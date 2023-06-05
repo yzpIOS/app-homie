@@ -1,0 +1,84 @@
+File pubspec = new File(project.projectDir.parentFile, 'pubspec.yaml')
+String yaml = pubspec.text
+// Using \s*['|"]?([^\n|'|"]*)['|"]? to extract version number.
+java.util.regex.Matcher versionMatcher = java.util.regex.Pattern.compile("^version:\\s*['|\"]?([^\\n|'|\"]*)['|\"]?\$", java.util.regex.Pattern.MULTILINE).matcher(yaml)
+versionMatcher.find()
+String library_version = versionMatcher.group(1).replaceAll("\\+", "-")
+
+group 'io.github.v7lin.alipay_kit_android'
+version library_version
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'org.yaml:snakeyaml:1.17'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+
+        // 私仓
+        flatDir {
+            dirs project(':alipay_kit_android').file('libs')
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+
+        // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    flavorDimensions 'vendor'
+
+    productFlavors {
+        vendor {
+            dimension 'vendor'
+
+            // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
+            consumerProguardFiles 'consumer-vendor-rules.pro'
+        }
+    }
+}
+
+def use_utdid() {
+    File flutter_project_dir = rootProject.projectDir.parentFile
+    def cfg = new org.yaml.snakeyaml.Yaml().load(new File(flutter_project_dir, 'pubspec.yaml').text)
+    if (cfg.alipay_kit != null && cfg.alipay_kit?.android == 'noutdid') {
+        return false
+    }
+    return true
+}
+
+dependencies {
+    vendorImplementation 'com.alipay.sdk:alipaysdk-android:+@aar'
+
+//TODO
+//    println "alipaysdk ${use_utdid() ? 'utdid' : 'noutdid'}"
+//    // v15.8.10
+//    if (use_utdid()) {
+//        vendorImplementation 'com.alipay.sdk:alipaysdk-android:15.8.11@aar'
+//    } else {
+//        vendorImplementation(name: 'alipaysdk-noutdid-15.8.10.220419171600', ext: 'aar')
+//    }
+}

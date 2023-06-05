@@ -1,0 +1,1 @@
+rm -r ./android/unityLibrary/src/main/Il2CppOutputProject/IL2CPP/build/deploy/ && cp -R ./unity/deploy/ ./android/unityLibrary/src/main/Il2CppOutputProject/IL2CPP/build/deploy/

@@ -1,0 +1,178 @@
+import 'dart:io';
+
+import 'package:app/common/cache_manager.dart';
+import 'package:app/common/theme.dart';
+import 'package:app/store/config_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/tools.dart';
+import 'package:app/ui/my/setting/setting_account_page.dart';
+import 'package:app/ui/my/setting/setting_notify_page.dart';
+import 'package:app/ui/my/setting/setting_privacy_page.dart';
+import 'package:app/ui/my/setting/setting_version_page.dart';
+import 'package:app/ui/task/freeze_account_view.dart';
+import 'package:app/ui/task/young_view.dart';
+import 'package:app/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:photo_manager/photo_manager.dart';
+
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
+
+  @override
+  State<SettingPage> createState() => _SettingPageState();
+}
+
+class _SettingPageState extends State<SettingPage> {
+  final _divider = const Divider(height: 10, thickness: 10, color: AppPalette.background2);
+
+  late final configCtrl = Get.find<ConfigCtrl>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    configCtrl.doRefresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppPalette.background2,
+      appBar: xAppBar(title: '设置'),
+      body: SingleChildScrollView(
+        padding: Pad(top: 10, bottom: AppSize.safeBottom),
+        child: Column(
+          children: [
+            $DataView(),
+            Padding(
+              padding: const Pad(horizontal: 32, top: 20, bottom: 68),
+              child: XTextBtn(
+                label: '退出登录',
+                color: Colors.white,
+                textStyle: const TextStyle(fontSize: 16, color: Colors.black),
+                onTap: () => onItemClick('退出登录'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget $DataView() {
+    final data = [
+      [
+        '账号与安全',
+        '消息提醒',
+        '隐私',
+        '青少年模式',
+      ],
+      [
+        '清理缓存',
+      ],
+      [
+        '用户协议',
+        '隐私政策',
+        '隐私政策摘要',
+        '个人信息收集清单',
+        '第三方信息共享清单',
+        '申请注销',
+        '关于',
+      ],
+    ];
+
+    return TableView(
+      divider: Some(PreferredSize(preferredSize: const Size.fromHeight(10), child: _divider)),
+      data.map((it) {
+        return TableGroup(
+          itemColor: const Some(Colors.white),
+          [
+            for (final item in it)
+              TableItem(
+                title: item,
+                onTap: () => onItemClick(item),
+              ),
+          ],
+        );
+      }).toList(growable: false),
+    );
+  }
+
+  Future _doClean() {
+    final files = [ImgCacheManager.obj, GiftCacheManager.obj, FileManager.obj];
+
+    return Future.wait(
+      <Future>[
+        //刷新媒体缓存
+        if (Platform.isAndroid)
+          PhotoManager.editor.android
+              .removeAllNoExistsAsset()
+              .timeout(const Duration(seconds: 6), onTimeout: () => false),
+        //删除临时目录
+        ...files.expand((it) => [it.emptyCache(), Future(it.store.emptyMemoryCache)]),
+        Future(
+          () async {
+            //TODO 删除临时文件有可能引发第三方错误
+            final dir = await getTemporaryDirectory();
+
+            await dir.delete(recursive: true);
+            await dir.create(recursive: true);
+          },
+        ),
+        removeExpireLogs(),
+      ],
+    );
+  }
+
+  void onItemClick(String action) {
+    switch (action) {
+      case '账号与安全':
+        Get.to(() => const SettingAccountPage());
+        break;
+      case '消息提醒':
+        Get.to(() => const SettingNotifyPage());
+        break;
+      case '隐私':
+        Get.to(() => const SettingPrivacyPage());
+        break;
+      case '青少年模式':
+        Get.dialog(const YoungDialog());
+        break;
+      case '清理缓存':
+        Get.alertSub(
+          _doClean,
+          alert: '确定$action',
+          callback: () => showToast('清理成功'),
+        );
+        break;
+      case '用户协议':
+        configCtrl.onTapLink(action, 'user_protocol');
+        break;
+      case '隐私政策':
+        configCtrl.onTapLink(action, 'privacy_policy');
+        break;
+      case '隐私政策摘要':
+        configCtrl.onTapLink(action, 'privacy_policy_summary');
+        break;
+      case '个人信息收集清单':
+        configCtrl.onTapLink(action, 'personal_information_collection_list');
+        break;
+      case '第三方信息共享清单':
+        configCtrl.onTapLink(action, 'third_party_information_share_list');
+        break;
+      case '申请注销':
+        Get.to(() => const FreezeAccountPage());
+        break;
+      case '关于':
+        Get.to(() => const SettingVersionPage());
+        break;
+      case '退出登录':
+        Get.alertSub(
+          alert: '确定$action',
+          Get.find<OAuthCtrl>().doLogout,
+        );
+        break;
+    }
+  }
+}

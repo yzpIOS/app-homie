@@ -1,0 +1,13 @@
+{
+  "use_unity": true,
+  "app_name": "Homie",
+  "wx_app_id": "wxed5f4b391e3356ed",
+  "im_app_id": 1400808113,
+  "api_url": "https://api.homieyy.com:443/",
+  "api_img_url": "http://document.homieyy.com/",
+  "mq_acc": "app",
+  "mq_pwd": "A7KiDPZ7M9",
+  "mq_url": "ws://111.230.241.225:32373/ws",
+  "sentry_dsn": "https://52fff051ed924b838b3e04d3e0909caa@o4504445347037184.ingest.sentry.io/4504445494165504",
+  "is_debug": false
+}

@@ -1,0 +1,3 @@
+flutter_native_splash:
+  fullscreen: true
+  background_image: "icon/bg.png"

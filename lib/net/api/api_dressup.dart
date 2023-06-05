@@ -1,0 +1,111 @@
+part of '../api.dart';
+
+class ApiDressUp extends ApiBase {
+  const ApiDressUp(super.path);
+
+  Future my() {
+    return _doPost('user_current_dress_up/query').then((val) => val['product_list'] ?? []);
+  }
+
+  Future myList({required PageNum page, int? categoryId}) {
+    final data = <String, dynamic>{
+      if (categoryId != null) //
+        'category_id_list': [categoryId],
+    };
+
+    return _doPost('warehouse/query', data: page + data);
+  }
+
+  Future save({required List<int> ids}) {
+    final data = {
+      'product_id_list': ids,
+    };
+
+    return _doPost('user_current_dress_up/update', data: data).then((val) => val['items']);
+  }
+
+  Future useAndSave({required List<int> useIds, required List<int> saveIds}) {
+    final data = {
+      'use_product_id_list': useIds,
+      'save_dress_up_product_id_list': saveIds,
+    };
+
+    return _doPost('use_and_save', data: data);
+  }
+
+  Future give({required UID uid, required List<int> ids}) {
+    final data = {
+      'access_uid': uid,
+      'product_id_list': ids,
+      'count': 1,
+    };
+
+    return _doPost('give', data: data);
+  }
+
+  Future hotList({required PageNum page}) {
+    return _doPost('hot/query', data: page + {});
+  }
+
+  Future fav({required int productId}) {
+    final data = {
+      'group_id': productId,
+      'product_id': productId,
+    };
+
+    return _doPost('collect/create', data: data);
+  }
+
+  Future delFav(String id) {
+    final data = {
+      'id': id,
+    };
+
+    return _doPost('collect/delete', data: data);
+  }
+
+  Future favList({required PageNum page}) {
+    return _doPost('collect/query', data: page + {});
+  }
+
+  Future snapshot() {
+    return _doPost('user_dress_up/create');
+  }
+
+  Future delSnapshot(int id) {
+    final data = {
+      'id': id,
+    };
+
+    return _doPost('user_dress_up/delete', data: data);
+  }
+
+  Future snapshotList() {
+    return _doPost('user_dress_up/query');
+  }
+
+  Future dressUp({required int id, required List<int> productIds}) {
+    final data = {
+      'id': id,
+      'product_id_list': productIds,
+    };
+
+    return _doPost('user_dress_up/update', data: data);
+  }
+
+  Future backpackUse({required List<int> ids}) {
+    final data = {
+      'product_id_list': ids,
+    };
+
+    return _doPost('backpack/use', data: data).then((val) => val['items']);
+  }
+
+  Future backpackList() {
+    return _doPost('backpack/query');
+  }
+
+  Future myAnimeList() {
+    return _doPost('action_warehouse/query').then((val) => val['items']);
+  }
+}

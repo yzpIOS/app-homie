@@ -1,0 +1,52 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+  #    - dart_code_metrics
+  errors:
+    todo: ignore
+    invalid_annotation_target: ignore
+  exclude:
+    - test/**
+    - lib/**/*.g.dart
+
+linter:
+  rules:
+    avoid_function_literals_in_foreach_calls: false
+    no_leading_underscores_for_local_identifiers: false
+    depend_on_referenced_packages: false
+    #
+    use_super_parameters: true
+    avoid_relative_lib_imports: true
+    always_use_package_imports: true
+    control_flow_in_finally: true
+    avoid_returning_null_for_future: true
+    use_key_in_widget_constructors: true
+    #
+    use_colored_box: true
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 4
+  metrics-exclude:
+    - test/**
+    - lib/**/*.g.dart
+  rules:
+    - avoid-dynamic
+    - avoid-passing-async-when-sync-expected
+    - avoid-redundant-async
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - avoid-unused-parameters
+    - avoid-nested-conditional-expressions
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - no-equal-then-else
+    - prefer-moving-to-variable
+#    - prefer-match-file-name

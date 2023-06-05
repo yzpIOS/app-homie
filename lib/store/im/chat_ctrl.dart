@@ -1,0 +1,388 @@
+import 'dart:io';
+
+import 'package:app/3rd/tencent/im.dart';
+import 'package:app/event/event.dart';
+import 'package:app/exception.dart';
+import 'package:app/model/conv.dart';
+import 'package:app/store/common/ready_ctrl_mixin.dart';
+import 'package:app/store/im/conv_manager_ctrl.dart';
+import 'package:app/store/im/message_manager_ctrl.dart';
+import 'package:app/store/im/tool/chat_scroll_mixin.dart';
+import 'package:app/store/im/tool/conv_creator.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
+import 'package:app/tools.dart';
+import 'package:app/types.dart';
+import 'package:app/ui/gift/gift_send_logic.dart';
+import 'package:app/ui/gift/gift_sheet.dart';
+import 'package:app/ui/message/chat/chat_app_bar.dart';
+import 'package:app/ui/message/input/ext/export.dart';
+import 'package:app/ui/message/input/input_ctrl.dart';
+import 'package:app/ui/message/input/input_view.dart';
+import 'package:flutter/material.dart';
+import 'package:photo_manager/photo_manager.dart';
+
+mixin GetConvMixin {
+  abstract final Either<V2TimConversation, ConvCreator> _conv;
+
+  late final ChatConv conv;
+
+  @mustCallSuper
+  Future<void> _initConv() async {
+    conv = await verifyConv(
+      await _conv.fold((l) => ChatConv.from(l), (r) => r.create()),
+    );
+  }
+
+  FutureOr<ChatConv> verifyConv(final ChatConv conv) {
+    return conv..onlyViewRx(conv.convId.startsWith('service_'));
+  }
+}
+
+mixin GroupMixin on GetConvMixin {
+  late final String groupId;
+
+  @override
+  Future<void> _initConv() async {
+    await super._initConv();
+
+    groupId = conv.convId;
+  }
+}
+
+abstract class ChatCtrl extends GetxController
+    with
+        GetConvMixin,
+        AutoScrollMixin,
+        EndScrollMixin,
+        BusGetLifeMixin,
+        ReadyMixin,
+        ReadyCtrlMixin,
+        GetDisposableMixin,
+        GetSingleTickerProviderStateMixin {
+  final kPageSize = 20;
+
+  final msgManager = Get.find<MessageManagerCtrl>();
+  final isMuteRx = false.obs;
+
+  final oldMsgRx = RxList<V2TimMessage>();
+  final newMsgRx = RxList<V2TimMessage>();
+
+  final selectRx = Rxn<Set<String>>();
+
+  final fullRx = Rx(true);
+
+  late final List<V2TimMessage> msgList = CombinedListView([oldMsgRx, newMsgRx]);
+
+  abstract final ChatAppBar appBar;
+  abstract final InputConfig inputConfig;
+
+  @override
+  void onInit() async {
+    super.onInit();
+
+    await _init();
+
+    final convCtrl = Get.find<ConvManagerCtrl>();
+    final convId = conv.convId;
+
+    bindWorker(
+      Worker(
+        () async => convCtrl.markConvOut(convId),
+        '退出会话',
+      ),
+    );
+
+    convCtrl.markConvIn(convId);
+  }
+
+  @override
+  Future<bool> onEndScroll() async {
+    final target = oldMsgRx.firstOrNull ?? newMsgRx.firstOrNull;
+
+    final result = //
+        await msgManager //
+            .fetchMsg(conv, target: target, limit: kPageSize)
+            .minTime(const Duration(milliseconds: 618));
+
+    if (target != null) {
+      final index = result.indexWhere((it) => it.equal(target));
+
+      if (index == -1) {
+        addOldMsg(result);
+      } else {
+        addOldMsg(result.take(index)); //去重
+      }
+    } else {
+      addOldMsg(result);
+    }
+
+    return result.length >= kPageSize;
+  }
+
+  @override
+  Future<bool> onTopScroll() async {
+    final target = newMsgRx.lastOrNull ?? oldMsgRx.lastOrNull;
+
+    final result = //
+        await msgManager //
+            .fetchMsg(conv, target: target, limit: kPageSize, queryNew: true)
+            .minTime(const Duration(milliseconds: 618));
+
+    if (target != null) {
+      final index = result.indexWhere((it) => it.equal(target));
+
+      if (index == -1) {
+        addNewMsg(result);
+      } else {
+        addNewMsg(result.skip(index + 1)); //去重
+      }
+    } else {
+      addNewMsg(result);
+    }
+
+    return result.length >= kPageSize;
+  }
+
+  @mustCallSuper
+  Future<void> _init() async {
+    try {
+      await _initConv();
+
+      if (isClosed) return;
+
+      _initMsg();
+
+      if (isClosed) return;
+
+      markReady();
+    } catch (e, s) {
+      markFail(e, s);
+
+      rethrow;
+    }
+  }
+
+  Future<void> _initMsg() async {
+    bindWorker(
+      ever<bool>(keyboardRx, (b) {
+        if (b) animeToEnd();
+      }),
+    );
+
+    on<NewMsgEvent>(
+      test: (it) {
+        return it.msg.convId == conv.convId;
+      },
+      (event) async {
+        final msg = event.msg;
+
+        if (!isClosed) {
+          final items = addNewMsg(msg);
+
+          if (items != null && (autoRx.isTrue || msg.isSend)) animeToEnd();
+        }
+      },
+    );
+
+    on<MsgStateEvent>(
+      test: (it) => it.msg.convId == conv.convId,
+      (event) {
+        final msg = event.msg;
+
+        [newMsgRx, oldMsgRx].any((data) {
+          for (var i = 0; i < data.length; ++i) {
+            final item = data[i];
+
+            if (item.equal(msg)) {
+              data
+                ..[i] = msg
+                ..refresh();
+
+              return true;
+            }
+          }
+
+          return false;
+        });
+      },
+    );
+
+    final result = await msgManager.fetchMsg(conv, limit: kPageSize);
+
+    if (result.length < kPageSize) {
+      xlog('初始化数据不足一页', type: LogType.IM);
+
+      setFetchFlag(fetchTop: false, fetchBottom: false);
+    }
+
+    addNewMsg(result);
+  }
+
+  Iterable<V2TimMessage>? addNewMsg(data) {
+    if (data is V2TimMessage) {
+      if (_msgFilter(data)) {
+        newMsgRx.add(data);
+
+        return [data];
+      }
+    } else if (data is Iterable<V2TimMessage>) {
+      final _data = data.where(_msgFilter);
+
+      newMsgRx.addAll(_data);
+
+      return _data;
+    } else {
+      assert(false, data);
+    }
+
+    return null;
+  }
+
+  void addOldMsg(Iterable<V2TimMessage> data) {
+    oldMsgRx.insertAll(0, data.where(_msgFilter));
+  }
+
+  void assignMsgData(Iterable<V2TimMessage> data) {
+    newMsgRx
+      ..clear()
+      ..refresh();
+
+    oldMsgRx
+      ..assignAll(data.where(_msgFilter))
+      ..refresh();
+  }
+
+  bool _msgFilter(V2TimMessage data) {
+    switch (data.elemType) {
+      case MessageElemType.V2TIM_ELEM_TYPE_TEXT:
+      case MessageElemType.V2TIM_ELEM_TYPE_IMAGE:
+      case MessageElemType.V2TIM_ELEM_TYPE_SOUND:
+      case MessageElemType.V2TIM_ELEM_TYPE_VIDEO:
+      case MessageElemType.V2TIM_ELEM_TYPE_LOCATION:
+      case MessageElemType.V2TIM_ELEM_TYPE_FILE:
+      case MessageElemType.V2TIM_ELEM_TYPE_CUSTOM:
+        return true;
+      default:
+        return false;
+    }
+  }
+}
+
+class ChatMsgSender extends MsgSender with TxtSender, ImageSender, GiftSender, CallSender, VoiceSender {
+  final ChatConv _conv;
+  final VoidCallback _toEnd;
+  final ValueChanged _msgAdd;
+  final MessageManagerCtrl _msgManager;
+
+  ChatMsgSender(ChatCtrl target)
+      : _conv = target.conv,
+        _toEnd = target.animeToEnd,
+        _msgAdd = target.addNewMsg,
+        _msgManager = target.msgManager;
+
+  void $AddMsg(task) async {
+    assert(task is Future<V2TimMessage> || task is Stream<V2TimMessage>, '数据错误 => [$task]');
+
+    try {
+      dynamic msgOut;
+
+      if (task is Future<V2TimMessage>) {
+        msgOut = await task;
+      } else if (task is Stream<V2TimMessage>) {
+        msgOut = await task.toList();
+      }
+
+      if (msgOut != null) {
+        _msgAdd(msgOut);
+
+        _toEnd();
+      }
+    } on LogicException catch (e) {
+      showToast(e.msg);
+    } catch (e, s) {
+      errLog(e, s);
+    }
+  }
+
+  @override
+  void callVoice() {
+    //TODO
+  }
+
+  @override
+  void callVideo() {
+    //TODO
+  }
+
+  @override
+  void sendImage(AssetEntity data) {
+    $AddMsg(
+      _msgManager.sendImage(_conv, Right([data])),
+    );
+  }
+
+  @override
+  void sendVideo(AssetEntity data) {
+    $AddMsg(
+      _msgManager.sendVideo(_conv, Right([data])),
+    );
+  }
+
+  @override
+  void sendVoice(Tuple2<File, Duration> data) {
+    $AddMsg(
+      _msgManager.sendVoice(_conv, data),
+    );
+  }
+
+  @override
+  void sendTxt(String data) {
+    $AddMsg(
+      _msgManager.sendText(_conv, data),
+    );
+  }
+
+  @override
+  void sendGift() {
+    GiftSheet.show(GiftSend2ImUser(_conv.userId!));
+  }
+}
+
+class SingleChatCtrl extends ChatCtrl {
+  @override
+  final Either<V2TimConversation, ConvCreator> _conv;
+
+  SingleChatCtrl(this._conv);
+
+  SingleChatCtrl.fromUid(UID uid) : _conv = Right(SingleChatConvCreator(uid));
+
+  @override
+  late final InputConfig inputConfig = InputConfig.userChat(
+    conv.userId!,
+    InputCtrl(ChatMsgSender(this), hint: '输入新消息'),
+  );
+
+  @override
+  Future<void> _init() async {
+    await super._init();
+
+    final uid = conv.convId;
+    if (!uid.startsWith('service_')) Get.find<UserInfoCtrl>().loadByNet(uid);
+
+    bindWorker(
+      Worker(
+        conv.markMessageAsRead,
+        '会话已读',
+      ),
+    );
+  }
+
+  @override
+  ChatAppBar get appBar => ChatAppBar$User(conv, isMuteRx);
+}
+
+extension<T> on Future<T> {
+  Future<T> minTime(Duration dur) {
+    return Future.wait([this, Future.delayed(dur)]).then((it) => it[0]);
+  }
+}

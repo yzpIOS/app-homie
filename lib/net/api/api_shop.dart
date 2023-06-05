@@ -1,0 +1,41 @@
+part of '../api.dart';
+
+class ApiShop extends ApiBase {
+  const ApiShop(super.path);
+
+  Future categoryList_({int parentId = 0, onlyHead = false}) {
+    final data = {
+      'status': 1,
+      'parent_id_list': [parentId],
+      // 'group_id_list': [onlyHead ? 1 : 2],
+    };
+
+    return _doPost('category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
+  }
+
+  Future categoryList() {
+    return _doPost('sales_category/query', data: const PageNum(size: 999) + {}).then((val) => val?['items'] ?? []);
+  }
+
+  Future recommendList() {
+    return _doPost('recommend/query').then((val) => val?['items'] ?? []);
+  }
+
+  Future productList({required PageNum page, int? categoryId, GenderEnum? gender}) {
+    final data = {
+      'status': 1,
+      if (categoryId != null) 'sales_category_id_list': [categoryId],
+      if (gender != null) 'gender': gender.code,
+    };
+
+    return _doPost('product/query', data: page + data);
+  }
+
+  Future buy({required int productId}) {
+    final data = {
+      'product_id': productId,
+    };
+
+    return _doPost('buy', data: data);
+  }
+}
