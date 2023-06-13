@@ -112,6 +112,10 @@ dependencies:
   flutter_constraintlayout: ^1.6.3-stable
   wakelock:
     path: ./plugin/wakelock-0.6.2
+  # protobuf
+  # https://pub.dev/packages/protoc_plugin/install
+  protoc_plugin: ^20.0.1
+
 
 link_kit:
   deep_link: homie:///

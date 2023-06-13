@@ -1,7 +1,10 @@
+import 'package:app/common/nets/socket/custom_client.dart';
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/sys_conv_enum.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/conv_view.dart';
 import 'package:app/ui/message/interactive_page.dart';
@@ -92,9 +95,30 @@ class _ActionView extends GetView<ConvManagerCtrl> {
     switch (action) {
       case SysConvEnum.like:
       case SysConvEnum.at:
+        if(Env.isDebug) {
+          CustomClient.ins.addConnect(() {
+            String? token = OAuthCtrl.token;
+            if(token == null) {
+              return;
+            }
+            C_Role c_role = C_Role(session: token);
+            CustomClient.ins.send(6666, c_role.writeToBuffer());
+          });
+          CustomClient.ins.connect("192.168.1.185", 7778);
+          return;
+        }
         Get.to(() => InteractivePage(type: action));
         break;
       case SysConvEnum.guest:
+        if(Env.isDebug) {
+          String? token = OAuthCtrl.token;
+          if(token == null) {
+            return;
+          }
+          C_Role c_role = C_Role(session: token);
+          CustomClient.ins.send(6666, c_role.writeToBuffer());
+          return;
+        }
         Get.to(() => const AccessPage());
         break;
       case SysConvEnum.follow:

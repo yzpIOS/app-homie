@@ -1405,6 +1405,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
+  protoc_plugin:
+    dependency: "direct main"
+    description:
+      name: protoc_plugin
+      sha256: e2be5014ba145dc0f8de20ac425afa2a513aff64fe350d338e481d40de0573df
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "20.0.1"
   provider:
     dependency: "direct main"
     description:
