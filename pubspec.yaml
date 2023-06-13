@@ -103,10 +103,10 @@ dependencies:
   stack_trace: ^1.11.0
   flutter_local_notifications: ^14.1.0
   #
-  media_kit: ^0.0.9
+  media_kit: ^0.0.11
   media_kit_native_event_loop: ^1.0.4
   media_kit_video: ^0.0.12
-  media_kit_libs_android_video: ^1.0.5
+  media_kit_libs_android_video: ^1.0.6
   media_kit_libs_ios_video: ^1.0.4
   #
   flutter_constraintlayout: ^1.6.3-stable

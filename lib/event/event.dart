@@ -15,7 +15,7 @@ part 'room_event.dart';
 part 'rtc_event.dart';
 part 'unity_event.dart';
 
-sealed class Event {
+class Event {
   String get name => '$runtimeType';
 
   const Event();
