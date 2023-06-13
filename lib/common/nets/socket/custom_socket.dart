@@ -87,7 +87,7 @@ class CustomSocket {
     // 取消回调监听
     _socketSubscription?.cancel();
     // 链接新的socket
-    Socket.connect(host, port).asStream().listen((event) {
+    Socket.connect(host, port).then((Socket event) {
       _socket = event;
       // 处理连接
       _handleConnect();
@@ -116,10 +116,12 @@ class CustomSocket {
       return false;
     }
 
-    _socket?.write(datas);
+    _socket?.add(datas);
     _socket?.flush();
     return true;
   }
+
+  Stream<List<int>>? mStream;
 
   ///
   /// socket连接上
@@ -127,10 +129,13 @@ class CustomSocket {
   void _handleConnect() {
     // 把前一个订阅取消掉
     _socketSubscription?.cancel();
-    _socketSubscription = _socket?.listen((event) {
+
+    _socket?.asBroadcastStream(onListen: (event) {
+      _socketSubscription = event;
+    }).listen((data) {
       // 接收到数据
       for(int index = 0; index < _receive.length; index ++) {
-        _receive[index].call(event);
+        _receive[index].call(data);
       }
     }, onError: (error) {
       // 接收到数据报错，需要断开重接吗？

@@ -42,7 +42,7 @@ class BigByteBuffer {
     }
     // 当前包体长度
     if(_curPkgLen == 0) {
-      _curPkgLen = _buffer[3] << 4 + _buffer[2] << 3 +  _buffer[1] << 2 + _buffer[0];
+      _curPkgLen = _buffer[0] << 4 + _buffer[1] << 3 +  _buffer[2] << 2 + _buffer[3];
     }
     // 当前协议号
     if(_curCmd == 0) {

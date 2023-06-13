@@ -100,8 +100,8 @@ class CustomClient {
   bool send(int cmd, Uint8List datas) {
     int len = datas.length;
     datas = Uint8List.fromList([
-        (len >> 24).toUnsigned(4), (len >> 16).toUnsigned(4), (len >> 8).toUnsigned(4), (len).toUnsigned(8),
-        (cmd >> 24).toUnsigned(4), (cmd >> 16).toUnsigned(4), (cmd >> 8).toUnsigned(4), (cmd).toUnsigned(8)
+        (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
+        (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8)
       ]..addAll(datas));
     return _customSocket.send(datas);
   }
