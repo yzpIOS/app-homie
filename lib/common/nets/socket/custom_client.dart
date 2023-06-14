@@ -128,6 +128,8 @@ class CustomClient {
 
   ///
   /// 发送数据
+  /// C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
+  /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
     int len = datas?.length ?? 0;
