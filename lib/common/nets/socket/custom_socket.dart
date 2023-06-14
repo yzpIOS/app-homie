@@ -21,9 +21,11 @@ typedef Disconnect = void Function();
 typedef Receive = void Function(Uint8List data, bool fromServer);
 
 class CustomSocket {
-
+  // 连接失败, 有可能回调多次
   static const CONNECT_SUC = 900000000;
+  // 连接失败, 有可能回调多次
   static const CONNECT_FAIL = 900000001;
+  // 连接断开
   static const CONNECT_CLOSE = 900000002;
 
   // 当前的socket链接
