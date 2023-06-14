@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 // 链接回调, 底层在多次重连时，会多次调用
@@ -55,9 +56,10 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 10}) {
+  CustomSocket connect(String host, int port, {int timeout = 10, int reconnectTimes = 1}) {
     // 防止重复调用
     if(_host == host && _port == port) {
+      debugPrint("[socket]:连接地址相同, host=$host, port=$port");
       return this;
     }
     _timeout = timeout;
@@ -69,8 +71,18 @@ class CustomSocket {
     _port = port;
     // 取消回调监听
     _socketSubscription?.cancel();
+
+    if(reconnectTimes <= 0 || _isConnecting) {
+      debugPrint("[socket]:连接条件不满足, reconnectTimes=$reconnectTimes, _isConnecting=$_isConnecting");
+      return this;
+    }
+
+    debugPrint("[socket]:发起连接, host=$host, port=$_port");
+    // 正在连接中
+    _isConnecting = true;
     // 链接新的socket
     Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
+      debugPrint("[socket]:连接成功, host=$host, port=$_port");
       _isConnecting = false;
       _socket = event;
       // 处理连接
@@ -80,6 +92,7 @@ class CustomSocket {
         _connected[index].call();
       }
     }, onError: (error) async {
+      debugPrint("[socket]:连接失败, host=$host, port=$_port");
       _isConnecting = false;
       // 关闭之前的socket链接
       _socket?.close();
@@ -88,6 +101,18 @@ class CustomSocket {
       _socketSubscription?.cancel();
       for(int index = 0; index < _connectError.length; index ++) {
         _connectError[index].call();
+      }
+
+      // 需要重新链接
+      if(reconnectTimes > 0) {
+        // ip和端口
+        String host = _host;
+        int port = _port;
+        // 重置数据
+        _host = "";
+        _port = 0;
+        // 网络连接
+        connect(host, port, timeout: _timeout, reconnectTimes: reconnectTimes - 1);
       }
     });
     return this;
@@ -113,15 +138,19 @@ class CustomSocket {
   void _handleConnect() {
     // 把前一个订阅取消掉
     _socketSubscription?.cancel();
+    debugPrint("[socket]:监听网络数据, ${_socket?.address}");
 
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
+      debugPrint("[socket]:接收到网络数据");
+
       // 接收到数据
       for(int index = 0; index < _receive.length; index ++) {
         _receive[index].call(data);
       }
     }, onError: (error) {
+      debugPrint("[socket]:网络连接错误, ${error.toString()}");
       // 接收到数据报错，需要断开重接吗？
       // 关闭之前的socket链接
       _socket?.close();
@@ -141,18 +170,21 @@ class CustomSocket {
     _netStateSubscription?.cancel();
     // 订阅网络变化
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
+      debugPrint("[socket]:网络发生变化, state = $state");
       // 是否有网络
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       // 没有网络直接返回
       if(!hasNet) {
+        debugPrint("[socket]:网络发生变化；无网络, state = $state");
         return;
       }
 
-      // 己经连接
+      // 己经连接, 或者在重连中
       if(_socket != null) {
+        debugPrint("[socket]:网络发生变化；己连接, state = $state");
         return;
       }
-
+      debugPrint("[socket]:网络发生变化；发送连接请求, state = $state");
       // ip和端口
       String host = _host;
       int port = _port;
@@ -160,7 +192,7 @@ class CustomSocket {
       _host = "";
       _port = 0;
       // 网络连接
-      connect(host, port, timeout: _timeout);
+      connect(host, port, timeout: _timeout, reconnectTimes: 3);
     });
     return this;
   }
