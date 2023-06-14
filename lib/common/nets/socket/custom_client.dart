@@ -1,6 +1,7 @@
 
+import 'dart:async';
 import 'dart:typed_data';
-import 'big_byte_buffer.dart';
+import 'custom_byte_buffer.dart';
 import 'custom_socket.dart';
 import 'dart:core';
 import 'package:protobuf/protobuf.dart';
@@ -18,7 +19,7 @@ typedef OnReceiveRawData = void Function(int cmd, Uint8List? data);
 ///
 /// 数据处理
 ///
-typedef OnFromBuffers = GeneratedMessage Function(List<int> data);
+typedef OnGeneratedMessage = GeneratedMessage Function(List<int> data);
 
 class CustomClient {
 
@@ -31,30 +32,27 @@ class CustomClient {
     return _ins;
   }
 
-  ///
-  /// socket连接
-  ///
+  // socket连接
   final CustomSocket _customSocket = CustomSocket();
 
-  ///
-  /// 粘包处理
-  ///
-  final BigByteBuffer _bigByteBuffer = BigByteBuffer();
+  // 粘包处理
+  final CustomByteBuffer _bigByteBuffer = CustomByteBuffer();
 
-  ///
-  /// 收到数据回调方法
-  ///
+  // 全局收到数据回调方法
   final List<OnReceiveData> _onReceive = [];
+  // 监听指令的pb对像
+  Map<int, List<OnReceiveData>> _onReceiveCmds = {};
 
-  ///
-  /// 原始数据
-  ///
+  // 全局原始数据接收回调
   final List<OnReceiveRawData> _onReceiveRaw = [];
+  // 监听指令的原始数据回调
+  Map<int, List<OnReceiveRawData>> _onReceiveRawCmds = {};
 
-  ///
-  /// 数据转化器
-  ///
-  Map<int, OnFromBuffers> _pbFromBuffers = <int, OnFromBuffers>{};
+  // 数据转化器
+  Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
+
+  // 心跳定时器
+  StreamSubscription? _heartBeatStream = null;
 
   CustomClient() {
     // 断开自动连接
@@ -69,16 +67,30 @@ class CustomClient {
       while(curPkg != null) {
         // 唤起ProtoBuff的数据回调
         // 解析proto数据
-        GeneratedMessage? generatedMessage = _pbFromBuffers[curCmd]?.call(curPkg);
-        // 唤起回调
+        GeneratedMessage? generatedMessage = _onGeneratedMessage[curCmd]?.call(curPkg);
+        // 唤起回调, 全局的数据监听
         for(int index = 0; index < _onReceive.length; index ++) {
           _onReceive[index].call(curCmd, generatedMessage);
         }
+        // 特定指令监听指定的指令回调
+        List<OnReceiveData>? callBacks = _onReceiveCmds[curCmd];
+        if(callBacks != null) {
+          callBacks.forEach((element) {
+            element.call(curCmd, generatedMessage);
+          });
+        }
 
-        // 唤起原始数据的回调
         // 原始数据
+        // 唤起原始数据的回调
         for(int index = 0; index < _onReceiveRaw.length; index ++) {
           _onReceiveRaw[index].call(curCmd, curPkg);
+        }
+        // 原始数据的指令数据回调
+        List<OnReceiveRawData>? callBacks2 = _onReceiveRawCmds[curCmd];
+        if(callBacks2 != null) {
+          callBacks2.forEach((element) {
+            element.call(curCmd, curPkg);
+          });
         }
 
         // 解析下一个包的数据
@@ -87,22 +99,37 @@ class CustomClient {
         curCmd = _bigByteBuffer.curUnPkgCmd;
       }
     });
+
     // 断开连接时的回调，用于清理数据
     _customSocket.addDisconnect(() {
       // todo 清理缓存数据
       _bigByteBuffer.clearBuffer();
+      _heartBeatStream?.cancel();
+    });
+
+    // 监听开始心跳
+    _customSocket.addConnect(() {
+      startHeartBeat();
     });
   }
 
   ///
   /// 发送数据
   ///
-  bool send(int cmd, Uint8List datas) {
-    int len = datas.length;
+  bool send(int cmd, {GeneratedMessage? message}) {
+    return sendBytes(cmd, datas: message?.writeToBuffer());
+  }
+
+
+  ///
+  /// 发送数据
+  ///
+  bool sendBytes(int cmd, {Uint8List? datas}) {
+    int len = datas?.length ?? 0;
     datas = Uint8List.fromList([
-        (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
-        (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8)
-      ]..addAll(datas));
+      (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
+      (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
+    ]);
     return _customSocket.send(datas);
   }
 
@@ -110,69 +137,120 @@ class CustomClient {
   ///
   /// 注册数据解析器
   ///
-  void registerFromBuffers(int cmd, OnFromBuffers parseData) {
-    if(_pbFromBuffers.containsKey(cmd)) {
+  void registerFromBuffers(int cmd, OnGeneratedMessage parseData) {
+    if(_onGeneratedMessage.containsKey(cmd)) {
       return;
     }
-    _pbFromBuffers[cmd] = parseData;
+    _onGeneratedMessage[cmd] = parseData;
   }
 
   ///
   /// 取消数据解析器
   ///
   void unRegisterFromBuffers(int cmd) {
-    if(!_pbFromBuffers.containsKey(cmd)) {
+    if(!_onGeneratedMessage.containsKey(cmd)) {
       return;
     }
-    _pbFromBuffers.remove(cmd);
+    _onGeneratedMessage.remove(cmd);
   }
 
   ///
   /// 注册数据回调
   ///
-  void registerOnReceiveData(int cmd, OnReceiveData receiveData) {
-    if(_onReceive.contains(cmd)) {
+  void onDataCmd(int cmd, OnReceiveData receiveData) {
+    if(!_onReceiveCmds.containsKey(cmd)) {
+      _onReceiveCmds[cmd] = [];
+    }
+    if(_onReceiveCmds[cmd]?.contains(receiveData) == true) {
       return;
     }
-    _onReceive[cmd] = receiveData;
+    _onReceiveCmds[cmd]?.add(receiveData);
   }
 
   ///
   /// 取消注册数据回调
   ///
-  void unRegisterOnReceiveData(int cmd, OnReceiveData receiveData) {
-    if(!_onReceive.contains(cmd)) {
+  void removeOnDataCmd(int cmd, OnReceiveData receiveData) {
+    if(!_onReceiveCmds.containsKey(cmd)) {
       return;
     }
-    _onReceive.remove(cmd);
+    if(_onReceiveCmds[cmd]?.contains(receiveData) == false) {
+      return;
+    }
+    _onReceiveCmds[cmd]?.remove(receiveData);
+  }
+
+
+
+  ///
+  /// 注册数据回调
+  ///
+  void onData(OnReceiveData receiveData) {
+    if(_onReceive.contains(receiveData)) {
+      return;
+    }
+    _onReceive.add(receiveData);
+  }
+
+  ///
+  /// 取消注册数据回调
+  ///
+  void removeOnData(OnReceiveData receiveData) {
+    if(!_onReceive.contains(receiveData)) {
+      return;
+    }
+    _onReceive.remove(receiveData);
   }
 
   ///
   /// 注册数据回调
   ///
-  void registerOnReceiveRawData(int cmd, OnReceiveRawData receiveData) {
-    if(_onReceiveRaw.contains(cmd)) {
+  void onRawDataCmd(int cmd, OnReceiveRawData receiveData) {
+    if(!_onReceiveRawCmds.containsKey(cmd)) {
+      _onReceiveRawCmds[cmd] = [];
+    }
+    if(_onReceiveRawCmds[cmd]?.contains(receiveData) == true) {
       return;
     }
-    _onReceiveRaw[cmd] = receiveData;
+    _onReceiveRawCmds[cmd]?.add(receiveData);
   }
 
   ///
   /// 取消注册数据回调
   ///
-  void unRegisterOnReceiveRawData(int cmd, OnReceiveRawData receiveData) {
-    if(!_onReceiveRaw.contains(cmd)) {
+  void removeOnRawDataCmd(int cmd, OnReceiveRawData receiveData) {
+    if(_onReceiveRawCmds[cmd]?.contains(receiveData) == false) {
       return;
     }
-    _onReceiveRaw.remove(cmd);
+    _onReceiveRawCmds[cmd]?.remove(receiveData);
   }
 
+
+  ///
+  /// 注册数据回调
+  ///
+  void onRawData(OnReceiveRawData receiveData) {
+    if(_onReceiveRaw.contains(receiveData)) {
+      return;
+    }
+    _onReceiveRaw.add(receiveData);
+  }
+
+  ///
+  /// 取消注册数据回调
+  ///
+  void removeOnRawData(OnReceiveRawData receiveData) {
+    if(!_onReceiveRaw.contains(receiveData)) {
+      return;
+    }
+    _onReceiveRaw.remove(receiveData);
+  }
 
     ///
   /// 连接服务器
   ///
-  CustomClient connect(String host, int port) {
-    _customSocket.connect(host, port);
+  CustomClient connect(String host, int port, {int timeout = 10}) {
+    _customSocket.connect(host, port, timeout: timeout);
     return this;
   }
 
@@ -200,6 +278,23 @@ class CustomClient {
       return this;
     }
     _onReceive.add(onReceiveData);
+    return this;
+  }
+
+  ///
+  /// 心跳
+  ///
+  CustomClient startHeartBeat({int interval = 5}) {
+    _heartBeatStream?.cancel();
+    _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
+      // todo 发送心跳
+      sendBytes(1);
+      // 下一个心跳
+      startHeartBeat(interval: interval);
+    }, onError: (error){
+    // 下一个心跳
+      startHeartBeat(interval: interval);
+    });
     return this;
   }
 

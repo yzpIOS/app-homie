@@ -102,7 +102,7 @@ class _ActionView extends GetView<ConvManagerCtrl> {
               return;
             }
             C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
-            CustomClient.ins.send(6666, c_role.writeToBuffer());
+            CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
           });
           CustomClient.ins.connect("192.168.1.185", 7778);
           return;
@@ -116,7 +116,7 @@ class _ActionView extends GetView<ConvManagerCtrl> {
             return;
           }
           C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
-          CustomClient.ins.send(6666, c_role.writeToBuffer());
+          CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
           return;
         }
         Get.to(() => const AccessPage());

@@ -18,76 +18,60 @@ typedef Receive = Function(Uint8List data);
 
 class CustomSocket {
 
-  ///
-  /// 当前的socket链接
-  ///
+  // 当前的socket链接
   Socket? _socket;
 
-  ///
-  /// 当前地址
-  ///
+  // 当前地址
   String _host = "";
 
-  ///
-  /// 当前ip
-  ///
+  // 当前ip
   int _port = 0;
 
-  ///
-  /// 网络状态订阅
-  ///
+  // 网络状态订阅
   StreamSubscription? _netStateSubscription;
 
-  ///
-  /// 网络连接订阅
-  ///
+  // 网络连接订阅
   StreamSubscription? _socketSubscription;
 
-  ///
-  /// 当前的网络状态
-  ///
-  ConnectivityResult? _curState;
-
-  ///
-  /// 接收数据
+  // 接收数据
   List<Receive> _receive = <Receive>[];
 
-  ///
-  /// 连接成功
-  ///
+  // 连接成功
   List<Connected> _connected = <Connected>[];
 
-  ///
-  /// 连接失败
-  ///
+  // 连接失败
   List<ConnectError> _connectError = <ConnectError>[];
 
-  ///
-  /// 断开连接
-  ///
+  // 断开连接
   List<Disconnect> _disconnects = <Disconnect>[];
+
+  // 过期时间
+  int _timeout = 0;
+  bool _isConnecting = false;
 
   ///
   /// 链接socket
   /// [host]              ip地址
   /// [port]              端口号
-  /// [failRetryTime]     失败重试次数, -1表示无限重试
-  CustomSocket connect(String host, int port) {
+  /// [timeout]           过期时间
+  ///
+  CustomSocket connect(String host, int port, {int timeout = 10}) {
     // 防止重复调用
     if(_host == host && _port == port) {
       return this;
     }
+    _timeout = timeout;
+    // 关闭之前的socket
+    _socket?.close();
     // 记录当前的host
     _host = host;
     // 记录当前port
     _port = port;
-    // 关闭之前的socket链接
-    _socket?.close();
-    _socket = null;
     // 取消回调监听
     _socketSubscription?.cancel();
     // 链接新的socket
-    Socket.connect(host, port).then((Socket event) {
+    Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
+      _isConnecting = false;
       _socket = event;
       // 处理连接
       _handleConnect();
@@ -96,6 +80,7 @@ class CustomSocket {
         _connected[index].call();
       }
     }, onError: (error) async {
+      _isConnecting = false;
       // 关闭之前的socket链接
       _socket?.close();
       _socket = null;
@@ -115,7 +100,6 @@ class CustomSocket {
     if(datas.isEmpty || _socket == null) {
       return false;
     }
-
     _socket?.add(datas);
     _socket?.flush();
     return true;
@@ -139,12 +123,10 @@ class CustomSocket {
       }
     }, onError: (error) {
       // 接收到数据报错，需要断开重接吗？
+      // 关闭之前的socket链接
       _socket?.close();
+      _socket = null;
       _socketSubscription?.cancel();
-      // 调用者调用了closeAutoConnect方法，这时主动断开连接时，重新链接
-      if(_netStateSubscription != null) {
-        _reconnect();
-      }
       // 回调断开连接
       for(int index = 0; index < _disconnects.length; index ++) {
         _disconnects[index].call();
@@ -158,46 +140,29 @@ class CustomSocket {
   CustomSocket closeAutoConnect() {
     _netStateSubscription?.cancel();
     // 订阅网络变化
-    _netStateSubscription = Connectivity().onConnectivityChanged.listen(_onNetStatusChange);
-    // 获取网络状态
-    Connectivity().onConnectivityChanged.first.asStream().listen((event) {
-      _curState = event;
-    }, onError: (error) {
-      _curState = null;
+    _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
+      // 是否有网络
+      final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
+      // 没有网络直接返回
+      if(!hasNet) {
+        return;
+      }
+
+      // 己经连接
+      if(_socket != null) {
+        return;
+      }
+
+      // ip和端口
+      String host = _host;
+      int port = _port;
+      // 重置数据
+      _host = "";
+      _port = 0;
+      // 网络连接
+      connect(host, port, timeout: _timeout);
     });
     return this;
-  }
-
-  ///
-  /// 网络变化
-  ///
-  void _onNetStatusChange(ConnectivityResult state) {
-    if(_curState == state) {
-      return;
-    }
-    // 当前的网络状态
-    _curState = state;
-    // 是否有网络
-    final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
-    // 没有网络直接返回
-    if(!hasNet) {
-      return;
-    }
-    _reconnect();
-  }
-
-  ///
-  /// 重连
-  ///
-  void _reconnect() {
-    // ip和端口
-    String host = _host;
-    int port = _port;
-    // 重置数据
-    _host = "";
-    _port = 0;
-    // 网络连接
-    connect(host, port);
   }
 
   ///
