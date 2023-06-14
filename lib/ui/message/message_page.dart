@@ -1,4 +1,4 @@
-import 'package:app/common/nets/socket/custom_client.dart';
+import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
@@ -104,7 +104,7 @@ class _ActionView extends GetView<ConvManagerCtrl> {
             C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
             CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
           });
-          CustomClient.ins.connect("192.168.1.185", 7778);
+          CustomClient.ins.connect("localhost", 8321);
           return;
         }
         Get.to(() => InteractivePage(type: action));
