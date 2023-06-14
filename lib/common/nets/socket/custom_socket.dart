@@ -52,12 +52,18 @@ class CustomSocket {
   bool _isConnecting = false;
 
   ///
+  /// 是否需要重连
+  ///
+  bool _needReconnecting = false;
+
+
+  ///
   /// 链接socket
   /// [host]              ip地址
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 5, int reconnectTimes = 1}) {
+  CustomSocket connect(String host, int port, {int timeout = 5, int reconnectTimes = 2}) {
     // 防止重复调用
     if(_host == host && _port == port) {
       debugPrint("[socket]:连接地址相同, host=$host, port=$port");
@@ -85,6 +91,7 @@ class CustomSocket {
     Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
       debugPrint("[socket]:连接成功, host=$host, port=$_port");
       _isConnecting = false;
+      _needReconnecting = false;
       _socket = event;
       // 处理连接
       _handleConnect();
@@ -113,7 +120,12 @@ class CustomSocket {
       }
 
       // 需要重新链接
-      if(reconnectTimes > 0) {
+      if(reconnectTimes > 0 || _needReconnecting) {
+        // 如果重连，就重新设置重连次数
+        if(_needReconnecting) {
+          reconnectTimes = 3;
+          _needReconnecting = false;
+        }
         // ip和端口
         String host = _host;
         int port = _port;
@@ -134,11 +146,11 @@ class CustomSocket {
     if(datas.isEmpty || _socket == null) {
       return false;
     }
+    debugPrint("[socket]:发送数据");
+
     _socket?.add(datas);
     return true;
   }
-
-  Stream<List<int>>? mStream;
 
   ///
   /// socket连接上
@@ -180,6 +192,27 @@ class CustomSocket {
   }
 
   ///
+  /// 把原来的socket关掉，并且进行重联
+  ///
+  void reconnect() {
+    // 正在连接中，防止重复连接
+    if(_isConnecting) {
+      _needReconnecting = true;
+      return;
+    }
+    _resetConnect();
+
+    String host = _host;
+    int port = _port;
+
+    _host = "";
+    _port = 0;
+
+    // 发起重联
+    connect(host, port, timeout: _timeout, reconnectTimes: 3);
+  }
+
+  ///
   /// 连接关闭时自动连接
   ///
   CustomSocket closeAutoConnect() {
@@ -192,6 +225,7 @@ class CustomSocket {
       // 没有网络直接返回
       if(!hasNet) {
         debugPrint("[socket]:网络发生变化；无网络, state = $state");
+        _resetConnect();
         return;
       }
 
@@ -246,13 +280,24 @@ class CustomSocket {
     return this;
   }
 
+  ///
+  /// 重置连接数据
+  ///
+  void _resetConnect() {
+    _socket?.close();
+    _socket = null;
+    _socketSubscription?.cancel();
+    _socketSubscription = null;
+  }
+
   void dispose() {
     _socket?.close();
-    _receive.clear();
     _connectError.clear();
     _disconnects.clear();
     _receive.clear();
     _socketSubscription?.cancel();
     _netStateSubscription?.cancel();
   }
+
+
 }

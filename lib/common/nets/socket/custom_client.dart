@@ -127,7 +127,9 @@ class CustomClient {
   bool sendBytes(int cmd, {Uint8List? datas}) {
     int len = datas?.length ?? 0;
     datas = Uint8List.fromList([
+      // 32位整数，转化成二进制数据
       (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
+      // 32位整数，转化成二进制数据
       (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
     ]);
     return _customSocket.send(datas);
@@ -287,7 +289,6 @@ class CustomClient {
   CustomClient startHeartBeat({int interval = 5}) {
     _heartBeatStream?.cancel();
     _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
-      // todo 发送心跳
       sendBytes(1);
       // 下一个心跳
       startHeartBeat(interval: interval);
