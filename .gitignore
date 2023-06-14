@@ -57,3 +57,4 @@ app.*.map.json
 /ios/UnityLibrary/
 
 /android/deploy
+/plugin/f_unity/android/unityLibrary/

@@ -36,7 +36,7 @@ class CustomClient {
   final CustomSocket _customSocket = CustomSocket();
 
   // 粘包处理
-  final CustomByteBuffer _bigByteBuffer = CustomByteBuffer();
+  final CustomByteBuffer _serverByteBuffer = CustomByteBuffer();
 
   // 全局收到数据回调方法
   final List<OnReceiveData> _onReceive = [];
@@ -54,65 +54,36 @@ class CustomClient {
   // 心跳定时器
   StreamSubscription? _heartBeatStream;
 
+  // 记录客户端发送心跳次数，服务端心跳返回时清理
   int heartBeatNumber = 0;
 
   CustomClient() {
     // 断开自动连接
     _customSocket.closeAutoConnect();
     // 收到消息时的回调
-    _customSocket.addReceive((data, fromServer) {
-      if(!fromServer) {
-        return;
-      }
-
-      _bigByteBuffer.addBuffer(data);
+    _customSocket.addReceive((data) {
+      _serverByteBuffer.addBuffer(data);
       // 获取解析数据
-      Uint8List? curPkg = _bigByteBuffer.getPackage();
+      Uint8List? curPkg = _serverByteBuffer.getPackage();
       // 当前协议号
-      int curCmd = _bigByteBuffer.curUnPkgCmd;
+      int curCmd = _serverByteBuffer.curUnPkgCmd;
       while(curPkg != null) {
         // 唤起ProtoBuff的数据回调
-        // 解析proto数据
-        GeneratedMessage? generatedMessage = _onGeneratedMessage[curCmd]?.call(curPkg);
-        // 唤起回调, 全局的数据监听
-        for(int index = 0; index < _onReceive.length; index ++) {
-          _onReceive[index].call(curCmd, generatedMessage);
-        }
-        // 特定指令监听指定的指令回调
-        List<OnReceiveData>? callBacks = _onReceiveCmds[curCmd];
-        if(callBacks != null) {
-          callBacks.forEach((element) {
-            element.call(curCmd, generatedMessage);
-          });
-        }
-
+        _riseOnData(curCmd, _onGeneratedMessage[curCmd]?.call(curPkg));
         // 原始数据
-        // 唤起原始数据的回调
-        for(int index = 0; index < _onReceiveRaw.length; index ++) {
-          _onReceiveRaw[index].call(curCmd, curPkg);
-        }
-        // 原始数据的指令数据回调
-        List<OnReceiveRawData>? callBacks2 = _onReceiveRawCmds[curCmd];
-        if(callBacks2 != null) {
-          callBacks2.forEach((element) {
-            element.call(curCmd, curPkg);
-          });
-        }
-
+        _riseOnRawData(curCmd, curPkg);
         // 处理心跳
         _handleHeartBeatRes(curCmd);
-
         // 解析下一个包的数据
-        curPkg = _bigByteBuffer.getPackage();
+        curPkg = _serverByteBuffer.getPackage();
         // 获取下一个包的指令号
-        curCmd = _bigByteBuffer.curUnPkgCmd;
+        curCmd = _serverByteBuffer.curUnPkgCmd;
       }
     });
 
     // 断开连接时的回调，用于清理数据
     _customSocket.addDisconnect(() {
-      // todo 清理缓存数据
-      _bigByteBuffer.clearBuffer();
+      _serverByteBuffer.clearBuffer();
       _heartBeatStream?.cancel();
     });
 
@@ -120,6 +91,48 @@ class CustomClient {
     _customSocket.addConnect(() {
       startHeartBeat();
     });
+
+    // socket状态变化
+    _customSocket.socketStatusCallBack = (cmd) {
+      // 处理protobuf
+      _riseOnData(cmd, null);
+      // 原始数据
+      _riseOnRawData(cmd, null);
+    };
+  }
+
+  ///
+  /// 唤起原始数据的回调
+  ///
+  void _riseOnRawData(int curCmd, Uint8List? curPkg) {
+    // 唤起原始数据的回调
+    for(int index = 0; index < _onReceiveRaw.length; index ++) {
+      _onReceiveRaw[index].call(curCmd, curPkg);
+    }
+    // 原始数据的指令数据回调
+    List<OnReceiveRawData>? callBacks2 = _onReceiveRawCmds[curCmd];
+    if(callBacks2 != null) {
+      callBacks2.forEach((element) {
+        element.call(curCmd, curPkg);
+      });
+    }
+  }
+
+  ///
+  /// 唤起回调
+  ///
+  void _riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
+    // 唤起回调, 全局的数据监听
+    for(int index = 0; index < _onReceive.length; index ++) {
+      _onReceive[index].call(curCmd, generatedMessage);
+    }
+    // 特定指令监听指定的指令回调
+    List<OnReceiveData>? callBacks = _onReceiveCmds[curCmd];
+    if(callBacks != null) {
+      callBacks.forEach((element) {
+        element.call(curCmd, generatedMessage);
+      });
+    }
   }
 
   ///
@@ -334,6 +347,6 @@ class CustomClient {
   ///
   void dispose() {
     _customSocket.dispose();
-    _bigByteBuffer.clearBuffer();
+    _serverByteBuffer.clearBuffer();
   }
 }

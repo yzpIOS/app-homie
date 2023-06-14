@@ -15,10 +15,12 @@ typedef ConnectError = void Function();
 // 断开回调, 底层在多次重连时，会多次调用
 typedef Disconnect = void Function();
 
+// socket状态回调
+typedef SocketStatusCallBack = void Function(int cmd);
+
 /// 接收到数据
 /// [data]        返回数据
-/// [fromServer]  数据是否是服务端返回的, true是， false客户端数据
-typedef Receive = void Function(Uint8List data, bool fromServer);
+typedef Receive = void Function(Uint8List data);
 
 class CustomSocket {
   // 连接失败, 有可能回调多次
@@ -59,11 +61,11 @@ class CustomSocket {
   int _timeout = 0;
   bool _isConnecting = false;
 
-  ///
-  /// 是否需要重连
-  ///
+  // 是否需要重连
   bool _needReconnecting = false;
 
+  // socket状态回调
+  SocketStatusCallBack? socketStatusCallBack;
 
   ///
   /// 链接socket
@@ -159,7 +161,6 @@ class CustomSocket {
       return false;
     }
     debugPrint("[socket]:发送数据");
-
     _socket?.add(datas);
     return true;
   }
@@ -177,7 +178,7 @@ class CustomSocket {
     }).listen((data) {
       debugPrint("[socket]:接收到网络数据");
       // 接收到数据
-      _riseCallBack(data, true);
+      _riseCallBack(data);
     }, onError: (error) {
       debugPrint("[socket]:网络连接错误, ${error.toString()}");
       // 接收到数据报错，需要断开重接吗？
@@ -278,18 +279,21 @@ class CustomSocket {
   ///
   /// 唤起回调
   ///
-  void _riseCallBack(Uint8List data, bool fromServer) {
+  void _riseCallBack(Uint8List data) {
     _receive.forEach((element) {
       try {
-        element.call(data, fromServer);
+        element.call(data);
       } catch(e) {
         debugPrint("[socket]:数据接逻辑处理失败, ${e.toString()}");
       }
     });
   }
 
+  ///
+  /// 连接错误回调
+  ///
   void _riseCallBack2(int cmd) {
-    _riseCallBack(Uint8List.fromList([0, 0, 0, 0, (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8)]), false);
+    socketStatusCallBack?.call(cmd);
   }
 
   ///
@@ -320,6 +324,7 @@ class CustomSocket {
     _receive.clear();
     _socketSubscription?.cancel();
     _netStateSubscription?.cancel();
+    socketStatusCallBack = null;
   }
 
 
