@@ -42,11 +42,11 @@ class CustomByteBuffer {
     }
     // 当前包体长度
     if(_curPkgLen == 0) {
-      _curPkgLen = (_buffer[0] << 4).toInt() + (_buffer[1] << 3).toInt() +  (_buffer[2] << 2).toInt() + _buffer[3].toInt();
+      _curPkgLen = (_buffer[0] << 24).toInt() + (_buffer[1] << 16).toInt() +  (_buffer[2] << 8).toInt() + _buffer[3].toInt();
     }
     // 当前协议号
     if(_curCmd == 0) {
-      _curCmd = (_buffer[4] << 4).toInt() + (_buffer[5] << 3).toInt() +  (_buffer[6] << 2).toInt() + _buffer[7];
+      _curCmd = (_buffer[4] << 24).toInt() + (_buffer[5] << 16).toInt() +  (_buffer[6] << 8).toInt() + _buffer[7];
     }
     // 粘包了，不解析数据，等下个包数据过来
     if(_curPkgLen < _buffer.length - PKG_LEN - CMD_LEN) {

@@ -7,18 +7,24 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/utils.dart';
 
 // 链接回调, 底层在多次重连时，会多次调用
-typedef Connected = Function();
+typedef Connected = void Function();
 
 // 连接错误, 底层在多次重连时，会多次调用
-typedef ConnectError = Function();
+typedef ConnectError = void Function();
 
 // 断开回调, 底层在多次重连时，会多次调用
-typedef Disconnect = Function();
+typedef Disconnect = void Function();
 
-// 接收到数据
-typedef Receive = Function(Uint8List data);
+/// 接收到数据
+/// [data]        返回数据
+/// [fromServer]  数据是否是服务端返回的, true是， false客户端数据
+typedef Receive = void Function(Uint8List data, bool fromServer);
 
 class CustomSocket {
+
+  static const CONNECT_SUC = 900000000;
+  static const CONNECT_FAIL = 900000001;
+  static const CONNECT_CLOSE = 900000002;
 
   // 当前的socket链接
   Socket? _socket;
@@ -103,6 +109,8 @@ class CustomSocket {
           debugPrint("[socket]:_connected热行失败");
         }
       }
+      // 连接成功回调
+      _riseCallBack2(CONNECT_SUC);
     }, onError: (error) async {
       debugPrint("[socket]:连接失败, host=$host, port=$_port");
       _isConnecting = false;
@@ -134,6 +142,8 @@ class CustomSocket {
         _port = 0;
         // 网络连接
         connect(host, port, timeout: _timeout, reconnectTimes: reconnectTimes - 1);
+        // 连接失败
+        _riseCallBack2(CONNECT_FAIL);
       }
     });
     return this;
@@ -164,15 +174,8 @@ class CustomSocket {
       _socketSubscription = event;
     }).listen((data) {
       debugPrint("[socket]:接收到网络数据");
-
       // 接收到数据
-      for(int index = 0; index < _receive.length; index ++) {
-        try {
-          _receive[index].call(data);
-        } catch(e) {
-          debugPrint("[socket]:asBroadcastStream热行失败");
-        }
-      }
+      _riseCallBack(data, true);
     }, onError: (error) {
       debugPrint("[socket]:网络连接错误, ${error.toString()}");
       // 接收到数据报错，需要断开重接吗？
@@ -185,9 +188,10 @@ class CustomSocket {
         try {
           _disconnects[index].call();
         } catch(e) {
-          debugPrint("[socket]:onErrorStream热行失败");
+          debugPrint("[socket]:断开连接回调处理失败, ${e.toString()}");
         }
       }
+      _riseCallBack2(CONNECT_CLOSE);
     });
   }
 
@@ -267,6 +271,23 @@ class CustomSocket {
     }
     _disconnects.add(disconnect);
     return this;
+  }
+
+  ///
+  /// 唤起回调
+  ///
+  void _riseCallBack(Uint8List data, bool fromServer) {
+    _receive.forEach((element) {
+      try {
+        element.call(data, fromServer);
+      } catch(e) {
+        debugPrint("[socket]:数据接逻辑处理失败, ${e.toString()}");
+      }
+    });
+  }
+
+  void _riseCallBack2(int cmd) {
+    _riseCallBack(Uint8List.fromList([0, 0, 0, 0, (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8)]), false);
   }
 
   ///

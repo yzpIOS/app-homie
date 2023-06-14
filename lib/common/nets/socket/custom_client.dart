@@ -60,7 +60,11 @@ class CustomClient {
     // 断开自动连接
     _customSocket.closeAutoConnect();
     // 收到消息时的回调
-    _customSocket.addReceive((data) {
+    _customSocket.addReceive((data, fromServer) {
+      if(!fromServer) {
+        return;
+      }
+
       _bigByteBuffer.addBuffer(data);
       // 获取解析数据
       Uint8List? curPkg = _bigByteBuffer.getPackage();
