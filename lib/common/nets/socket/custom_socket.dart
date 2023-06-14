@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get/utils.dart';
 
 // 链接回调, 底层在多次重连时，会多次调用
 typedef Connected = Function();
@@ -56,7 +57,7 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 10, int reconnectTimes = 1}) {
+  CustomSocket connect(String host, int port, {int timeout = 5, int reconnectTimes = 1}) {
     // 防止重复调用
     if(_host == host && _port == port) {
       debugPrint("[socket]:连接地址相同, host=$host, port=$port");
@@ -89,7 +90,11 @@ class CustomSocket {
       _handleConnect();
       // 连接成功
       for(int index = 0; index < _connected.length; index ++) {
-        _connected[index].call();
+        try {
+          _connected[index].call();
+        } catch(e) {
+          debugPrint("[socket]:_connected热行失败");
+        }
       }
     }, onError: (error) async {
       debugPrint("[socket]:连接失败, host=$host, port=$_port");
@@ -100,7 +105,11 @@ class CustomSocket {
       // 取消回调监听
       _socketSubscription?.cancel();
       for(int index = 0; index < _connectError.length; index ++) {
-        _connectError[index].call();
+        try {
+          _connectError[index].call();
+        } catch(e) {
+          debugPrint("[socket]:onError热行失败");
+        }
       }
 
       // 需要重新链接
@@ -126,7 +135,6 @@ class CustomSocket {
       return false;
     }
     _socket?.add(datas);
-    _socket?.flush();
     return true;
   }
 
@@ -147,7 +155,11 @@ class CustomSocket {
 
       // 接收到数据
       for(int index = 0; index < _receive.length; index ++) {
-        _receive[index].call(data);
+        try {
+          _receive[index].call(data);
+        } catch(e) {
+          debugPrint("[socket]:asBroadcastStream热行失败");
+        }
       }
     }, onError: (error) {
       debugPrint("[socket]:网络连接错误, ${error.toString()}");
@@ -158,7 +170,11 @@ class CustomSocket {
       _socketSubscription?.cancel();
       // 回调断开连接
       for(int index = 0; index < _disconnects.length; index ++) {
-        _disconnects[index].call();
+        try {
+          _disconnects[index].call();
+        } catch(e) {
+          debugPrint("[socket]:onErrorStream热行失败");
+        }
       }
     });
   }

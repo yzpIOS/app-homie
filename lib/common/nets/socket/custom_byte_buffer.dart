@@ -29,7 +29,7 @@ class CustomByteBuffer {
       return;
     }
     // 合并buffer
-    _buffer = Uint8List.fromList([]..addAll(_buffer)..addAll(newBuffer));
+    _buffer = Uint8List.fromList([..._buffer, ...newBuffer]);
   }
 
   ///
@@ -42,11 +42,11 @@ class CustomByteBuffer {
     }
     // 当前包体长度
     if(_curPkgLen == 0) {
-      _curPkgLen = _buffer[0] << 4 + _buffer[1] << 3 +  _buffer[2] << 2 + _buffer[3];
+      _curPkgLen = (_buffer[0] << 4).toInt() + (_buffer[1] << 3).toInt() +  (_buffer[2] << 2).toInt() + _buffer[3].toInt();
     }
     // 当前协议号
     if(_curCmd == 0) {
-      _curCmd = _buffer[4] << 4 + _buffer[5] << 3 +  _buffer[6] << 2 + _buffer[7];
+      _curCmd = (_buffer[4] << 4).toInt() + (_buffer[5] << 3).toInt() +  (_buffer[6] << 2).toInt() + _buffer[7];
     }
     // 粘包了，不解析数据，等下个包数据过来
     if(_curPkgLen < _buffer.length - PKG_LEN - CMD_LEN) {
@@ -55,7 +55,13 @@ class CustomByteBuffer {
     // 读取
     Uint8List result = _buffer.sublist(PKG_LEN + CMD_LEN, _curPkgLen + PKG_LEN + CMD_LEN);
     // 删除,协议长度，协议号和数据
-    _buffer.removeRange(0, PKG_LEN + CMD_LEN + _curPkgLen);
+    if(_buffer.length == _curPkgLen + PKG_LEN + CMD_LEN) {
+      // 数据己经读完
+      _buffer = Uint8List(0);
+    } else {
+      // 获取剩余的包数据
+      _buffer = _buffer.sublist(_curPkgLen + PKG_LEN + CMD_LEN, _buffer.length);
+    }
     // 记录协议
     curUnPkgCmd = _curCmd;
     // 重置数据
