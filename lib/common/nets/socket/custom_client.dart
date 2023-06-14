@@ -52,7 +52,9 @@ class CustomClient {
   Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
 
   // 心跳定时器
-  StreamSubscription? _heartBeatStream = null;
+  StreamSubscription? _heartBeatStream;
+
+  int heartBeatNumber = 0;
 
   CustomClient() {
     // 断开自动连接
@@ -92,6 +94,9 @@ class CustomClient {
             element.call(curCmd, curPkg);
           });
         }
+
+        // 处理心跳
+        _handleHeartBeatRes(curCmd);
 
         // 解析下一个包的数据
         curPkg = _bigByteBuffer.getPackage();
@@ -181,8 +186,6 @@ class CustomClient {
     }
     _onReceiveCmds[cmd]?.remove(receiveData);
   }
-
-
 
   ///
   /// 注册数据回调
@@ -287,9 +290,20 @@ class CustomClient {
   /// 心跳
   ///
   CustomClient startHeartBeat({int interval = 5}) {
+    // 心跳没有响应的次数
+    if(heartBeatNumber >= 4) {
+      _customSocket.reconnect();
+      heartBeatNumber = 0;
+    }
+
+    // 取消定时器
     _heartBeatStream?.cancel();
+    // 延尺执行
     _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
-      sendBytes(1);
+      // 发送心跳成功，数值加1
+      if(sendBytes(1)) {
+        heartBeatNumber += 1;
+      }
       // 下一个心跳
       startHeartBeat(interval: interval);
     }, onError: (error){
@@ -297,6 +311,16 @@ class CustomClient {
       startHeartBeat(interval: interval);
     });
     return this;
+  }
+
+  ///
+  /// 心跳返回处理
+  void _handleHeartBeatRes(int cmd) {
+    if(cmd != 1) {
+      return;
+    }
+    // 尺到心跳回庆重新置成0
+    heartBeatNumber = 0;
   }
 
   ///
