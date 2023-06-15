@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/utils.dart';
@@ -23,12 +24,6 @@ typedef SocketStatusCallBack = void Function(int cmd);
 typedef Receive = void Function(Uint8List data);
 
 class CustomSocket {
-  // 连接失败, 有可能回调多次
-  static const CONNECT_SUC = 900000000;
-  // 连接失败, 有可能回调多次
-  static const CONNECT_FAIL = 900000001;
-  // 连接断开
-  static const CONNECT_CLOSE = 900000002;
 
   // 当前的socket链接
   Socket? _socket;
@@ -114,7 +109,7 @@ class CustomSocket {
         }
       }
       // 连接成功回调
-      _riseCallBack2(CONNECT_SUC);
+      _riseCallBack2(BaseClient.CONNECT_SUC);
     }, onError: (error) async {
       debugPrint("[socket]:连接失败, host=$host, port=$_port");
       _isConnecting = false;
@@ -147,7 +142,7 @@ class CustomSocket {
         // 网络连接
         connect(host, port, timeout: _timeout, reconnectTimes: reconnectTimes - 1);
         // 连接失败
-        _riseCallBack2(CONNECT_FAIL);
+        _riseCallBack2(BaseClient.CONNECT_FAIL);
       }
     });
     return this;
@@ -194,7 +189,7 @@ class CustomSocket {
           debugPrint("[socket]:断开连接回调处理失败, ${e.toString()}");
         }
       }
-      _riseCallBack2(CONNECT_CLOSE);
+      _riseCallBack2(BaseClient.CONNECT_CLOSE);
     });
   }
 
@@ -326,6 +321,5 @@ class CustomSocket {
     _netStateSubscription?.cancel();
     socketStatusCallBack = null;
   }
-
 
 }

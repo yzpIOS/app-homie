@@ -13,6 +13,7 @@ class CustomSocketSession extends BaseClient {
   ///
   Socket socket;
 
+  // 客户端id
   String uniqueId = "";
 
   // 网络连接订阅
@@ -51,7 +52,6 @@ class CustomSocketSession extends BaseClient {
     return sendBytes(cmd, datas: message?.writeToBuffer());
   }
 
-
   ///
   /// 发送数据
   /// C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
@@ -65,12 +65,28 @@ class CustomSocketSession extends BaseClient {
       // 32位整数，转化成二进制数据
       (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
     ]);
+    return sendBytes2(datas);
+  }
+
+  ///
+  /// 发送数据
+  ///
+  bool sendBytes2(Uint8List datas) {
     try {
       socket.add(datas);
     } catch(e) {
       return false;
     }
     return true;
+  }
+
+  @override
+  void handleResponse(int cmd, Uint8List? curPkg, GeneratedMessage? onGeneratedMessage) {
+    super.handleResponse(cmd, curPkg, onGeneratedMessage);
+    if(cmd != BaseClient.USER_LOGIN) {
+      return;
+    }
+    // 登录成功
   }
 
   ///
