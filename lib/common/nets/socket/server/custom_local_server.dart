@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/env.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
@@ -50,8 +51,12 @@ class CustomLocalServer with BaseClient {
     if(connectTimes >= 1000) {
       return;
     }
+    String currentIp = "localhost";
+    if(Env.isDebug) {
+      currentIp = '192.168.1.177';
+    }
     // 开启ServerSocket
-    ServerSocket.bind('192.168.1.177', port).asStream().listen((event) {
+    ServerSocket.bind(currentIp, port).asStream().listen((event) {
       // socket连接上
       serverSocket = event;
       // 绑定server
@@ -107,6 +112,9 @@ class CustomLocalServer with BaseClient {
   /// 获取到Session
   ///
   CustomSocketSession? getSession(String uniqueId) {
+    if(Env.isDebug && _sessions.isNotEmpty) {
+      return _sessions.values.first;
+    }
     for(int index = 0; index < _sessions.length; index ++) {
       if(_sessions[index]?.uniqueId == uniqueId) {
         return _sessions[index];
@@ -119,6 +127,9 @@ class CustomLocalServer with BaseClient {
   /// 心跳，检查无用连接
   ///
   void beatHeartCheck({int interval = 5}) {
+    if(Env.isDebug) {
+      return;
+    }
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;

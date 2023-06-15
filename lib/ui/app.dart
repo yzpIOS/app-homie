@@ -47,6 +47,11 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
     super.initState();
 
     Connectivity().onConnectivityChanged.listen(ConnState.onChanged);
+    // 连接socket
+    post(() async {
+      await Future.delayed(const Duration(seconds: 3));
+      SocketCtrl.getCtrl().startClient("192.168.1.188", 7778);
+    });
 
     TimeFormat.initLocale('zh_cn');
   }
@@ -65,7 +70,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       defaultTransition: Transition.cupertino,
       builder: _transitionBuilder,
       initialBinding: _AppBindings(),
-      // navxigatorObservers: [SentryNavigatorObserver()],
+      // navigatorObservers: [SentryNavigatorObserver()],
       supportedLocales: const [
         Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
       ],

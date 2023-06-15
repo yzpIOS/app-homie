@@ -1,6 +1,7 @@
 
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
+import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
 
@@ -14,13 +15,13 @@ const FLUTTER_UINITY_END = 21000;
 ///
 class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
-  // flutter 内部的server, 用于与unity进行通信
-  CustomLocalServer localServer = CustomLocalServer();
+  // client, 用于与后台通信
+  CustomClient client = CustomClient();
+
   // 分配给unity的唯一id
   String uniqueId = DateTime.now().toString();
-
-  // client, 用于与后台通信
-  CustomClient clientForgo = CustomClient();
+  // flutter 内部的server, 用于与unity进行通信
+  CustomLocalServer localServer = CustomLocalServer();
 
   static SocketCtrl getCtrl() {
     return Get.find<SocketCtrl>();
@@ -44,7 +45,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
       // 发送数据到服务端
-      clientForgo.sendBytes(cmd, datas: data);
+      client.sendBytes(cmd, datas: data);
     });
     // 监听unity发送的消息
     localServer.onReceiveDataFromU((session, cmd, data) {
@@ -62,12 +63,12 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     localServer.beatHeartCheck();
 
     // 接收到原始数据
-    clientForgo.onRawData((cmd, data) {
+    client.onRawData((cmd, data) {
       riseOnRawData(cmd, data);
       localServer.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
     // 接收到反序列化后的数据
-    clientForgo.onData((cmd, data) {
+    client.onData((cmd, data) {
       riseOnData(cmd, data);
     });
   }
@@ -76,13 +77,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 启动client
   ///
   void startClient(String host, int port) {
-    clientForgo.connect(host, port);
+    client.connect(host, port);
   }
 
   @override
   void dispose() {
     super.dispose();
-    clientForgo.dispose();
+    client.dispose();
     localServer.dispose();
   }
 }
