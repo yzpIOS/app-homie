@@ -1,0 +1,3 @@
+/Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/android/.cxx/Debug/2w2u2721/x86_64/CMakeFiles/rebuild_cache.dir
+/Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/android/.cxx/Debug/2w2u2721/x86_64/CMakeFiles/edit_cache.dir
+/Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/android/.cxx/Debug/2w2u2721/x86_64/CMakeFiles/f_tgp.dir

@@ -19,7 +19,7 @@ typedef OnReceiveRawData = void Function(int cmd, Uint8List? data);
 ///
 typedef OnGeneratedMessage = GeneratedMessage Function(List<int> data);
 
-class BaseClient {
+mixin BaseClient {
   // 连接失败, 有可能回调多次
   static const CONNECT_SUC = 900000000;
   // 连接失败, 有可能回调多次
@@ -56,6 +56,7 @@ class BaseClient {
     // 当前协议号
     int curCmd = serverByteBuffer.curUnPkgCmd;
     while(curPkg != null) {
+      // todo curPkg需要解密
       // 唤起ProtoBuff的数据回调
       GeneratedMessage? message = _onGeneratedMessage[curCmd]?.call(curPkg);
       riseOnData(curCmd, message);

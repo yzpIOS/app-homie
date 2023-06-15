@@ -1,3 +1,4 @@
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/config_ctrl.dart';
@@ -126,6 +127,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
 class _AppBindings extends Bindings {
   @override
   void dependencies() {
+    Get.put(SocketCtrl());
     Get.put(UnityCtrl());
 
     Get.put(const AppWaiting());

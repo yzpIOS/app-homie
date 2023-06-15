@@ -7,10 +7,8 @@ import 'dart:core';
 import 'package:protobuf/protobuf.dart';
 
 
-class CustomClient extends BaseClient {
+class CustomClient with BaseClient {
 
-  // 私有构造函数
-  CustomClient._();
   // 单例引用
   static final CustomClient _ins = CustomClient();
   // 单例获取方法

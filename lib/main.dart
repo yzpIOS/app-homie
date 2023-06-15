@@ -1,5 +1,4 @@
 import 'package:app/3rd/sentry/sentry.dart';
-import 'package:app/common/nets/socket/server/custom_socket_server.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/special_text.dart';
@@ -45,8 +44,6 @@ void main() async {
       );
     },
   );
-  // 服务开始
-  CustomSocketServer.ins.bindServer();
 }
 
 Future<List<SingleChildWidget>> get _providers async {

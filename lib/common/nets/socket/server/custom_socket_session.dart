@@ -6,7 +6,7 @@ import 'dart:typed_data';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:protobuf/protobuf.dart';
 
-class CustomSocketSession extends BaseClient {
+class CustomSocketSession with BaseClient {
 
   ///
   /// 连接进来的socket对像
