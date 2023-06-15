@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/android/.cxx/Debug/2w2u2721/x86_64",
-  "command": "/Users/sundar/Documents/workme/android/sdk/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang --target=x86_64-none-linux-android21 --gcc-toolchain=/Users/sundar/Documents/workme/android/sdk/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/sundar/Documents/workme/android/sdk/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -DDART_SHARED_LIB -Df_tgp_EXPORTS -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security  -fno-limit-debug-info  -fPIC -o CMakeFiles/f_tgp.dir/f_tgp.c.o -c /Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/src/f_tgp.c",
-  "file": "/Users/sundar/Documents/work/jumai/app/app-homie/plugin/flutter_tgp/src/f_tgp.c"
-}
-]
