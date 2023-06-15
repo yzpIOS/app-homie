@@ -6,7 +6,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 
-const int SOCKET_TIME_OUT = 40;
+const int SOCKET_TIME_OUT = 15;
 
 /// 服务开始
 typedef ServerStarted = void Function(int port);
@@ -118,7 +118,7 @@ class CustomLocalServer with BaseClient {
   ///
   /// 心跳，检查无用连接
   ///
-  void beatHeartCheck({int interval = 20}) {
+  void beatHeartCheck({int interval = 5}) {
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;

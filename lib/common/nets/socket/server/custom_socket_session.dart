@@ -21,7 +21,7 @@ class CustomSocketSession with BaseClient {
   StreamSubscription? _socketSubscription;
 
   // 上一次收到协义数据
-  int lastReceivePkgTime = 0;
+  int lastReceivePkgTime = DateTime.now().second;
 
   CustomSocketSession({required this.socket}) {
     // 监听数据

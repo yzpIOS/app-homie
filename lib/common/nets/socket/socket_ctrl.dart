@@ -33,8 +33,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     localServer.bindServer();
     // 监听unity发送的消息
     localServer.onReceiveRawData((session, cmd, data) {
-
-      session.sendBytes(cmd, datas: data);
       if(session.uniqueId != uniqueId) {
         return;
       }
