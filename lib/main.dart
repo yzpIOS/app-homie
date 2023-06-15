@@ -30,7 +30,7 @@ void main() async {
         ],
         eagerError: true,
       );
-
+      // test
       await SentryHelp.initApp(
         MultiProvider(
           providers: await _providers,
