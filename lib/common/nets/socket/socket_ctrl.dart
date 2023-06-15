@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 
 import 'client/custom_client.dart';
 
+const FLUTTER_UINITY_START = 20000;
+const FLUTTER_UINITY_END = 21000;
 
 ///
 /// socket控制器
@@ -31,12 +33,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     localServer.bindServer();
     // 监听unity发送的消息
     localServer.onReceiveRawData((session, cmd, data) {
+
+      session.sendBytes(cmd, datas: data);
       if(session.uniqueId != uniqueId) {
         return;
       }
       // flutter与unity之间的协义号从20001开始
       // 大于20000的是unity发给flutter的信息
-      if(cmd >= 20000) {
+      if(cmd >= FLUTTER_UINITY_START || cmd <= FLUTTER_UINITY_END) {
         // 通知flutter收到信息
         riseOnRawData(cmd, data);
         return;
@@ -50,16 +54,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
       // 小于20000的不处理, 因为unity发给服务端的
-      if(cmd <= 20000) {
+      if(cmd <= FLUTTER_UINITY_START || cmd >= FLUTTER_UINITY_END) {
         return;
       }
-      // todo flutter与客户端的通信
+      // flutter与客户端的通信
       riseOnData(cmd, data);
     });
-
-    on((event) async {
-      // 获取到Unity的消息
-    });
+    // 开心跳心检查
+    localServer.beatHeartCheck();
 
     // 接收到原始数据
     clientForgo.onRawData((cmd, data) {
@@ -74,6 +76,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   ///
   /// 启动client
+  ///
   void startClient(String host, int port) {
     clientForgo.connect(host, port);
   }

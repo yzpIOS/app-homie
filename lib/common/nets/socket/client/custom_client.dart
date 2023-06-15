@@ -1,6 +1,8 @@
 
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:app/common/nets/socket/byte_utils.dart';
+
 import '../base_client.dart';
 import 'custom_socket.dart';
 import 'dart:core';
@@ -68,6 +70,9 @@ class CustomClient with BaseClient {
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
     int len = datas?.length ?? 0;
+    // 加密
+    ByteUtils.encryption(datas);
+    // 数据封装
     datas = Uint8List.fromList([
       // 32位整数，转化成二进制数据
       (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),

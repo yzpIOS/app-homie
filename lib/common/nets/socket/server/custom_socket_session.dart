@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/socket/base_client.dart';
+import 'package:app/common/nets/socket/byte_utils.dart';
 import 'package:protobuf/protobuf.dart';
 
 class CustomSocketSession with BaseClient {
@@ -18,6 +19,9 @@ class CustomSocketSession with BaseClient {
 
   // 网络连接订阅
   StreamSubscription? _socketSubscription;
+
+  // 上一次收到协义数据
+  int lastReceivePkgTime = 0;
 
   CustomSocketSession({required this.socket}) {
     // 监听数据
@@ -59,19 +63,15 @@ class CustomSocketSession with BaseClient {
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
     int len = datas?.length ?? 0;
+    // 加密
+    ByteUtils.encryption(datas);
+    // 数据封装
     datas = Uint8List.fromList([
       // 32位整数，转化成二进制数据
       (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
       // 32位整数，转化成二进制数据
       (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
     ]);
-    return sendBytes2(datas);
-  }
-
-  ///
-  /// 发送数据
-  ///
-  bool sendBytes2(Uint8List datas) {
     try {
       socket.add(datas);
     } catch(e) {
@@ -83,10 +83,17 @@ class CustomSocketSession with BaseClient {
   @override
   void handleResponse(int cmd, Uint8List? curPkg, GeneratedMessage? onGeneratedMessage) {
     super.handleResponse(cmd, curPkg, onGeneratedMessage);
-    if(cmd != BaseClient.USER_LOGIN) {
-      return;
+    if(cmd == BaseClient.USER_LOGIN) {
     }
-    // 登录成功
+    switch(cmd) {
+      case BaseClient.USER_LOGIN:
+        // todo 登录成功
+        break;
+      case BaseClient.USER_HEART_BEAT:
+        // 心跳
+        lastReceivePkgTime = DateTime.now().second;
+        break;
+    }
   }
 
   ///

@@ -6,6 +6,8 @@ import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 
+const int SOCKET_TIME_OUT = 40;
+
 /// 服务开始
 typedef ServerStarted = void Function(int port);
 
@@ -25,9 +27,13 @@ class CustomLocalServer with BaseClient {
 
   // 所有的链接
   Map<String, CustomSocketSession> _sessions = {};
+  List<CustomSocketSession> _sessionList = [];
 
   // 服务器开启成功
   ServerStarted? serverStarted;
+
+  // 心跳定时器
+  StreamSubscription? _beatHeartCheckStream;
 
   // 全局收到数据回调方法
   final List<OnReceiveDataFromU> _onReceiveFromU = [];
@@ -39,13 +45,13 @@ class CustomLocalServer with BaseClient {
   ///
   /// 绑定server
   ///
-  void bindServer({int port = 8321, int connectTimes = 0}) {
-    // 超过300次
-    if(connectTimes >= 300) {
+  void bindServer({int port = 7778, int connectTimes = 0}) {
+    // 超过1000次
+    if(connectTimes >= 1000) {
       return;
     }
     // 开启ServerSocket
-    ServerSocket.bind('localhost', port).asStream().listen((event) {
+    ServerSocket.bind('192.168.1.177', port).asStream().listen((event) {
       // socket连接上
       serverSocket = event;
       // 绑定server
@@ -67,7 +73,12 @@ class CustomLocalServer with BaseClient {
       _socketSubscription = event;
     }).listen((data) {
       // 先销毁当前的session
+      CustomSocketSession? exist = _sessions[CustomSocketSession.getUniqueKey2(data)];
+      if(exist != null && _sessionList.contains(exist)) {
+        _sessionList.remove(exist);
+      }
       _sessions[CustomSocketSession.getUniqueKey2(data)]?.dispose();
+
       // 新创建session
       CustomSocketSession customSocketSession = CustomSocketSession(socket: data);
       // 监听protobuf数据对像
@@ -82,6 +93,7 @@ class CustomLocalServer with BaseClient {
           element.call(customSocketSession, cmd, data);
         });
       });
+      _sessionList.add(customSocketSession);
       _sessions[CustomSocketSession.getUniqueKey2(data)] = customSocketSession;
     }, onError: (error) {
       // 服务端断开
@@ -101,6 +113,27 @@ class CustomLocalServer with BaseClient {
       }
     }
     return null;
+  }
+
+  ///
+  /// 心跳，检查无用连接
+  ///
+  void beatHeartCheck({int interval = 20}) {
+    _beatHeartCheckStream?.cancel();
+    _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
+      int nowSeconds = DateTime.now().second;
+      // 遍历所有的session
+      for(int index = _sessionList.length - 1; index >= 0; index --) {
+        // 心跳
+        if(nowSeconds - _sessionList[index].lastReceivePkgTime > SOCKET_TIME_OUT) {
+          _sessionList[index].dispose();
+          _sessionList.removeAt(index);
+        }
+      }
+      beatHeartCheck();
+    }, onError: (error) {
+      beatHeartCheck();
+    });
   }
 
   ///
@@ -144,7 +177,9 @@ class CustomLocalServer with BaseClient {
   }
 
 
+  @override
   void dispose() {
+    super.dispose();
     _sessions.values.forEach((element) {
       element.dispose();
     });
@@ -152,5 +187,6 @@ class CustomLocalServer with BaseClient {
     _onReceiveFromU.clear();
     _onReceiveRawFromU.clear();
     _socketSubscription?.cancel();
+    _beatHeartCheckStream?.cancel();
   }
 }

@@ -1,7 +1,9 @@
 
 import 'dart:core';
 import 'dart:typed_data';
-import 'client/custom_byte_buffer.dart';
+import 'package:app/common/nets/socket/byte_utils.dart';
+
+import 'custom_byte_buffer.dart';
 import 'package:protobuf/protobuf.dart';
 
 ///
@@ -29,6 +31,8 @@ mixin BaseClient {
 
   // 用户登录
   static const USER_LOGIN = 900000003;
+  // 心跳
+  static const USER_HEART_BEAT = 900000004;
 
   // 粘包处理
   final CustomByteBuffer serverByteBuffer = CustomByteBuffer();
@@ -56,7 +60,8 @@ mixin BaseClient {
     // 当前协议号
     int curCmd = serverByteBuffer.curUnPkgCmd;
     while(curPkg != null) {
-      // todo curPkg需要解密
+      // curPkg需要解密
+      ByteUtils.decrypt(curPkg);
       // 唤起ProtoBuff的数据回调
       GeneratedMessage? message = _onGeneratedMessage[curCmd]?.call(curPkg);
       riseOnData(curCmd, message);

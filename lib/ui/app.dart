@@ -65,7 +65,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       defaultTransition: Transition.cupertino,
       builder: _transitionBuilder,
       initialBinding: _AppBindings(),
-      // navigatorObservers: [SentryNavigatorObserver()],
+      // navxigatorObservers: [SentryNavigatorObserver()],
       supportedLocales: const [
         Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
       ],
