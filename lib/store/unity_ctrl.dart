@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
@@ -54,6 +55,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             break;
           case Unity2AppEnum.UTF_INIT_START:
             _onUnityInit();
+            // 发送flutter相关的信息
+            sendFlutterSocketInfo();
+            // 监听flutter socketserver状态
+            socketCtrlStatus();
             break;
           default:
             final reqId = msg['requestId'];
@@ -88,6 +93,62 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if (!Env.useUnity) throw '未开启Unity';
 
     await ready.timeout(const Duration(seconds: 30));
+  }
+
+  ///
+  /// 发送flutter相关的socket信息
+  ///
+  void sendFlutterSocketInfo({int tryTimes = 0}) async {
+    if(tryTimes >= 10) {
+      return;
+    }
+    // 更新唯一id
+    SocketCtrl.getCtrl().updateUniqueId();
+    // 延迟时间
+    int delayTryTIme = 3;
+    // 获取到端口号
+    SocketCtrl.getCtrl().getLocalServerPort().asStream().listen((event) async {
+      // 服务还没有连上
+      if(event == 0) {
+        await Future.delayed(Duration(seconds: delayTryTIme));
+        sendFlutterSocketInfo(tryTimes: tryTimes + 1);
+        return;
+      }
+      // 获取到端口
+      Future<dynamic> result = await sendMessage(
+        App2UnityEnum.FTU_NEW_SOCKET_INFO,
+        data: {
+          "port": event,
+          "uniqueId": SocketCtrl.getCtrl().uniqueId,
+        },
+      );
+      // todo 判断成功或者失败
+    }, onError: (error) async {
+      // 连接错误
+      await Future.delayed(Duration(seconds: delayTryTIme));
+      sendFlutterSocketInfo(tryTimes: tryTimes + 1);
+    });
+  }
+
+  ///
+  /// 监听flutter socket相关的状态
+  ///
+  void socketCtrlStatus() {
+    SocketCtrl.getCtrl().removeServerStatusCallBacks(onServerStatusCallBacks);
+    SocketCtrl.getCtrl().addServerStatusCallBacks(onServerStatusCallBacks);
+  }
+
+  ///
+  /// 本地服务连接状态变化回调
+  ///
+  void onServerStatusCallBacks() {
+    sendFlutterSocketInfo();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    SocketCtrl.getCtrl().removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
   Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: 5)}) async {

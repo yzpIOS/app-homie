@@ -1,11 +1,10 @@
-
 import 'package:app/common/nets/socket/base_client.dart';
+import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
 
-import 'client/custom_client.dart';
 
 const FLUTTER_UINITY_START = 20000;
 const FLUTTER_UINITY_END = 21000;
@@ -16,12 +15,12 @@ const FLUTTER_UINITY_END = 21000;
 class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   // client, 用于与后台通信
-  CustomClient client = CustomClient();
+  final CustomClient _client = CustomClient();
 
   // 分配给unity的唯一id
   String uniqueId = DateTime.now().toString();
   // flutter 内部的server, 用于与unity进行通信
-  CustomLocalServer localServer = CustomLocalServer();
+  final CustomLocalServer _localServer = CustomLocalServer();
 
   static SocketCtrl getCtrl() {
     return Get.find<SocketCtrl>();
@@ -31,9 +30,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void onInit() {
     super.onInit();
     // 初始化客户端socketserver, 用于与unity通仿
-    localServer.bindServer();
+    _localServer.bindServer();
     // 监听unity发送的消息
-    localServer.onReceiveRawData((session, cmd, data) {
+    _localServer.onReceiveRawData((session, cmd, data) {
       if(session.uniqueId != uniqueId) {
         return;
       }
@@ -45,45 +44,64 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
       // 发送数据到服务端
-      client.sendBytes(cmd, datas: data);
+      _client.sendBytes(cmd, datas: data);
     });
     // 监听unity发送的消息
-    localServer.onReceiveDataFromU((session, cmd, data) {
+    _localServer.onReceiveDataFromU((session, cmd, data) {
       if(session.uniqueId != uniqueId) {
         return;
       }
       // 小于20000的不处理, 因为unity发给服务端的
-      if(cmd <= FLUTTER_UINITY_START || cmd >= FLUTTER_UINITY_END) {
+      if(cmd < FLUTTER_UINITY_START || cmd > FLUTTER_UINITY_END) {
         return;
       }
       // flutter与客户端的通信
       riseOnData(cmd, data);
     });
     // 开心跳心检查
-    localServer.beatHeartCheck();
+    _localServer.beatHeartCheck();
 
     // 接收到原始数据
-    client.onRawData((cmd, data) {
+    _client.onRawData((cmd, data) {
       riseOnRawData(cmd, data);
-      localServer.getSession(uniqueId)?.sendBytes(cmd, datas: data);
+      _localServer.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
     // 接收到反序列化后的数据
-    client.onData((cmd, data) {
+    _client.onData((cmd, data) {
       riseOnData(cmd, data);
     });
+  }
+
+  Future<int> getLocalServerPort() async {
+    return _localServer.getPortAsync();
+  }
+
+  void addServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
+    _localServer.addServerStatusCallBacks(serverStatusCallBacks);
+  }
+
+  void removeServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
+    _localServer.removeServerStatusCallBacks(serverStatusCallBacks);
   }
 
   ///
   /// 启动client
   ///
   void startClient(String host, int port) {
-    client.connect(host, port);
+    _client.connect(host, port);
+  }
+
+  ///
+  /// 更新时间
+  ///
+  void updateUniqueId() {
+    uniqueId = DateTime.now().toString();
   }
 
   @override
   void dispose() {
     super.dispose();
-    client.dispose();
-    localServer.dispose();
+    _client.dispose();
+    _localServer.dispose();
   }
 }

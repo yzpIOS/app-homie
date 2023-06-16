@@ -1,9 +1,10 @@
 
 import 'dart:async';
 import 'dart:typed_data';
+
+import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/byte_utils.dart';
 
-import '../base_client.dart';
 import 'custom_socket.dart';
 import 'dart:core';
 import 'package:protobuf/protobuf.dart';

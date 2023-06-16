@@ -23,6 +23,8 @@ class CustomSocketSession with BaseClient {
   // 上一次收到协义数据
   int lastReceivePkgTime = DateTime.now().second;
 
+  Function? exitCallBack;
+
   CustomSocketSession({required this.socket}) {
     // 监听数据
     socket.asBroadcastStream(onListen: (event) {
@@ -83,11 +85,14 @@ class CustomSocketSession with BaseClient {
   @override
   void handleResponse(int cmd, Uint8List? curPkg, GeneratedMessage? onGeneratedMessage) {
     super.handleResponse(cmd, curPkg, onGeneratedMessage);
-    if(cmd == BaseClient.USER_LOGIN) {
-    }
     switch(cmd) {
-      case BaseClient.USER_LOGIN:
-        // todo 登录成功
+      case BaseClient.CONNECT_VARIFY:
+        // flutter传给unity的，由unity通过协议传过来的
+        uniqueId = "";
+        break;
+      case BaseClient.CONNECT_EXIT:
+        // unity退出
+        exitCallBack?.call();
         break;
       case BaseClient.USER_HEART_BEAT:
         // 心跳
@@ -108,6 +113,7 @@ class CustomSocketSession with BaseClient {
   }
 
   void dispose() {
+    exitCallBack = null;
     _socketSubscription?.cancel();
   }
 }

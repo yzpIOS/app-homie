@@ -2,15 +2,16 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/env.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/socket/base_client.dart';
-import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 
 const int SOCKET_TIME_OUT = 15;
 
 /// 服务开始
-typedef ServerStarted = void Function(int port);
+typedef ServerStatusCallBack = void Function();
+
 
 // 接收到unity数据
 typedef OnReceiveDataFromU = void Function(CustomSocketSession session, int cmd, GeneratedMessage? data);
@@ -31,7 +32,7 @@ class CustomLocalServer with BaseClient {
   List<CustomSocketSession> _sessionList = [];
 
   // 服务器开启成功
-  ServerStarted? serverStarted;
+  List<ServerStatusCallBack> _serverStatusCallBacks = [];
 
   // 心跳定时器
   StreamSubscription? _beatHeartCheckStream;
@@ -41,30 +42,52 @@ class CustomLocalServer with BaseClient {
   // 全局原始数据接收回调
   final List<OnReceiveRawDataFromU> _onReceiveRawFromU = [];
 
+  // 当前的端口
+  int _currentPort = 0;
+  Completer<int>? _portCompleter;
+
+  bool _isBindingServer = false;
+
   CustomLocalServer();
 
   ///
   /// 绑定server
   ///
   void bindServer({int port = 7778, int connectTimes = 0}) {
+    if(_isBindingServer) {
+      return;
+    }
     // 超过1000次
     if(connectTimes >= 1000) {
+      _portCompleter?.complete(_currentPort);
+      _portCompleter = null;
       return;
     }
     String currentIp = "localhost";
     if(Env.isDebug) {
       currentIp = '192.168.1.177';
     }
+    _isBindingServer = true;
     // 开启ServerSocket
     ServerSocket.bind(currentIp, port).asStream().listen((event) {
+      _isBindingServer = false;
+      _currentPort = port;
+      _portCompleter?.complete(_currentPort);
+      _portCompleter = null;
       // socket连接上
       serverSocket = event;
       // 绑定server
       _handleServer();
-      // 服务器链接上
-      serverStarted?.call(port);
+
+      _serverStatusCallBacks.forEach((element) {
+        element.call();
+      });
     }, onError: (error) async {
-      await Future.delayed(const Duration(milliseconds: 40));
+      _isBindingServer = false;
+      _currentPort = 0;
+      serverSocket?.close();
+      serverSocket = null;
+      await Future.delayed(const Duration(milliseconds: 100));
       // 绑定失败，尝试期它端口
       bindServer(port: port - 1, connectTimes: connectTimes + 1);
     });
@@ -98,6 +121,12 @@ class CustomLocalServer with BaseClient {
           element.call(customSocketSession, cmd, data);
         });
       });
+      // 由unity调用的退出
+      customSocketSession.exitCallBack = () {
+        customSocketSession.dispose();
+        _sessionList.remove(customSocketSession);
+        _sessions.remove(customSocketSession.getUniqueKey());
+      };
       _sessionList.add(customSocketSession);
       _sessions[CustomSocketSession.getUniqueKey2(data)] = customSocketSession;
     }, onError: (error) {
@@ -112,6 +141,7 @@ class CustomLocalServer with BaseClient {
   /// 获取到Session
   ///
   CustomSocketSession? getSession(String uniqueId) {
+    // 测试环境
     if(Env.isDebug && _sessions.isNotEmpty) {
       return _sessions.values.first;
     }
@@ -121,6 +151,15 @@ class CustomLocalServer with BaseClient {
       }
     }
     return null;
+  }
+
+  ///
+  /// 获取端口
+  ///
+  Future<int> getPortAsync() async {
+    _portCompleter?.completeError("error");
+    _portCompleter = Completer();
+    return _portCompleter!.future;
   }
 
   ///
@@ -187,6 +226,19 @@ class CustomLocalServer with BaseClient {
     _onReceiveFromU.remove(receiveData);
   }
 
+  void addServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
+    if(_serverStatusCallBacks.contains(serverStatusCallBacks)) {
+      return;
+    }
+    _serverStatusCallBacks.add(serverStatusCallBacks);
+  }
+
+  void removeServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
+    if(!_serverStatusCallBacks.contains(serverStatusCallBacks)) {
+      return;
+    }
+    _serverStatusCallBacks.remove(serverStatusCallBacks);
+  }
 
   @override
   void dispose() {
@@ -199,5 +251,7 @@ class CustomLocalServer with BaseClient {
     _onReceiveRawFromU.clear();
     _socketSubscription?.cancel();
     _beatHeartCheckStream?.cancel();
+    _portCompleter = null;
+    _serverStatusCallBacks.clear();
   }
 }

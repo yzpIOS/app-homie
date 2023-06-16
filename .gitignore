@@ -58,3 +58,4 @@ app.*.map.json
 
 /android/deploy
 /plugin/f_unity/android/unityLibrary/
+/plugin/f_unity/android/unityLibrary2/

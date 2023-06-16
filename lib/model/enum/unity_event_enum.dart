@@ -40,5 +40,6 @@ enum App2UnityEnum {
   FTU_IPUTFIELDCONTENT, //输入框内容
   FTU_GIVEGIFT, //送出礼物
   FTU_PLAY_MOTION, //播放指定动作
+  FTU_NEW_SOCKET_INFO, // 告诉unity flutter相关的socket信息
   ;
 }

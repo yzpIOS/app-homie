@@ -29,10 +29,14 @@ mixin BaseClient {
   // 连接断开
   static const CONNECT_CLOSE = 900000002;
 
+  // 连接认证
+  static const CONNECT_VARIFY = 10000;
+  // 退出
+  static const CONNECT_EXIT = 10001;
+  // 心跳
+  static const USER_HEART_BEAT = 10002;
   // 用户登录
   static const USER_LOGIN = 900000003;
-  // 心跳
-  static const USER_HEART_BEAT = 900000004;
 
   // 粘包处理
   final CustomByteBuffer serverByteBuffer = CustomByteBuffer();
