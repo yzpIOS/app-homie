@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/byte_utils.dart';
+import 'package:app/common/nets/socket/call_back.dart';
 import 'package:protobuf/protobuf.dart';
 
 class CustomSocketSession with BaseClient {
@@ -80,6 +81,15 @@ class CustomSocketSession with BaseClient {
       return false;
     }
     return true;
+  }
+
+  ///
+  /// 发送返回的数据
+  ///
+  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
+    CallBack<T> callBack = createCallBack(cmd);
+    sendBytes(cmd, datas: datas);
+    return callBack.complete.future;
   }
 
   @override

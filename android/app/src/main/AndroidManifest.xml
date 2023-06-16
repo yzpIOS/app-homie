@@ -5,6 +5,12 @@
         android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:node="remove" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
    <application
         android:label="${app_name}"
         android:name="${applicationName}"

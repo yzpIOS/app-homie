@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
+import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
@@ -92,6 +95,48 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
+  /// 发送pb对像数据
+  ///
+  bool sendSever(int cmd, {GeneratedMessage? message}) {
+    return _client.send(cmd, message: message);
+  }
+
+  ///
+  /// 发送数据到server
+  ///
+  bool senByteServer(int cmd, {Uint8List? datas}) {
+    return _client.sendBytes(cmd, datas: datas);
+  }
+
+  ///
+  /// 发送数据到服务端
+  ///
+  Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
+    return _client.sendByteAsync(cmd, datas: datas);
+  }
+
+
+  ///
+  /// 发送pb对像数据
+  ///
+  bool sendUnity(int cmd, {GeneratedMessage? message}) {
+    return _localServer.getSession(uniqueId)?.send(cmd, message: message) ?? false;
+  }
+
+  ///
+  /// 发送数据到server
+  ///
+  bool senByteUnity(int cmd, {Uint8List? datas}) {
+    return _localServer.getSession(uniqueId)?.sendBytes(cmd, datas: datas) ?? false;
+  }
+
+  ///
+  /// 发送数据到服务端
+  ///
+  Future<T?> sendByteAsyncUnity<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
+    return _localServer.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas);
+  }
+    ///
   /// 更新时间
   ///
   void updateUniqueId() {

@@ -2,8 +2,9 @@
 import 'dart:core';
 import 'dart:typed_data';
 import 'package:app/common/nets/socket/byte_utils.dart';
+import 'package:app/common/nets/socket/call_back.dart';
 
-import 'custom_byte_buffer.dart';
+import 'byte_buffer1.dart';
 import 'package:protobuf/protobuf.dart';
 
 ///
@@ -39,17 +40,19 @@ mixin BaseClient {
   static const USER_LOGIN = 900000003;
 
   // 粘包处理
-  final CustomByteBuffer serverByteBuffer = CustomByteBuffer();
+  final ByteBuffer1 serverByteBuffer = ByteBuffer1();
 
   // 全局收到数据回调方法
   final List<OnReceiveData> _onReceive = [];
   // 监听指令的pb对像
-  Map<int, List<OnReceiveData>> _onReceiveCmds = {};
+  final Map<int, List<OnReceiveData>> _onReceiveCmds = {};
+  // future返回数据
+  final Map<int, List<CallBack<GeneratedMessage>>>  _onReceiveFutures = {};
 
   // 全局原始数据接收回调
   final List<OnReceiveRawData> _onReceiveRaw = [];
   // 监听指令的原始数据回调
-  Map<int, List<OnReceiveRawData>> _onReceiveRawCmds = {};
+  final Map<int, List<OnReceiveRawData>> _onReceiveRawCmds = {};
 
   // 数据转化器
   Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
@@ -68,7 +71,10 @@ mixin BaseClient {
       ByteUtils.decrypt(curPkg);
       // 唤起ProtoBuff的数据回调
       GeneratedMessage? message = _onGeneratedMessage[curCmd]?.call(curPkg);
+      // 监听的方法回调
       riseOnData(curCmd, message);
+      // Future事件回调
+      riseOnDataFuture(curCmd, message);
       // 原始数据
       riseOnRawData(curCmd, curPkg);
       // 处理心跳
@@ -78,6 +84,18 @@ mixin BaseClient {
       // 获取下一个包的指令号
       curCmd = serverByteBuffer.curUnPkgCmd;
     }
+  }
+
+  ///
+  /// 创建callBack
+  ///
+  CallBack<T> createCallBack<T extends GeneratedMessage>(int cmd) {
+    CallBack<T> callBack = CallBack.create(cmd);
+    if(!_onReceiveFutures.containsKey(cmd)) {
+      _onReceiveFutures[cmd] = [];
+    }
+    _onReceiveFutures[cmd]?.add(callBack);
+    return callBack;
   }
 
   ///
@@ -124,6 +142,14 @@ mixin BaseClient {
     }
   }
 
+  void riseOnDataFuture(int curCmd, GeneratedMessage? generatedMessage) {
+    if(!_onReceiveFutures.containsKey(curCmd)) {
+      return;
+    }
+    _onReceiveFutures.remove(curCmd)?.forEach((element) {
+      element.response(curCmd, generatedMessage);
+    });
+  }
 
   ///
   /// 注册数据解析器

@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-class CustomByteBuffer {
+class ByteBuffer1 {
 
   // 单个包体长度
   static const int PKG_LEN = 4;

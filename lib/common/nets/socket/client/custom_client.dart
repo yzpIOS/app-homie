@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/byte_utils.dart';
+import 'package:app/common/nets/socket/call_back.dart';
 
 import 'custom_socket.dart';
 import 'dart:core';
@@ -83,6 +84,14 @@ class CustomClient with BaseClient {
     return _customSocket.send(datas);
   }
 
+  ///
+  /// 发送返回的数据
+  ///
+  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
+    CallBack<T> callBack = createCallBack(cmd);
+    sendBytes(cmd, datas: datas);
+    return callBack.complete.future;
+  }
 
     ///
   /// 连接服务器
