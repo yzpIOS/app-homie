@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
+import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:protobuf/protobuf.dart';
@@ -127,6 +128,20 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     return _client.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
+  ///
+  /// 添加连接成功回调
+  ///
+  void addClientConnect(Connected callBack) {
+    _client.addConnect(callBack);
+  }
+
+  ///
+  /// 删除回调
+  ///
+  void removeClientConnect(Connected callBack) {
+    _client.removeConnect(callBack);
+  }
+
 
   ///
   /// 发送pb对像数据
@@ -145,8 +160,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   /// 发送数据到服务端
   ///
-  Future<T?> sendByteAsyncUnity<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
-    return _localServer.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas);
+  Future<T?> sendByteAsyncUnity<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+    return _localServer.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
   ///
@@ -161,6 +176,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   void registerAll() {
     register(CMD.S_CreateScene, S_CreateScene.fromBuffer);
+    register(CMD.S_Role, S_Role.fromBuffer);
+    register(CMD.S_Err, S_Err.fromBuffer);
   }
 
   @override

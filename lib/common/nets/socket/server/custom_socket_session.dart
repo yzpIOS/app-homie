@@ -86,10 +86,10 @@ class CustomSocketSession with BaseClient {
   ///
   /// 发送返回的数据
   ///
-  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
-    CallBack<T> callBack = createCallBack(cmd);
+  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+    CallBack<T> callBack = createCallBack(cmd, resCmd:resCmd);
     sendBytes(cmd, datas: datas);
-    return callBack.complete.future;
+    return callBack.complete!.future;
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
@@ -45,16 +47,45 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
   @override
   void initState() {
     super.initState();
-
+    // 网络变化
     Connectivity().onConnectivityChanged.listen(ConnState.onChanged);
+    intiSocketConfig();
+    TimeFormat.initLocale('zh_cn');
+  }
+
+  void intiSocketConfig() {
     // 连接socket
     post(() async {
       await Future.delayed(const Duration(seconds: 3));
       // 连接服务器
       SocketCtrl.getCtrl().startClient("192.168.1.188", 7778);
+      // 连接成功回调
+      SocketCtrl.getCtrl().addClientConnect(onClientConnect);
+      SocketCtrl.getCtrl().onDataCmd(CMD.S_Role, onRoleResponse);
+      SocketCtrl.getCtrl().onDataCmd(CMD.S_Err, onServerError);
     });
 
-    TimeFormat.initLocale('zh_cn');
+  }
+
+  ///
+  /// 用户信息返回
+  ///
+  void onRoleResponse(int cmd, S_Role? role) {
+    debugPrint("aaa");
+  }
+
+  ///
+  /// 服务端错误
+  ///
+  void onServerError(int cmd, S_Err? role) {
+    debugPrint("aaa");
+  }
+
+  void onClientConnect() {
+    C_Role role = C_Role.create();
+    role.session = OAuthCtrl.token ?? "";
+    // todo 请求用户信息
+    // SocketCtrl.getCtrl().sendSever(CMD.C_Role, message: role);
   }
 
   @override

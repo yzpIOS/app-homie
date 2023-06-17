@@ -88,14 +88,9 @@ class CustomClient with BaseClient {
   /// 发送返回的数据
   ///
   Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
-    CallBack<T> callBack;
-    if(resCmd != null) {
-      callBack = createCallBack(resCmd);
-    } else {
-      callBack = createCallBack(cmd);
-    }
+    CallBack<T> callBack = createCallBack(cmd, resCmd: resCmd);
     sendBytes(cmd, datas: datas);
-    return callBack.complete.future;
+    return callBack.complete!.future;
   }
 
   ///
@@ -115,6 +110,14 @@ class CustomClient with BaseClient {
   }
 
   ///
+  /// 连接成功回调
+  ///
+  CustomClient removeConnect(Connected connected) {
+    _customSocket.removeConnect(connected);
+    return this;
+  }
+
+  ///
   /// 断开回调
   ///
   CustomClient addDisconnect(Disconnect disconnect) {
@@ -127,7 +130,7 @@ class CustomClient with BaseClient {
   ///
   CustomClient startHeartBeat({int interval = 5}) {
     // 心跳没有响应的次数
-    if(heartBeatNumber >= 4) {
+    if(heartBeatNumber >= 3) {
       _customSocket.reconnect();
       heartBeatNumber = 0;
     }

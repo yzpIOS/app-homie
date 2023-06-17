@@ -7,10 +7,6 @@ import 'package:app/common/nets/socket/call_back.dart';
 import 'byte_buffer1.dart';
 import 'package:protobuf/protobuf.dart';
 
-///
-/// 接收到数据
-///
-typedef OnReceiveData = void Function(int cmd, GeneratedMessage? data);
 
 ///
 /// 原始数据回调
@@ -45,7 +41,7 @@ mixin BaseClient {
   // 全局收到数据回调方法
   final List<OnReceiveData> _onReceive = [];
   // 监听指令的pb对像
-  final Map<int, List<OnReceiveData>> _onReceiveCmds = {};
+  final Map<int, List<CallBack<GeneratedMessage>>> _onReceiveCmds = {};
   // future返回数据
   final Map<int, List<CallBack<GeneratedMessage>>>  _onReceiveFutures = {};
 
@@ -55,7 +51,7 @@ mixin BaseClient {
   final Map<int, List<OnReceiveRawData>> _onReceiveRawCmds = {};
 
   // 数据转化器
-  Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
+  final Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
 
   ///
   /// 收到数据的处理
@@ -89,14 +85,15 @@ mixin BaseClient {
   ///
   /// 创建callBack
   ///
-  CallBack<T> createCallBack<T extends GeneratedMessage>(int cmd) {
-    CallBack<T> callBack = CallBack.create(cmd);
+  CallBack<T> createCallBack<T extends GeneratedMessage>(int cmd, {int? resCmd}) {
+    int targetCmd = resCmd ?? cmd;
+    CallBack<T> callBack = CallBack.create(targetCmd);
     if(!_onReceiveFutures.containsKey(cmd)) {
-      _onReceiveFutures[cmd] = [];
+      _onReceiveFutures[targetCmd] = [];
     }
     // todo 没有requestId，只能保存一个
-    _onReceiveFutures[cmd]?.clear();
-    _onReceiveFutures[cmd]?.add(callBack);
+    _onReceiveFutures[targetCmd]?.clear();
+    _onReceiveFutures[targetCmd]?.add(callBack);
     return callBack;
   }
 
@@ -136,10 +133,10 @@ mixin BaseClient {
       _onReceive[index].call(curCmd, generatedMessage);
     }
     // 特定指令监听指定的指令回调
-    List<OnReceiveData>? callBacks = _onReceiveCmds[curCmd];
+    List<CallBack<GeneratedMessage>>? callBacks = _onReceiveCmds[curCmd];
     if(callBacks != null) {
       callBacks.forEach((element) {
-        element.call(curCmd, generatedMessage);
+        element.responseCallBack(curCmd, generatedMessage);
       });
     }
   }
@@ -179,14 +176,16 @@ mixin BaseClient {
   ///
   /// 注册数据回调
   ///
-  void onDataCmd(int cmd, OnReceiveData receiveData) {
+  void onDataCmd<T extends GeneratedMessage>(int cmd, OnReceiveData<T> receiveData) {
     if(!_onReceiveCmds.containsKey(cmd)) {
       _onReceiveCmds[cmd] = [];
     }
-    if(_onReceiveCmds[cmd]?.contains(receiveData) == true) {
-      return;
-    }
-    _onReceiveCmds[cmd]?.add(receiveData);
+    _onReceiveCmds[cmd]?.forEach((element) {
+      if(element.onCallBack == receiveData) {
+        return;
+      }
+    });
+    _onReceiveCmds[cmd]?.add(CallBack<T>(cmd: cmd, onCallBack: receiveData));
   }
 
   ///
@@ -196,10 +195,18 @@ mixin BaseClient {
     if(!_onReceiveCmds.containsKey(cmd)) {
       return;
     }
-    if(_onReceiveCmds[cmd]?.contains(receiveData) == false) {
+    if(_onReceiveCmds.containsKey(cmd) == false) {
       return;
     }
-    _onReceiveCmds[cmd]?.remove(receiveData);
+    List<CallBack<GeneratedMessage>>? list = _onReceiveCmds[cmd];
+    if(list == null) {
+      return;
+    }
+    for(int index = list.length - 1; index >= 0; index --) {
+      if(list[index].onCallBack == receiveData) {
+        list.removeAt(index);
+      }
+    }
   }
 
   ///

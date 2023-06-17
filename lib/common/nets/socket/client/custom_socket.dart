@@ -261,6 +261,17 @@ class CustomSocket {
   }
 
   ///
+  /// 删除回调
+  ///
+  CustomSocket removeConnect(Connected connected) {
+    if(!_connected.contains(connected)) {
+      return this;
+    }
+    _connected.remove(connected);
+    return this;
+  }
+
+  ///
   /// 断开回调
   ///
   CustomSocket addDisconnect(Disconnect disconnect) {
