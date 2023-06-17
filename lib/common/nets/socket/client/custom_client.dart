@@ -87,13 +87,18 @@ class CustomClient with BaseClient {
   ///
   /// 发送返回的数据
   ///
-  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
-    CallBack<T> callBack = createCallBack(cmd);
+  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+    CallBack<T> callBack;
+    if(resCmd != null) {
+      callBack = createCallBack(resCmd);
+    } else {
+      callBack = createCallBack(cmd);
+    }
     sendBytes(cmd, datas: datas);
     return callBack.complete.future;
   }
 
-    ///
+  ///
   /// 连接服务器
   ///
   CustomClient connect(String host, int port, {int timeout = 10}) {

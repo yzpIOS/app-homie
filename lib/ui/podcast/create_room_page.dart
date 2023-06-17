@@ -1,3 +1,4 @@
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/local_attach.dart';
@@ -53,6 +54,11 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
 
           errLog(e, s);
 
+          return;
+        }
+
+        if(Env.isDebug) {
+          markReady();
           return;
         }
 
@@ -277,17 +283,19 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
   //   });
   // }
 
-  void doSub() {
+  Future<void> doSub() async {
     final title = inputs.by('房间名称');
     final notice = inputs.by('房间公告');
     final pwd = inputs.by('房间密码');
     // final scene = sceneRx();
     final image = imageRx();
 
-    if (image == null) {
-      showToast('请上传封面');
+    if(Env.isRelease) {
+      if (image == null) {
+        showToast('请上传封面');
 
-      return;
+        return;
+      }
     }
 
     if (title.isEmpty) {
@@ -307,17 +315,17 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
 
       return;
     }
-
-    simpleSub(
-      Api.Room.open(
-          title: title,
-          image: image,
-          notice: notice,
-          /*scene: scene.value1,*/
-          pwd: pwd),
-      callback1: (resp) {
-        Get.find<RoomManagerCtrl>().toRoom(roomId: resp['room_id'], off: true);
-      },
-    );
+    // 创建房间
+    S_CreateScene? response = await Api.Room.open(
+        title: title,
+        image: image,
+        notice: notice,
+        pwd: pwd);
+    // 获取到sceneId
+    int? sceneId = response?.sceneId;
+    if(sceneId == null) {
+      return;
+    }
+    Get.find<RoomManagerCtrl>().toRoom(roomId: sceneId, off: true);
   }
 }

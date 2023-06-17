@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: ErrorCode.proto
+//  source: proto/ErrorCode.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
@@ -17,6 +17,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode SERVER_CONNECT_FAILED = ErrorCode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVER_CONNECT_FAILED');
   static const ErrorCode SUSPECTED_SENSITIVE_WORD = ErrorCode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SUSPECTED_SENSITIVE_WORD');
   static const ErrorCode MEDIA_VIOLATION = ErrorCode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MEDIA_VIOLATION');
+  static const ErrorCode NOT_CONNECTION_CACHE = ErrorCode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOT_CONNECTION_CACHE');
   static const ErrorCode RouterNotFound = ErrorCode._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RouterNotFound');
   static const ErrorCode NEED_BUY_PRODUCT = ErrorCode._(10001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NEED_BUY_PRODUCT');
   static const ErrorCode REPEAT_PURCHASE = ErrorCode._(10002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REPEAT_PURCHASE');
@@ -87,12 +88,19 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_PASSWORD_NOT_PERMISSION = ErrorCode._(16009, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_PASSWORD_NOT_PERMISSION');
   static const ErrorCode ROOM_NAME_TOO_LENGTH = ErrorCode._(16010, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_NAME_TOO_LENGTH');
   static const ErrorCode ROOM_IMAGE_NOT_FOUND = ErrorCode._(16011, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_IMAGE_NOT_FOUND');
+  static const ErrorCode ROOM_USER_LIVE_ING = ErrorCode._(16012, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_LIVE_ING');
   static const ErrorCode ROOM_MIKE_NOT_EXIST = ErrorCode._(16101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_EXIST');
   static const ErrorCode ROOM_MIKE_NOT_FOUND = ErrorCode._(16102, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_FOUND');
   static const ErrorCode ROOM_START_MIKE_EXECUTING = ErrorCode._(16103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_START_MIKE_EXECUTING');
   static const ErrorCode ROOM_SCENE_NOT_EXIST = ErrorCode._(16201, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_SCENE_NOT_EXIST');
   static const ErrorCode NOT_FACE_REAL_NAME = ErrorCode._(16202, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOT_FACE_REAL_NAME');
-  static const ErrorCode ROOM_COLLECT_IS_EXIST = ErrorCode._(16300, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_COLLECT_IS_EXIST');
+  static const ErrorCode ROOM_ANCHOR_NOT_FOUND = ErrorCode._(16203, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_ANCHOR_NOT_FOUND');
+  static const ErrorCode ROOM_SCENE_NOT_FOUND = ErrorCode._(16204, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_SCENE_NOT_FOUND');
+  static const ErrorCode GUILD_NOT_EXIST = ErrorCode._(16300, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GUILD_NOT_EXIST');
+  static const ErrorCode GUILD_IS_EXIST = ErrorCode._(16301, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GUILD_IS_EXIST');
+  static const ErrorCode GUILD_NOT_FOUND = ErrorCode._(16302, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GUILD_NOT_FOUND');
+  static const ErrorCode GUILD_NOT_JOIN_USER = ErrorCode._(16303, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GUILD_NOT_JOIN_USER');
+  static const ErrorCode ROOM_COLLECT_IS_EXIST = ErrorCode._(16400, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_COLLECT_IS_EXIST');
   static const ErrorCode FEEDBACK_ERROR = ErrorCode._(17000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FEEDBACK_ERROR');
   static const ErrorCode REPORT_TYPE_NOT_EXIST = ErrorCode._(17001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'REPORT_TYPE_NOT_EXIST');
   static const ErrorCode USER_NAME_OR_PASSWORD_ERROR = ErrorCode._(18001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'USER_NAME_OR_PASSWORD_ERROR');
@@ -131,6 +139,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     SERVER_CONNECT_FAILED,
     SUSPECTED_SENSITIVE_WORD,
     MEDIA_VIOLATION,
+    NOT_CONNECTION_CACHE,
     RouterNotFound,
     NEED_BUY_PRODUCT,
     REPEAT_PURCHASE,
@@ -201,11 +210,18 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_PASSWORD_NOT_PERMISSION,
     ROOM_NAME_TOO_LENGTH,
     ROOM_IMAGE_NOT_FOUND,
+    ROOM_USER_LIVE_ING,
     ROOM_MIKE_NOT_EXIST,
     ROOM_MIKE_NOT_FOUND,
     ROOM_START_MIKE_EXECUTING,
     ROOM_SCENE_NOT_EXIST,
     NOT_FACE_REAL_NAME,
+    ROOM_ANCHOR_NOT_FOUND,
+    ROOM_SCENE_NOT_FOUND,
+    GUILD_NOT_EXIST,
+    GUILD_IS_EXIST,
+    GUILD_NOT_FOUND,
+    GUILD_NOT_JOIN_USER,
     ROOM_COLLECT_IS_EXIST,
     FEEDBACK_ERROR,
     REPORT_TYPE_NOT_EXIST,

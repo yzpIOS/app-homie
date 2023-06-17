@@ -87,37 +87,79 @@ const S_Role$json = const {
   '1': 'S_Role',
   '2': const [
     const {'1': 'role', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.RoleInfo', '10': 'role'},
-    const {'1': 'scene', '3': 2, '4': 1, '5': 5, '10': 'scene'},
-    const {'1': 'room', '3': 3, '4': 1, '5': 5, '10': 'room'},
-    const {'1': 'session', '3': 4, '4': 1, '5': 9, '10': 'session'},
-    const {'1': 'time', '3': 5, '4': 1, '5': 3, '10': 'time'},
+    const {'1': 'retryToken', '3': 2, '4': 1, '5': 9, '10': 'retryToken'},
+    const {'1': 'time', '3': 3, '4': 1, '5': 3, '10': 'time'},
   ],
 };
 
 /// Descriptor for `S_Role`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_RoleDescriptor = $convert.base64Decode('CgZTX1JvbGUSLQoEcm9sZRgBIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5Sb2xlSW5mb1IEcm9sZRIUCgVzY2VuZRgCIAEoBVIFc2NlbmUSEgoEcm9vbRgDIAEoBVIEcm9vbRIYCgdzZXNzaW9uGAQgASgJUgdzZXNzaW9uEhIKBHRpbWUYBSABKANSBHRpbWU=');
+final $typed_data.Uint8List s_RoleDescriptor = $convert.base64Decode('CgZTX1JvbGUSLQoEcm9sZRgBIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5Sb2xlSW5mb1IEcm9sZRIeCgpyZXRyeVRva2VuGAIgASgJUgpyZXRyeVRva2VuEhIKBHRpbWUYAyABKANSBHRpbWU=');
+@$core.Deprecated('Use c_UploadURLDescriptor instead')
+const C_UploadURL$json = const {
+  '1': 'C_UploadURL',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 5, '10': 'type'},
+  ],
+};
+
+/// Descriptor for `C_UploadURL`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_UploadURLDescriptor = $convert.base64Decode('CgtDX1VwbG9hZFVSTBISCgR0eXBlGAEgASgFUgR0eXBl');
+@$core.Deprecated('Use s_UploadURLDescriptor instead')
+const S_UploadURL$json = const {
+  '1': 'S_UploadURL',
+  '2': const [
+    const {'1': 'url', '3': 1, '4': 1, '5': 9, '10': 'url'},
+    const {'1': 'file_name', '3': 2, '4': 1, '5': 9, '10': 'fileName'},
+  ],
+};
+
+/// Descriptor for `S_UploadURL`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_UploadURLDescriptor = $convert.base64Decode('CgtTX1VwbG9hZFVSTBIQCgN1cmwYASABKAlSA3VybBIbCglmaWxlX25hbWUYAiABKAlSCGZpbGVOYW1l');
+@$core.Deprecated('Use c_MediaIdDescriptor instead')
+const C_MediaId$json = const {
+  '1': 'C_MediaId',
+  '2': const [
+    const {'1': 'file_name', '3': 1, '4': 1, '5': 9, '10': 'fileName'},
+    const {'1': 'type', '3': 2, '4': 1, '5': 5, '10': 'type'},
+    const {'1': 'extras', '3': 3, '4': 1, '5': 9, '10': 'extras'},
+  ],
+};
+
+/// Descriptor for `C_MediaId`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_MediaIdDescriptor = $convert.base64Decode('CglDX01lZGlhSWQSGwoJZmlsZV9uYW1lGAEgASgJUghmaWxlTmFtZRISCgR0eXBlGAIgASgFUgR0eXBlEhYKBmV4dHJhcxgDIAEoCVIGZXh0cmFz');
+@$core.Deprecated('Use s_MediaIdDescriptor instead')
+const S_MediaId$json = const {
+  '1': 'S_MediaId',
+  '2': const [
+    const {'1': 'mediaId', '3': 1, '4': 1, '5': 3, '10': 'mediaId'},
+  ],
+};
+
+/// Descriptor for `S_MediaId`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_MediaIdDescriptor = $convert.base64Decode('CglTX01lZGlhSWQSGAoHbWVkaWFJZBgBIAEoA1IHbWVkaWFJZA==');
 @$core.Deprecated('Use c_CreateRoleDescriptor instead')
 const C_CreateRole$json = const {
   '1': 'C_CreateRole',
   '2': const [
-    const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'typeId', '3': 2, '4': 1, '5': 5, '10': 'typeId'},
+    const {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'typeId', '3': 3, '4': 1, '5': 5, '10': 'typeId'},
+    const {'1': 'mediaId', '3': 4, '4': 1, '5': 3, '10': 'mediaId'},
   ],
 };
 
 /// Descriptor for `C_CreateRole`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_CreateRoleDescriptor = $convert.base64Decode('CgxDX0NyZWF0ZVJvbGUSEgoEbmFtZRgBIAEoCVIEbmFtZRIWCgZ0eXBlSWQYAiABKAVSBnR5cGVJZA==');
+final $typed_data.Uint8List c_CreateRoleDescriptor = $convert.base64Decode('CgxDX0NyZWF0ZVJvbGUSFgoGcm9sZUlkGAEgASgDUgZyb2xlSWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIWCgZ0eXBlSWQYAyABKAVSBnR5cGVJZBIYCgdtZWRpYUlkGAQgASgDUgdtZWRpYUlk');
 @$core.Deprecated('Use s_CreateRoleDescriptor instead')
 const S_CreateRole$json = const {
   '1': 'S_CreateRole',
   '2': const [
-    const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
-    const {'1': 'roleId', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
   ],
 };
 
 /// Descriptor for `S_CreateRole`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_CreateRoleDescriptor = $convert.base64Decode('CgxTX0NyZWF0ZVJvbGUSLgoEY29kZRgBIAEoDjIaLmNvbS5zYXZ2eS5wcm90by5FcnJvckNvZGVSBGNvZGUSFgoGcm9sZUlkGAIgASgDUgZyb2xlSWQ=');
+final $typed_data.Uint8List s_CreateRoleDescriptor = $convert.base64Decode('CgxTX0NyZWF0ZVJvbGUSFgoGcm9sZUlkGAEgASgDUgZyb2xlSWQ=');
 @$core.Deprecated('Use g_RemoveRoleDescriptor instead')
 const G_RemoveRole$json = const {
   '1': 'G_RemoveRole',
@@ -141,6 +183,34 @@ const C_ReLink$json = const {
 
 /// Descriptor for `C_ReLink`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_ReLinkDescriptor = $convert.base64Decode('CghDX1JlTGluaxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgR0aW1lGAIgASgDUgR0aW1lEhQKBXRva2VuGAMgASgJUgV0b2tlbg==');
+@$core.Deprecated('Use c_CreateSceneDescriptor instead')
+const C_CreateScene$json = const {
+  '1': 'C_CreateScene',
+  '2': const [
+    const {'1': 'scene_id', '3': 1, '4': 1, '5': 5, '10': 'sceneId'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'image', '3': 3, '4': 1, '5': 9, '10': 'image'},
+    const {'1': 'room_password', '3': 4, '4': 1, '5': 9, '10': 'roomPassword'},
+    const {'1': 'private_status', '3': 5, '4': 1, '5': 5, '10': 'privateStatus'},
+    const {'1': 'notice_message', '3': 6, '4': 1, '5': 9, '10': 'noticeMessage'},
+    const {'1': 'max_num', '3': 7, '4': 1, '5': 5, '10': 'maxNum'},
+    const {'1': 'mike_status', '3': 8, '4': 1, '5': 5, '10': 'mikeStatus'},
+  ],
+};
+
+/// Descriptor for `C_CreateScene`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_CreateSceneDescriptor = $convert.base64Decode('Cg1DX0NyZWF0ZVNjZW5lEhkKCHNjZW5lX2lkGAEgASgFUgdzY2VuZUlkEhIKBG5hbWUYAiABKAlSBG5hbWUSFAoFaW1hZ2UYAyABKAlSBWltYWdlEiMKDXJvb21fcGFzc3dvcmQYBCABKAlSDHJvb21QYXNzd29yZBIlCg5wcml2YXRlX3N0YXR1cxgFIAEoBVINcHJpdmF0ZVN0YXR1cxIlCg5ub3RpY2VfbWVzc2FnZRgGIAEoCVINbm90aWNlTWVzc2FnZRIXCgdtYXhfbnVtGAcgASgFUgZtYXhOdW0SHwoLbWlrZV9zdGF0dXMYCCABKAVSCm1pa2VTdGF0dXM=');
+@$core.Deprecated('Use s_CreateSceneDescriptor instead')
+const S_CreateScene$json = const {
+  '1': 'S_CreateScene',
+  '2': const [
+    const {'1': 'scene_id', '3': 1, '4': 1, '5': 5, '10': 'sceneId'},
+    const {'1': 'room_id', '3': 2, '4': 1, '5': 5, '10': 'roomId'},
+  ],
+};
+
+/// Descriptor for `S_CreateScene`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_CreateSceneDescriptor = $convert.base64Decode('Cg1TX0NyZWF0ZVNjZW5lEhkKCHNjZW5lX2lkGAEgASgFUgdzY2VuZUlkEhcKB3Jvb21faWQYAiABKAVSBnJvb21JZA==');
 @$core.Deprecated('Use g_SwitchSceneDescriptor instead')
 const G_SwitchScene$json = const {
   '1': 'G_SwitchScene',
@@ -240,45 +310,49 @@ final $typed_data.Uint8List s_SyncRoleDescriptor = $convert.base64Decode('CgpTX1
 const C_ToZone$json = const {
   '1': 'C_ToZone',
   '2': const [
-    const {'1': 'xyzr', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 2, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `C_ToZone`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_ToZoneDescriptor = $convert.base64Decode('CghDX1RvWm9uZRIpCgR4eXpyGAEgASgLMhUuY29tLnNhdnZ5LnByb3RvLlhZWlJSBHh5enI=');
+final $typed_data.Uint8List c_ToZoneDescriptor = $convert.base64Decode('CghDX1RvWm9uZRImCgN4eXoYASABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgN4eXoSDAoBchgCIAEoBVIBcg==');
 @$core.Deprecated('Use s_SyncZoneDescriptor instead')
 const S_SyncZone$json = const {
   '1': 'S_SyncZone',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-    const {'1': 'xyzr', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 3, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `S_SyncZone`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_SyncZoneDescriptor = $convert.base64Decode('CgpTX1N5bmNab25lEg4KAmlkGAEgASgFUgJpZBIpCgR4eXpyGAIgASgLMhUuY29tLnNhdnZ5LnByb3RvLlhZWlJSBHh5enI=');
+final $typed_data.Uint8List s_SyncZoneDescriptor = $convert.base64Decode('CgpTX1N5bmNab25lEg4KAmlkGAEgASgFUgJpZBImCgN4eXoYAiABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgN4eXoSDAoBchgDIAEoBVIBcg==');
 @$core.Deprecated('Use s_EnforceZoneDescriptor instead')
 const S_EnforceZone$json = const {
   '1': 'S_EnforceZone',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-    const {'1': 'xyzr', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 3, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `S_EnforceZone`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_EnforceZoneDescriptor = $convert.base64Decode('Cg1TX0VuZm9yY2Vab25lEg4KAmlkGAEgASgFUgJpZBIpCgR4eXpyGAIgASgLMhUuY29tLnNhdnZ5LnByb3RvLlhZWlJSBHh5enI=');
+final $typed_data.Uint8List s_EnforceZoneDescriptor = $convert.base64Decode('Cg1TX0VuZm9yY2Vab25lEg4KAmlkGAEgASgFUgJpZBImCgN4eXoYAiABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgN4eXoSDAoBchgDIAEoBVIBcg==');
 @$core.Deprecated('Use s_ConveyZoneDescriptor instead')
 const S_ConveyZone$json = const {
   '1': 'S_ConveyZone',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
-    const {'1': 'xyzr', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 3, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `S_ConveyZone`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_ConveyZoneDescriptor = $convert.base64Decode('CgxTX0NvbnZleVpvbmUSDgoCaWQYASABKAVSAmlkEikKBHh5enIYAiABKAsyFS5jb20uc2F2dnkucHJvdG8uWFlaUlIEeHl6cg==');
+final $typed_data.Uint8List s_ConveyZoneDescriptor = $convert.base64Decode('CgxTX0NvbnZleVpvbmUSDgoCaWQYASABKAVSAmlkEiYKA3h5ehgCIAEoCzIULmNvbS5zYXZ2eS5wcm90by5YWVpSA3h5ehIMCgFyGAMgASgFUgFy');
 @$core.Deprecated('Use s_AddRoleDescriptor instead')
 const S_AddRole$json = const {
   '1': 'S_AddRole',
@@ -324,24 +398,26 @@ const C_State$json = const {
   '1': 'C_State',
   '2': const [
     const {'1': 'state', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.State', '10': 'state'},
-    const {'1': 'xyzr', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 3, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `C_State`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_StateDescriptor = $convert.base64Decode('CgdDX1N0YXRlEiwKBXN0YXRlGAEgASgOMhYuY29tLnNhdnZ5LnByb3RvLlN0YXRlUgVzdGF0ZRIpCgR4eXpyGAIgASgLMhUuY29tLnNhdnZ5LnByb3RvLlhZWlJSBHh5enI=');
+final $typed_data.Uint8List c_StateDescriptor = $convert.base64Decode('CgdDX1N0YXRlEiwKBXN0YXRlGAEgASgOMhYuY29tLnNhdnZ5LnByb3RvLlN0YXRlUgVzdGF0ZRImCgN4eXoYAiABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgN4eXoSDAoBchgDIAEoBVIBcg==');
 @$core.Deprecated('Use s_StateDescriptor instead')
 const S_State$json = const {
   '1': 'S_State',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
     const {'1': 'state', '3': 2, '4': 1, '5': 14, '6': '.com.savvy.proto.State', '10': 'state'},
-    const {'1': 'xyzr', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZR', '10': 'xyzr'},
+    const {'1': 'xyz', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    const {'1': 'r', '3': 4, '4': 1, '5': 5, '10': 'r'},
   ],
 };
 
 /// Descriptor for `S_State`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_StateDescriptor = $convert.base64Decode('CgdTX1N0YXRlEg4KAmlkGAEgASgFUgJpZBIsCgVzdGF0ZRgCIAEoDjIWLmNvbS5zYXZ2eS5wcm90by5TdGF0ZVIFc3RhdGUSKQoEeHl6chgDIAEoCzIVLmNvbS5zYXZ2eS5wcm90by5YWVpSUgR4eXpy');
+final $typed_data.Uint8List s_StateDescriptor = $convert.base64Decode('CgdTX1N0YXRlEg4KAmlkGAEgASgFUgJpZBIsCgVzdGF0ZRgCIAEoDjIWLmNvbS5zYXZ2eS5wcm90by5TdGF0ZVIFc3RhdGUSJgoDeHl6GAMgASgLMhQuY29tLnNhdnZ5LnByb3RvLlhZWlIDeHl6EgwKAXIYBCABKAVSAXI=');
 @$core.Deprecated('Use c_TestDescriptor instead')
 const C_Test$json = const {
   '1': 'C_Test',
@@ -385,3 +461,30 @@ const S_Debug$json = const {
 
 /// Descriptor for `S_Debug`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_DebugDescriptor = $convert.base64Decode('CgdTX0RlYnVnEhYKBnN0YXR1cxgBIAEoBVIGc3RhdHVz');
+@$core.Deprecated('Use c_VerifyDescriptor instead')
+const C_Verify$json = const {
+  '1': 'C_Verify',
+  '2': const [
+    const {'1': 'uniqueId', '3': 1, '4': 1, '5': 5, '10': 'uniqueId'},
+  ],
+};
+
+/// Descriptor for `C_Verify`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_VerifyDescriptor = $convert.base64Decode('CghDX1ZlcmlmeRIaCgh1bmlxdWVJZBgBIAEoBVIIdW5pcXVlSWQ=');
+@$core.Deprecated('Use g_UFHeartDescriptor instead')
+const G_UFHeart$json = const {
+  '1': 'G_UFHeart',
+};
+
+/// Descriptor for `G_UFHeart`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List g_UFHeartDescriptor = $convert.base64Decode('CglHX1VGSGVhcnQ=');
+@$core.Deprecated('Use f_GiftShowDescriptor instead')
+const F_GiftShow$json = const {
+  '1': 'F_GiftShow',
+  '2': const [
+    const {'1': 'giftId', '3': 1, '4': 1, '5': 5, '10': 'giftId'},
+  ],
+};
+
+/// Descriptor for `F_GiftShow`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List f_GiftShowDescriptor = $convert.base64Decode('CgpGX0dpZnRTaG93EhYKBmdpZnRJZBgBIAEoBVIGZ2lmdElk');

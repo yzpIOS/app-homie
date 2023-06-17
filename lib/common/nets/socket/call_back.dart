@@ -5,7 +5,7 @@ import 'package:protobuf/protobuf.dart';
 class CallBack<T> {
 
   static CallBack<T> create<T>(int cmd) {
-    return CallBack(cmd: cmd, complete: Completer<T>());
+    return CallBack(cmd: cmd, complete: Completer<T?>());
   }
 
   // 协议号
@@ -20,6 +20,10 @@ class CallBack<T> {
   CallBack({required this.cmd, required this.complete});
 
   void response(int cmd, T? data) {
-    complete.complete(data);
+    try {
+      complete.complete(data);
+    } catch(e) {
+      complete.completeError(e);
+    }
   }
 }

@@ -94,6 +94,8 @@ mixin BaseClient {
     if(!_onReceiveFutures.containsKey(cmd)) {
       _onReceiveFutures[cmd] = [];
     }
+    // todo 没有requestId，只能保存一个
+    _onReceiveFutures[cmd]?.clear();
     _onReceiveFutures[cmd]?.add(callBack);
     return callBack;
   }
@@ -142,6 +144,9 @@ mixin BaseClient {
     }
   }
 
+  ///
+  /// 异步回调
+  ///
   void riseOnDataFuture(int curCmd, GeneratedMessage? generatedMessage) {
     if(!_onReceiveFutures.containsKey(curCmd)) {
       return;

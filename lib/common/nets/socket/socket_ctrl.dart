@@ -111,8 +111,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   /// 发送数据到服务端
   ///
-  Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
-    return _client.sendByteAsync(cmd, datas: datas);
+  Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+    return _client.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
 
