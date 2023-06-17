@@ -2,9 +2,9 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:app/common/nets/socket/base_client.dart';
-import 'package:app/common/nets/socket/byte_utils.dart';
-import 'package:app/common/nets/socket/call_back.dart';
+import 'package:app/common/nets/base_client.dart';
+import 'package:app/common/nets/byte_utils.dart';
+import 'package:app/common/nets/call_back.dart';
 
 import 'custom_socket.dart';
 import 'dart:core';

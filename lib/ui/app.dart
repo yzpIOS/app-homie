@@ -64,7 +64,6 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       SocketCtrl.getCtrl().onDataCmd(CMD.S_Role, onRoleResponse);
       SocketCtrl.getCtrl().onDataCmd(CMD.S_Err, onServerError);
     });
-
   }
 
   ///
@@ -81,6 +80,9 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
     debugPrint("aaa");
   }
 
+  ///
+  /// 连接成功后，就请求用户信息
+  ///
   void onClientConnect() {
     C_Role role = C_Role.create();
     role.session = OAuthCtrl.token ?? "";

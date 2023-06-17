@@ -1,21 +1,20 @@
 
 import 'dart:typed_data';
 
-class ByteBuffer1 {
+import 'package:app/common/nets/base_byte_buffer.dart';
 
-  // 单个包体长度
-  static const int PKG_LEN = 4;
-  // 协仪长度
-  static const int CMD_LEN = 4;
+// 单个包体长度
+const int PKG_LEN = 4;
+// 协仪长度
+const int CMD_LEN = 4;
+
+class ByteBuffer1 extends BaseByteBuffer {
+
 
   // 当前的包体长度
   int _curPkgLen = 0;
   // 当前的cmd
   int _curCmd = 0;
-
-  // 解析出来的协议号
-  int curUnPkgCmd = 0;
-
   ///
   /// 原始buffer数据
   ///
@@ -24,6 +23,7 @@ class ByteBuffer1 {
   ///
   /// 添加新的数据列表
   ///
+  @override
   void addBuffer(Uint8List newBuffer) {
     if(newBuffer.isEmpty) {
       return;
@@ -32,10 +32,16 @@ class ByteBuffer1 {
     _buffer = Uint8List.fromList([..._buffer, ...newBuffer]);
   }
 
+  @override
+  int getUnPackCmd() {
+    return _curCmd;
+  }
+
   ///
   /// 获取单个包体数据
   /// 只有返回的数据不为空时，unPkgCmd才是当前解析出来的数据包的协议号
   ///
+  @override
   Uint8List? getPackage() {
     if(_buffer.length < CMD_LEN + PKG_LEN) {
       return null;
@@ -63,9 +69,7 @@ class ByteBuffer1 {
       _buffer = _buffer.sublist(_curPkgLen + PKG_LEN + CMD_LEN, _buffer.length);
     }
     // 记录协议
-    curUnPkgCmd = _curCmd;
     // 重置数据
-    _curCmd = 0;
     _curPkgLen = 0;
     return result;
   }
@@ -76,6 +80,10 @@ class ByteBuffer1 {
     _curCmd = 0;
     _curPkgLen = 0;
     _buffer = Uint8List(0);
-    curUnPkgCmd = 0;
+  }
+
+  @override
+  int getUdpPkgIndex() {
+    return 0;
   }
 }

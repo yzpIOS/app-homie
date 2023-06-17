@@ -1,10 +1,10 @@
 
 import 'dart:core';
 import 'dart:typed_data';
-import 'package:app/common/nets/socket/byte_utils.dart';
-import 'package:app/common/nets/socket/call_back.dart';
-
-import 'byte_buffer1.dart';
+import 'package:app/common/nets/base_byte_buffer.dart';
+import 'package:app/common/nets/byte_buffer1.dart';
+import 'package:app/common/nets/byte_utils.dart';
+import 'package:app/common/nets/call_back.dart';
 import 'package:protobuf/protobuf.dart';
 
 
@@ -36,7 +36,7 @@ mixin BaseClient {
   static const USER_LOGIN = 900000003;
 
   // 粘包处理
-  final ByteBuffer1 serverByteBuffer = ByteBuffer1();
+  BaseByteBuffer serverByteBuffer = ByteBuffer1();
 
   // 全局收到数据回调方法
   final List<OnReceiveData> _onReceive = [];
@@ -61,7 +61,7 @@ mixin BaseClient {
     // 获取解析数据
     Uint8List? curPkg = serverByteBuffer.getPackage();
     // 当前协议号
-    int curCmd = serverByteBuffer.curUnPkgCmd;
+    int curCmd = serverByteBuffer.getUnPackCmd();
     while(curPkg != null) {
       // curPkg需要解密
       ByteUtils.decrypt(curPkg);
@@ -78,7 +78,7 @@ mixin BaseClient {
       // 解析下一个包的数据
       curPkg = serverByteBuffer.getPackage();
       // 获取下一个包的指令号
-      curCmd = serverByteBuffer.curUnPkgCmd;
+      curCmd = serverByteBuffer.getUnPackCmd();
     }
   }
 

@@ -28,9 +28,6 @@ class ByteUtils {
     for(int index = 0; index < key.length; index ++) {
       value = key[index];
       if(value < data.length) {
-        if(value >= 35) {
-          debugPrint("aa");
-        }
         data[value] = ~data[value];
       }
     }

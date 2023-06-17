@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/env.dart';
 import 'package:protobuf/protobuf.dart';
-import 'package:app/common/nets/socket/base_client.dart';
+import 'package:app/common/nets/base_client.dart';
 
 const int SOCKET_TIME_OUT = 15;
 
