@@ -2,9 +2,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:app/common/nets/base_client.dart';
-import 'package:app/common/nets/byte_buffer1.dart';
-import 'package:app/common/nets/byte_utils.dart';
+import 'package:app/common/nets/commons/base_client.dart';
+import 'package:app/common/nets/commons/byte_buffer1.dart';
+import 'package:app/common/nets/commons/byte_utils.dart';
 import 'package:app/common/nets/udp/client_session.dart';
 
 class UdpServer with BaseClient {

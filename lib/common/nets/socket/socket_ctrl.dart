@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:app/common/nets/cmds.dart';
-import 'package:app/common/nets/base_client.dart';
+import 'package:app/common/nets/commons/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/proto/Message.pb.dart';

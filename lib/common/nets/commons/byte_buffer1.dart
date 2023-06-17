@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 
-import 'package:app/common/nets/base_byte_buffer.dart';
+import 'package:app/common/nets/commons/base_byte_buffer.dart';
 
 // 单个包体长度
 const int PKG_LEN = 4;

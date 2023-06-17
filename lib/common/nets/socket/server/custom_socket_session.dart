@@ -3,9 +3,9 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:app/common/nets/base_client.dart';
-import 'package:app/common/nets/byte_utils.dart';
-import 'package:app/common/nets/call_back.dart';
+import 'package:app/common/nets/commons/base_client.dart';
+import 'package:app/common/nets/commons/byte_utils.dart';
+import 'package:app/common/nets/commons/call_back.dart';
 import 'package:protobuf/protobuf.dart';
 
 class CustomSocketSession with BaseClient {

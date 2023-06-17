@@ -1,10 +1,10 @@
 
 import 'dart:core';
 import 'dart:typed_data';
-import 'package:app/common/nets/base_byte_buffer.dart';
-import 'package:app/common/nets/byte_buffer1.dart';
-import 'package:app/common/nets/byte_utils.dart';
-import 'package:app/common/nets/call_back.dart';
+import 'package:app/common/nets/commons/base_byte_buffer.dart';
+import 'package:app/common/nets/commons/byte_buffer1.dart';
+import 'package:app/common/nets/commons/byte_utils.dart';
+import 'package:app/common/nets/commons/call_back.dart';
 import 'package:protobuf/protobuf.dart';
 
 

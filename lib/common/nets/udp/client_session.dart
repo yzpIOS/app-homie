@@ -1,10 +1,10 @@
 
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:app/common/nets/byte_utils.dart';
+import 'package:app/common/nets/commons/byte_utils.dart';
 import 'package:app/common/nets/udp/ByteBuffer2.dart';
 import 'package:protobuf/protobuf.dart';
-import 'package:app/common/nets/base_client.dart';
+import 'package:app/common/nets/commons/base_client.dart';
 
 class ClientSession with BaseClient {
 

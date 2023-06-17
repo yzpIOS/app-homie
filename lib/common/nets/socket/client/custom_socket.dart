@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:app/common/nets/base_client.dart';
+import 'package:app/common/nets/commons/base_client.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/utils.dart';
