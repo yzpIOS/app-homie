@@ -50,6 +50,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
     // 连接socket
     post(() async {
       await Future.delayed(const Duration(seconds: 3));
+      // 连接服务器
       SocketCtrl.getCtrl().startClient("192.168.1.188", 7778);
     });
 

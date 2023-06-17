@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
+import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/socket/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
@@ -32,6 +34,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   @override
   void onInit() {
     super.onInit();
+    // 注册所有数据解析器
+    registerAll();
     // 初始化客户端socketserver, 用于与unity通仿
     _localServer.bindServer();
     // 监听unity发送的消息
@@ -109,6 +113,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
+  /// 注册反序例化protobuf模型
+  ///
+  void register(int cmd, OnGeneratedMessage client) {
+    _client.registerFromBuffers(cmd, client);
+    _localServer.registerFromBuffers(cmd, client);
+  }
+
+  ///
   /// 发送数据到服务端
   ///
   Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
@@ -136,11 +148,19 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   Future<T?> sendByteAsyncUnity<T extends GeneratedMessage>(int cmd, {Uint8List? datas}) async {
     return _localServer.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas);
   }
-    ///
+
+  ///
   /// 更新时间
   ///
   void updateUniqueId() {
     uniqueId = DateTime.now().toString();
+  }
+
+  ///
+  /// 注册所有的数据解析器
+  ///
+  void registerAll() {
+    register(CMD.S_CreateScene, S_CreateScene.fromBuffer);
   }
 
   @override
