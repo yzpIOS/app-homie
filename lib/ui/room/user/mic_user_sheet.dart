@@ -17,6 +17,7 @@ abstract class MicUserSheet {
     final roomId = roomCtrl.roomId;
     final myUid = OAuthCtrl.uid;
     final posUid = info?.uid;
+    final nUid = info?.nUid;
 
     final isAdmin = isRoom && roomCtrl.isAdmin(myUid);
     final isOwner = isRoom && roomCtrl.isOwner(myUid);

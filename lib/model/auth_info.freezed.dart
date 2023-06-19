@@ -22,6 +22,7 @@ AuthInfo _$AuthInfoFromJson(Map<String, dynamic> json) {
 mixin _$AuthInfo {
   String get token => throw _privateConstructorUsedError;
   UID get uid => throw _privateConstructorUsedError;
+  NUID get nuid => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $AuthInfoCopyWith<$Res> {
   factory $AuthInfoCopyWith(AuthInfo value, $Res Function(AuthInfo) then) =
       _$AuthInfoCopyWithImpl<$Res, AuthInfo>;
   @useResult
-  $Res call({String token, UID uid});
+  $Res call({String token, UID uid, NUID nuid});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$AuthInfoCopyWithImpl<$Res, $Val extends AuthInfo>
   $Res call({
     Object? token = null,
     Object? uid = freezed,
+    Object? nuid = freezed,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -62,6 +64,10 @@ class _$AuthInfoCopyWithImpl<$Res, $Val extends AuthInfo>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as UID,
+      nuid: freezed == nuid
+          ? _value.nuid
+          : nuid // ignore: cast_nullable_to_non_nullable
+              as NUID,
     ) as $Val);
   }
 }
@@ -73,7 +79,7 @@ abstract class _$$_AuthInfoCopyWith<$Res> implements $AuthInfoCopyWith<$Res> {
       __$$_AuthInfoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, UID uid});
+  $Res call({String token, UID uid, NUID nuid});
 }
 
 /// @nodoc
@@ -89,6 +95,7 @@ class __$$_AuthInfoCopyWithImpl<$Res>
   $Res call({
     Object? token = null,
     Object? uid = freezed,
+    Object? nuid = freezed,
   }) {
     return _then(_$_AuthInfo(
       token: null == token
@@ -99,6 +106,10 @@ class __$$_AuthInfoCopyWithImpl<$Res>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as UID,
+      nuid: freezed == nuid
+          ? _value.nuid
+          : nuid // ignore: cast_nullable_to_non_nullable
+              as NUID,
     ));
   }
 }
@@ -106,7 +117,7 @@ class __$$_AuthInfoCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_AuthInfo implements _AuthInfo {
-  _$_AuthInfo({required this.token, required this.uid});
+  _$_AuthInfo({required this.token, required this.uid, required this.nuid});
 
   factory _$_AuthInfo.fromJson(Map<String, dynamic> json) =>
       _$$_AuthInfoFromJson(json);
@@ -115,10 +126,12 @@ class _$_AuthInfo implements _AuthInfo {
   final String token;
   @override
   final UID uid;
+  @override
+  final NUID nuid;
 
   @override
   String toString() {
-    return 'AuthInfo(token: $token, uid: $uid)';
+    return 'AuthInfo(token: $token, uid: $uid, nuid: $nuid)';
   }
 
   @override
@@ -127,13 +140,17 @@ class _$_AuthInfo implements _AuthInfo {
         (other.runtimeType == runtimeType &&
             other is _$_AuthInfo &&
             (identical(other.token, token) || other.token == token) &&
-            const DeepCollectionEquality().equals(other.uid, uid));
+            const DeepCollectionEquality().equals(other.uid, uid) &&
+            const DeepCollectionEquality().equals(other.nuid, nuid));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, token, const DeepCollectionEquality().hash(uid));
+  int get hashCode => Object.hash(
+      runtimeType,
+      token,
+      const DeepCollectionEquality().hash(uid),
+      const DeepCollectionEquality().hash(nuid));
 
   @JsonKey(ignore: true)
   @override
@@ -150,8 +167,10 @@ class _$_AuthInfo implements _AuthInfo {
 }
 
 abstract class _AuthInfo implements AuthInfo {
-  factory _AuthInfo({required final String token, required final UID uid}) =
-      _$_AuthInfo;
+  factory _AuthInfo(
+      {required final String token,
+      required final UID uid,
+      required final NUID nuid}) = _$_AuthInfo;
 
   factory _AuthInfo.fromJson(Map<String, dynamic> json) = _$_AuthInfo.fromJson;
 
@@ -159,6 +178,8 @@ abstract class _AuthInfo implements AuthInfo {
   String get token;
   @override
   UID get uid;
+  @override
+  NUID get nuid;
   @override
   @JsonKey(ignore: true)
   _$$_AuthInfoCopyWith<_$_AuthInfo> get copyWith =>

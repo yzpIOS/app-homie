@@ -87,6 +87,9 @@ class ApiRoom extends ApiBase {
     return _doPost('join/init', data: data,);
   }
 
+  ///
+  /// 退出房间
+  ///
   Future outRoom(int id) async {
     // 发送加入房间的socket
     return await SocketCtrl.getCtrl().sendByteAsyncServer(
@@ -119,8 +122,11 @@ class ApiRoom extends ApiBase {
     );
   }
 
-  ///type 1 申请 2.邀请
-  ///status 1.确认 2.拒绝
+  ///
+  /// 麦克风确认【待定】
+  /// type 1 申请 2.邀请
+  /// status 1.确认 2.拒绝
+  ///
   Future micConfirm({required int mikeId, required bool isAgree, required int type}) {
     final data = {
       'mike_id': mikeId,
@@ -180,13 +186,12 @@ class ApiRoom extends ApiBase {
   }
 
   Future setManager({required int roomId, required UID uid, required bool isAdd}) {
-    final data = {
-      'room_id': roomId,
-      'uid': uid,
-      'status': isAdd ? 1 : 2,
-    };
-
-    return _doPost('set-admin', data: data);
+    C_SetAdministrator cSetnoticemessage = C_SetAdministrator.create();
+    cSetnoticemessage.roomId = Int64(roomId);
+    cSetnoticemessage.sceneId = Int64(roomId);
+    cSetnoticemessage.status = isAdd ? 1 : 2;
+    SocketCtrl.getCtrl().sendSever(CMD.C_SetNoticeMessage, message: cSetnoticemessage);
+    return Future.value(1);
   }
 
   Future managerList({required int roomId}) {
@@ -217,13 +222,11 @@ class ApiRoom extends ApiBase {
     return _doPost('black-list', data: page + data);
   }
 
-  Future setNotice({required int roomId, required String notice}) {
-    final data = {
-      'room_id': roomId,
-      'message': notice,
-    };
-
-    return _doPost('set-notice', data: data);
+  bool setNotice({required int roomId, required String notice}) {
+    C_SetNoticeMessage c_setNoticeMessage = C_SetNoticeMessage.create();
+    c_setNoticeMessage.roomId = Int64(roomId);
+    c_setNoticeMessage.message = notice;
+    return SocketCtrl.getCtrl().sendSever(CMD.C_SetNoticeMessage, message: c_setNoticeMessage);
   }
 
   Future notice({required int roomId}) {

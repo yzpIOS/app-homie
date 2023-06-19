@@ -181,6 +181,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_CloseScene, S_CloseScene.fromBuffer);
     // register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
     // register(CMD.S_OutScene, S_OutScene.fromBuffer);
+    register(CMD.S_LiveBroadcast, S_LiveBroadcast.fromBuffer);
+    register(CMD.S_OnlineBroadcast, S_OnlineBroadcast.fromBuffer);
+    register(CMD.S_MikeBroadcast, S_MikeBroadcast.fromBuffer);
+    register(CMD.S_AccMikeBroadcast, S_AccMikeBroadcast.fromBuffer);
+    register(CMD.S_NoticeBroadcast, S_NoticeBroadcast.fromBuffer);
+    register(CMD.S_BlackBroadcast, S_BlackBroadcast.fromBuffer);
+    register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
   }
 
   @override

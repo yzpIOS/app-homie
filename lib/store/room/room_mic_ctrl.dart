@@ -33,7 +33,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       (event) {
         dataRx[event.micNo] = //
             dataRx.remove(event.oldMicNo)?.also((it) => it.micId = event.micId) ??
-                MicInfo(uid: event.uid, micId: event.micId, hotCount: event.hotCount, isMute: event.isMute);
+                MicInfo(uid: event.uid, micId: event.micId, hotCount: event.hotCount, isMute: event.isMute, nUid: event.nUid);
 
         _sendMicData2Unity();
       },
@@ -253,6 +253,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         for (final item in data)
           item['mike_no']: MicInfo(
             uid: item['uid'],
+            nUid: item["role_id"],
             micId: item['mike_id'],
             hotCount: item['number'] ?? 0,
             isMute: item['open_status'] == 2,
@@ -263,9 +264,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
 class MicInfo {
   UID uid;
+  NUID nUid;
   int micId;
   bool isMute;
   int hotCount;
 
-  MicInfo({required this.uid, required this.micId, required this.hotCount, required this.isMute});
+  MicInfo({required this.uid, required this.micId, required this.hotCount, required this.isMute, required this.nUid});
 }

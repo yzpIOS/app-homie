@@ -5,6 +5,7 @@ import 'package:app/model/auth_info.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -102,10 +103,12 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   Future<void> _useAuth(String token) async {
     Future<void> _useInfo(Map info) async {
       final uid = info['uid'];
+      final nUid = info["role_id"];
 
       final auth = AuthInfo(
         token: token,
         uid: uid,
+        nuid: nUid,
       );
 
       await KvBox.write(PrefKey.AuthInfo, auth.toJson());
@@ -176,6 +179,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   //</editor-fold>
 
   static String get uid => _auth!.uid;
+  static NUID get nUid => _auth!.nuid;
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;

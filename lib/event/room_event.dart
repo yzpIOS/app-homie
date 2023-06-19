@@ -2,6 +2,7 @@ part of 'event.dart';
 
 mixin UidMixin<T extends Map> on RoomEvent<T> {
   late final UID uid = data['uid'];
+  late final NUID nUid = data['role_id'];
 }
 
 class RoomReConnectEvent extends Event {
