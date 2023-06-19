@@ -41,7 +41,12 @@ class ApiRoom extends ApiBase {
   ///
   /// 退出房间
   ///
-  Future close() => _doPost('out');
+  Future close() {
+    return SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_CloseScene,
+        resCmd: CMD.S_CloseScene
+    );
+  }
 
   ///type 1.自定义 2工会 3.广场
   Future info({int? roomId, RoomType? type}) {
@@ -65,24 +70,37 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
-  Future joinRoom(int id, {String? pwd}) {
+  Future joinRoom(int id, {String? pwd}) async {
     final data = {
       'room_id': id,
       'password': pwd,
     };
 
-    return _doPost('join-room', data: data);
+    // 发送加入房间的socket
+    C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
+    await SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_JoinScene,
+        datas: c_joinScene.writeToBuffer(),
+        resCmd: CMD.S_JoinScene);
+
+    // 数据回来后
+    return _doPost('join/init', data: data,);
   }
 
-  Future outRoom(int id) {
-    final data = {
-      'room_id': id,
-    };
-
-    return _doPost('out-room', data: data);
+  Future outRoom(int id) async {
+    // 发送加入房间的socket
+    return await SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_OutScene);
   }
 
+  ///
+  /// 房间下麦
+  ///
   Future micDown({required int micId}) {
+    return SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_OutMike,
+    );
+
     final data = {
       'mike_id': micId,
     };
@@ -90,14 +108,15 @@ class ApiRoom extends ApiBase {
     return _doPost('out-mike', data: data);
   }
 
-  Future micUp({required int roomId, required String no, String? uid}) {
-    final data = {
-      'room_id': roomId,
-      'mike_no': no,
-      if (uid != null) 'uid': uid,
-    };
-
-    return _doPost('up-mike', data: data);
+  ///
+  /// 房间上麦
+  ///
+  Future micUp({required int roomId, required String no, NUID? uid}) async {
+    C_UpMike c_upMike = C_UpMike(makeNo: no, roleId: uid);
+    return SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_UpMike,
+        datas: c_upMike.writeToBuffer()
+    );
   }
 
   ///type 1 申请 2.邀请

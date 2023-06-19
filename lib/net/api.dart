@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:app/common/nets/cmds.dart';
@@ -15,6 +16,7 @@ import 'package:app/net/http.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
+import 'package:fixnum/fixnum.dart';
 
 part 'api/api_activity.dart';
 part 'api/api_common.dart';

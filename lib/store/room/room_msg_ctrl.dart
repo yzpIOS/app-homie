@@ -1,7 +1,9 @@
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/room_event_type.dart';
 import 'package:app/store/mq_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:protobuf/protobuf.dart';
 
 class RoomMsgCtrl extends GetxController {
   final MqCtrl mq;
@@ -42,11 +44,13 @@ class RoomMsgCtrl extends GetxController {
       onData: onData,
       onReSub: () => RoomReConnectEvent(roomId).fire(),
     );
+    SocketCtrl.getCtrl().onData(onReceive);
   }
 
   @override
   void onClose() {
     mq.unSub(subKey);
+    SocketCtrl.getCtrl().removeOnData(onReceive);
 
     super.onClose();
   }
@@ -71,5 +75,9 @@ class RoomMsgCtrl extends GetxController {
         }
       },
     );
+  }
+
+  void onReceive(int cmd, GeneratedMessage? generatedMessage) {
+
   }
 }
