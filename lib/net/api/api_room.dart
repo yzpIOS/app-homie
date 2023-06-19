@@ -3,39 +3,39 @@ part of '../api.dart';
 class ApiRoom extends ApiBase {
   const ApiRoom(super.path);
 
-  Future open({
+  Future<S_CreateScene?> open({
     required String title,
     required String notice,
     required String? image,
     int? scene,
     bool? freeMic,
     String? pwd,
-  }) {
-    final _pwd = isEmpty(pwd)
-        ? {
-      'room_password': null,
-      'private_status': ApiSwitch.open.code,
+  }) async {
+    C_CreateScene c_createScene = C_CreateScene.create();
+    // 房间密码
+    if(isEmpty(pwd)) {
+      c_createScene.privateStatus = ApiSwitch.open.code;
+    } else {
+      c_createScene.privateStatus = ApiSwitch.close.code;
     }
-        : {
-      'room_password': pwd,
-      'private_status': ApiSwitch.close.code,
-    };
-
-    final data = {
-      'image': image,
-      'room_name': title,
-      'notice_message': notice,
-      'max_num': 0,
-      if (scene != null) 'scene_id': scene,
-      if (freeMic != null) 'mike_status': freeMic ? ApiSwitch.open.code : ApiSwitch.close.code,
-      ..._pwd,
-    };
-
-    return _doPost(
-      'up',
-      data: data,
-      ext: {'RECEIVE_TIMEOUT': const Duration(seconds: 30)},
+    c_createScene.roomPassword = pwd ?? "";
+    c_createScene.image = image ?? "";
+    c_createScene.name = title;
+    c_createScene.noticeMessage = notice;
+    c_createScene.maxNum = 0;
+    c_createScene.sceneId = scene ?? 0;
+    if(freeMic != null) {
+      c_createScene.mikeStatus = ApiSwitch.open.code;
+    } else {
+      c_createScene.mikeStatus = ApiSwitch.close.code;
+    }
+    // 发送数据
+    S_CreateScene? response = await SocketCtrl.getCtrl().sendByteAsyncServer(
+        CMD.C_CreateScene,
+        resCmd: CMD.S_CreateScene,
+        datas: c_createScene.writeToBuffer()
     );
+    return response;
   }
 
   ///
