@@ -1,8 +1,8 @@
 
 import 'dart:typed_data';
 
-import 'package:app/common/nets/commons/base_byte_buffer.dart';
-import 'package:app/common/nets/commons/byte_buffer1.dart';
+import 'package:app/common/nets/commons/utils/base_byte_buffer.dart';
+import 'package:app/common/nets/commons/utils/byte_buffer1.dart';
 
 const INDEX_LENGTH = 4;
 

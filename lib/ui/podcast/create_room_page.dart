@@ -283,7 +283,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
   //   });
   // }
 
-  Future<void> doSub() async {
+  void doSub() {
     final title = inputs.by('房间名称');
     final notice = inputs.by('房间公告');
     final pwd = inputs.by('房间密码');
@@ -315,17 +315,17 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
 
       return;
     }
-    // 创建房间
-    S_CreateScene? response = await Api.Room.open(
-        title: title,
-        image: image,
-        notice: notice,
-        pwd: pwd);
-    // 获取到sceneId
-    int? roomId = response?.roomId;
-    if(roomId == null) {
-      return;
-    }
-    Get.find<RoomManagerCtrl>().toRoom(roomId: roomId, off: true);
+
+    simpleSub(
+      Api.Room.open(
+          title: title,
+          image: image,
+          notice: notice,
+          /*scene: scene.value1,*/
+          pwd: pwd),
+      callback1: (resp) {
+        Get.find<RoomManagerCtrl>().toRoom(roomId: resp['room_id'], off: true);
+      },
+    );
   }
 }
