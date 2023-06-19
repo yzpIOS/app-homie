@@ -1,5 +1,8 @@
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
+import 'package:app/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:fixnum/fixnum.dart';
 
 class KvBox {
   KvBox._();
@@ -11,6 +14,7 @@ class KvBox {
   static Future<void> init() async {
     await Hive.initFlutter();
 
+    Hive.registerAdapter(Int64Adapter());
     final box = await Hive.openLazyBox(_boxName);
 
     _ready.complete(box);
@@ -42,5 +46,28 @@ class KvBox {
     xlog('DELETE => $k', level: 0, type: LogType.BOX);
 
     return (await _box).delete(k);
+  }
+}
+
+
+
+/// Adapter for Int64
+class Int64Adapter extends TypeAdapter<Int64> {
+  @override
+  final typeId = 20;
+
+  @override
+  Int64 read(BinaryReader reader) {
+    int len = reader.readByte();
+    debugPrint("aaaaaa = $len");
+    return Int64.fromBytes(reader.readByteList(len));
+  }
+
+  @override
+  void write(BinaryWriter writer, Int64 obj) {
+    writer.writeByte(8);
+    List<int> bytes = obj.toBytes();
+    writer.writeByteList(bytes, writeLength: false);
+    debugPrint("aaaaaa = ");
   }
 }

@@ -15,6 +15,8 @@ import 'package:app/ui/login/init/user_init_2_page.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
 
+import 'package:fixnum/fixnum.dart';
+
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static AuthInfo? _auth;
 
@@ -103,7 +105,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   Future<void> _useAuth(String token) async {
     Future<void> _useInfo(Map info) async {
       final uid = info['uid'];
-      final nUid = info["role_id"];
+      Int64 nUid = Int64(info['role_id']);
 
       final auth = AuthInfo(
         token: token,
@@ -111,7 +113,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         nuid: nUid,
       );
 
-      await KvBox.write(PrefKey.AuthInfo, auth.toJson());
+      Map<String, dynamic> data = auth.toJson();
+      await KvBox.write(PrefKey.AuthInfo, data);
 
       _setup(auth, info: info);
     }
