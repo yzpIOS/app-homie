@@ -6,7 +6,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 
 abstract class RoomUserSheet {
-  static void show(UID uid) {
+  static void show(UID uid, NUID nuid) {
     final roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     final isRoom = roomCtrl is RoomCtrl;
@@ -27,11 +27,11 @@ abstract class RoomUserSheet {
     final actions = <String, FutureOr Function()>{
       if (!isSelf) //
         '查看资料': () {
-          RoomUserInfoDialog.show(uid: uid);
+          RoomUserInfoDialog.show(uid: uid, nuid: nuid);
         },
       if (canManage && notSelf && !posManage) //
         '加入黑名单': () {
-          roomCtrl.setBlock(uid: uid, isAdd: true);
+          roomCtrl.setBlock(uid: nuid, isAdd: true);
         },
       if (isOwner && notSelf && !posManage) //
         '添加管理员': () {

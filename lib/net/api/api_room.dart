@@ -222,7 +222,11 @@ class ApiRoom extends ApiBase {
     return _doPost('get-admin', data: const PageNum(size: 999) + data);
   }
 
-  Future setBlock({required int roomId, required UID uid, required bool isAdd}) {
+  Future setBlock({required int roomId, required NUID uid, required bool isAdd}) {
+    C_SetBlack c_setBlack = C_SetBlack.create();
+    c_setBlack.roomId = Int64(roomId);
+    c_setBlack.sceneId = uid;
+
     final data = {
       'room_id': roomId,
       'uid': uid,
@@ -256,7 +260,16 @@ class ApiRoom extends ApiBase {
     return _doPost('get-notice', data: data);
   }
 
+  ///
+  /// 清除麦克风热度计数器
+  /// https://yapi.pro/project/11739/interface/api/457358
+  ///
   Future resetHotCount({required int roomId, int? micId}) {
+    C_AccMikeClear cAccmikeclear = C_AccMikeClear.create();
+    cAccmikeclear.makeId = Int64(micId ?? 0);
+    SocketCtrl.getCtrl().sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
+    return Future.value(1);
+    
     final data = {
       'room_id': roomId,
       if (micId != null) 'mike_id': micId,

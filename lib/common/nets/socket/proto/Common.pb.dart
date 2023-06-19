@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: proto/Common.proto
+//  source: Common.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
@@ -860,7 +860,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleSceneInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
-    ..aOM<AttrInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrs', subBuilder: AttrInfo.create)
+    ..aOM<AttrInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
     ..aOM<SuitInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
     ..aOM<StateInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
     ..hasRequiredFields = false
@@ -870,7 +870,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   factory RoleSceneInfo({
     $fixnum.Int64? roleId,
     $core.String? name,
-    AttrInfo? attrs,
+    AttrInfo? attrInfo,
     SuitInfo? suitInfo,
     StateInfo? stateInfo,
   }) {
@@ -881,8 +881,8 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     if (name != null) {
       _result.name = name;
     }
-    if (attrs != null) {
-      _result.attrs = attrs;
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
     }
     if (suitInfo != null) {
       _result.suitInfo = suitInfo;
@@ -932,15 +932,15 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   void clearName() => clearField(2);
 
   @$pb.TagNumber(3)
-  AttrInfo get attrs => $_getN(2);
+  AttrInfo get attrInfo => $_getN(2);
   @$pb.TagNumber(3)
-  set attrs(AttrInfo v) { setField(3, v); }
+  set attrInfo(AttrInfo v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasAttrs() => $_has(2);
+  $core.bool hasAttrInfo() => $_has(2);
   @$pb.TagNumber(3)
-  void clearAttrs() => clearField(3);
+  void clearAttrInfo() => clearField(3);
   @$pb.TagNumber(3)
-  AttrInfo ensureAttrs() => $_ensure(2);
+  AttrInfo ensureAttrInfo() => $_ensure(2);
 
   @$pb.TagNumber(4)
   SuitInfo get suitInfo => $_getN(3);
@@ -968,7 +968,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
 class RoleData extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOM<AttrInfo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrs', subBuilder: AttrInfo.create)
+    ..aOM<AttrInfo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
     ..aOM<SuitInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
     ..aOM<StateInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
     ..hasRequiredFields = false
@@ -977,7 +977,7 @@ class RoleData extends $pb.GeneratedMessage {
   RoleData._() : super();
   factory RoleData({
     $fixnum.Int64? id,
-    AttrInfo? attrs,
+    AttrInfo? attrInfo,
     SuitInfo? suitInfo,
     StateInfo? stateInfo,
   }) {
@@ -985,8 +985,8 @@ class RoleData extends $pb.GeneratedMessage {
     if (id != null) {
       _result.id = id;
     }
-    if (attrs != null) {
-      _result.attrs = attrs;
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
     }
     if (suitInfo != null) {
       _result.suitInfo = suitInfo;
@@ -1027,15 +1027,15 @@ class RoleData extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  AttrInfo get attrs => $_getN(1);
+  AttrInfo get attrInfo => $_getN(1);
   @$pb.TagNumber(2)
-  set attrs(AttrInfo v) { setField(2, v); }
+  set attrInfo(AttrInfo v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasAttrs() => $_has(1);
+  $core.bool hasAttrInfo() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAttrs() => clearField(2);
+  void clearAttrInfo() => clearField(2);
   @$pb.TagNumber(2)
-  AttrInfo ensureAttrs() => $_ensure(1);
+  AttrInfo ensureAttrInfo() => $_ensure(1);
 
   @$pb.TagNumber(3)
   SuitInfo get suitInfo => $_getN(2);

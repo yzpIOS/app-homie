@@ -24,12 +24,13 @@ import 'package:flutter/material.dart';
 
 class RoomUserInfoDialog extends StatefulWidget {
   final UID uid;
+  final NUID nuid;
   final TxtMsgData? msg;
   final SceneCtrl sceneCtrl;
 
-  const RoomUserInfoDialog._({required this.uid, required this.sceneCtrl, this.msg});
+  const RoomUserInfoDialog._({required this.uid, required this.nuid, required this.sceneCtrl, this.msg});
 
-  static void show({required UID uid, TxtMsgData? msg}) {
+  static void show({required UID uid, required NUID nuid, TxtMsgData? msg}) {
     final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     const decor = ShapeDecoration(
@@ -38,7 +39,7 @@ class RoomUserInfoDialog extends StatefulWidget {
     );
 
     OrientationSheet.show(
-      child: RoomUserInfoDialog._(uid: uid, sceneCtrl: sceneCtrl, msg: msg),
+      child: RoomUserInfoDialog._(uid: uid, nuid:nuid, sceneCtrl: sceneCtrl, msg: msg),
       decoration: decor,
       minHeight: 0,
     );
@@ -288,7 +289,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         final items = {
           '举报': () => Get.to(() => ReportPage(type: 2, id: uid)),
           if (canManage && !ctrl.getRole(uid).isManager) //
-            '加入黑名单': () => ctrl.setBlock(uid: uid, isAdd: true)
+            '加入黑名单': () => ctrl.setBlock(uid: widget.nuid, isAdd: true)
         };
 
         switch (items.length) {

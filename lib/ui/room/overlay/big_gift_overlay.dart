@@ -39,7 +39,7 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
 
       for (final uid in ids) {
         _ctrl.add(
-          _BigGiftView(uid: sendUid, acceptUid: uid, users: users, data: data.data),
+          _BigGiftView(uid: sendUid, nuid: data.nuid, acceptUid: uid, users: users, data: data.data),
         );
       }
     });
@@ -159,11 +159,12 @@ class _AnimateView extends StatelessWidget {
 
 class _BigGiftView extends StatelessWidget {
   final UID uid;
+  final NUID nuid;
   final UID acceptUid;
   final Map<UID, UserInfoDto> users;
   final Map data;
 
-  _BigGiftView({required this.uid, required this.acceptUid, required this.users, required this.data})
+  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.users, required this.data})
       : super(key: UniqueKey());
 
   @override
@@ -200,7 +201,7 @@ class _BigGiftView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         OpacityButton(
-          onTap: () => RoomUserInfoDialog.show(uid: uid),
+          onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: nuid),
           child: AvatarView(user?.avatar, blur: user?.avatarEx, size: 30),
         ),
         Expanded(

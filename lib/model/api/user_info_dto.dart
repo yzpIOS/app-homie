@@ -1,6 +1,8 @@
 import 'package:app/model/enum/gender_enum.dart';
+import 'package:app/model/json_converter.dart';
 import 'package:app/types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:fixnum/fixnum.dart';
 
 part 'user_info_dto.freezed.dart';
 part 'user_info_dto.g.dart';
@@ -9,6 +11,7 @@ part 'user_info_dto.g.dart';
 class UserInfoDto with _$UserInfoDto {
   factory UserInfoDto({
     @JsonKey(name: 'uid') required UID uid,
+    @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
     @JsonKey(name: 'public_id') String? account,
     @JsonKey(name: 'avatar_url') String? avatar,
     @JsonKey(name: 'avatar_extra') String? avatarEx,

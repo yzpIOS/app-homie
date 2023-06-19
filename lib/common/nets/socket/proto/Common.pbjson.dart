@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: proto/Common.proto
+//  source: Common.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
@@ -21,11 +21,17 @@ const AttrCode$json = const {
     const {'1': 'scene', '2': 6},
     const {'1': 'room', '2': 7},
     const {'1': 'job', '2': 8},
+    const {'1': 'avatar_url', '2': 9},
+    const {'1': 'public_id', '2': 10},
+    const {'1': 'description', '2': 11},
+    const {'1': 'growth_value', '2': 12},
+    const {'1': 'charm_growth_value', '2': 13},
+    const {'1': 'real_name_type', '2': 14},
   ],
 };
 
 /// Descriptor for `AttrCode`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIHCgNiaWQQABIGCgJsdhABEgwKCGNoYXJtX2x2EAISBwoDc2V4EAMSCgoGY2FyZWVyEAQSCQoFc3BlZWQQBRIJCgVzY2VuZRAGEggKBHJvb20QBxIHCgNqb2IQCA==');
+final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIHCgNiaWQQABIGCgJsdhABEgwKCGNoYXJtX2x2EAISBwoDc2V4EAMSCgoGY2FyZWVyEAQSCQoFc3BlZWQQBRIJCgVzY2VuZRAGEggKBHJvb20QBxIHCgNqb2IQCBIOCgphdmF0YXJfdXJsEAkSDQoJcHVibGljX2lkEAoSDwoLZGVzY3JpcHRpb24QCxIQCgxncm93dGhfdmFsdWUQDBIWChJjaGFybV9ncm93dGhfdmFsdWUQDRISCg5yZWFsX25hbWVfdHlwZRAO');
 @$core.Deprecated('Use stateDescriptor instead')
 const State$json = const {
   '1': 'State',
@@ -183,24 +189,24 @@ const RoleSceneInfo$json = const {
   '2': const [
     const {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'attrs', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrs'},
+    const {'1': 'attrInfo', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
     const {'1': 'suitInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
     const {'1': 'stateInfo', '3': 5, '4': 1, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'stateInfo'},
   ],
 };
 
 /// Descriptor for `RoleSceneInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode('Cg1Sb2xlU2NlbmVJbmZvEhYKBnJvbGVJZBgBIAEoA1IGcm9sZUlkEhIKBG5hbWUYAiABKAlSBG5hbWUSLwoFYXR0cnMYAyABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SBWF0dHJzEjUKCHN1aXRJbmZvGAQgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode('Cg1Sb2xlU2NlbmVJbmZvEhYKBnJvbGVJZBgBIAEoA1IGcm9sZUlkEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIYXR0ckluZm8YAyABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAQgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
 @$core.Deprecated('Use roleDataDescriptor instead')
 const RoleData$json = const {
   '1': 'RoleData',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
-    const {'1': 'attrs', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrs'},
+    const {'1': 'attrInfo', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
     const {'1': 'suitInfo', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
     const {'1': 'stateInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'stateInfo'},
   ],
 };
 
 /// Descriptor for `RoleData`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode('CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSLwoFYXR0cnMYAiABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SBWF0dHJzEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode('CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSNQoIYXR0ckluZm8YAiABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');

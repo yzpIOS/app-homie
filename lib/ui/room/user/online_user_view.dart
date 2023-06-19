@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/widgets/role_view.dart';
 import 'package:app/ui/room/user/room_user_item_view.dart';
+import 'package:fixnum/fixnum.dart';
 
 class OnlineUserPage extends StatefulWidget {
   final int roomId;
@@ -64,6 +65,7 @@ class _ItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final uid = data['uid'];
+    final nuid = Int64(data['role_id']);
 
     Widget child = Row(
       children: [
@@ -80,7 +82,7 @@ class _ItemView extends StatelessWidget {
 
     child = InkWell(
       child: child,
-      onTap: () => RoomUserSheet.show(uid),
+      onTap: () => RoomUserSheet.show(uid, nuid),
     );
 
     return child;

@@ -22,6 +22,9 @@ UserInfoDto _$UserInfoDtoFromJson(Map<String, dynamic> json) {
 mixin _$UserInfoDto {
   @JsonKey(name: 'uid')
   UID get uid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'role_id')
+  @MyJsonConverter()
+  Int64? get nuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'public_id')
   String? get account => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
@@ -54,6 +57,7 @@ abstract class $UserInfoDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'uid') UID uid,
+      @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
@@ -78,6 +82,7 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
   @override
   $Res call({
     Object? uid = freezed,
+    Object? nuid = freezed,
     Object? account = freezed,
     Object? avatar = freezed,
     Object? avatarEx = freezed,
@@ -92,6 +97,10 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as UID,
+      nuid: freezed == nuid
+          ? _value.nuid
+          : nuid // ignore: cast_nullable_to_non_nullable
+              as Int64?,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -138,6 +147,7 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'uid') UID uid,
+      @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
@@ -160,6 +170,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = freezed,
+    Object? nuid = freezed,
     Object? account = freezed,
     Object? avatar = freezed,
     Object? avatarEx = freezed,
@@ -174,6 +185,10 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as UID,
+      nuid: freezed == nuid
+          ? _value.nuid
+          : nuid // ignore: cast_nullable_to_non_nullable
+              as Int64?,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -215,6 +230,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
 class _$_UserInfoDto implements _UserInfoDto {
   _$_UserInfoDto(
       {@JsonKey(name: 'uid') required this.uid,
+      @JsonKey(name: 'role_id') @MyJsonConverter() this.nuid,
       @JsonKey(name: 'public_id') this.account,
       @JsonKey(name: 'avatar_url') this.avatar,
       @JsonKey(name: 'avatar_extra') this.avatarEx,
@@ -230,6 +246,10 @@ class _$_UserInfoDto implements _UserInfoDto {
   @override
   @JsonKey(name: 'uid')
   final UID uid;
+  @override
+  @JsonKey(name: 'role_id')
+  @MyJsonConverter()
+  final Int64? nuid;
   @override
   @JsonKey(name: 'public_id')
   final String? account;
@@ -258,7 +278,7 @@ class _$_UserInfoDto implements _UserInfoDto {
 
   @override
   String toString() {
-    return 'UserInfoDto(uid: $uid, account: $account, avatar: $avatar, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, charmLevel: $charmLevel, remarkName: $remarkName)';
+    return 'UserInfoDto(uid: $uid, nuid: $nuid, account: $account, avatar: $avatar, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, charmLevel: $charmLevel, remarkName: $remarkName)';
   }
 
   @override
@@ -267,6 +287,7 @@ class _$_UserInfoDto implements _UserInfoDto {
         (other.runtimeType == runtimeType &&
             other is _$_UserInfoDto &&
             const DeepCollectionEquality().equals(other.uid, uid) &&
+            (identical(other.nuid, nuid) || other.nuid == nuid) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
             (identical(other.avatarEx, avatarEx) ||
@@ -286,6 +307,7 @@ class _$_UserInfoDto implements _UserInfoDto {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(uid),
+      nuid,
       account,
       avatar,
       avatarEx,
@@ -313,6 +335,9 @@ abstract class _UserInfoDto implements UserInfoDto {
   factory _UserInfoDto(
       {@JsonKey(name: 'uid')
           required final UID uid,
+      @JsonKey(name: 'role_id')
+      @MyJsonConverter()
+          final Int64? nuid,
       @JsonKey(name: 'public_id')
           final String? account,
       @JsonKey(name: 'avatar_url')
@@ -337,6 +362,10 @@ abstract class _UserInfoDto implements UserInfoDto {
   @override
   @JsonKey(name: 'uid')
   UID get uid;
+  @override
+  @JsonKey(name: 'role_id')
+  @MyJsonConverter()
+  Int64? get nuid;
   @override
   @JsonKey(name: 'public_id')
   String? get account;

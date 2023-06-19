@@ -104,6 +104,8 @@ class GiftEvent extends InRoomEvent<Map> {
   GiftEvent(super.data);
 
   late final UID uid = data['send_uid'];
+
+  late final NUID nuid = data['role_id'];
 }
 
 class AdminSetEvent extends InRoomEvent<Map> with UidMixin {

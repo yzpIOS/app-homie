@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/api_switch.dart';
 import 'package:app/model/enum/room_role_type.dart';
@@ -125,8 +126,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       test: (event) => event.code == Unity2AppEnum.UTF_ROLE_INFOPANEL,
       (event) {
         final data = jsonDecode(event.data);
+        var roleId = data["role_id"];
+        if(roleId == null) {
+          return;
+        }
 
-        RoomUserInfoDialog.show(uid: data['uid']);
+        RoomUserInfoDialog.show(uid: data['uid'], nuid: Int64(roleId));
       },
     );
 
@@ -296,7 +301,7 @@ class RoomCtrl extends SceneCtrl {
     return null;
   }
 
-  void setBlock({required UID uid, required bool isAdd}) {
+  void setBlock({required NUID uid, required bool isAdd}) {
     simpleSub(
       () => Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: isAdd),
     );

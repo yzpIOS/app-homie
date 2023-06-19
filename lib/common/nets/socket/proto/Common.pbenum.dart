@@ -1,6 +1,6 @@
 ///
 //  Generated code. Do not modify.
-//  source: proto/Common.proto
+//  source: Common.proto
 //
 // @dart = 2.12
 // ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
@@ -19,6 +19,12 @@ class AttrCode extends $pb.ProtobufEnum {
   static const AttrCode scene = AttrCode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'scene');
   static const AttrCode room = AttrCode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'room');
   static const AttrCode job = AttrCode._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'job');
+  static const AttrCode avatar_url = AttrCode._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'avatar_url');
+  static const AttrCode public_id = AttrCode._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'public_id');
+  static const AttrCode description = AttrCode._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'description');
+  static const AttrCode growth_value = AttrCode._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'growth_value');
+  static const AttrCode charm_growth_value = AttrCode._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'charm_growth_value');
+  static const AttrCode real_name_type = AttrCode._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'real_name_type');
 
   static const $core.List<AttrCode> values = <AttrCode> [
     bid,
@@ -30,6 +36,12 @@ class AttrCode extends $pb.ProtobufEnum {
     scene,
     room,
     job,
+    avatar_url,
+    public_id,
+    description,
+    growth_value,
+    charm_growth_value,
+    real_name_type,
   ];
 
   static final $core.Map<$core.int, AttrCode> _byValue = $pb.ProtobufEnum.initByValue(values);

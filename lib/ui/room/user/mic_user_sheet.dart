@@ -17,6 +17,7 @@ abstract class MicUserSheet {
     final roomId = roomCtrl.roomId;
     final myUid = OAuthCtrl.uid;
     final posUid = info?.uid;
+    final posnUid = info?.nUid;
     final nUid = info?.nUid;
 
     final isAdmin = isRoom && roomCtrl.isAdmin(myUid);
@@ -36,7 +37,10 @@ abstract class MicUserSheet {
     final actions = <String, FutureOr Function()>{
       if (hasUser && notSelf) //
         '查看资料': () {
-          RoomUserInfoDialog.show(uid: posUid);
+          if(posnUid == null) {
+            return;
+          }
+          RoomUserInfoDialog.show(uid: posUid, nuid: posnUid);
         },
       if (hasUser && canManage && notSelf) //
         '抱Ta下麦': () {
@@ -53,7 +57,10 @@ abstract class MicUserSheet {
         },
       if (hasUser && canManage && notSelf && !posManage) //
         '加入黑名单': () {
-          roomCtrl.setBlock(uid: posUid, isAdd: true);
+          if(posnUid == null) {
+            return;
+          }
+          roomCtrl.setBlock(uid: posnUid, isAdd: true);
         },
       if (hasUser && isOwner && notSelf && !posManage) //
         '添加管理员': () {

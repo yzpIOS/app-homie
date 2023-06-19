@@ -21,12 +21,13 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<MsgTxtEvent>((data) {
       final uid = data.uid;
       final txt = data.txt;
+      final nuid = data.nUid;
 
       sendCmd2Unity(App2UnityEnum.FTU_IPUTFIELDCONTENT, data: {'uid': uid, 'content': txt});
 
       dataRx.add(
         TxtMsgView(
-          TxtMsgData(uid: uid, data: txt),
+          TxtMsgData(uid: uid, data: txt, nuid: nuid),
         ),
       );
     });
@@ -34,7 +35,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<UserInEvent>((data) {
       dataRx.add(
         UserInMsgView(
-          UserInMsgData(uid: data.uid),
+          UserInMsgData(uid: data.uid, nuid: data.nUid),
         ),
       );
     });
@@ -55,13 +56,15 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
-      for (final uid in ids) {
-        dataRx.add(
-          GiftMsgView(
-            GiftMsgAdapter(uid: sendUid, acceptUid: uid, users: users, data: data.data),
-          ),
-        );
-      }
+      users.forEach((key, value) {
+        if(sendUid != value.uid) {
+          dataRx.add(
+            GiftMsgView(
+              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: data.data),
+            ),
+          );
+        }
+      });
     });
   }
 }

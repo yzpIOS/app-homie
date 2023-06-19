@@ -16,6 +16,7 @@ class CMD {
   static const C_OutScene = 2114; // 退出房间场景
   static const S_OutScene = 2115; // 退出房间场景反馈结果
 
+  static const C_AccMikeClear = 2130; // 房间麦克风计数器清除
 
   static const C_UpMike = 2122; // 房间上麦
   static const C_OutMike = 2124; // 房间下麦
