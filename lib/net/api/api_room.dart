@@ -46,6 +46,8 @@ class ApiRoom extends ApiBase {
         CMD.C_CloseScene,
         resCmd: CMD.S_CloseScene
     );
+
+    return _doPost('out');
   }
 
   ///type 1.自定义 2工会 3.广场
@@ -85,6 +87,8 @@ class ApiRoom extends ApiBase {
 
     // 数据回来后
     return _doPost('join/init', data: data,);
+
+    return _doPost('join-room', data: data);
   }
 
   ///
@@ -94,6 +98,13 @@ class ApiRoom extends ApiBase {
     // 发送加入房间的socket
     return await SocketCtrl.getCtrl().sendByteAsyncServer(
         CMD.C_OutScene);
+
+
+    final data = {
+      'room_id': id,
+    };
+
+    return _doPost('out-room', data: data);
   }
 
   ///
@@ -120,6 +131,14 @@ class ApiRoom extends ApiBase {
         CMD.C_UpMike,
         datas: c_upMike.writeToBuffer()
     );
+
+    final data = {
+      'room_id': roomId,
+      'mike_no': no,
+      if (uid != null) 'uid': uid,
+    };
+
+    return _doPost('up-mike', data: data);
   }
 
   ///
