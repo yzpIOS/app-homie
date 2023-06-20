@@ -12,7 +12,7 @@ import 'dart:typed_data' as $typed_data;
 const AttrCode$json = const {
   '1': 'AttrCode',
   '2': const [
-    const {'1': 'bid', '2': 0},
+    const {'1': 'none', '2': 0},
     const {'1': 'lv', '2': 1},
     const {'1': 'charm_lv', '2': 2},
     const {'1': 'sex', '2': 3},
@@ -31,7 +31,7 @@ const AttrCode$json = const {
 };
 
 /// Descriptor for `AttrCode`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIHCgNiaWQQABIGCgJsdhABEgwKCGNoYXJtX2x2EAISBwoDc2V4EAMSCgoGY2FyZWVyEAQSCQoFc3BlZWQQBRIJCgVzY2VuZRAGEggKBHJvb20QBxIHCgNqb2IQCBIOCgphdmF0YXJfdXJsEAkSDQoJcHVibGljX2lkEAoSDwoLZGVzY3JpcHRpb24QCxIQCgxncm93dGhfdmFsdWUQDBIWChJjaGFybV9ncm93dGhfdmFsdWUQDRISCg5yZWFsX25hbWVfdHlwZRAO');
+final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIICgRub25lEAASBgoCbHYQARIMCghjaGFybV9sdhACEgcKA3NleBADEgoKBmNhcmVlchAEEgkKBXNwZWVkEAUSCQoFc2NlbmUQBhIICgRyb29tEAcSBwoDam9iEAgSDgoKYXZhdGFyX3VybBAJEg0KCXB1YmxpY19pZBAKEg8KC2Rlc2NyaXB0aW9uEAsSEAoMZ3Jvd3RoX3ZhbHVlEAwSFgoSY2hhcm1fZ3Jvd3RoX3ZhbHVlEA0SEgoOcmVhbF9uYW1lX3R5cGUQDg==');
 @$core.Deprecated('Use stateDescriptor instead')
 const State$json = const {
   '1': 'State',
@@ -210,3 +210,14 @@ const RoleData$json = const {
 
 /// Descriptor for `RoleData`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode('CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSNQoIYXR0ckluZm8YAiABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+@$core.Deprecated('Use seatInfoDescriptor instead')
+const SeatInfo$json = const {
+  '1': 'SeatInfo',
+  '2': const [
+    const {'1': 'guid', '3': 1, '4': 1, '5': 9, '10': 'guid'},
+    const {'1': 'canSit', '3': 2, '4': 1, '5': 8, '10': 'canSit'},
+  ],
+};
+
+/// Descriptor for `SeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List seatInfoDescriptor = $convert.base64Decode('CghTZWF0SW5mbxISCgRndWlkGAEgASgJUgRndWlkEhYKBmNhblNpdBgCIAEoCFIGY2FuU2l0');

@@ -16,7 +16,7 @@ export 'Common.pbenum.dart';
 
 class AttrVO extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AttrVO', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..e<AttrCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: AttrCode.bid, valueOf: AttrCode.valueOf, enumValues: AttrCode.values)
+    ..e<AttrCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: AttrCode.none, valueOf: AttrCode.valueOf, enumValues: AttrCode.values)
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'val')
     ..hasRequiredFields = false
   ;
@@ -1058,5 +1058,66 @@ class RoleData extends $pb.GeneratedMessage {
   void clearStateInfo() => clearField(4);
   @$pb.TagNumber(4)
   StateInfo ensureStateInfo() => $_ensure(3);
+}
+
+class SeatInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SeatInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guid')
+    ..aOB(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'canSit', protoName: 'canSit')
+    ..hasRequiredFields = false
+  ;
+
+  SeatInfo._() : super();
+  factory SeatInfo({
+    $core.String? guid,
+    $core.bool? canSit,
+  }) {
+    final _result = create();
+    if (guid != null) {
+      _result.guid = guid;
+    }
+    if (canSit != null) {
+      _result.canSit = canSit;
+    }
+    return _result;
+  }
+  factory SeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SeatInfo clone() => SeatInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SeatInfo copyWith(void Function(SeatInfo) updates) => super.copyWith((message) => updates(message as SeatInfo)) as SeatInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static SeatInfo create() => SeatInfo._();
+  SeatInfo createEmptyInstance() => create();
+  static $pb.PbList<SeatInfo> createRepeated() => $pb.PbList<SeatInfo>();
+  @$core.pragma('dart2js:noInline')
+  static SeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SeatInfo>(create);
+  static SeatInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get guid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set guid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGuid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGuid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.bool get canSit => $_getBF(1);
+  @$pb.TagNumber(2)
+  set canSit($core.bool v) { $_setBool(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCanSit() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCanSit() => clearField(2);
 }
 

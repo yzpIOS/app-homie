@@ -30,20 +30,16 @@ class UserInEvent extends RoomEvent<S_OnlineBroadcast> {
 }
 
 // 用户退出房间
-class UserOutEvent extends RoomEvent<S_OnlineBroadcast> {
-}
+class UserOutEvent extends RoomEvent<S_OnlineBroadcast> { }
 
 // 房间关闭
-class RoomCloseEvent extends RoomEvent<S_LiveBroadcast> {
-}
+class RoomCloseEvent extends RoomEvent<S_LiveBroadcast> { }
 
 // 上麦
-class MicUpEvent extends RoomEvent<S_MikeBroadcast> {
-}
+class MicUpEvent extends RoomEvent<S_MikeBroadcast> { }
 
 // 下麦
-class MicDownEvent extends RoomEvent<S_MikeBroadcast> {
-}
+class MicDownEvent extends RoomEvent<S_MikeBroadcast> { }
 
 // 房间公告
 // S_NoticeBroadcast
@@ -85,7 +81,6 @@ class MicStateEvent extends RoomEvent<S_AccMikeBroadcast> {
 
   MicStateEvent(this.isMute);
 }
-
 class UserLevelUpEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
 class UserCharmUpEvent extends RoomEvent<S_AccMikeBroadcast> {

@@ -31,6 +31,7 @@ class RoomMsgCtrlPb extends GetxController {
     // 禁麦
     RoomEventType.micEnable: () => MicStateEvent(false),
     RoomEventType.micDisabled: () => MicStateEvent(true),
+    // 黑名单
     RoomEventType.userBlock: UserBlockEvent.new,
     // 关闭房间
     RoomEventType.closeLive: RoomCloseEvent.new,

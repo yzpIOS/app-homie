@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/api_switch.dart';
@@ -117,6 +118,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   @mustCallSuper
   void _bindGet(RoomRunInfo data) {
     bindGet(RoomMsgCtrl(roomId));
+    bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
   }
 

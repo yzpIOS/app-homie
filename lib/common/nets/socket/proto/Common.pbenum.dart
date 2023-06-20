@@ -10,7 +10,7 @@ import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class AttrCode extends $pb.ProtobufEnum {
-  static const AttrCode bid = AttrCode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'bid');
+  static const AttrCode none = AttrCode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'none');
   static const AttrCode lv = AttrCode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'lv');
   static const AttrCode charm_lv = AttrCode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'charm_lv');
   static const AttrCode sex = AttrCode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'sex');
@@ -27,7 +27,7 @@ class AttrCode extends $pb.ProtobufEnum {
   static const AttrCode real_name_type = AttrCode._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'real_name_type');
 
   static const $core.List<AttrCode> values = <AttrCode> [
-    bid,
+    none,
     lv,
     charm_lv,
     sex,
