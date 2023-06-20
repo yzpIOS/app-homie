@@ -16,6 +16,8 @@ export 'package:app/model/enum/unity_event_enum.dart';
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
   late final _callback = _Callback();
 
+  StreamSubscription? subscription;
+
   final _sceneLock = Lock(reentrant: true);
 
   @override
@@ -107,7 +109,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     // 延迟时间
     int delayTryTIme = 3;
     // 获取到端口号
-    SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
+    subscription?.cancel();
+    subscription = SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {
         await Future.delayed(Duration(seconds: delayTryTIme));
@@ -148,6 +151,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   @override
   void onClose() {
     super.onClose();
+    subscription?.cancel();
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
