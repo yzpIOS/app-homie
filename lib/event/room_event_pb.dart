@@ -26,20 +26,20 @@ class RoomEvent<T extends GeneratedMessage> extends EventPb {
 }
 
 // 用户进入房间
-class UserInEvent extends RoomEvent<S_OnlineBroadcast> {
+class UserInEvent extends RoomEvent<S_JoinBroadcast> {
 }
 
 // 用户退出房间
-class UserOutEvent extends RoomEvent<S_OnlineBroadcast> { }
+class UserOutEvent extends RoomEvent<S_LeaveBroadcast> { }
 
 // 房间关闭
-class RoomCloseEvent extends RoomEvent<S_LiveBroadcast> { }
+class RoomCloseEvent extends RoomEvent<S_LiveStopBroadcast> { }
 
 // 上麦
-class MicUpEvent extends RoomEvent<S_MikeBroadcast> { }
+class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> { }
 
 // 下麦
-class MicDownEvent extends RoomEvent<S_MikeBroadcast> { }
+class MicDownEvent extends RoomEvent<S_DownMikeBroadcast> { }
 
 // 房间公告
 // S_NoticeBroadcast
@@ -81,13 +81,15 @@ class MicApplyEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
 
 // 邀请上麦
-class InviteMicUpEvent extends RoomEvent<S_AccMikeBroadcast> {
+class InviteMicUpEvent extends RoomEvent<S_InviteMikeBroadcast> {
 }
 
-// 开麦. 下麦
-class MicStateEvent extends RoomEvent<S_AccMikeBroadcast> {
-  final bool isMute;
-  MicStateEvent(this.isMute);
+// 开麦
+class MicOpenEvent extends RoomEvent<S_OpenBroadcast> {
+}
+
+// 下麦
+class MicCloseEvent extends RoomEvent<S_CloseMikeBroadcast> {
 }
 
 // socket状态回调
@@ -96,7 +98,7 @@ class RoomReConnectEvent extends EventPb {
   RoomReConnectEvent(this.roomId);
 }
 
-//
+// 房间计数器广播 【对应旧mq类型：18】
 class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
 

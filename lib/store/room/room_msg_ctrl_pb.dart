@@ -32,9 +32,9 @@ class RoomMsgCtrlPb extends GetxController {
     // 申请上麦
     CMD.S_ApplyUpMikeBroadcast: MicApplyEvent.new,
     // 开麦
-    CMD.S_OpenBroadcast: () => MicStateEvent(false),
+    CMD.S_OpenBroadcast: MicOpenEvent.new,
     // 下麦
-    CMD.S_CloseMikeBroadcast: () => MicStateEvent(true),
+    CMD.S_CloseMikeBroadcast: MicCloseEvent.new,
     // 把用设设置成黑名单
     CMD.S_BlackBroadcast: UserBlockEvent.new,
     // 关闭房间

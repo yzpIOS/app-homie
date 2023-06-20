@@ -194,16 +194,25 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_CreateScene, S_CreateScene.fromBuffer);
     register(CMD.S_Role, S_Role.fromBuffer);
     register(CMD.S_Err, S_Err.fromBuffer);
-    // register(CMD.S_CloseScene, S_CloseScene.fromBuffer);
-    // register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
-    // register(CMD.S_OutScene, S_OutScene.fromBuffer);
-    register(CMD.S_LiveBroadcast, S_LiveBroadcast.fromBuffer);
-    // register(CMD.S_UserIn, S_OnlineBroadcast.fromBuffer);
-    register(CMD.S_MikeBroadcast, S_MikeBroadcast.fromBuffer);
-    register(CMD.S_AccMikeBroadcast, S_AccMikeBroadcast.fromBuffer);
+    register(CMD.S_JoinBroadcast, S_JoinBroadcast.fromBuffer);
+    register(CMD.S_LeaveBroadcast, S_LeaveBroadcast.fromBuffer);
+    register(CMD.S_InviteMikeBroadcast, S_InviteMikeBroadcast.fromBuffer);
+    register(CMD.S_UpMikeBroadcast, S_UpMikeBroadcast.fromBuffer);
+    register(CMD.S_DownMikeBroadcast, S_DownMikeBroadcast.fromBuffer);
     register(CMD.S_NoticeBroadcast, S_NoticeBroadcast.fromBuffer);
+    register(CMD.S_AdministratorBroadcast, S_AdministratorBroadcast.fromBuffer);
     register(CMD.S_BlackBroadcast, S_BlackBroadcast.fromBuffer);
+    register(CMD.S_CloseMikeBroadcast, S_CloseMikeBroadcast.fromBuffer);
+    register(CMD.S_OpenBroadcast, S_OpenBroadcast.fromBuffer);
+    register(CMD.S_AccMikeBroadcast, S_AccMikeBroadcast.fromBuffer);
+    register(CMD.S_GiftPlay, S_GiftPlay.fromBuffer);
+    register(CMD.S_UpdateLevel, S_UpdateLevel.fromBuffer);
+    register(CMD.S_UpdateCharmLevel, S_UpdateCharmLevel.fromBuffer);
+    register(CMD.S_LiveStopBroadcast, S_LiveStopBroadcast.fromBuffer);
+    register(CMD.S_ApplyUpMikeBroadcast, S_ApplyUpMikeBroadcast.fromBuffer);
     register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
+
+    register(CMD.S_GiveGiftByRoom, C_GiveGiftByRoom.fromBuffer);
   }
 
   @override
