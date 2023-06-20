@@ -20,6 +20,8 @@ class ByteBuffer1 extends BaseByteBuffer {
   ///
   Uint8List _buffer = Uint8List(0);
 
+  int curUnPkgCmd = 0;
+
   ///
   /// 添加新的数据列表
   ///
@@ -34,7 +36,7 @@ class ByteBuffer1 extends BaseByteBuffer {
 
   @override
   int getUnPackCmd() {
-    return _curCmd;
+    return curUnPkgCmd;
   }
 
   ///
@@ -68,7 +70,9 @@ class ByteBuffer1 extends BaseByteBuffer {
       // 获取剩余的包数据
       _buffer = _buffer.sublist(_curPkgLen + PKG_LEN + CMD_LEN, _buffer.length);
     }
+    curUnPkgCmd = _curCmd;
     // 记录协议
+    _curCmd = 0;
     // 重置数据
     _curPkgLen = 0;
     return result;
@@ -80,6 +84,7 @@ class ByteBuffer1 extends BaseByteBuffer {
     _curCmd = 0;
     _curPkgLen = 0;
     _buffer = Uint8List(0);
+    curUnPkgCmd = 0;
   }
 
   @override

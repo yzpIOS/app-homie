@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/common/utils/en.dart';
 import 'package:app/model/enum/verify_code_enum.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
@@ -44,36 +45,36 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
   Widget build(BuildContext context) {
     final child = Column(
       children: [
-        const XText(
-          '手机验证码登录',
+        XText(
+          '手机验证码登录'.en(),
           style: TextStyle(fontSize: 18, fontWeight: fw$Medium),
         ),
         Spacing.h54,
         FormInputView(
-          controller: inputs['手机号'],
-          hint: '手机号',
+          controller: inputs['手机号'.en()],
+          hint: '手机号'.en(),
           keyboardType: TextInputType.phone,
         ),
         Spacing.h20,
         FormInputView(
-          controller: inputs['验证码'],
-          hint: '验证码',
+          controller: inputs['验证码'.en()],
+          hint: '验证码'.en(),
           keyboardType: TextInputType.number,
-          suffixIcon: SmsVerifyView(number: inputs['手机号']!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
+          suffixIcon: SmsVerifyView(number: inputs['手机号'.en()]!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
         ),
         Spacing.h20,
-        const Align(
+        Align(
           alignment: Alignment.centerLeft,
           child: XText(
-            '未注册的手机号码验证后将自动登录',
-            style: TextStyle(fontSize: 12, color: AppPalette.c9),
+            '未注册的手机号码验证后将自动登录'.en(),
+            style: const TextStyle(fontSize: 12, color: AppPalette.c9),
           ),
         ),
         Spacing.h4,
         Pact.app.$PactView(),
         Spacing.h54,
         XTextBtn(
-          label: '登录',
+          label: '登录'.en(),
           shape: AppShape.a4,
           textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
           onTap: doLogin,
@@ -82,7 +83,7 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           alignment: Alignment.topRight,
           child: XTextBtn(
             width: 64,
-            label: '密码登录',
+            label: '密码登录'.en(),
             color: Colors.transparent,
             textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
             onTap: () => Get.to(() => const LoginPwdPage()),
@@ -101,22 +102,23 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
   }
 
   void doLogin() {
-    final token = tokenRx();
+    String? token = tokenRx();
+    if(Env.isDebug && token?.isEmpty == true) {
+      token = "1";
+    }
 
     if (token == null) {
-      showToast('请先发送验证码');
-
+      showToast('请先发送验证码'.en());
       return;
     }
+
     if (inputs.validate()) {
       hideKeyboard();
-
-      final phone = inputs.by('手机号');
-      final code = inputs.by('验证码');
-
+      final phone = inputs.by('手机号'.en());
+      final code = inputs.by('验证码'.en());
       Pact.app.alertSub(
         doSub: () {
-          Get.find<OAuthCtrl>().doSmsLogin(phone: phone, smsToken: token, smsCode: code);
+          Get.find<OAuthCtrl>().doSmsLogin(phone: phone, smsToken: token ?? "", smsCode: code);
         },
       );
     }

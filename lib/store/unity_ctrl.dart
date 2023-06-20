@@ -103,11 +103,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       return;
     }
     // 更新唯一id
-    SocketCtrl.getCtrl().updateUniqueId();
+    SocketCtrl.ins.updateUniqueId();
     // 延迟时间
     int delayTryTIme = 3;
     // 获取到端口号
-    SocketCtrl.getCtrl().getLocalServerPort().asStream().listen((event) async {
+    SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {
         await Future.delayed(Duration(seconds: delayTryTIme));
@@ -119,7 +119,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
         data: {
           "port": event,
-          "uniqueId": SocketCtrl.getCtrl().uniqueId,
+          "uniqueId": SocketCtrl.ins.uniqueId,
         },
       );
       // todo 判断成功或者失败
@@ -134,8 +134,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 监听flutter socket相关的状态
   ///
   void socketCtrlStatus() {
-    SocketCtrl.getCtrl().removeServerStatusCallBacks(onServerStatusCallBacks);
-    SocketCtrl.getCtrl().addServerStatusCallBacks(onServerStatusCallBacks);
+    SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
+    SocketCtrl.ins.addServerStatusCallBacks(onServerStatusCallBacks);
   }
 
   ///
@@ -148,7 +148,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   @override
   void onClose() {
     super.onClose();
-    SocketCtrl.getCtrl().removeServerStatusCallBacks(onServerStatusCallBacks);
+    SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
   Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: 5)}) async {

@@ -58,11 +58,11 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
     post(() async {
       await Future.delayed(const Duration(seconds: 3));
       // 连接服务器
-      SocketCtrl.getCtrl().startClient("192.168.1.188", 7778);
+      SocketCtrl.ins.startClient("192.168.1.123", 7778);
       // 连接成功回调
-      SocketCtrl.getCtrl().addClientConnect(onClientConnect);
-      SocketCtrl.getCtrl().onDataCmd(CMD.S_Role, onRoleResponse);
-      SocketCtrl.getCtrl().onDataCmd(CMD.S_Err, onServerError);
+      SocketCtrl.ins.addClientConnect(onClientConnect);
+      SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
+      SocketCtrl.ins.onDataCmd(CMD.S_Err, onServerError);
     });
   }
 
@@ -70,6 +70,11 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
   /// 用户信息返回
   ///
   void onRoleResponse(int cmd, S_Role? role) {
+    if(role == null) {
+      return;
+    }
+    var roleId = role.role.roleId;
+    var name = role.role.name;
     debugPrint("aaa");
   }
 
@@ -86,8 +91,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
   void onClientConnect() {
     C_Role role = C_Role.create();
     role.session = OAuthCtrl.token ?? "";
-    // todo 请求用户信息
-    // SocketCtrl.getCtrl().sendSever(CMD.C_Role, message: role);
+    SocketCtrl.ins.sendSever(CMD.C_Role, message: role);
   }
 
   @override

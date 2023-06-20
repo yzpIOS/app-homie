@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:get/utils.dart';
 
 // 链接回调, 底层在多次重连时，会多次调用
 typedef Connected = void Function();
@@ -62,13 +61,15 @@ class CustomSocket {
   // socket状态回调
   SocketStatusCallBack? socketStatusCallBack;
 
+  bool _canConnected = true;
+
   ///
   /// 链接socket
   /// [host]              ip地址
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 5, int reconnectTimes = 2}) {
+  CustomSocket connect(String host, int port, {int timeout = 5}) {
     // 防止重复调用
     if(_host == host && _port == port) {
       debugPrint("[socket]:连接地址相同, host=$host, port=$port");
@@ -84,8 +85,13 @@ class CustomSocket {
     // 取消回调监听
     _socketSubscription?.cancel();
 
-    if(reconnectTimes <= 0 || _isConnecting) {
-      debugPrint("[socket]:连接条件不满足, reconnectTimes=$reconnectTimes, _isConnecting=$_isConnecting");
+    if(_isConnecting) {
+      debugPrint("[socket]:连接条件不满足, _isConnecting=$_isConnecting");
+      return this;
+    }
+
+    // 是否可以连接
+    if(!_canConnected) {
       return this;
     }
 
@@ -95,9 +101,9 @@ class CustomSocket {
     // 链接新的socket
     Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
       debugPrint("[socket]:连接成功, host=$host, port=$_port");
+      _socket = event;
       _isConnecting = false;
       _needReconnecting = false;
-      _socket = event;
       // 处理连接
       _handleConnect();
       // 连接成功
@@ -127,12 +133,7 @@ class CustomSocket {
       }
 
       // 需要重新链接
-      if(reconnectTimes > 0 || _needReconnecting) {
-        // 如果重连，就重新设置重连次数
-        if(_needReconnecting) {
-          reconnectTimes = 3;
-          _needReconnecting = false;
-        }
+      if(_needReconnecting) {
         // ip和端口
         String host = _host;
         int port = _port;
@@ -140,7 +141,7 @@ class CustomSocket {
         _host = "";
         _port = 0;
         // 网络连接
-        connect(host, port, timeout: _timeout, reconnectTimes: reconnectTimes - 1);
+        connect(host, port, timeout: _timeout);
         // 连接失败
         _riseCallBack2(BaseClient.CONNECT_FAIL);
       }
@@ -196,22 +197,30 @@ class CustomSocket {
   ///
   /// 把原来的socket关掉，并且进行重联
   ///
-  void reconnect() {
+  void reconnect({bool foreceConnect = false}) {
+    // 强制连接
+    if(foreceConnect) {
+      _canConnected = true;
+    }
     // 正在连接中，防止重复连接
     if(_isConnecting) {
       _needReconnecting = true;
       return;
     }
-    _resetConnect();
-
     String host = _host;
     int port = _port;
 
-    _host = "";
-    _port = 0;
+    resetConnect();
 
     // 发起重联
-    connect(host, port, timeout: _timeout, reconnectTimes: 3);
+    connect(host, port, timeout: _timeout);
+  }
+
+  ///
+  /// 是否可以连接
+  ///
+  void onCanConnected(bool canConnect) {
+    _canConnected = canConnect;
   }
 
   ///
@@ -227,7 +236,7 @@ class CustomSocket {
       // 没有网络直接返回
       if(!hasNet) {
         debugPrint("[socket]:网络发生变化；无网络, state = $state");
-        _resetConnect();
+        resetConnect(clearHost: false);
         return;
       }
 
@@ -244,7 +253,7 @@ class CustomSocket {
       _host = "";
       _port = 0;
       // 网络连接
-      connect(host, port, timeout: _timeout, reconnectTimes: 3);
+      connect(host, port, timeout: _timeout);
     });
     return this;
   }
@@ -316,11 +325,17 @@ class CustomSocket {
   ///
   /// 重置连接数据
   ///
-  void _resetConnect() {
+  void resetConnect({bool clearHost = true}) {
     _socket?.close();
     _socket = null;
     _socketSubscription?.cancel();
     _socketSubscription = null;
+
+    // 重置数据
+    if(clearHost) {
+      _host = "";
+      _port = 0;
+    }
   }
 
   void dispose() {

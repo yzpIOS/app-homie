@@ -59,7 +59,6 @@ class Int64Adapter extends TypeAdapter<Int64> {
   @override
   Int64 read(BinaryReader reader) {
     int len = reader.readByte();
-    debugPrint("aaaaaa = $len");
     return Int64.fromBytes(reader.readByteList(len));
   }
 
@@ -68,6 +67,5 @@ class Int64Adapter extends TypeAdapter<Int64> {
     writer.writeByte(8);
     List<int> bytes = obj.toBytes();
     writer.writeByteList(bytes, writeLength: false);
-    debugPrint("aaaaaa = ");
   }
 }

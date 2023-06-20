@@ -41,7 +41,7 @@ class MqCtrl extends GetxController {
         assert(false, '未处理的业务 -> $event');
       },
     );
-    SocketCtrl.getCtrl().onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+    SocketCtrl.ins.onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
   }
 
   ///
@@ -57,7 +57,7 @@ class MqCtrl extends GetxController {
   @override
   void onClose() {
     _client.stop();
-    SocketCtrl.getCtrl().removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     super.onClose();
   }
 

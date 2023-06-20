@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/auth_info.dart';
 import 'package:app/model/enum/gender_enum.dart';
@@ -177,6 +178,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     await KvBox.remove(PrefKey.AuthInfo);
 
     await Get.delete<UserCtrl>(force: true);
+
+    SocketCtrl.ins.resetConnect();
+    SocketCtrl.ins.onCanConnected(false);
   }
 
   //</editor-fold>

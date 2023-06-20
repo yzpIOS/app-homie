@@ -168,6 +168,20 @@ class CustomClient with BaseClient {
   }
 
   ///
+  /// 是否可以连接
+  ///
+  void onCanConnected(bool canConnect) {
+    _customSocket.onCanConnected(canConnect);
+  }
+
+  ///
+  /// 重置连接数据
+  ///
+  void resetConnect() {
+    _customSocket.resetConnect();
+  }
+
+  ///
   /// 销毁连接
   ///
   @override

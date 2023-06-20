@@ -30,7 +30,7 @@ class ApiRoom extends ApiBase {
       c_createScene.mikeStatus = ApiSwitch.close.code;
     }
     // 发送数据
-    S_CreateScene? response = await SocketCtrl.getCtrl().sendByteAsyncServer(
+    S_CreateScene? response = await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_CreateScene,
         resCmd: CMD.S_CreateScene,
         datas: c_createScene.writeToBuffer()
@@ -42,7 +42,7 @@ class ApiRoom extends ApiBase {
   /// 退出房间
   ///
   Future close() {
-    return SocketCtrl.getCtrl().sendByteAsyncServer(
+    return SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_CloseScene,
         resCmd: CMD.S_CloseScene
     );
@@ -80,7 +80,7 @@ class ApiRoom extends ApiBase {
 
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
-    await SocketCtrl.getCtrl().sendByteAsyncServer(
+    await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_JoinScene,
         datas: c_joinScene.writeToBuffer(),
         resCmd: CMD.S_JoinScene);
@@ -96,7 +96,7 @@ class ApiRoom extends ApiBase {
   ///
   Future outRoom(int id) async {
     // 发送加入房间的socket
-    return await SocketCtrl.getCtrl().sendByteAsyncServer(
+    return await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_OutScene);
 
 
@@ -111,7 +111,7 @@ class ApiRoom extends ApiBase {
   /// 房间下麦
   ///
   Future micDown({required int micId}) {
-    return SocketCtrl.getCtrl().sendByteAsyncServer(
+    return SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_OutMike,
     );
 
@@ -127,7 +127,7 @@ class ApiRoom extends ApiBase {
   ///
   Future micUp({required int roomId, required String no, NUID? uid}) async {
     C_UpMike c_upMike = C_UpMike(makeNo: no, roleId: uid);
-    return SocketCtrl.getCtrl().sendByteAsyncServer(
+    return SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_UpMike,
         datas: c_upMike.writeToBuffer()
     );
@@ -209,7 +209,7 @@ class ApiRoom extends ApiBase {
     cSetnoticemessage.roomId = Int64(roomId);
     cSetnoticemessage.sceneId = Int64(roomId);
     cSetnoticemessage.status = isAdd ? 1 : 2;
-    SocketCtrl.getCtrl().sendSever(CMD.C_SetNoticeMessage, message: cSetnoticemessage);
+    SocketCtrl.ins.sendSever(CMD.C_SetNoticeMessage, message: cSetnoticemessage);
     return Future.value(1);
   }
 
@@ -249,7 +249,7 @@ class ApiRoom extends ApiBase {
     C_SetNoticeMessage c_setNoticeMessage = C_SetNoticeMessage.create();
     c_setNoticeMessage.roomId = Int64(roomId);
     c_setNoticeMessage.message = notice;
-    return SocketCtrl.getCtrl().sendSever(CMD.C_SetNoticeMessage, message: c_setNoticeMessage);
+    return SocketCtrl.ins.sendSever(CMD.C_SetNoticeMessage, message: c_setNoticeMessage);
   }
 
   Future notice({required int roomId}) {
@@ -267,7 +267,7 @@ class ApiRoom extends ApiBase {
   Future resetHotCount({required int roomId, int? micId}) {
     C_AccMikeClear cAccmikeclear = C_AccMikeClear.create();
     cAccmikeclear.makeId = Int64(micId ?? 0);
-    SocketCtrl.getCtrl().sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
+    SocketCtrl.ins.sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
     return Future.value(1);
     
     final data = {

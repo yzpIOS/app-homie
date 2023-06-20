@@ -48,14 +48,14 @@ class RoomMsgCtrlPb extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    SocketCtrl.getCtrl().onData(onReceive);
-    SocketCtrl.getCtrl().addClientConnect(onConnected);
+    SocketCtrl.ins.onData(onReceive);
+    SocketCtrl.ins.addClientConnect(onConnected);
   }
 
   @override
   void onClose() {
-    SocketCtrl.getCtrl().removeOnData(onReceive);
-    SocketCtrl.getCtrl().removeClientConnect(onConnected);
+    SocketCtrl.ins.removeOnData(onReceive);
+    SocketCtrl.ins.removeClientConnect(onConnected);
     super.onClose();
   }
 
