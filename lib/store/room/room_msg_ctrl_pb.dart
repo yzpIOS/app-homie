@@ -1,6 +1,6 @@
+import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/room_event_pb.dart';
-import 'package:app/model/enum/room_event_type.dart';
 import 'package:app/tools.dart';
 import 'package:protobuf/protobuf.dart';
 
@@ -9,36 +9,40 @@ class RoomMsgCtrlPb extends GetxController {
 
   RoomMsgCtrlPb({required this.roomId});
 
-  final _createMap = <RoomEventType, RoomEvent Function()>{
-    RoomEventType.updateHotCount: UpdateHotCountEvent.new,
-    // 用户进入
-    RoomEventType.userIn: UserInEvent.new,
+  final _createMap = <int, RoomEvent Function()>{
+    // 房间计数器广播 【对应旧mq类型：18】
+    CMD.S_AccMikeBroadcast: UpdateHotCountEvent.new,
+    // 用户进入1
+    CMD.S_JoinBroadcast: UserInEvent.new,
     // 用户退出
-    RoomEventType.userOut: UserOutEvent.new,
-    RoomEventType.inviteMicUp: InviteMicUpEvent.new,
+    CMD.S_LeaveBroadcast: UserOutEvent.new,
+    // 邀请上麦
+    CMD.S_InviteMikeBroadcast: InviteMicUpEvent.new,
     // 上麦
-    RoomEventType.micUp: MicUpEvent.new,
+    CMD.S_UpMikeBroadcast: MicUpEvent.new,
     // 下麦
-    RoomEventType.micDown: MicDownEvent.new,
+    CMD.S_DownMikeBroadcast: MicDownEvent.new,
     // 修改房间公告
-    RoomEventType.notice: NoticeEvent.new,
-    RoomEventType.msgTxt: MsgTxtEvent.new,
+    CMD.S_NoticeBroadcast: NoticeEvent.new,
+    CMD.msgTxt: MsgTxtEvent.new,
     // 礼物
-    RoomEventType.gift: GiftEvent.new,
+    CMD.S_GiftPlay: GiftEvent.new,
     // 设置管理员
-    RoomEventType.managerSet: AdminSetEvent.new,
-    RoomEventType.micApply: MicApplyEvent.new,
-    // 禁麦
-    RoomEventType.micEnable: () => MicStateEvent(false),
-    RoomEventType.micDisabled: () => MicStateEvent(true),
-    // 黑名单
-    RoomEventType.userBlock: UserBlockEvent.new,
+    CMD.S_AdministratorBroadcast: AdminSetEvent.new,
+    // 申请上麦
+    CMD.S_ApplyUpMikeBroadcast: MicApplyEvent.new,
+    // 开麦
+    CMD.S_OpenBroadcast: () => MicStateEvent(false),
+    // 下麦
+    CMD.S_CloseMikeBroadcast: () => MicStateEvent(true),
+    // 把用设设置成黑名单
+    CMD.S_BlackBroadcast: UserBlockEvent.new,
     // 关闭房间
-    RoomEventType.closeLive: RoomCloseEvent.new,
+    CMD.S_LiveStopBroadcast: RoomCloseEvent.new,
     // 用户等级
-    RoomEventType.updateUserLevel: UserLevelUpEvent.new,
+    CMD.S_UpdateLevel: UserLevelUpEvent.new,
     // 魅力待级
-    RoomEventType.updateCharmLevel: UserCharmUpEvent.new,
+    CMD.S_UpdateCharmLevel: UserCharmUpEvent.new,
   };
 
   @override
@@ -52,7 +56,6 @@ class RoomMsgCtrlPb extends GetxController {
   void onClose() {
     SocketCtrl.getCtrl().removeOnData(onReceive);
     SocketCtrl.getCtrl().removeClientConnect(onConnected);
-
     super.onClose();
   }
 

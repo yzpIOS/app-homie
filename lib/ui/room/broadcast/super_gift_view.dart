@@ -1,3 +1,4 @@
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/api/user_info_dto.dart';
@@ -11,20 +12,20 @@ import 'package:app/widgets.dart';
 class SuperGiftView extends StatelessWidget {
   final UID acceptUid;
   final Map<UID, UserInfoDto> users;
-  final Map data;
+  final S_FloatingScreen data;
 
   SuperGiftView({required this.data, required this.acceptUid, required this.users}) : super(key: UniqueKey());
 
   @override
   Widget build(BuildContext context) {
-    final user = users[data['send_uid']];
+    final user = users[data.sendId];
 
     Widget child = XRichText(
       TextSpan(
         children: [
           TextSpan(text: user?.showName() ?? '--'),
           const TextSpan(text: '在'),
-          TextSpan(text: '${data['room_name']}'),
+          TextSpan(text: data.roomName),
           const TextSpan(text: '直播间赠送'),
           TextSpan(text: users[acceptUid]?.showName() ?? '--'),
         ],
@@ -38,11 +39,11 @@ class SuperGiftView extends StatelessWidget {
         Padding(
           padding: const Pad(horizontal: 2),
           child: GiftImgState(
-            child: NetImage(data['cover'], width: 30, height: 34),
+            child: NetImage(data.cover, width: 30, height: 34),
           ),
         ),
         XText(
-          'x${data['count']}',
+          'x${data.count}',
           style: const TextStyle(fontSize: 14),
         ),
       ],
@@ -104,21 +105,21 @@ class SuperGiftView extends StatelessWidget {
       child: child,
       onTap: () {
         final managerCtrl = Get.find<RoomManagerCtrl>();
-        final roomId = data['room_id'];
+        final roomId = data.roomId;
 
         if (managerCtrl.sceneCtrl.roomId != roomId) {
           Get.simpleDialog(msg: '确定切换房间').onResult(okCall: () {
             const SwitchRoomEvent().fire();
 
             simpleSub(
-              Future.wait([Api.Room.info(roomId: roomId), Future.delayed(const Duration(seconds: 1))]),
+              Future.wait([Api.Room.info(roomId: roomId.toInt()), Future.delayed(const Duration(seconds: 1))]),
               callback1: (resp) {
                 final data = resp[0];
 
                 switch (RoomType.fromVal(data['room_type'])) {
                   case RoomType.customize:
                   case RoomType.guild:
-                    managerCtrl.toRoom(roomId: roomId, data: data);
+                    managerCtrl.toRoom(roomId: roomId.toInt(), data: data);
                     break;
                   case RoomType.square:
                     managerCtrl.toSquare(data: data);

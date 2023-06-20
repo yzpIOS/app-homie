@@ -191,7 +191,7 @@ mixin BaseClient {
   ///
   /// 取消注册数据回调
   ///
-  void removeOnDataCmd(int cmd, OnReceiveData receiveData) {
+  void removeOnDataCmd<T extends GeneratedMessage>(int cmd, OnReceiveData<T> receiveData) {
     if(!_onReceiveCmds.containsKey(cmd)) {
       return;
     }

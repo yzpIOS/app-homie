@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app/3rd/tencent/im.dart' show V2TimMessage;
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/model/enum/unity_event_enum.dart';

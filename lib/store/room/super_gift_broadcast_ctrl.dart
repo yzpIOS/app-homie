@@ -1,3 +1,4 @@
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/tools.dart';
@@ -19,9 +20,9 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     );
   }
 
-  void _onGiftEvent(Map data) async {
-    final ids = data['accept_uid_list'] as Iterable;
-    final users = await _findByUidX({data['send_uid'], ...ids}, useNet: true);
+  void _onGiftEvent(S_FloatingScreen data) async {
+    final ids = data.acceptUidList;
+    final users = await _findByUidX({data.roleId.toString(), ...ids}, useNet: true);
 
     for (final uid in ids) {
       addTask(

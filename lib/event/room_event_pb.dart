@@ -60,33 +60,46 @@ class RoomChatMessageEvent extends RoomEvent<S_ChatMessageBroadcast> {
 class RoomAacMikeEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
 
-
-
-
-class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
+// 魅力等级提升广播（对应mq的19）
+class UserCharmUpEvent extends RoomEvent<S_UpdateCharmLevel> {
 }
-class InviteMicUpEvent extends RoomEvent<S_AccMikeBroadcast> {
+
+// 等级提升广播（对应mq的16）
+class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
 }
-class MsgTxtEvent extends RoomEvent<S_AccMikeBroadcast> {
-}
+
+// 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
+
+// 房间管理员设置
 class AdminSetEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
+
+// 申请上麦
 class MicApplyEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
+
+// 邀请上麦
+class InviteMicUpEvent extends RoomEvent<S_AccMikeBroadcast> {
+}
+
+// 开麦. 下麦
 class MicStateEvent extends RoomEvent<S_AccMikeBroadcast> {
-
   final bool isMute;
-
   MicStateEvent(this.isMute);
 }
-class UserLevelUpEvent extends RoomEvent<S_AccMikeBroadcast> {
-}
-class UserCharmUpEvent extends RoomEvent<S_AccMikeBroadcast> {
-}
+
+// socket状态回调
 class RoomReConnectEvent extends EventPb {
   final int roomId;
-
   RoomReConnectEvent(this.roomId);
+}
+
+//
+class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
+}
+
+
+class MsgTxtEvent extends RoomEvent<S_AccMikeBroadcast> {
 }

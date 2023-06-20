@@ -17,7 +17,7 @@ class RoomMsgCtrl extends GetxController {
 
   final _createMap = <RoomEventType, RoomEvent Function(Map)?>{
     RoomEventType.updateHotCount: UpdateHotCountEvent.new,
-    // 用户进入
+    // 用户进入1
     RoomEventType.userIn: UserInEvent.new,
     // 用户退出
     RoomEventType.userOut: UserOutEvent.new,
@@ -56,16 +56,11 @@ class RoomMsgCtrl extends GetxController {
       onData: onData,
       onReSub: () => RoomReConnectEvent(roomId).fire(),
     );
-    SocketCtrl.getCtrl().onData(onReceive);
-    SocketCtrl.getCtrl().addClientConnect(onConnected);
   }
 
   @override
   void onClose() {
     mq.unSub(subKey);
-    SocketCtrl.getCtrl().removeOnData(onReceive);
-    SocketCtrl.getCtrl().removeClientConnect(onConnected);
-
     super.onClose();
   }
 
@@ -89,19 +84,5 @@ class RoomMsgCtrl extends GetxController {
         }
       },
     );
-  }
-
-  ///
-  /// 接收到tcp数据
-  ///
-  void onReceive(int cmd, GeneratedMessage? generatedMessage) {
-
-  }
-
-  ///
-  /// 发送重新连接事件
-  ///
-  void onConnected() {
-    RoomReConnectEvent(roomId).fire();
   }
 }

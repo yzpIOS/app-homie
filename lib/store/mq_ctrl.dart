@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/socket/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -25,12 +28,12 @@ class MqCtrl extends GetxController {
       exchange('app_broadcast'),
       (event) {
         if (event case {'code': int code, 'data': Map data}) {
-          final logicEvent = switch (code) {
-            8 => SuperGiftEvent(data),
-            _ => BroadcastEvent(data),
-          };
-
-          logicEvent.fire();
+          // final logicEvent = switch (code) {
+          //   8 => SuperGiftEvent(data),
+          //   _ => BroadcastEvent(data),
+          // };
+          //
+          // logicEvent.fire();
 
           return;
         }
@@ -38,12 +41,23 @@ class MqCtrl extends GetxController {
         assert(false, '未处理的业务 -> $event');
       },
     );
+    SocketCtrl.getCtrl().onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+  }
+
+  ///
+  /// 漂屏
+  ///
+  void onFloatingScreen(int cmd, S_FloatingScreen? sFloatingscreen) {
+    if(sFloatingscreen == null) {
+      return;
+    }
+    SuperGiftEvent(sFloatingscreen).fire();
   }
 
   @override
   void onClose() {
     _client.stop();
-
+    SocketCtrl.getCtrl().removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     super.onClose();
   }
 

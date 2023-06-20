@@ -6,6 +6,6 @@ class BroadcastEvent<T> extends Event {
   const BroadcastEvent(this.data);
 }
 
-class SuperGiftEvent extends BroadcastEvent<Map> {
+class SuperGiftEvent extends BroadcastEvent<S_FloatingScreen> {
   SuperGiftEvent(super.data);
 }
