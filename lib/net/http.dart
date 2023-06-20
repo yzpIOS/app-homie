@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:app/3rd/sentry/sentry.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
+import 'package:app/net/interceptor/curl_interceptor.dart';
+import 'package:app/net/interceptor/log_interceptor.dart';
 import 'package:app/net/pretty_dio_logger.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
@@ -54,7 +56,10 @@ class Http {
               handler.next(options);
             },
           ),
-          _logInterceptor,
+          // 打印日志
+          LoggerInterceptor.instace,
+          // curl
+          CurlInterceptor.instace,
         ],
       );
 
@@ -95,12 +100,6 @@ class Http {
     } finally {
       _cancel.remove(token);
     }
-  }
-
-  Interceptor get _logInterceptor {
-    return PrettyDioLogger(
-      log: (msg, {required bool isError}) => xlog(msg, level: isError ? 3 : 0, type: LogType.HTTP),
-    );
   }
 }
 

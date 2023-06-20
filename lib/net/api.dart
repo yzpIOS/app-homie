@@ -4,7 +4,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:app/common/nets/cmds.dart';
-import 'package:app/common/nets/socket/proto/Message.pb.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/api_switch.dart';

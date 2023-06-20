@@ -1,5 +1,5 @@
 
-import 'package:app/common/nets/socket/proto/Message.pb.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/tools/bus.dart';
 import 'package:protobuf/protobuf.dart';
 

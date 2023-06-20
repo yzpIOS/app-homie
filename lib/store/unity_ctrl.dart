@@ -118,14 +118,20 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         return;
       }
       // 获取到端口
-      Future<dynamic> result = await sendMessage(
+      dynamic result = await sendMessage(
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
         data: {
           "port": event,
           "uniqueId": SocketCtrl.ins.uniqueId,
         },
       );
-      // todo 判断成功或者失败
+      Map res = jsonDecode(result);
+      // 成功
+      if(res.containsKey("action") == true) {
+        return;
+      }
+      // 失败，重连
+      sendFlutterSocketInfo(tryTimes: tryTimes - 1);
     }, onError: (error) async {
       // 连接错误
       await Future.delayed(Duration(seconds: delayTryTIme));

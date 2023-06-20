@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app/common/nets/cmds.dart';
-import 'package:app/common/nets/socket/proto/Message.pb.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/tools.dart';

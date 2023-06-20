@@ -1,4 +1,4 @@
-import 'package:app/common/nets/socket/proto/Message.pb.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/local_attach.dart';

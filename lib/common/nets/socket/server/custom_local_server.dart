@@ -65,7 +65,7 @@ class CustomLocalServer with BaseClient {
     }
     String currentIp = "localhost";
     if(Env.isDebug) {
-      currentIp = '192.168.1.177';
+      currentIp = '192.168.1.185';
     }
     _isBindingServer = true;
     // 开启ServerSocket
@@ -166,9 +166,6 @@ class CustomLocalServer with BaseClient {
   /// 心跳，检查无用连接
   ///
   void beatHeartCheck({int interval = 5}) {
-    if(Env.isDebug) {
-      return;
-    }
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;
