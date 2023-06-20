@@ -19,11 +19,14 @@ class CallBack<T extends GeneratedMessage> {
   Completer<T?>? complete;
 
   OnReceiveData<T>? onCallBack;
+  int? onCallBackHashCode;
 
   // 开始请求时间
   int starteTime = DateTime.now().second;
 
-  CallBack({required this.cmd, this.complete, this.onCallBack});
+  CallBack({required this.cmd, this.complete, this.onCallBack}) {
+    onCallBackHashCode = onCallBack?.hashCode;
+  }
 
   void response(int cmd, T? data) {
     try {
@@ -33,6 +36,16 @@ class CallBack<T extends GeneratedMessage> {
     }
   }
 
+  ///
+  /// 获取到future
+  ///
+  Future<T?>? getFuture() {
+    return complete?.future;
+  }
+
+  ///
+  /// 获取回调
+  ///
   void responseCallBack(int cmd, T? data) {
     try {
       onCallBack?.call(cmd, data);

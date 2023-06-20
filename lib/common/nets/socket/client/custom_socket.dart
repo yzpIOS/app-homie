@@ -40,23 +40,20 @@ class CustomSocket {
   StreamSubscription? _socketSubscription;
 
   // 接收数据
-  List<Receive> _receive = <Receive>[];
+  final List<Receive> _receive = <Receive>[];
 
   // 连接成功
-  List<Connected> _connected = <Connected>[];
+  final List<Connected> _connected = <Connected>[];
 
   // 连接失败
-  List<ConnectError> _connectError = <ConnectError>[];
+  final List<ConnectError> _connectError = <ConnectError>[];
 
   // 断开连接
-  List<Disconnect> _disconnects = <Disconnect>[];
+  final List<Disconnect> _disconnects = <Disconnect>[];
 
   // 过期时间
   int _timeout = 0;
   bool _isConnecting = false;
-
-  // 是否需要重连
-  bool _needReconnecting = false;
 
   // socket状态回调
   SocketStatusCallBack? socketStatusCallBack;
@@ -69,7 +66,7 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 5}) {
+  CustomSocket connect(String host, int port, {int timeout = 5, int delayReconnect = 3}) {
     // 防止重复调用
     if(_host == host && _port == port) {
       debugPrint("[socket]:连接地址相同, host=$host, port=$port");
@@ -103,7 +100,6 @@ class CustomSocket {
       debugPrint("[socket]:连接成功, host=$host, port=$_port");
       _socket = event;
       _isConnecting = false;
-      _needReconnecting = false;
       // 处理连接
       _handleConnect();
       // 连接成功
@@ -132,19 +128,16 @@ class CustomSocket {
         }
       }
 
-      // 需要重新链接
-      if(_needReconnecting) {
-        // ip和端口
-        String host = _host;
-        int port = _port;
-        // 重置数据
-        _host = "";
-        _port = 0;
-        // 网络连接
-        connect(host, port, timeout: _timeout);
-        // 连接失败
-        _riseCallBack2(BaseClient.CONNECT_FAIL);
-      }
+      // 延迟去重新连接
+      await Future.delayed(Duration(seconds: delayReconnect));
+
+      // 重置数据
+      _host = "";
+      _port = 0;
+      // 网络连接
+      connect(host, port, timeout: _timeout);
+      // 连接失败
+      _riseCallBack2(BaseClient.CONNECT_FAIL);
     });
     return this;
   }
@@ -201,11 +194,6 @@ class CustomSocket {
     // 强制连接
     if(foreceConnect) {
       _canConnected = true;
-    }
-    // 正在连接中，防止重复连接
-    if(_isConnecting) {
-      _needReconnecting = true;
-      return;
     }
     String host = _host;
     int port = _port;

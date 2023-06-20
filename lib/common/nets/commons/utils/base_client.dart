@@ -198,12 +198,12 @@ mixin BaseClient {
     if(_onReceiveCmds.containsKey(cmd) == false) {
       return;
     }
-    List<CallBack<GeneratedMessage>>? list = _onReceiveCmds[cmd];
+    List<CallBack>? list = _onReceiveCmds[cmd];
     if(list == null) {
       return;
     }
     for(int index = list.length - 1; index >= 0; index --) {
-      if(list[index].onCallBack == receiveData) {
+      if(list[index].onCallBackHashCode == receiveData.hashCode) {
         list.removeAt(index);
       }
     }
