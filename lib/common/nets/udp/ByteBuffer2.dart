@@ -64,7 +64,7 @@ class ByteBuffer2 extends BaseByteBuffer {
       _currentIndex = (_buffer[8] << 24).toInt() + (_buffer[9] << 16).toInt() +  (_buffer[10] << 8).toInt() + _buffer[11];
     }
     // 粘包了，不解析数据，等下个包数据过来
-    if(_curPkgLen < _buffer.length - PKG_LEN - CMD_LEN - INDEX_LENGTH) {
+    if(_buffer.length < _curPkgLen  + PKG_LEN + CMD_LEN + INDEX_LENGTH) {
       return null;
     }
     // 读取

@@ -57,7 +57,7 @@ class ByteBuffer1 extends BaseByteBuffer {
       _curCmd = (_buffer[4] << 24).toInt() + (_buffer[5] << 16).toInt() +  (_buffer[6] << 8).toInt() + _buffer[7];
     }
     // 粘包了，不解析数据，等下个包数据过来
-    if(_curPkgLen < _buffer.length - PKG_LEN - CMD_LEN) {
+    if(_buffer.length < _curPkgLen  + PKG_LEN + CMD_LEN) {
       return null;
     }
     // 读取

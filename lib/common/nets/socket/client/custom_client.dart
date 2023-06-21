@@ -130,7 +130,7 @@ class CustomClient with BaseClient {
   ///
   CustomClient startHeartBeat({int interval = 5}) {
     // 心跳没有响应的次数
-    if(heartBeatNumber >= 3) {
+    if(heartBeatNumber > 3) {
       _customSocket.reconnect();
       heartBeatNumber = 0;
     }

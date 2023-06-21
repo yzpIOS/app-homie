@@ -154,7 +154,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
     // todo 获取服务端的ip和host
     // 开启socket连接
-    SocketCtrl.ins.startClient("192.168.1.123", 7778);
+    SocketCtrl.ins.startClient("192.168.1.188", 7778);
   }
 
   //</editor-fold>
@@ -194,6 +194,12 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;
+
+    return _uid != null && uid != null && _uid == uid;
+  }
+
+  static bool isSelf2(int? uid) {
+    final _uid = _auth?.nuid;
 
     return _uid != null && uid != null && _uid == uid;
   }
