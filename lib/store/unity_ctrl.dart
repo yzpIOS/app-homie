@@ -123,7 +123,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
       debugPrint("[sendFlutterSocketInfo]: 发送信息给unity, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}...");
       // 获取到端口
-      dynamic result = await sendMessage(
+      Map<dynamic, dynamic> result = await sendMessage(
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
         data: {
           "port": event,
