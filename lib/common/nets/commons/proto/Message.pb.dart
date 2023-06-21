@@ -12,9 +12,9 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'Common.pb.dart' as $0;
 
-import 'ErrorCode.pbenum.dart' as $1;
 import 'Message.pbenum.dart';
 import 'Common.pbenum.dart' as $0;
+import 'ErrorCode.pbenum.dart' as $1;
 
 export 'Message.pbenum.dart';
 
@@ -67,13 +67,13 @@ class S_SysTime extends $pb.GeneratedMessage {
 
 class S_Err extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_Err', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..e<$1.ErrorCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   S_Err._() : super();
   factory S_Err({
-    $1.ErrorCode? code,
+    $core.int? code,
   }) {
     final _result = create();
     if (code != null) {
@@ -103,9 +103,9 @@ class S_Err extends $pb.GeneratedMessage {
   static S_Err? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $1.ErrorCode get code => $_getN(0);
+  $core.int get code => $_getIZ(0);
   @$pb.TagNumber(1)
-  set code($1.ErrorCode v) { setField(1, v); }
+  set code($core.int v) { $_setSignedInt32(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -972,6 +972,7 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_JoinBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'total', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
@@ -980,6 +981,7 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
   factory S_JoinBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.int? total,
   }) {
     final _result = create();
@@ -988,6 +990,9 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (total != null) {
       _result.total = total;
@@ -1033,12 +1038,21 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.int get total => $_getIZ(2);
+  $core.int get total => $_getIZ(3);
   @$pb.TagNumber(4)
-  set total($core.int v) { $_setSignedInt32(2, v); }
+  set total($core.int v) { $_setSignedInt32(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasTotal() => $_has(2);
+  $core.bool hasTotal() => $_has(3);
   @$pb.TagNumber(4)
   void clearTotal() => clearField(4);
 }
@@ -1047,6 +1061,7 @@ class S_LeaveBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_LeaveBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'total', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
@@ -1055,6 +1070,7 @@ class S_LeaveBroadcast extends $pb.GeneratedMessage {
   factory S_LeaveBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.int? total,
   }) {
     final _result = create();
@@ -1063,6 +1079,9 @@ class S_LeaveBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (total != null) {
       _result.total = total;
@@ -1108,12 +1127,21 @@ class S_LeaveBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.int get total => $_getIZ(2);
+  $core.int get total => $_getIZ(3);
   @$pb.TagNumber(4)
-  set total($core.int v) { $_setSignedInt32(2, v); }
+  set total($core.int v) { $_setSignedInt32(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasTotal() => $_has(2);
+  $core.bool hasTotal() => $_has(3);
   @$pb.TagNumber(4)
   void clearTotal() => clearField(4);
 }
@@ -1122,6 +1150,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldMikeNo')
     ..hasRequiredFields = false
@@ -1131,6 +1160,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   factory S_UpMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
     $core.String? oldMikeNo,
   }) {
@@ -1140,6 +1170,9 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
@@ -1188,21 +1221,30 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get oldMikeNo => $_getSZ(3);
+  $core.String get oldMikeNo => $_getSZ(4);
   @$pb.TagNumber(5)
-  set oldMikeNo($core.String v) { $_setString(3, v); }
+  set oldMikeNo($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasOldMikeNo() => $_has(3);
+  $core.bool hasOldMikeNo() => $_has(4);
   @$pb.TagNumber(5)
   void clearOldMikeNo() => clearField(5);
 }
@@ -1211,6 +1253,7 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_DownMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
@@ -1219,6 +1262,7 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
   factory S_DownMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
   }) {
     final _result = create();
@@ -1227,6 +1271,9 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
@@ -1272,12 +1319,21 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
 }
@@ -1286,8 +1342,8 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_InviteMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
-    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldMikeNo')
     ..hasRequiredFields = false
   ;
 
@@ -1295,8 +1351,8 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   factory S_InviteMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
-    $core.String? oldMikeNo,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1305,11 +1361,11 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     if (roleId != null) {
       _result.roleId = roleId;
     }
+    if (uid != null) {
+      _result.uid = uid;
+    }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
-    }
-    if (oldMikeNo != null) {
-      _result.oldMikeNo = oldMikeNo;
     }
     return _result;
   }
@@ -1352,29 +1408,30 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
-
-  @$pb.TagNumber(5)
-  $core.String get oldMikeNo => $_getSZ(3);
-  @$pb.TagNumber(5)
-  set oldMikeNo($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasOldMikeNo() => $_has(3);
-  @$pb.TagNumber(5)
-  void clearOldMikeNo() => clearField(5);
 }
 
 class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_CloseMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
@@ -1383,6 +1440,7 @@ class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
   factory S_CloseMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
   }) {
     final _result = create();
@@ -1391,6 +1449,9 @@ class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
@@ -1436,12 +1497,21 @@ class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
 }
@@ -1450,6 +1520,7 @@ class S_OpenBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_OpenBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -1457,6 +1528,7 @@ class S_OpenBroadcast extends $pb.GeneratedMessage {
   factory S_OpenBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1464,6 +1536,9 @@ class S_OpenBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     return _result;
   }
@@ -1505,12 +1580,22 @@ class S_OpenBroadcast extends $pb.GeneratedMessage {
   $core.bool hasRoleId() => $_has(1);
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
 }
 
 class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_ApplyUpMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
@@ -1519,6 +1604,7 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   factory S_ApplyUpMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
   }) {
     final _result = create();
@@ -1527,6 +1613,9 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
@@ -1572,12 +1661,21 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
 }
@@ -1586,6 +1684,7 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_RefuseUpMikeBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
@@ -1594,6 +1693,7 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   factory S_RefuseUpMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $core.String? mikeNo,
   }) {
     final _result = create();
@@ -1602,6 +1702,9 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
@@ -1647,12 +1750,21 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   void clearRoleId() => clearField(2);
 
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+
   @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(2);
+  $core.String get mikeNo => $_getSZ(3);
   @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(2, v); }
+  set mikeNo($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(2);
+  $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
 }
@@ -1811,8 +1923,9 @@ class S_BlackBroadcast extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_BlackBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
-    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'operatorRoleId')
-    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'operatorRoleId')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1820,6 +1933,7 @@ class S_BlackBroadcast extends $pb.GeneratedMessage {
   factory S_BlackBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
+    $core.String? uid,
     $fixnum.Int64? operatorRoleId,
     $core.int? status,
   }) {
@@ -1829,6 +1943,9 @@ class S_BlackBroadcast extends $pb.GeneratedMessage {
     }
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     if (operatorRoleId != null) {
       _result.operatorRoleId = operatorRoleId;
@@ -1878,22 +1995,31 @@ class S_BlackBroadcast extends $pb.GeneratedMessage {
   void clearRoleId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $fixnum.Int64 get operatorRoleId => $_getI64(2);
+  $core.String get uid => $_getSZ(2);
   @$pb.TagNumber(3)
-  set operatorRoleId($fixnum.Int64 v) { $_setInt64(2, v); }
+  set uid($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasOperatorRoleId() => $_has(2);
+  $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
-  void clearOperatorRoleId() => clearField(3);
+  void clearUid() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.int get status => $_getIZ(3);
+  $fixnum.Int64 get operatorRoleId => $_getI64(3);
   @$pb.TagNumber(4)
-  set status($core.int v) { $_setSignedInt32(3, v); }
+  set operatorRoleId($fixnum.Int64 v) { $_setInt64(3, v); }
   @$pb.TagNumber(4)
-  $core.bool hasStatus() => $_has(3);
+  $core.bool hasOperatorRoleId() => $_has(3);
   @$pb.TagNumber(4)
-  void clearStatus() => clearField(4);
+  void clearOperatorRoleId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get status => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set status($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasStatus() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearStatus() => clearField(5);
 }
 
 class S_AdministratorBroadcast extends $pb.GeneratedMessage {
@@ -2252,6 +2378,55 @@ class S_CreateScene extends $pb.GeneratedMessage {
   void clearRoomId() => clearField(2);
 }
 
+class S_CloseScene extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_CloseScene', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOM<S_Err>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', subBuilder: S_Err.create)
+    ..hasRequiredFields = false
+  ;
+
+  S_CloseScene._() : super();
+  factory S_CloseScene({
+    S_Err? code,
+  }) {
+    final _result = create();
+    if (code != null) {
+      _result.code = code;
+    }
+    return _result;
+  }
+  factory S_CloseScene.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_CloseScene.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_CloseScene clone() => S_CloseScene()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_CloseScene copyWith(void Function(S_CloseScene) updates) => super.copyWith((message) => updates(message as S_CloseScene)) as S_CloseScene; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_CloseScene create() => S_CloseScene._();
+  S_CloseScene createEmptyInstance() => create();
+  static $pb.PbList<S_CloseScene> createRepeated() => $pb.PbList<S_CloseScene>();
+  @$core.pragma('dart2js:noInline')
+  static S_CloseScene getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_CloseScene>(create);
+  static S_CloseScene? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  S_Err get code => $_getN(0);
+  @$pb.TagNumber(1)
+  set code(S_Err v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => clearField(1);
+  @$pb.TagNumber(1)
+  S_Err ensureCode() => $_ensure(0);
+}
+
 class C_JoinScene extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_JoinScene', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
@@ -2311,67 +2486,6 @@ class C_JoinScene extends $pb.GeneratedMessage {
   $core.bool hasRoomPassword() => $_has(1);
   @$pb.TagNumber(2)
   void clearRoomPassword() => clearField(2);
-}
-
-class S_JoinScene extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_JoinScene', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sceneId')
-    ..hasRequiredFields = false
-  ;
-
-  S_JoinScene._() : super();
-  factory S_JoinScene({
-    $fixnum.Int64? roomId,
-    $fixnum.Int64? sceneId,
-  }) {
-    final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
-    }
-    if (sceneId != null) {
-      _result.sceneId = sceneId;
-    }
-    return _result;
-  }
-  factory S_JoinScene.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_JoinScene.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_JoinScene clone() => S_JoinScene()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_JoinScene copyWith(void Function(S_JoinScene) updates) => super.copyWith((message) => updates(message as S_JoinScene)) as S_JoinScene; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static S_JoinScene create() => S_JoinScene._();
-  S_JoinScene createEmptyInstance() => create();
-  static $pb.PbList<S_JoinScene> createRepeated() => $pb.PbList<S_JoinScene>();
-  @$core.pragma('dart2js:noInline')
-  static S_JoinScene getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_JoinScene>(create);
-  static S_JoinScene? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get sceneId => $_getI64(1);
-  @$pb.TagNumber(2)
-  set sceneId($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSceneId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSceneId() => clearField(2);
 }
 
 class C_UpMike extends $pb.GeneratedMessage {
@@ -2438,16 +2552,21 @@ class C_UpMike extends $pb.GeneratedMessage {
 class S_UpMike extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpMike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   S_UpMike._() : super();
   factory S_UpMike({
     $fixnum.Int64? mikeId,
+    $core.int? status,
   }) {
     final _result = create();
     if (mikeId != null) {
       _result.mikeId = mikeId;
+    }
+    if (status != null) {
+      _result.status = status;
     }
     return _result;
   }
@@ -2480,6 +2599,62 @@ class S_UpMike extends $pb.GeneratedMessage {
   $core.bool hasMikeId() => $_has(0);
   @$pb.TagNumber(1)
   void clearMikeId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get status => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set status($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStatus() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStatus() => clearField(2);
+}
+
+class C_OutMike extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_OutMike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..hasRequiredFields = false
+  ;
+
+  C_OutMike._() : super();
+  factory C_OutMike({
+    $fixnum.Int64? roleId,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    return _result;
+  }
+  factory C_OutMike.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_OutMike.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_OutMike clone() => C_OutMike()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_OutMike copyWith(void Function(C_OutMike) updates) => super.copyWith((message) => updates(message as C_OutMike)) as C_OutMike; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_OutMike create() => C_OutMike._();
+  C_OutMike createEmptyInstance() => create();
+  static $pb.PbList<C_OutMike> createRepeated() => $pb.PbList<C_OutMike>();
+  @$core.pragma('dart2js:noInline')
+  static C_OutMike getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_OutMike>(create);
+  static C_OutMike? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
 }
 
 class C_BanMike extends $pb.GeneratedMessage {
@@ -4003,17 +4178,22 @@ class S_State extends $pb.GeneratedMessage {
 
 class C_ToSeatInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_ToSeatInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aOM<$0.SeatInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'info', subBuilder: $0.SeatInfo.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guid')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'canSeat', $pb.PbFieldType.O3, protoName: 'canSeat')
     ..hasRequiredFields = false
   ;
 
   C_ToSeatInfo._() : super();
   factory C_ToSeatInfo({
-    $0.SeatInfo? info,
+    $core.String? guid,
+    $core.int? canSeat,
   }) {
     final _result = create();
-    if (info != null) {
-      _result.info = info;
+    if (guid != null) {
+      _result.guid = guid;
+    }
+    if (canSeat != null) {
+      _result.canSeat = canSeat;
     }
     return _result;
   }
@@ -4039,30 +4219,47 @@ class C_ToSeatInfo extends $pb.GeneratedMessage {
   static C_ToSeatInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.SeatInfo get info => $_getN(0);
+  $core.String get guid => $_getSZ(0);
   @$pb.TagNumber(1)
-  set info($0.SeatInfo v) { setField(1, v); }
+  set guid($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasInfo() => $_has(0);
+  $core.bool hasGuid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearInfo() => clearField(1);
-  @$pb.TagNumber(1)
-  $0.SeatInfo ensureInfo() => $_ensure(0);
+  void clearGuid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get canSeat => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set canSeat($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCanSeat() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCanSeat() => clearField(2);
 }
 
 class S_SyncSeatInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_SyncSeatInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aOM<$0.SeatInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'info', subBuilder: $0.SeatInfo.create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guid')
+    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'canSeat', protoName: 'canSeat')
     ..hasRequiredFields = false
   ;
 
   S_SyncSeatInfo._() : super();
   factory S_SyncSeatInfo({
-    $0.SeatInfo? info,
+    $fixnum.Int64? id,
+    $core.String? guid,
+    $core.bool? canSeat,
   }) {
     final _result = create();
-    if (info != null) {
-      _result.info = info;
+    if (id != null) {
+      _result.id = id;
+    }
+    if (guid != null) {
+      _result.guid = guid;
+    }
+    if (canSeat != null) {
+      _result.canSeat = canSeat;
     }
     return _result;
   }
@@ -4088,15 +4285,31 @@ class S_SyncSeatInfo extends $pb.GeneratedMessage {
   static S_SyncSeatInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $0.SeatInfo get info => $_getN(0);
+  $fixnum.Int64 get id => $_getI64(0);
   @$pb.TagNumber(1)
-  set info($0.SeatInfo v) { setField(1, v); }
+  set id($fixnum.Int64 v) { $_setInt64(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasInfo() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearInfo() => clearField(1);
-  @$pb.TagNumber(1)
-  $0.SeatInfo ensureInfo() => $_ensure(0);
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get guid => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set guid($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasGuid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearGuid() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.bool get canSeat => $_getBF(2);
+  @$pb.TagNumber(3)
+  set canSeat($core.bool v) { $_setBool(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCanSeat() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCanSeat() => clearField(3);
 }
 
 class C_Robot extends $pb.GeneratedMessage {
@@ -4484,13 +4697,13 @@ class S_Debug extends $pb.GeneratedMessage {
 
 class C_Verify extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_Verify', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uniqueId', $pb.PbFieldType.O3, protoName: 'uniqueId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uniqueId', protoName: 'uniqueId')
     ..hasRequiredFields = false
   ;
 
   C_Verify._() : super();
   factory C_Verify({
-    $core.int? uniqueId,
+    $core.String? uniqueId,
   }) {
     final _result = create();
     if (uniqueId != null) {
@@ -4520,9 +4733,9 @@ class C_Verify extends $pb.GeneratedMessage {
   static C_Verify? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get uniqueId => $_getIZ(0);
+  $core.String get uniqueId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set uniqueId($core.int v) { $_setSignedInt32(0, v); }
+  set uniqueId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasUniqueId() => $_has(0);
   @$pb.TagNumber(1)
@@ -4556,6 +4769,81 @@ class G_UFHeart extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static G_UFHeart getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<G_UFHeart>(create);
   static G_UFHeart? _defaultInstance;
+}
+
+class C_UFReLink extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_UFReLink', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'token')
+    ..hasRequiredFields = false
+  ;
+
+  C_UFReLink._() : super();
+  factory C_UFReLink({
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? time,
+    $core.String? token,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (time != null) {
+      _result.time = time;
+    }
+    if (token != null) {
+      _result.token = token;
+    }
+    return _result;
+  }
+  factory C_UFReLink.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_UFReLink.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_UFReLink clone() => C_UFReLink()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_UFReLink copyWith(void Function(C_UFReLink) updates) => super.copyWith((message) => updates(message as C_UFReLink)) as C_UFReLink; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_UFReLink create() => C_UFReLink._();
+  C_UFReLink createEmptyInstance() => create();
+  static $pb.PbList<C_UFReLink> createRepeated() => $pb.PbList<C_UFReLink>();
+  @$core.pragma('dart2js:noInline')
+  static C_UFReLink getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_UFReLink>(create);
+  static C_UFReLink? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get time => $_getI64(1);
+  @$pb.TagNumber(2)
+  set time($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTime() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get token => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set token($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasToken() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearToken() => clearField(3);
 }
 
 class F_GiftShow extends $pb.GeneratedMessage {
@@ -4757,15 +5045,15 @@ class S_UpdateLevel extends $pb.GeneratedMessage {
   void clearLevel() => clearField(2);
 }
 
-class S_UpdateCharmLevel extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateCharmLevel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+class UpdateCharmLevelItem extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateCharmLevelItem', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'charmLevel')
     ..hasRequiredFields = false
   ;
 
-  S_UpdateCharmLevel._() : super();
-  factory S_UpdateCharmLevel({
+  UpdateCharmLevelItem._() : super();
+  factory UpdateCharmLevelItem({
     $fixnum.Int64? roleId,
     $fixnum.Int64? charmLevel,
   }) {
@@ -4775,6 +5063,62 @@ class S_UpdateCharmLevel extends $pb.GeneratedMessage {
     }
     if (charmLevel != null) {
       _result.charmLevel = charmLevel;
+    }
+    return _result;
+  }
+  factory UpdateCharmLevelItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UpdateCharmLevelItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UpdateCharmLevelItem clone() => UpdateCharmLevelItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UpdateCharmLevelItem copyWith(void Function(UpdateCharmLevelItem) updates) => super.copyWith((message) => updates(message as UpdateCharmLevelItem)) as UpdateCharmLevelItem; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UpdateCharmLevelItem create() => UpdateCharmLevelItem._();
+  UpdateCharmLevelItem createEmptyInstance() => create();
+  static $pb.PbList<UpdateCharmLevelItem> createRepeated() => $pb.PbList<UpdateCharmLevelItem>();
+  @$core.pragma('dart2js:noInline')
+  static UpdateCharmLevelItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UpdateCharmLevelItem>(create);
+  static UpdateCharmLevelItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get charmLevel => $_getI64(1);
+  @$pb.TagNumber(2)
+  set charmLevel($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCharmLevel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCharmLevel() => clearField(2);
+}
+
+class S_UpdateCharmLevel extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateCharmLevel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<UpdateCharmLevelItem>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: UpdateCharmLevelItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  S_UpdateCharmLevel._() : super();
+  factory S_UpdateCharmLevel({
+    $core.Iterable<UpdateCharmLevelItem>? items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
     }
     return _result;
   }
@@ -4800,22 +5144,7 @@ class S_UpdateCharmLevel extends $pb.GeneratedMessage {
   static S_UpdateCharmLevel? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get roleId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoleId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoleId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get charmLevel => $_getI64(1);
-  @$pb.TagNumber(2)
-  set charmLevel($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasCharmLevel() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearCharmLevel() => clearField(2);
+  $core.List<UpdateCharmLevelItem> get items => $_getList(0);
 }
 
 class S_GiftPlay extends $pb.GeneratedMessage {

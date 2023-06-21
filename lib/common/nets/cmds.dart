@@ -19,6 +19,7 @@ class CMD {
   static const C_AccMikeClear = 2130; // 房间麦克风计数器清除
 
   static const C_UpMike = 2122; // 房间上麦
+  static const S_UpMike = 2123; // 房间上麦反馈结果
   static const C_OutMike = 2124; // 房间下麦
 
   static const C_ChatMessage = 2180; // 房间聊天

@@ -7,6 +7,7 @@ import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/scene_loader.dart';
+import 'package:app/widgets.dart';
 import 'package:f_unity/f_unity_platform_interface.dart';
 import 'package:slugid/slugid.dart';
 import 'package:synchronized/synchronized.dart';
@@ -104,6 +105,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if(tryTimes >= 10) {
       return;
     }
+    debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
     SocketCtrl.ins.updateUniqueId();
     // 延迟时间
@@ -113,10 +115,13 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     subscription = SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {
+        debugPrint("[sendFlutterSocketInfo]: 服务没有启动...");
         await Future.delayed(Duration(seconds: delayTryTIme));
         sendFlutterSocketInfo(tryTimes: tryTimes + 1);
         return;
       }
+
+      debugPrint("[sendFlutterSocketInfo]: 发送信息给unity, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}...");
       // 获取到端口
       dynamic result = await sendMessage(
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
@@ -128,11 +133,14 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       Map res = jsonDecode(result);
       // 成功
       if(res.containsKey("action") == true) {
+        debugPrint("[sendFlutterSocketInfo]: 连接失败, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${result}...");
         return;
       }
+      debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${result}...");
       // 失败，重连
       sendFlutterSocketInfo(tryTimes: tryTimes - 1);
     }, onError: (error) async {
+      debugPrint("[sendFlutterSocketInfo]: 连接失败, error = ${error.toString()}");
       // 连接错误
       await Future.delayed(Duration(seconds: delayTryTIme));
       sendFlutterSocketInfo(tryTimes: tryTimes + 1);

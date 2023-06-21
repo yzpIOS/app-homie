@@ -57,11 +57,6 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
           return;
         }
 
-        if(Env.isDebug) {
-          markReady();
-          return;
-        }
-
         switch (e.code) {
           case 16001:
             markReady();
@@ -290,12 +285,10 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
     // final scene = sceneRx();
     final image = imageRx();
 
-    if(Env.isRelease) {
-      if (image == null) {
-        showToast('请上传封面');
+    if (image == null) {
+      showToast('请上传封面');
 
-        return;
-      }
+      return;
     }
 
     if (title.isEmpty) {

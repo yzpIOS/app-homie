@@ -1,3 +1,4 @@
+import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/home/home_search_page.dart';
@@ -79,6 +80,15 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         color: null,
         onPressed: () async {
           await Get.find<RoomManagerCtrl>().doCloseState();
+
+          if(Env.isDebug) {
+            // Get.find<RoomManagerCtrl>().toRoom(roomId: 5, off: true);
+            Api.Room.joinRoom(5);
+            await Future.delayed(const Duration(seconds: 3));
+            var result = await Api.Room.micUp(roomId: 5, no: "3");
+            debugPrint("aaa");
+            return;
+          }
 
           Get.to(() => const CreateRoomPage());
         },

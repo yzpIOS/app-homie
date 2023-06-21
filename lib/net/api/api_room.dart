@@ -80,7 +80,7 @@ class ApiRoom extends ApiBase {
 
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
-    await SocketCtrl.ins.sendByteAsyncServer(
+    var result = await await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_JoinScene,
         datas: c_joinScene.writeToBuffer(),
         resCmd: CMD.S_JoinScene);
@@ -94,10 +94,10 @@ class ApiRoom extends ApiBase {
   ///
   /// 退出房间
   ///
-  Future outRoom(int id) async {
+  Future<dynamic> outRoom(int id) async {
     // 发送加入房间的socket
     return await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_OutScene);
+        CMD.C_OutScene, resCmd: CMD.S_OutScene);
 
 
     final data = {
@@ -125,11 +125,12 @@ class ApiRoom extends ApiBase {
   ///
   /// 房间上麦
   ///
-  Future micUp({required int roomId, required String no, NUID? uid}) async {
+  Future<S_UpMike?> micUp({required int roomId, required String no, NUID? uid}) async {
     C_UpMike c_upMike = C_UpMike(makeNo: no, roleId: uid);
     return SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_UpMike,
-        datas: c_upMike.writeToBuffer()
+        datas: c_upMike.writeToBuffer(),
+      resCmd: CMD.S_UpMike
     );
 
     final data = {
@@ -138,7 +139,7 @@ class ApiRoom extends ApiBase {
       if (uid != null) 'uid': uid,
     };
 
-    return _doPost('up-mike', data: data);
+    // return _doPost('up-mike', data: data);
   }
 
   ///

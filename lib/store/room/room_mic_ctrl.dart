@@ -197,7 +197,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       () async {
         final result = await Api.Room.micUp(roomId: roomId, no: no);
 
-        switch (result['status']) {
+        switch (result?.status.toInt()) {
           case 3:
             showToast('申请发送成功');
             break;
@@ -225,7 +225,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
 
       // 1.上麦， 2.下麦， 3.申请中 4.邀请
-      switch (result['status']) {
+      switch (result?.status.toInt()) {
         case 4:
           showToast('发送邀请成功');
           break;
