@@ -130,9 +130,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           "uniqueId": SocketCtrl.ins.uniqueId,
         },
       );
-      Map res = jsonDecode(result);
       // 成功
-      if(res.containsKey("action") == true) {
+      if(result.containsKey("action") == false) {
         debugPrint("[sendFlutterSocketInfo]: 连接失败, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${result}...");
         return;
       }
