@@ -108,30 +108,36 @@ class GiftEvent extends InRoomEvent<Map> {
   late final NUID nuid = data['role_id'];
 }
 
+//1
 class AdminSetEvent extends InRoomEvent<Map> with UidMixin {
   AdminSetEvent(super.data);
 
   late final bool isAdd = data['status'] == 1;
 }
 
+//1
 class UpdateHotCountEvent extends InRoomEvent<Map> {
   UpdateHotCountEvent(super.data);
 }
 
+// 1
 class RoomCloseEvent extends InRoomEvent {
   RoomCloseEvent(super.data);
 }
 
+//1
 class UserBlockEvent extends InRoomEvent with UidMixin {
   UserBlockEvent(super.data);
 }
 
+//1
 class UserLevelUpEvent extends RoomEvent<Map> with UidMixin {
   UserLevelUpEvent(super.data);
 
   late final String level = data['level'];
 }
 
+//1
 class UserCharmUpEvent extends RoomEvent<Map> with UidMixin {
   UserCharmUpEvent(super.data);
 

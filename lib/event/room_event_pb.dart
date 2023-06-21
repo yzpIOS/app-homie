@@ -105,3 +105,10 @@ class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
 
 class MsgTxtEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
+
+// ?
+class RoomAtEvent extends EventPb {
+  final String nickName;
+
+  RoomAtEvent(this.nickName);
+}

@@ -323,10 +323,10 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
         notice: notice,
         pwd: pwd);
     // 获取到sceneId
-    int? sceneId = response?.sceneId;
-    if(sceneId == null) {
+    int? roomId = response?.roomId.toInt();
+    if(roomId == null) {
       return;
     }
-    Get.find<RoomManagerCtrl>().toRoom(roomId: sceneId, off: true);
+    Get.find<RoomManagerCtrl>().toRoom(roomId: roomId, off: true);
   }
 }
