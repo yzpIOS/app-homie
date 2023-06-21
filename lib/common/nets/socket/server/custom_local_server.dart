@@ -63,13 +63,10 @@ class CustomLocalServer with BaseClient {
       _portCompleter = null;
       return;
     }
-    String currentIp = "localhost";
-    if(Env.isDebug) {
-      currentIp = '192.168.1.185';
-    }
+    _currentPort = 0;
     _isBindingServer = true;
     // 开启ServerSocket
-    ServerSocket.bind(currentIp, port).asStream().listen((event) {
+    ServerSocket.bind("localhost", port).asStream().listen((event) {
       _isBindingServer = false;
       _currentPort = port;
       _portCompleter?.complete(_currentPort);
@@ -157,8 +154,12 @@ class CustomLocalServer with BaseClient {
   /// 获取端口
   ///
   Future<int> getPortAsync() async {
+    if(_currentPort != 0) {
+      return Future.value(_currentPort);
+    }
     _portCompleter?.completeError("error");
     _portCompleter = Completer();
+
     return _portCompleter!.future;
   }
 
