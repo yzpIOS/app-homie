@@ -123,21 +123,14 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
       debugPrint("[sendFlutterSocketInfo]: 发送信息给unity, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}...");
       // 获取到端口
-      Map<dynamic, dynamic> result = await sendMessage(
+      dynamic resultString = await sendMessage(
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
         data: {
           "port": event,
           "uniqueId": SocketCtrl.ins.uniqueId,
         },
       );
-      // 成功
-      if(result.containsKey("action") == false) {
-        debugPrint("[sendFlutterSocketInfo]: 连接失败, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${result}...");
-        return;
-      }
-      debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${result}...");
-      // 失败，重连
-      sendFlutterSocketInfo(tryTimes: tryTimes - 1);
+      debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
       debugPrint("[sendFlutterSocketInfo]: 连接失败, error = ${error.toString()}");
       // 连接错误
