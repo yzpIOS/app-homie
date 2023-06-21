@@ -53,7 +53,7 @@ class CustomLocalServer with BaseClient {
   ///
   /// 绑定server
   ///
-  void bindServer({int port = 7778, int connectTimes = 0}) {
+  void bindServer({int port = 7678, int connectTimes = 0}) {
     if(_isBindingServer) {
       return;
     }
@@ -66,7 +66,7 @@ class CustomLocalServer with BaseClient {
     _currentPort = 0;
     _isBindingServer = true;
     // 开启ServerSocket
-    ServerSocket.bind("localhost", port).asStream().listen((event) {
+    ServerSocket.bind("127.0.0.1", port).asStream().listen((event) {
       _isBindingServer = false;
       _currentPort = port;
       _portCompleter?.complete(_currentPort);
