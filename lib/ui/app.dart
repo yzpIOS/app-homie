@@ -49,50 +49,9 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
     super.initState();
     // 网络变化
     Connectivity().onConnectivityChanged.listen(ConnState.onChanged);
-    intiSocketConfig();
     TimeFormat.initLocale('zh_cn');
   }
 
-  void intiSocketConfig() {
-    // 连接socket
-    post(() async {
-      await Future.delayed(const Duration(seconds: 3));
-      // 连接服务器
-      SocketCtrl.ins.startClient("192.168.1.123", 7778);
-      // 连接成功回调
-      SocketCtrl.ins.addClientConnect(onClientConnect);
-      SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
-      SocketCtrl.ins.onDataCmd(CMD.S_Err, onServerError);
-    });
-  }
-
-  ///
-  /// 用户信息返回
-  ///
-  void onRoleResponse(int cmd, S_Role? role) {
-    if(role == null) {
-      return;
-    }
-    var roleId = role.role.roleId;
-    var name = role.role.name;
-    debugPrint("aaa");
-  }
-
-  ///
-  /// 服务端错误
-  ///
-  void onServerError(int cmd, S_Err? role) {
-    debugPrint("aaa");
-  }
-
-  ///
-  /// 连接成功后，就请求用户信息
-  ///
-  void onClientConnect() {
-    C_Role role = C_Role.create();
-    role.session = OAuthCtrl.token ?? "";
-    SocketCtrl.ins.sendSever(CMD.C_Role, message: role);
-  }
 
   @override
   Widget build(BuildContext context) {

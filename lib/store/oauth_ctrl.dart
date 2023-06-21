@@ -151,6 +151,10 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       UserCtrl(_auth = data, init: info),
       permanent: true,
     );
+
+    // todo 获取服务端的ip和host
+    // 开启socket连接
+    SocketCtrl.ins.startClient("192.168.1.123", 7778);
   }
 
   //</editor-fold>
@@ -179,8 +183,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
     await Get.delete<UserCtrl>(force: true);
 
-    SocketCtrl.ins.resetConnect();
-    SocketCtrl.ins.onCanConnected(false);
+    // 重置socket
+    SocketCtrl.ins.closeSocket();
   }
 
   //</editor-fold>

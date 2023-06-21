@@ -21,6 +21,8 @@ class CMD {
   static const C_UpMike = 2122; // 房间上麦
   static const C_OutMike = 2124; // 房间下麦
 
+  static const C_ChatMessage = 2180; // 房间聊天
+
 
   static const C_SetNoticeMessage = 2140; // 设置房间公告
 
@@ -45,7 +47,7 @@ class CMD {
   static const S_UpdateLevel = 3102; // 等级提升广播（对应mq的16）
   static const S_LiveStopBroadcast = 2201; // 房间关播广播【对应旧mq类型：17】
   static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18
-  static const S_UpdateCharmLevel = 2270; // 魅力等级提升广播（对应mq的19）
+  static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）
   static const S_ChatMessageBroadcast = 2270; // 房间聊天信息广播
 
 

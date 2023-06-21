@@ -6,6 +6,9 @@ import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
+import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/tools.dart';
+import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
@@ -95,13 +98,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
-  /// 启动client
-  ///
-  void startClient(String host, int port) {
-    shareClient.connect(host, port);
-  }
-
-  ///
   /// 发送pb对像数据
   ///
   bool sendSever(int cmd, {GeneratedMessage? message}) {
@@ -174,20 +170,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
-  /// 是否可以连接
-  ///
-  void onCanConnected(bool canConnect) {
-    shareClient.onCanConnected(canConnect);
-  }
-
-  ///
-  /// 重置连接数据
-  ///
-  void resetConnect() {
-    shareClient.resetConnect();
-  }
-
-  ///
   /// 注册所有的数据解析器
   ///
   void registerAll() {
@@ -214,10 +196,62 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_GiveGiftByRoom, C_GiveGiftByRoom.fromBuffer);
   }
 
+  ///
+  /// 开启socket连接
+  void startClient(String host, int port) {
+    // 连接socket
+    post(() async {
+      await Future.delayed(const Duration(seconds: 3));
+      // 连接服务器
+      shareClient.connect(host, port);
+      // 连接成功回调
+      addClientConnect(onClientConnect);
+      onDataCmd(CMD.S_Role, onRoleResponse);
+      onDataCmd(CMD.S_Err, onServerError);
+    });
+  }
+
+  ///
+  /// 断开socket
+  ///
+  void closeSocket() {
+    shareClient.onCanConnected(false);
+    shareClient.resetConnect();
+  }
+
+  ///
+  /// 用户信息返回
+  ///
+  void onRoleResponse(int cmd, S_Role? role) {
+    if(role == null) {
+      return;
+    }
+    var roleId = role.role.roleId;
+    var name = role.role.name;
+    debugPrint("aaa");
+  }
+
+  ///
+  /// 服务端错误
+  ///
+  void onServerError(int cmd, S_Err? role) {
+    debugPrint("aaa");
+  }
+
+  ///
+  /// 连接成功后，就请求用户信息
+  ///
+  void onClientConnect() {
+    C_Role role = C_Role.create();
+    role.session = OAuthCtrl.token ?? "";
+    SocketCtrl.ins.sendSever(CMD.C_Role, message: role);
+  }
+
   @override
   void dispose() {
     super.dispose();
     shareClient.dispose();
     localServer.dispose();
+    removeClientConnect(onClientConnect);
   }
 }

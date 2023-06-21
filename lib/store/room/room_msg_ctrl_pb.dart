@@ -24,7 +24,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_DownMikeBroadcast: MicDownEvent.new,
     // 修改房间公告
     CMD.S_NoticeBroadcast: NoticeEvent.new,
-    CMD.msgTxt: MsgTxtEvent.new,
+    CMD.S_ChatMessageBroadcast: RoomChatMessageEvent.new,
+    // CMD.msgTxt: MsgTxtEvent.new,
     // 礼物
     CMD.S_GiftPlay: GiftEvent.new,
     // 设置管理员

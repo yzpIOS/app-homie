@@ -284,6 +284,12 @@ mixin BaseClient {
   }
 
   void dispose() {
+    _onReceive.clear();
+    _onReceiveCmds.clear();
+    _onReceiveFutures.clear();
+    _onReceiveRaw.clear();
+    _onReceiveRawCmds.clear();
+    _onGeneratedMessage.clear();
     serverByteBuffer.clearBuffer();
   }
 }

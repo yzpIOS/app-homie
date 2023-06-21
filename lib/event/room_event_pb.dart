@@ -69,15 +69,15 @@ class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
 }
 
 // 礼物播放广播(对应mq的8)
-class GiftEvent extends RoomEvent<S_AccMikeBroadcast> {
+class GiftEvent extends RoomEvent<S_GiftPlay> {
 }
 
 // 房间管理员设置
-class AdminSetEvent extends RoomEvent<S_AccMikeBroadcast> {
+class AdminSetEvent extends RoomEvent<S_AdministratorBroadcast> {
 }
 
 // 申请上麦
-class MicApplyEvent extends RoomEvent<S_AccMikeBroadcast> {
+class MicApplyEvent extends RoomEvent<S_ApplyUpMikeBroadcast> {
 }
 
 // 邀请上麦
