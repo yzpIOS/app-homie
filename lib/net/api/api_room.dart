@@ -110,23 +110,23 @@ class ApiRoom extends ApiBase {
   ///
   /// 房间下麦
   ///
-  Future micDown({required int micId}) {
-    return SocketCtrl.ins.sendByteAsyncServer(
+  void micDown({required int micId}) {
+    SocketCtrl.ins.sendSever(
         CMD.C_OutMike,
     );
 
-    final data = {
-      'mike_id': micId,
-    };
-
-    return _doPost('out-mike', data: data);
+    // final data = {
+    //   'mike_id': micId,
+    // };
+    //
+    // return _doPost('out-mike', data: data);
   }
 
   ///
   /// 房间上麦
   ///
   Future<S_UpMike?> micUp({required int roomId, required String no, NUID? uid}) async {
-    C_UpMike c_upMike = C_UpMike(makeNo: no, roleId: uid);
+    C_UpMike c_upMike = C_UpMike(mikeNo: no, roleId: uid);
     return SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_UpMike,
         datas: c_upMike.writeToBuffer(),

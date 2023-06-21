@@ -22,12 +22,12 @@ final $typed_data.Uint8List s_SysTimeDescriptor = $convert.base64Decode('CglTX1N
 const S_Err$json = const {
   '1': 'S_Err',
   '2': const [
-    const {'1': 'code', '3': 1, '4': 1, '5': 5, '10': 'code'},
+    const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
   ],
 };
 
 /// Descriptor for `S_Err`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_ErrDescriptor = $convert.base64Decode('CgVTX0VychISCgRjb2RlGAEgASgFUgRjb2Rl');
+final $typed_data.Uint8List s_ErrDescriptor = $convert.base64Decode('CgVTX0VychIuCgRjb2RlGAEgASgOMhouY29tLnNhdnZ5LnByb3RvLkVycm9yQ29kZVIEY29kZQ==');
 @$core.Deprecated('Use s_TipsDescriptor instead')
 const S_Tips$json = const {
   '1': 'S_Tips',
@@ -436,12 +436,12 @@ const C_UpMike$json = const {
   '1': 'C_UpMike',
   '2': const [
     const {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-    const {'1': 'make_no', '3': 2, '4': 1, '5': 9, '10': 'makeNo'},
+    const {'1': 'mike_no', '3': 2, '4': 1, '5': 9, '10': 'mikeNo'},
   ],
 };
 
 /// Descriptor for `C_UpMike`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_UpMikeDescriptor = $convert.base64Decode('CghDX1VwTWlrZRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSFwoHbWFrZV9ubxgCIAEoCVIGbWFrZU5v');
+final $typed_data.Uint8List c_UpMikeDescriptor = $convert.base64Decode('CghDX1VwTWlrZRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSFwoHbWlrZV9ubxgCIAEoCVIGbWlrZU5v');
 @$core.Deprecated('Use s_UpMikeDescriptor instead')
 const S_UpMike$json = const {
   '1': 'S_UpMike',

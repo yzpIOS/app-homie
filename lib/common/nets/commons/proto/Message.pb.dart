@@ -12,9 +12,9 @@ import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'Common.pb.dart' as $0;
 
+import 'ErrorCode.pbenum.dart' as $1;
 import 'Message.pbenum.dart';
 import 'Common.pbenum.dart' as $0;
-import 'ErrorCode.pbenum.dart' as $1;
 
 export 'Message.pbenum.dart';
 
@@ -67,13 +67,13 @@ class S_SysTime extends $pb.GeneratedMessage {
 
 class S_Err extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_Err', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.O3)
+    ..e<$1.ErrorCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
     ..hasRequiredFields = false
   ;
 
   S_Err._() : super();
   factory S_Err({
-    $core.int? code,
+    $1.ErrorCode? code,
   }) {
     final _result = create();
     if (code != null) {
@@ -103,9 +103,9 @@ class S_Err extends $pb.GeneratedMessage {
   static S_Err? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get code => $_getIZ(0);
+  $1.ErrorCode get code => $_getN(0);
   @$pb.TagNumber(1)
-  set code($core.int v) { $_setSignedInt32(0, v); }
+  set code($1.ErrorCode v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
@@ -2491,21 +2491,21 @@ class C_JoinScene extends $pb.GeneratedMessage {
 class C_UpMike extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_UpMike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'makeNo')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
 
   C_UpMike._() : super();
   factory C_UpMike({
     $fixnum.Int64? roleId,
-    $core.String? makeNo,
+    $core.String? mikeNo,
   }) {
     final _result = create();
     if (roleId != null) {
       _result.roleId = roleId;
     }
-    if (makeNo != null) {
-      _result.makeNo = makeNo;
+    if (mikeNo != null) {
+      _result.mikeNo = mikeNo;
     }
     return _result;
   }
@@ -2540,13 +2540,13 @@ class C_UpMike extends $pb.GeneratedMessage {
   void clearRoleId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get makeNo => $_getSZ(1);
+  $core.String get mikeNo => $_getSZ(1);
   @$pb.TagNumber(2)
-  set makeNo($core.String v) { $_setString(1, v); }
+  set mikeNo($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasMakeNo() => $_has(1);
+  $core.bool hasMikeNo() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMakeNo() => clearField(2);
+  void clearMikeNo() => clearField(2);
 }
 
 class S_UpMike extends $pb.GeneratedMessage {

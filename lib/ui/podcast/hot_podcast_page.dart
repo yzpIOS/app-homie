@@ -81,15 +81,6 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         onPressed: () async {
           await Get.find<RoomManagerCtrl>().doCloseState();
 
-          if(Env.isDebug) {
-            // Get.find<RoomManagerCtrl>().toRoom(roomId: 5, off: true);
-            Api.Room.joinRoom(5);
-            await Future.delayed(const Duration(seconds: 3));
-            var result = await Api.Room.micUp(roomId: 5, no: "3");
-            debugPrint("aaa");
-            return;
-          }
-
           Get.to(() => const CreateRoomPage());
         },
       ),
