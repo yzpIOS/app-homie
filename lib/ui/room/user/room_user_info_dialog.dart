@@ -289,7 +289,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         final items = {
           '举报': () => Get.to(() => ReportPage(type: 2, id: uid)),
           if (canManage && !ctrl.getRole(uid).isManager) //
-            '加入黑名单': () => ctrl.setBlock(uid: widget.nuid, isAdd: true)
+            '加入黑名单': () => ctrl.setBlock(uid:widget.uid, nuid: widget.nuid, isAdd: true)
         };
 
         switch (items.length) {

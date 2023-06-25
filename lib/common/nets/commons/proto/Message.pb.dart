@@ -2659,7 +2659,6 @@ class C_OutMike extends $pb.GeneratedMessage {
 
 class C_BanMike extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_BanMike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sceneId')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
@@ -2667,14 +2666,10 @@ class C_BanMike extends $pb.GeneratedMessage {
 
   C_BanMike._() : super();
   factory C_BanMike({
-    $fixnum.Int64? roomId,
     $fixnum.Int64? sceneId,
     $core.int? status,
   }) {
     final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
-    }
     if (sceneId != null) {
       _result.sceneId = sceneId;
     }
@@ -2704,30 +2699,21 @@ class C_BanMike extends $pb.GeneratedMessage {
   static C_BanMike getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_BanMike>(create);
   static C_BanMike? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $fixnum.Int64 get sceneId => $_getI64(1);
+  $fixnum.Int64 get sceneId => $_getI64(0);
   @$pb.TagNumber(2)
-  set sceneId($fixnum.Int64 v) { $_setInt64(1, v); }
+  set sceneId($fixnum.Int64 v) { $_setInt64(0, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSceneId() => $_has(1);
+  $core.bool hasSceneId() => $_has(0);
   @$pb.TagNumber(2)
   void clearSceneId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.int get status => $_getIZ(2);
+  $core.int get status => $_getIZ(1);
   @$pb.TagNumber(3)
-  set status($core.int v) { $_setSignedInt32(2, v); }
+  set status($core.int v) { $_setSignedInt32(1, v); }
   @$pb.TagNumber(3)
-  $core.bool hasStatus() => $_has(2);
+  $core.bool hasStatus() => $_has(1);
   @$pb.TagNumber(3)
   void clearStatus() => clearField(3);
 }
@@ -2781,20 +2767,15 @@ class C_AccMikeClear extends $pb.GeneratedMessage {
 
 class C_SetNoticeMessage extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_SetNoticeMessage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
     ..hasRequiredFields = false
   ;
 
   C_SetNoticeMessage._() : super();
   factory C_SetNoticeMessage({
-    $fixnum.Int64? roomId,
     $core.String? message,
   }) {
     final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
-    }
     if (message != null) {
       _result.message = message;
     }
@@ -2821,45 +2802,36 @@ class C_SetNoticeMessage extends $pb.GeneratedMessage {
   static C_SetNoticeMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_SetNoticeMessage>(create);
   static C_SetNoticeMessage? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $core.String get message => $_getSZ(1);
+  $core.String get message => $_getSZ(0);
   @$pb.TagNumber(2)
-  set message($core.String v) { $_setString(1, v); }
+  set message($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(2)
-  $core.bool hasMessage() => $_has(1);
+  $core.bool hasMessage() => $_has(0);
   @$pb.TagNumber(2)
   void clearMessage() => clearField(2);
 }
 
 class C_SetAdministrator extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_SetAdministrator', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sceneId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   C_SetAdministrator._() : super();
   factory C_SetAdministrator({
-    $fixnum.Int64? roomId,
-    $fixnum.Int64? sceneId,
+    $core.String? uid,
+    $fixnum.Int64? roleId,
     $core.int? status,
   }) {
     final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
+    if (uid != null) {
+      _result.uid = uid;
     }
-    if (sceneId != null) {
-      _result.sceneId = sceneId;
+    if (roleId != null) {
+      _result.roleId = roleId;
     }
     if (status != null) {
       _result.status = status;
@@ -2888,22 +2860,22 @@ class C_SetAdministrator extends $pb.GeneratedMessage {
   static C_SetAdministrator? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
+  $core.String get uid => $_getSZ(0);
   @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  set uid($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
+  $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
+  void clearUid() => clearField(1);
 
   @$pb.TagNumber(2)
-  $fixnum.Int64 get sceneId => $_getI64(1);
+  $fixnum.Int64 get roleId => $_getI64(1);
   @$pb.TagNumber(2)
-  set sceneId($fixnum.Int64 v) { $_setInt64(1, v); }
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSceneId() => $_has(1);
+  $core.bool hasRoleId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSceneId() => clearField(2);
+  void clearRoleId() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get status => $_getIZ(2);
@@ -2917,24 +2889,24 @@ class C_SetAdministrator extends $pb.GeneratedMessage {
 
 class C_SetBlack extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_SetBlack', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sceneId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
   C_SetBlack._() : super();
   factory C_SetBlack({
-    $fixnum.Int64? roomId,
-    $fixnum.Int64? sceneId,
+    $core.String? uid,
+    $fixnum.Int64? roleId,
     $core.int? status,
   }) {
     final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
+    if (uid != null) {
+      _result.uid = uid;
     }
-    if (sceneId != null) {
-      _result.sceneId = sceneId;
+    if (roleId != null) {
+      _result.roleId = roleId;
     }
     if (status != null) {
       _result.status = status;
@@ -2963,22 +2935,22 @@ class C_SetBlack extends $pb.GeneratedMessage {
   static C_SetBlack? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
+  $core.String get uid => $_getSZ(0);
   @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  set uid($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
+  $core.bool hasUid() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
+  void clearUid() => clearField(1);
 
   @$pb.TagNumber(2)
-  $fixnum.Int64 get sceneId => $_getI64(1);
+  $fixnum.Int64 get roleId => $_getI64(1);
   @$pb.TagNumber(2)
-  set sceneId($fixnum.Int64 v) { $_setInt64(1, v); }
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSceneId() => $_has(1);
+  $core.bool hasRoleId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSceneId() => clearField(2);
+  void clearRoleId() => clearField(2);
 
   @$pb.TagNumber(3)
   $core.int get status => $_getIZ(2);
@@ -4241,7 +4213,7 @@ class S_SyncSeatInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_SyncSeatInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guid')
-    ..aOB(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'canSeat', protoName: 'canSeat')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'canSeat', $pb.PbFieldType.O3, protoName: 'canSeat')
     ..hasRequiredFields = false
   ;
 
@@ -4249,7 +4221,7 @@ class S_SyncSeatInfo extends $pb.GeneratedMessage {
   factory S_SyncSeatInfo({
     $fixnum.Int64? id,
     $core.String? guid,
-    $core.bool? canSeat,
+    $core.int? canSeat,
   }) {
     final _result = create();
     if (id != null) {
@@ -4303,9 +4275,9 @@ class S_SyncSeatInfo extends $pb.GeneratedMessage {
   void clearGuid() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.bool get canSeat => $_getBF(2);
+  $core.int get canSeat => $_getIZ(2);
   @$pb.TagNumber(3)
-  set canSeat($core.bool v) { $_setBool(2, v); }
+  set canSeat($core.int v) { $_setSignedInt32(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasCanSeat() => $_has(2);
   @$pb.TagNumber(3)

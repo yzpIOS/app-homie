@@ -60,7 +60,7 @@ abstract class MicUserSheet {
           if(posnUid == null) {
             return;
           }
-          roomCtrl.setBlock(uid: posnUid, isAdd: true);
+          roomCtrl.setBlock(uid: posUid, nuid: posnUid, isAdd: true);
         },
       if (hasUser && isOwner && notSelf && !posManage) //
         '添加管理员': () {

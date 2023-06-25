@@ -30,6 +30,13 @@ class CMD {
 
   static const C_SetNoticeMessage = 2140; // 设置房间公告
 
+  static const C_SetAdministrator = 2152; // 房间设置管理员
+  static const S_SetAdministrator = 2153; // 房间设置管理员反馈结果
+
+  static const C_SetBlack = 2162; // 设置房间黑名单
+  static const S_SetBlack = 2163; //  设置房间黑名单反馈结果
+
+
   // =========房间相关===========
   static const S_LiveBroadcast = 2200; // 房间开关播广播
 

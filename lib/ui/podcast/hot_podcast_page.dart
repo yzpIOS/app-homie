@@ -79,6 +79,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
       'ic_create'.toSvgAction(
         color: null,
         onPressed: () async {
+
           await Get.find<RoomManagerCtrl>().doCloseState();
 
           Get.to(() => const CreateRoomPage());

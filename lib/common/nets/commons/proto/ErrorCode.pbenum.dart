@@ -88,10 +88,15 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_PASSWORD_NOT_PERMISSION = ErrorCode._(16009, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_PASSWORD_NOT_PERMISSION');
   static const ErrorCode ROOM_NAME_TOO_LENGTH = ErrorCode._(16010, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_NAME_TOO_LENGTH');
   static const ErrorCode ROOM_IMAGE_NOT_FOUND = ErrorCode._(16011, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_IMAGE_NOT_FOUND');
-  static const ErrorCode ROOM_USER_LIVE_ING = ErrorCode._(16012, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_LIVE_ING');
+  static const ErrorCode ROOM_UP_ING = ErrorCode._(16012, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_UP_ING');
+  static const ErrorCode ROOM_UID_BLACK = ErrorCode._(16013, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_UID_BLACK');
+  static const ErrorCode ROOM_USER_NOT_ONLINE = ErrorCode._(16014, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_NOT_ONLINE');
+  static const ErrorCode ROOM_USER_LIVE_ING = ErrorCode._(16015, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_LIVE_ING');
   static const ErrorCode ROOM_MIKE_NOT_EXIST = ErrorCode._(16101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_EXIST');
   static const ErrorCode ROOM_MIKE_NOT_FOUND = ErrorCode._(16102, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_FOUND');
   static const ErrorCode ROOM_START_MIKE_EXECUTING = ErrorCode._(16103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_START_MIKE_EXECUTING');
+  static const ErrorCode ROOM_MIKE_IN_USE = ErrorCode._(16104, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_IN_USE');
+  static const ErrorCode ROOM_MIKE_BAN_USE = ErrorCode._(16105, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_BAN_USE');
   static const ErrorCode ROOM_SCENE_NOT_EXIST = ErrorCode._(16201, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_SCENE_NOT_EXIST');
   static const ErrorCode NOT_FACE_REAL_NAME = ErrorCode._(16202, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'NOT_FACE_REAL_NAME');
   static const ErrorCode ROOM_ANCHOR_NOT_FOUND = ErrorCode._(16203, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_ANCHOR_NOT_FOUND');
@@ -115,6 +120,8 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode USER_INSP_FREES_FAIL = ErrorCode._(20007, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'USER_INSP_FREES_FAIL');
   static const ErrorCode USER_DALONG_BANK_ORDER_FAIL = ErrorCode._(20008, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'USER_DALONG_BANK_ORDER_FAIL');
   static const ErrorCode BANK_ORDER_STATUS_NOT_FOUND = ErrorCode._(20009, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'BANK_ORDER_STATUS_NOT_FOUND');
+  static const ErrorCode WITHDRAW_CASH_LESS_THAN_ZERO = ErrorCode._(20010, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'WITHDRAW_CASH_LESS_THAN_ZERO');
+  static const ErrorCode FINE_AMOUNT_LESS_THAN_ZERO = ErrorCode._(20011, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FINE_AMOUNT_LESS_THAN_ZERO');
   static const ErrorCode CONFIGURE_ERROR = ErrorCode._(21000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CONFIGURE_ERROR');
   static const ErrorCode LOTTERY_ACTIVITY_NOT_EXISTS = ErrorCode._(22001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOTTERY_ACTIVITY_NOT_EXISTS');
   static const ErrorCode LOTTERY_POOL_NOT_EXISTS = ErrorCode._(22002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOTTERY_POOL_NOT_EXISTS');
@@ -210,10 +217,15 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_PASSWORD_NOT_PERMISSION,
     ROOM_NAME_TOO_LENGTH,
     ROOM_IMAGE_NOT_FOUND,
+    ROOM_UP_ING,
+    ROOM_UID_BLACK,
+    ROOM_USER_NOT_ONLINE,
     ROOM_USER_LIVE_ING,
     ROOM_MIKE_NOT_EXIST,
     ROOM_MIKE_NOT_FOUND,
     ROOM_START_MIKE_EXECUTING,
+    ROOM_MIKE_IN_USE,
+    ROOM_MIKE_BAN_USE,
     ROOM_SCENE_NOT_EXIST,
     NOT_FACE_REAL_NAME,
     ROOM_ANCHOR_NOT_FOUND,
@@ -237,6 +249,8 @@ class ErrorCode extends $pb.ProtobufEnum {
     USER_INSP_FREES_FAIL,
     USER_DALONG_BANK_ORDER_FAIL,
     BANK_ORDER_STATUS_NOT_FOUND,
+    WITHDRAW_CASH_LESS_THAN_ZERO,
+    FINE_AMOUNT_LESS_THAN_ZERO,
     CONFIGURE_ERROR,
     LOTTERY_ACTIVITY_NOT_EXISTS,
     LOTTERY_POOL_NOT_EXISTS,

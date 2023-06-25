@@ -467,14 +467,13 @@ final $typed_data.Uint8List c_OutMikeDescriptor = $convert.base64Decode('CglDX09
 const C_BanMike$json = const {
   '1': 'C_BanMike',
   '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     const {'1': 'scene_id', '3': 2, '4': 1, '5': 3, '10': 'sceneId'},
     const {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
   ],
 };
 
 /// Descriptor for `C_BanMike`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_BanMikeDescriptor = $convert.base64Decode('CglDX0Jhbk1pa2USFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhkKCHNjZW5lX2lkGAIgASgDUgdzY2VuZUlkEhYKBnN0YXR1cxgDIAEoBVIGc3RhdHVz');
+final $typed_data.Uint8List c_BanMikeDescriptor = $convert.base64Decode('CglDX0Jhbk1pa2USGQoIc2NlbmVfaWQYAiABKANSB3NjZW5lSWQSFgoGc3RhdHVzGAMgASgFUgZzdGF0dXM=');
 @$core.Deprecated('Use c_AccMikeClearDescriptor instead')
 const C_AccMikeClear$json = const {
   '1': 'C_AccMikeClear',
@@ -489,37 +488,36 @@ final $typed_data.Uint8List c_AccMikeClearDescriptor = $convert.base64Decode('Cg
 const C_SetNoticeMessage$json = const {
   '1': 'C_SetNoticeMessage',
   '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     const {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
   ],
 };
 
 /// Descriptor for `C_SetNoticeMessage`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_SetNoticeMessageDescriptor = $convert.base64Decode('ChJDX1NldE5vdGljZU1lc3NhZ2USFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhgKB21lc3NhZ2UYAiABKAlSB21lc3NhZ2U=');
+final $typed_data.Uint8List c_SetNoticeMessageDescriptor = $convert.base64Decode('ChJDX1NldE5vdGljZU1lc3NhZ2USGAoHbWVzc2FnZRgCIAEoCVIHbWVzc2FnZQ==');
 @$core.Deprecated('Use c_SetAdministratorDescriptor instead')
 const C_SetAdministrator$json = const {
   '1': 'C_SetAdministrator',
   '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
-    const {'1': 'scene_id', '3': 2, '4': 1, '5': 3, '10': 'sceneId'},
+    const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
     const {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
   ],
 };
 
 /// Descriptor for `C_SetAdministrator`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_SetAdministratorDescriptor = $convert.base64Decode('ChJDX1NldEFkbWluaXN0cmF0b3ISFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhkKCHNjZW5lX2lkGAIgASgDUgdzY2VuZUlkEhYKBnN0YXR1cxgDIAEoBVIGc3RhdHVz');
+final $typed_data.Uint8List c_SetAdministratorDescriptor = $convert.base64Decode('ChJDX1NldEFkbWluaXN0cmF0b3ISFwoHcm9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgBIAEoCVIDdWlkEhYKBnN0YXR1cxgDIAEoBVIGc3RhdHVz');
 @$core.Deprecated('Use c_SetBlackDescriptor instead')
 const C_SetBlack$json = const {
   '1': 'C_SetBlack',
   '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
-    const {'1': 'scene_id', '3': 2, '4': 1, '5': 3, '10': 'sceneId'},
+    const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
     const {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
   ],
 };
 
 /// Descriptor for `C_SetBlack`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_SetBlackDescriptor = $convert.base64Decode('CgpDX1NldEJsYWNrEhcKB3Jvb21faWQYASABKANSBnJvb21JZBIZCghzY2VuZV9pZBgCIAEoA1IHc2NlbmVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
+final $typed_data.Uint8List c_SetBlackDescriptor = $convert.base64Decode('CgpDX1NldEJsYWNrEhcKB3JvbGVfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYASABKAlSA3VpZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
 @$core.Deprecated('Use c_ChatMessageDescriptor instead')
 const C_ChatMessage$json = const {
   '1': 'C_ChatMessage',
@@ -756,12 +754,12 @@ const S_SyncSeatInfo$json = const {
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
     const {'1': 'guid', '3': 2, '4': 1, '5': 9, '10': 'guid'},
-    const {'1': 'canSeat', '3': 3, '4': 1, '5': 8, '10': 'canSeat'},
+    const {'1': 'canSeat', '3': 3, '4': 1, '5': 5, '10': 'canSeat'},
   ],
 };
 
 /// Descriptor for `S_SyncSeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_SyncSeatInfoDescriptor = $convert.base64Decode('Cg5TX1N5bmNTZWF0SW5mbxIOCgJpZBgBIAEoA1ICaWQSEgoEZ3VpZBgCIAEoCVIEZ3VpZBIYCgdjYW5TZWF0GAMgASgIUgdjYW5TZWF0');
+final $typed_data.Uint8List s_SyncSeatInfoDescriptor = $convert.base64Decode('Cg5TX1N5bmNTZWF0SW5mbxIOCgJpZBgBIAEoA1ICaWQSEgoEZ3VpZBgCIAEoCVIEZ3VpZBIYCgdjYW5TZWF0GAMgASgFUgdjYW5TZWF0');
 @$core.Deprecated('Use c_RobotDescriptor instead')
 const C_Robot$json = const {
   '1': 'C_Robot',

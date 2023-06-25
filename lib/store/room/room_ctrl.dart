@@ -303,9 +303,9 @@ class RoomCtrl extends SceneCtrl {
     return null;
   }
 
-  void setBlock({required NUID uid, required bool isAdd}) {
+  void setBlock({required UID uid, required NUID nuid, required bool isAdd}) {
     simpleSub(
-      () => Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: isAdd),
+      () => Api.Room.setBlock(uid:uid, roomId: roomId, isAdd: isAdd),
     );
   }
 

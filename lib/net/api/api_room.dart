@@ -197,6 +197,12 @@ class ApiRoom extends ApiBase {
   }
 
   Future micMute({required int micId, required bool isMute}) {
+    C_BanMike c_banMike = C_BanMike.create();
+    c_banMike.sceneId = Int64(micId);
+    c_banMike.status = isMute ? 2 : 1;
+    SocketCtrl.ins.sendSever(CMD.C_BanMike, message: c_banMike);
+    return Future.value();
+
     final data = {
       'mike_id': micId,
       'status': isMute ? 2 : 1,
@@ -207,10 +213,9 @@ class ApiRoom extends ApiBase {
 
   Future setManager({required int roomId, required UID uid, required bool isAdd}) {
     C_SetAdministrator cSetnoticemessage = C_SetAdministrator.create();
-    cSetnoticemessage.roomId = Int64(roomId);
-    cSetnoticemessage.sceneId = Int64(roomId);
     cSetnoticemessage.status = isAdd ? 1 : 2;
-    SocketCtrl.ins.sendSever(CMD.C_SetNoticeMessage, message: cSetnoticemessage);
+    cSetnoticemessage.uid = uid;
+    SocketCtrl.ins.sendSever(CMD.C_SetAdministrator, message: cSetnoticemessage);
     return Future.value(1);
   }
 
@@ -223,10 +228,12 @@ class ApiRoom extends ApiBase {
     return _doPost('get-admin', data: const PageNum(size: 999) + data);
   }
 
-  Future setBlock({required int roomId, required NUID uid, required bool isAdd}) {
+  Future setBlock({required UID uid, required int roomId, required bool isAdd}) {
     C_SetBlack c_setBlack = C_SetBlack.create();
-    c_setBlack.roomId = Int64(roomId);
-    c_setBlack.sceneId = uid;
+    c_setBlack.status = isAdd ? 1 : 2;
+    c_setBlack.uid = uid;
+    SocketCtrl.ins.sendSever(CMD.C_SetBlack, message: c_setBlack);
+    return Future.value(1);
 
     final data = {
       'room_id': roomId,
@@ -248,7 +255,6 @@ class ApiRoom extends ApiBase {
 
   bool setNotice({required int roomId, required String notice}) {
     C_SetNoticeMessage c_setNoticeMessage = C_SetNoticeMessage.create();
-    c_setNoticeMessage.roomId = Int64(roomId);
     c_setNoticeMessage.message = notice;
     return SocketCtrl.ins.sendSever(CMD.C_SetNoticeMessage, message: c_setNoticeMessage);
   }

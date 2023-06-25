@@ -192,11 +192,12 @@ const RoleSceneInfo$json = const {
     const {'1': 'attrInfo', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
     const {'1': 'suitInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
     const {'1': 'stateInfo', '3': 5, '4': 1, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'stateInfo'},
+    const {'1': 'seatGuid', '3': 6, '4': 1, '5': 9, '10': 'seatGuid'},
   ],
 };
 
 /// Descriptor for `RoleSceneInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode('Cg1Sb2xlU2NlbmVJbmZvEhYKBnJvbGVJZBgBIAEoA1IGcm9sZUlkEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIYXR0ckluZm8YAyABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAQgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode('Cg1Sb2xlU2NlbmVJbmZvEhYKBnJvbGVJZBgBIAEoA1IGcm9sZUlkEhIKBG5hbWUYAiABKAlSBG5hbWUSNQoIYXR0ckluZm8YAyABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAQgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8SGgoIc2VhdEd1aWQYBiABKAlSCHNlYXRHdWlk');
 @$core.Deprecated('Use roleDataDescriptor instead')
 const RoleData$json = const {
   '1': 'RoleData',
@@ -210,14 +211,3 @@ const RoleData$json = const {
 
 /// Descriptor for `RoleData`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode('CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSNQoIYXR0ckluZm8YAiABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
-@$core.Deprecated('Use seatInfoDescriptor instead')
-const SeatInfo$json = const {
-  '1': 'SeatInfo',
-  '2': const [
-    const {'1': 'guid', '3': 1, '4': 1, '5': 9, '10': 'guid'},
-    const {'1': 'canSit', '3': 2, '4': 1, '5': 8, '10': 'canSit'},
-  ],
-};
-
-/// Descriptor for `SeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List seatInfoDescriptor = $convert.base64Decode('CghTZWF0SW5mbxISCgRndWlkGAEgASgJUgRndWlkEhYKBmNhblNpdBgCIAEoCFIGY2FuU2l0');

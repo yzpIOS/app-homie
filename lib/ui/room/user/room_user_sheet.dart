@@ -31,7 +31,7 @@ abstract class RoomUserSheet {
         },
       if (canManage && notSelf && !posManage) //
         '加入黑名单': () {
-          roomCtrl.setBlock(uid: nuid, isAdd: true);
+          roomCtrl.setBlock(uid:uid, nuid: nuid, isAdd: true);
         },
       if (isOwner && notSelf && !posManage) //
         '添加管理员': () {

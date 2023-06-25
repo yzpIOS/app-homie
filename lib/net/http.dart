@@ -56,10 +56,11 @@ class Http {
               handler.next(options);
             },
           ),
-          // 打印日志
-          LoggerInterceptor.instace,
-          // curl
-          CurlInterceptor.instace,
+          _logInterceptor,
+          // // 打印日志
+          // LoggerInterceptor.instace,
+          // // curl
+          // CurlInterceptor.instace,
         ],
       );
 
@@ -100,6 +101,12 @@ class Http {
     } finally {
       _cancel.remove(token);
     }
+  }
+
+  Interceptor get _logInterceptor {
+    return PrettyDioLogger(
+      log: (msg, {required bool isError}) => xlog(msg, level: isError ? 3 : 0, type: LogType.HTTP),
+    );
   }
 }
 
@@ -148,7 +155,9 @@ void _handleError(DioError e) {
         //交给外面处理
       }
   }
+
 }
+
 
 // ignore: deprecated_member_use
 class _Transformer extends DefaultTransformer {
