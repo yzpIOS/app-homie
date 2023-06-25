@@ -305,7 +305,6 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
 
     if (pwdRx() && pwd.isEmpty) {
       showToast('请输入房间密码');
-
       return;
     }
 

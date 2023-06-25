@@ -40,7 +40,7 @@ abstract class MicUserSheet {
           if(posnUid == null) {
             return;
           }
-          RoomUserInfoDialog.show(uid: posUid, nuid: posnUid);
+          RoomUserInfoDialog.show(uid: posUid);
         },
       if (hasUser && canManage && notSelf) //
         '抱Ta下麦': () {
@@ -60,7 +60,7 @@ abstract class MicUserSheet {
           if(posnUid == null) {
             return;
           }
-          roomCtrl.setBlock(uid: posUid, nuid: posnUid, isAdd: true);
+          roomCtrl.setBlock(uid: posUid, isAdd: true);
         },
       if (hasUser && isOwner && notSelf && !posManage) //
         '添加管理员': () {

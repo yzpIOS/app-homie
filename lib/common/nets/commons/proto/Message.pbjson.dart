@@ -238,11 +238,12 @@ const S_UpMikeBroadcast$json = const {
     const {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
     const {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
     const {'1': 'old_mike_no', '3': 5, '4': 1, '5': 9, '10': 'oldMikeNo'},
+    const {'1': 'mike_id', '3': 6, '4': 1, '5': 3, '10': 'mikeId'},
   ],
 };
 
 /// Descriptor for `S_UpMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_UpMikeBroadcastDescriptor = $convert.base64Decode('ChFTX1VwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhcKB21pa2Vfbm8YBCABKAlSBm1pa2VObxIeCgtvbGRfbWlrZV9ubxgFIAEoCVIJb2xkTWlrZU5v');
+final $typed_data.Uint8List s_UpMikeBroadcastDescriptor = $convert.base64Decode('ChFTX1VwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhcKB21pa2Vfbm8YBCABKAlSBm1pa2VObxIeCgtvbGRfbWlrZV9ubxgFIAEoCVIJb2xkTWlrZU5vEhcKB21pa2VfaWQYBiABKANSBm1pa2VJZA==');
 @$core.Deprecated('Use s_DownMikeBroadcastDescriptor instead')
 const S_DownMikeBroadcast$json = const {
   '1': 'S_DownMikeBroadcast',
@@ -251,11 +252,12 @@ const S_DownMikeBroadcast$json = const {
     const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
     const {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
+    const {'1': 'mike_id', '3': 6, '4': 1, '5': 3, '10': 'mikeId'},
   ],
 };
 
 /// Descriptor for `S_DownMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_DownMikeBroadcastDescriptor = $convert.base64Decode('ChNTX0Rvd25NaWtlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQSFwoHbWlrZV9ubxgEIAEoCVIGbWlrZU5v');
+final $typed_data.Uint8List s_DownMikeBroadcastDescriptor = $convert.base64Decode('ChNTX0Rvd25NaWtlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQSFwoHbWlrZV9ubxgEIAEoCVIGbWlrZU5vEhcKB21pa2VfaWQYBiABKANSBm1pa2VJZA==');
 @$core.Deprecated('Use s_InviteMikeBroadcastDescriptor instead')
 const S_InviteMikeBroadcast$json = const {
   '1': 'S_InviteMikeBroadcast',
@@ -264,11 +266,12 @@ const S_InviteMikeBroadcast$json = const {
     const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
     const {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
+    const {'1': 'mike_id', '3': 5, '4': 1, '5': 3, '10': 'mikeId'},
   ],
 };
 
 /// Descriptor for `S_InviteMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_InviteMikeBroadcastDescriptor = $convert.base64Decode('ChVTX0ludml0ZU1pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZBIXCgdtaWtlX25vGAQgASgJUgZtaWtlTm8=');
+final $typed_data.Uint8List s_InviteMikeBroadcastDescriptor = $convert.base64Decode('ChVTX0ludml0ZU1pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZBIXCgdtaWtlX25vGAQgASgJUgZtaWtlTm8SFwoHbWlrZV9pZBgFIAEoA1IGbWlrZUlk');
 @$core.Deprecated('Use s_CloseMikeBroadcastDescriptor instead')
 const S_CloseMikeBroadcast$json = const {
   '1': 'S_CloseMikeBroadcast',
@@ -365,11 +368,12 @@ const S_AdministratorBroadcast$json = const {
     const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
+    const {'1': 'uid', '3': 4, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
 /// Descriptor for `S_AdministratorBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_AdministratorBroadcastDescriptor = $convert.base64Decode('ChhTX0FkbWluaXN0cmF0b3JCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaWQYAiABKANSBnJvbGVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
+final $typed_data.Uint8List s_AdministratorBroadcastDescriptor = $convert.base64Decode('ChhTX0FkbWluaXN0cmF0b3JCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaWQYAiABKANSBnJvbGVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cxIQCgN1aWQYBCABKAlSA3VpZA==');
 @$core.Deprecated('Use s_ChatMessageBroadcastDescriptor instead')
 const S_ChatMessageBroadcast$json = const {
   '1': 'S_ChatMessageBroadcast',
@@ -377,11 +381,12 @@ const S_ChatMessageBroadcast$json = const {
     const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
+    const {'1': 'uid', '3': 4, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
 /// Descriptor for `S_ChatMessageBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_ChatMessageBroadcastDescriptor = $convert.base64Decode('ChZTX0NoYXRNZXNzYWdlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2xlX2lkGAIgASgDUgZyb2xlSWQSGAoHbWVzc2FnZRgDIAEoCVIHbWVzc2FnZQ==');
+final $typed_data.Uint8List s_ChatMessageBroadcastDescriptor = $convert.base64Decode('ChZTX0NoYXRNZXNzYWdlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2xlX2lkGAIgASgDUgZyb2xlSWQSGAoHbWVzc2FnZRgDIAEoCVIHbWVzc2FnZRIQCgN1aWQYBCABKAlSA3VpZA==');
 @$core.Deprecated('Use c_CreateSceneDescriptor instead')
 const C_CreateScene$json = const {
   '1': 'C_CreateScene',
@@ -880,22 +885,24 @@ const S_UpdateLevel$json = const {
   '2': const [
     const {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'level', '3': 2, '4': 1, '5': 3, '10': 'level'},
+    const {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
 /// Descriptor for `S_UpdateLevel`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_UpdateLevelDescriptor = $convert.base64Decode('Cg1TX1VwZGF0ZUxldmVsEhcKB3JvbGVfaWQYASABKANSBnJvbGVJZBIUCgVsZXZlbBgCIAEoA1IFbGV2ZWw=');
+final $typed_data.Uint8List s_UpdateLevelDescriptor = $convert.base64Decode('Cg1TX1VwZGF0ZUxldmVsEhcKB3JvbGVfaWQYASABKANSBnJvbGVJZBIUCgVsZXZlbBgCIAEoA1IFbGV2ZWwSEAoDdWlkGAMgASgJUgN1aWQ=');
 @$core.Deprecated('Use updateCharmLevelItemDescriptor instead')
 const UpdateCharmLevelItem$json = const {
   '1': 'UpdateCharmLevelItem',
   '2': const [
     const {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
     const {'1': 'charm_level', '3': 2, '4': 1, '5': 3, '10': 'charmLevel'},
+    const {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
 /// Descriptor for `UpdateCharmLevelItem`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List updateCharmLevelItemDescriptor = $convert.base64Decode('ChRVcGRhdGVDaGFybUxldmVsSXRlbRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSHwoLY2hhcm1fbGV2ZWwYAiABKANSCmNoYXJtTGV2ZWw=');
+final $typed_data.Uint8List updateCharmLevelItemDescriptor = $convert.base64Decode('ChRVcGRhdGVDaGFybUxldmVsSXRlbRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSHwoLY2hhcm1fbGV2ZWwYAiABKANSCmNoYXJtTGV2ZWwSEAoDdWlkGAMgASgJUgN1aWQ=');
 @$core.Deprecated('Use s_UpdateCharmLevelDescriptor instead')
 const S_UpdateCharmLevel$json = const {
   '1': 'S_UpdateCharmLevel',

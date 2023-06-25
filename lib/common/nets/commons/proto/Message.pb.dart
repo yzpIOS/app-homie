@@ -1153,6 +1153,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldMikeNo')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
     ..hasRequiredFields = false
   ;
 
@@ -1163,6 +1164,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     $core.String? uid,
     $core.String? mikeNo,
     $core.String? oldMikeNo,
+    $fixnum.Int64? mikeId,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1179,6 +1181,9 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (oldMikeNo != null) {
       _result.oldMikeNo = oldMikeNo;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
     }
     return _result;
   }
@@ -1247,6 +1252,15 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasOldMikeNo() => $_has(4);
   @$pb.TagNumber(5)
   void clearOldMikeNo() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get mikeId => $_getI64(5);
+  @$pb.TagNumber(6)
+  set mikeId($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasMikeId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearMikeId() => clearField(6);
 }
 
 class S_DownMikeBroadcast extends $pb.GeneratedMessage {
@@ -1255,6 +1269,7 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
     ..hasRequiredFields = false
   ;
 
@@ -1264,6 +1279,7 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roleId,
     $core.String? uid,
     $core.String? mikeNo,
+    $fixnum.Int64? mikeId,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1277,6 +1293,9 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
     }
     return _result;
   }
@@ -1336,6 +1355,15 @@ class S_DownMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get mikeId => $_getI64(4);
+  @$pb.TagNumber(6)
+  set mikeId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasMikeId() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearMikeId() => clearField(6);
 }
 
 class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
@@ -1344,6 +1372,7 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
+    ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
     ..hasRequiredFields = false
   ;
 
@@ -1353,6 +1382,7 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roleId,
     $core.String? uid,
     $core.String? mikeNo,
+    $fixnum.Int64? mikeId,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1366,6 +1396,9 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (mikeNo != null) {
       _result.mikeNo = mikeNo;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
     }
     return _result;
   }
@@ -1425,6 +1458,15 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasMikeNo() => $_has(3);
   @$pb.TagNumber(4)
   void clearMikeNo() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get mikeId => $_getI64(4);
+  @$pb.TagNumber(5)
+  set mikeId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMikeId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMikeId() => clearField(5);
 }
 
 class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
@@ -2027,6 +2069,7 @@ class S_AdministratorBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -2035,6 +2078,7 @@ class S_AdministratorBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.int? status,
+    $core.String? uid,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -2045,6 +2089,9 @@ class S_AdministratorBroadcast extends $pb.GeneratedMessage {
     }
     if (status != null) {
       _result.status = status;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     return _result;
   }
@@ -2095,6 +2142,15 @@ class S_AdministratorBroadcast extends $pb.GeneratedMessage {
   $core.bool hasStatus() => $_has(2);
   @$pb.TagNumber(3)
   void clearStatus() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get uid => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set uid($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUid() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUid() => clearField(4);
 }
 
 class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
@@ -2102,6 +2158,7 @@ class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'message')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -2110,6 +2167,7 @@ class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? message,
+    $core.String? uid,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -2120,6 +2178,9 @@ class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
     }
     if (message != null) {
       _result.message = message;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     return _result;
   }
@@ -2170,6 +2231,15 @@ class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
   $core.bool hasMessage() => $_has(2);
   @$pb.TagNumber(3)
   void clearMessage() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get uid => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set uid($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUid() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUid() => clearField(4);
 }
 
 class C_CreateScene extends $pb.GeneratedMessage {
@@ -4960,6 +5030,7 @@ class S_UpdateLevel extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateLevel', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -4967,6 +5038,7 @@ class S_UpdateLevel extends $pb.GeneratedMessage {
   factory S_UpdateLevel({
     $fixnum.Int64? roleId,
     $fixnum.Int64? level,
+    $core.String? uid,
   }) {
     final _result = create();
     if (roleId != null) {
@@ -4974,6 +5046,9 @@ class S_UpdateLevel extends $pb.GeneratedMessage {
     }
     if (level != null) {
       _result.level = level;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     return _result;
   }
@@ -5015,12 +5090,22 @@ class S_UpdateLevel extends $pb.GeneratedMessage {
   $core.bool hasLevel() => $_has(1);
   @$pb.TagNumber(2)
   void clearLevel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
 }
 
 class UpdateCharmLevelItem extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UpdateCharmLevelItem', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
     ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'charmLevel')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -5028,6 +5113,7 @@ class UpdateCharmLevelItem extends $pb.GeneratedMessage {
   factory UpdateCharmLevelItem({
     $fixnum.Int64? roleId,
     $fixnum.Int64? charmLevel,
+    $core.String? uid,
   }) {
     final _result = create();
     if (roleId != null) {
@@ -5035,6 +5121,9 @@ class UpdateCharmLevelItem extends $pb.GeneratedMessage {
     }
     if (charmLevel != null) {
       _result.charmLevel = charmLevel;
+    }
+    if (uid != null) {
+      _result.uid = uid;
     }
     return _result;
   }
@@ -5076,6 +5165,15 @@ class UpdateCharmLevelItem extends $pb.GeneratedMessage {
   $core.bool hasCharmLevel() => $_has(1);
   @$pb.TagNumber(2)
   void clearCharmLevel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
 }
 
 class S_UpdateCharmLevel extends $pb.GeneratedMessage {

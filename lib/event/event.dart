@@ -9,10 +9,14 @@ import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/tools/bus.dart';
+import 'package:protobuf/protobuf.dart';
+
 part 'app_event.dart';
 part 'broadcast_event.dart';
 part 'im_event.dart';
-part 'room_event.dart';
+part 'room_event_pb.dart';
 part 'rtc_event.dart';
 part 'unity_event.dart';
 

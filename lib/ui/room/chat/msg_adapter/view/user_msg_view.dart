@@ -33,7 +33,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
       if(nuid == null) {
         return;
       }
-      RoomUserInfoDialog.show(uid: vm.uid, nuid: nuid, msg: vm.typeIf<TxtMsgData>());
+      RoomUserInfoDialog.show(uid: vm.uid, msg: vm.typeIf<TxtMsgData>());
     };
 
     InlineSpan span = TextSpan(

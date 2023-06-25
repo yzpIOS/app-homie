@@ -1,7 +1,4 @@
-
-import 'package:app/common/nets/commons/proto/Message.pb.dart';
-import 'package:app/tools/bus.dart';
-import 'package:protobuf/protobuf.dart';
+part of 'event.dart';
 
 class EventPb {
   String get name => '$runtimeType';
@@ -16,8 +13,10 @@ class EventPb {
   }
 }
 
-class RoomEvent<T extends GeneratedMessage> extends EventPb {
+abstract class RoomEvent<T extends GeneratedMessage> extends EventPb {
   T? data;
+
+  UID? get uid => null;
 
   void myFire(T? msg) {
     data = msg;
@@ -25,18 +24,33 @@ class RoomEvent<T extends GeneratedMessage> extends EventPb {
   }
 }
 
+abstract class UserTotalEvent<T extends GeneratedMessage> extends RoomEvent<T> {
+  int? get total;
+}
+
 // 用户进入房间
-class UserInEvent extends RoomEvent<S_JoinBroadcast> {
+class UserInEvent extends UserTotalEvent<S_JoinBroadcast> {
+  UID? get uid => data?.uid;
+
+  int? get total => data?.total;
 }
 
 // 用户退出房间
-class UserOutEvent extends RoomEvent<S_LeaveBroadcast> { }
+class UserOutEvent extends UserTotalEvent<S_LeaveBroadcast> {
+  int? get total => data?.total;
+}
 
 // 房间关闭
 class RoomCloseEvent extends RoomEvent<S_LiveStopBroadcast> { }
 
 // 上麦
-class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> { }
+class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> {
+
+  UID? get uid => data?.uid;
+
+  late final bool isMute = false;
+  late final int hotCount = 0;
+}
 
 // 下麦
 class MicDownEvent extends RoomEvent<S_DownMikeBroadcast> { }
@@ -66,14 +80,20 @@ class UserCharmUpEvent extends RoomEvent<S_UpdateCharmLevel> {
 
 // 等级提升广播（对应mq的16）
 class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
+  UID? get uid => data?.uid;
 }
 
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
+  UID? get uid => data?.sendId;
 }
 
 // 房间管理员设置
 class AdminSetEvent extends RoomEvent<S_AdministratorBroadcast> {
+
+  UID? get uid => data?.uid;
+
+  late final bool isAdd = data?.status == 1;
 }
 
 // 申请上麦
@@ -82,14 +102,17 @@ class MicApplyEvent extends RoomEvent<S_ApplyUpMikeBroadcast> {
 
 // 邀请上麦
 class InviteMicUpEvent extends RoomEvent<S_InviteMikeBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // 开麦
 class MicOpenEvent extends RoomEvent<S_OpenBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // 下麦
 class MicCloseEvent extends RoomEvent<S_CloseMikeBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // socket状态回调
@@ -103,7 +126,8 @@ class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
 }
 
 
-class MsgTxtEvent extends RoomEvent<S_AccMikeBroadcast> {
+class MsgTxtEvent extends RoomEvent<S_ChatMessageBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // ?

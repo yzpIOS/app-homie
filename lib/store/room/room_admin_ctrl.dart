@@ -14,8 +14,8 @@ class RoomAdminCtrl extends GetxController with BusGetLifeMixin {
 
     on<AdminSetEvent>(
       (data) {
-        if (data.isAdd) {
-          dataRx.add(data.uid);
+        if (data.isAdd && data.uid?.isNotEmpty == true) {
+          dataRx.add(data.uid ?? "");
         } else {
           dataRx.remove(data.uid);
         }

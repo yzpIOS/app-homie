@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -19,9 +20,9 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
     on<MsgTxtEvent>((data) {
-      final uid = data.uid;
-      final txt = data.txt;
-      final nuid = data.nUid;
+      final uid = data.uid ?? "";
+      final txt = data.data?.message ?? "";
+      final nuid = data.data?.roleId;
 
       sendCmd2Unity(App2UnityEnum.FTU_IPUTFIELDCONTENT, data: {'uid': uid, 'content': txt});
 
@@ -35,7 +36,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<UserInEvent>((data) {
       dataRx.add(
         UserInMsgView(
-          UserInMsgData(uid: data.uid, nuid: data.nUid),
+          UserInMsgData(uid: data.uid ?? "", nuid: data.data?.roleId),
         ),
       );
     });
@@ -43,7 +44,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<NoticeEvent>((data) {
       dataRx.add(
         NoticeMsgView(
-          BaseMsgData<String>(data: data.data['message']),
+          BaseMsgData<String>(data: data.data?.message ?? ""),
         ),
       );
     });
@@ -51,8 +52,15 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
 
     on<GiftEvent>((data) async {
+      S_GiftPlay? gift = data.data;
+      if(gift == null) {
+        return;
+      }
       final sendUid = data.uid;
-      final ids = data.data['accept_uid_list'] as Iterable;
+      if(sendUid == null) {
+        return;
+      }
+      final ids = data.data?.acceptUidList ?? [];
 
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
@@ -60,7 +68,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         if(sendUid != value.uid) {
           dataRx.add(
             GiftMsgView(
-              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: data.data),
+              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift),
             ),
           );
         }

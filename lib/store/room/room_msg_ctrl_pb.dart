@@ -1,6 +1,6 @@
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
-import 'package:app/event/room_event_pb.dart';
+import 'package:app/event/event.dart';
 import 'package:app/tools.dart';
 import 'package:protobuf/protobuf.dart';
 
@@ -24,8 +24,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_DownMikeBroadcast: MicDownEvent.new,
     // 修改房间公告
     CMD.S_NoticeBroadcast: NoticeEvent.new,
-    CMD.S_ChatMessageBroadcast: RoomChatMessageEvent.new,
-    // CMD.msgTxt: MsgTxtEvent.new,
+    // CMD.S_ChatMessageBroadcast: RoomChatMessageEvent.new,
+    CMD.S_ChatMessageBroadcast: MsgTxtEvent.new,
     // 礼物
     CMD.S_GiftPlay: GiftEvent.new,
     // 设置管理员

@@ -13,13 +13,16 @@ class RoomGiftCtrl extends SvgaEffectCtrl with BusGetLifeMixin {
     on<GiftEvent>(
       (event) {
         final data = event.data;
+        if(data == null) {
+          return;
+        }
 
         //0-2D静态礼物，1-2D动态礼物，2-3D礼物，4-烟花
-        switch (data['type']) {
+        switch (data.type) {
           case 0:
             break;
           case 1:
-            play(data['send_effect_url']);
+            play(data.sendEffectUrl);
             break;
           case 2:
           case 4:

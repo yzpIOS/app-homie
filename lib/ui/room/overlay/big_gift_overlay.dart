@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -32,14 +33,21 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
     final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
 
     on<GiftEvent>((data) async {
+      final giftModel = data.data;
+      if(giftModel == null) {
+        return;
+      }
       final sendUid = data.uid;
-      final ids = data.data['accept_uid_list'] as Iterable;
+      if(sendUid == null) {
+        return;
+      }
+      final ids = data.data?.acceptUidList ?? [];
 
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
       for (final uid in ids) {
         _ctrl.add(
-          _BigGiftView(uid: sendUid, nuid: data.nuid, acceptUid: uid, users: users, data: data.data),
+          _BigGiftView(uid: sendUid, acceptUid: uid, users: users, data: giftModel),
         );
       }
     });
@@ -159,12 +167,11 @@ class _AnimateView extends StatelessWidget {
 
 class _BigGiftView extends StatelessWidget {
   final UID uid;
-  final NUID nuid;
   final UID acceptUid;
   final Map<UID, UserInfoDto> users;
-  final Map data;
+  final S_GiftPlay data;
 
-  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.users, required this.data})
+  _BigGiftView({required this.uid, required this.acceptUid, required this.users, required this.data})
       : super(key: UniqueKey());
 
   @override
@@ -201,7 +208,7 @@ class _BigGiftView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         OpacityButton(
-          onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: nuid),
+          onTap: () => RoomUserInfoDialog.show(uid: uid),
           child: AvatarView(user?.avatar, blur: user?.avatarEx, size: 30),
         ),
         Expanded(
@@ -211,14 +218,14 @@ class _BigGiftView extends StatelessWidget {
           ),
         ),
         GiftImgState(
-          child: NetImage(data['cover'], width: 36, height: 36),
+          child: NetImage(data.cover, width: 36, height: 36),
         ),
         Row(
           textBaseline: TextBaseline.ideographic,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
             const Text('x', style: TextStyle(fontSize: 8, fontWeight: fw$Medium)),
-            Text('${data['count']}', style: const TextStyle(fontWeight: fw$Medium)) //
+            Text('${data.count}', style: const TextStyle(fontWeight: fw$Medium)) //
                 .animate()
                 .scaleXY(
                   delay: const Duration(milliseconds: 1000 - 618),

@@ -1,4 +1,5 @@
 import 'package:app/3rd/tencent/rtc.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
@@ -31,9 +32,13 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     on<MicUpEvent>(
       (event) {
-        dataRx[event.micNo] = //
-            dataRx.remove(event.oldMicNo)?.also((it) => it.micId = event.micId) ??
-                MicInfo(uid: event.uid, micId: event.micId, hotCount: event.hotCount, isMute: event.isMute, nUid: event.nUid);
+        S_UpMikeBroadcast? data = event.data;
+        if(data == null) {
+          return;
+        }
+        dataRx[data.mikeNo] = //
+            dataRx.remove(data.oldMikeNo)?.also((it) => it.micId = data.mikeId.toInt()) ??
+                MicInfo(uid: event.uid ?? "", micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId);
 
         _sendMicData2Unity();
       },
@@ -41,30 +46,54 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     on<MicDownEvent>(
       (event) {
-        dataRx.remove(event.micNo);
+        dataRx.remove(event.data?.mikeNo);
 
         _sendMicData2Unity();
       },
     );
 
-    on<MicStateEvent>(
-      (event) {
-        final info = dataRx[event.micNo];
+    on<MicCloseEvent>((event) {
+      final info = dataRx[event.data?.mikeNo];
 
-        assert(info != null && event.uid == info.uid, '数据错误 -> $event ${event.uid}');
+      assert(info != null && event.uid == info.uid, '数据错误 -> $event ${event.uid}');
 
-        if (info != null && event.uid == info.uid) {
-          info.isMute = event.isMute;
+      if (info != null && event.uid == info.uid) {
+        info.isMute = true;
 
-          dataRx.refresh();
-        }
-      },
-    );
+        dataRx.refresh();
+      }
+    });
+
+    // on<MicOpenEvent>((event) {
+    //   final info = dataRx[event.data?.mikeNo];
+    //
+    //   assert(info != null && event.uid == info.uid, '数据错误 -> $event ${event.uid}');
+    //
+    //   if (info != null && event.uid == info.uid) {
+    //     info.isMute = true;
+    //
+    //     dataRx.refresh();
+    //   }
+    // });
+    //
+    // on<MicStateEvent>(
+    //   (event) {
+    //     final info = dataRx[event.micNo];
+    //
+    //     assert(info != null && event.uid == info.uid, '数据错误 -> $event ${event.uid}');
+    //
+    //     if (info != null && event.uid == info.uid) {
+    //       info.isMute = event.isMute;
+    //
+    //       dataRx.refresh();
+    //     }
+    //   },
+    // );
 
     on<InviteMicUpEvent>(
       test: (event) => OAuthCtrl.isSelf(event.uid),
       (event) {
-        onInviteMicUp(event.micId);
+        onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
       },
     );
 
@@ -163,7 +192,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     const isSelf = OAuthCtrl.isSelf;
 
     on<MicUpEvent>(
-      test: (event) => isSelf(event.uid) && event.oldMicNo == null, //如果不是切换麦，就先把麦禁用
+      test: (event) => isSelf(event.uid) && event.data?.oldMikeNo == null, //如果不是切换麦，就先把麦禁用
       (_) => Rtc.micRx(false),
     );
 
@@ -172,12 +201,12 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       (_) => Rtc.micRx(false),
     );
 
-    on<MicStateEvent>(
-      test: (event) => isSelf(event.uid) && event.isMute,
-      (_) {
-        Rtc.micRx(false);
-      },
-    );
+    // on<MicStateEvent>(
+    //   test: (event) => isSelf(event.uid) && event.isMute,
+    //   (_) {
+    //     Rtc.micRx(false);
+    //   },
+    // );
 
     on<RoomCloseEvent>(
       (_) => rtc.leaveRoom(),

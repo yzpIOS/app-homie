@@ -128,12 +128,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       test: (event) => event.code == Unity2AppEnum.UTF_ROLE_INFOPANEL,
       (event) {
         final data = jsonDecode(event.data);
-        var roleId = data["role_id"];
-        if(roleId == null) {
-          return;
-        }
 
-        RoomUserInfoDialog.show(uid: data['uid'], nuid: Int64(roleId));
+        RoomUserInfoDialog.show(uid: data['uid']);
       },
     );
 
@@ -273,16 +269,17 @@ class RoomCtrl extends SceneCtrl {
   void _initListener(RoomRunInfo data) {
     super._initListener(data);
 
+    // todo 这里
     on<UserTotalEvent>(
       (data) {
-        userCountRx.rebuild((val) => data.total);
+        userCountRx.rebuild((val) => data.total ?? 0);
       },
     );
 
     on<AdminSetEvent>(
       (data) {
-        if (data.isAdd) {
-          managerRx.add(data.uid);
+        if (data.isAdd && data.uid != null && data.uid?.isNotEmpty == true) {
+          managerRx.add(data.uid ?? "");
         } else {
           managerRx.remove(data.uid);
         }
@@ -303,7 +300,7 @@ class RoomCtrl extends SceneCtrl {
     return null;
   }
 
-  void setBlock({required UID uid, required NUID nuid, required bool isAdd}) {
+  void setBlock({required UID uid, required bool isAdd}) {
     simpleSub(
       () => Api.Room.setBlock(uid:uid, roomId: roomId, isAdd: isAdd),
     );

@@ -30,18 +30,25 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     on<UserLevelUpEvent>(
       (event) {
         doUpdate(
-          event.uid,
-          rebuild: (val) => val.copyWith(level: event.level),
+          event.uid ?? "",
+          rebuild: (val) {
+            return val.copyWith(level: event.data?.level.toString());
+          },
         );
       },
     );
 
     on<UserCharmUpEvent>(
       (event) {
-        doUpdate(
-          event.uid,
-          rebuild: (val) => val.copyWith(charmLevel: event.level),
-        );
+        event.data?.items.forEach((element) {
+          doUpdate(
+            element.uid,
+            rebuild: (val) {
+              val.copyWith(charmLevel: element.charmLevel.toString());
+              return val;
+            },
+          );
+        });
       },
     );
   }

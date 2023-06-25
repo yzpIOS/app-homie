@@ -1,3 +1,4 @@
+import 'package:app/common/utils/en.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -26,19 +27,19 @@ abstract class RoomUserSheet {
 
     final actions = <String, FutureOr Function()>{
       if (!isSelf) //
-        '查看资料': () {
-          RoomUserInfoDialog.show(uid: uid, nuid: nuid);
+        '查看资料'.en(): () {
+          RoomUserInfoDialog.show(uid: uid);
         },
       if (canManage && notSelf && !posManage) //
-        '加入黑名单': () {
-          roomCtrl.setBlock(uid:uid, nuid: nuid, isAdd: true);
+        '加入黑名单'.en(): () {
+          roomCtrl.setBlock(uid:uid, isAdd: true);
         },
       if (isOwner && notSelf && !posManage) //
-        '添加管理员': () {
+        '添加管理员'.en(): () {
           roomCtrl.setManager(uid: uid, isAdd: true);
         },
       if (posAdmin && isOwner && notSelf) //
-        '移除管理员': () {
+        '移除管理员'.en(): () {
           roomCtrl.setManager(uid: uid, isAdd: false);
         },
     };
