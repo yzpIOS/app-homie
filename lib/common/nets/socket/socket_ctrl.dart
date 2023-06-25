@@ -207,6 +207,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 连接socket
     post(() async {
       await Future.delayed(const Duration(seconds: 3));
+      // 重置状态
+      shareClient.onCanConnected(true);
       // 连接服务器
       shareClient.connect(host, port);
       // 连接成功回调
