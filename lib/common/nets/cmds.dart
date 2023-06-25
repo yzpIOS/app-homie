@@ -22,6 +22,9 @@ class CMD {
   static const S_UpMike = 2123; // 房间上麦反馈结果
   static const C_OutMike = 2124; // 房间下麦
 
+  static const C_BanMike = 2126; // 房间禁麦
+  static const S_BanMike = 2127; // 房间禁麦反馈结果
+
   static const C_ChatMessage = 2180; // 房间聊天
 
 

@@ -67,9 +67,11 @@ public class FUnityPlugin implements FlutterPlugin, MethodCallHandler, ActivityA
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        System.out.print("FUnityPlugin onAttachedToEngine 1...");
         final Context context = binding.getApplicationContext();
 
         channel = new MethodChannel(binding.getBinaryMessenger(), "f_unity");
+        System.out.print("FUnityPlugin onAttachedToEngine 2...");
         channel.setMethodCallHandler(this);
 
         unity = new UnityHandle(context);
@@ -132,6 +134,7 @@ public class FUnityPlugin implements FlutterPlugin, MethodCallHandler, ActivityA
         binding
                 .getPlatformViewRegistry()
                 .registerViewFactory("f_unity/unity_view", factory);
+        System.out.print("FUnityPlugin onAttachedToEngine 3...");
     }
 
     @Override
@@ -145,6 +148,7 @@ public class FUnityPlugin implements FlutterPlugin, MethodCallHandler, ActivityA
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         try {
+            System.out.print("FUnityPlugin onMethodCall 1...");
             switch (call.method) {
                 case "postMessage":
                     XUnityPlayer.UnitySendMessage(
@@ -176,6 +180,7 @@ public class FUnityPlugin implements FlutterPlugin, MethodCallHandler, ActivityA
     //<editor-fold desc="ActivityAware">
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        System.out.print("FUnityPlugin onAttachedToActivity 1...");
         lifecycle = FlutterLifecycleAdapter.getActivityLifecycle(binding);
         lifecycle.addObserver(lifecycleObserver);
     }

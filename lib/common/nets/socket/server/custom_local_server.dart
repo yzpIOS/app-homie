@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -50,7 +52,8 @@ class CustomLocalServer with BaseClient {
 
   bool _isBindingServer = false;
 
-  CustomLocalServer();
+  CustomLocalServer() {
+  }
 
   ///
   /// 绑定server
@@ -176,8 +179,12 @@ class CustomLocalServer with BaseClient {
       for(int index = _sessionList.length - 1; index >= 0; index --) {
         // 心跳
         if(nowSeconds - _sessionList[index].lastReceivePkgTime > SOCKET_TIME_OUT) {
+          // 己经挂掉
           _sessionList[index].dispose();
           _sessionList.removeAt(index);
+        } else {
+          // 发送心跳
+          _sessionList[index].send(BaseClient.USER_HEART_BEAT);
         }
       }
       beatHeartCheck();

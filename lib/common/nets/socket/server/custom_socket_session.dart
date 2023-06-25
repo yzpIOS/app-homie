@@ -3,6 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
@@ -98,7 +99,8 @@ class CustomSocketSession with BaseClient {
     switch(cmd) {
       case BaseClient.CONNECT_VARIFY:
         // flutter传给unity的，由unity通过协议传过来的
-        uniqueId = "";
+        C_Verify? c_verify = onGeneratedMessage as C_Verify?;
+        uniqueId = c_verify?.uniqueId ?? "";
         break;
       case BaseClient.CONNECT_EXIT:
         // unity退出
