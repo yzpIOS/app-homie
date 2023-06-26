@@ -282,7 +282,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         for (final item in data)
           item['mike_no']: MicInfo(
             uid: item['uid'],
-            nUid: item["role_id"],
+            nUid: NUID(item["role_id"] ?? 0),
             micId: item['mike_id'],
             hotCount: item['number'] ?? 0,
             isMute: item['open_status'] == 2,

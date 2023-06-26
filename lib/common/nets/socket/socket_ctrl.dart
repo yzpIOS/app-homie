@@ -15,8 +15,8 @@ import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
 
 
-const FLUTTER_UINITY_START = 20000;
-const FLUTTER_UINITY_END = 21000;
+const FLUTTER_UINITY_START = 10000;
+const FLUTTER_UINITY_END = 20000;
 
 ///
 /// socket控制器

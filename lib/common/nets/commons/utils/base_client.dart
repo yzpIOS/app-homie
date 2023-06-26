@@ -114,7 +114,7 @@ mixin BaseClient {
   ///
   void riseOnRawData(int curCmd, Uint8List? curPkg) {
     if(Env.isDebug) {
-      debugPrint("cmd = $curCmd, data = ${curPkg?.toString()}");
+      debugPrint("接收数据, cmd = $curCmd, data = ${curPkg?.toString()}");
     }
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {
@@ -134,7 +134,7 @@ mixin BaseClient {
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
     if(Env.isDebug) {
-      debugPrint("cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}");
+      debugPrint("接收数据, cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}");
     }
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {
@@ -188,8 +188,9 @@ mixin BaseClient {
     if(!_onReceiveCmds.containsKey(cmd)) {
       _onReceiveCmds[cmd] = [];
     }
+    int receiveDataHashCode = receiveData.hashCode;
     _onReceiveCmds[cmd]?.forEach((element) {
-      if(element.onCallBack == receiveData) {
+      if(element.onCallBackHashCode == receiveDataHashCode) {
         return;
       }
     });
@@ -210,8 +211,9 @@ mixin BaseClient {
     if(list == null) {
       return;
     }
+    int receiveDataHashCode = receiveData.hashCode;
     for(int index = list.length - 1; index >= 0; index --) {
-      if(list[index].onCallBackHashCode == receiveData.hashCode) {
+      if(list[index].onCallBackHashCode == receiveDataHashCode) {
         list.removeAt(index);
       }
     }
