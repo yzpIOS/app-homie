@@ -39,7 +39,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
 
     final token = await Get.find<ImAuth>().fetchToken();
 
-    await Rtc.$.enterRoom(
+    await Rtc.rtcClient.enterRoom(
       TRTCParams(
         sdkAppId: appId,
         roomId: 0,
@@ -60,5 +60,5 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     return Rtc.leave();
   }
 
-  Future<void> setMicVol(double volume) => Rtc.$.setAudioCaptureVolume(volume.toInt());
+  Future<void> setMicVol(double volume) => Rtc.rtcClient.setAudioCaptureVolume(volume.toInt());
 }

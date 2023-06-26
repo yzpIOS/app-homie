@@ -150,7 +150,6 @@ class CustomSocket {
     if(datas.isEmpty || _socket == null) {
       return false;
     }
-    debugPrint("[socket]:发送数据");
     _socket?.add(datas);
     return true;
   }

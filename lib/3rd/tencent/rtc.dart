@@ -16,19 +16,19 @@ class Rtc {
   static final micRx = RxBool(false), audioRx = RxBool(true), videoRx = RxBool(false);
   static final netQualityRx = RxInt(0);
 
-  static late final TRTCCloud $;
+  static late final TRTCCloud rtcClient;
 
   static Future<void> _init() async {
-    $ = (await TRTCCloud.sharedInstance())!;
+    rtcClient = (await TRTCCloud.sharedInstance())!;
 
     await Future.wait(
       [
-        $.setLogLevel(TRTCCloudDef.TRTC_LOG_LEVEL_NULL),
-        $.setConsoleEnabled(canLog(LogType.RTC)),
+        rtcClient.setLogLevel(TRTCCloudDef.TRTC_LOG_LEVEL_NULL),
+        rtcClient.setConsoleEnabled(canLog(LogType.RTC)),
       ],
     );
 
-    $.registerListener((type, args) {
+    rtcClient.registerListener((type, args) {
       switch (type) {
         case TRTCCloudListener.onNetworkQuality:
           netQualityRx(args['localQuality']['quality']);
@@ -160,7 +160,7 @@ class Rtc {
     xlog('用户进入房间 -> $args', type: LogType.RTC);
 
     if (args > 0) {
-      $.enableAudioVolumeEvaluation(400);
+      rtcClient.enableAudioVolumeEvaluation(400);
     } else if (args < 0) {
       assert(false);
     } else {
@@ -194,12 +194,12 @@ class Rtc {
     try {
       await Future.wait(
         [
-          $.muteLocalAudio(!enable),
+          rtcClient.muteLocalAudio(!enable),
           if (enable) //
-            $.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
+            rtcClient.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
           else
-            $.stopLocalAudio(),
-          $.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
+            rtcClient.stopLocalAudio(),
+          rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
         ],
       );
 
@@ -212,7 +212,7 @@ class Rtc {
   //开关声音
   static Future<void> _enableAudio(bool enable) async {
     try {
-      await $.muteAllRemoteAudio(!enable);
+      await rtcClient.muteAllRemoteAudio(!enable);
 
       xlog(() => '声音状态设置为[$enable]', type: LogType.RTC);
     } catch (e, s) {
@@ -225,11 +225,11 @@ class Rtc {
     try {
       await Future.wait(
         [
-          $.muteLocalVideo(!enable),
+          rtcClient.muteLocalVideo(!enable),
           if (enable) //
-            $.startLocalPreview(true, null)
+            rtcClient.startLocalPreview(true, null)
           else
-            $.stopLocalPreview(),
+            rtcClient.stopLocalPreview(),
         ],
       );
 
@@ -257,7 +257,7 @@ class Rtc {
       await Future.wait(
         [
           // $.switchRole(TRTCCloudDef.TRTCRoleAudience),
-          $.exitRoom(),
+          rtcClient.exitRoom(),
         ],
       );
 

@@ -5,6 +5,8 @@ import 'dart:typed_data';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
+import 'package:app/env.dart';
+import 'package:app/widgets.dart';
 
 import 'custom_socket.dart';
 import 'dart:core';
@@ -71,6 +73,9 @@ class CustomClient with BaseClient {
   /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
+    if(Env.isDebug) {
+      debugPrint("[socket]:发送数据, cmd = $cmd, data = ${datas.toString()}");
+    }
     int len = datas?.length ?? 0;
     // 加密
     ByteUtils.encryption(datas);

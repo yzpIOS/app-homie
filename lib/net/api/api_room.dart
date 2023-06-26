@@ -41,11 +41,12 @@ class ApiRoom extends ApiBase {
   ///
   /// 退出房间
   ///
-  Future close() {
-    return SocketCtrl.ins.sendByteAsyncServer(
+  Future close() async {
+    var result = await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_CloseScene,
         resCmd: CMD.S_CloseScene
     );
+    return result;
 
     return _doPost('out');
   }
