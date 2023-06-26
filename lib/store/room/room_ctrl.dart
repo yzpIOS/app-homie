@@ -97,22 +97,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         Get.find<MyAnimeCtrl>().doPreCache();
       },
     );
-
-    Future.doWhile(
-      () async {
-        await Future.delayed(const Duration(seconds: 5));
-
-        if (isClosed) return false;
-
-        try {
-          await Api.Room.heartbeat(roomId: roomId);
-        } catch (_) {
-          //ignore
-        }
-
-        return !isClosed;
-      },
-    );
   }
 
   @mustCallSuper

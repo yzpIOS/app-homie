@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/commons/utils/base_client.dart';
+import 'package:app/env.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -165,7 +166,9 @@ class CustomSocket {
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
-      debugPrint("[socket]:接收到网络数据");
+      if(Env.isDebug) {
+        debugPrint("[socket]:接收数据data: $data");
+      }
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {

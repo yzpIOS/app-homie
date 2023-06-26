@@ -5,6 +5,8 @@ import 'package:app/common/nets/commons/utils/base_byte_buffer.dart';
 import 'package:app/common/nets/commons/utils/byte_buffer1.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
+import 'package:app/env.dart';
+import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
 
 
@@ -111,6 +113,9 @@ mixin BaseClient {
   /// 唤起原始数据的回调
   ///
   void riseOnRawData(int curCmd, Uint8List? curPkg) {
+    if(Env.isDebug) {
+      debugPrint("cmd = $curCmd, data = ${curPkg?.toString()}");
+    }
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {
       _onReceiveRaw[index].call(curCmd, curPkg);
@@ -128,6 +133,9 @@ mixin BaseClient {
   /// 唤起回调
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
+    if(Env.isDebug) {
+      debugPrint("cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}");
+    }
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {
       _onReceive[index].call(curCmd, generatedMessage);

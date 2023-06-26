@@ -60,7 +60,7 @@ class Http {
           // // 打印日志
           // LoggerInterceptor.instace,
           // // curl
-          // CurlInterceptor.instace,
+          CurlInterceptor.instace,
         ],
       );
 
