@@ -104,7 +104,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future<void> _useAuth(String token) async {
-    Future<void> _useInfo(Map info) async {
+    Future<Map> _useInfo(Map info) async {
       final uid = info['uid'];
       Int64 nUid = Int64(info['role_id']);
 
@@ -118,31 +118,31 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       await KvBox.write(PrefKey.AuthInfo, data);
 
       _setup(auth, info: info);
+      return info;
     }
 
     try {
-      await _useInfo(
+      var result = await _useInfo(
         await Api.UserInfo.myInfo(token: token),
       );
-    } on LogicException catch (e) {
-      switch (e.code) {
-        case 13004:
-          final info = await holderProgress(
-            Get.to(
-              () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
-              transition: Transition.noTransition,
-            )!,
-          );
 
-          if (info is Map) {
-            await _useInfo(info);
-          } else {
-            throw const CanceledException();
-          }
-          break;
-        default:
-          rethrow;
+      // 性别为空，那么需要去选择角色
+      if(result["sex"] == 0) {
+        final info = await holderProgress(
+          Get.to(
+                () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
+            transition: Transition.noTransition,
+          )!,
+        );
+
+        if (info is Map) {
+          await _useInfo(info);
+        } else {
+          throw const CanceledException();
+        }
       }
+    } on LogicException catch (e) {
+      rethrow;
     }
   }
 

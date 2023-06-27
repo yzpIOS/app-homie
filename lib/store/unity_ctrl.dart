@@ -5,6 +5,7 @@ import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/scene_loader.dart';
 import 'package:app/widgets.dart';
@@ -128,6 +129,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         data: {
           "port": event,
           "uniqueId": SocketCtrl.ins.uniqueId,
+          "uid": OAuthCtrl.uid,
+          "role_id": OAuthCtrl.nUid.toInt()
         },
       );
       debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
