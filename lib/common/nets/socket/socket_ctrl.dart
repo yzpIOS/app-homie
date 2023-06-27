@@ -52,16 +52,19 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       }
       // flutter与unity之间的协义号从20001开始
       // 大于20000的是unity发给flutter的信息
-      if(cmd >= FLUTTER_UINITY_START || cmd <= FLUTTER_UINITY_END) {
+      if(cmd >= FLUTTER_UINITY_START && cmd <= FLUTTER_UINITY_END) {
         // 通知flutter收到信息
         riseOnRawData(cmd, data);
         return;
       }
       // 发送数据到服务端
-      shareClient.sendBytes(cmd, datas: data);
+      shareClient.sendBytes(cmd, datas: data, sendToUntiy: "unity>>>server");
     });
     // 监听unity发送的消息
     localServer.onReceiveDataFromU((session, cmd, data) {
+      if(Env.isDebug) {
+        debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
+      }
       if(session.uniqueId != uniqueId) {
         return;
       }
@@ -78,6 +81,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 接收到原始数据
     shareClient.onRawData((cmd, data) {
       riseOnRawData(cmd, data);
+      if(Env.isDebug) {
+        debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
+      }
       localServer.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
     // 接收到反序列化后的数据

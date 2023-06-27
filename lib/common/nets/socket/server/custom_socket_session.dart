@@ -3,10 +3,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
+import 'package:app/env.dart';
+import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
 
 class CustomSocketSession with BaseClient {
@@ -36,7 +39,11 @@ class CustomSocketSession with BaseClient {
       onReceive(data);
     }, onError: (error) {
       // 断开连接
+      // unity退出
+      exitCallBack?.call();
     });
+    
+    registerFromBuffers(CMD.C_Verify, C_Verify.fromBuffer);
   }
 
   ///
@@ -66,6 +73,10 @@ class CustomSocketSession with BaseClient {
   /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
+    if(Env.isDebug) {
+      debugPrint("[socket]:sever>>>unity发送数据, cmd = $cmd, data = ${datas
+          .toString()}");
+    }
     int len = datas?.length ?? 0;
     // 加密
     ByteUtils.encryption(datas);
@@ -101,6 +112,9 @@ class CustomSocketSession with BaseClient {
         // flutter传给unity的，由unity通过协议传过来的
         C_Verify? c_verify = onGeneratedMessage as C_Verify?;
         uniqueId = c_verify?.uniqueId ?? "";
+        if(Env.isDebug) {
+          debugPrint("[socket]:接收到unity uniqueId = $uniqueId");
+        }
         break;
       case BaseClient.CONNECT_EXIT:
         // unity退出

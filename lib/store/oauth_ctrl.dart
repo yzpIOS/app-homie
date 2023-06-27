@@ -5,6 +5,7 @@ import 'package:app/exception.dart';
 import 'package:app/model/auth_info.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
@@ -147,14 +148,17 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   void _setup(AuthInfo data, {Map? info}) {
+    _auth = data;
     Get.put(
       UserCtrl(_auth = data, init: info),
       permanent: true,
     );
-
-    // todo 获取服务端的ip和host
     // 开启socket连接
     SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
+    // 通知unity登录变化
+    if(!UnityCtrl.ins.successSendInfo2Unity) {
+      UnityCtrl.ins.sendFlutterSocketInfo();
+    }
   }
 
   //</editor-fold>
@@ -176,6 +180,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         ],
       );
     }
+    // 退出时，重置登录状态
+    UnityCtrl.ins.successSendInfo2Unity = false;
 
     _auth = null;
 

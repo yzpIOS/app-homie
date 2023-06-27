@@ -8,6 +8,7 @@ import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/env.dart';
+import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 
@@ -143,13 +144,9 @@ class CustomLocalServer with BaseClient {
   /// 获取到Session
   ///
   CustomSocketSession? getSession(String uniqueId) {
-    // 测试环境
-    if(Env.isDebug && _sessions.isNotEmpty) {
-      return _sessions.values.first;
-    }
-    for(int index = 0; index < _sessions.length; index ++) {
-      if(_sessions[index]?.uniqueId == uniqueId) {
-        return _sessions[index];
+    for(var key in _sessions.keys) {
+      if(_sessions[key]?.uniqueId == uniqueId) {
+        return _sessions[key];
       }
     }
     return null;

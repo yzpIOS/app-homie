@@ -73,4 +73,6 @@ class CMD {
 
   static const C_Role = 103;//请求角色
   static const S_Role = 104;//角色(性别=0表示无角色)
+
+  static const C_Verify = 10000;//连接验证
 }

@@ -19,8 +19,16 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   late final _callback = _Callback();
 
   StreamSubscription? subscription;
+  // 是否调用过unity的
+  bool successSendInfo2Unity = false;
+  // unity是否初始化成功
+  bool _isUnityInitSuccess = false;
 
   final _sceneLock = Lock(reentrant: true);
+
+  static UnityCtrl get ins {
+    return Get.find<UnityCtrl>();
+  }
 
   @override
   void onInit() {
@@ -58,6 +66,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             _onUnityStart();
             break;
           case Unity2AppEnum.UTF_INIT_START:
+            _isUnityInitSuccess = true;
             _onUnityInit();
             // 发送flutter相关的信息
             sendFlutterSocketInfo();
@@ -103,16 +112,24 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 发送flutter相关的socket信息
   ///
   void sendFlutterSocketInfo({int tryTimes = 0}) async {
-    if(tryTimes >= 10) {
+    if(isClosed) {
+      return;
+    }
+    // 未登录, 不发消息
+    if(!OAuthCtrl.isLogin || _isUnityInitSuccess == false) {
+      return;
+    }
+    if(tryTimes >= 100) {
       return;
     }
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
     SocketCtrl.ins.updateUniqueId();
     // 延迟时间
-    int delayTryTIme = 3;
+    int delayTryTIme = 5;
     // 获取到端口号
     subscription?.cancel();
+    successSendInfo2Unity = true;
     subscription = SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {

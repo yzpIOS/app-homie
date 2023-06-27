@@ -72,9 +72,10 @@ class CustomClient with BaseClient {
   /// C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
   /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
-  bool sendBytes(int cmd, {Uint8List? datas}) {
+  bool sendBytes(int cmd, {Uint8List? datas, String sendToUntiy = ""}) {
     if(Env.isDebug) {
-      debugPrint("[socket]:发送数据, cmd = $cmd, data = ${datas.toString()}");
+      debugPrint("[socket]:${sendToUntiy}发送数据, cmd = $cmd, data = ${datas
+          .toString()}");
     }
     int len = datas?.length ?? 0;
     // 加密

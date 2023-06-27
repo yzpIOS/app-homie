@@ -31,6 +31,8 @@ class CustomSocket {
   // 当前地址
   String _host = "";
 
+  bool _isDisposed = false;
+
   // 当前ip
   int _port = 0;
 
@@ -68,6 +70,9 @@ class CustomSocket {
   /// [timeout]           过期时间
   ///
   CustomSocket connect(String host, int port, {int timeout = 5, int delayReconnect = 3}) {
+    if(_isDisposed) {
+      return this;
+    }
     // 防止重复调用
     if(_host == host && _port == port) {
       debugPrint("[socket]:连接地址相同, host=$host, port=$port");
@@ -168,6 +173,7 @@ class CustomSocket {
       if(Env.isDebug) {
         debugPrint("[socket]:接收数据data: $data");
       }
+
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {
@@ -329,6 +335,7 @@ class CustomSocket {
   }
 
   void dispose() {
+    _isDisposed = true;
     _socket?.close();
     _connectError.clear();
     _disconnects.clear();

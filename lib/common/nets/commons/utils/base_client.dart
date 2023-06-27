@@ -116,6 +116,7 @@ mixin BaseClient {
     if(Env.isDebug) {
       debugPrint("接收数据, cmd = $curCmd, data = ${curPkg?.toString()}");
     }
+
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {
       _onReceiveRaw[index].call(curCmd, curPkg);
@@ -133,9 +134,8 @@ mixin BaseClient {
   /// 唤起回调
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
-    if(Env.isDebug) {
       debugPrint("接收数据, cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}");
-    }
+
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {
       _onReceive[index].call(curCmd, generatedMessage);
