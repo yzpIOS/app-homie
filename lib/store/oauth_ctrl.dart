@@ -154,7 +154,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
     // todo 获取服务端的ip和host
     // 开启socket连接
-    SocketCtrl.ins.startClient("192.168.1.188", 7778);
+    SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
   }
 
   //</editor-fold>

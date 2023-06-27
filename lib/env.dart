@@ -16,4 +16,7 @@ abstract class Env {
   static final mqUrl = Uri.parse(const String.fromEnvironment('mq_url'));
 
   static const appName = String.fromEnvironment('app_name');
+
+  static const serverIP = String.fromEnvironment('server_ip');
+  static const serverPort = int.fromEnvironment('server_port');
 }

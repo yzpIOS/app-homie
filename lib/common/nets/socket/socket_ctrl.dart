@@ -13,6 +13,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
+import 'package:slugid/slugid.dart';
 
 
 const FLUTTER_UINITY_START = 10000;
@@ -166,7 +167,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 更新时间
   ///
   void updateUniqueId() {
-    uniqueId = DateTime.now().toString();
+    uniqueId = Slugid.nice().toString();;
   }
 
   ///
