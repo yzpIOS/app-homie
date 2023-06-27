@@ -44,6 +44,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_SyncZone = CMD._(242, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_SyncZone');
   static const CMD S_EnforceZone = CMD._(243, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_EnforceZone');
   static const CMD C_StopMove = CMD._(245, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_StopMove');
+  static const CMD C_Animate = CMD._(246, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Animate');
   static const CMD S_AddRole = CMD._(250, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_AddRole');
   static const CMD S_RemoveObj = CMD._(251, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_RemoveObj');
   static const CMD S_RemoveObjs = CMD._(252, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_RemoveObjs');
@@ -51,6 +52,10 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_State = CMD._(261, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_State');
   static const CMD C_ToSeatInfo = CMD._(280, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_ToSeatInfo');
   static const CMD S_SyncSeatInfo = CMD._(281, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_SyncSeatInfo');
+  static const CMD C_GoToRoom = CMD._(300, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GoToRoom');
+  static const CMD S_GoToRoom = CMD._(301, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GoToRoom');
+  static const CMD C_GoAwayRoom = CMD._(302, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GoAwayRoom');
+  static const CMD S_GoAwayRoom = CMD._(303, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GoAwayRoom');
   static const CMD C_CreateScene = CMD._(2100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_CreateScene');
   static const CMD S_CreateScene = CMD._(2101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_CreateScene');
   static const CMD C_CloseScene = CMD._(2103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_CloseScene');
@@ -59,6 +64,8 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_JoinScene = CMD._(2113, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_JoinScene');
   static const CMD C_OutScene = CMD._(2114, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OutScene');
   static const CMD S_OutScene = CMD._(2115, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_OutScene');
+  static const CMD C_MikeList = CMD._(2120, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_MikeList');
+  static const CMD S_MikeList = CMD._(2121, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_MikeList');
   static const CMD C_UpMike = CMD._(2122, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_UpMike');
   static const CMD S_UpMike = CMD._(2123, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UpMike');
   static const CMD C_OutMike = CMD._(2124, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OutMike');
@@ -144,6 +151,7 @@ class CMD extends $pb.ProtobufEnum {
     S_SyncZone,
     S_EnforceZone,
     C_StopMove,
+    C_Animate,
     S_AddRole,
     S_RemoveObj,
     S_RemoveObjs,
@@ -151,6 +159,10 @@ class CMD extends $pb.ProtobufEnum {
     S_State,
     C_ToSeatInfo,
     S_SyncSeatInfo,
+    C_GoToRoom,
+    S_GoToRoom,
+    C_GoAwayRoom,
+    S_GoAwayRoom,
     C_CreateScene,
     S_CreateScene,
     C_CloseScene,
@@ -159,6 +171,8 @@ class CMD extends $pb.ProtobufEnum {
     S_JoinScene,
     C_OutScene,
     S_OutScene,
+    C_MikeList,
+    S_MikeList,
     C_UpMike,
     S_UpMike,
     C_OutMike,

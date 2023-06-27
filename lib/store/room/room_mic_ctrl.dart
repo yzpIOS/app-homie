@@ -99,7 +99,11 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     on<UpdateHotCountEvent>(
       (event) {
-        _updateHotCount([event.data]);
+        var data = event.data;
+        if(data == null) {
+          return;
+        }
+        _updateHotCount2([data]);
       },
     );
 
@@ -149,6 +153,22 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         return false;
       } else {
         info.hotCount = it['number'];
+
+        return true;
+      }
+    });
+
+    if (b) dataRx.refresh();
+  }
+
+  void _updateHotCount2(List<S_AccMikeBroadcast> data) {
+    final b = data.any((it) {
+      final info = dataRx[it.mikeNo];
+
+      if (info == null) {
+        return false;
+      } else {
+        info.hotCount = it.number;
 
         return true;
       }

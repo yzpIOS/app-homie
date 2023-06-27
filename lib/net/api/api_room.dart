@@ -81,7 +81,7 @@ class ApiRoom extends ApiBase {
 
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
-    var result = await await SocketCtrl.ins.sendByteAsyncServer(
+    var result = await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_JoinScene,
         datas: c_joinScene.writeToBuffer(),
         resCmd: CMD.S_JoinScene);
@@ -274,7 +274,7 @@ class ApiRoom extends ApiBase {
   ///
   Future resetHotCount({required int roomId, int? micId}) {
     C_AccMikeClear cAccmikeclear = C_AccMikeClear.create();
-    cAccmikeclear.makeId = Int64(micId ?? 0);
+    cAccmikeclear.mikeId = Int64(micId ?? 0);
     SocketCtrl.ins.sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
     return Future.value(1);
     

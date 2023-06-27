@@ -92,6 +92,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_UID_BLACK = ErrorCode._(16013, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_UID_BLACK');
   static const ErrorCode ROOM_USER_NOT_ONLINE = ErrorCode._(16014, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_NOT_ONLINE');
   static const ErrorCode ROOM_USER_LIVE_ING = ErrorCode._(16015, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_USER_LIVE_ING');
+  static const ErrorCode ROOM_INIT_FAIL = ErrorCode._(16016, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_INIT_FAIL');
   static const ErrorCode ROOM_MIKE_NOT_EXIST = ErrorCode._(16101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_EXIST');
   static const ErrorCode ROOM_MIKE_NOT_FOUND = ErrorCode._(16102, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_MIKE_NOT_FOUND');
   static const ErrorCode ROOM_START_MIKE_EXECUTING = ErrorCode._(16103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROOM_START_MIKE_EXECUTING');
@@ -221,6 +222,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_UID_BLACK,
     ROOM_USER_NOT_ONLINE,
     ROOM_USER_LIVE_ING,
+    ROOM_INIT_FAIL,
     ROOM_MIKE_NOT_EXIST,
     ROOM_MIKE_NOT_FOUND,
     ROOM_START_MIKE_EXECUTING,

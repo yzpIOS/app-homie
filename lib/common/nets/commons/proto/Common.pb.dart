@@ -864,6 +864,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     ..aOM<SuitInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
     ..aOM<StateInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
     ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'seatGuid', protoName: 'seatGuid')
+    ..aInt64(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId', protoName: 'roomId')
     ..hasRequiredFields = false
   ;
 
@@ -875,6 +876,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     SuitInfo? suitInfo,
     StateInfo? stateInfo,
     $core.String? seatGuid,
+    $fixnum.Int64? roomId,
   }) {
     final _result = create();
     if (roleId != null) {
@@ -894,6 +896,9 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     }
     if (seatGuid != null) {
       _result.seatGuid = seatGuid;
+    }
+    if (roomId != null) {
+      _result.roomId = roomId;
     }
     return _result;
   }
@@ -977,6 +982,15 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   $core.bool hasSeatGuid() => $_has(5);
   @$pb.TagNumber(6)
   void clearSeatGuid() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get roomId => $_getI64(6);
+  @$pb.TagNumber(7)
+  set roomId($fixnum.Int64 v) { $_setInt64(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasRoomId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearRoomId() => clearField(7);
 }
 
 class RoleData extends $pb.GeneratedMessage {
