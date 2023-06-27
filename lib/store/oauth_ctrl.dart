@@ -127,7 +127,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       );
 
       // 性别为空，那么需要去选择角色
-      if(result["sex"] == 0) {
+      if(result.containsKey("sex") == false || result["sex"] == 0) {
         final info = await holderProgress(
           Get.to(
                 () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
