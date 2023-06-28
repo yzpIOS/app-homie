@@ -154,25 +154,14 @@ class GiftSend2Room extends GiftSendLogic {
 
     assert(type != null, '数据错误 -> $data');
 
-    C_GiveGiftByRoom c_giveGiftByRoom = C_GiveGiftByRoom.create();
-    c_giveGiftByRoom.acceptUidList.addAll(users);
-    c_giveGiftByRoom.roomId = Int64(roomId);
-    c_giveGiftByRoom.giftId = Int64(data['id']);
-    c_giveGiftByRoom.count = count;
 
-    await SocketCtrl.ins.sendByteAsyncServer(
-      CMD.C_GiveGiftByRoom,
-      datas: c_giveGiftByRoom.writeToBuffer(),
-      resCmd: CMD.S_GiveGiftByRoom
+    await Api.Gift.sendGift2Room(
+      roomId: roomId,
+      uid: users,
+      count: count,
+      giftId: data['id'],
+      isBackpack: data.containsKey('backpack_count'),
     );
-
-    // await Api.Gift.sendGift2Room(
-    //   roomId: roomId,
-    //   uid: users,
-    //   count: count,
-    //   giftId: data['id'],
-    //   isBackpack: data.containsKey('backpack_count'),
-    // );
 
     return count * users.length;
   }

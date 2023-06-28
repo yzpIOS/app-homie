@@ -48,7 +48,7 @@ class CMD {
   static const S_NoticeBroadcast = 2240; // 房间公告广播 【对应旧mq类型：6】
   static const S_MsgText = 2240; // 房间公告广播 【对应旧mq类型：7】
   static const S_ChatMessageBroadcast = 2270; // 房间聊天信息广播 【对应旧mq类型：7】
-  static const S_GiftPlay = 3104; // 礼物播放广播(对应mq的8)
+  static const S_GiftPlay = 3104; // 礼物播放广播(对应mq的8)=======对接完成
   static const S_AdministratorBroadcast = 2280; // 房间设置管理员广播 【对应旧mq类型：9】
 
   static const S_BlackBroadcast = 2250; // 房间黑名单广播【对应旧mq类型：11】
@@ -69,6 +69,11 @@ class CMD {
   // =========礼物相关===========
   static const C_GiveGiftByRoom = 3100; // 直播间赠送礼物
   static const S_GiveGiftByRoom = 3101; // 直播间赠送礼物返回
+
+  static const C_GiveGiftByDynamic = 3106; // 动态赠送礼物
+  static const S_GiveGiftByDynamic = 3107; // 直动态赠送礼物返回值
+  static const C_GiveGiftByIm = 3109; // 聊天赠送礼物
+  static const S_GiveGiftByIm = 3110; // 聊天赠送礼物返回值
 
 
   static const C_Role = 103;//请求角色

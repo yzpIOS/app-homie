@@ -104,12 +104,18 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_UpdateCharmLevel = CMD._(3103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UpdateCharmLevel');
   static const CMD S_GiftPlay = CMD._(3104, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GiftPlay');
   static const CMD S_FloatingScreen = CMD._(3105, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_FloatingScreen');
+  static const CMD C_GiveGiftByDynamic = CMD._(3106, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GiveGiftByDynamic');
+  static const CMD S_GiveGiftByDynamic = CMD._(3107, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GiveGiftByDynamic');
+  static const CMD C_GiveGiftByIm = CMD._(3109, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GiveGiftByIm');
+  static const CMD S_GiveGiftByIm = CMD._(3110, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GiveGiftByIm');
   static const CMD C_Robot = CMD._(6661, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Robot');
   static const CMD S_Robot = CMD._(6662, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_Robot');
   static const CMD C_Test = CMD._(6666, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Test');
   static const CMD S_Test = CMD._(6667, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_Test');
   static const CMD C_Debug = CMD._(6668, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Debug');
   static const CMD S_Debug = CMD._(6669, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_Debug');
+  static const CMD C_OptTest = CMD._(6670, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OptTest');
+  static const CMD S_OptTest = CMD._(6671, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_OptTest');
   static const CMD C_Verify = CMD._(10000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Verify');
   static const CMD C_Exit = CMD._(10001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Exit');
   static const CMD G_UFHeart = CMD._(10002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G_UFHeart');
@@ -211,12 +217,18 @@ class CMD extends $pb.ProtobufEnum {
     S_UpdateCharmLevel,
     S_GiftPlay,
     S_FloatingScreen,
+    C_GiveGiftByDynamic,
+    S_GiveGiftByDynamic,
+    C_GiveGiftByIm,
+    S_GiveGiftByIm,
     C_Robot,
     S_Robot,
     C_Test,
     S_Test,
     C_Debug,
     S_Debug,
+    C_OptTest,
+    S_OptTest,
     C_Verify,
     C_Exit,
     G_UFHeart,
