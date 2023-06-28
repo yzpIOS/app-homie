@@ -75,16 +75,16 @@ class ApiGift extends ApiBase {
     required int count,
   }) async {
 
-    C_GiveGiftByIm c_giveGiftByRoom = C_GiveGiftByIm.create();
-    c_giveGiftByRoom.acceptUid = uid;
-    c_giveGiftByRoom.giftId = Int64(giftId);
-    c_giveGiftByRoom.count = count;
-
-    return await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_GiveGiftByIm,
-        datas: c_giveGiftByRoom.writeToBuffer(),
-        resCmd: CMD.S_GiveGiftByIm
-    );
+    // C_GiveGiftByIm c_giveGiftByRoom = C_GiveGiftByIm.create();
+    // c_giveGiftByRoom.acceptUid = uid;
+    // c_giveGiftByRoom.giftId = Int64(giftId);
+    // c_giveGiftByRoom.count = count;
+    //
+    // return await SocketCtrl.ins.sendByteAsyncServer(
+    //     CMD.C_GiveGiftByIm,
+    //     datas: c_giveGiftByRoom.writeToBuffer(),
+    //     resCmd: CMD.S_GiveGiftByIm
+    // );
 
     final data = <String, dynamic>{
       'accept_uid': uid,

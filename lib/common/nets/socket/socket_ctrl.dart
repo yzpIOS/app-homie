@@ -6,6 +6,7 @@ import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
+import 'package:app/event/event.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
@@ -218,6 +219,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
     register(BaseClient.USER_HEART_BEAT, G_UFHeart.fromBuffer);
+
+    // 漂屏礼物广播
+    onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
   }
 
   ///
@@ -269,7 +273,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void onClientConnect() {
     C_Role role = C_Role.create();
     role.session = OAuthCtrl.token ?? "";
-    SocketCtrl.ins.sendSever(CMD.C_Role, message: role);
+    sendSever(CMD.C_Role, message: role);
   }
 
   @override
@@ -278,5 +282,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     shareClient.dispose();
     localServer.dispose();
     removeClientConnect(onClientConnect);
+    removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+  }
+
+  ///
+  /// 漂屏
+  ///
+  void onFloatingScreen(int cmd, S_FloatingScreen? sFloatingscreen) {
+    if(sFloatingscreen == null) {
+      return;
+    }
+    SuperGiftEvent(sFloatingscreen).fire();
   }
 }
