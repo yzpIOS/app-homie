@@ -291,7 +291,7 @@ class RoomCtrl extends SceneCtrl {
   }
 
   void setManager({required UID uid, required bool isAdd}) {
-    Api.Room.setManager(roomId: roomId, uid: uid, isAdd: isAdd)
+    Api.Room.setManager(roomId: roomId, uid: uid, isAdd: isAdd);
   }
 }
 
