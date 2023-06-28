@@ -1,3 +1,6 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
@@ -9,6 +12,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:fixnum/fixnum.dart';
 
 enum UseMyGift { enable, disable, only }
 
@@ -150,13 +154,25 @@ class GiftSend2Room extends GiftSendLogic {
 
     assert(type != null, '数据错误 -> $data');
 
-    await Api.Gift.sendGift2Room(
-      roomId: roomId,
-      uid: users,
-      count: count,
-      giftId: data['id'],
-      isBackpack: data.containsKey('backpack_count'),
+    C_GiveGiftByRoom c_giveGiftByRoom = C_GiveGiftByRoom.create();
+    c_giveGiftByRoom.acceptUidList.addAll(users);
+    c_giveGiftByRoom.roomId = Int64(roomId);
+    c_giveGiftByRoom.giftId = Int64(data['id']);
+    c_giveGiftByRoom.count = count;
+
+    await SocketCtrl.ins.sendByteAsyncServer(
+      CMD.C_GiveGiftByRoom,
+      datas: c_giveGiftByRoom.writeToBuffer(),
+      resCmd: CMD.S_GiveGiftByRoom
     );
+
+    // await Api.Gift.sendGift2Room(
+    //   roomId: roomId,
+    //   uid: users,
+    //   count: count,
+    //   giftId: data['id'],
+    //   isBackpack: data.containsKey('backpack_count'),
+    // );
 
     return count * users.length;
   }
