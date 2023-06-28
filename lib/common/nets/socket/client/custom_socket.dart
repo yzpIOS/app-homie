@@ -170,10 +170,6 @@ class CustomSocket {
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
-      if(Env.isDebug) {
-        debugPrint("[socket]:接收数据data: $data");
-      }
-
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {

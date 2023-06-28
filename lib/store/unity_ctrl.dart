@@ -298,7 +298,9 @@ class _Callback {
 
   _CallbackInfo? _popup(String requestId) {
     final data = _data.remove(requestId);
-
+    if(data == null) {
+      return null;
+    }
     assert(data != null, '数据异常[$requestId]');
 
     return data?.let((it) {

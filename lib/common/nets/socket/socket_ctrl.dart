@@ -28,7 +28,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   final CustomClient shareClient = CustomClient();
 
   // 分配给unity的唯一id
-  String uniqueId = DateTime.now().toString();
+  String uniqueId = Slugid.nice().toString();
   // flutter 内部的server, 用于与unity进行通信
   final CustomLocalServer localServer = CustomLocalServer();
 
@@ -213,7 +213,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void startClient(String host, int port) {
     // 连接socket
     post(() async {
-      await Future.delayed(const Duration(seconds: 3));
       // 重置状态
       shareClient.onCanConnected(true);
       // 连接服务器
