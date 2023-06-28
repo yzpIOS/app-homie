@@ -28,11 +28,12 @@ typedef UseBox = Future<R> Function<R>(FutureOr<R> Function(LazyBox box) callbac
 
 class UserCtrl extends GetxController with GetDisposableMixin {
   final Map? init;
+  bool? showTransition;
 
   final AuthInfo _auth;
   final UserLazyBox _box;
 
-  UserCtrl(this._auth, {this.init}) : _box = UserLazyBox(uid: _auth.uid, name: 'UserStore');
+  UserCtrl(this._auth, {this.init, this.showTransition = true}) : _box = UserLazyBox(uid: _auth.uid, name: 'UserStore');
 
   @override
   void onInit() {
@@ -70,7 +71,7 @@ class UserCtrl extends GetxController with GetDisposableMixin {
   void onReady() {
     super.onReady();
 
-    if (Env.useUnity) {
+    if (Env.useUnity && showTransition == true) {
       Get.find<UnityCtrl>() //
           .loadScene('Transition');
     }

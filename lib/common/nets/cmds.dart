@@ -40,8 +40,8 @@ class CMD {
   // =========房间相关===========
   static const S_LiveBroadcast = 2200; // 房间开关播广播
 
-  static const S_JoinBroadcast = 2210; // 加入房间广播 【对应旧mq类型:1】
-  static const S_LeaveBroadcast = 2211; // 退出房间广播 【对应旧mq类型:2】
+  static const S_JoinBroadcast = 2210; // 加入房间广播 【对应旧mq类型:1】）=======对接完成
+  static const S_LeaveBroadcast = 2211; // 退出房间广播 【对应旧mq类型:2】）=======对接完成
   static const S_InviteMikeBroadcast = 2222; // 邀请上麦广播 【对应旧mq类型：3】
   static const S_UpMikeBroadcast = 2220; // 上麦广播 【对应旧mq类型：4】）=======对接完成
   static const S_DownMikeBroadcast = 2221; // 下麦麦广播 【对应旧mq类型：5】=======对接完成
@@ -58,7 +58,7 @@ class CMD {
 
   static const S_UpdateLevel = 3102; // 等级提升广播（对应mq的16）
   static const S_LiveStopBroadcast = 2201; // 房间关播广播【对应旧mq类型：17】
-  static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18
+  static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18=======对接完成
   static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）=======对接完成
 
 

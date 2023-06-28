@@ -30,7 +30,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       final data = await KvBox.read(PrefKey.AuthInfo);
 
       if (data is Map) {
-        _setup(AuthInfo.fromJson(data.cast()));
+        _setup(AuthInfo.fromJson(data.cast()), true);
       }
     } catch (e, s) {
       errLog(e, s);
@@ -118,17 +118,19 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       Map<String, dynamic> data = auth.toJson();
       await KvBox.write(PrefKey.AuthInfo, data);
 
-      _setup(auth, info: info);
+      // _setup(auth, info: info);
+      _auth = auth;
       return info;
     }
 
     try {
-      var result = await _useInfo(
-        await Api.UserInfo.myInfo(token: token),
-      );
+      var myInfo = await Api.UserInfo.myInfo(token: token);
+      var result = await _useInfo(myInfo);
 
       // 性别为空，那么需要去选择角色
       if(result.containsKey("sex") == false || result["sex"] == 0) {
+        _setup(_auth!, false, info: myInfo);
+
         final info = await holderProgress(
           Get.to(
                 () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
@@ -141,16 +143,18 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         } else {
           throw const CanceledException();
         }
+      } else {
+        _setup(_auth!, true, info: myInfo);
       }
     } on LogicException catch (e) {
       rethrow;
     }
   }
 
-  void _setup(AuthInfo data, {Map? info}) {
+  void _setup(AuthInfo data, bool showTransition, {Map? info}) {
     _auth = data;
     Get.put(
-      UserCtrl(_auth = data, init: info),
+      UserCtrl(_auth = data, init: info, showTransition:showTransition),
       permanent: true,
     );
     // 开启socket连接

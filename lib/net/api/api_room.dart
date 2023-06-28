@@ -212,11 +212,15 @@ class ApiRoom extends ApiBase {
     return _doPost('mike/ban', data: data);
   }
 
-  Future setManager({required int roomId, required UID uid, required bool isAdd}) {
+  Future setManager({required int roomId, required UID uid, required bool isAdd}) async {
     C_SetAdministrator cSetnoticemessage = C_SetAdministrator.create();
     cSetnoticemessage.status = isAdd ? 1 : 2;
     cSetnoticemessage.uid = uid;
-    SocketCtrl.ins.sendSever(CMD.C_SetAdministrator, message: cSetnoticemessage);
+    await SocketCtrl.ins.sendByteAsyncServer(
+        CMD.C_SetAdministrator,
+        datas: cSetnoticemessage.writeToBuffer(),
+        resCmd: CMD.S_SetAdministrator
+    );
     return Future.value(1);
   }
 
