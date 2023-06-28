@@ -40,7 +40,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     );
 
     on<UserBlockEvent>(
-      test: (event) => stateRx() == RoomState.Mini && OAuthCtrl.isSelf(event.uid),
+      test: (event) {
+        return stateRx() == RoomState.Mini && OAuthCtrl.isSelf(event.uid);
+      },
       (_) => _doClose('你被封禁了'),
     );
   }

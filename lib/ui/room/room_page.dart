@@ -120,7 +120,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     );
 
     on<UserBlockEvent>(
-      test: (event) => OAuthCtrl.isSelf(event.uid),
+      test: (event) {
+        return OAuthCtrl.isSelf(event.uid);
+      },
       (_) => _doClose('你被封禁了'),
     );
 

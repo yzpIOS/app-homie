@@ -19,7 +19,9 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
 
   void _initListener() {
     on<UserBlockEvent>(
-      test: (event) => OAuthCtrl.isSelf(event.uid),
+      test: (event) {
+        return OAuthCtrl.isSelf(event.uid);
+      },
       (_) => leaveRoom(),
     );
   }
