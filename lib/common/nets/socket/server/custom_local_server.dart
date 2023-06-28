@@ -9,6 +9,7 @@ import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/env.dart';
 import 'package:app/widgets.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 
@@ -34,7 +35,6 @@ class CustomLocalServer with BaseClient {
 
   // 所有的链接
   Map<String, CustomSocketSession> _sessions = {};
-  List<CustomSocketSession> _sessionList = [];
 
   // 服务器开启成功
   List<ServerStatusCallBack> _serverStatusCallBacks = [];
@@ -52,6 +52,10 @@ class CustomLocalServer with BaseClient {
   Completer<int>? _portCompleter;
 
   bool _isBindingServer = false;
+  bool previouseHasNet = true;
+
+  // 网络状态订阅
+  StreamSubscription? _netStateSubscription;
 
   CustomLocalServer() {
   }
@@ -104,10 +108,6 @@ class CustomLocalServer with BaseClient {
       _socketSubscription = event;
     }).listen((data) {
       // 先销毁当前的session
-      CustomSocketSession? exist = _sessions[CustomSocketSession.getUniqueKey2(data)];
-      if(exist != null && _sessionList.contains(exist)) {
-        _sessionList.remove(exist);
-      }
       _sessions[CustomSocketSession.getUniqueKey2(data)]?.dispose();
 
       // 新创建session
@@ -127,10 +127,8 @@ class CustomLocalServer with BaseClient {
       // 由unity调用的退出
       customSocketSession.exitCallBack = () {
         customSocketSession.dispose();
-        _sessionList.remove(customSocketSession);
         _sessions.remove(customSocketSession.getUniqueKey());
       };
-      _sessionList.add(customSocketSession);
       _sessions[CustomSocketSession.getUniqueKey2(data)] = customSocketSession;
     }, onError: (error) {
       // 服务端断开
@@ -173,17 +171,20 @@ class CustomLocalServer with BaseClient {
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;
       // 遍历所有的session
-      for(int index = _sessionList.length - 1; index >= 0; index --) {
+      for(var key in _sessions.keys) {
+        var item = _sessions[key];
+        if(item == null) {
+          continue;
+        }
         // 心跳
-        if(nowSeconds - _sessionList[index].lastReceivePkgTime > SOCKET_TIME_OUT) {
+        if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
           // 移除session
-          _sessions.remove(_sessionList[index].getUniqueKey());
+          _sessions.remove(key);
           // 己经挂掉
-          _sessionList[index].dispose();
-          _sessionList.removeAt(index);
+          item.dispose();
         } else {
           // 发送心跳
-          _sessionList[index].send(BaseClient.USER_HEART_BEAT);
+          item.send(BaseClient.USER_HEART_BEAT);
         }
       }
       beatHeartCheck();
@@ -191,6 +192,39 @@ class CustomLocalServer with BaseClient {
       beatHeartCheck();
     });
   }
+
+
+  ///
+  /// 连接关闭时自动连接
+  ///
+  CustomLocalServer closeAutoConnect() {
+    _netStateSubscription?.cancel();
+    // 订阅网络变化
+    _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) async {
+      debugPrint("[socket]:网络发生变化, state = $state");
+      // 是否有网络
+      final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
+      // 没有网络直接返回
+      if(!hasNet) {
+        previouseHasNet = false;
+        debugPrint("[socket]:网络发生变化；无网络, state = $state");
+        _sessions.forEach((key, value) {
+          value.dispose();
+        });
+        _sessions.clear();
+        return;
+      }
+      // 防止重复调用
+      if(previouseHasNet) {
+        return;
+      }
+      previouseHasNet = true;
+      await Future.delayed(const Duration(seconds: 1));
+      riseServerStatusCallBacks();
+    });
+    return this;
+  }
+
 
   ///
   /// 注册数据回调
@@ -265,5 +299,6 @@ class CustomLocalServer with BaseClient {
     _beatHeartCheckStream?.cancel();
     _portCompleter = null;
     _serverStatusCallBacks.clear();
+    _netStateSubscription?.cancel();
   }
 }

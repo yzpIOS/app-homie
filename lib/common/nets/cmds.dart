@@ -43,10 +43,10 @@ class CMD {
   static const S_JoinBroadcast = 2210; // 加入房间广播 【对应旧mq类型:1】
   static const S_LeaveBroadcast = 2211; // 退出房间广播 【对应旧mq类型:2】
   static const S_InviteMikeBroadcast = 2222; // 邀请上麦广播 【对应旧mq类型：3】
-  static const S_UpMikeBroadcast = 2220; // 上麦广播 【对应旧mq类型：4】
-  static const S_DownMikeBroadcast = 2221; // 下麦麦广播 【对应旧mq类型：5】
+  static const S_UpMikeBroadcast = 2220; // 上麦广播 【对应旧mq类型：4】）=======对接完成
+  static const S_DownMikeBroadcast = 2221; // 下麦麦广播 【对应旧mq类型：5】=======对接完成
   static const S_NoticeBroadcast = 2240; // 房间公告广播 【对应旧mq类型：6】
-  static const S_MsgText = 2240; // 房间公告广播 【对应旧mq类型：7】
+  static const S_MsgText = 2240; // 房间公告广播 【对应旧mq类型：7】）=======对接完成
   static const S_ChatMessageBroadcast = 2270; // 房间聊天信息广播 【对应旧mq类型：7】
   static const S_GiftPlay = 3104; // 礼物播放广播(对应mq的8)=======对接完成
   static const S_AdministratorBroadcast = 2280; // 房间设置管理员广播 【对应旧mq类型：9】
@@ -59,16 +59,16 @@ class CMD {
   static const S_UpdateLevel = 3102; // 等级提升广播（对应mq的16）
   static const S_LiveStopBroadcast = 2201; // 房间关播广播【对应旧mq类型：17】
   static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18
-  static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）
+  static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）=======对接完成
 
 
-  static const S_FloatingScreen = 3105; // 礼物飘屏广播(对应mq的8，和礼物播放不同的mq通道)
+  static const S_FloatingScreen = 3105; // 礼物飘屏广播(对应mq的8，和礼物播放不同的mq通道)=======对接完成
   static const refuseUpMic = 22013; // 房间开关播广播
   static const msgTxt = 2206; // 礼物
 
   // =========礼物相关===========
-  static const C_GiveGiftByRoom = 3100; // 直播间赠送礼物
-  static const S_GiveGiftByRoom = 3101; // 直播间赠送礼物返回
+  static const C_GiveGiftByRoom = 3100; // 直播间赠送礼物=======对接完成
+  static const S_GiveGiftByRoom = 3101; // 直播间赠送礼物返回=======对接完成
 
   static const C_GiveGiftByDynamic = 3106; // 动态赠送礼物
   static const S_GiveGiftByDynamic = 3107; // 直动态赠送礼物返回值

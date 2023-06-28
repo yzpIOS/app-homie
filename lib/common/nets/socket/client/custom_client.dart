@@ -31,6 +31,9 @@ class CustomClient with BaseClient {
   // 记录客户端发送心跳次数，服务端心跳返回时清理
   int heartBeatNumber = 0;
 
+  // 发送数据错误次数
+  int sendFailTime = 0;
+
   CustomClient() {
     // 断开自动连接
     _customSocket.closeAutoConnect();
@@ -87,7 +90,19 @@ class CustomClient with BaseClient {
       // 32位整数，转化成二进制数据
       (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
     ]);
-    return _customSocket.send(datas);
+    try {
+      var sendResult = _customSocket.send(datas);
+      sendFailTime = 0;
+      return sendResult;
+    } catch(e) {
+      // 发送数据错误超过3次，就重新连接
+      sendFailTime += 1;
+      if(sendFailTime > 3) {
+        _customSocket.reconnect();
+        sendFailTime = 0;
+      }
+    }
+    return false;
   }
 
   ///
