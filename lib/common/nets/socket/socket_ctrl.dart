@@ -84,7 +84,19 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       if(Env.isDebug) {
         debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
       }
-      localServer.getSession(uniqueId)?.sendBytes(cmd, datas: data);
+      var session = localServer.getSession(uniqueId);
+      // 断开
+      if(session == null) {
+        // 通知unity去连接
+        localServer.riseServerStatusCallBacks();
+        return;
+      }
+      var result = session.sendBytes(cmd, datas: data);
+      if(result) {
+        return;
+      }
+      // 通知unity去连接
+      localServer.riseServerStatusCallBacks();
     });
     // 接收到反序列化后的数据
     shareClient.onData((cmd, data) {

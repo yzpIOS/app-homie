@@ -24,8 +24,6 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       final txt = data.data?.message ?? "";
       final nuid = data.data?.roleId;
 
-      sendCmd2Unity(App2UnityEnum.FTU_IPUTFIELDCONTENT, data: {'uid': uid, 'content': txt});
-
       dataRx.add(
         TxtMsgView(
           TxtMsgData(uid: uid, data: txt, nuid: nuid),

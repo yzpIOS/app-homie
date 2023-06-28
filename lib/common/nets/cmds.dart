@@ -4,28 +4,28 @@ class CMD {
 
 
   // 创建房间场景
-  static const C_CreateScene = 2100; // 创建房间场景
-  static const S_CreateScene = 2101; // 返回创建房间场景结果
+  static const C_CreateScene = 2100; // 创建房间场景=======对接完成
+  static const S_CreateScene = 2101; // 返回创建房间场景结果=======对接完成
 
-  static const C_CloseScene = 2103; // 关闭房间场景
-  static const S_CloseScene = 2104; // 关闭房间场景结果
+  static const C_CloseScene = 2103; // 关闭房间场景=======对接完成
+  static const S_CloseScene = 2104; // 关闭房间场景结果=======对接完成
 
-  static const C_JoinScene = 2112; // 加入房间场景
-  static const S_JoinScene = 2113; // 加入房间场景反馈结果
+  static const C_JoinScene = 2112; // 加入房间场景=======对接完成
+  static const S_JoinScene = 2113; // 加入房间场景反馈结果=======对接完成
 
-  static const C_OutScene = 2114; // 退出房间场景, 只是退出场景，rtc还在
-  static const S_OutScene = 2115; // 退出房间场景反馈结果
+  static const C_OutScene = 2114; // 退出房间场景, 只是退出场景，rtc还在=======对接完成
+  static const S_OutScene = 2115; // 退出房间场景反馈结果=======对接完成
 
-  static const C_AccMikeClear = 2130; // 房间麦克风计数器清除
+  static const C_AccMikeClear = 2130; // 房间麦克风计数器清除=======对接完成
 
-  static const C_UpMike = 2122; // 房间上麦
-  static const S_UpMike = 2123; // 房间上麦反馈结果
-  static const C_OutMike = 2124; // 房间下麦
+  static const C_UpMike = 2122; // 房间上麦=======对接完成
+  static const S_UpMike = 2123; // 房间上麦反馈结果=======对接完成
+  static const C_OutMike = 2124; // 房间下麦=======对接完成
 
   static const C_BanMike = 2126; // 房间禁麦
   static const S_BanMike = 2127; // 房间禁麦反馈结果
 
-  static const C_ChatMessage = 2180; // 房间聊天
+  static const C_ChatMessage = 2180; // 房间聊天=======对接完成
 
 
   static const C_SetNoticeMessage = 2140; // 设置房间公告

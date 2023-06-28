@@ -139,6 +139,7 @@ class CustomSocketSession with BaseClient {
   }
 
   void dispose() {
+    socket.close();
     exitCallBack = null;
     _socketSubscription?.cancel();
   }

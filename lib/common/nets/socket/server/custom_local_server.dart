@@ -168,7 +168,7 @@ class CustomLocalServer with BaseClient {
   ///
   /// 心跳，检查无用连接
   ///
-  void beatHeartCheck({int interval = 5}) {
+  void beatHeartCheck({int interval = 3}) {
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;
@@ -176,6 +176,8 @@ class CustomLocalServer with BaseClient {
       for(int index = _sessionList.length - 1; index >= 0; index --) {
         // 心跳
         if(nowSeconds - _sessionList[index].lastReceivePkgTime > SOCKET_TIME_OUT) {
+          // 移除session
+          _sessions.remove(_sessionList[index].getUniqueKey());
           // 己经挂掉
           _sessionList[index].dispose();
           _sessionList.removeAt(index);
@@ -242,6 +244,12 @@ class CustomLocalServer with BaseClient {
       return;
     }
     _serverStatusCallBacks.remove(serverStatusCallBacks);
+  }
+
+  void riseServerStatusCallBacks() {
+    _serverStatusCallBacks.forEach((element) {
+      element.call();
+    });
   }
 
   @override
