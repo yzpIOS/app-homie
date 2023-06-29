@@ -179,8 +179,6 @@ class CustomSocket {
       _socket?.close();
       _socket = null;
       _socketSubscription?.cancel();
-      // 回调断开连接
-      riseDisconnect();
       _riseCallBack2(BaseClient.CONNECT_CLOSE);
     });
   }

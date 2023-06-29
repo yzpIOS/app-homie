@@ -129,7 +129,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   }
 
   void onDisconnect() {
-    Get.alertDialog('网络己断开');
+    Get.alertDialog('网络己断开').then((value) => {
+      Get.back()
+    });
   }
 
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
