@@ -147,6 +147,14 @@ class CustomClient with BaseClient {
   }
 
   ///
+  /// 断开回调
+  ///
+  CustomClient removeDisconnect(Disconnect disconnect) {
+    _customSocket.removeDisconnect(disconnect);
+    return this;
+  }
+
+  ///
   /// 心跳
   ///
   CustomClient startHeartBeat({int interval = 5}) {

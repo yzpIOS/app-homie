@@ -9,6 +9,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/room_page.dart';
+import 'package:app/widgets.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
   final stateRx = Rx(RoomState.None);
@@ -41,6 +42,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     on<UserBlockEvent>(
       test: (event) {
+        debugPrint("用户被禁；userInfo = ${event?.data?.toProto3Json()}");
         return stateRx() == RoomState.Mini && OAuthCtrl.isSelf(event.uid);
       },
       (_) => _doClose('你被封禁了'),

@@ -180,16 +180,11 @@ class CustomSocket {
       _socket = null;
       _socketSubscription?.cancel();
       // 回调断开连接
-      for(int index = 0; index < _disconnects.length; index ++) {
-        try {
-          _disconnects[index].call();
-        } catch(e) {
-          debugPrint("[socket]:断开连接回调处理失败, ${e.toString()}");
-        }
-      }
+      riseDisconnect();
       _riseCallBack2(BaseClient.CONNECT_CLOSE);
     });
   }
+
 
   ///
   /// 把原来的socket关掉，并且进行重联
@@ -228,6 +223,8 @@ class CustomSocket {
       // 没有网络直接返回
       if(!hasNet) {
         debugPrint("[socket]:网络发生变化；无网络, state = $state");
+        // 回调断开连接
+        riseDisconnect();
         resetConnect(clearHost: false);
         return;
       }
@@ -284,6 +281,17 @@ class CustomSocket {
   }
 
   ///
+  /// 断开回调
+  ///
+  CustomSocket removeDisconnect(Disconnect disconnect) {
+    if(!_disconnects.contains(disconnect)) {
+      return this;
+    }
+    _disconnects.remove(disconnect);
+    return this;
+  }
+
+  ///
   /// 唤起回调
   ///
   void _riseCallBack(Uint8List data) {
@@ -327,6 +335,16 @@ class CustomSocket {
     if(clearHost) {
       _host = "";
       _port = 0;
+    }
+  }
+
+  void riseDisconnect() {
+    for(int index = 0; index < _disconnects.length; index ++) {
+      try {
+        _disconnects[index].call();
+      } catch(e) {
+        debugPrint("[socket]:断开连接回调处理失败, ${e.toString()}");
+      }
     }
   }
 

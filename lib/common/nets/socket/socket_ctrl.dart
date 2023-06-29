@@ -142,6 +142,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.addConnect(callBack);
   }
 
+  void addDisconnect(Disconnect disconnect) {
+    share.addDisconnect(disconnect);
+  }
+
+  void removeDisconnect(Disconnect disconnect) {
+    share.removeDisconnect(disconnect);
+  }
+
   ///
   /// 删除回调
   ///
@@ -206,10 +214,15 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_GiveGiftByRoom, C_GiveGiftByRoom.fromBuffer);
     register(CMD.S_FloatingScreen, S_FloatingScreen.fromBuffer);
     register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
+    register(CMD.S_GoToRoom, S_GoToRoom.fromBuffer);
+    register(CMD.S_InFreeMikesArea, S_InFreeMikesArea.fromBuffer);
+
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
     register(BaseClient.USER_HEART_BEAT, G_UFHeart.fromBuffer);
+    register(CMD.C_GoAwayRoom, C_GoAwayRoom.fromBuffer);
+    register(CMD.C_OutFreeMikesArea, C_OutFreeMikesArea.fromBuffer);
 
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);

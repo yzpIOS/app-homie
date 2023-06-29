@@ -87,7 +87,7 @@ class ApiRoom extends ApiBase {
         resCmd: CMD.S_JoinScene);
     // 进入房间不成功，返回
     if(result == null || result.code != ErrorCode.Ok) {
-      Get.back();
+      Get.alertDialog('房间数据加载错误');
       return;
     }
     // 数据回来后
@@ -115,9 +115,12 @@ class ApiRoom extends ApiBase {
   ///
   /// 房间下麦
   ///
-  void micDown({required int micId}) {
+  void micDown({required Int64 uid}) {
+    C_OutMike c_outMike = C_OutMike.create();
+    c_outMike.roleId = uid;
     SocketCtrl.ins.sendSever(
-        CMD.C_OutMike,
+      CMD.C_OutMike,
+      message: c_outMike,
     );
 
     // final data = {

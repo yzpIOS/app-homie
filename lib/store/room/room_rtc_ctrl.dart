@@ -1,9 +1,13 @@
 import 'package:app/3rd/tencent/keys.dart';
 import 'package:app/3rd/tencent/rtc.dart';
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/im/im_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/widgets.dart';
 
 class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   late final _myUid = OAuthCtrl.uid;
@@ -20,15 +24,69 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   void _initListener() {
     on<UserBlockEvent>(
       test: (event) {
+        debugPrint("用户被禁；userInfo = ${event?.data?.toProto3Json()}");
         return OAuthCtrl.isSelf(event.uid);
       },
       (_) => leaveRoom(),
     );
+
+    post(() async{
+      SocketCtrl.ins.onDataCmd(CMD.S_GoToRoom, goToRoom);
+      SocketCtrl.ins.onDataCmd(CMD.S_InFreeMikesArea, inFreeMikesArea);
+
+      SocketCtrl.ins.onDataCmd(CMD.C_GoAwayRoom, outRoom);
+      SocketCtrl.ins.onDataCmd(CMD.C_OutFreeMikesArea, outFreeMikesArea);
+    });
+  }
+
+  ///
+  /// 加入到房间
+  ///
+  void goToRoom(int cmd, S_GoToRoom? data) {
+    if(data == null) {
+      return;
+    }
+    joinRoom(roomId: data.roomId.toInt().toString());
+  }
+
+  ///
+  /// 加入到房间
+  ///
+  void outRoom(int cmd, C_GoAwayRoom? data) {
+    if(data == null) {
+      return;
+    }
+    leaveRoom();
+    SocketCtrl.ins.sendUnity(CMD.S_GoAwayRoom);
+  }
+
+  ///
+  /// 加入到房间
+  ///
+  void inFreeMikesArea(int cmd, S_GoToRoom? data) {
+    if(data == null) {
+      return;
+    }
+    joinRoom(roomId: data.roomId.toInt().toString());
+  }
+
+  ///
+  /// 退出房间
+  ///
+  void outFreeMikesArea(int cmd, C_OutFreeMikesArea? data) {
+    leaveRoom();
+    // 通知unity收到消息
+    SocketCtrl.ins.sendUnity(CMD.S_OutFreeMikesArea);
   }
 
   @override
   void onClose() {
     leaveRoom();
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_GoToRoom, goToRoom);
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_InFreeMikesArea, goToRoom);
+
+    SocketCtrl.ins.removeOnDataCmd(CMD.C_GoAwayRoom, outRoom);
+    SocketCtrl.ins.removeOnDataCmd(CMD.C_OutFreeMikesArea, outFreeMikesArea);
 
     super.onClose();
   }

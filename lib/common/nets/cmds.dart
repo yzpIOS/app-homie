@@ -2,6 +2,13 @@
 class CMD {
   static const S_Err = 4;//错误码
 
+  // ==== 大厅相关 ====
+  static const C_GoToRoom = 300; //靠近建筑后，请求播放直播间语音
+  static const S_GoToRoom = 301; //下发直播间相关信息
+
+  static const C_InFreeMikesArea =304; //发送进入自由组麦区域=======对接完成
+  static const S_InFreeMikesArea =305; //下发进入自由组麦区域=======对接完成
+
 
   // 创建房间场景
   static const C_CreateScene = 2100; // 创建房间场景=======对接完成
@@ -22,8 +29,8 @@ class CMD {
   static const S_UpMike = 2123; // 房间上麦反馈结果=======对接完成
   static const C_OutMike = 2124; // 房间下麦=======对接完成
 
-  static const C_BanMike = 2126; // 房间禁麦
-  static const S_BanMike = 2127; // 房间禁麦反馈结果
+  static const C_BanMike = 2126; // 房间禁麦=======对接完成
+  static const S_BanMike = 2127; // 房间禁麦反馈结果=======对接完成
 
   static const C_ChatMessage = 2180; // 房间聊天=======对接完成
 
@@ -51,7 +58,7 @@ class CMD {
   static const S_GiftPlay = 3104; // 礼物播放广播(对应mq的8)=======对接完成
   static const S_AdministratorBroadcast = 2280; // 房间设置管理员广播 【对应旧mq类型：9】=======对接完成
 
-  static const S_BlackBroadcast = 2250; // 房间黑名单广播【对应旧mq类型：11】
+  static const S_BlackBroadcast = 2250; // 房间黑名单广播【对应旧mq类型：11】=======对接完成
   static const S_CloseMikeBroadcast = 2223; // 禁麦广播 【对应旧mq类型：12】
   static const S_OpenBroadcast = 2224; // 开麦广播 【对应旧mq类型：13】
   static const S_ApplyUpMikeBroadcast = 2225; // 申请上麦 【对应旧mq类型：14】
@@ -76,8 +83,17 @@ class CMD {
   static const S_GiveGiftByIm = 3110; // 聊天赠送礼物返回值
 
 
+
+
+
   static const C_Role = 103;//请求角色
   static const S_Role = 104;//角色(性别=0表示无角色)
 
   static const C_Verify = 10000;//连接验证
+
+  static const C_GoAwayRoom = 12000; //远离建筑后，请求结束直播间语音 【服务端暂时不需要】
+  static const S_GoAwayRoom = 12001; //离开建筑结果【服务端暂时不需要】
+
+  static const C_OutFreeMikesArea = 12002;//发送退出自由组麦区域
+  static const S_OutFreeMikesArea = 12003;//下发退出自由组麦区域
 }

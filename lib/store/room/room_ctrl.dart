@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
@@ -83,6 +84,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   @override
   void onClose() {
     Api.Room.outRoom(roomId).ignore();
+    SocketCtrl.ins.removeDisconnect(onDisconnect);
 
     super.onClose();
   }
@@ -122,6 +124,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       test: (event) => event.code == Unity2AppEnum.UTF_DETECT_BUILDING && event.ext['type'] == 2,
       (_) => ActMainDialog.show(),
     );
+
+    SocketCtrl.ins.addDisconnect(onDisconnect);
+  }
+
+  void onDisconnect() {
+    Get.alertDialog('网络己断开');
   }
 
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {

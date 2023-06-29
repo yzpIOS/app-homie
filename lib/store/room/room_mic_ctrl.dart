@@ -262,7 +262,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       Get.alertSub(
         alert: alert,
         isModal: false,
-        () => Api.Room.micDown(micId: data.micId),
+        () => Api.Room.micDown(uid: data.nUid),
       );
     } else {
       assert(false, '数据错误 -> $data $no');
