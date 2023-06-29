@@ -440,12 +440,12 @@ final $typed_data.Uint8List c_JoinSceneDescriptor = $convert.base64Decode('CgtDX
 const S_JoinScene$json = const {
   '1': 'S_JoinScene',
   '2': const [
-    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    const {'1': 'code', '3': 2, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
   ],
 };
 
 /// Descriptor for `S_JoinScene`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_JoinSceneDescriptor = $convert.base64Decode('CgtTX0pvaW5TY2VuZRIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQ=');
+final $typed_data.Uint8List s_JoinSceneDescriptor = $convert.base64Decode('CgtTX0pvaW5TY2VuZRIuCgRjb2RlGAIgASgOMhouY29tLnNhdnZ5LnByb3RvLkVycm9yQ29kZVIEY29kZQ==');
 @$core.Deprecated('Use c_MikeListDescriptor instead')
 const C_MikeList$json = const {
   '1': 'C_MikeList',
@@ -831,11 +831,12 @@ const S_GoToRoom$json = const {
     const {'1': 'available', '3': 1, '4': 1, '5': 8, '10': 'available'},
     const {'1': 'banner', '3': 2, '4': 1, '5': 9, '10': 'banner'},
     const {'1': 'buildingId', '3': 3, '4': 1, '5': 3, '10': 'buildingId'},
+    const {'1': 'room_id', '3': 4, '4': 1, '5': 3, '10': 'roomId'},
   ],
 };
 
 /// Descriptor for `S_GoToRoom`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_GoToRoomDescriptor = $convert.base64Decode('CgpTX0dvVG9Sb29tEhwKCWF2YWlsYWJsZRgBIAEoCFIJYXZhaWxhYmxlEhYKBmJhbm5lchgCIAEoCVIGYmFubmVyEh4KCmJ1aWxkaW5nSWQYAyABKANSCmJ1aWxkaW5nSWQ=');
+final $typed_data.Uint8List s_GoToRoomDescriptor = $convert.base64Decode('CgpTX0dvVG9Sb29tEhwKCWF2YWlsYWJsZRgBIAEoCFIJYXZhaWxhYmxlEhYKBmJhbm5lchgCIAEoCVIGYmFubmVyEh4KCmJ1aWxkaW5nSWQYAyABKANSCmJ1aWxkaW5nSWQSFwoHcm9vbV9pZBgEIAEoA1IGcm9vbUlk');
 @$core.Deprecated('Use c_GoAwayRoomDescriptor instead')
 const C_GoAwayRoom$json = const {
   '1': 'C_GoAwayRoom',
@@ -856,6 +857,29 @@ const S_GoAwayRoom$json = const {
 
 /// Descriptor for `S_GoAwayRoom`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_GoAwayRoomDescriptor = $convert.base64Decode('CgxTX0dvQXdheVJvb20SHgoKYnVpbGRpbmdJZBgBIAEoA1IKYnVpbGRpbmdJZA==');
+@$core.Deprecated('Use c_FreeMikesAreaDescriptor instead')
+const C_FreeMikesArea$json = const {
+  '1': 'C_FreeMikesArea',
+  '2': const [
+    const {'1': 'roomid', '3': 1, '4': 1, '5': 3, '10': 'roomid'},
+    const {'1': 'state', '3': 2, '4': 1, '5': 3, '10': 'state'},
+  ],
+};
+
+/// Descriptor for `C_FreeMikesArea`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_FreeMikesAreaDescriptor = $convert.base64Decode('Cg9DX0ZyZWVNaWtlc0FyZWESFgoGcm9vbWlkGAEgASgDUgZyb29taWQSFAoFc3RhdGUYAiABKANSBXN0YXRl');
+@$core.Deprecated('Use s_FreeMikesAreaDescriptor instead')
+const S_FreeMikesArea$json = const {
+  '1': 'S_FreeMikesArea',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
+    const {'1': 'roomid', '3': 2, '4': 1, '5': 3, '10': 'roomid'},
+    const {'1': 'state', '3': 3, '4': 1, '5': 3, '10': 'state'},
+  ],
+};
+
+/// Descriptor for `S_FreeMikesArea`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_FreeMikesAreaDescriptor = $convert.base64Decode('Cg9TX0ZyZWVNaWtlc0FyZWESDgoCaWQYASABKANSAmlkEhYKBnJvb21pZBgCIAEoA1IGcm9vbWlkEhQKBXN0YXRlGAMgASgDUgVzdGF0ZQ==');
 @$core.Deprecated('Use c_RobotDescriptor instead')
 const C_Robot$json = const {
   '1': 'C_Robot',

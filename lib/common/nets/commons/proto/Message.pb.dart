@@ -2560,17 +2560,17 @@ class C_JoinScene extends $pb.GeneratedMessage {
 
 class S_JoinScene extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_JoinScene', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..e<$1.ErrorCode>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
     ..hasRequiredFields = false
   ;
 
   S_JoinScene._() : super();
   factory S_JoinScene({
-    $fixnum.Int64? roomId,
+    $1.ErrorCode? code,
   }) {
     final _result = create();
-    if (roomId != null) {
-      _result.roomId = roomId;
+    if (code != null) {
+      _result.code = code;
     }
     return _result;
   }
@@ -2595,14 +2595,14 @@ class S_JoinScene extends $pb.GeneratedMessage {
   static S_JoinScene getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_JoinScene>(create);
   static S_JoinScene? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
+  @$pb.TagNumber(2)
+  $1.ErrorCode get code => $_getN(0);
+  @$pb.TagNumber(2)
+  set code($1.ErrorCode v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearCode() => clearField(2);
 }
 
 class C_MikeList extends $pb.GeneratedMessage {
@@ -4637,6 +4637,7 @@ class S_GoToRoom extends $pb.GeneratedMessage {
     ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'available')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'banner')
     ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'buildingId', protoName: 'buildingId')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..hasRequiredFields = false
   ;
 
@@ -4645,6 +4646,7 @@ class S_GoToRoom extends $pb.GeneratedMessage {
     $core.bool? available,
     $core.String? banner,
     $fixnum.Int64? buildingId,
+    $fixnum.Int64? roomId,
   }) {
     final _result = create();
     if (available != null) {
@@ -4655,6 +4657,9 @@ class S_GoToRoom extends $pb.GeneratedMessage {
     }
     if (buildingId != null) {
       _result.buildingId = buildingId;
+    }
+    if (roomId != null) {
+      _result.roomId = roomId;
     }
     return _result;
   }
@@ -4705,6 +4710,15 @@ class S_GoToRoom extends $pb.GeneratedMessage {
   $core.bool hasBuildingId() => $_has(2);
   @$pb.TagNumber(3)
   void clearBuildingId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get roomId => $_getI64(3);
+  @$pb.TagNumber(4)
+  set roomId($fixnum.Int64 v) { $_setInt64(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRoomId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRoomId() => clearField(4);
 }
 
 class C_GoAwayRoom extends $pb.GeneratedMessage {
@@ -4799,6 +4813,142 @@ class S_GoAwayRoom extends $pb.GeneratedMessage {
   $core.bool hasBuildingId() => $_has(0);
   @$pb.TagNumber(1)
   void clearBuildingId() => clearField(1);
+}
+
+class C_FreeMikesArea extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_FreeMikesArea', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state')
+    ..hasRequiredFields = false
+  ;
+
+  C_FreeMikesArea._() : super();
+  factory C_FreeMikesArea({
+    $fixnum.Int64? roomid,
+    $fixnum.Int64? state,
+  }) {
+    final _result = create();
+    if (roomid != null) {
+      _result.roomid = roomid;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    return _result;
+  }
+  factory C_FreeMikesArea.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_FreeMikesArea.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_FreeMikesArea clone() => C_FreeMikesArea()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_FreeMikesArea copyWith(void Function(C_FreeMikesArea) updates) => super.copyWith((message) => updates(message as C_FreeMikesArea)) as C_FreeMikesArea; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_FreeMikesArea create() => C_FreeMikesArea._();
+  C_FreeMikesArea createEmptyInstance() => create();
+  static $pb.PbList<C_FreeMikesArea> createRepeated() => $pb.PbList<C_FreeMikesArea>();
+  @$core.pragma('dart2js:noInline')
+  static C_FreeMikesArea getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_FreeMikesArea>(create);
+  static C_FreeMikesArea? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomid => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomid($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get state => $_getI64(1);
+  @$pb.TagNumber(2)
+  set state($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasState() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearState() => clearField(2);
+}
+
+class S_FreeMikesArea extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_FreeMikesArea', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomid')
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state')
+    ..hasRequiredFields = false
+  ;
+
+  S_FreeMikesArea._() : super();
+  factory S_FreeMikesArea({
+    $fixnum.Int64? id,
+    $fixnum.Int64? roomid,
+    $fixnum.Int64? state,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (roomid != null) {
+      _result.roomid = roomid;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    return _result;
+  }
+  factory S_FreeMikesArea.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_FreeMikesArea.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_FreeMikesArea clone() => S_FreeMikesArea()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_FreeMikesArea copyWith(void Function(S_FreeMikesArea) updates) => super.copyWith((message) => updates(message as S_FreeMikesArea)) as S_FreeMikesArea; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_FreeMikesArea create() => S_FreeMikesArea._();
+  S_FreeMikesArea createEmptyInstance() => create();
+  static $pb.PbList<S_FreeMikesArea> createRepeated() => $pb.PbList<S_FreeMikesArea>();
+  @$core.pragma('dart2js:noInline')
+  static S_FreeMikesArea getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_FreeMikesArea>(create);
+  static S_FreeMikesArea? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get id => $_getI64(0);
+  @$pb.TagNumber(1)
+  set id($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roomid => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roomid($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomid() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get state => $_getI64(2);
+  @$pb.TagNumber(3)
+  set state($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasState() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearState() => clearField(3);
 }
 
 class C_Robot extends $pb.GeneratedMessage {

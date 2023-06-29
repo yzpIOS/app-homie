@@ -171,20 +171,22 @@ class CustomLocalServer with BaseClient {
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().second;
       // 遍历所有的session
-      for(var key in _sessions.keys) {
-        var item = _sessions[key];
-        if(item == null) {
-          continue;
-        }
-        // 心跳
-        if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
-          // 移除session
-          _sessions.remove(key);
-          // 己经挂掉
-          item.dispose();
-        } else {
-          // 发送心跳
-          item.send(BaseClient.USER_HEART_BEAT);
+      if(_sessions.isNotEmpty) {
+        for(var key in _sessions.keys) {
+          var item = _sessions[key];
+          if(item == null) {
+            continue;
+          }
+          // 心跳
+          if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
+            // 移除session
+            _sessions.remove(key);
+            // 己经挂掉
+            item.dispose();
+          } else {
+            // 发送心跳
+            item.send(BaseClient.USER_HEART_BEAT);
+          }
         }
       }
       beatHeartCheck();

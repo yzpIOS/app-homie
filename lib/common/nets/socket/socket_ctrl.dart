@@ -26,12 +26,12 @@ const FLUTTER_UINITY_END = 20000;
 class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   // client, 用于与后台通信
-  final CustomClient shareClient = CustomClient();
+  final CustomClient share = CustomClient();
 
   // 分配给unity的唯一id
   String uniqueId = Slugid.nice().toString();
   // flutter 内部的server, 用于与unity进行通信
-  final CustomLocalServer localServer = CustomLocalServer();
+  final CustomLocalServer local = CustomLocalServer();
 
   static SocketCtrl get ins {
     return Get.find<SocketCtrl>();
@@ -45,9 +45,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 注册所有数据解析器
     registerAll();
     // 初始化客户端socketserver, 用于与unity通仿
-    localServer.bindServer();
+    local.bindServer();
     // 监听unity发送的消息
-    localServer.onReceiveRawData((session, cmd, data) {
+    local.onReceiveRawData((session, cmd, data) {
       if(session.uniqueId != uniqueId) {
         return;
       }
@@ -59,10 +59,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
       // 发送数据到服务端
-      shareClient.sendBytes(cmd, datas: data, sendToUntiy: "unity>>>server");
+      share.sendBytes(cmd, datas: data, sendToUntiy: "unity>>>server");
     });
     // 监听unity发送的消息
-    localServer.onReceiveDataFromU((session, cmd, data) {
+    local.onReceiveDataFromU((session, cmd, data) {
       if(Env.isDebug) {
         debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
       }
@@ -77,87 +77,76 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       riseOnData(cmd, data);
     });
     // 开心跳心检查
-    localServer.beatHeartCheck();
+    local.beatHeartCheck();
+    local.closeAutoConnect();
 
     // 接收到原始数据
-    shareClient.onRawData((cmd, data) {
+    share.onRawData((cmd, data) {
       riseOnRawData(cmd, data);
       if(Env.isDebug) {
         debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
       }
-      var session = localServer.getSession(uniqueId);
-      // 断开
-      if(session == null) {
-        // 通知unity去连接
-        localServer.riseServerStatusCallBacks();
-        return;
-      }
-      var result = session.sendBytes(cmd, datas: data);
-      if(result) {
-        return;
-      }
-      // 通知unity去连接
-      localServer.riseServerStatusCallBacks();
+      local.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
     // 接收到反序列化后的数据
-    shareClient.onData((cmd, data) {
+    share.onData((cmd, data) {
       riseOnData(cmd, data);
     });
   }
 
   Future<int> getLocalServerPort() async {
-    return localServer.getPortAsync();
+    return local.getPortAsync();
   }
 
   void addServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
-    localServer.addServerStatusCallBacks(serverStatusCallBacks);
+    local.addServerStatusCallBacks(serverStatusCallBacks);
   }
 
   void removeServerStatusCallBacks(ServerStatusCallBack serverStatusCallBacks) {
-    localServer.removeServerStatusCallBacks(serverStatusCallBacks);
+    local.removeServerStatusCallBacks(serverStatusCallBacks);
   }
 
   ///
   /// 发送pb对像数据
   ///
   bool sendSever(int cmd, {GeneratedMessage? message}) {
-    return shareClient.send(cmd, message: message);
+    return share.send(cmd, message: message);
   }
 
   ///
   /// 发送数据到server
   ///
   bool senByteServer(int cmd, {Uint8List? datas}) {
-    return shareClient.sendBytes(cmd, datas: datas);
+    return share.sendBytes(cmd, datas: datas);
   }
 
   ///
   /// 注册反序例化protobuf模型
   ///
   void register(int cmd, OnGeneratedMessage client) {
-    shareClient.registerFromBuffers(cmd, client);
-    localServer.registerFromBuffers(cmd, client);
+    share.registerFromBuffers(cmd, client);
+    local.registerFromBuffers(cmd, client);
   }
 
   ///
   /// 发送数据到服务端
   ///
   Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
-    return shareClient.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
+    return share.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
   ///
   /// 添加连接成功回调
   ///
   void addClientConnect(Connected callBack) {
-    shareClient.addConnect(callBack);
+    share.addConnect(callBack);
   }
 
   ///
   /// 删除回调
   ///
   void removeClientConnect(Connected callBack) {
-    shareClient.removeConnect(callBack);
+    share.removeConnect(callBack);
   }
 
 
@@ -165,21 +154,21 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 发送pb对像数据
   ///
   bool sendUnity(int cmd, {GeneratedMessage? message}) {
-    return localServer.getSession(uniqueId)?.send(cmd, message: message) ?? false;
+    return local.getSession(uniqueId)?.send(cmd, message: message) ?? false;
   }
 
   ///
   /// 发送数据到server
   ///
   bool senByteUnity(int cmd, {Uint8List? datas}) {
-    return localServer.getSession(uniqueId)?.sendBytes(cmd, datas: datas) ?? false;
+    return local.getSession(uniqueId)?.sendBytes(cmd, datas: datas) ?? false;
   }
 
   ///
   /// 发送数据到服务端
   ///
   Future<T?> sendByteAsyncUnity<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
-    return localServer.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
+    return local.getSession(uniqueId)?.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
   ///
@@ -216,6 +205,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
     register(CMD.S_GiveGiftByRoom, C_GiveGiftByRoom.fromBuffer);
     register(CMD.S_FloatingScreen, S_FloatingScreen.fromBuffer);
+    register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
@@ -231,9 +221,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 连接socket
     post(() async {
       // 重置状态
-      shareClient.onCanConnected(true);
+      share.onCanConnected(true);
       // 连接服务器
-      shareClient.connect(host, port);
+      share.connect(host, port);
       // 连接成功回调
       addClientConnect(onClientConnect);
       onDataCmd(CMD.S_Role, onRoleResponse);
@@ -245,8 +235,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 断开socket
   ///
   void closeSocket() {
-    shareClient.onCanConnected(false);
-    shareClient.resetConnect();
+    share.onCanConnected(false);
+    share.resetConnect();
   }
 
   ///
@@ -280,8 +270,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   @override
   void dispose() {
     super.dispose();
-    shareClient.dispose();
-    localServer.dispose();
+    share.dispose();
+    local.dispose();
     removeClientConnect(onClientConnect);
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
   }

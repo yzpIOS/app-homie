@@ -81,11 +81,15 @@ class ApiRoom extends ApiBase {
 
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
-    var result = await SocketCtrl.ins.sendByteAsyncServer(
+    S_JoinScene? result = await SocketCtrl.ins.sendByteAsyncServer(
         CMD.C_JoinScene,
         datas: c_joinScene.writeToBuffer(),
         resCmd: CMD.S_JoinScene);
-
+    // 进入房间不成功，返回
+    if(result == null || result.code != ErrorCode.Ok) {
+      Get.back();
+      return;
+    }
     // 数据回来后
     return _doPost('join/init', data: data,);
 
