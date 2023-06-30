@@ -14,7 +14,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 
-const int SOCKET_TIME_OUT = 9;
+const int SOCKET_TIME_OUT = 9 * 1000;
 
 /// 服务开始
 typedef ServerStatusCallBack = void Function();
