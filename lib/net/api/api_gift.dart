@@ -11,7 +11,7 @@ class ApiGift extends ApiBase {
     return _doPost('backpack/query');
   }
 
-  Future? sendGift2Room({
+  Future<S_GiveGiftByRoom?> sendGift2Room({
     required int roomId,
     required int giftId,
     required int count,
@@ -31,18 +31,18 @@ class ApiGift extends ApiBase {
         resCmd: CMD.S_GiveGiftByRoom
     );
 
-    final data = {
-      'room_id': roomId,
-      'gift_id': giftId,
-      'count': count,
-      'uid_list': uid,
-      'is_backpack': isBackpack,
-    };
-
-    return _doPost('room/send', data: data);
+    // final data = {
+    //   'room_id': roomId,
+    //   'gift_id': giftId,
+    //   'count': count,
+    //   'uid_list': uid,
+    //   'is_backpack': isBackpack,
+    // };
+    //
+    // return _doPost('room/send', data: data);
   }
 
-  Future? sendGift2Moment({
+  Future<S_GiveGiftByDynamic?> sendGift2Moment({
     required int id,
     required int giftId,
     required int count,
@@ -59,14 +59,14 @@ class ApiGift extends ApiBase {
         resCmd: CMD.S_GiveGiftByDynamic
     );
 
-    final data = <String, dynamic>{
-      'dynamic_id': id,
-      'gift_id': giftId,
-      'count': count,
-      'is_backpack': isBackpack,
-    };
-
-    return _doPost('dynamic/send', data: data);
+    // final data = <String, dynamic>{
+    //   'dynamic_id': id,
+    //   'gift_id': giftId,
+    //   'count': count,
+    //   'is_backpack': isBackpack,
+    // };
+    //
+    // return _doPost('dynamic/send', data: data);
   }
 
   Future sendGift2ImUser({

@@ -1079,6 +1079,16 @@ const C_GiveGiftByRoom$json = const {
 
 /// Descriptor for `C_GiveGiftByRoom`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_GiveGiftByRoomDescriptor = $convert.base64Decode('ChBDX0dpdmVHaWZ0QnlSb29tEhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdnaWZ0X2lkGAIgASgDUgZnaWZ0SWQSFAoFY291bnQYAyABKAVSBWNvdW50EiYKD2FjY2VwdF91aWRfbGlzdBgEIAMoCVINYWNjZXB0VWlkTGlzdBItChNhY2NlcHRfcm9sZV9pZF9saXN0GAUgAygDUhBhY2NlcHRSb2xlSWRMaXN0');
+@$core.Deprecated('Use s_GiveGiftByRoomDescriptor instead')
+const S_GiveGiftByRoom$json = const {
+  '1': 'S_GiveGiftByRoom',
+  '2': const [
+    const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
+  ],
+};
+
+/// Descriptor for `S_GiveGiftByRoom`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_GiveGiftByRoomDescriptor = $convert.base64Decode('ChBTX0dpdmVHaWZ0QnlSb29tEi4KBGNvZGUYASABKA4yGi5jb20uc2F2dnkucHJvdG8uRXJyb3JDb2RlUgRjb2Rl');
 @$core.Deprecated('Use c_GiveGiftByDynamicDescriptor instead')
 const C_GiveGiftByDynamic$json = const {
   '1': 'C_GiveGiftByDynamic',
@@ -1091,6 +1101,16 @@ const C_GiveGiftByDynamic$json = const {
 
 /// Descriptor for `C_GiveGiftByDynamic`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_GiveGiftByDynamicDescriptor = $convert.base64Decode('ChNDX0dpdmVHaWZ0QnlEeW5hbWljEh0KCmR5bmFtaWNfaWQYASABKANSCWR5bmFtaWNJZBIXCgdnaWZ0X2lkGAIgASgDUgZnaWZ0SWQSFAoFY291bnQYAyABKAVSBWNvdW50');
+@$core.Deprecated('Use s_GiveGiftByDynamicDescriptor instead')
+const S_GiveGiftByDynamic$json = const {
+  '1': 'S_GiveGiftByDynamic',
+  '2': const [
+    const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
+  ],
+};
+
+/// Descriptor for `S_GiveGiftByDynamic`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_GiveGiftByDynamicDescriptor = $convert.base64Decode('ChNTX0dpdmVHaWZ0QnlEeW5hbWljEi4KBGNvZGUYASABKA4yGi5jb20uc2F2dnkucHJvdG8uRXJyb3JDb2RlUgRjb2Rl');
 @$core.Deprecated('Use c_GiveGiftByImDescriptor instead')
 const C_GiveGiftByIm$json = const {
   '1': 'C_GiveGiftByIm',

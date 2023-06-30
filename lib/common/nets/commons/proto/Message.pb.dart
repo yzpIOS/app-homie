@@ -6055,6 +6055,53 @@ class C_GiveGiftByRoom extends $pb.GeneratedMessage {
   $core.List<$fixnum.Int64> get acceptRoleIdList => $_getList(4);
 }
 
+class S_GiveGiftByRoom extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_GiveGiftByRoom', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..e<$1.ErrorCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
+    ..hasRequiredFields = false
+  ;
+
+  S_GiveGiftByRoom._() : super();
+  factory S_GiveGiftByRoom({
+    $1.ErrorCode? code,
+  }) {
+    final _result = create();
+    if (code != null) {
+      _result.code = code;
+    }
+    return _result;
+  }
+  factory S_GiveGiftByRoom.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_GiveGiftByRoom.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByRoom clone() => S_GiveGiftByRoom()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByRoom copyWith(void Function(S_GiveGiftByRoom) updates) => super.copyWith((message) => updates(message as S_GiveGiftByRoom)) as S_GiveGiftByRoom; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByRoom create() => S_GiveGiftByRoom._();
+  S_GiveGiftByRoom createEmptyInstance() => create();
+  static $pb.PbList<S_GiveGiftByRoom> createRepeated() => $pb.PbList<S_GiveGiftByRoom>();
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByRoom getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_GiveGiftByRoom>(create);
+  static S_GiveGiftByRoom? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.ErrorCode get code => $_getN(0);
+  @$pb.TagNumber(1)
+  set code($1.ErrorCode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => clearField(1);
+}
+
 class C_GiveGiftByDynamic extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_GiveGiftByDynamic', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dynamicId')
@@ -6128,6 +6175,53 @@ class C_GiveGiftByDynamic extends $pb.GeneratedMessage {
   $core.bool hasCount() => $_has(2);
   @$pb.TagNumber(3)
   void clearCount() => clearField(3);
+}
+
+class S_GiveGiftByDynamic extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_GiveGiftByDynamic', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..e<$1.ErrorCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
+    ..hasRequiredFields = false
+  ;
+
+  S_GiveGiftByDynamic._() : super();
+  factory S_GiveGiftByDynamic({
+    $1.ErrorCode? code,
+  }) {
+    final _result = create();
+    if (code != null) {
+      _result.code = code;
+    }
+    return _result;
+  }
+  factory S_GiveGiftByDynamic.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_GiveGiftByDynamic.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByDynamic clone() => S_GiveGiftByDynamic()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByDynamic copyWith(void Function(S_GiveGiftByDynamic) updates) => super.copyWith((message) => updates(message as S_GiveGiftByDynamic)) as S_GiveGiftByDynamic; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByDynamic create() => S_GiveGiftByDynamic._();
+  S_GiveGiftByDynamic createEmptyInstance() => create();
+  static $pb.PbList<S_GiveGiftByDynamic> createRepeated() => $pb.PbList<S_GiveGiftByDynamic>();
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByDynamic getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_GiveGiftByDynamic>(create);
+  static S_GiveGiftByDynamic? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.ErrorCode get code => $_getN(0);
+  @$pb.TagNumber(1)
+  set code($1.ErrorCode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => clearField(1);
 }
 
 class C_GiveGiftByIm extends $pb.GeneratedMessage {

@@ -1,4 +1,5 @@
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/ErrorCode.pbenum.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
@@ -86,12 +87,16 @@ class GiftSend2Moment extends GiftSendLogic {
 
     assert(type != null, '数据错误 -> $data');
 
-    await Api.Gift.sendGift2Moment(
+    S_GiveGiftByDynamic? giveGiftByDynamic = await Api.Gift.sendGift2Moment(
       id: dynamicId,
       giftId: data['id'],
       count: count,
       isBackpack: data.containsKey('backpack_count'),
     );
+
+    if(giveGiftByDynamic?.code == ErrorCode.LACK_BALANCE) {
+      throw LogicException(ErrorCode.LACK_BALANCE.value, "");
+    }
 
     return count;
   }
@@ -155,13 +160,17 @@ class GiftSend2Room extends GiftSendLogic {
     assert(type != null, '数据错误 -> $data');
 
 
-    await Api.Gift.sendGift2Room(
+    S_GiveGiftByRoom? s_giveGiftByRoom = await Api.Gift.sendGift2Room(
       roomId: roomId,
       uid: users,
       count: count,
       giftId: data['id'],
       isBackpack: data.containsKey('backpack_count'),
     );
+
+    if(s_giveGiftByRoom?.code == ErrorCode.LACK_BALANCE) {
+      throw LogicException(ErrorCode.LACK_BALANCE.value, "");
+    }
 
     return count * users.length;
   }
