@@ -41,9 +41,9 @@ class _MyPage2State extends State<MyPage2> {
               children: [
                 const _HeaderView(),
                 divider,
-                _$Action1(),
+                _Action1(),
                 divider,
-                _$Action2(),
+                _Action2(),
               ],
             ),
           ),
@@ -52,7 +52,7 @@ class _MyPage2State extends State<MyPage2> {
     );
   }
 
-  Widget _$Action1() {
+  Widget _Action1() {
     final items = [
       '我的钱包',
       '我的装扮',
@@ -93,7 +93,7 @@ class _MyPage2State extends State<MyPage2> {
     );
   }
 
-  Widget _$Action2() {
+  Widget _Action2() {
     final items = [
       '我的动态',
       '足迹与关注',
