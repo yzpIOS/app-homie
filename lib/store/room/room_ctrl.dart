@@ -103,7 +103,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   @mustCallSuper
   void _bindGet(RoomRunInfo data) {
-    bindGet(RoomMsgCtrl(roomId));
+    // bindGet(RoomMsgCtrl(roomId));
     bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
   }

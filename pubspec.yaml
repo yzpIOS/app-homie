@@ -66,7 +66,7 @@ dependencies:
   photo_view: ^0.14.0
   freezed_annotation: ^2.1.0
   json_annotation: ^4.8.0
-  stomp_dart_client: ^0.4.4
+#  stomp_dart_client: ^0.4.4
   tencent_cloud_chat_sdk: ^5.0.8
   tencent_trtc_cloud: ^2.4.2
   slugid: ^1.1.1

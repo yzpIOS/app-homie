@@ -36,9 +36,11 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         if(data == null) {
           return;
         }
-        dataRx[data.mikeNo] = //
-            dataRx.remove(data.oldMikeNo)?.also((it) => it.micId = data.mikeId.toInt()) ??
-                MicInfo(uid: event.uid ?? "", micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId);
+        // 删除旧mike
+        dataRx.remove(data.oldMikeNo);
+        // 新增mike
+        dataRx[data.mikeNo] = MicInfo(uid: event.uid ?? "",
+            micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId);
 
         _sendMicData2Unity();
       },

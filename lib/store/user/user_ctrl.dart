@@ -49,7 +49,7 @@ class UserCtrl extends GetxController with GetDisposableMixin {
     bindGet(MessageManagerCtrl());
     bindGet(RoomManagerCtrl());
 
-    bindGet(MqCtrl());
+    // bindGet(MqCtrl());
     bindGet(BannerCtrl());
     bindGet(GiftCtrl(uid: uid));
     bindGet(WalletCtrl(uid: uid));
