@@ -22,7 +22,7 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
 
   void _onGiftEvent(S_FloatingScreen data) async {
     final ids = data.acceptUidList;
-    final users = await _findByUidX({data.roleId.toString(), ...ids}, useNet: true);
+    final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
 
     for (final uid in ids) {
       addTask(

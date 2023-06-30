@@ -3,6 +3,7 @@ import 'package:app/common/nets/commons/proto/ErrorCode.pbenum.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/common/utils/en.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/money_type.dart';
@@ -154,7 +155,7 @@ class GiftSend2Room extends GiftSendLogic {
     final users = userRx.map((it) => it.uid).toList(growable: false);
 
     if (users.isEmpty) {
-      throw const LogicException(-1, '请选择礼物赠送对象');
+      throw LogicException(-1, '请选择礼物赠送对象'.en());
     }
 
     assert(type != null, '数据错误 -> $data');
