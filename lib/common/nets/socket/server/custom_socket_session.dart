@@ -26,7 +26,7 @@ class CustomSocketSession with BaseClient {
   StreamSubscription? _socketSubscription;
 
   // 上一次收到协义数据
-  int lastReceivePkgTime = DateTime.now().second;
+  int lastReceivePkgTime = DateTime.now().millisecondsSinceEpoch;
 
   Function? exitCallBack;
 
@@ -122,7 +122,8 @@ class CustomSocketSession with BaseClient {
         break;
       case BaseClient.USER_HEART_BEAT:
         // 心跳
-        lastReceivePkgTime = DateTime.now().second;
+        lastReceivePkgTime = DateTime.now().millisecondsSinceEpoch;
+        debugPrint("[socket]:收到unity发来的心跳 = $uniqueId");
         break;
     }
   }

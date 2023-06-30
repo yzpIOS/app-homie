@@ -5125,6 +5125,100 @@ class S_OutFreeMikesArea extends $pb.GeneratedMessage {
   void clearRoomid() => clearField(1);
 }
 
+class C_PlazaToRoom extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_PlazaToRoom', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomid')
+    ..hasRequiredFields = false
+  ;
+
+  C_PlazaToRoom._() : super();
+  factory C_PlazaToRoom({
+    $fixnum.Int64? roomid,
+  }) {
+    final _result = create();
+    if (roomid != null) {
+      _result.roomid = roomid;
+    }
+    return _result;
+  }
+  factory C_PlazaToRoom.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_PlazaToRoom.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_PlazaToRoom clone() => C_PlazaToRoom()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_PlazaToRoom copyWith(void Function(C_PlazaToRoom) updates) => super.copyWith((message) => updates(message as C_PlazaToRoom)) as C_PlazaToRoom; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_PlazaToRoom create() => C_PlazaToRoom._();
+  C_PlazaToRoom createEmptyInstance() => create();
+  static $pb.PbList<C_PlazaToRoom> createRepeated() => $pb.PbList<C_PlazaToRoom>();
+  @$core.pragma('dart2js:noInline')
+  static C_PlazaToRoom getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_PlazaToRoom>(create);
+  static C_PlazaToRoom? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomid => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomid($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomid() => clearField(1);
+}
+
+class S_PlazaToRoom extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_PlazaToRoom', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomid')
+    ..hasRequiredFields = false
+  ;
+
+  S_PlazaToRoom._() : super();
+  factory S_PlazaToRoom({
+    $fixnum.Int64? roomid,
+  }) {
+    final _result = create();
+    if (roomid != null) {
+      _result.roomid = roomid;
+    }
+    return _result;
+  }
+  factory S_PlazaToRoom.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PlazaToRoom.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_PlazaToRoom clone() => S_PlazaToRoom()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_PlazaToRoom copyWith(void Function(S_PlazaToRoom) updates) => super.copyWith((message) => updates(message as S_PlazaToRoom)) as S_PlazaToRoom; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_PlazaToRoom create() => S_PlazaToRoom._();
+  S_PlazaToRoom createEmptyInstance() => create();
+  static $pb.PbList<S_PlazaToRoom> createRepeated() => $pb.PbList<S_PlazaToRoom>();
+  @$core.pragma('dart2js:noInline')
+  static S_PlazaToRoom getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PlazaToRoom>(create);
+  static S_PlazaToRoom? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomid => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomid($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomid() => clearField(1);
+}
+
 class C_Robot extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_Robot', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'count', $pb.PbFieldType.O3)

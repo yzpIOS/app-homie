@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -13,7 +14,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 
-const int SOCKET_TIME_OUT = 15;
+const int SOCKET_TIME_OUT = 9;
 
 /// 服务开始
 typedef ServerStatusCallBack = void Function();
@@ -120,9 +121,7 @@ class CustomLocalServer with BaseClient {
       });
       // 监听原始数据
       customSocketSession.onRawData((cmd, data) {
-        _onReceiveRawFromU.forEach((element) {
-          element.call(customSocketSession, cmd, data);
-        });
+        onReceive2(customSocketSession, cmd, data);
       });
       // 由unity调用的退出
       customSocketSession.exitCallBack = () {
@@ -135,6 +134,22 @@ class CustomLocalServer with BaseClient {
       dispose();
       // 重新打开server
       bindServer();
+    });
+  }
+
+
+  ///
+  /// 收到数据的处理
+  ///
+  void onReceive2(CustomSocketSession session, int curCmd, Uint8List? data) {
+    // 唤起ProtoBuff的数据回调
+    GeneratedMessage? message = data == null ? null : onGeneratedMessage[curCmd]?.call(data);
+
+    _onReceiveFromU.forEach((element) {
+      element.call(session, curCmd, message);
+    });
+    _onReceiveRawFromU.forEach((element) {
+      element.call(session, curCmd, data);
     });
   }
 
@@ -169,9 +184,10 @@ class CustomLocalServer with BaseClient {
   void beatHeartCheck({int interval = 3}) {
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
-      int nowSeconds = DateTime.now().second;
+      int nowSeconds = DateTime.now().millisecondsSinceEpoch;
       // 遍历所有的session
-      if(_sessions.isNotEmpty) {
+      if(_sessions.isNotEmpty && _sessions.keys.isNotEmpty) {
+        List<String> deletes = <String>[];
         for(var key in _sessions.keys) {
           var item = _sessions[key];
           if(item == null) {
@@ -180,7 +196,7 @@ class CustomLocalServer with BaseClient {
           // 心跳
           if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
             // 移除session
-            _sessions.remove(key);
+            deletes.add(key);
             // 己经挂掉
             item.dispose();
           } else {
@@ -188,6 +204,16 @@ class CustomLocalServer with BaseClient {
             item.send(BaseClient.USER_HEART_BEAT);
           }
         }
+        deletes.forEach((element) {
+          _sessions.remove(element);
+        });
+
+        // 如果断开就重连
+        if(deletes.isNotEmpty && _sessions.isEmpty) {
+          riseServerStatusCallBacks();
+        }
+      } else {
+        riseServerStatusCallBacks();
       }
       beatHeartCheck();
     }, onError: (error) {
@@ -286,6 +312,15 @@ class CustomLocalServer with BaseClient {
     _serverStatusCallBacks.forEach((element) {
       element.call();
     });
+  }
+
+
+  ///
+  /// 注册数据解析器
+  ///
+  @override
+  void registerFromBuffers(int cmd, OnGeneratedMessage parseData) {
+    super.registerFromBuffers(cmd, parseData);
   }
 
   @override

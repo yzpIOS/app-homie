@@ -8,10 +8,16 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
 import 'package:app/widgets.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
+
+  static RoomManagerCtrl get ins {
+    return Get.find<RoomManagerCtrl>();
+  }
+
   final stateRx = Rx(RoomState.None);
 
   SceneCtrl? _sceneCtrl;
@@ -140,6 +146,10 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       infoApi: (it) => data ?? Api.Room.info(roomId: it),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
     );
+  }
+
+  void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
+    Get.to(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
   }
 
   void toSquare({Map? data}) {

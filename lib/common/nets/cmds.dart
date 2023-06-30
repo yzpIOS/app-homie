@@ -96,4 +96,8 @@ class CMD {
 
   static const C_OutFreeMikesArea = 12002;//发送退出自由组麦区域
   static const S_OutFreeMikesArea = 12003;//下发退出自由组麦区域
+
+
+  static const C_PlazaToRoom = 12004; //发送从大厅切到其他房间（场景）消息
+  static const S_PlazaToRoom = 12005; //下发从大厅切到其他房间（场景）消息
 }

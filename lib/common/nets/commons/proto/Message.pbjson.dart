@@ -920,6 +920,26 @@ const S_OutFreeMikesArea$json = const {
 
 /// Descriptor for `S_OutFreeMikesArea`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_OutFreeMikesAreaDescriptor = $convert.base64Decode('ChJTX091dEZyZWVNaWtlc0FyZWESFgoGcm9vbWlkGAEgASgDUgZyb29taWQ=');
+@$core.Deprecated('Use c_PlazaToRoomDescriptor instead')
+const C_PlazaToRoom$json = const {
+  '1': 'C_PlazaToRoom',
+  '2': const [
+    const {'1': 'roomid', '3': 1, '4': 1, '5': 3, '10': 'roomid'},
+  ],
+};
+
+/// Descriptor for `C_PlazaToRoom`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_PlazaToRoomDescriptor = $convert.base64Decode('Cg1DX1BsYXphVG9Sb29tEhYKBnJvb21pZBgBIAEoA1IGcm9vbWlk');
+@$core.Deprecated('Use s_PlazaToRoomDescriptor instead')
+const S_PlazaToRoom$json = const {
+  '1': 'S_PlazaToRoom',
+  '2': const [
+    const {'1': 'roomid', '3': 1, '4': 1, '5': 3, '10': 'roomid'},
+  ],
+};
+
+/// Descriptor for `S_PlazaToRoom`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PlazaToRoomDescriptor = $convert.base64Decode('Cg1TX1BsYXphVG9Sb29tEhYKBnJvb21pZBgBIAEoA1IGcm9vbWlk');
 @$core.Deprecated('Use c_RobotDescriptor instead')
 const C_Robot$json = const {
   '1': 'C_Robot',

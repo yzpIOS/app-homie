@@ -8,6 +8,7 @@ import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
@@ -223,9 +224,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(BaseClient.USER_HEART_BEAT, G_UFHeart.fromBuffer);
     register(CMD.C_GoAwayRoom, C_GoAwayRoom.fromBuffer);
     register(CMD.C_OutFreeMikesArea, C_OutFreeMikesArea.fromBuffer);
+    register(CMD.C_PlazaToRoom, C_PlazaToRoom.fromBuffer);
 
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+    onDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
   }
 
   ///
@@ -265,6 +268,18 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
+  /// unity通知切换roomId
+  ///
+  void onPlazaToRoom(int cmd, C_PlazaToRoom? role) {
+    if(role == null) {
+      return;
+    }
+    post(() async {
+      Get.find<RoomManagerCtrl>().toMiddleRoom(roomId: role.roomid.toInt(), off: true);
+    });
+  }
+
+  ///
   /// 服务端错误
   ///
   void onServerError(int cmd, S_Err? role) {
@@ -285,8 +300,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     super.dispose();
     share.dispose();
     local.dispose();
-    removeClientConnect(onClientConnect);
+
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
+    removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
+
+    removeClientConnect(onClientConnect);
   }
 
   ///

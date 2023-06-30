@@ -53,7 +53,7 @@ mixin BaseClient {
   final Map<int, List<OnReceiveRawData>> _onReceiveRawCmds = {};
 
   // 数据转化器
-  final Map<int, OnGeneratedMessage> _onGeneratedMessage = <int, OnGeneratedMessage>{};
+  final Map<int, OnGeneratedMessage> onGeneratedMessage = <int, OnGeneratedMessage>{};
 
   ///
   /// 收到数据的处理
@@ -68,7 +68,7 @@ mixin BaseClient {
       // curPkg需要解密
       ByteUtils.decrypt(curPkg);
       // 唤起ProtoBuff的数据回调
-      GeneratedMessage? message = _onGeneratedMessage[curCmd]?.call(curPkg);
+      GeneratedMessage? message = onGeneratedMessage[curCmd]?.call(curPkg);
       // 监听的方法回调
       riseOnData(curCmd, message);
       // Future事件回调
@@ -165,20 +165,20 @@ mixin BaseClient {
   /// 注册数据解析器
   ///
   void registerFromBuffers(int cmd, OnGeneratedMessage parseData) {
-    if(_onGeneratedMessage.containsKey(cmd)) {
+    if(onGeneratedMessage.containsKey(cmd)) {
       return;
     }
-    _onGeneratedMessage[cmd] = parseData;
+    onGeneratedMessage[cmd] = parseData;
   }
 
   ///
   /// 取消数据解析器
   ///
   void unRegisterFromBuffers(int cmd) {
-    if(!_onGeneratedMessage.containsKey(cmd)) {
+    if(!onGeneratedMessage.containsKey(cmd)) {
       return;
     }
-    _onGeneratedMessage.remove(cmd);
+    onGeneratedMessage.remove(cmd);
   }
 
   ///
@@ -299,7 +299,7 @@ mixin BaseClient {
     _onReceiveFutures.clear();
     _onReceiveRaw.clear();
     _onReceiveRawCmds.clear();
-    _onGeneratedMessage.clear();
+    onGeneratedMessage.clear();
     serverByteBuffer.clearBuffer();
   }
 }

@@ -32,13 +32,23 @@ class RoomPage extends StatefulWidget {
       Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();
 
       mgr.doNormalState();
-
-      return (off ? Get.off : Get.to).call(
-        builder,
-        routeName: '$RoomPage',
-        popGesture: false,
-        transition: Transition.noTransition,
-      )!;
+      if(off) {
+        return Get.off(
+          builder,
+          routeName: '$RoomPage',
+            popGesture: false,
+            transition: Transition.noTransition,
+            preventDuplicates: false
+        )!;
+      } else {
+        return Get.to(
+            builder,
+            routeName: '$RoomPage',
+            popGesture: false,
+            transition: Transition.noTransition,
+            preventDuplicates: false
+        )!;
+      }
     }
 
     try {
