@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/common/utils/en.dart';
 import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/room/my_gift_ctrl.dart';
 import 'package:app/store/wallet_ctrl.dart';
@@ -234,8 +235,8 @@ class GiftSheet extends StatelessWidget {
       11001: (_) {
         //TODO 判断货币
 
-        Get.simpleDialog(msg: '余额不足', okLabel: '去充值').then((val) {
-          if (val == '去充值') {
+        Get.simpleDialog(msg: '余额不足'.en(), okLabel: '去充值'.en()).then((val) {
+          if (val == '去充值'.en()) {
             Get.to(() => const RechargePage());
           }
         });
