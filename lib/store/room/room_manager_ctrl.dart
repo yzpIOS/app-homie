@@ -148,8 +148,12 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     );
   }
 
+  ///
+  /// 从房间大厅跳到房间B时，两个界面都是unity界面，所以加一个中间界面来跳转
+  /// 有更好的方式？？
+  ///
   void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
-    Get.to(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
+    Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
   }
 
   void toSquare({Map? data}) {
