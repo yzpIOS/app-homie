@@ -40,7 +40,7 @@ class GiftSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final data = <String, Widget>{
       if (logic.useMyGift != UseMyGift.only) //
-        '礼物': DelayView(
+        '礼物'.en(): DelayView(
           fadeIn: false,
           keepAlive: true,
           builder: (_) {
@@ -51,7 +51,7 @@ class GiftSheet extends StatelessWidget {
           },
         ),
       if (logic.useMyGift != UseMyGift.disable) //
-        '背包': DelayView(
+        '背包'.en(): DelayView(
           fadeIn: false,
           keepAlive: true,
           builder: (_) {
@@ -161,7 +161,7 @@ class GiftSheet extends StatelessWidget {
           width: 65,
           height: 34,
           child: PopupMenuButton(
-            tooltip: '赠送数量',
+            tooltip: '赠送数量'.en(),
             onSelected: numRx,
             itemBuilder: (_) => items.map(itemBuilder).toList(growable: false),
             child: Row(
@@ -183,13 +183,13 @@ class GiftSheet extends StatelessWidget {
       Widget $SendView() {
         return OpacityButton(
           onTap: doSend,
-          child: const Box(
+          child: Box(
             width: 56,
             height: 34,
             color: AppPalette.primary,
             alignment: Alignment.center,
             child: XText(
-              '送出',
+              '送出'.en(),
               style: TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
@@ -226,7 +226,7 @@ class GiftSheet extends StatelessWidget {
     final data = logic.selectRx();
 
     if (data == null) {
-      showToast('请选择礼物');
+      showToast('请选择礼物'.en());
 
       return;
     }
