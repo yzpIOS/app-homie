@@ -194,12 +194,12 @@ class Rtc {
     try {
       await Future.wait(
         [
-          rtcClient.muteLocalAudio(!enable),
+          // rtcClient.muteLocalAudio(!enable),
           if (enable) //
             rtcClient.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
           else
             rtcClient.stopLocalAudio(),
-          rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
+          // rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
         ],
       );
 
