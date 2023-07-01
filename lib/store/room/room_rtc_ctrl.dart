@@ -83,7 +83,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   void onClose() {
     leaveRoom();
     SocketCtrl.ins.removeOnDataCmd(CMD.S_GoToRoom, goToRoom);
-    SocketCtrl.ins.removeOnDataCmd(CMD.S_InFreeMikesArea, goToRoom);
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_InFreeMikesArea, inFreeMikesArea);
 
     SocketCtrl.ins.removeOnDataCmd(CMD.C_GoAwayRoom, outRoom);
     SocketCtrl.ins.removeOnDataCmd(CMD.C_OutFreeMikesArea, outFreeMikesArea);
