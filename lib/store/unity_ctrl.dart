@@ -41,7 +41,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     );
 
     if (Env.isDebug && Env.useUnity) {
-      _sendMessage(App2UnityEnum.FTU_TEST, null, const Duration(seconds: 5)) //
+      _sendMessage(App2UnityEnum.FTU_TEST, null, const Duration(seconds: 20)) //
           .then((_) => markReady())
           .ignore();
     }
@@ -181,7 +181,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
-  Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: 5)}) async {
+  Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: 20)}) async {
     await _unityReady();
 
     return _sendMessage(action, data, timeout);

@@ -195,6 +195,7 @@ class CustomLocalServer with BaseClient {
           }
           // 心跳
           if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
+            debugPrint("收不到unity心跳，断开链接");
             // 移除session
             deletes.add(key);
             // 己经挂掉

@@ -1154,6 +1154,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
     ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'oldMikeNo')
     ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'number', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1165,6 +1166,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     $core.String? mikeNo,
     $core.String? oldMikeNo,
     $fixnum.Int64? mikeId,
+    $core.int? number,
   }) {
     final _result = create();
     if (roomId != null) {
@@ -1184,6 +1186,9 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     }
     if (mikeId != null) {
       _result.mikeId = mikeId;
+    }
+    if (number != null) {
+      _result.number = number;
     }
     return _result;
   }
@@ -1261,6 +1266,15 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasMikeId() => $_has(5);
   @$pb.TagNumber(6)
   void clearMikeId() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get number => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set number($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasNumber() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearNumber() => clearField(7);
 }
 
 class S_DownMikeBroadcast extends $pb.GeneratedMessage {

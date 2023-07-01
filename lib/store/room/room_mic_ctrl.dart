@@ -42,6 +42,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         dataRx[data.mikeNo] = MicInfo(uid: event.uid ?? "",
             micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId);
 
+        _updateHotCount3(data.mikeNo, data.number, refresh: true);
+
         _sendMicData2Unity();
       },
     );
@@ -148,35 +150,47 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   }
 
   void _updateHotCount(List data) {
-    final b = data.any((it) {
+    bool refresh = false;
+    for(int index = 0; index < data.length; index ++) {
+      var it = data[index];
       final info = dataRx[it['mike_no']];
-
-      if (info == null) {
-        return false;
-      } else {
-        info.hotCount = it['number'];
-
-        return true;
+      if(info != null) {
+        refresh = true;
+        _updateHotCount3(it['mike_no'], it['number']);
       }
-    });
-
-    if (b) dataRx.refresh();
+    }
+    if (refresh){
+      dataRx.refresh();
+    }
   }
 
   void _updateHotCount2(List<S_AccMikeBroadcast> data) {
-    final b = data.any((it) {
-      final info = dataRx[it.mikeNo];
-
-      if (info == null) {
-        return false;
-      } else {
-        info.hotCount = it.number;
-
-        return true;
+    bool refresh = false;
+    for(int index = 0; index < data.length; index ++) {
+      var info = dataRx[data[index].mikeNo];
+      if(info != null) {
+        refresh = true;
+        _updateHotCount3(data[index].mikeNo, data[index].number);
       }
-    });
+    }
+    if (refresh) {
+      dataRx.refresh();
+    }
+  }
 
-    if (b) dataRx.refresh();
+  void _updateHotCount3(String? mikeNo, int? number, {bool refresh = false}) {
+    if(mikeNo == null || number == null) {
+      return;
+    }
+    final info = dataRx[mikeNo];
+    if (info == null) {
+      return;
+    } else {
+      info.hotCount = number;
+    }
+    if(refresh) {
+      dataRx.refresh();
+    }
   }
 
   Map<String, List<Map<String, UID>>> _unityMicInfoData() {
