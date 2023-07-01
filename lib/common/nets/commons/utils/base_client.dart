@@ -1,4 +1,5 @@
 
+import 'dart:async';
 import 'dart:core';
 import 'dart:typed_data';
 import 'package:app/common/nets/commons/utils/base_byte_buffer.dart';
@@ -55,6 +56,8 @@ mixin BaseClient {
   // 数据转化器
   final Map<int, OnGeneratedMessage> onGeneratedMessage = <int, OnGeneratedMessage>{};
 
+  StreamSubscription? _timeOutStreamSubscription;
+
   ///
   /// 收到数据的处理
   ///
@@ -82,6 +85,29 @@ mixin BaseClient {
       // 获取下一个包的指令号
       curCmd = serverByteBuffer.getUnPackCmd();
     }
+  }
+
+  ///
+  /// 请求过期时间计算
+  ///
+  void startTimeOut({int checkInterval = 2000}) {
+    _timeOutStreamSubscription?.cancel();
+    _timeOutStreamSubscription = Future.delayed(Duration(microseconds: checkInterval)).asStream().listen((event) {
+      int curStartTime = DateTime.now().millisecondsSinceEpoch;
+      _onReceiveFutures.forEach((key, value) {
+        for(int index = value.length - 1; index >= 0; index --) {
+          var item = value[index];
+          if(curStartTime - item.starteTime >= 8000) {
+            item.responseError();
+            value.removeAt(index);
+          }
+        }
+      });
+
+      startTimeOut(checkInterval: checkInterval);
+    }, onError: (error) {
+      startTimeOut(checkInterval: checkInterval);
+    });
   }
 
   ///
@@ -294,6 +320,7 @@ mixin BaseClient {
   }
 
   void dispose() {
+    _timeOutStreamSubscription?.cancel();
     _onReceive.clear();
     _onReceiveCmds.clear();
     _onReceiveFutures.clear();

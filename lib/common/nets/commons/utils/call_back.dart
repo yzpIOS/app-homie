@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:ffi';
 import 'package:protobuf/protobuf.dart';
 ///
 /// 接收到数据
@@ -18,11 +19,13 @@ class CallBack<T extends GeneratedMessage> {
   // 成功回调
   Completer<T?>? complete;
 
+  // 回调方法
   OnReceiveData<T>? onCallBack;
+  // 回调方法对应的hashcode
   int? onCallBackHashCode;
 
   // 开始请求时间
-  int starteTime = DateTime.now().second;
+  int starteTime = DateTime.now().millisecondsSinceEpoch;
 
   CallBack({required this.cmd, this.complete, this.onCallBack}) {
     onCallBackHashCode = onCallBack?.hashCode;
@@ -33,6 +36,13 @@ class CallBack<T extends GeneratedMessage> {
       complete?.complete(data);
     } catch(e) {
       complete?.completeError(e);
+    }
+  }
+
+  void responseError() {
+    try {
+      complete?.completeError(Error());
+    } catch(e) {
     }
   }
 
