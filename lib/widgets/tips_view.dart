@@ -14,7 +14,6 @@ class TipsView extends StatelessWidget {
 
     child = FittedBox(
       fit: BoxFit.fitWidth,
-      alignment: const Alignment(0, -0.6),
       child: child,
     );
 
@@ -22,7 +21,9 @@ class TipsView extends StatelessWidget {
       child = OpacityButton(onTap: doRefresh, child: child);
     }
 
-    return child;
+    return Center(
+      child: child,
+    );
   }
 
   Widget $TipsView() {
