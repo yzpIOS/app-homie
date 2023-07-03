@@ -7,6 +7,7 @@ import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/event/event.dart';
+import 'package:app/exception.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
@@ -131,10 +132,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.registerFromBuffers(cmd, client);
   }
 
+  Map<int, int> lastSendTime = {};
+
   ///
   /// 发送数据到服务端
   ///
   Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+    if(lastSendTime.containsKey(cmd) && DateTime.now().millisecondsSinceEpoch - lastSendTime[cmd]! < 1000) {
+      throw OperationException();
+    }
+    lastSendTime[cmd] = DateTime.now().millisecondsSinceEpoch;
     return share.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
   }
 
@@ -219,6 +226,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
     register(CMD.S_GoToRoom, S_GoToRoom.fromBuffer);
     register(CMD.S_InFreeMikesArea, S_InFreeMikesArea.fromBuffer);
+    register(CMD.S_GiveGiftByDynamic, S_GiveGiftByDynamic.fromBuffer);
 
 
     // 客户端间的通信协仪
@@ -302,6 +310,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     super.dispose();
     share.dispose();
     local.dispose();
+    lastSendTime.clear();
 
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);

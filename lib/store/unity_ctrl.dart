@@ -15,6 +15,8 @@ import 'package:synchronized/synchronized.dart';
 
 export 'package:app/model/enum/unity_event_enum.dart';
 
+const unity_time_out = 60;
+
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
   late final _callback = _Callback();
 
@@ -41,7 +43,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     );
 
     if (Env.isDebug && Env.useUnity) {
-      _sendMessage(App2UnityEnum.FTU_TEST, null, const Duration(seconds: 20)) //
+      _sendMessage(App2UnityEnum.FTU_TEST, null, const Duration(seconds: unity_time_out)) //
           .then((_) => markReady())
           .ignore();
     }
@@ -105,7 +107,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   Future<void> _unityReady() async {
     if (!Env.useUnity) throw '未开启Unity';
 
-    await ready.timeout(const Duration(seconds: 30));
+    await ready.timeout(const Duration(seconds: unity_time_out));
   }
 
   ///
@@ -181,7 +183,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
-  Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: 20)}) async {
+  Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: unity_time_out)}) async {
     await _unityReady();
 
     return _sendMessage(action, data, timeout);
@@ -252,7 +254,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
           data: data,
-          timeout: const Duration(minutes: 2),
+          timeout: const Duration(minutes: unity_time_out),
         );
 
         await loader.doOnAfter?.call();

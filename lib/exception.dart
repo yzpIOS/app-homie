@@ -31,3 +31,11 @@ class AuthException implements Exception {
 class CanceledException implements Exception {
   const CanceledException();
 }
+
+class OperationException implements Exception {
+
+  @override
+  String toString() {
+    return '操作太频繁';
+  }
+}

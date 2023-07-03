@@ -123,8 +123,9 @@ class GiftSheet extends StatelessWidget {
           const MoneyIcon(type: MoneyType.diamond, size: 24),
           WalletCtrl.use(
             builder: (it) {
+              var data = int.tryParse(it[MoneyType.diamond].toString()) ?? 0;
               return XText(
-                '${it[MoneyType.diamond]}',
+                '$data',
                 style: const TextStyle(fontSize: 14, color: Colors.white),
               );
             },

@@ -21,7 +21,8 @@ class TipsView extends StatelessWidget {
       child = OpacityButton(onTap: doRefresh, child: child);
     }
 
-    return Center(
+    return Align(
+      alignment: Alignment.topCenter,
       child: child,
     );
   }
