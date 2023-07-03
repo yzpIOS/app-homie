@@ -94,8 +94,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.onData((cmd, data) {
       riseOnData(cmd, data);
     });
-    // 过送过期定时器
-    share.startTimeOut();
   }
 
   Future<int> getLocalServerPort() async {

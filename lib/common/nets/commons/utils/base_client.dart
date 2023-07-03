@@ -88,29 +88,6 @@ mixin BaseClient {
   }
 
   ///
-  /// 请求过期时间计算
-  ///
-  void startTimeOut({int checkInterval = 2000}) {
-    _timeOutStreamSubscription?.cancel();
-    _timeOutStreamSubscription = Future.delayed(Duration(microseconds: checkInterval)).asStream().listen((event) {
-      int curStartTime = DateTime.now().millisecondsSinceEpoch;
-      _onReceiveFutures.forEach((key, value) {
-        for(int index = value.length - 1; index >= 0; index --) {
-          var item = value[index];
-          if(curStartTime - item.starteTime >= 8000) {
-            item.responseError();
-            value.removeAt(index);
-          }
-        }
-      });
-
-      startTimeOut(checkInterval: checkInterval);
-    }, onError: (error) {
-      startTimeOut(checkInterval: checkInterval);
-    });
-  }
-
-  ///
   /// 创建callBack
   ///
   CallBack<T> createCallBack<T extends GeneratedMessage>(int cmd, {int? resCmd}) {
