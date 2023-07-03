@@ -15,7 +15,7 @@ import 'package:synchronized/synchronized.dart';
 
 export 'package:app/model/enum/unity_event_enum.dart';
 
-const unity_time_out = 60;
+const unity_time_out = 90;
 
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
   late final _callback = _Callback();
