@@ -157,7 +157,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           isNotClose();
 
           Future<void> doJoinGame() {
-            const dur = Duration(seconds: 10);
+            const dur = Duration(seconds: unity_time_out);
             final data = {'token': OAuthCtrl.token, 'scene': info};
 
             return unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);

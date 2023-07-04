@@ -136,8 +136,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 发送数据到服务端
   ///
   Future<T?> sendByteAsyncServer<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
-    if(lastSendTime.containsKey(cmd) && DateTime.now().millisecondsSinceEpoch - lastSendTime[cmd]! < 1000) {
-      throw OperationException();
+    if(lastSendTime.containsKey(cmd) && DateTime.now().millisecondsSinceEpoch - lastSendTime[cmd]! < 500) {
+      return Future.value(null);
     }
     lastSendTime[cmd] = DateTime.now().millisecondsSinceEpoch;
     return share.sendByteAsync(cmd, datas: datas, resCmd: resCmd);
