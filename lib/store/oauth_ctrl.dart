@@ -38,7 +38,13 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       markReady();
     }
 
-    (isLogin ? App.toApp : App.toLogin).call();
+    if(isLogin && _auth?.sex != 0) {
+      // 己登录，并且资料己经填完
+      App.toApp();
+    } else {
+      // 未登录，或者资料没有完善
+      App.toLogin();
+    }
 
     FlutterNativeSplash.remove();
   }
@@ -105,27 +111,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future<void> _useAuth(String token) async {
-    Future<Map> _useInfo(Map info) async {
-      final uid = info['uid'];
-      Int64 nUid = Int64(info['role_id']);
-
-      final auth = AuthInfo(
-        token: token,
-        uid: uid,
-        nuid: nUid,
-      );
-
-      Map<String, dynamic> data = auth.toJson();
-      await KvBox.write(PrefKey.AuthInfo, data);
-
-      // _setup(auth, info: info);
-      _auth = auth;
-      return info;
-    }
-
     try {
       var myInfo = await Api.UserInfo.myInfo(token: token);
-      var result = await _useInfo(myInfo);
+      var result = await updateUserInfo(myInfo, token);
 
       // 性别为空，那么需要去选择角色
       if(result.containsKey("sex") == false || result["sex"] == 0) {
@@ -139,7 +127,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         );
 
         if (info is Map) {
-          await _useInfo(info);
+          await updateUserInfo(info, token);
         } else {
           throw const CanceledException();
         }
@@ -150,11 +138,34 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       rethrow;
     }
   }
+  Future<Map> updateUserInfo(Map info, String token) async {
+    if(info.containsKey("uid") == false || info.containsKey("role_id") == false) {
+      return info;
+    }
+    final uid = info['uid'];
+    Int64 nUid = Int64(info['role_id']);
 
+    final auth = AuthInfo(
+      token: token,
+      uid: uid,
+      nuid: nUid,
+      sex: info["sex"] ?? 0,
+    );
+
+    Map<String, dynamic> data = auth.toJson();
+    await KvBox.write(PrefKey.AuthInfo, data);
+
+    // _setup(auth, info: info);
+    _auth = auth;
+    return info;
+  }
+
+  ///
+  /// [showTransition] 如果未登录时，选角界面
   void _setup(AuthInfo data, bool showTransition, {Map? info}) {
     _auth = data;
     Get.put(
-      UserCtrl(_auth = data, init: info, showTransition:showTransition),
+      UserCtrl(_auth = data, init: info, showTransition: _auth?.sex != 0),
       permanent: true,
     );
     // 开启socket连接

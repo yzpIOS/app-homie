@@ -19,7 +19,7 @@ class MyView extends StatefulWidget {
 class _MyViewState extends SimplePageState<Map, MyView> {
   late final categoryId = widget.categoryId;
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
-  late final selector = selectorCtrl.selector$Cloth;
+  late final selector = selectorCtrl.selectorCloth;
 
   @override
   Future fetchPage(PageNum page) => Api.DressUp.myList(page: page, categoryId: categoryId);

@@ -106,6 +106,6 @@ class ShoppingCartCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
 
   void _doReset() {
     dataRx.clear();
-    Get.find<ClothSelectorCtrl>().selector$Shop.doReset();
+    Get.find<ClothSelectorCtrl>().selectorShop.doReset();
   }
 }

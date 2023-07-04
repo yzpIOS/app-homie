@@ -125,7 +125,7 @@ class _DataView extends StatefulWidget {
 class _DataViewState extends SimplePageState<Map, _DataView> {
   late final myInfo = Get.find<MyInfoCtrl>().dataRx;
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
-  late final selector = selectorCtrl.selector$Shop;
+  late final selector = selectorCtrl.selectorShop;
 
   @override
   BaseConfig get config {

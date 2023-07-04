@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class ModelOverlay$Wardrobe extends StatelessWidget {
   late final wardrobeCtrl = Get.find<MyWardrobeCtrl>();
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
-  late final selector = selectorCtrl.selector$Wardrobe;
+  late final selector = selectorCtrl.selectorWardrobe;
 
   ModelOverlay$Wardrobe({super.key});
 
@@ -82,7 +82,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
   }
 
   void _doReset() {
-    final selector = Get.find<ClothSelectorCtrl>().selector$Wardrobe;
+    final selector = Get.find<ClothSelectorCtrl>().selectorWardrobe;
 
     Get.showActionSheet(const ['恢复上一次的搭配', '清除所有单品']).onNotNull((val) {
       switch (val) {

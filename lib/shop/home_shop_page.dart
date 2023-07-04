@@ -23,7 +23,7 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
 
   late final pageCtrl = PageController();
   late final page = <Widget Function(ScrollController)>[
-    (_) => $ShopAndDressUpView(),
+    (_) => shopAndDressUpView(),
     // ShopViewCombo.new,
     ShopViewBest.new,
   ];
@@ -64,7 +64,7 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
     );
   }
 
-  Widget $ShopAndDressUpView() {
+  Widget shopAndDressUpView() {
     return VisibilityDetector(
       key: _key,
       child: const HomeShopAndDressUpView(),

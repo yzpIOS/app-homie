@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class ModelOverlay$Cloth extends StatelessWidget {
   late final dressUpCtrl = Get.find<MyDressUpCtrl>();
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
-  late final selector = selectorCtrl.selector$Cloth;
+  late final selector = selectorCtrl.selectorCloth;
 
   ModelOverlay$Cloth({super.key});
 
@@ -81,7 +81,7 @@ class ModelOverlay$Cloth extends StatelessWidget {
         dressUpCtrl.doSave(ids: selector.ids);
         break;
       case '重置':
-        final selector = Get.find<ClothSelectorCtrl>().selector$Cloth;
+        final selector = Get.find<ClothSelectorCtrl>().selectorCloth;
 
         Get.showActionSheet(const ['恢复上一次的搭配', '清除所有单品']).onNotNull((val) {
           switch (val) {

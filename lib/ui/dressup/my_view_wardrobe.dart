@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class MyView$Wardrobe extends StatelessWidget {
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
-  late final selector = selectorCtrl.selector$Wardrobe;
+  late final selector = selectorCtrl.selectorWardrobe;
 
   MyView$Wardrobe({super.key});
 

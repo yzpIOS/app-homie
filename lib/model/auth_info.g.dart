@@ -10,6 +10,7 @@ _$_AuthInfo _$$_AuthInfoFromJson(Map<String, dynamic> json) => _$_AuthInfo(
       token: json['token'] as String,
       uid: json['uid'],
       nuid: json['nuid'],
+      sex: json['sex'] as int,
     );
 
 Map<String, dynamic> _$$_AuthInfoToJson(_$_AuthInfo instance) =>
@@ -17,4 +18,5 @@ Map<String, dynamic> _$$_AuthInfoToJson(_$_AuthInfo instance) =>
       'token': instance.token,
       'uid': instance.uid,
       'nuid': instance.nuid,
+      'sex': instance.sex,
     };

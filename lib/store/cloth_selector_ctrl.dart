@@ -9,9 +9,9 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 
 class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin {
-  final selector$Shop = _Selector$Shop();
-  final selector$Cloth = _Selector$Cloth();
-  final selector$Wardrobe = _Selector$Wardrobe();
+  final selectorShop = _SelectorShop();
+  final selectorCloth = _SelectorCloth();
+  final selectorWardrobe = _SelectorWardrobe();
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
@@ -29,13 +29,13 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
       ever(_modeRx, (val) {
         switch (val) {
           case 0:
-            selector$Shop.enterTryMode();
+            selectorShop.enterTryMode();
             break;
           case 1:
-            selector$Wardrobe.enterTryMode();
+            selectorWardrobe.enterTryMode();
             break;
           case 2:
-            selector$Cloth.enterTryMode();
+            selectorCloth.enterTryMode();
             break;
         }
       }),
@@ -52,7 +52,7 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
     on<ShoppingCartDelEvent>(
       (event) {
         final id = event.productId;
-        final selector = selector$Shop;
+        final selector = selectorShop;
 
         if (selector._dataRx.containsKey(id)) {
           selector._doTryUse(id);
@@ -65,15 +65,15 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
 
   @override
   void onReady() async {
-    selector$Cloth._dataRx.assignAll(
+    selectorCloth._dataRx.assignAll(
       await Get.find<MyDressUpCtrl>().fetchIds(),
     );
   }
 
   Future<List<int>> initIds() {
     return isShopMode
-        ? selector$Shop.dressUpIds()
-        : (isWardrobeMode ? selector$Wardrobe.dressUpIds() : selector$Cloth.dressUpIds());
+        ? selectorShop.dressUpIds()
+        : (isWardrobeMode ? selectorWardrobe.dressUpIds() : selectorCloth.dressUpIds());
   }
 
   void setShopMode(bool isShopMode) {
@@ -237,7 +237,7 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
   void _debugTryUse() => xlog(_dataRx.debug);
 }
 
-class _Selector$Shop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _MultiMixin {
+class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _MultiMixin {
   late final cartCtrl = Get.find<ShoppingCartCtrl>();
 
   @override
@@ -259,7 +259,7 @@ class _Selector$Shop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _
   void _doDel(int id) => simpleTry(() => cartCtrl.doDel(id));
 }
 
-class _Selector$Wardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin, _MultiMixin {
+class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin, _MultiMixin {
   late final myInfo = Get.find<MyInfoCtrl>().dataRx;
 
   //异性选中数据
@@ -307,7 +307,7 @@ class _Selector$Wardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixi
   }
 }
 
-class _Selector$Cloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
+class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
   final _dataRx = RxSet<int>();
 
   @override
