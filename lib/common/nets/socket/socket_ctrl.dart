@@ -112,6 +112,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 发送pb对像数据
   ///
   bool sendSever(int cmd, {GeneratedMessage? message}) {
+    if(lastSendTime.containsKey(cmd) && DateTime.now().millisecondsSinceEpoch - lastSendTime[cmd]! < 500) {
+      return false;
+    }
+    lastSendTime[cmd] = DateTime.now().millisecondsSinceEpoch;
     return share.send(cmd, message: message);
   }
 
@@ -119,6 +123,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 发送数据到server
   ///
   bool senByteServer(int cmd, {Uint8List? datas}) {
+    if(lastSendTime.containsKey(cmd) && DateTime.now().millisecondsSinceEpoch - lastSendTime[cmd]! < 500) {
+      return false;
+    }
+    lastSendTime[cmd] = DateTime.now().millisecondsSinceEpoch;
     return share.sendBytes(cmd, datas: datas);
   }
 

@@ -124,6 +124,9 @@ class GiftSheet extends StatelessWidget {
           WalletCtrl.use(
             builder: (it) {
               var data = int.tryParse(it[MoneyType.diamond].toString()) ?? 0;
+              if(data < 0) {
+                data = 0;
+              }
               return XText(
                 '$data',
                 style: const TextStyle(fontSize: 14, color: Colors.white),
