@@ -31,7 +31,6 @@ enum App2UnityEnum {
   FTU_CALCULATE_CLOTH, //计算穿着的结果
   FTU_GENDER_CLOTHING_SCENE, //在换装场景中推送角色性别
   FTU_ROLE_SPEAK_GUILD_SCENE, //公会场景中谁在麦上说话
-  FTU_MICROPHONE_LIST, //公会场景麦列表
   FTU_PICTURE_ENTER, //进入拍照、录屏模式
   FTU_PICTURE_EXIT, //退出拍照、录屏模式
   FTU_PICTURE_JPG, //拍照

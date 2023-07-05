@@ -290,7 +290,7 @@ class _Callback {
 
           assert(completer != null);
 
-          completer?.completeError(TimeoutException("Future not completed", timeout));
+          completer?.completeError(TimeoutException("Future not completed2", timeout));
         },
       ),
     );

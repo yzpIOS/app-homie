@@ -204,15 +204,15 @@ class ApiRoom extends ApiBase {
     return _doPost('mike/list', data: page + data);
   }
 
-  Future micMute({required int micId, required bool isMute}) {
+  Future micMute({required NUID roleId, required bool isMute}) {
     C_BanMike c_banMike = C_BanMike.create();
-    c_banMike.sceneId = Int64(micId);
+    c_banMike.roleId = roleId;
     c_banMike.status = isMute ? 2 : 1;
     SocketCtrl.ins.sendSever(CMD.C_BanMike, message: c_banMike);
     return Future.value();
 
     final data = {
-      'mike_id': micId,
+      'mike_id': roleId,
       'status': isMute ? 2 : 1,
     };
 

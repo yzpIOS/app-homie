@@ -25,8 +25,6 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   void onInit() {
     super.onInit();
 
-    _sendMicData2Unity();
-
     Api.Room.hotCount(roomId: roomId) //
         .then((val) => val is List ? _updateHotCount(val) : null);
 
@@ -44,15 +42,12 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
         _updateHotCount3(data.mikeNo, data.number, refresh: true);
 
-        _sendMicData2Unity();
       },
     );
 
     on<MicDownEvent>(
       (event) {
         dataRx.remove(event.data?.mikeNo);
-
-        _sendMicData2Unity();
       },
     );
 
@@ -145,8 +140,6 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     );
 
     //TODO 处理重连期间自己麦状态改变情况
-
-    _sendMicData2Unity();
   }
 
   void _updateHotCount(List data) {
@@ -205,14 +198,6 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     };
   }
 
-  void _sendMicData2Unity() {
-    if (Env.useUnity && roomType == RoomType.guild) {
-      sendCmd2Unity(
-        App2UnityEnum.FTU_MICROPHONE_LIST,
-        data: _unityMicInfoData(),
-      );
-    }
-  }
 
   @override
   bool canSpeakRx(UID uid) {
@@ -305,7 +290,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     if (data != null && data.uid == uid) {
       simpleTry(
-        () => Api.Room.micMute(micId: data.micId, isMute: !data.isMute),
+        () => Api.Room.micMute(roleId: data.nUid, isMute: !data.isMute),
       );
     } else {
       assert(false, '数据错误 -> $data $no $uid');

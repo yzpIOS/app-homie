@@ -100,4 +100,7 @@ class CMD {
 
   static const C_PlazaToRoom = 12004; //发送从大厅切到其他房间（场景）消息
   static const S_PlazaToRoom = 12005; //下发从大厅切到其他房间（场景）消息
+
+  static const C_PushPreload=12020;//告诉flutter推送要预加载的商品id列表
+  static const S_PushPreload=12021;//告诉unity可以预加载哪些商品
 }

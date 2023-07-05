@@ -152,6 +152,8 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final productId = item['id'];
+    // 放在这里吧？
+    Get.find<ShopCategoryCtrl>().sendItems(productId);
 
     return HoldView(
       child: _ItemView(
