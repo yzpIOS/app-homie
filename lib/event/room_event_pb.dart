@@ -53,7 +53,9 @@ class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> {
 }
 
 // 下麦
-class MicDownEvent extends RoomEvent<S_DownMikeBroadcast> { }
+class MicDownEvent extends RoomEvent<S_DownMikeBroadcast> {
+  UID? get uid => data?.uid;
+}
 
 // 房间公告
 // S_NoticeBroadcast
@@ -63,11 +65,13 @@ class NoticeEvent extends RoomEvent<S_NoticeBroadcast> {
 // 黑名单
 // S_BlackBroadcast = 2250
 class UserBlockEvent extends RoomEvent<S_BlackBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 
 // 房间聊天
 class RoomChatMessageEvent extends RoomEvent<S_ChatMessageBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // 房间计数器S_AccMikeBroadcast
@@ -98,6 +102,7 @@ class AdminSetEvent extends RoomEvent<S_AdministratorBroadcast> {
 
 // 申请上麦
 class MicApplyEvent extends RoomEvent<S_ApplyUpMikeBroadcast> {
+  UID? get uid => data?.uid;
 }
 
 // 邀请上麦

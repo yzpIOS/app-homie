@@ -24,7 +24,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   void _initListener() {
     on<UserBlockEvent>(
       test: (event) {
-        debugPrint("用户被禁；userInfo = ${event?.data?.toProto3Json()}");
+        debugPrint("用户被禁；userInfo = ${event?.data?.toString()}");
         return OAuthCtrl.isSelf(event.uid);
       },
       (_) => leaveRoom(),

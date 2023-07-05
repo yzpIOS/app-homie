@@ -131,7 +131,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     on<UserBlockEvent>(
       test: (event) {
-        debugPrint("用户被禁；userInfo = ${event?.data?.toProto3Json()}");
+        debugPrint("用户被禁；userInfo = ${event?.data?.toString()}");
         return OAuthCtrl.isSelf(event.uid);
       },
       (_) => _doClose('你被封禁了'),

@@ -7,6 +7,7 @@ import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/ui/room/user/select_user_page.dart';
+import 'package:fixnum/fixnum.dart';
 
 abstract class MicUserSheet {
   static void show(String no, {MicInfo? info}) {
@@ -49,7 +50,9 @@ abstract class MicUserSheet {
       if (notUser && canManage) //
         '抱Ta上麦': () {
           Get.to(() => SelectUserPage(roomId: roomId, title: '抱Ta上麦')) //
-              ?.onType<Map>((val) => sceneMicCtrl<RoomMicCtrl>().inviteMicUp(no: no, uid: val['uid']));
+              ?.onType<Map>((val) {
+            sceneMicCtrl<RoomMicCtrl>().inviteMicUp(no: no, uid: Int64(val['role_id']));
+          });
         },
       if (hasUser && canManage) //
         '清空魅力值': () {
