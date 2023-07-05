@@ -64,9 +64,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   @override
   void onInit() {
-    super.onInit();
-
-    Get.find<RoomManagerCtrl>().sceneCtrl = this;
+    debugPrint("开始监听麦位信息");
 
     // 服务端的数据广播比较快，而客户端数据比较慢
     // 所以要记录用户的列表，然后当服务端数据返回来的时候
@@ -76,9 +74,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       if(data == null) {
         return;
       }
+      debugPrint("新增麦位：data = ${data.toProto3Json()}");
       newMicList.add(data);
-    },
+    }
     );
+
+    super.onInit();
+
+    Get.find<RoomManagerCtrl>().sceneCtrl = this;
   }
 
   @override

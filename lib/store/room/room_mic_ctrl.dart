@@ -43,6 +43,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
             break;
           }
         }
+        debugPrint("新增麦位：data = ${data.toProto3Json()}");
 
         // 删除旧mike
         dataRx.remove(data.oldMikeNo);
