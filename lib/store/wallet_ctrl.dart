@@ -10,6 +10,10 @@ export 'package:app/model/enum/money_type.dart';
 class WalletCtrl extends AsyncMapCtrl with BusGetLifeMixin {
   final _rx = Rxn<DateTime>();
 
+  static WalletCtrl get ins {
+    return Get.find<WalletCtrl>();
+  }
+
   WalletCtrl({required super.uid}) : super(boxName: 'UserWallet');
 
   @override

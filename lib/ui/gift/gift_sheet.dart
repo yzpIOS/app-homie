@@ -28,6 +28,9 @@ class GiftSheet extends StatelessWidget {
       color: Color(0xCC333333),
     );
 
+    // 刷新金币
+    WalletCtrl.ins.doRefresh();
+
     return OrientationSheet.show(
       child: sheet,
       decoration: decor,
