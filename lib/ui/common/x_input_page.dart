@@ -66,7 +66,7 @@ class _XInputPageState extends State<XInputPage> {
 
   Widget _actions() {
     return $InputBuilder((isBlank) {
-      final onTap = isBlank ? null : onSub;
+      final onTap = !cfg.emptyCallBack && isBlank ? null : onSub;
 
       return '确定'.toStadiumAction(onPressed: onTap);
     });
@@ -101,6 +101,7 @@ class InputCfg {
   final TextInputType? inputType;
   final List<TextInputFormatter>? formatter;
   final String? Function(String)? validator;
+  final emptyCallBack;
 
   InputCfg({
     required this.title,
@@ -111,5 +112,6 @@ class InputCfg {
     this.maxLines = 1,
     this.maxLength = 16,
     this.inputType = TextInputType.text,
+    this.emptyCallBack = false,
   });
 }

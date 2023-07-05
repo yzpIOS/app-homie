@@ -18,6 +18,10 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
 
   UserInfoCtrl({required this.uid});
 
+  static UserInfoCtrl get ins {
+    return Get.find<UserInfoCtrl>();
+  }
+
   final _cache = <String, Rxn<UserInfoDto>>{};
 
   final _task = <UID, Future<bool>>{};

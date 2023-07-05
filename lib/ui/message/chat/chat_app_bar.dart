@@ -81,13 +81,17 @@ class ChatAppBar$User extends _AppBar {
             )
           : OpacityButton(
               onTap: () {
-                XInputPage.go(InputCfg(title: '修改备注')).onNotNull((name) {
+                XInputPage.go(InputCfg(title: '修改备注', emptyCallBack: true)).onType<String?>((name) async {
+                  if(name == null || name.isEmpty == true) {
+                    var userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
+                    name = userInfo?.nickName;
+                  }
                   simpleSub(
-                    Api.UserInfo.remarkName(uid: uid, name: name),
+                    Api.UserInfo.remarkName(uid: uid, name: name ?? ""),
                     callback: () {
                       UserInfoCtrl.doUpdate(
                         uid,
-                        rebuild: (val) => val.copyWith(remarkName: name),
+                        rebuild: (val) => val.copyWith(remarkName: name ?? ""),
                       );
                     },
                   );
