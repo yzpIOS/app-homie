@@ -9,6 +9,7 @@ import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/widgets.dart';
 
 class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   final int roomId;
@@ -16,8 +17,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   final RoomType roomType;
   final RxMap<String, MicInfo> dataRx;
 
-  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required micInit})
-      : dataRx = RxMap(_micDataFrom(micInit));
+  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required Map<String, MicInfo> micInit})
+      : dataRx = RxMap(micInit);
 
   final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
@@ -34,6 +35,15 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         if(data == null) {
           return;
         }
+        var mikeUserKeyList = dataRx.keys.toList();
+        for(int index = 0; index < mikeUserKeyList.length; index ++) {
+          if(dataRx[mikeUserKeyList[index]]?.uid == data.uid) {
+            debugPrint("删除旧麦位: data = ${data.toProto3Json()}");
+            dataRx.remove(mikeUserKeyList[index]);
+            break;
+          }
+        }
+
         // 删除旧mike
         dataRx.remove(data.oldMikeNo);
         // 新增mike
@@ -136,7 +146,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     final resp = await Api.Room.micList(roomId: roomId);
 
     dataRx(
-      _micDataFrom(resp),
+      micDataFrom(resp),
     );
 
     //TODO 处理重连期间自己麦状态改变情况
@@ -297,7 +307,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     }
   }
 
-  static Map<String, MicInfo> _micDataFrom(data) {
+  static Map<String, MicInfo> micDataFrom(data) {
+    debugPrint("用户上麦：data = ${data.toString()}");
     return <String, MicInfo>{
       if (data is List && data.isNotEmpty)
         for (final item in data)

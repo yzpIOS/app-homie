@@ -27,6 +27,8 @@ import 'package:app/types.dart';
 import 'package:app/ui/activity/act_main_dialog.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/event/event.dart';
 
 export 'package:app/model/enum/room_role_type.dart';
 
@@ -40,6 +42,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   final RoomBaseInfo info;
 
   final WidgetBuilder overlay;
+
+
+  List<S_UpMikeBroadcast> newMicList = [];
 
   final int roomId;
   final String roomUid;
@@ -62,6 +67,18 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     super.onInit();
 
     Get.find<RoomManagerCtrl>().sceneCtrl = this;
+
+    // 服务端的数据广播比较快，而客户端数据比较慢
+    // 所以要记录用户的列表，然后当服务端数据返回来的时候
+    // 把当前数据更新到http列表的数据
+    on<MicUpEvent>((event) {
+      S_UpMikeBroadcast? data = event.data;
+      if(data == null) {
+        return;
+      }
+      newMicList.add(data);
+    },
+    );
   }
 
   @override
@@ -85,7 +102,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   void onClose() {
     Api.Room.outRoom(roomId).ignore();
     SocketCtrl.ins.removeDisconnect(onDisconnect);
-
+    newMicList.clear();
     super.onClose();
   }
 
@@ -255,7 +272,28 @@ class RoomCtrl extends SceneCtrl {
   void _bindGet(RoomRunInfo data) {
     super._bindGet(data);
 
-    bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, micInit: data['mikes']));
+    var oldMikeList = RoomMicCtrl.micDataFrom(data['mikes'] ?? []);
+    // 服务端的麦列表
+    var oldMikeKeyList = oldMikeList.keys.toList();
+    for(int index = oldMikeKeyList.length - 1; index >= 0; index --) {
+      debugPrint("删除旧麦位1：uid = ${oldMikeList[oldMikeKeyList[index]]?.uid}");
+      for(int innerIndex = 0; innerIndex < newMicList.length; innerIndex ++) {
+        // http返回来的数据为旧的，把旧数据删除
+        if(oldMikeList[oldMikeKeyList[index]]?.uid == newMicList[index].uid) {
+          oldMikeList.remove(oldMikeKeyList[index]);
+          debugPrint("删除旧麦位2：uid = ${newMicList[index].uid}");
+          break;
+        }
+      }
+    }
+    // 把新的数据加到列列中
+    newMicList.forEach((element) {
+      oldMikeList[element.mikeNo] = MicInfo(uid: element.uid ?? "",
+          micId: element.mikeId.toInt(), hotCount: element.number, isMute: false, nUid: element.roleId);
+    });
+    newMicList.clear();
+
+    bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, micInit: oldMikeList));
     bindGet(RoomAdminCtrl(roomId, managerRx));
   }
 
