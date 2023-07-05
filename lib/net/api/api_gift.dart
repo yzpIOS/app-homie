@@ -25,11 +25,15 @@ class ApiGift extends ApiBase {
     c_giveGiftByRoom.giftId = Int64(giftId);
     c_giveGiftByRoom.count = count;
 
-    return await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_GiveGiftByRoom,
-        datas: c_giveGiftByRoom.writeToBuffer(),
-        resCmd: CMD.S_GiveGiftByRoom
-    );
+    try {
+      return await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_GiveGiftByRoom,
+          datas: c_giveGiftByRoom.writeToBuffer(),
+          resCmd: CMD.S_GiveGiftByRoom
+      );
+    } catch(e) {
+      return null;
+    }
 
     // final data = {
     //   'room_id': roomId,
@@ -53,11 +57,15 @@ class ApiGift extends ApiBase {
     c_giveGiftByRoom.giftId = Int64(giftId);
     c_giveGiftByRoom.count = count;
 
-    return await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_GiveGiftByDynamic,
-        datas: c_giveGiftByRoom.writeToBuffer(),
-        resCmd: CMD.S_GiveGiftByDynamic
-    );
+    try {
+      return await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_GiveGiftByDynamic,
+          datas: c_giveGiftByRoom.writeToBuffer(),
+          resCmd: CMD.S_GiveGiftByDynamic
+      );
+    } catch(e) {
+      return null;
+    }
 
     // final data = <String, dynamic>{
     //   'dynamic_id': id,
