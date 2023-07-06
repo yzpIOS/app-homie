@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/exception.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
@@ -89,7 +91,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   void onReady() async {
     if (!Env.useUnity) {
       try {
-        await doOnReady(await Api.Room.joinRoom(roomId, pwd: pwd));
+        var jointResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+        if(jointResult == null || jointResult.code != ErrorCode.Ok) {
+          return;
+        }
+        var info = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+        await doOnReady(info);
         markReady();
       } catch (e, s) {
         markFail(e, s);
@@ -188,7 +195,15 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
             await doJoinGame();
           } else {
-            final info = await Api.Room.joinRoom(roomId, pwd: pwd);
+            final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+            if(joinResult == null || joinResult.code != ErrorCode.Ok) {
+              if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+                throw const LogicException(-1, "你被封禁了");
+              } else {
+                throw const LogicException(-1, "房间数据加载失败");
+              }
+            }
+            final info = await Api.Room.getRoomInfo(roomId, pwd: pwd);
             isNotClose();
 
             await doJoinGame();

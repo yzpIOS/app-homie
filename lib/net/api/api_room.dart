@@ -73,27 +73,22 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
-  Future joinRoom(int id, {String? pwd}) async {
+  Future<S_JoinScene?> joinRoom(int id, {String? pwd}) async {
+    // 发送加入房间的socket
+    C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
+    return await SocketCtrl.ins.sendByteAsyncServer(
+        CMD.C_JoinScene,
+        datas: c_joinScene.writeToBuffer(),
+        resCmd: CMD.S_JoinScene);
+  }
+
+  Future getRoomInfo(int id, {String? pwd}) {
     final data = {
       'room_id': id,
       'password': pwd,
     };
-
-    // 发送加入房间的socket
-    C_JoinScene c_joinScene = C_JoinScene(roomId: Int64(id), roomPassword: pwd ?? "");
-    S_JoinScene? result = await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_JoinScene,
-        datas: c_joinScene.writeToBuffer(),
-        resCmd: CMD.S_JoinScene);
-    // 进入房间不成功，返回
-    if(result == null || result.code != ErrorCode.Ok) {
-      Get.alertDialog('房间数据加载错误');
-      return;
-    }
     // 数据回来后
     return _doPost('join/init', data: data,);
-
-    return _doPost('join-room', data: data);
   }
 
   ///
