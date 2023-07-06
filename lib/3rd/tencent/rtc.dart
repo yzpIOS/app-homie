@@ -1,3 +1,4 @@
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud.dart';
@@ -121,7 +122,13 @@ class Rtc {
   static void _onRemoteUserLeaveRoom(args) {
     xlog('用户下麦 -> $args', type: LogType.RTC);
 
-    micRx(false);
+    if(args is Map) {
+      var userId = args["userId"];
+      if(OAuthCtrl.uid != userId) {
+        return;
+      }
+      micRx(false);
+    }
   }
 
   static void _onUserAudioAvailable(Map args) {
@@ -194,16 +201,16 @@ class Rtc {
     try {
       await Future.wait(
         [
-          // rtcClient.muteLocalAudio(!enable),
+          rtcClient.muteLocalAudio(!enable),
           if (enable) //
             rtcClient.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
           else
             rtcClient.stopLocalAudio(),
-          // rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
+          rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
         ],
       );
 
-      xlog(() => '麦克风状态设置为[$enable]', type: LogType.RTC);
+      xlog('麦克风状态设置为[$enable]', type: LogType.RTC);
     } catch (e, s) {
       errLog(e, s, type: LogType.RTC);
     }

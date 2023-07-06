@@ -68,7 +68,7 @@ const _visible = <LogType>{
   // LogType.EXECUTOR,
   // LogType.UNITY,
   // LogType.STOMP,
-  // LogType.RTC,
+  LogType.RTC,
   // LogType.GIFT_EFFECT,
   // LogType.GETX,
 };
