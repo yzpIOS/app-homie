@@ -9,6 +9,7 @@ import 'package:app/exception.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/my_gift_ctrl.dart';
+import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
@@ -62,14 +63,15 @@ abstract class GiftSendLogic {
     }
 
     void doMoneyChange() {
-      final type = MoneyType.fromVal(data['currency']);
-      assert(type != null, '数据错误 -> $data');
-
-      if (type != null) {
-        final amount = data['price'] * total;
-
-        MoneyChangeEvent({type: -amount}).fire();
-      }
+      // final type = MoneyType.fromVal(data['currency']);
+      // assert(type != null, '数据错误 -> $data');
+      //
+      // if (type != null) {
+      //   final amount = data['price'] * total;
+      //
+      //   MoneyChangeEvent({type: -amount}).fire();
+      // }
+      WalletCtrl.ins.doRefresh();
     }
 
     (data.containsKey('backpack_count') ? doBackpackChange : doMoneyChange).call();
