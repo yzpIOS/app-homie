@@ -120,7 +120,7 @@ class GiftSheet extends StatelessWidget {
   }
 
   Widget $Bnb() {
-    Widget $MoneyView() {
+    Widget moneyView() {
       Widget child = Row(
         children: [
           const MoneyIcon(type: MoneyType.diamond, size: 24),
@@ -187,7 +187,7 @@ class GiftSheet extends StatelessWidget {
         );
       }
 
-      Widget $SendView() {
+      Widget _sendView() {
         return OpacityButton(
           onTap: doSend,
           child: Box(
@@ -197,7 +197,7 @@ class GiftSheet extends StatelessWidget {
             alignment: Alignment.center,
             child: XText(
               '送出'.en(),
-              style: TextStyle(fontSize: 14, color: Colors.white),
+              style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
         );
@@ -210,7 +210,7 @@ class GiftSheet extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: Row(
-          children: [$NumView(), $SendView()],
+          children: [$NumView(), _sendView()],
         ),
       );
     }
@@ -221,7 +221,7 @@ class GiftSheet extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          $MoneyView(),
+          moneyView(),
           $BottomAction(),
         ],
       ),

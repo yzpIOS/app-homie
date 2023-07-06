@@ -48,7 +48,7 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
     }
     debugPrint("send size ${listGoods.length}");
     S_PushPreload payLoad = S_PushPreload(clothIds: listGoods);
-    SocketCtrl.ins.senByteUnity(CMD.C_PushPreload, datas: payLoad.writeToBuffer());
+    SocketCtrl.ins.senByteUnity(CMD.S_PushPreload, datas: payLoad.writeToBuffer());
     listGoods.clear();
   }
 
