@@ -7152,3 +7152,737 @@ class S_PushPreload extends $pb.GeneratedMessage {
   $core.List<$core.int> get clothIds => $_getList(0);
 }
 
+class C_UpdateRole extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_UpdateRole', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataBirth')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mediaId')
+    ..hasRequiredFields = false
+  ;
+
+  C_UpdateRole._() : super();
+  factory C_UpdateRole({
+    $core.String? username,
+    $core.String? description,
+    $fixnum.Int64? dataBirth,
+    $fixnum.Int64? mediaId,
+  }) {
+    final _result = create();
+    if (username != null) {
+      _result.username = username;
+    }
+    if (description != null) {
+      _result.description = description;
+    }
+    if (dataBirth != null) {
+      _result.dataBirth = dataBirth;
+    }
+    if (mediaId != null) {
+      _result.mediaId = mediaId;
+    }
+    return _result;
+  }
+  factory C_UpdateRole.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_UpdateRole.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_UpdateRole clone() => C_UpdateRole()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_UpdateRole copyWith(void Function(C_UpdateRole) updates) => super.copyWith((message) => updates(message as C_UpdateRole)) as C_UpdateRole; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_UpdateRole create() => C_UpdateRole._();
+  C_UpdateRole createEmptyInstance() => create();
+  static $pb.PbList<C_UpdateRole> createRepeated() => $pb.PbList<C_UpdateRole>();
+  @$core.pragma('dart2js:noInline')
+  static C_UpdateRole getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_UpdateRole>(create);
+  static C_UpdateRole? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get username => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set username($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUsername() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUsername() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get description => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set description($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDescription() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDescription() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get dataBirth => $_getI64(2);
+  @$pb.TagNumber(3)
+  set dataBirth($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDataBirth() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDataBirth() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get mediaId => $_getI64(3);
+  @$pb.TagNumber(4)
+  set mediaId($fixnum.Int64 v) { $_setInt64(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMediaId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMediaId() => clearField(4);
+}
+
+class S_UpdateRole extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateRole', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  S_UpdateRole._() : super();
+  factory S_UpdateRole() => create();
+  factory S_UpdateRole.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateRole.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateRole clone() => S_UpdateRole()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateRole copyWith(void Function(S_UpdateRole) updates) => super.copyWith((message) => updates(message as S_UpdateRole)) as S_UpdateRole; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateRole create() => S_UpdateRole._();
+  S_UpdateRole createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateRole> createRepeated() => $pb.PbList<S_UpdateRole>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateRole getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateRole>(create);
+  static S_UpdateRole? _defaultInstance;
+}
+
+class S_UpdateRoleBroadcast extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateRoleBroadcast', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'description')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dataBirth')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl')
+    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarExtra')
+    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..hasRequiredFields = false
+  ;
+
+  S_UpdateRoleBroadcast._() : super();
+  factory S_UpdateRoleBroadcast({
+    $fixnum.Int64? roleId,
+    $core.String? username,
+    $core.String? description,
+    $fixnum.Int64? dataBirth,
+    $core.String? avatarUrl,
+    $core.String? avatarExtra,
+    $core.String? uid,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (username != null) {
+      _result.username = username;
+    }
+    if (description != null) {
+      _result.description = description;
+    }
+    if (dataBirth != null) {
+      _result.dataBirth = dataBirth;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (avatarExtra != null) {
+      _result.avatarExtra = avatarExtra;
+    }
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    return _result;
+  }
+  factory S_UpdateRoleBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateRoleBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateRoleBroadcast clone() => S_UpdateRoleBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateRoleBroadcast copyWith(void Function(S_UpdateRoleBroadcast) updates) => super.copyWith((message) => updates(message as S_UpdateRoleBroadcast)) as S_UpdateRoleBroadcast; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateRoleBroadcast create() => S_UpdateRoleBroadcast._();
+  S_UpdateRoleBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateRoleBroadcast> createRepeated() => $pb.PbList<S_UpdateRoleBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateRoleBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateRoleBroadcast>(create);
+  static S_UpdateRoleBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get username => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set username($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUsername() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUsername() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get description => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set description($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDescription() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDescription() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get dataBirth => $_getI64(3);
+  @$pb.TagNumber(4)
+  set dataBirth($fixnum.Int64 v) { $_setInt64(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasDataBirth() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearDataBirth() => clearField(4);
+
+  @$pb.TagNumber(8)
+  $core.String get avatarUrl => $_getSZ(4);
+  @$pb.TagNumber(8)
+  set avatarUrl($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasAvatarUrl() => $_has(4);
+  @$pb.TagNumber(8)
+  void clearAvatarUrl() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.String get avatarExtra => $_getSZ(5);
+  @$pb.TagNumber(9)
+  set avatarExtra($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasAvatarExtra() => $_has(5);
+  @$pb.TagNumber(9)
+  void clearAvatarExtra() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get uid => $_getSZ(6);
+  @$pb.TagNumber(10)
+  set uid($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasUid() => $_has(6);
+  @$pb.TagNumber(10)
+  void clearUid() => clearField(10);
+}
+
+class C_SaveUserCurrentDressUp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_SaveUserCurrentDressUp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..p<$fixnum.Int64>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'productIdList', $pb.PbFieldType.K6)
+    ..hasRequiredFields = false
+  ;
+
+  C_SaveUserCurrentDressUp._() : super();
+  factory C_SaveUserCurrentDressUp({
+    $core.Iterable<$fixnum.Int64>? productIdList,
+  }) {
+    final _result = create();
+    if (productIdList != null) {
+      _result.productIdList.addAll(productIdList);
+    }
+    return _result;
+  }
+  factory C_SaveUserCurrentDressUp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_SaveUserCurrentDressUp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_SaveUserCurrentDressUp clone() => C_SaveUserCurrentDressUp()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_SaveUserCurrentDressUp copyWith(void Function(C_SaveUserCurrentDressUp) updates) => super.copyWith((message) => updates(message as C_SaveUserCurrentDressUp)) as C_SaveUserCurrentDressUp; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static C_SaveUserCurrentDressUp create() => C_SaveUserCurrentDressUp._();
+  C_SaveUserCurrentDressUp createEmptyInstance() => create();
+  static $pb.PbList<C_SaveUserCurrentDressUp> createRepeated() => $pb.PbList<C_SaveUserCurrentDressUp>();
+  @$core.pragma('dart2js:noInline')
+  static C_SaveUserCurrentDressUp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_SaveUserCurrentDressUp>(create);
+  static C_SaveUserCurrentDressUp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$fixnum.Int64> get productIdList => $_getList(0);
+}
+
+class S_LabelItem extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_LabelItem', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'icon')
+    ..hasRequiredFields = false
+  ;
+
+  S_LabelItem._() : super();
+  factory S_LabelItem({
+    $core.String? name,
+    $core.String? icon,
+  }) {
+    final _result = create();
+    if (name != null) {
+      _result.name = name;
+    }
+    if (icon != null) {
+      _result.icon = icon;
+    }
+    return _result;
+  }
+  factory S_LabelItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_LabelItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_LabelItem clone() => S_LabelItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_LabelItem copyWith(void Function(S_LabelItem) updates) => super.copyWith((message) => updates(message as S_LabelItem)) as S_LabelItem; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_LabelItem create() => S_LabelItem._();
+  S_LabelItem createEmptyInstance() => create();
+  static $pb.PbList<S_LabelItem> createRepeated() => $pb.PbList<S_LabelItem>();
+  @$core.pragma('dart2js:noInline')
+  static S_LabelItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_LabelItem>(create);
+  static S_LabelItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get icon => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set icon($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasIcon() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearIcon() => clearField(2);
+}
+
+class S_ProductItem extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_ProductItem', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'productNo')
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'categoryId')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'image')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'price')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currency', $pb.PbFieldType.O3)
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.O3)
+    ..aInt64(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'createdAt')
+    ..aInt64(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'updatedAt')
+    ..aInt64(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sellAt')
+    ..a<$core.int>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gender', $pb.PbFieldType.O3)
+    ..aOS(13, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'extra')
+    ..p<$fixnum.Int64>(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'productPositionIdList', $pb.PbFieldType.K6)
+    ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'modelId')
+    ..aOB(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initDressUp')
+    ..pc<S_LabelItem>(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'labelList', $pb.PbFieldType.PM, subBuilder: S_LabelItem.create)
+    ..aOS(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateName')
+    ..hasRequiredFields = false
+  ;
+
+  S_ProductItem._() : super();
+  factory S_ProductItem({
+    $fixnum.Int64? id,
+    $fixnum.Int64? productNo,
+    $fixnum.Int64? categoryId,
+    $core.String? name,
+    $core.String? image,
+    $fixnum.Int64? price,
+    $core.int? currency,
+    $core.int? status,
+    $fixnum.Int64? createdAt,
+    $fixnum.Int64? updatedAt,
+    $fixnum.Int64? sellAt,
+    $core.int? gender,
+    $core.String? extra,
+    $core.Iterable<$fixnum.Int64>? productPositionIdList,
+    $core.String? modelId,
+    $core.bool? initDressUp,
+    $core.Iterable<S_LabelItem>? labelList,
+    $core.String? stateName,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (productNo != null) {
+      _result.productNo = productNo;
+    }
+    if (categoryId != null) {
+      _result.categoryId = categoryId;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (image != null) {
+      _result.image = image;
+    }
+    if (price != null) {
+      _result.price = price;
+    }
+    if (currency != null) {
+      _result.currency = currency;
+    }
+    if (status != null) {
+      _result.status = status;
+    }
+    if (createdAt != null) {
+      _result.createdAt = createdAt;
+    }
+    if (updatedAt != null) {
+      _result.updatedAt = updatedAt;
+    }
+    if (sellAt != null) {
+      _result.sellAt = sellAt;
+    }
+    if (gender != null) {
+      _result.gender = gender;
+    }
+    if (extra != null) {
+      _result.extra = extra;
+    }
+    if (productPositionIdList != null) {
+      _result.productPositionIdList.addAll(productPositionIdList);
+    }
+    if (modelId != null) {
+      _result.modelId = modelId;
+    }
+    if (initDressUp != null) {
+      _result.initDressUp = initDressUp;
+    }
+    if (labelList != null) {
+      _result.labelList.addAll(labelList);
+    }
+    if (stateName != null) {
+      _result.stateName = stateName;
+    }
+    return _result;
+  }
+  factory S_ProductItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_ProductItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_ProductItem clone() => S_ProductItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_ProductItem copyWith(void Function(S_ProductItem) updates) => super.copyWith((message) => updates(message as S_ProductItem)) as S_ProductItem; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_ProductItem create() => S_ProductItem._();
+  S_ProductItem createEmptyInstance() => create();
+  static $pb.PbList<S_ProductItem> createRepeated() => $pb.PbList<S_ProductItem>();
+  @$core.pragma('dart2js:noInline')
+  static S_ProductItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_ProductItem>(create);
+  static S_ProductItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get id => $_getI64(0);
+  @$pb.TagNumber(1)
+  set id($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get productNo => $_getI64(1);
+  @$pb.TagNumber(2)
+  set productNo($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProductNo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearProductNo() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get categoryId => $_getI64(2);
+  @$pb.TagNumber(3)
+  set categoryId($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCategoryId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCategoryId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get name => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set name($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasName() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearName() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get image => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set image($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasImage() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearImage() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get price => $_getI64(5);
+  @$pb.TagNumber(6)
+  set price($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPrice() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPrice() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get currency => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set currency($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasCurrency() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCurrency() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get status => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set status($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasStatus() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearStatus() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get createdAt => $_getI64(8);
+  @$pb.TagNumber(9)
+  set createdAt($fixnum.Int64 v) { $_setInt64(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasCreatedAt() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearCreatedAt() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $fixnum.Int64 get updatedAt => $_getI64(9);
+  @$pb.TagNumber(10)
+  set updatedAt($fixnum.Int64 v) { $_setInt64(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasUpdatedAt() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearUpdatedAt() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $fixnum.Int64 get sellAt => $_getI64(10);
+  @$pb.TagNumber(11)
+  set sellAt($fixnum.Int64 v) { $_setInt64(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasSellAt() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearSellAt() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get gender => $_getIZ(11);
+  @$pb.TagNumber(12)
+  set gender($core.int v) { $_setSignedInt32(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasGender() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearGender() => clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.String get extra => $_getSZ(12);
+  @$pb.TagNumber(13)
+  set extra($core.String v) { $_setString(12, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasExtra() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearExtra() => clearField(13);
+
+  @$pb.TagNumber(14)
+  $core.List<$fixnum.Int64> get productPositionIdList => $_getList(13);
+
+  @$pb.TagNumber(15)
+  $core.String get modelId => $_getSZ(14);
+  @$pb.TagNumber(15)
+  set modelId($core.String v) { $_setString(14, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasModelId() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearModelId() => clearField(15);
+
+  @$pb.TagNumber(16)
+  $core.bool get initDressUp => $_getBF(15);
+  @$pb.TagNumber(16)
+  set initDressUp($core.bool v) { $_setBool(15, v); }
+  @$pb.TagNumber(16)
+  $core.bool hasInitDressUp() => $_has(15);
+  @$pb.TagNumber(16)
+  void clearInitDressUp() => clearField(16);
+
+  @$pb.TagNumber(17)
+  $core.List<S_LabelItem> get labelList => $_getList(16);
+
+  @$pb.TagNumber(18)
+  $core.String get stateName => $_getSZ(17);
+  @$pb.TagNumber(18)
+  set stateName($core.String v) { $_setString(17, v); }
+  @$pb.TagNumber(18)
+  $core.bool hasStateName() => $_has(17);
+  @$pb.TagNumber(18)
+  void clearStateName() => clearField(18);
+}
+
+class S_SaveUserCurrentDressUp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_SaveUserCurrentDressUp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<S_ProductItem>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'items', $pb.PbFieldType.PM, subBuilder: S_ProductItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  S_SaveUserCurrentDressUp._() : super();
+  factory S_SaveUserCurrentDressUp({
+    $core.Iterable<S_ProductItem>? items,
+  }) {
+    final _result = create();
+    if (items != null) {
+      _result.items.addAll(items);
+    }
+    return _result;
+  }
+  factory S_SaveUserCurrentDressUp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_SaveUserCurrentDressUp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_SaveUserCurrentDressUp clone() => S_SaveUserCurrentDressUp()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_SaveUserCurrentDressUp copyWith(void Function(S_SaveUserCurrentDressUp) updates) => super.copyWith((message) => updates(message as S_SaveUserCurrentDressUp)) as S_SaveUserCurrentDressUp; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_SaveUserCurrentDressUp create() => S_SaveUserCurrentDressUp._();
+  S_SaveUserCurrentDressUp createEmptyInstance() => create();
+  static $pb.PbList<S_SaveUserCurrentDressUp> createRepeated() => $pb.PbList<S_SaveUserCurrentDressUp>();
+  @$core.pragma('dart2js:noInline')
+  static S_SaveUserCurrentDressUp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_SaveUserCurrentDressUp>(create);
+  static S_SaveUserCurrentDressUp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<S_ProductItem> get items => $_getList(0);
+}
+
+class S_UpdateDressUp extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_UpdateDressUp', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..p<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'productIdList', $pb.PbFieldType.K6)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..hasRequiredFields = false
+  ;
+
+  S_UpdateDressUp._() : super();
+  factory S_UpdateDressUp({
+    $fixnum.Int64? roleId,
+    $core.Iterable<$fixnum.Int64>? productIdList,
+    $core.String? uid,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (productIdList != null) {
+      _result.productIdList.addAll(productIdList);
+    }
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    return _result;
+  }
+  factory S_UpdateDressUp.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateDressUp.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateDressUp clone() => S_UpdateDressUp()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateDressUp copyWith(void Function(S_UpdateDressUp) updates) => super.copyWith((message) => updates(message as S_UpdateDressUp)) as S_UpdateDressUp; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateDressUp create() => S_UpdateDressUp._();
+  S_UpdateDressUp createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateDressUp> createRepeated() => $pb.PbList<S_UpdateDressUp>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateDressUp getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateDressUp>(create);
+  static S_UpdateDressUp? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$fixnum.Int64> get productIdList => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+}
+

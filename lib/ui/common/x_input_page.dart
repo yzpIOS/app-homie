@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class XInputPage extends StatefulWidget {
+
   final InputCfg cfg;
 
   const XInputPage._(this.cfg);
@@ -80,6 +81,7 @@ class _XInputPageState extends State<XInputPage> {
   }
 
   onSub([_]) async {
+    cfg.flag = true;
     final txt = ctrl.text.trim();
 
     final errMsg = cfg.validator?.call(txt);
@@ -102,6 +104,9 @@ class InputCfg {
   final List<TextInputFormatter>? formatter;
   final String? Function(String)? validator;
   final emptyCallBack;
+
+  // 用于标记是否是点了确认按钮
+  bool? flag = false;
 
   InputCfg({
     required this.title,

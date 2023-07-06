@@ -2,13 +2,15 @@
 class CMD {
   static const S_Err = 4;//错误码
 
+  static const C_UpdateRole = 124; // 更新角色数据
+  static const S_UpdateRole = 125; // 更新角色数据响应
+
   // ==== 大厅相关 ====
   static const C_GoToRoom = 300; //靠近建筑后，请求播放直播间语音
   static const S_GoToRoom = 301; //下发直播间相关信息
 
   static const C_InFreeMikesArea =304; //发送进入自由组麦区域=======对接完成
   static const S_InFreeMikesArea =305; //下发进入自由组麦区域=======对接完成
-
 
   // 创建房间场景
   static const C_CreateScene = 2100; // 创建房间场景=======对接完成
@@ -83,7 +85,8 @@ class CMD {
   static const S_GiveGiftByIm = 3110; // 聊天赠送礼物返回值
 
 
-
+  static const C_SaveUserCurrentDressUp = 4100; // 保存用户当前装扮
+  static const S_SaveUserCurrentDressUp = 4101; // 保存用户当前装扮响应
 
 
   static const C_Role = 103;//请求角色

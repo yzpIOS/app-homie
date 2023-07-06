@@ -16,7 +16,20 @@ class ApiDressUp extends ApiBase {
     return _doPost('warehouse/query', data: page + data);
   }
 
-  Future save({required List<int> ids}) {
+  ///
+  /// 商城穿衣保存
+  ///
+  Future<S_SaveUserCurrentDressUp?> save({required List<int> ids}) {
+    // 保存
+    C_SaveUserCurrentDressUp c_saveUserCurrentDressUp =
+      C_SaveUserCurrentDressUp(productIdList: ids.map((e) => Int64(e)));
+
+    return SocketCtrl.ins.sendByteAsyncServer(
+      CMD.C_SaveUserCurrentDressUp,
+      datas: c_saveUserCurrentDressUp.writeToBuffer(),
+      resCmd: CMD.S_SaveUserCurrentDressUp
+    );
+
     final data = {
       'product_id_list': ids,
     };

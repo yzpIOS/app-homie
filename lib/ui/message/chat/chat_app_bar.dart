@@ -81,7 +81,11 @@ class ChatAppBar$User extends _AppBar {
             )
           : OpacityButton(
               onTap: () {
-                XInputPage.go(InputCfg(title: '修改备注', emptyCallBack: true)).onType<String?>((name) async {
+                var config = InputCfg(title: '修改备注', emptyCallBack: true);
+                XInputPage.go(config).onType<String?>((name) async {
+                  if(config.flag == false) {
+                    return;
+                  }
                   if(name == null || name.isEmpty == true) {
                     var userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
                     name = userInfo?.nickName;

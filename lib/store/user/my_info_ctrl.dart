@@ -138,15 +138,18 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     );
   }
 
-  void updateNick(String data) async {
+  ///
+  /// 更新用户名
+  ///
+  void updateNick(String nickName) async {
     simpleSub(
-      Api.UserInfo.setInfo(nickName: data),
+      Api.UserInfo.setInfo2(nickName),
       callback: () {
-        dataRx.rebuild((val) => val.copyWith(nickName: data));
+        dataRx.rebuild((val) => val.copyWith(nickName: nickName));
 
         UserInfoCtrl.doUpdate(
           uid,
-          rebuild: (val) => val.copyWith(nickName: data),
+          rebuild: (val) => val.copyWith(nickName: nickName),
         );
 
         _saveToBox();

@@ -56,6 +56,19 @@ class ApiUserInfo extends ApiBase {
     return _doPost('update', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }
 
+  Future setInfo2(String? nickName) {
+    if(nickName == null) {
+      return Future.value(null);
+    }
+    C_UpdateRole c_updateRole = C_UpdateRole();
+    c_updateRole.username = nickName;
+    return SocketCtrl.ins.sendByteAsyncServer(
+      CMD.C_UpdateRole,
+      datas: c_updateRole.writeToBuffer(),
+      resCmd: CMD.S_UpdateRole
+    );
+  }
+
   Future follow({required UID uid, required bool doFollow}) {
     final data = <String, dynamic>{
       'follow_uid': uid,
