@@ -1,6 +1,7 @@
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
@@ -151,7 +152,7 @@ class _MiniView extends RoomGetView<RoomCtrl> implements PreferredSizeWidget {
   void doClose() async {
     final close = Get.find<RoomManagerCtrl>().doCloseState;
 
-    if (controller.getRole(OAuthCtrl.uid).isOwner) {
+    if (controller.roomType != RoomType.guild && controller.getRole(OAuthCtrl.uid).isOwner) {
       Future api() async {
         try {
           await Api.Room.close();
