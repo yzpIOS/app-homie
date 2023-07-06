@@ -48,7 +48,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   List<S_UpMikeBroadcast> newMicList = [];
 
-  final int roomId;
+  int roomId = 0;
   final String roomUid;
   final RoomType roomType;
 
@@ -114,6 +114,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     SocketCtrl.ins.removeDisconnect(onDisconnect);
     newMicList.clear();
     super.onClose();
+    roomId = 0;
   }
 
   @mustCallSuper

@@ -72,7 +72,7 @@ class SuperGiftView extends StatelessWidget {
           top: 6,
           right: 0,
           left: 300,
-          child: $ToRoomView(),
+          child: toRoomView(),
         ),
       ],
     );
@@ -92,7 +92,14 @@ class SuperGiftView extends StatelessWidget {
     );
   }
 
-  Widget $ToRoomView() {
+  Widget toRoomView() {
+    // 当前直播间，不显示去围观
+    try {
+      if(RoomManagerCtrl.ins.sceneCtrl.roomId == data.roomId.toInt()) {
+        return const SizedBox();
+      }
+    } catch(e) {
+    }
     Widget child = Image.asset(IMG.$('room/围观'), width: 35, height: 20, scale: 3);
 
     child = Box(
