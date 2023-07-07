@@ -1,9 +1,12 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/model/local_attach.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
+import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -86,8 +89,20 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
         Get.find<RoomManagerCtrl>().toRoom(roomId: data['room_id'], off: true);
         break;
       case '下播':
+        // 关闭函数
+        Function closeFunc;
+        // 房间
+        RoomCtrl? roomCtrl = RoomManagerCtrl.ins.sceneCtrl as RoomCtrl?;
+        // 如果是
+        if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
+          // 不是公会，并且用户所在的房间是主人房
+          closeFunc = Api.Room.close;
+        } else {
+          // 房间manager
+          closeFunc = Get.find<RoomManagerCtrl>().doCloseState;
+        }
         simpleSub(
-          Api.Room.close(),
+          closeFunc.call(),
           msg: '操作成功',
           whenErr: doBackWhenErr,
           callback: () => _initData(data),
