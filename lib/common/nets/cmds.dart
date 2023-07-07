@@ -13,6 +13,9 @@ class CMD {
   static const S_InFreeMikesArea =305; //下发进入自由组麦区域=======对接完成
 
   // 创建房间场景
+  static const C_RoomEnterComplete = 2000; // 房间加载完成后通知后端可以同步信息，同步初始化信息到 S_SyncRoomInfo
+  static const S_SyncRoomInfo = 2001; 			// 同步房间初始化信息数据
+
   static const C_CreateScene = 2100; // 创建房间场景=======对接完成
   static const S_CreateScene = 2101; // 返回创建房间场景结果=======对接完成
 

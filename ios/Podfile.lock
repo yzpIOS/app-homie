@@ -258,7 +258,7 @@ SPEC CHECKSUMS:
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
-  f_unity: 73762be1c1625dce615bed76acb1f9a900b6866a
+  f_unity: 725a49c8f926d6739da3715cb853d815a9df9a84
   ffmpeg-kit-ios-https: 8dffbe1623a2f227be98fc314294847a97f818e4
   ffmpeg_kit_flutter: 17e9f35a4ec996ac55051c20be05240f2a0b53e8
   file_picker: ce3938a0df3cc1ef404671531facef740d03f920
@@ -301,6 +301,6 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
   wechat_kit: 72ef5bc9da4a5f40a95f6dab060763d6b7071137
 
-PODFILE CHECKSUM: f1707b35109de2457b7dd3c51b8c5de5220270ea
+PODFILE CHECKSUM: 16bb13b57442a74762b5010ee9fa082d34128898
 
 COCOAPODS: 1.11.3

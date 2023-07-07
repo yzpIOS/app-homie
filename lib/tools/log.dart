@@ -66,7 +66,7 @@ const _visible = <LogType>{
   // LogType.ASYNC_CTRL,
   // LogType.SIMPLE_TRY,
   // LogType.EXECUTOR,
-  // LogType.UNITY,
+  LogType.UNITY,
   // LogType.STOMP,
   LogType.RTC,
   // LogType.GIFT_EFFECT,

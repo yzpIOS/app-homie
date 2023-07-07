@@ -6,7 +6,7 @@ abstract class Env {
   static const isDebugCfg = bool.fromEnvironment('is_debug', defaultValue: isDebug);
 
   static const channelCode = String.fromEnvironment('channelCode', defaultValue: 'app'); //渠道号
-  static const useUnity = bool.fromEnvironment('use_unity', defaultValue: kReleaseMode);
+  static const useUnity = true;
 
   static final apiUrl = Uri.parse(const String.fromEnvironment('api_url'));
   static final apiImgUrl = Uri.parse(const String.fromEnvironment('api_img_url'));

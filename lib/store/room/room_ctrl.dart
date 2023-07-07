@@ -210,6 +210,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             await doJoinGame();
             isNotClose();
 
+            // 等待unity发来UTF_INIT_START事件
+            // await unity.ready;
+
             await doOnReady(info);
             isNotClose();
 

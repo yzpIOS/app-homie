@@ -55,6 +55,7 @@ app.*.map.json
 
 /unity/
 /ios/UnityLibrary/
+/ios/unityLibrary_BurstDebugInformation_DoNotShip/
 
 /android/deploy
 /plugin/f_unity/android/unityLibrary/
