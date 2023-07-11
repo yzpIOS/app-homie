@@ -6,8 +6,13 @@ import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/im/im_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+
+import 'room_mic_ctrl.dart';
 
 class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   late final _myUid = OAuthCtrl.uid;
@@ -39,12 +44,18 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     });
   }
 
+  bool _nativeValue = false;
   ///
   /// 加入到房间
   ///
   void goToRoom(int cmd, S_GoToRoom? data) {
     if(data == null) {
       return;
+    }
+    SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
+    if(roomCtrl is SquareCtrl) {
+      _nativeValue = roomCtrl.manInHallNearByRoom.value;
+      roomCtrl.manInHallNearByRoom.value = true;
     }
     joinRoom(roomId: data.roomId.toInt().toString());
   }
@@ -56,6 +67,13 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     if(data == null) {
       return;
     }
+
+    // 设置自由组麦
+    SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
+    if(roomCtrl is SquareCtrl) {
+      roomCtrl.manInHallNearByRoom.value = _nativeValue;
+    }
+
     leaveRoom();
     S_GoAwayRoom s_goAwayRoom = S_GoAwayRoom(buildingId: data.buildingId);
     SocketCtrl.ins.sendUnity(CMD.S_GoAwayRoom, message: s_goAwayRoom);

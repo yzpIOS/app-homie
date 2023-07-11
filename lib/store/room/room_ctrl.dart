@@ -48,7 +48,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   Map? roomHttpInfo = null;
 
-
   List<S_UpMikeBroadcast> newMicList = [];
 
   int roomId = 0;
@@ -260,9 +259,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 class RoomCtrl extends SceneCtrl {
   final int maxMic;
   final int maxUser;
-  RxBool freeMicRx = RxBool(true);
   RxBool examineMicRx = RxBool(false);
   RxSet<String> managerRx = RxSet();
+
+  // 大厅房间不能自收组麦，只能是普通房间
+  // 由于在大厅
+  RxBool freeMicRx = RxBool(false);
 
   RxBool followRx = RxBool(false);
   RxInt userCountRx = RxInt(0);
@@ -380,6 +382,9 @@ class RoomCtrl extends SceneCtrl {
 }
 
 class SquareCtrl extends SceneCtrl {
+  // 大厅中的人是否接口了其它的房间
+  RxBool manInHallNearByRoom = RxBool(false);
+
   SquareCtrl({required super.info, required super.pwd, required super.overlay})
       : assert(info['room_type'] == RoomType.square.code);
 
