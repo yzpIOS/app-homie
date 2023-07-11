@@ -1,4 +1,5 @@
 import 'package:app/3rd/tencent/rtc.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/room_state.dart';
@@ -12,13 +13,12 @@ import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 
 class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
-  final int roomId;
-  final int maxMic;
-  final RoomType roomType;
-  final RxMap<String, MicInfo> dataRx;
+  int roomId;
+  int maxMic;
+  RoomType roomType;
+  RxMap<String, MicInfo> dataRx = RxMap();
 
-  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required Map<String, MicInfo> micInit})
-      : dataRx = RxMap(micInit);
+  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType});
 
   final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
@@ -321,6 +321,21 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
             isMute: item['open_status'] == 2,
           ),
     };
+  }
+
+  static Map<String, MicInfo> createMicInfo(List<MikeInfo> mikeInfos) {
+    var map = <String, MicInfo>{};
+    for(var index = 0; index < mikeInfos.length; index ++) {
+      var mikeInfo = mikeInfos[index];
+      map[mikeInfo.mikeNo] = MicInfo(
+        uid: mikeInfo.uid,
+        nUid: mikeInfo.roleId,
+        micId: mikeInfo.mikeId.toInt(),
+        hotCount: mikeInfo.number.toInt(),
+        isMute: mikeInfo.isFrozen,
+      );
+    }
+    return map;
   }
 }
 

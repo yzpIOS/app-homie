@@ -1102,3 +1102,251 @@ class RoleData extends $pb.GeneratedMessage {
   StateInfo ensureStateInfo() => $_ensure(3);
 }
 
+class UserInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'adminType', $pb.PbFieldType.O3)
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level')
+    ..hasRequiredFields = false
+  ;
+
+  UserInfo._() : super();
+  factory UserInfo({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $core.String? username,
+    $core.String? avatarUrl,
+    $core.int? type,
+    $core.int? adminType,
+    $core.String? level,
+  }) {
+    final _result = create();
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (username != null) {
+      _result.username = username;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (adminType != null) {
+      _result.adminType = adminType;
+    }
+    if (level != null) {
+      _result.level = level;
+    }
+    return _result;
+  }
+  factory UserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserInfo clone() => UserInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserInfo copyWith(void Function(UserInfo) updates) => super.copyWith((message) => updates(message as UserInfo)) as UserInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserInfo create() => UserInfo._();
+  UserInfo createEmptyInstance() => create();
+  static $pb.PbList<UserInfo> createRepeated() => $pb.PbList<UserInfo>();
+  @$core.pragma('dart2js:noInline')
+  static UserInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserInfo>(create);
+  static UserInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roleId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoleId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoleId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get username => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set username($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUsername() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUsername() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get avatarUrl => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set avatarUrl($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAvatarUrl() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAvatarUrl() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get type => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set type($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasType() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearType() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get adminType => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set adminType($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasAdminType() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearAdminType() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get level => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set level($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasLevel() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearLevel() => clearField(7);
+}
+
+class MikeInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MikeInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aInt64(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'number')
+    ..hasRequiredFields = false
+  ;
+
+  MikeInfo._() : super();
+  factory MikeInfo({
+    $fixnum.Int64? roomId,
+    $fixnum.Int64? mikeId,
+    $core.String? mikeNo,
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? number,
+  }) {
+    final _result = create();
+    if (roomId != null) {
+      _result.roomId = roomId;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
+    }
+    if (mikeNo != null) {
+      _result.mikeNo = mikeNo;
+    }
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (number != null) {
+      _result.number = number;
+    }
+    return _result;
+  }
+  factory MikeInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MikeInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MikeInfo clone() => MikeInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MikeInfo copyWith(void Function(MikeInfo) updates) => super.copyWith((message) => updates(message as MikeInfo)) as MikeInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MikeInfo create() => MikeInfo._();
+  MikeInfo createEmptyInstance() => create();
+  static $pb.PbList<MikeInfo> createRepeated() => $pb.PbList<MikeInfo>();
+  @$core.pragma('dart2js:noInline')
+  static MikeInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MikeInfo>(create);
+  static MikeInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get mikeId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set mikeId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMikeId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMikeId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get mikeNo => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set mikeNo($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMikeNo() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMikeNo() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get uid => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set uid($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUid() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUid() => clearField(4);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get roleId => $_getI64(4);
+  @$pb.TagNumber(6)
+  set roleId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasRoleId() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearRoleId() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get number => $_getI64(5);
+  @$pb.TagNumber(7)
+  set number($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasNumber() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearNumber() => clearField(7);
+}
+

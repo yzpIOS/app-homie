@@ -41,11 +41,12 @@ const State$json = const {
   '2': const [
     const {'1': 'None', '2': 0},
     const {'1': 'Mai', '2': 1},
+    const {'1': 'Sit', '2': 2},
   ],
 };
 
 /// Descriptor for `State`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List stateDescriptor = $convert.base64Decode('CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAE=');
+final $typed_data.Uint8List stateDescriptor = $convert.base64Decode('CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAI=');
 @$core.Deprecated('Use attrVODescriptor instead')
 const AttrVO$json = const {
   '1': 'AttrVO',
@@ -216,3 +217,34 @@ const RoleData$json = const {
 
 /// Descriptor for `RoleData`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode('CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSNQoIYXR0ckluZm8YAiABKAsyGS5jb20uc2F2dnkucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+@$core.Deprecated('Use userInfoDescriptor instead')
+const UserInfo$json = const {
+  '1': 'UserInfo',
+  '2': const [
+    const {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'username', '3': 3, '4': 1, '5': 9, '10': 'username'},
+    const {'1': 'avatar_url', '3': 4, '4': 1, '5': 9, '10': 'avatarUrl'},
+    const {'1': 'type', '3': 5, '4': 1, '5': 5, '10': 'type'},
+    const {'1': 'admin_type', '3': 6, '4': 1, '5': 5, '10': 'adminType'},
+    const {'1': 'level', '3': 7, '4': 1, '5': 9, '10': 'level'},
+  ],
+};
+
+/// Descriptor for `UserInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List userInfoDescriptor = $convert.base64Decode('CghVc2VySW5mbxIQCgN1aWQYASABKAlSA3VpZBIXCgdyb2xlX2lkGAIgASgDUgZyb2xlSWQSGgoIdXNlcm5hbWUYAyABKAlSCHVzZXJuYW1lEh0KCmF2YXRhcl91cmwYBCABKAlSCWF2YXRhclVybBISCgR0eXBlGAUgASgFUgR0eXBlEh0KCmFkbWluX3R5cGUYBiABKAVSCWFkbWluVHlwZRIUCgVsZXZlbBgHIAEoCVIFbGV2ZWw=');
+@$core.Deprecated('Use mikeInfoDescriptor instead')
+const MikeInfo$json = const {
+  '1': 'MikeInfo',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    const {'1': 'mike_id', '3': 2, '4': 1, '5': 3, '10': 'mikeId'},
+    const {'1': 'mike_no', '3': 3, '4': 1, '5': 9, '10': 'mikeNo'},
+    const {'1': 'uid', '3': 4, '4': 1, '5': 9, '10': 'uid'},
+    const {'1': 'role_id', '3': 6, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'number', '3': 7, '4': 1, '5': 3, '10': 'number'},
+  ],
+};
+
+/// Descriptor for `MikeInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List mikeInfoDescriptor = $convert.base64Decode('CghNaWtlSW5mbxIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHbWlrZV9pZBgCIAEoA1IGbWlrZUlkEhcKB21pa2Vfbm8YAyABKAlSBm1pa2VObxIQCgN1aWQYBCABKAlSA3VpZBIXCgdyb2xlX2lkGAYgASgDUgZyb2xlSWQSFgoGbnVtYmVyGAcgASgDUgZudW1iZXI=');

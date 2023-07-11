@@ -59,10 +59,12 @@ class AttrCode extends $pb.ProtobufEnum {
 class State extends $pb.ProtobufEnum {
   static const State None = State._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
   static const State Mai = State._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Mai');
+  static const State Sit = State._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sit');
 
   static const $core.List<State> values = <State> [
     None,
     Mai,
+    Sit,
   ];
 
   static final $core.Map<$core.int, State> _byValue = $pb.ProtobufEnum.initByValue(values);

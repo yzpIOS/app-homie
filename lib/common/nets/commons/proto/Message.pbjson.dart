@@ -183,6 +183,27 @@ const C_ReLink$json = const {
 
 /// Descriptor for `C_ReLink`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_ReLinkDescriptor = $convert.base64Decode('CghDX1JlTGluaxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgR0aW1lGAIgASgDUgR0aW1lEhQKBXRva2VuGAMgASgJUgV0b2tlbg==');
+@$core.Deprecated('Use c_RoomEnterCompleteDescriptor instead')
+const C_RoomEnterComplete$json = const {
+  '1': 'C_RoomEnterComplete',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+  ],
+};
+
+/// Descriptor for `C_RoomEnterComplete`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_RoomEnterCompleteDescriptor = $convert.base64Decode('ChNDX1Jvb21FbnRlckNvbXBsZXRlEhcKB3Jvb21faWQYASABKANSBnJvb21JZA==');
+@$core.Deprecated('Use s_SyncRoomInfoDescriptor instead')
+const S_SyncRoomInfo$json = const {
+  '1': 'S_SyncRoomInfo',
+  '2': const [
+    const {'1': 'online_list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.UserInfo', '10': 'onlineList'},
+    const {'1': 'mikes', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.MikeInfo', '10': 'mikes'},
+  ],
+};
+
+/// Descriptor for `S_SyncRoomInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_SyncRoomInfoDescriptor = $convert.base64Decode('Cg5TX1N5bmNSb29tSW5mbxI6CgtvbmxpbmVfbGlzdBgBIAMoCzIZLmNvbS5zYXZ2eS5wcm90by5Vc2VySW5mb1IKb25saW5lTGlzdBIvCgVtaWtlcxgCIAMoCzIZLmNvbS5zYXZ2eS5wcm90by5NaWtlSW5mb1IFbWlrZXM=');
 @$core.Deprecated('Use s_LiveStartBroadcastDescriptor instead')
 const S_LiveStartBroadcast$json = const {
   '1': 'S_LiveStartBroadcast',
@@ -1236,28 +1257,25 @@ final $typed_data.Uint8List s_PushPreloadDescriptor = $convert.base64Decode('Cg1
 const C_UpdateRole$json = const {
   '1': 'C_UpdateRole',
   '2': const [
-    const {'1': 'username', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'username', '17': true},
-    const {'1': 'description', '3': 2, '4': 1, '5': 9, '9': 1, '10': 'description', '17': true},
-    const {'1': 'data_birth', '3': 3, '4': 1, '5': 3, '9': 2, '10': 'dataBirth', '17': true},
-    const {'1': 'media_id', '3': 4, '4': 1, '5': 3, '9': 3, '10': 'mediaId', '17': true},
-  ],
-  '8': const [
-    const {'1': '_username'},
-    const {'1': '_description'},
-    const {'1': '_data_birth'},
-    const {'1': '_media_id'},
+    const {'1': 'username', '3': 1, '4': 1, '5': 9, '10': 'username'},
+    const {'1': 'description', '3': 2, '4': 1, '5': 9, '10': 'description'},
+    const {'1': 'data_birth', '3': 3, '4': 1, '5': 3, '10': 'dataBirth'},
+    const {'1': 'media_id', '3': 4, '4': 1, '5': 3, '10': 'mediaId'},
   ],
 };
 
 /// Descriptor for `C_UpdateRole`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_UpdateRoleDescriptor = $convert.base64Decode('CgxDX1VwZGF0ZVJvbGUSHwoIdXNlcm5hbWUYASABKAlIAFIIdXNlcm5hbWWIAQESJQoLZGVzY3JpcHRpb24YAiABKAlIAVILZGVzY3JpcHRpb26IAQESIgoKZGF0YV9iaXJ0aBgDIAEoA0gCUglkYXRhQmlydGiIAQESHgoIbWVkaWFfaWQYBCABKANIA1IHbWVkaWFJZIgBAUILCglfdXNlcm5hbWVCDgoMX2Rlc2NyaXB0aW9uQg0KC19kYXRhX2JpcnRoQgsKCV9tZWRpYV9pZA==');
+final $typed_data.Uint8List c_UpdateRoleDescriptor = $convert.base64Decode('CgxDX1VwZGF0ZVJvbGUSGgoIdXNlcm5hbWUYASABKAlSCHVzZXJuYW1lEiAKC2Rlc2NyaXB0aW9uGAIgASgJUgtkZXNjcmlwdGlvbhIdCgpkYXRhX2JpcnRoGAMgASgDUglkYXRhQmlydGgSGQoIbWVkaWFfaWQYBCABKANSB21lZGlhSWQ=');
 @$core.Deprecated('Use s_UpdateRoleDescriptor instead')
 const S_UpdateRole$json = const {
   '1': 'S_UpdateRole',
+  '2': const [
+    const {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
+  ],
 };
 
 /// Descriptor for `S_UpdateRole`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_UpdateRoleDescriptor = $convert.base64Decode('CgxTX1VwZGF0ZVJvbGU=');
+final $typed_data.Uint8List s_UpdateRoleDescriptor = $convert.base64Decode('CgxTX1VwZGF0ZVJvbGUSLgoEY29kZRgBIAEoDjIaLmNvbS5zYXZ2eS5wcm90by5FcnJvckNvZGVSBGNvZGU=');
 @$core.Deprecated('Use s_UpdateRoleBroadcastDescriptor instead')
 const S_UpdateRoleBroadcast$json = const {
   '1': 'S_UpdateRoleBroadcast',
@@ -1284,20 +1302,20 @@ const C_SaveUserCurrentDressUp$json = const {
 
 /// Descriptor for `C_SaveUserCurrentDressUp`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_SaveUserCurrentDressUpDescriptor = $convert.base64Decode('ChhDX1NhdmVVc2VyQ3VycmVudERyZXNzVXASJgoPcHJvZHVjdF9pZF9saXN0GAEgAygDUg1wcm9kdWN0SWRMaXN0');
-@$core.Deprecated('Use s_LabelItemDescriptor instead')
-const S_LabelItem$json = const {
-  '1': 'S_LabelItem',
+@$core.Deprecated('Use labelItemDescriptor instead')
+const LabelItem$json = const {
+  '1': 'LabelItem',
   '2': const [
     const {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'icon', '3': 2, '4': 1, '5': 9, '10': 'icon'},
   ],
 };
 
-/// Descriptor for `S_LabelItem`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_LabelItemDescriptor = $convert.base64Decode('CgtTX0xhYmVsSXRlbRISCgRuYW1lGAEgASgJUgRuYW1lEhIKBGljb24YAiABKAlSBGljb24=');
-@$core.Deprecated('Use s_ProductItemDescriptor instead')
-const S_ProductItem$json = const {
-  '1': 'S_ProductItem',
+/// Descriptor for `LabelItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List labelItemDescriptor = $convert.base64Decode('CglMYWJlbEl0ZW0SEgoEbmFtZRgBIAEoCVIEbmFtZRISCgRpY29uGAIgASgJUgRpY29u');
+@$core.Deprecated('Use productItemDescriptor instead')
+const ProductItem$json = const {
+  '1': 'ProductItem',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
     const {'1': 'product_no', '3': 2, '4': 1, '5': 3, '10': 'productNo'},
@@ -1315,23 +1333,23 @@ const S_ProductItem$json = const {
     const {'1': 'product_position_id_list', '3': 14, '4': 3, '5': 3, '10': 'productPositionIdList'},
     const {'1': 'model_id', '3': 15, '4': 1, '5': 9, '10': 'modelId'},
     const {'1': 'init_dress_up', '3': 16, '4': 1, '5': 8, '10': 'initDressUp'},
-    const {'1': 'label_list', '3': 17, '4': 3, '5': 11, '6': '.com.savvy.proto.S_LabelItem', '10': 'labelList'},
+    const {'1': 'label_list', '3': 17, '4': 3, '5': 11, '6': '.com.savvy.proto.LabelItem', '10': 'labelList'},
     const {'1': 'state_name', '3': 18, '4': 1, '5': 9, '10': 'stateName'},
   ],
 };
 
-/// Descriptor for `S_ProductItem`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_ProductItemDescriptor = $convert.base64Decode('Cg1TX1Byb2R1Y3RJdGVtEg4KAmlkGAEgASgDUgJpZBIdCgpwcm9kdWN0X25vGAIgASgDUglwcm9kdWN0Tm8SHwoLY2F0ZWdvcnlfaWQYAyABKANSCmNhdGVnb3J5SWQSEgoEbmFtZRgEIAEoCVIEbmFtZRIUCgVpbWFnZRgFIAEoCVIFaW1hZ2USFAoFcHJpY2UYBiABKANSBXByaWNlEhoKCGN1cnJlbmN5GAcgASgFUghjdXJyZW5jeRIWCgZzdGF0dXMYCCABKAVSBnN0YXR1cxIdCgpjcmVhdGVkX2F0GAkgASgDUgljcmVhdGVkQXQSHQoKdXBkYXRlZF9hdBgKIAEoA1IJdXBkYXRlZEF0EhcKB3NlbGxfYXQYCyABKANSBnNlbGxBdBIWCgZnZW5kZXIYDCABKAVSBmdlbmRlchIUCgVleHRyYRgNIAEoCVIFZXh0cmESNwoYcHJvZHVjdF9wb3NpdGlvbl9pZF9saXN0GA4gAygDUhVwcm9kdWN0UG9zaXRpb25JZExpc3QSGQoIbW9kZWxfaWQYDyABKAlSB21vZGVsSWQSIgoNaW5pdF9kcmVzc191cBgQIAEoCFILaW5pdERyZXNzVXASOwoKbGFiZWxfbGlzdBgRIAMoCzIcLmNvbS5zYXZ2eS5wcm90by5TX0xhYmVsSXRlbVIJbGFiZWxMaXN0Eh0KCnN0YXRlX25hbWUYEiABKAlSCXN0YXRlTmFtZQ==');
+/// Descriptor for `ProductItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List productItemDescriptor = $convert.base64Decode('CgtQcm9kdWN0SXRlbRIOCgJpZBgBIAEoA1ICaWQSHQoKcHJvZHVjdF9ubxgCIAEoA1IJcHJvZHVjdE5vEh8KC2NhdGVnb3J5X2lkGAMgASgDUgpjYXRlZ29yeUlkEhIKBG5hbWUYBCABKAlSBG5hbWUSFAoFaW1hZ2UYBSABKAlSBWltYWdlEhQKBXByaWNlGAYgASgDUgVwcmljZRIaCghjdXJyZW5jeRgHIAEoBVIIY3VycmVuY3kSFgoGc3RhdHVzGAggASgFUgZzdGF0dXMSHQoKY3JlYXRlZF9hdBgJIAEoA1IJY3JlYXRlZEF0Eh0KCnVwZGF0ZWRfYXQYCiABKANSCXVwZGF0ZWRBdBIXCgdzZWxsX2F0GAsgASgDUgZzZWxsQXQSFgoGZ2VuZGVyGAwgASgFUgZnZW5kZXISFAoFZXh0cmEYDSABKAlSBWV4dHJhEjcKGHByb2R1Y3RfcG9zaXRpb25faWRfbGlzdBgOIAMoA1IVcHJvZHVjdFBvc2l0aW9uSWRMaXN0EhkKCG1vZGVsX2lkGA8gASgJUgdtb2RlbElkEiIKDWluaXRfZHJlc3NfdXAYECABKAhSC2luaXREcmVzc1VwEjkKCmxhYmVsX2xpc3QYESADKAsyGi5jb20uc2F2dnkucHJvdG8uTGFiZWxJdGVtUglsYWJlbExpc3QSHQoKc3RhdGVfbmFtZRgSIAEoCVIJc3RhdGVOYW1l');
 @$core.Deprecated('Use s_SaveUserCurrentDressUpDescriptor instead')
 const S_SaveUserCurrentDressUp$json = const {
   '1': 'S_SaveUserCurrentDressUp',
   '2': const [
-    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.S_ProductItem', '10': 'items'},
+    const {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.ProductItem', '10': 'items'},
   ],
 };
 
 /// Descriptor for `S_SaveUserCurrentDressUp`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_SaveUserCurrentDressUpDescriptor = $convert.base64Decode('ChhTX1NhdmVVc2VyQ3VycmVudERyZXNzVXASNAoFaXRlbXMYASADKAsyHi5jb20uc2F2dnkucHJvdG8uU19Qcm9kdWN0SXRlbVIFaXRlbXM=');
+final $typed_data.Uint8List s_SaveUserCurrentDressUpDescriptor = $convert.base64Decode('ChhTX1NhdmVVc2VyQ3VycmVudERyZXNzVXASMgoFaXRlbXMYASADKAsyHC5jb20uc2F2dnkucHJvdG8uUHJvZHVjdEl0ZW1SBWl0ZW1z');
 @$core.Deprecated('Use s_UpdateDressUpDescriptor instead')
 const S_UpdateDressUp$json = const {
   '1': 'S_UpdateDressUp',

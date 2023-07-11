@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/exception.dart';
@@ -45,6 +46,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   final WidgetBuilder overlay;
 
+  Map? roomHttpInfo = null;
+
 
   List<S_UpMikeBroadcast> newMicList = [];
 
@@ -83,8 +86,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     super.onInit();
 
+    // 等待unity发来UTF_INIT_START事件
+    // await unity.ready;
+    doOnReady();
+
     Get.find<RoomManagerCtrl>().sceneCtrl = this;
   }
+
+  void onRender(S_SyncRoomInfo? s_syncRoomInfo) {}
 
   @override
   @mustCallSuper
@@ -96,7 +105,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           return;
         }
         var info = await Api.Room.getRoomInfo(roomId, pwd: pwd);
-        await doOnReady(info);
+        roomHttpInfo = info;
+        await doOnReady();
         markReady();
       } catch (e, s) {
         markFail(e, s);
@@ -118,9 +128,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   }
 
   @mustCallSuper
-  FutureOr<void> doOnReady(RoomRunInfo data) {
-    _bindGet(data);
-    _initListener(data);
+  FutureOr<void> doOnReady() {
+    _bindGet();
+    _initListener();
 
     post(
       () {
@@ -130,14 +140,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   }
 
   @mustCallSuper
-  void _bindGet(RoomRunInfo data) {
+  void _bindGet() {
     // bindGet(RoomMsgCtrl(roomId));
     bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
   }
 
   @mustCallSuper
-  void _initListener(RoomRunInfo data) {
+  void _initListener() {
     on<XUnityEvent>(
       test: (event) => event.code == Unity2AppEnum.UTF_ROLE_INFOPANEL,
       (event) {
@@ -204,16 +214,27 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
                 throw const LogicException(-1, "房间数据加载失败");
               }
             }
-            final info = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+            roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
             isNotClose();
 
             await doJoinGame();
             isNotClose();
 
-            // 等待unity发来UTF_INIT_START事件
-            // await unity.ready;
+            // 监听unity发过来的信息
+            unity.ready.asStream().listen((event) async{
+              // unity初始化完成后，发送同步信息指令
+              C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
+              c_roomEnterComplete.roomId = Int64(roomId);
+              S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+                  CMD.C_RoomEnterComplete,
+                  datas: c_roomEnterComplete.writeToBuffer(),
+                resCmd: CMD.S_SyncRoomInfo
+              );
+              onRender(s_syncRoomInfo);
+            }, onError: (error) {
+              debugPrint(error);
+            });
 
-            await doOnReady(info);
             isNotClose();
 
             markReady();
@@ -239,12 +260,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 class RoomCtrl extends SceneCtrl {
   final int maxMic;
   final int maxUser;
-  final RxBool freeMicRx;
-  final RxBool examineMicRx;
-  final RxSet<String> managerRx;
+  RxBool freeMicRx = RxBool(true);
+  RxBool examineMicRx = RxBool(false);
+  RxSet<String> managerRx = RxSet();
 
-  late final RxBool followRx;
-  late final RxInt userCountRx;
+  RxBool followRx = RxBool(false);
+  RxInt userCountRx = RxInt(0);
 
   RoomCtrl({required super.info, required super.pwd, required super.overlay})
       : assert({RoomType.customize.code, RoomType.guild.code}.contains(info['room_type'])),
@@ -265,11 +286,8 @@ class RoomCtrl extends SceneCtrl {
   bool keepState = true;
 
   @override
-  FutureOr<void> doOnReady(RoomRunInfo data) async {
-    await super.doOnReady(data);
-
-    followRx = RxBool(data['follow_status']);
-    userCountRx = RxInt(data['total']);
+  FutureOr<void> doOnReady() async {
+    await super.doOnReady();
 
     if (noticeRx.isNotEmpty) {
       noticePanelRx(true);
@@ -291,37 +309,33 @@ class RoomCtrl extends SceneCtrl {
   }
 
   @override
-  void _bindGet(RoomRunInfo data) {
-    super._bindGet(data);
+  void onRender(S_SyncRoomInfo? data) {
+    followRx = RxBool(roomHttpInfo?['follow_status'] ?? false);
+    userCountRx = RxInt(data?.onlineList.length ?? 0);
 
-    var oldMikeList = RoomMicCtrl.micDataFrom(data['mikes'] ?? []);
-    // 服务端的麦列表
-    var oldMikeKeyList = oldMikeList.keys.toList();
-    for(int index = oldMikeKeyList.length - 1; index >= 0; index --) {
-      debugPrint("删除旧麦位1：uid = ${oldMikeList[oldMikeKeyList[index]]?.uid}");
-      for(int innerIndex = 0; innerIndex < newMicList.length; innerIndex ++) {
-        // http返回来的数据为旧的，把旧数据删除
-        if(oldMikeList[oldMikeKeyList[index]]?.uid == newMicList[index].uid) {
-          oldMikeList.remove(oldMikeKeyList[index]);
-          debugPrint("删除旧麦位2：uid = ${newMicList[index].uid}");
-          break;
-        }
-      }
-    }
-    // 把新的数据加到列列中
-    newMicList.forEach((element) {
-      oldMikeList[element.mikeNo] = MicInfo(uid: element.uid ?? "",
-          micId: element.mikeId.toInt(), hotCount: element.number, isMute: false, nUid: element.roleId);
-    });
-    newMicList.clear();
+    // 更新mike位数据
+    roomMicCtrl = getRoomMicCtrl();
+    (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
+  }
 
-    bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, micInit: oldMikeList));
+  SceneMicCtrl? roomMicCtrl;
+
+  @override
+  void _bindGet() {
+    super._bindGet();
+
+    getRoomMicCtrl();
     bindGet(RoomAdminCtrl(roomId, managerRx));
   }
 
+  SceneMicCtrl getRoomMicCtrl() {
+    roomMicCtrl ??= bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType));
+    return roomMicCtrl!;
+  }
+
   @override
-  void _initListener(RoomRunInfo data) {
-    super._initListener(data);
+  void _initListener() {
+    super._initListener();
 
     // todo 这里
     on<UserTotalEvent>(
@@ -373,8 +387,8 @@ class SquareCtrl extends SceneCtrl {
   bool keepState = false;
 
   @override
-  void _bindGet(RoomRunInfo data) {
-    super._bindGet(data);
+  void _bindGet() {
+    super._bindGet();
 
     bindGet<SceneMicCtrl>(SquareMicCtrl());
   }
