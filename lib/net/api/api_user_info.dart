@@ -56,17 +56,18 @@ class ApiUserInfo extends ApiBase {
     return _doPost('update', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }
 
-  Future setInfo2(String? nickName) {
+  Future<ErrorCode?> setInfo2(String? nickName) async {
     if(nickName == null) {
       return Future.value(null);
     }
     C_UpdateRole c_updateRole = C_UpdateRole();
     c_updateRole.username = nickName;
-    return SocketCtrl.ins.sendByteAsyncServer(
+    S_UpdateRole? result = await SocketCtrl.ins.sendByteAsyncServer(
       CMD.C_UpdateRole,
       datas: c_updateRole.writeToBuffer(),
       resCmd: CMD.S_UpdateRole
     );
+    return result?.code;
   }
 
   Future follow({required UID uid, required bool doFollow}) {

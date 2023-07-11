@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/model/enum/gender_enum.dart';
@@ -142,19 +143,21 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   /// 更新用户名
   ///
   void updateNick(String nickName) async {
-    simpleSub(
-      Api.UserInfo.setInfo2(nickName),
-      callback: () {
-        dataRx.rebuild((val) => val.copyWith(nickName: nickName));
-
-        UserInfoCtrl.doUpdate(
-          uid,
-          rebuild: (val) => val.copyWith(nickName: nickName),
-        );
-
-        _saveToBox();
-      },
+    var result = await Api.UserInfo.setInfo2(nickName);
+    if(result != ErrorCode.Ok) {
+      if(result == ErrorCode.USER_NAME_MORE_THAN_MAX_LEN) {
+        showToast("用户名称超过最大长度");
+      } else {
+        showToast("修改失败");
+      }
+      return;
+    }
+    dataRx.rebuild((val) => val.copyWith(nickName: nickName));
+    UserInfoCtrl.doUpdate(
+      uid,
+      rebuild: (val) => val.copyWith(nickName: nickName),
     );
+    _saveToBox();
   }
 
   void updateDesc(String data) async {
