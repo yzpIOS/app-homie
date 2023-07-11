@@ -302,6 +302,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   void onServerError(int cmd, S_Err? role) {
     debugPrint("服务端返回错误：cmd = $cmd error = ${role?.code}");
+    if(role?.message.isNotEmpty == true) {
+      showToast(role?.message ?? "");
+    }
   }
 
   ///
