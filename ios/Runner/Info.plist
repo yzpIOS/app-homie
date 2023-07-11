@@ -2,6 +2,20 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Homie想访问您的照册，用于分享和更改头像等功能</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Homie想访问您的麦克风，用于发送语音等功能</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Homie想访问您的相机，用于发布动态等功能</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Homie想访问您的媒体资料库，用于播放音乐等功能</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Homie想访问您的定位，用于推荐用户等功能</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Homie想访问您的定位，用于推荐用户等功能</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
