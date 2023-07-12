@@ -54,6 +54,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
                   case SysConvEnum.at:
                   case SysConvEnum.guest:
                     updateBadge(item, type);
+                    showData.add(item);
                     break;
                   case SysConvEnum.follow:
                   case SysConvEnum.news:

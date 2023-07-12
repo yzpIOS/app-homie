@@ -26,6 +26,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   // unity是否初始化成功
   bool _isUnityInitSuccess = false;
 
+  // 当前加载的scene
+  String curScene = "";
+
   final _sceneLock = Lock(reentrant: true);
 
   static UnityCtrl get ins {
@@ -74,6 +77,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             sendFlutterSocketInfo();
             // 监听flutter socketserver状态
             socketCtrlStatus();
+            curScene = "";
             break;
           default:
             final reqId = msg['requestId'];
@@ -251,6 +255,12 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           'sceneName': loader.scene,
         };
 
+        // 防止重复加载
+        if(curScene != loader.scene) {
+          debugPrint("场景切换太频繁=>loader.scene = ${loader.scene}, curScene = $curScene");
+          return;
+        }
+
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
           data: data,
@@ -263,12 +273,16 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) {
+    curScene = scene;
     return _loadScene(
       SceneInfo(scene, doOnAfter: doOnAfter, doOnBefore: doOnBefore),
     );
   }
 
-  Future<void> loadSceneBlank() => _loadScene(const SceneInfo('Transition'));
+  Future<void> loadSceneBlank() async {
+    curScene = "Transition";
+    _loadScene(SceneInfo(curScene));
+  }
 
   Future<void> loadSceneCombo(FutureOr<void> Function() action) => _sceneLock.synchronized(action);
 }

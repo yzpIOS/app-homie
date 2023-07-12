@@ -147,6 +147,10 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     if(result != ErrorCode.Ok) {
       if(result == ErrorCode.USER_NAME_MORE_THAN_MAX_LEN) {
         showToast("用户名称超过最大长度");
+      } else if(result == ErrorCode.SUSPECTED_SENSITIVE_WORD) {
+        showToast("内容涉及敏感词");
+      } else if(result == ErrorCode.USER_NAME_IS_EXIST) {
+        showToast("用户名称已存在");
       } else {
         showToast("修改失败");
       }
