@@ -39,14 +39,14 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   Widget $MicView(bool isRoom) {
     late final freeMicRx = (controller as RoomCtrl).freeMicRx;
     // 大厅中的用户是否接近了直播房，如果是就要使用禁用mike
-    late final manInHallNearByRoom = (controller as SquareCtrl).manInHallNearByRoom;
+    late final manInHallNearByRoom = (controller as SquareCtrl?)?.manInHallNearByRoom.isTrue ?? false;
 
     final canSpeak = sceneMicCtrl().canSpeakRx;
     final myUid = OAuthCtrl.uid;
 
     return Obx(
       () {
-        final isEnable = (isRoom && freeMicRx.isTrue) || canSpeak(myUid) || manInHallNearByRoom.isTrue;
+        final isEnable = (isRoom && freeMicRx.isTrue) || canSpeak(myUid) || manInHallNearByRoom;
 
         return _IconBtn(
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',

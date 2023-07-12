@@ -156,7 +156,14 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
   }
 
+  int _preClickTime = 0;
+
   void toSquare({Map? data}) {
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < 2000) {
+      showToast("操作太频繁");
+      return;
+    }
+    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     return _show(
       off: false,
       infoApi: (_) => data ?? Api.Room.info(type: RoomType.square),
