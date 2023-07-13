@@ -24,6 +24,8 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
   SceneCtrl get sceneCtrl => _sceneCtrl!;
 
+  SceneCtrl? get sceneCtrl2 => _sceneCtrl;
+
   set sceneCtrl(SceneCtrl ctrl) => _sceneCtrl = ctrl;
 
   @override

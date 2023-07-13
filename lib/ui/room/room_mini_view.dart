@@ -164,6 +164,10 @@ class _MiniView extends RoomGetView<RoomCtrl> implements PreferredSizeWidget {
       await Get.alertSub(api, alert: '确定下播', callback: close);
     } else {
       close();
+      // 如果公开房
+      if(controller.roomType == RoomType.guild) {
+        Get.back();
+      }
     }
   }
 }
