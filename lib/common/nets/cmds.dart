@@ -9,9 +9,6 @@ class CMD {
   static const C_GoToRoom = 300; //靠近建筑后，请求播放直播间语音
   static const S_GoToRoom = 301; //下发直播间相关信息
 
-  static const C_InFreeMikesArea =304; //发送进入自由组麦区域=======对接完成
-  static const S_InFreeMikesArea =305; //下发进入自由组麦区域=======对接完成
-
   // 创建房间场景
   static const C_RoomEnterComplete = 2000; // 房间加载完成后通知后端可以同步信息，同步初始化信息到 S_SyncRoomInfo
   static const S_SyncRoomInfo = 2001; 			// 同步房间初始化信息数据
@@ -100,9 +97,11 @@ class CMD {
   static const C_GoAwayRoom = 12000; //远离建筑后，请求结束直播间语音 【服务端暂时不需要】
   static const S_GoAwayRoom = 12001; //离开建筑结果【服务端暂时不需要】
 
-  static const C_OutFreeMikesArea = 12002;//发送退出自由组麦区域
-  static const S_OutFreeMikesArea = 12003;//下发退出自由组麦区域
+  static const C_InFreeMikesArea =12002; //发送进入自由组麦区域=======对接完成
+  static const S_InFreeMikesArea =12003; //下发进入自由组麦区域=======对接完成
 
+  static const C_OutFreeMikesArea = 12006;//发送退出自由组麦区域
+  static const S_OutFreeMikesArea = 12007;//下发退出自由组麦区域
 
   static const C_PlazaToRoom = 12004; //发送从大厅切到其他房间（场景）消息
   static const S_PlazaToRoom = 12005; //下发从大厅切到其他房间（场景）消息

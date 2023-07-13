@@ -37,7 +37,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
 
     post(() async{
       SocketCtrl.ins.onDataCmd(CMD.S_GoToRoom, goToRoom);
-      SocketCtrl.ins.onDataCmd(CMD.S_InFreeMikesArea, inFreeMikesArea);
+      SocketCtrl.ins.onDataCmd(CMD.C_InFreeMikesArea, inFreeMikesArea);
 
       SocketCtrl.ins.onDataCmd(CMD.C_GoAwayRoom, outRoom);
       SocketCtrl.ins.onDataCmd(CMD.C_OutFreeMikesArea, outFreeMikesArea);
@@ -82,20 +82,42 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   ///
   /// 加入到房间
   ///
-  void inFreeMikesArea(int cmd, S_GoToRoom? data) {
+  void inFreeMikesArea(int cmd, C_InFreeMikesArea? data) {
     if(data == null) {
       return;
     }
-    joinRoom(roomId: data.roomId.toInt().toString());
+    // 设置自由组麦
+    SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
+    if(roomCtrl is SquareCtrl) {
+      _nativeValue = roomCtrl.manInHallNearByRoom.value;
+      roomCtrl.manInHallNearByRoom.value = true;
+    }
+
+    joinRoom(roomId: data.roomid.toInt().toString());
+
+    // 通知unity收到消息
+    S_InFreeMikesArea s_outFreeMikesArea = S_InFreeMikesArea.create();
+    s_outFreeMikesArea.roomid = data.roomid;
+    SocketCtrl.ins.sendUnity(CMD.S_InFreeMikesArea, message: s_outFreeMikesArea);
   }
 
   ///
   /// 退出房间
   ///
   void outFreeMikesArea(int cmd, C_OutFreeMikesArea? data) {
+    // 设置自由组麦
+    SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
+    if(roomCtrl is SquareCtrl) {
+      roomCtrl.manInHallNearByRoom.value = _nativeValue;
+    }
+
     leaveRoom();
-    // 通知unity收到消息
-    SocketCtrl.ins.sendUnity(CMD.S_OutFreeMikesArea);
+    if(data != null) {
+      // 通知unity收到消息
+      S_OutFreeMikesArea s_outFreeMikesArea = S_OutFreeMikesArea.create();
+      s_outFreeMikesArea.roomid = data.roomid;
+      SocketCtrl.ins.sendUnity(CMD.S_OutFreeMikesArea, message: s_outFreeMikesArea);
+    }
   }
 
   @override
