@@ -383,7 +383,7 @@ class RoomCtrl extends SceneCtrl {
 
 class SquareCtrl extends SceneCtrl {
   // 大厅中的人是否接口了其它的房间
-  RxBool manInHallNearByRoom = RxBool(false);
+  RxBool enableUpMikeButton = RxBool(false);
 
   SquareCtrl({required super.info, required super.pwd, required super.overlay})
       : assert(info['room_type'] == RoomType.square.code);

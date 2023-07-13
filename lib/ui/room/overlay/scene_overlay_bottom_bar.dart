@@ -41,7 +41,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     // 大厅中的用户是否接近了直播房，如果是就要使用禁用mike
     RxBool? manInHallNearByRoom;
     if(controller is SquareCtrl) {
-      manInHallNearByRoom = (controller as SquareCtrl?)?.manInHallNearByRoom;
+      manInHallNearByRoom = (controller as SquareCtrl?)?.enableUpMikeButton;
     }
 
     final canSpeak = sceneMicCtrl().canSpeakRx;

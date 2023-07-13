@@ -42,6 +42,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
 
           await _fetchSysExt(items);
 
+          int otherTotal = 0;
           for (final item in items) {
             if (item.isSysConv) {
               final type = SysConvEnum.fromVal(_sysExt[item.userID]?['type']);
@@ -54,7 +55,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
                   case SysConvEnum.at:
                   case SysConvEnum.guest:
                     updateBadge(item, type);
-                    showData.add(item);
+                    otherTotal += item.unreadCount ?? 0;
                     break;
                   case SysConvEnum.follow:
                   case SysConvEnum.news:
@@ -71,7 +72,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
             }
           }
 
-          badge.value = showData.map((e) => e.unreadCount ?? 0).sum;
+          badge.value = showData.map((e) => e.unreadCount ?? 0).sum + otherTotal;
 
           showData.sort(
             (a, b) {
