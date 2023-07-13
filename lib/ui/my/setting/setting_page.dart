@@ -99,31 +99,32 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 
-  Future _doClean() {
-    final files = [ImgCacheManager.obj, GiftCacheManager.obj, FileManager.obj];
-
-    return Future.wait(
-      <Future>[
-        //刷新媒体缓存
-        if (Platform.isAndroid)
-          PhotoManager.editor.android
-              .removeAllNoExistsAsset()
-              .timeout(const Duration(seconds: 6), onTimeout: () => false),
-        //删除临时目录
-        ...files.expand((it) => [it.emptyCache(), Future(it.store.emptyMemoryCache)]),
-        Future(
-          () async {
-            //TODO 删除临时文件有可能引发第三方错误
-            final dir = await getTemporaryDirectory();
-
-            await dir.delete(recursive: true);
-            await dir.create(recursive: true);
-          },
-        ),
-        removeExpireLogs(),
-      ],
-    );
+  Future _doClean() async {
+    try {
+      Directory directory = await getTemporaryDirectory();
+      //删除缓存目录
+      await deleteDirectory(directory);
+    } catch(e) {
+    }
+    debugPrint("删除缓存目录 ==> ....");
+    return Future.value(true);
   }
+
+  /// 递归方式删除目录
+  static Future<void> deleteDirectory(FileSystemEntity file) async {
+    try {
+      if (file is Directory) {
+        final List<FileSystemEntity> children = file.listSync();
+        for (final FileSystemEntity child in children) {
+          await deleteDirectory(child);
+        }
+      }
+      debugPrint("删除缓存目录 ==> " + file.path);
+      await file.delete();
+    } catch(e) {
+    }
+  }
+
 
   void onItemClick(String action) {
     switch (action) {
