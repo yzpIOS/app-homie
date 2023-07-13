@@ -312,8 +312,8 @@ class RoomCtrl extends SceneCtrl {
 
   @override
   void onRender(S_SyncRoomInfo? data) {
-    followRx = RxBool(roomHttpInfo?['follow_status'] ?? false);
-    userCountRx = RxInt(data?.onlineList.length ?? 0);
+    followRx = roomHttpInfo?['follow_status'] ?? false;
+    userCountRx.value = data?.onlineList.length ?? 0;
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
