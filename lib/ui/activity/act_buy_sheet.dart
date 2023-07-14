@@ -56,7 +56,7 @@ class ActBuySheet extends ISheetWidget {
             left: -6,
             right: -6,
             bottom: -6,
-            child: Image.asset(IMG.$('activity/锤子背景'), scale: 3, fit: BoxFit.contain),
+            child: Image.asset(IMG.format('activity/锤子背景'), scale: 3, fit: BoxFit.contain),
           ),
           Positioned(
             bottom: 9,

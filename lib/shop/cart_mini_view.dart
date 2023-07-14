@@ -57,7 +57,7 @@ class CartMiniView extends GetView<ShoppingCartCtrl> {
         children: [
           Positioned(
             left: 20,
-            child: Image.asset(IMG.$('购物车'), width: 40, height: 40, scale: 3, fit: BoxFit.contain),
+            child: Image.asset(IMG.format('购物车'), width: 40, height: 40, scale: 3, fit: BoxFit.contain),
           ),
           Positioned(
             left: 77,

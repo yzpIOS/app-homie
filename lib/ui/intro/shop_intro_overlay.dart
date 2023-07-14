@@ -40,11 +40,11 @@ class ShopIntroOverlay extends IntroOverlay {
         Positioned(
           top: offsetY - 10 - offset1 - 105,
           left: 40,
-          child: Image.asset(IMG.$('intro/shop/0'), scale: 3, fit: BoxFit.contain),
+          child: Image.asset(IMG.format('intro/shop/0'), scale: 3, fit: BoxFit.contain),
         ),
         Positioned(
           top: offsetY + 7,
-          child: Image.asset(IMG.$('intro/shop/1'), scale: 3, fit: BoxFit.contain),
+          child: Image.asset(IMG.format('intro/shop/1'), scale: 3, fit: BoxFit.contain),
         ),
       ],
     );

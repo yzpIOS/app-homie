@@ -34,7 +34,7 @@ class TipsView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(IMG.$('state/$tips'), width: 174, cacheWidth: 174.toPx(), scale: 3),
+          Image.asset(IMG.format('state/$tips'), width: 174, cacheWidth: 174.toPx(), scale: 3),
           Spacing.h10,
           XText(
             tips,

@@ -51,7 +51,7 @@ mixin ActionMixin {
     );
   }
 
-  Widget get icon => Image.asset(IMG.$('chat/$title'), scale: 3, fit: BoxFit.scaleDown);
+  Widget get icon => Image.asset(IMG.format('chat/$title'), scale: 3, fit: BoxFit.scaleDown);
 
   String get title;
 

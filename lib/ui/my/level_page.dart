@@ -53,7 +53,7 @@ class _LevelPageState extends State<LevelPage> {
           ),
           const Text('经验等级是你在Homie开启Homie人生之后的成长属性，随着你的等级上升，你的等级标志会有相应的颜色变化'),
           Spacing.h10,
-          Image.asset(IMG.$('my/level/说明'), fit: BoxFit.fitWidth, scale: 2),
+          Image.asset(IMG.format('my/level/说明'), fit: BoxFit.fitWidth, scale: 2),
           const Padding(
             padding: Pad(top: 20, bottom: 5),
             child: Text(

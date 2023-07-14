@@ -245,6 +245,6 @@ class _ItemView extends StatelessWidget {
   }
 
   Widget $OnlineView() {
-    return Image.asset(IMG.$('room/房间状态_1'), width: 60, height: 24, scale: 3);
+    return Image.asset(IMG.format('room/房间状态_1'), width: 60, height: 24, scale: 3);
   }
 }

@@ -40,12 +40,12 @@ class RoomIntroOverlay extends IntroOverlay {
           Positioned(
             top: 274,
             right: 42,
-            child: Image.asset(IMG.$('intro/room/0'), scale: 3, fit: BoxFit.contain),
+            child: Image.asset(IMG.format('intro/room/0'), scale: 3, fit: BoxFit.contain),
           ),
           Positioned(
             right: 20,
             bottom: 143,
-            child: Image.asset(IMG.$('intro/room/1'), scale: 3, fit: BoxFit.contain),
+            child: Image.asset(IMG.format('intro/room/1'), scale: 3, fit: BoxFit.contain),
           ),
         ],
       ),

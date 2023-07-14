@@ -174,7 +174,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
           left: 0,
           right: 0,
           bottom: 0,
-          child: Image.asset(IMG.$('room/房间封面'), scale: 3, fit: BoxFit.fitWidth),
+          child: Image.asset(IMG.format('room/房间封面'), scale: 3, fit: BoxFit.fitWidth),
         ),
       ],
     );

@@ -159,7 +159,7 @@ class MyModelView extends StatelessWidget {
   Widget $Btn({required String action}) {
     return OpacityButton(
       onTap: () => onItemClick(action),
-      child: Image.asset(IMG.$('shop/$action'), scale: 3),
+      child: Image.asset(IMG.format('shop/$action'), scale: 3),
     );
   }
 

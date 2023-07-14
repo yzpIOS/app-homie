@@ -114,7 +114,7 @@ class _ActMainDialogState extends State<ActMainDialog> with TickerProviderStateM
       Positioned(
         top: 110,
         left: 68,
-        child: Image.asset(IMG.$('activity/蛋背景'), width: 174, height: 174, scale: 3, fit: BoxFit.contain),
+        child: Image.asset(IMG.format('activity/蛋背景'), width: 174, height: 174, scale: 3, fit: BoxFit.contain),
       ),
       Positioned(
         top: 336,
@@ -172,7 +172,7 @@ class _ActMainDialogState extends State<ActMainDialog> with TickerProviderStateM
       child: IntrinsicWidth(
         child: Row(
           children: [
-            Image.asset(IMG.$('activity/锤子'), width: 24, height: 24, scale: 3),
+            Image.asset(IMG.format('activity/锤子'), width: 24, height: 24, scale: 3),
             Expanded(
               child: Center(child: child),
             ),

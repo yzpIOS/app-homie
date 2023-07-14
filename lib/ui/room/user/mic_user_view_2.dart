@@ -137,7 +137,7 @@ class _ItemView extends StatelessWidget {
     return _MicView(
       avatar: InkResponse(
         onTap: () => MicUserSheet.show(no),
-        child: Image.asset(IMG.$('room/mic/麦位_$type'), scale: 3, fit: BoxFit.contain),
+        child: Image.asset(IMG.format('room/mic/麦位_$type'), scale: 3, fit: BoxFit.contain),
       ),
       title: XText(
         '$no 号麦',
@@ -218,7 +218,7 @@ class _ItemView extends StatelessWidget {
 
   Widget $MicStateView(String state) {
     return Image.asset(
-      IMG.$('room/mic/麦位_$state'),
+      IMG.format('room/mic/麦位_$state'),
       scale: 3,
       errorBuilder: (_, __, ___) => Spacing.blank,
     );

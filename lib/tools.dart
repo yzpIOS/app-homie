@@ -115,7 +115,7 @@ T? readJsonOrNull<T>(json) {
 class IMG {
   IMG._();
 
-  static String $(String img, [String type = 'webp']) => 'assets/img/$img.$type';
+  static String format(String img, [String type = 'webp']) => 'assets/img/$img.$type';
 }
 
 class SVG {

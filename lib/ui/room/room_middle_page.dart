@@ -32,7 +32,7 @@ class _RoomMiddlePageState extends State<RoomMiddlePage> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Image.asset(
-            IMG.$('loading'),
+            IMG.format('loading'),
             fit: BoxFit.cover,
           ),
         )

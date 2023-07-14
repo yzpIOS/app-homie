@@ -42,11 +42,11 @@ class MyClothIntroOverlay extends IntroOverlay {
         Positioned(
           top: offsetY - 105,
           left: 40,
-          child: Image.asset(IMG.$('intro/shop/2'), scale: 3, fit: BoxFit.contain),
+          child: Image.asset(IMG.format('intro/shop/2'), scale: 3, fit: BoxFit.contain),
         ),
         Positioned(
           top: offsetY + offset2,
-          child: Image.asset(IMG.$('intro/shop/3'), scale: 3, fit: BoxFit.contain),
+          child: Image.asset(IMG.format('intro/shop/3'), scale: 3, fit: BoxFit.contain),
         ),
       ],
     );

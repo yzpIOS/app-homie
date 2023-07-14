@@ -56,7 +56,7 @@ class SuperGiftView extends StatelessWidget {
 
     child = Stack(
       children: [
-        Image.asset(IMG.$('room/广播背景'), width: 355, height: 50, scale: 2),
+        Image.asset(IMG.format('room/广播背景'), width: 355, height: 50, scale: 2),
         Positioned(
           top: 8,
           left: 28,
@@ -100,7 +100,7 @@ class SuperGiftView extends StatelessWidget {
       }
     } catch(e) {
     }
-    Widget child = Image.asset(IMG.$('room/围观'), width: 35, height: 20, scale: 3);
+    Widget child = Image.asset(IMG.format('room/围观'), width: 35, height: 20, scale: 3);
 
     child = Box(
       alignment: Alignment.topLeft,

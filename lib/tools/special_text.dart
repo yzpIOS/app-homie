@@ -8,7 +8,7 @@ final emojis = loadAssetJson('assets/emoji.json').then(
   (it) {
     final data = //
         (it as Iterable) //
-            .map((it) => MapEntry<String, String>(it['glyph'], IMG.$('emoji/${it['asset']}')))
+            .map((it) => MapEntry<String, String>(it['glyph'], IMG.format('emoji/${it['asset']}')))
             .toList(growable: false);
 
     data.sort(
@@ -95,7 +95,7 @@ class StyledTextTagEmoji extends StyledTextTagBase {
 
     switch (attributes['type']) {
       case 'local':
-        return Image.asset(IMG.$('emoji/icon_${attributes['src']}'), width: size, height: size, scale: 3);
+        return Image.asset(IMG.format('emoji/icon_${attributes['src']}'), width: size, height: size, scale: 3);
       default:
         return SizedBox(width: size, height: size);
     }

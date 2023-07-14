@@ -105,7 +105,7 @@ class _GiftBtn extends StatelessWidget {
       child: Padding(
         padding: const Pad(all: 5) * AppSize.scaleW,
         child: IconBtnDecor(
-          child: Image.asset(IMG.$('room/$_icon'), width: size, height: size, scale: 3, fit: BoxFit.none),
+          child: Image.asset(IMG.format('room/$_icon'), width: size, height: size, scale: 3, fit: BoxFit.none),
         ),
       ),
     );

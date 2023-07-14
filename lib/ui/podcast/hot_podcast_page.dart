@@ -68,7 +68,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         onTap: () => Get.find<RoomManagerCtrl>().toSquare(),
         child: AspectRatio(
           aspectRatio: 355 / 177,
-          child: Image.asset(IMG.$('广场'), fit: BoxFit.cover, scale: 2),
+          child: Image.asset(IMG.format('广场'), fit: BoxFit.cover, scale: 2),
         ),
       ),
     );

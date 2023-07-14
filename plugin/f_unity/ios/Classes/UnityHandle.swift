@@ -78,6 +78,9 @@ public class UnityHandle {
     }
 
     func addTo(viewId: Int64, view: UIView) {
+        if(view == nil) {
+            return
+        }
         _addTo(view: view)
         
         showId = viewId

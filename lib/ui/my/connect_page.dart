@@ -39,7 +39,7 @@ class ConnectPage extends StatelessWidget {
     return Column(
       children: [
         const Spacing(flex: 54),
-        Image.asset(IMG.$('my/公众号'), width: 174, height: 174, scale: 2, fit: BoxFit.contain),
+        Image.asset(IMG.format('my/公众号'), width: 174, height: 174, scale: 2, fit: BoxFit.contain),
         const Spacing(flex: 20),
         const XText('请扫码关注Homie公众号'),
         const Spacing(flex: 5),

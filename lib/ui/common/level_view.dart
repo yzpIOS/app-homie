@@ -18,7 +18,7 @@ class LevelView extends StatelessWidget {
     if (_level == '0' || _level == null || _level.isEmpty) return Spacing.blank;
 
     Widget child = Image.asset(
-      IMG.$('level/$_level'),
+      IMG.format('level/$_level'),
       scale: 3,
       width: 34,
       height: 17,

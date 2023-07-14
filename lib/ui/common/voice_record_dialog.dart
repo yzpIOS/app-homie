@@ -100,7 +100,7 @@ class _VoiceRecordDialogState extends State<VoiceRecordDialog> {
               ? Spacing.blank
               : InkResponse(
                   onTap: doReset,
-                  child: Image.asset(IMG.$('voice/重置'), scale: 3),
+                  child: Image.asset(IMG.format('voice/重置'), scale: 3),
                 );
         }),
       ),
@@ -115,7 +115,7 @@ class _VoiceRecordDialogState extends State<VoiceRecordDialog> {
             onTap: val.value2,
             child: OpacityButton(
               onTap: val.value2,
-              child: Image.asset(IMG.$(val.value1), scale: 3),
+              child: Image.asset(IMG.format(val.value1), scale: 3),
             ),
           );
         }),
@@ -129,7 +129,7 @@ class _VoiceRecordDialogState extends State<VoiceRecordDialog> {
               ? Spacing.blank
               : InkResponse(
                   onTap: doDone,
-                  child: Image.asset(IMG.$('voice/确定'), scale: 3),
+                  child: Image.asset(IMG.format('voice/确定'), scale: 3),
                 );
         }),
       ),

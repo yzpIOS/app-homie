@@ -147,7 +147,7 @@ extension ActionBtn$String on String {
   Widget toImgAction({VoidCallback? onPressed}) {
     return xActionBtn(
       onPressed: onPressed,
-      icon: Image.asset(IMG.$(this), scale: 3),
+      icon: Image.asset(IMG.format(this), scale: 3),
     );
   }
 

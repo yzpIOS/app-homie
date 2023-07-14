@@ -78,7 +78,7 @@ class _ActionView extends GetView<ConvManagerCtrl> {
               return AppBadge.count(
                 count: count,
                 position: BadgePosition.topEnd(top: 0, end: 0),
-                child: Image.asset(IMG.$('msg/${type.label}'), scale: 3),
+                child: Image.asset(IMG.format('msg/${type.label}'), scale: 3),
               );
             }),
             XText(

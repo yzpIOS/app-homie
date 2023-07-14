@@ -28,7 +28,7 @@ class ActResultDialog extends StatelessWidget {
       width: 288,
       height: 327,
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(IMG.$('activity/结果背景')), scale: 3),
+        image: DecorationImage(image: AssetImage(IMG.format('activity/结果背景')), scale: 3),
       ),
       margin: const Pad(horizontal: 20),
       child: child,

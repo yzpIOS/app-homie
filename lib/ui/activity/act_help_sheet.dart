@@ -57,7 +57,7 @@ class ActHelpSheet extends ISheetWidget {
             style: TextStyle(fontSize: 12, color: Colors.black),
           ),
           Spacing.h10,
-          Image.asset(IMG.$('activity/说明'), scale: 2, fit: BoxFit.fitWidth),
+          Image.asset(IMG.format('activity/说明'), scale: 2, fit: BoxFit.fitWidth),
           Spacing.h20,
           const Text.rich(
             TextSpan(

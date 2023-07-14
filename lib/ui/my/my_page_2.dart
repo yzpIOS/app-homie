@@ -65,7 +65,7 @@ class _MyPage2State extends State<MyPage2> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Spacing.blank,
-          Image.asset(IMG.$('my/$item'), width: 56, height: 56, fit: BoxFit.contain, scale: 3),
+          Image.asset(IMG.format('my/$item'), width: 56, height: 56, fit: BoxFit.contain, scale: 3),
           XText(
             item,
             style: const TextStyle(fontSize: 14, color: Colors.black),

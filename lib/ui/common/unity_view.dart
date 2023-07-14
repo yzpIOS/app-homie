@@ -278,7 +278,7 @@ class UnityLoading extends StatelessWidget {
 
     final decor = BoxDecoration(
       image: DecorationImage(
-        image: AssetImage(IMG.$('loading')),
+        image: AssetImage(IMG.format('loading')),
         scale: 2,
         fit: BoxFit.cover,
         opacity: Env.isDebug ? 0.618 : 1,

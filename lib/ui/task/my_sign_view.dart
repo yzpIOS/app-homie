@@ -109,7 +109,7 @@ class SignDialog extends StatelessWidget {
       top: 32,
       width: 93,
       height: 64,
-      child: Image.asset(IMG.$('task/装饰_2'), scale: 3),
+      child: Image.asset(IMG.format('task/装饰_2'), scale: 3),
     );
 
     final title2View = Positioned(
@@ -119,7 +119,7 @@ class SignDialog extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Image.asset(IMG.$('task/装饰_3'), scale: 3),
+          Image.asset(IMG.format('task/装饰_3'), scale: 3),
           const Padding(
             padding: Pad(bottom: 8),
             child: XText(
@@ -131,7 +131,7 @@ class SignDialog extends StatelessWidget {
       ),
     );
 
-    final image = Image.asset(IMG.$('task/装饰_1'), width: 44, scale: 3);
+    final image = Image.asset(IMG.format('task/装饰_1'), width: 44, scale: 3);
 
     return [
       bgView,
@@ -279,7 +279,7 @@ class _ItemView extends StatelessWidget {
           Positioned(
             width: 26,
             height: 26,
-            child: Image.asset(IMG.$('task/已签到'), scale: 3),
+            child: Image.asset(IMG.format('task/已签到'), scale: 3),
           ),
         ]
       ],

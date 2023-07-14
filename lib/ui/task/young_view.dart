@@ -46,7 +46,7 @@ class YoungDialog extends StatelessWidget {
       ),
       Positioned(
         top: -33,
-        child: Image.asset(IMG.$('青少年'), width: 120, scale: 2),
+        child: Image.asset(IMG.format('青少年'), width: 120, scale: 2),
       ),
     ];
   }

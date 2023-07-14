@@ -14,7 +14,7 @@ class MoneyIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      IMG.$('money_${type.name}${variant == null ? '' : '_$variant'}'),
+      IMG.format('money_${type.name}${variant == null ? '' : '_$variant'}'),
       width: size,
       height: size,
       scale: 3,

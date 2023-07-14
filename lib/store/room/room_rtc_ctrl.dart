@@ -55,8 +55,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
     if(roomCtrl is SquareCtrl) {
       // 加入房间但是不能上麦
-      _nativeValue = roomCtrl.enableUpMikeButton.value;
-      roomCtrl.enableUpMikeButton.value = false;
+      roomCtrl.enableUpMikeButton.value = true;
     }
     joinRoom(roomId: data.roomId.toInt().toString());
   }
@@ -72,7 +71,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     // 设置自由组麦
     SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
     if(roomCtrl is SquareCtrl) {
-      roomCtrl.enableUpMikeButton.value = _nativeValue;
+      roomCtrl.enableUpMikeButton.value = false;
     }
 
     leaveRoom();
@@ -90,7 +89,6 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     // 设置自由组麦
     SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
     if(roomCtrl is SquareCtrl) {
-      _nativeValue = roomCtrl.enableUpMikeButton.value;
       // 加入到自由组麦区域，可以上麦
       roomCtrl.enableUpMikeButton.value = true;
     }
@@ -110,7 +108,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     // 设置自由组麦
     SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
     if(roomCtrl is SquareCtrl) {
-      roomCtrl.enableUpMikeButton.value = _nativeValue;
+      roomCtrl.enableUpMikeButton.value = false;
     }
 
     leaveRoom();

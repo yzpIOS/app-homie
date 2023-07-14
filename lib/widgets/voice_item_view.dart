@@ -32,7 +32,7 @@ class VoiceItemView extends StatelessWidget {
           alignment: Alignment.center,
           child: $Icon(),
         ),
-        Image.asset(IMG.$('voice/波形'), width: 56, height: 20, scale: 3),
+        Image.asset(IMG.format('voice/波形'), width: 56, height: 20, scale: 3),
         if (dur != null) //
           XText(
             dur!.format2(),
@@ -66,7 +66,7 @@ class VoiceItemView extends StatelessWidget {
         duration: kTabScrollDuration,
         child: () {
           Widget $Icon(String icon) {
-            return Image.asset(key: Key(icon), scale: 3, IMG.$('voice/$icon'));
+            return Image.asset(key: Key(icon), scale: 3, IMG.format('voice/$icon'));
           }
 
           if (playing) {
