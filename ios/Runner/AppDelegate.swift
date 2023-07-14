@@ -13,8 +13,7 @@ import f_unity
         //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
         
         setDefaultHandler()
-          
-        HookMutableArray().startHook();
+        
     
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)

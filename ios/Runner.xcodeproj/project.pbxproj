@@ -90,6 +90,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		078783D62A61620D00D451E3 /* safemode */ = {
+			isa = PBXGroup;
+			children = (
+				078783C02A615FAA00D451E3 /* NSMutableString+Safe.h */,
+				078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */,
+				078783C22A615FAA00D451E3 /* NSDictionary+Safe.h */,
+				078783C32A615FAA00D451E3 /* SafeObject.h */,
+				078783C42A615FAA00D451E3 /* NSMutableDictionary+Safe.m */,
+				078783C52A615FAA00D451E3 /* NSObject+ImpChangeTool.h */,
+				078783C62A615FAA00D451E3 /* NSArray+Safe.h */,
+				078783C72A615FAA00D451E3 /* NSObject+Swizzling.h */,
+				078783C82A615FAA00D451E3 /* NSMutableArray+Safe.h */,
+				078783C92A615FAA00D451E3 /* NSMutableString+Safe.m */,
+				078783CA2A615FAA00D451E3 /* NSMutableDictionary+Safe.h */,
+				078783CB2A615FAA00D451E3 /* NSDictionary+Safe.m */,
+				078783CC2A615FAA00D451E3 /* NSObject+Swizzling.m */,
+				078783CD2A615FAA00D451E3 /* NSArray+Safe.m */,
+				078783CE2A615FAA00D451E3 /* NSObject+ImpChangeTool.m */,
+			);
+			path = safemode;
+			sourceTree = "<group>";
+		};
 		64F01B7B31B39D39C1DB1FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,21 +164,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				078783C02A615FAA00D451E3 /* NSMutableString+Safe.h */,
-				078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */,
-				078783C22A615FAA00D451E3 /* NSDictionary+Safe.h */,
-				078783C32A615FAA00D451E3 /* SafeObject.h */,
-				078783C42A615FAA00D451E3 /* NSMutableDictionary+Safe.m */,
-				078783C52A615FAA00D451E3 /* NSObject+ImpChangeTool.h */,
-				078783C62A615FAA00D451E3 /* NSArray+Safe.h */,
-				078783C72A615FAA00D451E3 /* NSObject+Swizzling.h */,
-				078783C82A615FAA00D451E3 /* NSMutableArray+Safe.h */,
-				078783C92A615FAA00D451E3 /* NSMutableString+Safe.m */,
-				078783CA2A615FAA00D451E3 /* NSMutableDictionary+Safe.h */,
-				078783CB2A615FAA00D451E3 /* NSDictionary+Safe.m */,
-				078783CC2A615FAA00D451E3 /* NSObject+Swizzling.m */,
-				078783CD2A615FAA00D451E3 /* NSArray+Safe.m */,
-				078783CE2A615FAA00D451E3 /* NSObject+ImpChangeTool.m */,
+				078783D62A61620D00D451E3 /* safemode */,
 				075A77652A5BF78100BA29F4 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
