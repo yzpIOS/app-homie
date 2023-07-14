@@ -12,7 +12,9 @@ import f_unity
       ) -> Bool {
         //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
         
-          setDefaultHandler()
+        setDefaultHandler()
+          
+        HookMutableArray().startHook();
     
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
