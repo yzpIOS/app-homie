@@ -7,6 +7,9 @@ import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+///
+/// 套装，头发，上装，下装等
+///
 class MyView extends StatefulWidget {
   final int? categoryId;
 
@@ -71,7 +74,7 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    Widget children = Column(
       children: [
         Expanded(
           flex: 70,
@@ -98,5 +101,22 @@ class _ItemView extends StatelessWidget {
         const Spacing(flex: 8),
       ],
     );
+
+    if (data case {'label_list': List items}) {
+      if (items.isNotEmpty) {
+        children = Stack(
+          children: [
+            children,
+            for (var i = 0; i < items.length; ++i)
+              Positioned(
+                top: 5,
+                left: 5.0 * (i + 1) + 32 * i,
+                child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+              ),
+          ],
+        );
+      }
+    }
+    return children;
   }
 }

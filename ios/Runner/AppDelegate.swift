@@ -13,6 +13,8 @@ import f_unity
         //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
         
         setDefaultHandler()
+          
+          IOSurface().allocationSize()
         
     
         GeneratedPluginRegistrant.register(with: self)

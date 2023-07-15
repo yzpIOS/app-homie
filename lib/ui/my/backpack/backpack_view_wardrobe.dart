@@ -247,6 +247,15 @@ class _ItemView extends StatelessWidget {
         Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
         Positioned(top: 3, right: 3, height: 10, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
+
+        // label图片
+        if (_data case {'label_list': List items})
+          for (var i = 0; i < items.length; ++i)
+            Positioned(
+              top: 5,
+              left: 5.0 * (i + 1) + 32 * i,
+              child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+            ),
       ],
     );
 

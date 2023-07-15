@@ -113,9 +113,23 @@ class _CartSheetState extends State<CartSheet> {
       ],
     );
 
+
+    // 左上角图标
     child = Row(
       children: [
-        NetImage(data['image'], width: size, height: size),
+        Stack(
+          children: [
+            NetImage(data['image'], width: size, height: size),
+            // label图片
+            if (data case {'label_list': List items})
+              for (var i = 0; i < items.length; ++i)
+                Positioned(
+                  top: 5,
+                  left: 5.0 * (i + 1) + 32 * i,
+                  child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+                ),
+          ],
+        ),
         Spacing.w10,
         Expanded(child: child),
         Spacing.w10,

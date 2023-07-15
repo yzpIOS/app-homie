@@ -7,6 +7,9 @@ import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+///
+/// 衣柜
+///
 class MyView$Wardrobe extends StatelessWidget {
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
   late final selector = selectorCtrl.selectorWardrobe;
@@ -94,7 +97,7 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    Widget children = Column(
       children: [
         Expanded(
           flex: 70,
@@ -121,5 +124,24 @@ class _ItemView extends StatelessWidget {
         const Spacing(flex: 8),
       ],
     );
+
+    // 左上角图标
+    if (data case {'label_list': List items}) {
+      if (items.isNotEmpty) {
+        children = Stack(
+          children: [
+            children,
+            for (var i = 0; i < items.length; ++i)
+              Positioned(
+                top: 5,
+                left: 5.0 * (i + 1) + 32 * i,
+                child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+              ),
+          ],
+        );
+      }
+    }
+
+    return children;
   }
 }
