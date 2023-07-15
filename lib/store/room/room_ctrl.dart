@@ -312,7 +312,7 @@ class RoomCtrl extends SceneCtrl {
 
   @override
   void onRender(S_SyncRoomInfo? data) {
-    followRx = roomHttpInfo?['follow_status'] ?? false;
+    followRx.value = roomHttpInfo?['follow_status'] ?? false;
     userCountRx.value = data?.onlineList.length ?? 0;
 
     // 更新mike位数据
