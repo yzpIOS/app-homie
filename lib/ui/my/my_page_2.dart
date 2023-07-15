@@ -27,6 +27,13 @@ class MyPage2 extends StatefulWidget {
 }
 
 class _MyPage2State extends State<MyPage2> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.find<MyInfoCtrl>().doRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     const divider = Divider(height: 10, thickness: 10, color: AppPalette.background2);
@@ -39,7 +46,10 @@ class _MyPage2State extends State<MyPage2> {
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
-                const _HeaderView(),
+                Obx((){
+                  Rx<MyInfoDto> dataRx = Get.find<MyInfoCtrl>().dataRx;
+                  return _HeaderView(myInfoDto: dataRx.value,);
+                }),
                 divider,
                 _Action1(),
                 divider,
@@ -171,7 +181,8 @@ class _MyPage2State extends State<MyPage2> {
 }
 
 class _HeaderView extends StatelessWidget {
-  const _HeaderView();
+  MyInfoDto? myInfoDto;
+  _HeaderView({required this.myInfoDto});
 
   @override
   Widget build(BuildContext context) {
