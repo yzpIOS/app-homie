@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/env.dart';
+import 'package:app/tools/log.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -75,7 +76,7 @@ class CustomSocket {
     }
     // 防止重复调用
     if(_host == host && _port == port) {
-      debugPrint("[socket]:连接地址相同, host=$host, port=$port");
+      xlog("[socket]:连接地址相同, host=$host, port=$port", type: LogType.SOCKET);
       return this;
     }
     _timeout = timeout;
@@ -89,7 +90,7 @@ class CustomSocket {
     _socketSubscription?.cancel();
 
     if(_isConnecting) {
-      debugPrint("[socket]:连接条件不满足, _isConnecting=$_isConnecting");
+      xlog("[socket]:连接条件不满足, _isConnecting=$_isConnecting", type: LogType.SOCKET);
       return this;
     }
 
@@ -98,12 +99,12 @@ class CustomSocket {
       return this;
     }
 
-    debugPrint("[socket]:发起连接, host=$host, port=$_port");
+    xlog("[socket]:发起连接, host=$host, port=$_port", type: LogType.SOCKET);
     // 正在连接中
     _isConnecting = true;
     // 链接新的socket
     Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
-      debugPrint("[socket]:连接成功, host=$host, port=$_port");
+      xlog("[socket]:连接成功, host=$host, port=$_port", type: LogType.SOCKET);
       _socket = event;
       _isConnecting = false;
       // 处理连接
@@ -113,13 +114,13 @@ class CustomSocket {
         try {
           _connected[index].call();
         } catch(e) {
-          debugPrint("[socket]:_connected热行失败");
+          xlog("[socket]:_connected热行失败", type: LogType.SOCKET);
         }
       }
       // 连接成功回调
       _riseCallBack2(BaseClient.CONNECT_SUC);
     }, onError: (error) async {
-      debugPrint("[socket]:连接失败, host=$host, port=$_port");
+      xlog("[socket]:连接失败, host=$host, port=$_port", type: LogType.SOCKET);
       _isConnecting = false;
       // 关闭之前的socket链接
       _socket?.close();
@@ -130,7 +131,7 @@ class CustomSocket {
         try {
           _connectError[index].call();
         } catch(e) {
-          debugPrint("[socket]:onError热行失败");
+          xlog("[socket]:onError热行失败", type: LogType.SOCKET);
         }
       }
 
@@ -165,7 +166,7 @@ class CustomSocket {
   void _handleConnect() {
     // 把前一个订阅取消掉
     _socketSubscription?.cancel();
-    debugPrint("[socket]:监听网络数据, ${_socket?.address}");
+    xlog("[socket]:监听网络数据, ${_socket?.address}", type: LogType.SOCKET);
 
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
@@ -173,7 +174,7 @@ class CustomSocket {
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {
-      debugPrint("[socket]:网络连接错误, ${error.toString()}");
+      xlog("[socket]:网络连接错误, ${error.toString()}", type: LogType.SOCKET);
       // 接收到数据报错，需要断开重接吗？
       // 关闭之前的socket链接
       _socket?.close();
@@ -215,12 +216,12 @@ class CustomSocket {
     _netStateSubscription?.cancel();
     // 订阅网络变化
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
-      debugPrint("[socket]:网络发生变化, state = $state");
+      xlog("[socket]:网络发生变化, state = $state", type: LogType.SOCKET);
       // 是否有网络
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       // 没有网络直接返回
       if(!hasNet) {
-        debugPrint("[socket]:网络发生变化；无网络, state = $state");
+        xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
         // 回调断开连接
         riseDisconnect();
         resetConnect(clearHost: false);
@@ -229,10 +230,10 @@ class CustomSocket {
 
       // 己经连接, 或者在重连中
       if(_socket != null) {
-        debugPrint("[socket]:网络发生变化；己连接, state = $state");
+        xlog("[socket]:网络发生变化；己连接, state = $state", type: LogType.SOCKET);
         return;
       }
-      debugPrint("[socket]:网络发生变化；发送连接请求, state = $state");
+      xlog("[socket]:网络发生变化；发送连接请求, state = $state", type: LogType.SOCKET);
       // ip和端口
       String host = _host;
       int port = _port;
@@ -297,7 +298,7 @@ class CustomSocket {
       try {
         element.call(data);
       } catch(e) {
-        debugPrint("[socket]:数据接逻辑处理失败, ${e.toString()}");
+        xlog("[socket]:数据接逻辑处理失败, ${e.toString()}", type: LogType.SOCKET);
       }
     });
   }
@@ -334,6 +335,8 @@ class CustomSocket {
       _host = "";
       _port = 0;
     }
+    // 唤起断开连接
+    riseDisconnect();
   }
 
   void riseDisconnect() {
@@ -341,7 +344,7 @@ class CustomSocket {
       try {
         _disconnects[index].call();
       } catch(e) {
-        debugPrint("[socket]:断开连接回调处理失败, ${e.toString()}");
+        xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
       }
     }
   }

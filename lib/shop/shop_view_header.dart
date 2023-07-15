@@ -184,13 +184,13 @@ class ModelOverlay$Shop extends StatelessWidget {
           bottom: 20,
           width: 60,
           height: 30,
-          child: $BuyView(),
+          child: buyView(),
         ),
       ],
     );
   }
 
-  Widget $BuyView() {
+  Widget buyView() {
     const ts = TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold);
 
     return GetX<ShoppingCartCtrl>(

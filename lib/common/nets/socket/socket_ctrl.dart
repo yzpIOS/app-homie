@@ -66,7 +66,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 监听unity发送的消息
     local.onReceiveDataFromU((session, cmd, data) {
       if(Env.isDebug) {
-        debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
+        xlog("[socket]:uniqueId: uniqueId ${uniqueId}", type: LogType.SOCKET);
       }
       if(session.uniqueId != uniqueId) {
         return;
@@ -86,7 +86,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.onRawData((cmd, data) {
       riseOnRawData(cmd, data);
       if(Env.isDebug) {
-        debugPrint("[socket]:uniqueId: uniqueId ${uniqueId}");
+        xlog("[socket]:uniqueId: uniqueId ${uniqueId}", type: LogType.SOCKET);
       }
       local.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
@@ -275,6 +275,20 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
+  /// 取消心跳
+  ///
+  void cancelUnityHeartBeat() {
+    local.cancelHeartBeat();
+  }
+
+  ///
+  /// 开始与unity的心跳
+  ///
+  void startUnityHeartBeat() {
+    local.beatHeartCheck();
+  }
+
+  ///
   /// 用户信息返回
   ///
   void onRoleResponse(int cmd, S_Role? role) {
@@ -283,7 +297,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     }
     var roleId = role.role.roleId;
     var name = role.role.name;
-    debugPrint("aaa");
   }
 
   ///
@@ -302,7 +315,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 服务端错误
   ///
   void onServerError(int cmd, S_Err? role) {
-    debugPrint("服务端返回错误：cmd = $cmd error = ${role?.code}");
+    xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }

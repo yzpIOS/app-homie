@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/shop/home_shop_page.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
@@ -25,7 +26,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with BusStateMixin {
+class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver {
   final selector = ValueNotifier(1);
 
   final pages = <Widget>[], navs = <NavBarItem>[];
@@ -62,6 +63,13 @@ class _MainPageState extends State<MainPage> with BusStateMixin {
         },
       );
     }
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   void _initPages() {
@@ -78,6 +86,32 @@ class _MainPageState extends State<MainPage> with BusStateMixin {
     for (final item in items) {
       pages.add(item.value2);
       navs.add(NavBarItem(label: item.value1, badge: item.value3, refreshEvent: item.value4));
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch(state) {
+      case AppLifecycleState.inactive:
+        //??
+        break;
+      case AppLifecycleState.resumed:
+        // 从后台到前台了
+        // 开启socket连接
+        SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
+        SocketCtrl.ins.startUnityHeartBeat();
+        break;
+      case AppLifecycleState.paused:
+        // 界面不可见，退后台
+        SocketCtrl.ins.closeSocket();
+        SocketCtrl.ins.cancelUnityHeartBeat();
+        break;
+      case AppLifecycleState.detached:
+        // app 结束时调用
+        break;
+      default:
+        break;
     }
   }
 

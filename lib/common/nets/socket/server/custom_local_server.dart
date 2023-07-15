@@ -9,6 +9,7 @@ import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_socket_session.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/env.dart';
+import 'package:app/tools/log.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
@@ -195,7 +196,7 @@ class CustomLocalServer with BaseClient {
           }
           // 心跳
           if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
-            debugPrint("收不到unity心跳，断开链接");
+            xlog("收不到unity心跳，断开链接", type: LogType.SOCKET);
             // 移除session
             deletes.add(key);
             // 己经挂掉
@@ -222,6 +223,9 @@ class CustomLocalServer with BaseClient {
     });
   }
 
+  void cancelHeartBeat() {
+    _beatHeartCheckStream?.cancel();
+  }
 
   ///
   /// 连接关闭时自动连接
@@ -230,13 +234,13 @@ class CustomLocalServer with BaseClient {
     _netStateSubscription?.cancel();
     // 订阅网络变化
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) async {
-      debugPrint("[socket]:网络发生变化, state = $state");
+      xlog("[socket]:网络发生变化, state = $state", type: LogType.SOCKET);
       // 是否有网络
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       // 没有网络直接返回
       if(!hasNet) {
         previouseHasNet = false;
-        debugPrint("[socket]:网络发生变化；无网络, state = $state");
+        xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
         _sessions.forEach((key, value) {
           value.dispose();
         });

@@ -50,6 +50,7 @@ enum LogType {
   RTC,
   GIFT_EFFECT,
   GETX,
+  SOCKET,
 }
 
 const _visible = <LogType>{
@@ -71,6 +72,7 @@ const _visible = <LogType>{
   LogType.RTC,
   // LogType.GIFT_EFFECT,
   // LogType.GETX,
+  LogType.SOCKET,
 };
 
 bool canLog(LogType? type) {
@@ -82,8 +84,12 @@ void xlog(message, {int level = 1, LogType type = LogType.App}) {
 
   late final String msg = message is CreateLog ? message() : '$message';
 
-  if (level > 0) _log(msg, level: level, name: name);
-  if (canLog(type)) _print(msg, name: name);
+  if (level > 0) {
+    _log(msg, level: level, name: name);
+  }
+  if (canLog(type)) {
+    _print(msg, name: name);
+  }
 }
 
 void errLog(e, StackTrace? s, {String? message, LogType type = LogType.App}) {

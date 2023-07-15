@@ -9,6 +9,7 @@ import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
 import 'package:app/env.dart';
+import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:protobuf/protobuf.dart';
 
@@ -74,8 +75,8 @@ class CustomSocketSession with BaseClient {
   ///
   bool sendBytes(int cmd, {Uint8List? datas}) {
     if(Env.isDebug) {
-      debugPrint("[socket]:sever>>>unity发送数据, cmd = $cmd, data = ${datas
-          .toString()}");
+      xlog("[socket]:sever>>>unity发送数据, cmd = $cmd, data = ${datas
+          .toString()}", type: LogType.SOCKET);
     }
     int len = datas?.length ?? 0;
     // 加密
@@ -113,7 +114,7 @@ class CustomSocketSession with BaseClient {
         C_Verify? c_verify = onGeneratedMessage as C_Verify?;
         uniqueId = c_verify?.uniqueId ?? "";
         if(Env.isDebug) {
-          debugPrint("[socket]:接收到unity uniqueId = $uniqueId");
+          xlog("[socket]:接收到unity uniqueId = $uniqueId", type: LogType.SOCKET);
         }
         break;
       case BaseClient.CONNECT_EXIT:
@@ -123,7 +124,7 @@ class CustomSocketSession with BaseClient {
       case BaseClient.USER_HEART_BEAT:
         // 心跳
         lastReceivePkgTime = DateTime.now().millisecondsSinceEpoch;
-        debugPrint("[socket]:收到unity发来的心跳 = $uniqueId");
+        xlog("[socket]:收到unity发来的心跳 = $uniqueId", type: LogType.SOCKET);
         break;
     }
   }
