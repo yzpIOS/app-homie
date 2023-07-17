@@ -23,7 +23,7 @@ class ConvView extends GetView<ConvManagerCtrl> {
       doRefresh: controller.doRefresh,
       padding: const Pad(bottom: 64),
       divider: const Divider(indent: 60),
-      itemBuilder: (_, item, __) => _ItemView(data: item, special: special),
+      itemBuilder: (_, item, __) => _ItemView(data: item, convManagerCtrl:controller, special: special),
     );
 
     child = ConfigListState(
@@ -45,7 +45,9 @@ class _ItemView extends StatelessWidget {
   final V2TimConversation data;
   final SpecialTextSpanBuilder? special;
 
-  const _ItemView({required this.data, this.special});
+  final ConvManagerCtrl convManagerCtrl;
+
+  const _ItemView({required this.data, required this.convManagerCtrl, this.special});
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,10 @@ class _ItemView extends StatelessWidget {
         onTap: () {
           switch (data.type) {
             case ConversationType.V2TIM_C2C:
+              // 打开聊天
               ChatPage.to(SingleChatCtrl.fromUid(data.userID!));
+              // 设置为己读
+              convManagerCtrl.markUserConvAsRead(data.userID!);
               break;
             default:
               showToast('当前版本不支持');

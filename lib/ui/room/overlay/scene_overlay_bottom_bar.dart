@@ -125,7 +125,7 @@ class _ConvViewState extends State<_ConvView> {
   @override
   Widget build(BuildContext context) {
     return NotifierView(
-      Get.find<ConvManagerCtrl>().badge,
+      Get.find<ConvManagerCtrl>().unReadMessageCount,
       onData: (data) {
         return _IconBtn(
           icon: '消息_${(data > 0).intVal}',

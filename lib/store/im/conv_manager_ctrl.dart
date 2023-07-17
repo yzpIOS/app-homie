@@ -8,9 +8,13 @@ import 'package:app/widgets.dart';
 
 class ConvManagerCtrl extends GetxController with GetDisposableMixin {
   final _dataRx = RxMap<String, V2TimConversation>();
+  // 用于刷新数据
+  final _refresCount = RxList<String>();
+
   final convRx = RxList<V2TimConversation>();
 
   final badge = ValueNotifier<int>(0);
+  final unReadMessageCount = ValueNotifier<int>(0);
   final sysBadgeRx = RxMap<SysConvEnum, Tuple2<V2TimConversation, int>>();
 
   Future? _cache;
@@ -32,17 +36,18 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
     }
 
     bindWorker(
-      interval<Map<String, V2TimConversation>>(
-        _dataRx,
+      interval<List<String>>(
+        _refresCount,
         time: const Duration(milliseconds: 100),
         (data) async {
-          final items = data.values.toList(growable: false);
+          final items = _dataRx.values.toList(growable: false);
 
           final showData = <V2TimConversation>[];
 
           await _fetchSysExt(items);
 
           int otherTotal = 0;
+          int unUserReadMessageCount = 0;
           for (final item in items) {
             if (item.isSysConv) {
               final type = SysConvEnum.fromVal(_sysExt[item.userID]?['type']);
@@ -61,6 +66,9 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
                   case SysConvEnum.news:
                   case SysConvEnum.notice:
                     showData.add(item);
+                    if((item.unreadCount ?? 0) > 0) {
+                      unUserReadMessageCount += (item.unreadCount ?? 0);
+                    }
                     break;
                   case SysConvEnum.dressUp:
                   case SysConvEnum.gift:
@@ -69,9 +77,13 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
               }
             } else {
               showData.add(item);
+              if((item.unreadCount ?? 0) > 0) {
+                unUserReadMessageCount += (item.unreadCount ?? 0);
+              }
             }
           }
-
+          // 未读im消息
+          unReadMessageCount.value = unUserReadMessageCount;
           badge.value = showData.map((e) => e.unreadCount ?? 0).sum + otherTotal;
 
           showData.sort(
@@ -93,6 +105,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
         _dataRx.addAll(
           conversationList.groupFoldBy((val) => val.conversationID, (_, val) => val),
         );
+        _refresCount.addAll(conversationList.map((e) => e.convId));
 
         xlog('某些会话的关键信息发生变化', level: 0, type: LogType.IM);
       },
@@ -115,6 +128,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
         _dataRx.addAll(
           conversationList.groupFoldBy((val) => val.conversationID, (_, val) => val),
         );
+        _refresCount.addAll(conversationList.map((e) => e.convId));
 
         xlog('新会话的回调函数', type: LogType.IM);
       },
@@ -195,6 +209,14 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
 
       sysBadgeRx[type] = data.copyWith(value2: 0);
     }
+  }
+
+  ///
+  /// 设置用户的聊天为己读
+  ///
+  void markUserConvAsRead(String userid) async {
+    await IM.chat.markC2CMessageAsRead(userID: userid);
+    _refresCount.add(DateTime.now().millisecondsSinceEpoch.toString());
   }
 
   Future doRefresh() {
