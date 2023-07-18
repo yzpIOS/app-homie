@@ -18,6 +18,27 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     return Get.find<RoomManagerCtrl>();
   }
 
+  void closeRoom({Function? closeFunc}) {
+    if(_sceneCtrl == null && _sceneCtrl is RoomCtrl == false) {
+      return;
+    }
+    // 关闭函数
+    ;
+    // 房间
+    RoomCtrl? roomCtrl = _sceneCtrl as RoomCtrl?;
+    if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
+      // 不是公会，并且用户所在的房间是主人房
+      Api.Room.close().asStream().listen((event) {
+        doCloseState();
+        closeFunc?.call();
+      });
+    } else {
+      // 房间manager
+      doCloseState();
+      closeFunc?.call();
+    }
+  }
+
   final stateRx = Rx(RoomState.None);
 
   SceneCtrl? _sceneCtrl;

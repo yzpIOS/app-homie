@@ -1,5 +1,6 @@
 
 class CMD {
+  static const G_Heart = 1;
   static const S_Err = 4;//错误码
 
   static const C_UpdateRole = 124; // 更新角色数据

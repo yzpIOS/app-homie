@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
@@ -190,7 +191,7 @@ class CustomClient with BaseClient {
   ///
   /// 心跳返回处理
   void handleHeartBeatRes(int cmd) {
-    if(cmd != 1) {
+    if(cmd != CMD.G_Heart) {
       return;
     }
     // 尺到心跳回庆重新置成0

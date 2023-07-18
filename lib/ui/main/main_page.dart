@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/shop/home_shop_page.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/main/nav_view.dart';
 import 'package:app/ui/message/message_page.dart';
@@ -28,6 +31,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver {
   final selector = ValueNotifier(1);
+
+  bool resumeReconnect = false;
+  StreamSubscription? _closeCountDown;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -64,11 +70,21 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       );
     }
     WidgetsBinding.instance.addObserver(this);
+    SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
+  }
+
+  ///
+  /// 关闭房间
+  ///
+  void onDisconnectCallBack() {
+    RoomManagerCtrl.ins.closeRoom();
   }
 
   @override
   void dispose() {
+    _closeCountDown?.cancel();
     WidgetsBinding.instance.removeObserver(this);
+    SocketCtrl.ins.removeDisconnect(onDisconnectCallBack);
     super.dispose();
   }
 
@@ -97,15 +113,23 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
+        _closeCountDown?.cancel();
         // 从后台到前台了
         // 开启socket连接
+        if(!resumeReconnect) {
+          return;
+        }
+        resumeReconnect = false;
+        // 重新连接
         SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
+        // 开始heart beat
         SocketCtrl.ins.startUnityHeartBeat();
         break;
       case AppLifecycleState.paused:
-        // 界面不可见，退后台
-        SocketCtrl.ins.closeSocket();
-        SocketCtrl.ins.cancelUnityHeartBeat();
+        _closeCountDown = Future.delayed(const Duration(seconds: 40)).asStream().listen((event) {
+          SocketCtrl.ins.closeSocket();
+          SocketCtrl.ins.cancelUnityHeartBeat();
+        });
         break;
       case AppLifecycleState.detached:
         // app 结束时调用
