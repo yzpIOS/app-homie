@@ -5,6 +5,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
@@ -126,6 +127,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         _resetHotCount();
         break;
       case '意见反馈':
+        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST, data: {"aaaaaaaaaaaaaaabbbbbbbbbbbbbb":"aaaaaaaaaaaaaaabbbbbbbbbbbbbb"});
         Get.to(() => FeedbackPage(type: 1, id: controller.roomId));
         break;
       default:

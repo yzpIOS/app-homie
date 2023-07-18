@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -8,6 +9,7 @@ import 'package:app/shop/home_shop_page.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/main/nav_view.dart';
 import 'package:app/ui/message/message_page.dart';
@@ -29,7 +31,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver {
+class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver, RouteAware {
   final selector = ValueNotifier(1);
 
   bool resumeReconnect = false;
@@ -69,8 +71,27 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         },
       );
     }
+    selector.addListener(() {
+      if(selector.value == 2) {
+        // 切换到unity，需要开始Unity
+        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+            data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
+      } else {
+        // 切走了，停止unity
+        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+            data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
+      }
+    });
     WidgetsBinding.instance.addObserver(this);
+    // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 添加监听订阅页面的生命周期
+    AppNavObserver.subscribe(this, context);
   }
 
   ///
@@ -80,9 +101,35 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     RoomManagerCtrl.ins.closeRoom();
   }
 
+
+  ///
+  /// 当前页面push到其他页面走这里
+  ///
+  @override
+  void didPushNext() {
+    super.didPushNext();
+    if(selector.value == 2) {
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+          data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
+    }
+  }
+
+  ///
+  /// 从其他页面pop回当前页面走这里
+  ///
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    if(selector.value == 2) {
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+          data: {UnityCtrl.UNITY_RESUME_EVENT: UnityCtrl.UNITY_RESUME_EVENT});
+    }
+  }
+
   @override
   void dispose() {
     _closeCountDown?.cancel();
+    AppNavObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
     SocketCtrl.ins.removeDisconnect(onDisconnectCallBack);
     super.dispose();

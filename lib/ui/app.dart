@@ -1,3 +1,4 @@
+import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -72,6 +73,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
         Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
       ],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      navigatorObservers: [AppNavObserver.routeObserver],
     );
 
     child = Stack(

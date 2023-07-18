@@ -3,6 +3,7 @@ import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/local_attach.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/login/init/user_init_view.dart';
@@ -29,6 +30,14 @@ class _UserInit2PageState extends State<UserInit2Page> {
     const {'昵称'},
     value: (_) => TextEditingController(),
   );
+
+  @override
+  void dispose() {
+    super.dispose();
+    // 切走了，停止unity, 否则会报错
+    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
+  }
 
   @override
   Widget build(BuildContext context) {

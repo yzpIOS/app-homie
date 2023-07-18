@@ -38,6 +38,12 @@ public class FUnityPlugin: NSObject, FlutterPlugin {
                 methodName: args["methodName"]!,
                 message: args["message"]!
             )
+            
+            if(args["message"]!.contains("flutter_tell_ios_stop_render_event")) {
+                UnityFramework.getInstance().pause(true);
+            } else if(args["message"]!.contains("flutter_tell_ios_resumt_render_event")) {
+                UnityFramework.getInstance().pause(false);
+            }
         
             result(nil)
         default:

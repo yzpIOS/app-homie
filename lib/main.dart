@@ -20,7 +20,6 @@ void main() async {
     'App 初始化',
     action: () async {
       FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
-
       asyncTrack('Executor 初始化', action: executorInit);
 
       await Future.wait(

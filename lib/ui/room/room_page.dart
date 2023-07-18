@@ -1,3 +1,4 @@
+import 'package:app/common/AppNavObserver.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/room_state.dart';
@@ -9,6 +10,7 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_gift_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/super_gift_broadcast_ctrl.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/svga_effect_overlay.dart';
 import 'package:app/ui/common/unity_view.dart';
@@ -68,7 +70,7 @@ class RoomPage extends StatefulWidget {
   State<RoomPage> createState() => _RoomPageState();
 }
 
-class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, OverlayMixin {
+class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, OverlayMixin, RouteAware {
   late final controller = widget.controller;
 
   @override
@@ -76,13 +78,25 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     super.initState();
 
     Wakelock.enable();
-
     _init();
+    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 添加监听订阅页面的生命周期
+    AppNavObserver.subscribe(this, context);
+  }
+
 
   @override
   void dispose() {
     Wakelock.disable();
+    AppNavObserver.unsubscribe(this);
+    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
 
     super.dispose();
   }
@@ -109,6 +123,26 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
       safePop().whenComplete(() => Get.alertDialog(msg));
     }
+  }
+
+  ///
+  /// 当前页面push到其他页面走这里
+  ///
+  @override
+  void didPushNext() {
+    super.didPushNext();
+    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
+  }
+
+  ///
+  /// 从其他页面pop回当前页面走这里
+  ///
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
   }
 
   void _initListener() {
