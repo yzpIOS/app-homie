@@ -1,5 +1,4 @@
 #import "GeneratedPluginRegistrant.h"
-#import "HookMutableArray.h"
 #import "NSArray+Safe.h"
 #import "NSDictionary+Safe.h"
 #import "NSMutableArray+Safe.h"
