@@ -55,7 +55,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     SceneCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
     if(roomCtrl is SquareCtrl) {
       // 加入房间但是不能上麦
-      roomCtrl.enableUpMikeButton.value = true;
+      roomCtrl.enableUpMikeButton.value = false;
     }
     joinRoom(roomId: data.roomId.toInt().toString());
   }

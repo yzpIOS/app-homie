@@ -1,4 +1,7 @@
 import 'package:app/3rd/tencent/rtc.dart';
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_ctrl.dart';
@@ -10,6 +13,7 @@ import 'package:app/ui/room/overlay/room_anime_dialog.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:fixnum/fixnum.dart';
 
 abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
   late final roomId = controller.roomId;
@@ -66,8 +70,13 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         break;
       case '最小化':
         controller.keepState = true;
-
         Get.back();
+        // 公会房通知下线
+        if(controller.roomType == RoomType.guild) {
+          C_GoBack c_goBack = C_GoBack.create();
+          c_goBack.roomId = Int64(roomId);
+          SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
+        }
         break;
       default:
         assert(false, '未处理的业务 -> $action');

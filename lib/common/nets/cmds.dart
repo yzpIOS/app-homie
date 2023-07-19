@@ -23,6 +23,8 @@ class CMD {
   static const C_JoinScene = 2112; // 加入房间场景=======对接完成
   static const S_JoinScene = 2113; // 加入房间场景反馈结果=======对接完成
 
+  static const C_GoBack = 2116;//公会房间按钮返回键发送的消息c_gob
+
   static const C_OutScene = 2114; // 退出房间场景, 只是退出场景，rtc还在=======对接完成
   static const S_OutScene = 2115; // 退出房间场景反馈结果=======对接完成
 

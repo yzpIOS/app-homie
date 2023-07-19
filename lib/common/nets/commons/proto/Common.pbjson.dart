@@ -42,11 +42,12 @@ const State$json = const {
     const {'1': 'None', '2': 0},
     const {'1': 'Mai', '2': 1},
     const {'1': 'Sit', '2': 2},
+    const {'1': 'Swim', '2': 3},
   ],
 };
 
 /// Descriptor for `State`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List stateDescriptor = $convert.base64Decode('CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAI=');
+final $typed_data.Uint8List stateDescriptor = $convert.base64Decode('CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAISCAoEU3dpbRAD');
 @$core.Deprecated('Use attrVODescriptor instead')
 const AttrVO$json = const {
   '1': 'AttrVO',
