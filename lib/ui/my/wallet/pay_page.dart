@@ -9,6 +9,7 @@ import 'package:app/ui/common/web_page.dart';
 import 'package:app/widgets.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 
 class PayPage extends StatefulWidget {
   final int payType;
@@ -23,9 +24,11 @@ class PayPage extends StatefulWidget {
 class _PayPageState extends State<PayPage> {
   late final data = widget.data;
 
+
   @override
   void initState() {
     super.initState();
+
 
     doPay();
   }
@@ -208,4 +211,6 @@ class _PayPageState extends State<PayPage> {
 
     Get.back(result: false);
   }
+
+
 }

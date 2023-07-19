@@ -4,6 +4,7 @@ import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
 import 'package:app/ui/my/wallet/pay_page.dart';
 import 'package:app/widgets.dart';
@@ -24,6 +25,8 @@ class _RechargePageState extends State<RechargePage> {
   final type = MoneyType.diamond;
 
   late final api = Api.Wallet.rechargeCombo();
+
+  ApplePurchase applePurchase = ApplePurchase();
 
   static final _format = NumberFormat('0.##').format;
 
@@ -94,7 +97,7 @@ class _RechargePageState extends State<RechargePage> {
           Spacing.h20,
           $ComboView(items),
           Spacing.h20,
-          if (types.length > 1) $PayTypeView(types),
+          if (types.isNotEmpty) $PayTypeView(types),
           Spacing.exp,
           Padding(
             padding: Pad(horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
@@ -237,20 +240,31 @@ class _RechargePageState extends State<RechargePage> {
       return;
     }
 
-    //1：支付宝，2：微信
+    //1：支付宝，2：微信，3: 苹果内购
     final payType = payTypeRx()!;
 
     simpleSub(
       Api.Wallet.recharge(id: data['id'], payType: payType),
       callback1: (resp) async {
-        final b = await Get.to(() => PayPage(payType: payType, data: resp));
+        bool payResult;
+        if(payType == 4) {
+          payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
+        } else {
+          payResult = await Get.to(() => PayPage(payType: payType, data: resp));
+        }
 
-        if (b == true) {
+        if (payResult) {
           Get.back(result: true);
 
           MoneyChangeEvent({type: data['diamond_amount']}).fire();
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    applePurchase.dispose();
   }
 }

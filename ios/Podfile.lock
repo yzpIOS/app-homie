@@ -67,6 +67,9 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
+  - in_app_purchase_storekit (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - just_audio (0.0.1):
     - Flutter
   - link_kit (1.0.1):
@@ -96,9 +99,9 @@ PODS:
   - ReachabilitySwift (5.0.0)
   - record (0.0.1):
     - Flutter
-  - SDWebImage (5.15.8):
-    - SDWebImage/Core (= 5.15.8)
-  - SDWebImage/Core (5.15.8)
+  - SDWebImage (5.17.0):
+    - SDWebImage/Core (= 5.17.0)
+  - SDWebImage/Core (5.17.0)
   - share_plus (0.0.1):
     - Flutter
   - sqflite (0.0.3):
@@ -114,7 +117,7 @@ PODS:
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
     - TXLiteAVSDK_Professional (= 11.1.14143)
   - TXCustomBeautyProcesserPlugin (1.0.2)
-  - TXIMSDK_Plus_iOS (7.2.4146)
+  - TXIMSDK_Plus_iOS (7.3.4358)
   - TXLiteAVSDK_Professional (11.1.14143):
     - TXLiteAVSDK_Professional/Professional (= 11.1.14143)
   - TXLiteAVSDK_Professional/Professional (11.1.14143)
@@ -148,6 +151,7 @@ DEPENDENCIES:
   - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
   - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - link_kit (from `.symlinks/plugins/link_kit/ios`)
   - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
@@ -212,6 +216,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_editor_common/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  in_app_purchase_storekit:
+    :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   link_kit:
@@ -272,6 +278,7 @@ SPEC CHECKSUMS:
   HydraAsync: 8d589bd725b0224f899afafc9a396327405f8063
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   link_kit: d7bfc53a95ba13ef377f4c2dc208015a7902d21e
   media_kit_libs_ios_video: 96259eccffaa309b63a7ee610c2c7786a3b335e5
@@ -285,14 +292,14 @@ SPEC CHECKSUMS:
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
-  SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
+  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   tencent_cloud_chat_sdk: 8a2bceccaf81e7f922e7b6509ab93c39c3884dda
   tencent_trtc_cloud: 8e7982c2423cb0187cefedd4a1d913767a778536
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
-  TXIMSDK_Plus_iOS: 560464285b93add271d5fd7a2a26434293821c11
+  TXIMSDK_Plus_iOS: bc72c7cec1b5e975c3cc6629692c849513a932f5
   TXLiteAVSDK_Professional: a20fdf458f2e9c1c24cc4219310707c74d410d1c
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
@@ -303,4 +310,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 16bb13b57442a74762b5010ee9fa082d34128898
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.1

@@ -116,6 +116,9 @@ dependencies:
   # https://pub.dev/packages/protoc_plugin/install
   protoc_plugin: ^20.0.1
 
+  # 苹果内购
+  in_app_purchase: ^3.1.7
+
 
 link_kit:
   deep_link: homie:///

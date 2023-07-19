@@ -41,4 +41,11 @@ class ApiWallet extends ApiBase {
 
     return _doPost('gold_coins/exchange', data: data);
   }
+
+  ///
+  /// 查询苹果支付的状态
+  ///
+  Future checkAppPayStatus(String transaction_id) {
+    return _doPost("/apple_iap/callback", data: {"transaction_id": transaction_id});
+  }
 }
