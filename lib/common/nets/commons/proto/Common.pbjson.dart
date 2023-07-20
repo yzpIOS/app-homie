@@ -27,14 +27,15 @@ const AttrCode$json = const {
     const {'1': 'growth_value', '2': 12},
     const {'1': 'charm_growth_value', '2': 13},
     const {'1': 'real_name_type', '2': 14},
-    const {'1': 'animate', '2': 15},
     const {'1': 'mike_id', '2': 16},
     const {'1': 'mike_no', '2': 17},
+    const {'1': 'animate', '2': 15},
+    const {'1': 'stage', '2': 18},
   ],
 };
 
 /// Descriptor for `AttrCode`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIICgRub25lEAASBgoCbHYQARIMCghjaGFybV9sdhACEgcKA3NleBADEgoKBmNhcmVlchAEEgkKBXNwZWVkEAUSCQoFc2NlbmUQBhIICgRyb29tEAcSBwoDam9iEAgSDgoKYXZhdGFyX3VybBAJEg0KCXB1YmxpY19pZBAKEg8KC2Rlc2NyaXB0aW9uEAsSEAoMZ3Jvd3RoX3ZhbHVlEAwSFgoSY2hhcm1fZ3Jvd3RoX3ZhbHVlEA0SEgoOcmVhbF9uYW1lX3R5cGUQDhILCgdhbmltYXRlEA8SCwoHbWlrZV9pZBAQEgsKB21pa2Vfbm8QEQ==');
+final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode('CghBdHRyQ29kZRIICgRub25lEAASBgoCbHYQARIMCghjaGFybV9sdhACEgcKA3NleBADEgoKBmNhcmVlchAEEgkKBXNwZWVkEAUSCQoFc2NlbmUQBhIICgRyb29tEAcSBwoDam9iEAgSDgoKYXZhdGFyX3VybBAJEg0KCXB1YmxpY19pZBAKEg8KC2Rlc2NyaXB0aW9uEAsSEAoMZ3Jvd3RoX3ZhbHVlEAwSFgoSY2hhcm1fZ3Jvd3RoX3ZhbHVlEA0SEgoOcmVhbF9uYW1lX3R5cGUQDhILCgdtaWtlX2lkEBASCwoHbWlrZV9ubxAREgsKB2FuaW1hdGUQDxIJCgVzdGFnZRAS');
 @$core.Deprecated('Use stateDescriptor instead')
 const State$json = const {
   '1': 'State',

@@ -37,13 +37,23 @@ class ApiDressUp extends ApiBase {
     return _doPost('user_current_dress_up/update', data: data).then((val) => val['items']);
   }
 
-  Future useAndSave({required List<int> useIds, required List<int> saveIds}) {
-    final data = {
-      'use_product_id_list': useIds,
-      'save_dress_up_product_id_list': saveIds,
-    };
+  Future<S_UseProductAndSaveUserCurrentDressUp?> useAndSave({required List<int> useIds, required List<int> saveIds}) {
+    C_UseProductAndSaveUserCurrentDressUp dressUp = C_UseProductAndSaveUserCurrentDressUp.create();
+    dressUp.saveDressUpProductIdList.addAll(saveIds.map((e) => Int64(e)).toList());
+    dressUp.useProductIdList.addAll(useIds.map((e) => Int64(e)).toList());
 
-    return _doPost('use_and_save', data: data);
+    return SocketCtrl.ins.sendByteAsyncServer(
+        CMD.C_UseProductAndSaveUserCurrentDressUp,
+      datas: dressUp.writeToBuffer(),
+      resCmd: CMD.S_UseProductAndSaveUserCurrentDressUp
+    );
+
+    // final data = {
+    //   'use_product_id_list': useIds,
+    //   'save_dress_up_product_id_list': saveIds,
+    // };
+    //
+    // return _doPost('use_and_save', data: data);
   }
 
   Future give({required UID uid, required List<int> ids}) {

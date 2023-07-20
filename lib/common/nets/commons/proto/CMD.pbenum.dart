@@ -27,6 +27,9 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD C_CreateRole = CMD._(121, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_CreateRole');
   static const CMD S_CreateRole = CMD._(122, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_CreateRole');
   static const CMD G_RemoveRole = CMD._(123, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G_RemoveRole');
+  static const CMD C_UpdateRole = CMD._(124, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_UpdateRole');
+  static const CMD S_UpdateRole = CMD._(125, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UpdateRole');
+  static const CMD S_UpdateRoleBroadcast = CMD._(126, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UpdateRoleBroadcast');
   static const CMD C_ReLink = CMD._(131, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_ReLink');
   static const CMD C_ExitGame = CMD._(132, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_ExitGame');
   static const CMD G_SwitchScene = CMD._(200, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'G_SwitchScene');
@@ -45,6 +48,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_EnforceZone = CMD._(243, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_EnforceZone');
   static const CMD C_StopMove = CMD._(245, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_StopMove');
   static const CMD C_Animate = CMD._(246, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Animate');
+  static const CMD C_Stage = CMD._(247, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Stage');
   static const CMD S_AddRole = CMD._(250, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_AddRole');
   static const CMD S_RemoveObj = CMD._(251, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_RemoveObj');
   static const CMD S_RemoveObjs = CMD._(252, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_RemoveObjs');
@@ -54,8 +58,8 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_SyncSeatInfo = CMD._(281, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_SyncSeatInfo');
   static const CMD C_GoToRoom = CMD._(300, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GoToRoom');
   static const CMD S_GoToRoom = CMD._(301, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GoToRoom');
-  static const CMD C_InFreeMikesArea = CMD._(304, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_InFreeMikesArea');
-  static const CMD S_InFreeMikesArea = CMD._(305, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_InFreeMikesArea');
+  static const CMD C_RoomEnterComplete = CMD._(2000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_RoomEnterComplete');
+  static const CMD S_SyncRoomInfo = CMD._(2001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_SyncRoomInfo');
   static const CMD C_CreateScene = CMD._(2100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_CreateScene');
   static const CMD S_CreateScene = CMD._(2101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_CreateScene');
   static const CMD C_CloseScene = CMD._(2103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_CloseScene');
@@ -64,6 +68,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_JoinScene = CMD._(2113, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_JoinScene');
   static const CMD C_OutScene = CMD._(2114, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OutScene');
   static const CMD S_OutScene = CMD._(2115, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_OutScene');
+  static const CMD C_GoBack = CMD._(2116, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GoBack');
   static const CMD C_MikeList = CMD._(2120, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_MikeList');
   static const CMD S_MikeList = CMD._(2121, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_MikeList');
   static const CMD C_UpMike = CMD._(2122, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_UpMike');
@@ -112,6 +117,11 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_GiveGiftByDynamic = CMD._(3107, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GiveGiftByDynamic');
   static const CMD C_GiveGiftByIm = CMD._(3109, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GiveGiftByIm');
   static const CMD S_GiveGiftByIm = CMD._(3110, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GiveGiftByIm');
+  static const CMD C_SaveUserCurrentDressUp = CMD._(4100, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_SaveUserCurrentDressUp');
+  static const CMD S_SaveUserCurrentDressUp = CMD._(4101, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_SaveUserCurrentDressUp');
+  static const CMD S_UpdateDressUp = CMD._(4102, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UpdateDressUp');
+  static const CMD C_UseProductAndSaveUserCurrentDressUp = CMD._(4103, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_UseProductAndSaveUserCurrentDressUp');
+  static const CMD S_UseProductAndSaveUserCurrentDressUp = CMD._(4104, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_UseProductAndSaveUserCurrentDressUp');
   static const CMD C_Robot = CMD._(6661, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Robot');
   static const CMD S_Robot = CMD._(6662, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_Robot');
   static const CMD C_Test = CMD._(6666, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_Test');
@@ -127,8 +137,10 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD F_GiftShow = CMD._(11000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'F_GiftShow');
   static const CMD C_GoAwayRoom = CMD._(12000, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_GoAwayRoom');
   static const CMD S_GoAwayRoom = CMD._(12001, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_GoAwayRoom');
-  static const CMD C_OutFreeMikesArea = CMD._(12002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OutFreeMikesArea');
-  static const CMD S_OutFreeMikesArea = CMD._(12003, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_OutFreeMikesArea');
+  static const CMD C_InFreeMikesArea = CMD._(12002, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_InFreeMikesArea');
+  static const CMD S_InFreeMikesArea = CMD._(12003, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_InFreeMikesArea');
+  static const CMD C_OutFreeMikesArea = CMD._(12006, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_OutFreeMikesArea');
+  static const CMD S_OutFreeMikesArea = CMD._(12007, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_OutFreeMikesArea');
   static const CMD C_PlazaToRoom = CMD._(12004, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_PlazaToRoom');
   static const CMD S_PlazaToRoom = CMD._(12005, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'S_PlazaToRoom');
   static const CMD C_PushPreload = CMD._(12020, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'C_PushPreload');
@@ -152,6 +164,9 @@ class CMD extends $pb.ProtobufEnum {
     C_CreateRole,
     S_CreateRole,
     G_RemoveRole,
+    C_UpdateRole,
+    S_UpdateRole,
+    S_UpdateRoleBroadcast,
     C_ReLink,
     C_ExitGame,
     G_SwitchScene,
@@ -170,6 +185,7 @@ class CMD extends $pb.ProtobufEnum {
     S_EnforceZone,
     C_StopMove,
     C_Animate,
+    C_Stage,
     S_AddRole,
     S_RemoveObj,
     S_RemoveObjs,
@@ -179,8 +195,8 @@ class CMD extends $pb.ProtobufEnum {
     S_SyncSeatInfo,
     C_GoToRoom,
     S_GoToRoom,
-    C_InFreeMikesArea,
-    S_InFreeMikesArea,
+    C_RoomEnterComplete,
+    S_SyncRoomInfo,
     C_CreateScene,
     S_CreateScene,
     C_CloseScene,
@@ -189,6 +205,7 @@ class CMD extends $pb.ProtobufEnum {
     S_JoinScene,
     C_OutScene,
     S_OutScene,
+    C_GoBack,
     C_MikeList,
     S_MikeList,
     C_UpMike,
@@ -237,6 +254,11 @@ class CMD extends $pb.ProtobufEnum {
     S_GiveGiftByDynamic,
     C_GiveGiftByIm,
     S_GiveGiftByIm,
+    C_SaveUserCurrentDressUp,
+    S_SaveUserCurrentDressUp,
+    S_UpdateDressUp,
+    C_UseProductAndSaveUserCurrentDressUp,
+    S_UseProductAndSaveUserCurrentDressUp,
     C_Robot,
     S_Robot,
     C_Test,
@@ -252,6 +274,8 @@ class CMD extends $pb.ProtobufEnum {
     F_GiftShow,
     C_GoAwayRoom,
     S_GoAwayRoom,
+    C_InFreeMikesArea,
+    S_InFreeMikesArea,
     C_OutFreeMikesArea,
     S_OutFreeMikesArea,
     C_PlazaToRoom,

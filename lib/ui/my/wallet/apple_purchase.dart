@@ -14,12 +14,17 @@ import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
 class ApplePurchase {
 
   String productId = "";
-  String transactionId = "";
+  String recordNumber = "";
 
   ///
   /// 苹果支付监听
   ///
   StreamSubscription<List<PurchaseDetails>>? _subscription;
+
+  ///
+  /// 苹果支付监听
+  ///
+  StreamSubscription? _skPaymentTransactionWrapper;
 
   Completer<bool>? payResult;
 
@@ -33,6 +38,12 @@ class ApplePurchase {
       // 检查是否支持苹果支付
     }, onError: (error) {
       debugPrint("aaa");
+    });
+    // 处理未支付订单
+    _skPaymentTransactionWrapper = SKPaymentQueueWrapper().transactions().asStream().listen((event) {
+      event.forEach((skPaymentTransactionWrapper) {
+        SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
+      });
     });
   }
 
@@ -51,8 +62,8 @@ class ApplePurchase {
     payResult = Completer();
 
     productId = data["iap_product_id"] ?? "";
-    transactionId = data["transaction_id"] ?? "";
-    if(productId.isEmpty || transactionId.isEmpty) {
+    recordNumber = data["record_number"] ?? "";
+    if(productId.isEmpty || recordNumber.isEmpty) {
       showToast("订单数错误错");
       riseCallBack(false);
       return payResult?.future;
@@ -79,6 +90,7 @@ class ApplePurchase {
       riseCallBack(false);
       return payResult?.future;
     }
+    await InAppPurchase.instance.restorePurchases(applicationUserName: "1689826889094");
     if (consumable) {
       InAppPurchase.instance.buyConsumable(
           purchaseParam: PurchaseParam(productDetails: response.productDetails.first, applicationUserName:DateTime.now().millisecondsSinceEpoch.toString())
@@ -150,7 +162,7 @@ class ApplePurchase {
   ///
   Future<bool> _verifyPurchase(PurchaseDetails details) async {
     if(details is AppStorePurchaseDetails) {
-      var result = await Api.Wallet.checkAppPayStatus(transactionId);
+      var result = await Api.Wallet.checkAppPayStatus(recordNumber, details.purchaseID ?? "");
       if(result is Map == false || result["code"] != 0) {
         return Future.value(false);
       }
@@ -170,5 +182,6 @@ class ApplePurchase {
 
   void dispose() {
     _subscription?.cancel();
+    _skPaymentTransactionWrapper?.cancel();
   }
 }

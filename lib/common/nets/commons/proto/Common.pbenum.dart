@@ -25,9 +25,10 @@ class AttrCode extends $pb.ProtobufEnum {
   static const AttrCode growth_value = AttrCode._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'growth_value');
   static const AttrCode charm_growth_value = AttrCode._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'charm_growth_value');
   static const AttrCode real_name_type = AttrCode._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'real_name_type');
-  static const AttrCode animate = AttrCode._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'animate');
   static const AttrCode mike_id = AttrCode._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'mike_id');
   static const AttrCode mike_no = AttrCode._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'mike_no');
+  static const AttrCode animate = AttrCode._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'animate');
+  static const AttrCode stage = AttrCode._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'stage');
 
   static const $core.List<AttrCode> values = <AttrCode> [
     none,
@@ -45,9 +46,10 @@ class AttrCode extends $pb.ProtobufEnum {
     growth_value,
     charm_growth_value,
     real_name_type,
-    animate,
     mike_id,
     mike_no,
+    animate,
+    stage,
   ];
 
   static final $core.Map<$core.int, AttrCode> _byValue = $pb.ProtobufEnum.initByValue(values);

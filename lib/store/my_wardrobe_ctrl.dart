@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/common/async_ctrl.dart';
 import 'package:app/tools.dart';
@@ -93,7 +94,11 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
       Api.DressUp.useAndSave(useIds: useIds, saveIds: saveIds),
       msg: '操作成功',
       callback1: (resp) {
-        final List items = resp['use_product_list'];
+        if(resp == null || resp is S_UseProductAndSaveUserCurrentDressUp == false) {
+          return;
+        }
+        S_UseProductAndSaveUserCurrentDressUp dressUp = resp as S_UseProductAndSaveUserCurrentDressUp;
+        final List<BackpackProductItem> items = dressUp.useProductList;
 
         showToast('成功使用${items.length}件');
 
@@ -101,12 +106,12 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
           final data = _data;
 
           for (final item in items) {
-            final tmp = data[item['product_id']];
+            final tmp = data[item.productId.toInt()];
 
             if (tmp == null) {
               assert(false, '数据错误 -> $item');
             } else {
-              final count = tmp.value1.value -= item['count'] as int;
+              final count = tmp.value1.value -= item.count as int;
 
               assert(count >= 0);
 
@@ -115,7 +120,13 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
           }
         }
 
-        callback?.call(resp['user_dress_up_product_list']);
+        // 数据转化
+        var listResult = [];
+        dressUp.userDressUpProductList.forEach((element) {
+          listResult.add({"product_id": element.productNo.toInt()});
+        });
+
+        callback?.call(listResult);
       },
     );
   }
