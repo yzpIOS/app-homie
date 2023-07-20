@@ -173,7 +173,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         SocketCtrl.ins.startUnityHeartBeat();
         break;
       case AppLifecycleState.paused:
+        _closeCountDown?.cancel();
         _closeCountDown = Future.delayed(const Duration(seconds: 40)).asStream().listen((event) {
+          resumeReconnect = true;
           SocketCtrl.ins.closeSocket();
           SocketCtrl.ins.cancelUnityHeartBeat();
         });
