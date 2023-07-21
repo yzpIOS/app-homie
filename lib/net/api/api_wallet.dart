@@ -46,6 +46,6 @@ class ApiWallet extends ApiBase {
   /// 查询苹果支付的状态
   ///
   Future checkAppPayStatus(String recordNumber, String transaction_id) {
-    return _doPost("/apple_iap/callback", data: {"recordNumber": recordNumber, "transaction_id": transaction_id});
+    return _doPost3("/apple_iap/callback", data: {"record_number": recordNumber, "transaction_id": transaction_id});
   }
 }

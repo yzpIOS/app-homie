@@ -65,9 +65,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     });
     // 监听unity发送的消息
     local.onReceiveDataFromU((session, cmd, data) {
-      if(Env.isDebug) {
-        xlog("[socket]:uniqueId: uniqueId ${uniqueId}", type: LogType.SOCKET);
-      }
+      xlog("[socket]:uniqueId: uniqueId ${uniqueId}, cmd = ${cmd}", type: LogType.SOCKET);
       if(session.uniqueId != uniqueId) {
         return;
       }
@@ -236,6 +234,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_SaveUserCurrentDressUp, S_SaveUserCurrentDressUp.fromBuffer);
     register(CMD.S_UpdateRole, S_UpdateRole.fromBuffer);
     register(CMD.S_SyncRoomInfo, S_SyncRoomInfo.fromBuffer);
+    register(CMD.S_UseProductAndSaveUserCurrentDressUp, S_UseProductAndSaveUserCurrentDressUp.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);

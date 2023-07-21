@@ -107,8 +107,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   void _onUnityInit() {
     xlog('Unity准备好了！！！', type: LogType.UNITY);
-
-    markReady();
+    try {
+      markReady();
+    } catch(e, s) {
+      print(e);
+    }
   }
 
   Future<void> _unityReady() async {

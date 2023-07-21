@@ -29,13 +29,17 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
       ever(_modeRx, (val) {
         switch (val) {
           case 0:
+            // 商城
             selectorShop.enterTryMode();
             break;
           case 1:
+            // 我的-衣柜
             selectorWardrobe.enterTryMode();
             break;
           case 2:
+            // 我的-套装，头发等（除了衣柜）
             selectorCloth.enterTryMode();
+
             break;
         }
       }),

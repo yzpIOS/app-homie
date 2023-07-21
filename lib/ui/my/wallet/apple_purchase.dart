@@ -16,17 +16,17 @@ class ApplePurchase {
   String productId = "";
   String recordNumber = "";
 
-  ///
-  /// 苹果支付监听
-  ///
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
+  Completer<bool>? payResult;
 
   ///
   /// 苹果支付监听
   ///
   StreamSubscription? _skPaymentTransactionWrapper;
 
-  Completer<bool>? payResult;
+  ///
+  /// 苹果支付监听
+  ///
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
 
   ApplePurchase() {
     _subscription?.cancel();
@@ -34,7 +34,7 @@ class ApplePurchase {
     // https://www.jianshu.com/p/5eb553a0e0f0
     _subscription = InAppPurchase.instance.purchaseStream.listen((data) async {
       // 处理内购回调
-      _listenToPurchaseUpdated(data);
+      _listenToPurchaseUpdated(recordNumber, data);
       // 检查是否支持苹果支付
     }, onError: (error) {
       debugPrint("aaa");
@@ -90,7 +90,6 @@ class ApplePurchase {
       riseCallBack(false);
       return payResult?.future;
     }
-    await InAppPurchase.instance.restorePurchases(applicationUserName: "1689826889094");
     if (consumable) {
       InAppPurchase.instance.buyConsumable(
           purchaseParam: PurchaseParam(productDetails: response.productDetails.first, applicationUserName:DateTime.now().millisecondsSinceEpoch.toString())
@@ -106,7 +105,7 @@ class ApplePurchase {
   ///
   /// 监听支付回调
   ///
-  void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
+  void _listenToPurchaseUpdated(String recordNumber, List<PurchaseDetails> purchaseDetailsList) {
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         return;
@@ -125,7 +124,7 @@ class ApplePurchase {
         int totalValidateTime = 3;
         while(totalValidateTime > 0) {
           // 校验订单是否成功, 服务端进行验证，成功时会返回200
-          valid = await _verifyPurchase(purchaseDetails);
+          valid = await _verifyPurchase(recordNumber, purchaseDetails);
           if (valid) {
             break;
           }
@@ -159,14 +158,18 @@ class ApplePurchase {
 
   ///
   /// 验证支付结果
+  /// [recordNumber] 如果为空，有可能是进行补单, 需要请求另外的接口
   ///
-  Future<bool> _verifyPurchase(PurchaseDetails details) async {
+  Future<bool> _verifyPurchase(String recordNumber, PurchaseDetails details) async {
     if(details is AppStorePurchaseDetails) {
-      var result = await Api.Wallet.checkAppPayStatus(recordNumber, details.purchaseID ?? "");
-      if(result is Map == false || result["code"] != 0) {
-        return Future.value(false);
+      try {
+        var result = await Api.Wallet.checkAppPayStatus(recordNumber, details.purchaseID ?? "");
+        if(result is Map == false || result["code"] != 0) {
+          return Future.value(false);
+        }
+        return Future.value(true);
+      } catch(e, s) {
       }
-      return result.isSuccess();
     }
     return Future.value(false);
   }

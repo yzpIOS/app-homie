@@ -123,7 +123,7 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
         // 数据转化
         var listResult = [];
         dressUp.userDressUpProductList.forEach((element) {
-          listResult.add({"product_id": element.productNo.toInt()});
+          listResult.add({"product_id": element.id.toInt()});
         });
 
         callback?.call(listResult);

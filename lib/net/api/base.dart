@@ -23,6 +23,12 @@ mixin _HttpMixin on _IApi {
     return _onResp(url, _data);
   }
 
+  Future<dynamic> _doPost3(String path, {JMap? ext, data}) async {
+    final _data = await _http.request('POST', _withBasePath(path), ext: ext, data: data ?? const {});
+
+    return _data;
+  }
+
   dynamic _onResp(String path, data) {
     if (data is Map) {
       final int code = data['code'];

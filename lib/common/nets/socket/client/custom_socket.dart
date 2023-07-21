@@ -172,6 +172,7 @@ class CustomSocket {
       _socketSubscription = event;
     }).listen((data) {
       // 接收到数据
+      debugPrint("收到数据 data = ${data.toString()}");
       _riseCallBack(data);
     }, onError: (error) {
       xlog("[socket]:网络连接错误, ${error.toString()}", type: LogType.SOCKET);

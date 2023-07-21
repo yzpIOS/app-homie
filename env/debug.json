@@ -10,6 +10,6 @@
   "mq_url": "ws://192.168.1.156:15674/ws",
   "sentry_dsn": "https://52fff051ed924b838b3e04d3e0909caa@o4504445347037184.ingest.sentry.io/4504445494165504",
   "is_debug": true,
-  "server_ip": "192.168.1.156",
-  "server_port": 31391
+  "server_ip": "192.168.1.188",
+  "server_port": 7778
 }
