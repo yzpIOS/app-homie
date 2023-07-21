@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:app/common/theme.dart';
+import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/my_wardrobe_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';

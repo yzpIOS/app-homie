@@ -351,4 +351,7 @@ class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
       callback: _dataRx.clear,
     );
   }
+  void updateDressUp2(List data) {
+    _dataRx.assignAll(data.map((e) => e["product_id"]));
+  }
 }

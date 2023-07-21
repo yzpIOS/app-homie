@@ -7,6 +7,9 @@ class ApiDressUp extends ApiBase {
     return _doPost('user_current_dress_up/query').then((val) => val['product_list'] ?? []);
   }
 
+  ///
+  /// 套装，头发，上装，下装，鞋子等tab
+  ///
   Future myList({required PageNum page, int? categoryId}) {
     final data = <String, dynamic>{
       if (categoryId != null) //

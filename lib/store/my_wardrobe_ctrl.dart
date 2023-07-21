@@ -5,6 +5,8 @@ import 'package:app/tools.dart';
 import 'package:app/ui/dressup/user_select_sheet.dart';
 import 'package:app/widgets.dart';
 
+import 'my_dressup_ctrl.dart';
+
 typedef DateItem = Tuple2<RxInt, Map>;
 
 class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {

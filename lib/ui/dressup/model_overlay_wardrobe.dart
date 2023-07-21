@@ -104,6 +104,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
       saveIds: saveIds,
       callback: (resp) {
         Get.find<MyDressUpCtrl>().updateDressUp(resp);
+        Get.find<ClothSelectorCtrl>().selectorCloth.updateDressUp2(resp);
 
         selector.doReset();
       },
