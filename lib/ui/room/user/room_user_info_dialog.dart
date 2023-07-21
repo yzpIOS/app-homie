@@ -280,6 +280,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
 
         GiftSheet.show(
           GiftSend2UserInRoom(roomId: ctrl.roomId, uid: uid),
+          hasShowUnityView: true
         );
         break;
       case '举报':

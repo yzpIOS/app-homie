@@ -149,6 +149,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
 
     GiftSheet.show(
       GiftSend2Room(roomId: controller.roomId, users: users.toList(growable: false)),
+      hasShowUnityView: true,
     );
   }
 

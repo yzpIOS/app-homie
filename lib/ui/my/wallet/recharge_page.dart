@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/my/wallet/apple_purchase.dart';
@@ -12,7 +13,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class RechargePage extends StatefulWidget {
-  const RechargePage({super.key});
+
+  // 进入充值入口的页面是否显示了unity
+  bool hasShowUnityView;
+
+  RechargePage({super.key, this.hasShowUnityView = false});
 
   @override
   State<RechargePage> createState() => _RechargePageState();
@@ -33,6 +38,11 @@ class _RechargePageState extends State<RechargePage> {
   @override
   void initState() {
     super.initState();
+
+    if(widget.hasShowUnityView) {
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+          data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
+    }
 
     _init();
   }
@@ -266,5 +276,9 @@ class _RechargePageState extends State<RechargePage> {
   void dispose() {
     super.dispose();
     applePurchase.dispose();
+    if(widget.hasShowUnityView) {
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+          data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
+    }
   }
 }

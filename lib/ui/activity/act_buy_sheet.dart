@@ -188,7 +188,7 @@ class ActBuySheet extends ISheetWidget {
 
     child = OpacityButton(
       child: child,
-      onTap: () => Get.to(() => const RechargePage()),
+      onTap: () => Get.to(() => RechargePage(hasShowUnityView: true,)),
     );
 
     return child;

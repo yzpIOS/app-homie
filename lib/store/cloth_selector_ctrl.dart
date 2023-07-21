@@ -240,7 +240,7 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
     }
 
     return simpleTry(task, callback: (result) {
-      // 如果不成功，就重置原来数据
+      // 我只是填坑：如果不成功，就重置原来数据
       if(result is Iterable<int>) {
         if(result.isEmpty) {
           _dataRx.assignAll(_dataRx2);

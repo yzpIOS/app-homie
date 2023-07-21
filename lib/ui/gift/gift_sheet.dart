@@ -16,12 +16,14 @@ import 'package:flutter/services.dart';
 class GiftSheet extends StatelessWidget {
   final GiftSendLogic logic;
 
-  GiftSheet._({required this.logic});
+  final bool hasShowUnityView;
+
+  GiftSheet._({required this.logic, required this.hasShowUnityView});
 
   final numRx = RxInt(1);
 
-  static Future show(GiftSendLogic logic) {
-    final sheet = GiftSheet._(logic: logic);
+  static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
+    final sheet = GiftSheet._(logic: logic, hasShowUnityView: hasShowUnityView);
 
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
@@ -146,7 +148,7 @@ class GiftSheet extends StatelessWidget {
       );
 
       child = OpacityButton(
-        onTap: () => Get.to(() => const RechargePage()),
+        onTap: () => Get.to(() => RechargePage(hasShowUnityView: hasShowUnityView,)),
         child: child,
       );
 
@@ -244,7 +246,7 @@ class GiftSheet extends StatelessWidget {
 
         Get.simpleDialog(msg: '余额不足'.en(), okLabel: '去充值'.en()).then((val) {
           if (val == '去充值'.en()) {
-            Get.to(() => const RechargePage());
+            Get.to(() => RechargePage(hasShowUnityView: hasShowUnityView,));
           }
         });
       },

@@ -134,7 +134,7 @@ class _WalletPageState extends State<WalletPage> {
   void onItemClick(String action) {
     switch (action) {
       case '充值':
-        Get.to(() => const RechargePage());
+        Get.to(() => RechargePage());
         break;
       case '兑换':
         Get.to(() => const ExchangePage());
