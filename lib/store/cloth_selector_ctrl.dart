@@ -198,6 +198,10 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
   Future<void> _doTryUse(int id) {
     FutureOr Function() task;
 
+    // 保存原来的数据
+    final _dataRx2 = <int, List<int>>{};
+    _dataRx2.assignAll(_dataRx);
+
     if (_dataRx.containsKey(id)) {
       _doDel(id);
 
@@ -235,7 +239,15 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
       task = () => updateDressUp(true, id).then((val) => _dataRx[id] = List.from(val, growable: false));
     }
 
-    return simpleTry(task, callback: (_) => _debugTryUse());
+    return simpleTry(task, callback: (result) {
+      // 如果不成功，就重置原来数据
+      if(result is Iterable<int>) {
+        if(result.isEmpty) {
+          _dataRx.assignAll(_dataRx2);
+        }
+      }
+      _debugTryUse();
+    });
   }
 
   void _debugTryUse() => xlog(_dataRx.debug);
