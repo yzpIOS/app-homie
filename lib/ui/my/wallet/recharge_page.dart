@@ -250,25 +250,29 @@ class _RechargePageState extends State<RechargePage> {
 
     if (data == null) {
       showToast('请选择充值套餐');
-
       return;
     }
 
     //1：支付宝，2：微信，4: 苹果内购
-    int payType = payTypeRx()!;
+    int? payType = payTypeRx.value;
     // 苹果支付不传支付渠道，所以强制写死4
     if(Platform.isIOS) {
       payType = 4;
     }
 
+    if(payType == null) {
+      showToast('请选择支付方式');
+      return;
+    }
+
     simpleSub(
-      Api.Wallet.recharge(id: data['id'], payType: payType),
+      Api.Wallet.recharge(id: data['id'], payType: payType!),
       callback1: (resp) async {
         bool payResult;
         if(payType == 4) {
           payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
         } else {
-          payResult = await Get.to(() => PayPage(payType: payType, data: resp));
+          payResult = await Get.to(() => PayPage(payType: payType!, data: resp));
         }
 
         if (payResult) {

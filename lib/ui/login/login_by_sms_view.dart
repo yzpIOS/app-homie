@@ -103,7 +103,7 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
 
   void doLogin() {
     String? token = tokenRx();
-    if(Env.isDebug && (token == null || token?.isEmpty == true)) {
+    if(Env.isDebugCfg && (token == null || token.isEmpty == true)) {
       token = "1";
     }
 
