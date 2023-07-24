@@ -202,8 +202,11 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
     final _dataRx2 = <int, List<int>>{};
     _dataRx2.assignAll(_dataRx);
 
+    // true: add, false: delete
+    bool addOrDel = false;
+
     if (_dataRx.containsKey(id)) {
-      _doDel(id);
+      addOrDel = false;
 
       final keys = _dataRx.keys.toList();
       final keyIndex = keys.indexOf(id);
@@ -234,7 +237,7 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
               return setDressUp(_dataRx.values.last);
             };
     } else {
-      _doAdd(id);
+      addOrDel = true;
 
       task = () => updateDressUp(true, id).then((val) => _dataRx[id] = List.from(val, growable: false));
     }
@@ -244,6 +247,15 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
       if(result is Iterable<int>) {
         if(result.isEmpty) {
           _dataRx.assignAll(_dataRx2);
+        } else {
+          // unity成功了
+          if(addOrDel) {
+            // 添加购物车
+            _doAdd(id);
+          } else {
+            // 删除购物车
+            _doDel(id);
+          }
         }
       }
       _debugTryUse();
