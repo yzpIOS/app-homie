@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/money_type.dart';
@@ -107,7 +109,9 @@ class _RechargePageState extends State<RechargePage> {
           Spacing.h20,
           $ComboView(items),
           Spacing.h20,
-          if (types.isNotEmpty) $PayTypeView(types),
+          // 只有android才显示支付方式
+          if(Platform.isAndroid)
+            $PayTypeView(types),
           Spacing.exp,
           Padding(
             padding: Pad(horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
@@ -250,8 +254,12 @@ class _RechargePageState extends State<RechargePage> {
       return;
     }
 
-    //1：支付宝，2：微信，3: 苹果内购
-    final payType = payTypeRx()!;
+    //1：支付宝，2：微信，4: 苹果内购
+    int payType = payTypeRx()!;
+    // 苹果支付不传支付渠道，所以强制写死4
+    if(Platform.isIOS) {
+      payType = 4;
+    }
 
     simpleSub(
       Api.Wallet.recharge(id: data['id'], payType: payType),
