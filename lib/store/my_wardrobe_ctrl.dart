@@ -79,9 +79,8 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
             } else {
               final count = tmp.value1.value -= item['count'] as int;
 
-              assert(count >= 0);
 
-              if (count == 0) dataRx.remove(tmp);
+              if (count <= 0) dataRx.remove(tmp);
             }
           }
         }
@@ -115,9 +114,9 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
             } else {
               final count = tmp.value1.value -= item.count as int;
 
-              assert(count >= 0);
+              // assert(count >= 0);
 
-              if (count == 0) dataRx.remove(tmp);
+              if (count <= 0) dataRx.remove(tmp);
             }
           }
         }

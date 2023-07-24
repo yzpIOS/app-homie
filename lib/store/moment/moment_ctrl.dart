@@ -67,7 +67,10 @@ extension XRxMomentDto on Rx<MomentDto> {
   void sendGift() {
     final logic = GiftSend2Moment(_id, (it) {
       rebuild(
-        (val) => val.copyWith.count(giftCount: val.count.giftCount + it),
+        (val) {
+          var value = val.copyWith.count(giftCount: val.count.giftCount + it);
+          return value;
+        },
       );
     });
 
