@@ -24,6 +24,7 @@ class ApiGift extends ApiBase {
     c_giveGiftByRoom.roomId = Int64(roomId);
     c_giveGiftByRoom.giftId = Int64(giftId);
     c_giveGiftByRoom.count = count;
+    c_giveGiftByRoom.isBackpack = isBackpack;
 
     try {
       return await SocketCtrl.ins.sendByteAsyncServer(
@@ -56,6 +57,7 @@ class ApiGift extends ApiBase {
     c_giveGiftByRoom.dynamicId = Int64(id);
     c_giveGiftByRoom.giftId = Int64(giftId);
     c_giveGiftByRoom.count = count;
+    c_giveGiftByRoom.isBackpack = isBackpack;
 
     try {
       return await SocketCtrl.ins.sendByteAsyncServer(
