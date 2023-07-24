@@ -15,6 +15,7 @@ import 'package:app/ui/main/nav_view.dart';
 import 'package:app/ui/message/message_page.dart';
 import 'package:app/ui/moment/moment_page.dart';
 import 'package:app/ui/my/my_page_2.dart';
+import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/podcast/hot_podcast_page.dart';
 import 'package:app/ui/room/room_icon_overlay.dart';
 import 'package:app/ui/task/my_sign_view.dart';
@@ -36,6 +37,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
 
   bool resumeReconnect = false;
   StreamSubscription? _closeCountDown;
+
+  // 用于苹果支付补单用
+  ApplePurchase applePurchase = ApplePurchase(compensate: true);
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -129,6 +133,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void dispose() {
     _closeCountDown?.cancel();
+    applePurchase.dispose();
     AppNavObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
     SocketCtrl.ins.removeDisconnect(onDisconnectCallBack);

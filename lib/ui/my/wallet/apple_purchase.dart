@@ -18,6 +18,8 @@ class ApplePurchase {
 
   Completer<bool>? payResult;
 
+  bool compensate;
+
   ///
   /// 苹果支付监听
   ///
@@ -28,11 +30,15 @@ class ApplePurchase {
   ///
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
-  ApplePurchase() {
+  ApplePurchase({this.compensate = false}) {
     _subscription?.cancel();
     // 监听支付结果
     // https://www.jianshu.com/p/5eb553a0e0f0
     _subscription = InAppPurchase.instance.purchaseStream.listen((data) async {
+      // 如果是补单的时候，recordNumber为空，如果不为空就是正形的处理逻辑
+      if(compensate) {
+        return;
+      }
       // 处理内购回调
       _listenToPurchaseUpdated(recordNumber, data);
       // 检查是否支持苹果支付
