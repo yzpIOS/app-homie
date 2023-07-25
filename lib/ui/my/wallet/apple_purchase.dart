@@ -31,24 +31,36 @@ class ApplePurchase {
   StreamSubscription<List<PurchaseDetails>>? _subscription;
 
   ApplePurchase({this.compensate = false}) {
+    // 处理未支付订单
+    _skPaymentTransactionWrapper = SKPaymentQueueWrapper().transactions().asStream().listen((event) {
+      event.forEach((skPaymentTransactionWrapper) {
+        SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
+      });
+    });
+
+    // 补单自动添加
+    if(compensate) {
+      addPurchaseCallBack();
+    }
+  }
+
+  ///
+  /// 添加购买回调
+  ///
+  void addPurchaseCallBack() {
     _subscription?.cancel();
     // 监听支付结果
     // https://www.jianshu.com/p/5eb553a0e0f0
     _subscription = InAppPurchase.instance.purchaseStream.listen((data) async {
       // 处理内购回调
-      if(compensate && recordNumber.isNotEmpty) {
+      // recordNumber为空证明是补单，而compensate表明当前不补单
+      if(recordNumber.isEmpty && !compensate) {
         return;
       }
       _listenToPurchaseUpdated(recordNumber, data);
       // 检查是否支持苹果支付
     }, onError: (error) {
       debugPrint("aaa");
-    });
-    // 处理未支付订单
-    _skPaymentTransactionWrapper = SKPaymentQueueWrapper().transactions().asStream().listen((event) {
-      event.forEach((skPaymentTransactionWrapper) {
-        SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
-      });
     });
   }
 
@@ -66,16 +78,12 @@ class ApplePurchase {
     // 通知苹果支付结果
     payResult = Completer();
 
-    productId = data["iap_product_id"] ?? "";
-    recordNumber = data["record_number"] ?? "";
-    if(productId.isEmpty || recordNumber.isEmpty) {
-      showToast("订单数错误错");
-      riseCallBack(false);
-      return payResult?.future;
-    }
     // 查询商品
     WaitingCtrl.obj.show();
-    ProductDetailsResponse? response = await InAppPurchase.instance.queryProductDetails({productId});
+    // 添加购买回调
+    addPurchaseCallBack();
+    // 获取支付套餐
+    ProductDetailsResponse? response = await InAppPurchase.instance.queryProductDetails({data["iap_product_id"] ?? ""});
     if(response == null || response.productDetails.isEmpty == true) {
       showToast("获取套餐失败");
 
@@ -95,6 +103,19 @@ class ApplePurchase {
       riseCallBack(false);
       return payResult?.future;
     }
+    // 等待2秒，防止单号错乱
+    await Future.delayed(const Duration(seconds: 2));
+
+    productId = data["iap_product_id"] ?? "";
+    recordNumber = data["record_number"] ?? "";
+
+    if(productId.isEmpty || recordNumber.isEmpty) {
+      showToast("订单数错误错");
+      riseCallBack(false);
+      return payResult?.future;
+    }
+
+    // 调起支付
     if (consumable) {
       InAppPurchase.instance.buyConsumable(
           purchaseParam: PurchaseParam(productDetails: response.productDetails.first, applicationUserName:DateTime.now().millisecondsSinceEpoch.toString())
@@ -189,6 +210,7 @@ class ApplePurchase {
   }
 
   void dispose() {
+    recordNumber = "";
     compensate = false;
     _subscription?.cancel();
     _skPaymentTransactionWrapper?.cancel();
