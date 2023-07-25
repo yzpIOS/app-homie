@@ -35,11 +35,10 @@ class ApplePurchase {
     // 监听支付结果
     // https://www.jianshu.com/p/5eb553a0e0f0
     _subscription = InAppPurchase.instance.purchaseStream.listen((data) async {
-      // 如果是补单的时候，recordNumber为空，如果不为空就是正形的处理逻辑
-      if(compensate) {
+      // 处理内购回调
+      if(compensate && recordNumber.isNotEmpty) {
         return;
       }
-      // 处理内购回调
       _listenToPurchaseUpdated(recordNumber, data);
       // 检查是否支持苹果支付
     }, onError: (error) {
@@ -190,6 +189,7 @@ class ApplePurchase {
   }
 
   void dispose() {
+    compensate = false;
     _subscription?.cancel();
     _skPaymentTransactionWrapper?.cancel();
   }

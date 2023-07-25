@@ -37,9 +37,10 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
 
   bool resumeReconnect = false;
   StreamSubscription? _closeCountDown;
+  StreamSubscription? _appStreamSubscription;
 
   // 用于苹果支付补单用
-  ApplePurchase applePurchase = ApplePurchase(compensate: true);
+  ApplePurchase? applePurchase = null;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -89,6 +90,10 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     WidgetsBinding.instance.addObserver(this);
     // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
+
+    _appStreamSubscription = Future.delayed(const Duration(seconds: 1)).asStream().listen((event) {
+      applePurchase = ApplePurchase(compensate: true);
+    });
   }
 
   @override
@@ -116,6 +121,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
           data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
     }
+    applePurchase?.dispose();
   }
 
   ///
@@ -133,7 +139,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void dispose() {
     _closeCountDown?.cancel();
-    applePurchase.dispose();
+    applePurchase?.dispose();
+    _appStreamSubscription?.cancel();
     AppNavObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
     SocketCtrl.ins.removeDisconnect(onDisconnectCallBack);
