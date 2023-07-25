@@ -36,7 +36,10 @@ mixin _ListMixin<T> on AsyncCtrl<RxList<T>, List<T>, T> {
   @override
   void _onData(List<T> data) {
     _ready = true;
-
+    if(data.isEmpty) {
+      _dataRx.clear();
+      return;
+    }
     _dataRx.assignAll(data);
   }
 
@@ -134,7 +137,15 @@ abstract class AsyncCtrl<RX extends RxInterface<DATA>, DATA, T> extends GetxCont
   Future doRefresh() async {
     if (isClosed) return;
 
-    final task = _cache ??= Future.doWhile(_fetch).whenComplete(() => _cache = null);
+    int tryTime = 0;
+
+    final task = _cache ??= Future.doWhile(() async {
+      if(tryTime >= 3) {
+        throw TimeoutException("time out");
+      }
+      tryTime += 1;
+      return _fetch();
+    }).whenComplete(() => _cache = null);
 
     await task;
   }

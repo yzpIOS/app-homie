@@ -171,8 +171,8 @@ class GiftSend2Room extends GiftSendLogic {
       isBackpack: data.containsKey('backpack_count'),
     );
 
-    if(s_giveGiftByRoom?.code == ErrorCode.LACK_BALANCE) {
-      throw LogicException(ErrorCode.LACK_BALANCE.value, "");
+    if(s_giveGiftByRoom?.code != ErrorCode.Ok) {
+      throw LogicException(s_giveGiftByRoom?.code.value ?? 0, "");
     }
 
     return count * users.length;
