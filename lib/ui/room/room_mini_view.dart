@@ -150,9 +150,11 @@ class _MiniView extends RoomGetView<RoomCtrl> implements PreferredSizeWidget {
   }
 
   void doClose() async {
+    var roomType = controller.roomType;
+    var isOwner = controller.getRole(OAuthCtrl.uid).isOwner;
     final close = Get.find<RoomManagerCtrl>().doCloseState;
 
-    if (controller.roomType != RoomType.guild && controller.getRole(OAuthCtrl.uid).isOwner) {
+    if (roomType != RoomType.guild && isOwner) {
       Future api() async {
         try {
           await Api.Room.close();
@@ -165,7 +167,7 @@ class _MiniView extends RoomGetView<RoomCtrl> implements PreferredSizeWidget {
     } else {
       close();
       // 如果公开房
-      if(controller.roomType == RoomType.guild) {
+      if(roomType == RoomType.guild) {
         Get.back();
       }
     }
