@@ -10,9 +10,11 @@ class WaitingOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetX<WaitingCtrl>(
       builder: (it) {
+        AppWaiting appWaiting = Get.find<AppWaiting>();
+        appWaiting.text = it.text;
         return Offstage(
           offstage: it._offstage.isTrue,
-          child: Get.find<AppWaiting>(),
+          child: appWaiting,
         );
       },
     );
@@ -20,13 +22,16 @@ class WaitingOverlay extends StatelessWidget {
 }
 
 class AppWaiting extends StatelessWidget {
-  const AppWaiting({super.key});
+
+  String text = "";
+
+  AppWaiting({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Widget child = const DefaultTextStyle(
-      style: TextStyle(fontSize: 13, color: Color(0xFFEBEBF5)),
-      child: Text('请稍候'),
+    Widget child = DefaultTextStyle(
+      style: const TextStyle(fontSize: 13, color: Color(0xFFEBEBF5)),
+      child: Text(text),
     );
 
     const indicator = RepaintBoundary(
@@ -56,9 +61,11 @@ class AppWaiting extends StatelessWidget {
 class WaitingCtrl extends GetxService {
   final _offstage = RxBool(true);
 
+  String text = "请稍候";
+
   bool get isShow => !_offstage.value;
 
-  show() => _offstage.value = false;
+  show({String text = "请稍候"}) => _offstage.value = false;
 
   hidden() => _offstage.value = true;
 

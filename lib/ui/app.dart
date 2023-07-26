@@ -134,7 +134,7 @@ class _AppBindings extends Bindings {
     Get.put(SocketCtrl());
     Get.put(UnityCtrl());
 
-    Get.put(const AppWaiting());
+    Get.put(AppWaiting());
     Get.put(WaitingCtrl());
 
     Get.put(OAuthCtrl());

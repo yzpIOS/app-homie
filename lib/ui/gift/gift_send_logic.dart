@@ -97,8 +97,8 @@ class GiftSend2Moment extends GiftSendLogic {
       isBackpack: data.containsKey('backpack_count'),
     );
 
-    if(giveGiftByDynamic?.code == ErrorCode.LACK_BALANCE) {
-      throw LogicException(ErrorCode.LACK_BALANCE.value, "");
+    if(giveGiftByDynamic?.code != ErrorCode.Ok) {
+      throw LogicException(giveGiftByDynamic?.code.value ?? -10, "");
     }
 
     return count;

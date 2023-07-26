@@ -17,6 +17,9 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
   final UserLazyBox _box;
 
+
+  final modeUnityLoadStatus = RxBool(false);
+
   MyInfoCtrl(this._box, {required this.uid, this.init}) : dataRx = Rx(MyInfoDto(uid: uid));
 
   @override

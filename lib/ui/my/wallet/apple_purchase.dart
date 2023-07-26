@@ -79,7 +79,7 @@ class ApplePurchase {
     payResult = Completer();
 
     // 查询商品
-    WaitingCtrl.obj.show();
+    WaitingCtrl.obj.show(text: "请勿关闭，正在支付中..");
     // 添加购买回调
     addPurchaseCallBack();
     // 获取支付套餐

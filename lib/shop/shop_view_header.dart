@@ -14,10 +14,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class MyModelView extends StatelessWidget {
-  const MyModelView({super.key});
+class MyModelView extends StatefulWidget {
 
   static const ratio = 375 / 428;
+
+  const MyModelView({super.key});
+
+  @override
+  _MyModelViewState createState() => _MyModelViewState();
+
+}
+
+class _MyModelViewState extends State<MyModelView> {
+
+  bool unityLoadComplete = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +53,9 @@ class MyModelView extends StatelessWidget {
                     'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
                   },
                 );
+                unityLoadComplete = true;
+                myInfo.modeUnityLoadStatus.value = true;
+                setState(() { });
               } catch (e, s) {
                 errLog(e, s);
               }
@@ -54,27 +67,32 @@ class MyModelView extends StatelessWidget {
 
     child = Stack(
       children: [
-        AspectRatio(aspectRatio: ratio, child: child),
-        Positioned.fill(
-          child: GetX<ClothSelectorCtrl>(
-            builder: (it) {
-              return it.isShopMode
-                  ? const ModelOverlay$Shop()
-                  : (it.isWardrobeMode ? ModelOverlay$Wardrobe() : ModelOverlay$Cloth());
-            },
+        AspectRatio(aspectRatio: MyModelView.ratio, child: child),
+        if(unityLoadComplete)
+          Positioned.fill(
+            child: GetX<ClothSelectorCtrl>(
+              builder: (it) {
+                return it.isShopMode
+                    ? const ModelOverlay$Shop()
+                    : (it.isWardrobeMode ? ModelOverlay$Wardrobe() : ModelOverlay$Cloth());
+              },
+            ),
           ),
-        ),
-        Positioned(
-          top: AppSize.safeTop + 50,
-          right: 10,
-          child: $Btn(action: '广场'),
-        ),
-        Positioned(
-          left: 10,
-          bottom: 20,
-          height: 30,
-          child: $ModeView(),
-        ),
+        // 加载成功后，才显示下面的按钮
+        if(unityLoadComplete)
+          Positioned(
+            top: AppSize.safeTop + 50,
+            right: 10,
+            child: $Btn(action: '广场'),
+          ),
+        // 加载成功后，才显示下面的按钮
+        if(unityLoadComplete)
+          Positioned(
+            left: 10,
+            bottom: 20,
+            height: 30,
+            child: $ModeView(),
+          ),
       ],
     );
 
