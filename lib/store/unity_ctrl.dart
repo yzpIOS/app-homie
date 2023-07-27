@@ -292,7 +292,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   Future<void> _loadScene(SceneInfo loader) async {
     await _sceneLock.synchronized(() {});
-
+    // 通知加载场景
+    Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(
       '加载场景 -> ${loader.scene}',
       type: LogType.UNITY,

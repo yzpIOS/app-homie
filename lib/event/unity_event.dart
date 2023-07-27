@@ -66,3 +66,9 @@ class RespUnityEvent extends XUnityEvent {
     }
   }
 }
+
+class LoadScene extends Event {
+  String sceneName;
+
+  LoadScene({required this.sceneName});
+}

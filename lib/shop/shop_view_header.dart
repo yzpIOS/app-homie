@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/event/event.dart';
 import 'package:app/shop/cart_sheet.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -28,6 +29,25 @@ class MyModelView extends StatefulWidget {
 class _MyModelViewState extends State<MyModelView> {
 
   bool unityLoadComplete = false;
+
+  StreamSubscription? streamSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    streamSubscription = Bus.on<LoadScene>((event) {
+      if(event.sceneName != "ModelScene") {
+        unityLoadComplete = false;
+        setState(() { });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
