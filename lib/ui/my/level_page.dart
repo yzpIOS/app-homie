@@ -108,7 +108,7 @@ class _LevelPageState extends State<LevelPage> {
 
       final num growthVal = data['growth_value'];
       final num levelGrowthVal = data['level_growth_value'];
-      final num nextLevelGrowthVal = data['next_level_growth_value'];
+      final num nextLevelGrowthVal = data['next_level_growth_value'] - growthVal;
 
       final $GrowthView = Row(
         children: [
