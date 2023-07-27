@@ -23,6 +23,7 @@ enum Unity2AppEnum {
 // flutter 发送消息到 unity
 enum App2UnityEnum {
   FTU_TEST, // 测试
+  FTU_NET_STATUS_CHANGE, // flutter告诉unity网络变化
   FTU_LOAD_SCENE, // 进入房间
   FTU_JOIN_GAME, // 加入游戏
   FTU_ALL_GOODS_LIST, //所有商品列表

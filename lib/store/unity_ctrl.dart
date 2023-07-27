@@ -9,6 +9,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/scene_loader.dart';
 import 'package:app/widgets.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:f_unity/f_unity_platform_interface.dart';
 import 'package:slugid/slugid.dart';
 import 'package:synchronized/synchronized.dart';
@@ -23,6 +24,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   static const UNITY_RESUME_EVENT = "flutter_tell_ios_resumt_render_event";
   late final _callback = _Callback();
 
+  StreamSubscription? _netStatusChange;
+  StreamSubscription? _netStatusMessageTick;
   StreamSubscription? subscription;
   // 是否调用过unity的
   bool successSendInfo2Unity = false;
@@ -31,6 +34,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   // 当前加载的scene
   String curScene = "";
+  int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
   final _sceneLock = Lock(reentrant: true);
 
@@ -53,6 +57,43 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           .then((_) => markReady())
           .ignore();
     }
+    // 网络变化
+    _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
+      curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
+      tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile, curFluttyVersion);
+    });
+    // 默认网络开启
+    tellUnityNetStatus(true, curFluttyVersion);
+  }
+
+  ///
+  /// 告诉unity网络变化
+  ///
+  void tellUnityNetStatus(bool result, int version) async {
+    int maxTimes = 50;
+    while(true) {
+      if(curFluttyVersion != version || maxTimes <= 0) {
+        debugPrint("curFluttyVersion != version || maxTimes <= 0");
+        break;
+      }
+      // 重试次数
+      maxTimes --;
+      try {
+        await _sendMessage(
+            App2UnityEnum.FTU_NET_STATUS_CHANGE,
+            {"status": result},
+            const Duration(seconds: 1)
+        );
+        // 成功返回
+        debugPrint("unity通讯成功");
+        break;
+      } catch(e, s) {
+        await Future.delayed(const Duration(seconds: 2));
+        debugPrint(e.toString());
+        debugPrint("unity通讯异常");
+      }
+    }
+    debugPrint("unity通讯完成");
   }
 
   void _onUnityMessage(String json) {
@@ -190,6 +231,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   void onClose() {
     super.onClose();
     subscription?.cancel();
+    _netStatusChange?.cancel();
+    _netStatusMessageTick?.cancel();
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
   }
 
