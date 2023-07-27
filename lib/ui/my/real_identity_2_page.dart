@@ -7,6 +7,7 @@ import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:app/ui/common/web_page.dart';
 
 class RealIdentity2Page extends StatefulWidget {
   const RealIdentity2Page({super.key});
@@ -22,7 +23,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
   );
 
   final maskFormatter = MaskFunctionTextInputFormatter(
-    maskFunction: ({required oldValue, required newValue}) => '######-Y###M#D#-###V',
+    maskFunction: ({required oldValue, required newValue}) => '######Y###M#D####V',
     filter: {
       "#": RegExp(r'\d'),
       "Y": RegExp('[1-2]'),
@@ -110,28 +111,34 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
 
     simpleSub(
       Api.UserInfo.realFace(name: name, number: number),
-      callback1: (resp) async {
+      callback1: (resp) {
         final url = resp['page_url'];
 
-        try {
-          final b = await launchUrl(
-            Uri(
-              scheme: 'alipays',
-              host: 'platformapi',
-              pathSegments: ['startapp'],
-              queryParameters: {'appId': '20000067', 'url': url},
-            ),
-            mode: LaunchMode.externalNonBrowserApplication,
-          );
-
-          if (b) return;
-        } catch (e, s) {
-          errLog(e, s);
+        if (url is String && url.isNotEmpty) {
+          Get.to(() => WebPage(uri: Uri.parse(url), title: '支付宝快捷实名认证'));
+        } else {
+          showToast('打开失败');
         }
 
-        if (await launchUrlString(url, mode: LaunchMode.externalApplication)) return;
-
-        showToast('打开失败');
+        // try {
+        //   final b = await launchUrl(
+        //     Uri(
+        //       scheme: 'alipays',
+        //       host: 'platformapi',
+        //       pathSegments: ['startapp'],
+        //       queryParameters: {'appId': '20000067', 'url': url},
+        //     ),
+        //     mode: LaunchMode.externalNonBrowserApplication,
+        //   );
+        //
+        //   if (b) return;
+        // } catch (e, s) {
+        //   errLog(e, s);
+        // }
+        //
+        // if (await launchUrlString(url, mode: LaunchMode.externalApplication)) return;
+        //
+        // showToast('打开失败');
       },
     );
   }

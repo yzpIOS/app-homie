@@ -17,7 +17,7 @@ class LoginByThirdView extends StatelessWidget {
       // 'phone',
       // 'qq',
       'wx',
-      if (GetPlatform.isIOS) 'apple',
+      // if (GetPlatform.isIOS) 'apple',
     ];
 
     return Box(
