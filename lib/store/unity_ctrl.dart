@@ -34,6 +34,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   // 当前加载的scene
   String curScene = "";
+  bool netStatusValue = false;
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
   final _sceneLock = Lock(reentrant: true);
@@ -59,17 +60,24 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
-      curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
-      tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile, curFluttyVersion);
+
+      tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
     });
     // 默认网络开启
-    tellUnityNetStatus(true, curFluttyVersion);
+    Connectivity().checkConnectivity().then((event) {
+      tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
+    }, onError: (error) {
+      tellUnityNetStatus(false);
+    });
   }
 
   ///
   /// 告诉unity网络变化
   ///
-  void tellUnityNetStatus(bool result, int version) async {
+  void tellUnityNetStatus(bool result) async {
+    curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
+    // 局部变量，用于记录上一次的版本号
+    int version = curFluttyVersion;
     int maxTimes = 50;
     while(true) {
       if(curFluttyVersion != version || maxTimes <= 0) {
