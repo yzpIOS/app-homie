@@ -138,8 +138,7 @@ class _ItemView extends StatelessWidget {
             image,
             for (var i = 0; i < items.length; ++i)
               Positioned(
-                top: 5,
-                left: 5.0 * (i + 1) + 32 * i,
+                left: (32 + 5.0) * i,
                 child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
               ),
           ],

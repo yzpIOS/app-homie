@@ -19,7 +19,7 @@ class _RealIdentity1PageState extends State<RealIdentity1Page> {
   );
 
   final maskFormatter = MaskFunctionTextInputFormatter(
-    maskFunction: ({required oldValue, required newValue}) => '######-Y###M#D#-###V',
+    maskFunction: ({required oldValue, required newValue}) => '######Y###M#D####V',
     filter: {
       "#": RegExp(r'\d'),
       "Y": RegExp('[1-2]'),
