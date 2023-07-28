@@ -14,7 +14,9 @@ class Rtc {
 
   static final speakRx = RxMap<String, double>();
   static final openMicRx = RxSet<String>();
-  static final micRx = RxBool(false), audioRx = RxBool(true), videoRx = RxBool(false);
+  static final micRx = RxBool(false);
+  static final audioRx = RxBool(true);
+  static final videoRx = RxBool(false);
   static final netQualityRx = RxInt(0);
 
   static late final TRTCCloud rtcClient;
@@ -261,6 +263,7 @@ class Rtc {
 
   static Future<void> leave({bool isJoinBefore = false}) async {
     try {
+      audioRx(true);
       await Future.wait(
         [
           // $.switchRole(TRTCCloudDef.TRTCRoleAudience),

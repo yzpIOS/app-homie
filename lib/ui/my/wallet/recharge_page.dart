@@ -42,7 +42,7 @@ class _RechargePageState extends State<RechargePage> {
     super.initState();
 
     if(widget.hasShowUnityView) {
-      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
           data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
     }
 
@@ -289,7 +289,7 @@ class _RechargePageState extends State<RechargePage> {
     super.dispose();
     applePurchase.dispose();
     if(widget.hasShowUnityView) {
-      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST,
+      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
           data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
     }
   }

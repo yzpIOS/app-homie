@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:app/net/api.dart';
 import 'package:app/tools/help.dart';
@@ -32,11 +33,13 @@ class ApplePurchase {
 
   ApplePurchase({this.compensate = false}) {
     // 处理未支付订单
-    _skPaymentTransactionWrapper = SKPaymentQueueWrapper().transactions().asStream().listen((event) {
-      event.forEach((skPaymentTransactionWrapper) {
-        SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
+    if(Platform.isIOS) {
+      _skPaymentTransactionWrapper = SKPaymentQueueWrapper().transactions().asStream().listen((event) {
+        event.forEach((skPaymentTransactionWrapper) {
+          SKPaymentQueueWrapper().finishTransaction(skPaymentTransactionWrapper);
+        });
       });
-    });
+    }
 
     // 补单自动添加
     if(compensate) {

@@ -127,7 +127,6 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         _resetHotCount();
         break;
       case '意见反馈':
-        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_TEST, data: {"aaaaaaaaaaaaaaabbbbbbbbbbbbbb":"aaaaaaaaaaaaaaabbbbbbbbbbbbbb"});
         Get.to(() => FeedbackPage(type: 1, id: controller.roomId));
         break;
       default:
