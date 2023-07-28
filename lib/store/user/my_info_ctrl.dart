@@ -27,6 +27,8 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     super.onInit();
 
     _initByBox(init);
+
+    doRefresh();
   }
 
   Future<void> _initByBox(Map? init) async {

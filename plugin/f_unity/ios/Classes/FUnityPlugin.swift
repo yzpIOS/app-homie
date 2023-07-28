@@ -33,16 +33,16 @@ public class FUnityPlugin: NSObject, FlutterPlugin {
         case "postMessage":
             let args = call.arguments as! [String: String]
             
-            UnityHandle.sendMessage(
-                gameObject: args["gameObject"]!,
-                methodName: args["methodName"]!,
-                message: args["message"]!
-            )
-            
             if(args["message"]!.contains("flutter_tell_ios_stop_render_event")) {
                 UnityFramework.getInstance().pause(true);
             } else if(args["message"]!.contains("flutter_tell_ios_resumt_render_event")) {
                 UnityFramework.getInstance().pause(false);
+            } else {
+                UnityHandle.sendMessage(
+                    gameObject: args["gameObject"]!,
+                    methodName: args["methodName"]!,
+                    message: args["message"]!
+                )
             }
         
             result(nil)

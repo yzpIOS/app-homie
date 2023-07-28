@@ -197,7 +197,6 @@ class _UserInit2PageState extends State<UserInit2Page> {
           return info;
         },
         callback1: (resp) {
-          Get.find<MyInfoCtrl>().doRefresh();
           return Get.back(result: resp);
         },
       );

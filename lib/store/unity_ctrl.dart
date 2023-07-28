@@ -34,7 +34,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   // 当前加载的scene
   String curScene = "";
-  bool netStatusValue = false;
+  bool? netStatusValue = null;
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
   final _sceneLock = Lock(reentrant: true);
@@ -75,6 +75,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 告诉unity网络变化
   ///
   void tellUnityNetStatus(bool result) async {
+    if(netStatusValue == result) {
+      return;
+    }
+    netStatusValue = result;
+
     curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
     // 局部变量，用于记录上一次的版本号
     int version = curFluttyVersion;
