@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import f_unity
+import UnityFramework
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate  {
@@ -14,21 +15,8 @@ import f_unity
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
       }
+    
+    override func applicationWillTerminate(_ application: UIApplication) {
+        UnityFramework.getInstance().pause(true);
+    }
 }
-
-//import UIKit
-//import Flutter
-//import f_unity
-//
-//@UIApplicationMain
-//@objc class AppDelegate: FlutterAppDelegate {
-//
-//
-//    override func application(_ application: UIApplication,
-//                              didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
-//        GeneratedPluginRegistrant.register(with: self)
-//
-//        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-//    }
-//}
