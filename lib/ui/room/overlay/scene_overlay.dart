@@ -69,14 +69,17 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         Get.back();
         break;
       case '最小化':
-        controller.keepState = true;
-        Get.back();
-        // 公会房通知下线
-        if(controller.roomType == RoomType.guild) {
-          C_GoBack c_goBack = C_GoBack.create();
-          c_goBack.roomId = Int64(roomId);
-          SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
+        try {
+          controller.keepState = true;
+          // 公会房通知下线
+          if(controller.roomType == RoomType.guild) {
+            C_GoBack c_goBack = C_GoBack.create();
+            c_goBack.roomId = Int64(roomId);
+            SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
+          }
+        } catch(e, s) {
         }
+        Get.back();
         break;
       default:
         assert(false, '未处理的业务 -> $action');
