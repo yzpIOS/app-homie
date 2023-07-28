@@ -72,7 +72,7 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         try {
           controller.keepState = true;
           // 公会房通知下线
-          if(controller.roomType == RoomType.guild) {
+          if(controller.roomType == RoomType.guild || controller.roomType == RoomType.customize) {
             C_GoBack c_goBack = C_GoBack.create();
             c_goBack.roomId = Int64(roomId);
             SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);

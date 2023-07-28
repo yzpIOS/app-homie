@@ -4,6 +4,7 @@ import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
@@ -60,11 +61,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
-
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
     });
     // 默认网络开启
-    Connectivity().checkConnectivity().then((event) {
+    Connectivity().checkConnectivity().then((event) async {
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
     }, onError: (error) {
       tellUnityNetStatus(false);
