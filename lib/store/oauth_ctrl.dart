@@ -10,6 +10,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:app/ui/login/init/user_init_1_page.dart';
@@ -113,12 +114,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   Future<void> _useAuth(String token) async {
     try {
       var myInfo = await Api.UserInfo.myInfo(token: token);
-      var result = await updateUserInfo(myInfo, token);
-
       // 性别为空，那么需要去选择角色
-      if(result.containsKey("sex") == false || result["sex"] == 0) {
-        _setup(_auth!, false, info: myInfo);
-
+      if(myInfo.containsKey("sex") == false || myInfo["sex"] == 0) {
         final info = await holderProgress(
           Get.to(
                 () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
@@ -128,10 +125,12 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
         if (info is Map) {
           await updateUserInfo(info, token);
+          _setup(_auth!, false, info: myInfo);
         } else {
           throw const CanceledException();
         }
       } else {
+        await updateUserInfo(myInfo, token);
         _setup(_auth!, true, info: myInfo);
       }
     } on LogicException catch (e) {
