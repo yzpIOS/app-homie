@@ -245,7 +245,7 @@ class UnityLoading extends StatelessWidget {
 
     child = Column(
       children: [
-        const Spacing(flex: 452),
+        const Spacing(flex: 412),
         const Text(
           '另一个世界，另一个你',
           style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$SemiBold),

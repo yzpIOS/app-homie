@@ -111,34 +111,28 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
 
     simpleSub(
       Api.UserInfo.realFace(name: name, number: number),
-      callback1: (resp) {
+      callback1: (resp) async {
         final url = resp['page_url'];
 
-        if (url is String && url.isNotEmpty) {
-          Get.to(() => WebPage(uri: Uri.parse(url), title: '支付宝快捷实名认证'));
-        } else {
-          showToast('打开失败');
+        try {
+          final b = await launchUrl(
+            Uri(
+              scheme: 'alipays',
+              host: 'platformapi',
+              pathSegments: ['startapp'],
+              queryParameters: {'appId': '20000067', 'url': url},
+            ),
+            mode: LaunchMode.platformDefault,
+          );
+
+          if (b) return;
+        } catch (e, s) {
+          errLog(e, s);
         }
 
-        // try {
-        //   final b = await launchUrl(
-        //     Uri(
-        //       scheme: 'alipays',
-        //       host: 'platformapi',
-        //       pathSegments: ['startapp'],
-        //       queryParameters: {'appId': '20000067', 'url': url},
-        //     ),
-        //     mode: LaunchMode.externalNonBrowserApplication,
-        //   );
-        //
-        //   if (b) return;
-        // } catch (e, s) {
-        //   errLog(e, s);
-        // }
-        //
-        // if (await launchUrlString(url, mode: LaunchMode.externalApplication)) return;
-        //
-        // showToast('打开失败');
+        if (await launchUrlString(url, mode: LaunchMode.externalApplication)) return;
+
+        showToast('打开失败');
       },
     );
   }
