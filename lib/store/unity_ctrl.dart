@@ -22,7 +22,7 @@ const unity_time_out = 90;
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
   // 随便起的？？
   static const UNITY_STOP_EVENT = "flutter_tell_ios_stop_render_event";
-  static const UNITY_RESUME_EVENT = "flutter_tell_ios_resumt_render_event";
+  static const UNITY_RESUME_EVENT = "flutter_tell_ios_resume_render_event";
   late final _callback = _Callback();
 
   StreamSubscription? _netStatusChange;
@@ -61,10 +61,17 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
+      if(_isUnityInitSuccess) {
+        _netStatusChange?.cancel();
+        return;
+      }
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
     });
     // 默认网络开启
     Connectivity().checkConnectivity().then((event) async {
+      if(_isUnityInitSuccess) {
+        return;
+      }
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
     }, onError: (error) {
       tellUnityNetStatus(false);
@@ -89,13 +96,17 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         debugPrint("curFluttyVersion != version || maxTimes <= 0");
         break;
       }
+      // unity己经初始初始化成功了
+      if(_isUnityInitSuccess) {
+        break;
+      }
       // 重试次数
       maxTimes --;
       try {
         await _sendMessage(
             App2UnityEnum.FTU_NET_STATUS_CHANGE,
             {"status": result},
-            const Duration(seconds: 1)
+            const Duration(seconds: 5)
         );
         // 成功返回
         debugPrint("unity通讯成功");

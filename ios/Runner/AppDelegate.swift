@@ -15,8 +15,4 @@ import UnityFramework
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
       }
-    
-    override func applicationWillTerminate(_ application: UIApplication) {
-        UnityFramework.getInstance().pause(true);
-    }
 }
