@@ -65,7 +65,10 @@ class WaitingCtrl extends GetxService {
 
   bool get isShow => !_offstage.value;
 
-  show({String text = "请稍候"}) => _offstage.value = false;
+  show({String text = "请稍候"}) {
+    this.text = text;
+    _offstage.value = false;
+  }
 
   hidden() => _offstage.value = true;
 

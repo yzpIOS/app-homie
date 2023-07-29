@@ -10,6 +10,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
+import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -116,6 +117,14 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       var myInfo = await Api.UserInfo.myInfo(token: token);
       // 性别为空，那么需要去选择角色
       if(myInfo.containsKey("sex") == false || myInfo["sex"] == 0) {
+
+        // Unity还没有初始化完
+        if(!UnityCtrl.ins.isReady) {
+          WaitingCtrl.obj.show(text: "资源加载中, 请稍后");
+          await UnityCtrl.ins.ready;
+          WaitingCtrl.obj.hidden();
+        }
+
         final info = await holderProgress(
           Get.to(
                 () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
