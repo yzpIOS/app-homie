@@ -106,9 +106,9 @@ class _LevelPageState extends State<LevelPage> {
     Widget builder(Map? data) {
       if (data == null) return Spacing.blank;
 
-      final num growthVal = data['growth_value'];
-      final num levelGrowthVal = data['level_growth_value'];
-      final num nextLevelGrowthVal = data['next_level_growth_value'] - growthVal;
+      final num growthVal = data['growth_value'];//用户当前经验值
+      final num nextLevelGrowthVal = data['next_level_growth_value'];//下一级总经验值
+      final num growthToNextNeedVal = nextLevelGrowthVal - growthVal;//升到下一级所需经验值
 
       final $GrowthView = Row(
         children: [
@@ -116,7 +116,7 @@ class _LevelPageState extends State<LevelPage> {
           Spacing.w4,
           Text('经验值：$growthVal'),
           Spacing.exp,
-          Text('升级所需经验值：$nextLevelGrowthVal'),
+          Text('升级所需经验值：$growthToNextNeedVal'),
         ],
       );
 
@@ -136,7 +136,7 @@ class _LevelPageState extends State<LevelPage> {
               0,
               min(
                 1,
-                (growthVal - levelGrowthVal) / (nextLevelGrowthVal - levelGrowthVal),
+                growthVal / nextLevelGrowthVal,
               ),
             ),
           ),
