@@ -39,7 +39,7 @@ class ShopViewBest extends StatelessWidget {
     child = Column(
       children: [
         GroupTitleView(
-          title: '热销异性单品',
+          title: '热销异性商品',
           margin: Pad(top: AppSize.safeTop),
         ),
         Expanded(child: child),
