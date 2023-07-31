@@ -179,7 +179,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
   }
 
-  Future<void> _unityReady() async {
+  Future<void> unityReady() async {
     if (!Env.useUnity) throw '未开启Unity';
 
     await ready.timeout(const Duration(seconds: unity_time_out));
@@ -261,7 +261,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: unity_time_out)}) async {
-    await _unityReady();
+    await unityReady();
 
     return _sendMessage(action, data, timeout);
   }
@@ -295,7 +295,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   void sendCmd(App2UnityEnum action, {data}) async {
-    await _unityReady();
+    await unityReady();
 
     assert(data is! Function);
 

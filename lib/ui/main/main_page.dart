@@ -99,7 +99,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       // Unity还没有初始化完
       if(!UnityCtrl.ins.isReady) {
         WaitingCtrl.obj.show(text: "资源加载中, 请稍后");
-        await UnityCtrl.ins.ready;
+        await UnityCtrl.ins.unityReady();
         WaitingCtrl.obj.hidden();
       }
     });

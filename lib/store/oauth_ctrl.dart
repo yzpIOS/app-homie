@@ -121,9 +121,13 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         // Unity还没有初始化完
         if(!UnityCtrl.ins.isReady) {
           WaitingCtrl.obj.show(text: "资源加载中, 请稍后");
-          await UnityCtrl.ins.ready;
+          await UnityCtrl.ins.unityReady();
           WaitingCtrl.obj.hidden();
         }
+
+        // 切走了，停止unity, 否则会报错
+        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
+            data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
 
         final info = await holderProgress(
           Get.to(
