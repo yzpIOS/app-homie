@@ -11,5 +11,5 @@
   "sentry_dsn": "https://52fff051ed924b838b3e04d3e0909caa@o4504445347037184.ingest.sentry.io/4504445494165504",
   "is_debug": false,
   "server_ip": "106.55.217.49",
-  "server_port": 31391
+  "server_port": 7779
 }
