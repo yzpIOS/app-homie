@@ -40,8 +40,6 @@ class SignDialog extends StatelessWidget {
       final data2 = resp[1]?['list'] ?? [];
 
       if ((data is! List || data.isEmpty) || (total is! int) || (data2 is! List)) {
-        showToast('数据错误');
-
         return;
       }
 
