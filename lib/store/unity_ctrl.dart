@@ -82,6 +82,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 告诉unity网络变化
   ///
   void tellUnityNetStatus(bool result) async {
+    if(!_isUnityInitSuccess) {
+      return;
+    }
     if(netStatusValue == result) {
       return;
     }
@@ -103,10 +106,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       // 重试次数
       maxTimes --;
       try {
-        await _sendMessage(
+        await sendMessage(
             App2UnityEnum.FTU_NET_STATUS_CHANGE,
-            {"status": result},
-            const Duration(seconds: 5)
+            data: {"status": result},
+            timeout: const Duration(seconds: 5)
         );
         // 成功返回
         debugPrint("unity通讯成功");
@@ -145,6 +148,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             sendFlutterSocketInfo();
             // 监听flutter socketserver状态
             socketCtrlStatus();
+            // 初始化
             curScene = "";
             break;
           default:

@@ -118,13 +118,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       // 性别为空，那么需要去选择角色
       if(myInfo.containsKey("sex") == false || myInfo["sex"] == 0) {
 
-        // Unity还没有初始化完
-        if(!UnityCtrl.ins.isReady) {
-          WaitingCtrl.obj.show(text: "资源加载中, 请稍后");
-          await UnityCtrl.ins.unityReady();
-          WaitingCtrl.obj.hidden();
-        }
-
         // 切走了，停止unity, 否则会报错
         UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
             data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});

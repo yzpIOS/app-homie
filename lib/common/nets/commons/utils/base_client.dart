@@ -117,9 +117,7 @@ mixin BaseClient {
   /// 唤起原始数据的回调
   ///
   void riseOnRawData(int curCmd, Uint8List? curPkg) {
-    if(Env.isDebug) {
-      xlog("接收数据, cmd = $curCmd, data = ${curPkg?.toString()}", type: LogType.SOCKET);
-    }
+    xlog("接收数据, cmd = $curCmd, data = ${curPkg?.toString()}", type: LogType.SOCKET);
 
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {

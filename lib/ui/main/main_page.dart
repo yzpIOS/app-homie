@@ -94,15 +94,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     _appStreamSubscription = Future.delayed(const Duration(seconds: 1)).asStream().listen((event) {
       applePurchase = ApplePurchase(compensate: true);
     });
-
-    post(() async {
-      // Unity还没有初始化完
-      if(!UnityCtrl.ins.isReady) {
-        WaitingCtrl.obj.show(text: "资源加载中, 请稍后");
-        await UnityCtrl.ins.unityReady();
-        WaitingCtrl.obj.hidden();
-      }
-    });
   }
 
   @override
