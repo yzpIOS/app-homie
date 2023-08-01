@@ -82,9 +82,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 告诉unity网络变化
   ///
   void tellUnityNetStatus(bool result) async {
-    if(!_isUnityInitSuccess) {
-      return;
-    }
+    // if(!_isUnityInitSuccess) {
+    //   return;
+    // }
     if(netStatusValue == result) {
       return;
     }
