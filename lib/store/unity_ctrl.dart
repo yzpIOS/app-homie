@@ -106,10 +106,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       // 重试次数
       maxTimes --;
       try {
-        await sendMessage(
+        await _sendMessage(
             App2UnityEnum.FTU_NET_STATUS_CHANGE,
-            data: {"status": result},
-            timeout: const Duration(seconds: 5)
+            {"status": result},
+            const Duration(seconds: 5)
         );
         // 成功返回
         debugPrint("unity通讯成功");
