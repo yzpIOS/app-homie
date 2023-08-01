@@ -107,6 +107,7 @@ class _LevelPageState extends State<LevelPage> {
       if (data == null) return Spacing.blank;
 
       final num growthVal = data['growth_value'];//用户当前经验值
+      final num levelGrowthValue = data['level_growth_value'];//本级总经验值
       final num nextLevelGrowthVal = data['next_level_growth_value'];//下一级总经验值
       final num growthToNextNeedVal = nextLevelGrowthVal - growthVal;//升到下一级所需经验值
 
@@ -136,7 +137,7 @@ class _LevelPageState extends State<LevelPage> {
               0,
               min(
                 1,
-                growthVal / nextLevelGrowthVal,
+                (growthVal - levelGrowthValue) / (nextLevelGrowthVal - levelGrowthValue),
               ),
             ),
           ),
