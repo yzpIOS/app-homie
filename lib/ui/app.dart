@@ -84,7 +84,13 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       ],
     );
 
-    return child;
+    return GestureDetector(
+      behavior: HitTestBehavior.deferToChild,
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: child,
+    );
   }
 
   Widget _transitionBuilder(BuildContext context, Widget? child) {
