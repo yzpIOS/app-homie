@@ -174,6 +174,13 @@ mixin _TryMixin implements _UnityDressUpMixin {
 }
 
 mixin _MultiMixin implements ClothSelector, _TryMixin {
+
+  // 数据结构
+  // 下面的数据有可能重复，所以在取消选择的时候，需要把map中的其它的数据同时删除
+  // {
+  // "122": [11, 12, 15, 17, 22],
+  // "123":[11, 33, 122, 555],
+  // }
   final _dataRx = RxMap<int, List<int>>();
 
   @override
@@ -215,31 +222,27 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
         keys.removeAt(keyIndex),
       );
 
-      task = keys.isEmpty
-          ? doReset2DressUp
-          : () async {
-              final count = keys.length;
-              final isLast = keyIndex == keys.length - 1;
+      task = keys.isEmpty ? doReset2DressUp : () async {
+        final count = keys.length;
+        final isLast = keyIndex == keys.length - 1;
 
-              if (!isLast) {
-                for (var i = keyIndex; i < count; ++i) {
-                  final key = keys[i];
+        if (!isLast) {
+          for (var i = keyIndex; i < count; ++i) {
+            final key = keys[i];
 
-                  final newIds = await calcDressUp(
-                    key,
-                    i == 0 ? dressUpCtrl.ids.toList(growable: false) : _dataRx[keys[i - 1]]!,
-                  );
-
-                  _dataRx[key] = newIds;
-                }
-              }
-
-              return setDressUp(_dataRx.values.last);
-            };
+            final newIds = await calcDressUp(
+              key,
+              i == 0 ? dressUpCtrl.ids.toList(growable: false) : _dataRx[keys[i]]!,
+            );
+            _dataRx[key] = newIds;
+          }
+        }
+        return setDressUp(_dataRx.values.last);
+      };
     } else {
       addOrDel = true;
 
-      task = () => updateDressUp(true, id).then((val) => _dataRx[id] = List.from(val, growable: false));
+      task = () => updateDressUp(true, id).then((val) => _dataRx[id] = List.from(val));
     }
 
     return simpleTry(task, callback: (result) {
