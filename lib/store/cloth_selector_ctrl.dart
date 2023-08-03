@@ -16,6 +16,7 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
   final _mode2Rx = RxBool(true);
+  final groupListId = RxInt(2);// 选择的类型(1头部(头发口红等)、2着装(上衣下衣等))
 
   bool get isShopMode => _modeRx() == 0;
 
@@ -309,7 +310,8 @@ class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin
   Future<void> doSelect(Map item) {
     final int id = item['product_id'];
 
-    if (myInfo().gender!.code == item['gender']) {
+    //gender:3  男女均可使用
+    if (myInfo().gender!.code == item['gender'] || item['gender'] == 3) {
       return _doTryUse(id);
     } else {
       if (!_data2Rx.remove(id)) _data2Rx.add(id);
