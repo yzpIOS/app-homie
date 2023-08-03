@@ -3,11 +3,19 @@ import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../banner_ctrl.dart';
+
 class RoomHotCtrl extends PageListCtrl<Map> {
   final top6Rx = Rxn<List<Map>>();
+  final bannerCtrl = Get.find<BannerCtrl>();
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.hotRoomList(page: page);
+  Future fetchPage(PageNum page) {
+    //刷新banner
+    bannerCtrl.doRefresh();
+
+    return Api.Room.hotRoomList(page: page);
+  }
 
   @override
   Iterable<Map> transform(data) {
