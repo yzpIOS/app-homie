@@ -324,9 +324,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   Future<void> _loadScene(SceneInfo loader) async {
     await _sceneLock.synchronized(() {});
     // 没有完成，需要等待
-    if(!sendSocketComplete.isCompleted) {
-      await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
-    }
+    // if(!sendSocketComplete.isCompleted) {
+    //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
+    // }
     // 通知加载场景
     Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(
