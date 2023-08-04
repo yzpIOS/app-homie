@@ -26,12 +26,12 @@ class ApiShop extends ApiBase {
     return _doPost('recommend/query').then((val) => val?['items'] ?? []);
   }
 
-  Future productList({required PageNum page, int? categoryId, GenderEnum? gender}) {
+  Future productList({required PageNum page, int? categoryId, GenderEnum? gender, bool needGroupListId = true}) {
     final data = {
       'status': 1,
       if (categoryId != null) 'sales_category_id_list': [categoryId],
       if (gender != null) 'gender': gender.code,
-      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
+      if (needGroupListId) 'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('product/query', data: page + data);
