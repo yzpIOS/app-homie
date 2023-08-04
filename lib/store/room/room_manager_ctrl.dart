@@ -13,6 +13,7 @@ import 'package:app/ui/room/room_page.dart';
 import 'package:app/widgets.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
+  final interval_time = 200;
 
   static RoomManagerCtrl get ins {
     return Get.find<RoomManagerCtrl>();
@@ -163,6 +164,11 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   }
 
   void toRoom({required int roomId, Map? data, bool off = false}) {
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
+      return;
+    }
+    _preClickTime = DateTime.now().millisecondsSinceEpoch;
+
     return _show(
       roomId: roomId,
       off: off,
@@ -176,14 +182,17 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   /// 有更好的方式？？
   ///
   void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
+      return;
+    }
+    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
   }
 
   int _preClickTime = 0;
 
   void toSquare({Map? data}) {
-    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < 2000) {
-      showToast("操作太频繁");
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;

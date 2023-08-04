@@ -40,6 +40,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   final _sceneLock = Lock(reentrant: true);
 
+  Completer sendSocketComplete = Completer();
+
   static UnityCtrl get ins {
     return Get.find<UnityCtrl>();
   }
@@ -231,6 +233,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           "role_id": OAuthCtrl.nUid.toInt()
         },
       );
+      sendSocketComplete.complete(true);
       debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
       debugPrint("[sendFlutterSocketInfo]: 连接失败, error = ${error.toString()}");
@@ -320,6 +323,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   Future<void> _loadScene(SceneInfo loader) async {
     await _sceneLock.synchronized(() {});
+    // 没有完成，需要等待
+    if(!sendSocketComplete.isCompleted) {
+      await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
+    }
     // 通知加载场景
     Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(

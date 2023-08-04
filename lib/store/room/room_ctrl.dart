@@ -240,10 +240,11 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           }
         } catch (e, s) {
           markFail(e, s);
+          Get.alertDialog("场景加载错误");
 
           // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
 
-          rethrow;
+          return;
         }
 
         sceneHudRx(RoomHudState.Normal);
