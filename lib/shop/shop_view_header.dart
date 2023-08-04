@@ -57,7 +57,16 @@ class _MyModelViewState extends State<MyModelView> {
     if (data == null) {
       return;
     }
-    //position=1; 镜头位置 0：聚焦头部 1：概览全身
+
+    //即将切换的镜头位置和已选中的位置一致，不处理
+    if (data.position == 0 && Get.find<ClothSelectorCtrl>().groupListId.value == 1) {
+      return;
+    }
+    if (data.position == 1 && Get.find<ClothSelectorCtrl>().groupListId.value == 2) {
+      return;
+    }
+
+    //position; 镜头位置 0：聚焦头部 1：概览全身
     Get.find<ClothSelectorCtrl>().groupListId.value = data.position == 0 ? 1 : 2;
     Get.find<ShopCategoryCtrl>().doRefresh();
     Get.find<MyDressUpCtrl>().getMyDressList();

@@ -31,12 +31,13 @@ class _LoginByThirdViewState extends State<LoginByThirdView> {
 
     //iOS端未安装微信则不显示入口
     if (GetPlatform.isIOS) {
-      WechatKitPlatform.instance.isInstalled().then((value) {
-        if (value) {
-          data.add('wx');
-          setState(() {});
-        }
-      });
+      // todo:屏蔽微信
+      // WechatKitPlatform.instance.isInstalled().then((value) {
+      //   if (value) {
+      //     data.add('wx');
+      //     setState(() {});
+      //   }
+      // });
     } else {
       data.add('wx');
     }

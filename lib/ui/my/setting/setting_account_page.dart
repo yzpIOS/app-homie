@@ -38,10 +38,11 @@ class _SettingAccountPageState extends State<SettingAccountPage> {
     final items = [
       TableItem(title: '账号名称', tips: data['user_name']),
       TableItem(title: '手机绑定', tips: phone),
-      TableItem(
-        title: '第三方账号绑定',
-        onTap: () => Get.to(() => const BindThirdPage()),
-      ),
+      // todo:屏蔽微信
+      // TableItem(
+      //   title: '第三方账号绑定',
+      //   onTap: () => Get.to(() => const BindThirdPage()),
+      // ),
       TableItem(
         title: '密码',
         tips: hasPwd ? '已设置' : '未设置',
