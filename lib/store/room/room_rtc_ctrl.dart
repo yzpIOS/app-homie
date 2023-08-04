@@ -75,7 +75,8 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     }
 
     leaveRoom();
-    S_GoAwayRoom s_goAwayRoom = S_GoAwayRoom(buildingId: data.buildingId);
+    S_GoAwayRoom s_goAwayRoom = S_GoAwayRoom();
+    s_goAwayRoom.buildingId = data.buildingId;
     SocketCtrl.ins.sendUnity(CMD.S_GoAwayRoom, message: s_goAwayRoom);
   }
 

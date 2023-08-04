@@ -12,6 +12,7 @@ class ApiDressUp extends ApiBase {
   ///
   Future myList({required PageNum page, int? categoryId}) {
     final data = <String, dynamic>{
+      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
       if (categoryId != null) //
         'category_id_list': [categoryId],
     };
@@ -24,8 +25,8 @@ class ApiDressUp extends ApiBase {
   ///
   Future<S_SaveUserCurrentDressUp?> save({required List<int> ids}) {
     // 保存
-    C_SaveUserCurrentDressUp c_saveUserCurrentDressUp =
-      C_SaveUserCurrentDressUp(productIdList: ids.map((e) => Int64(e)));
+    C_SaveUserCurrentDressUp c_saveUserCurrentDressUp = C_SaveUserCurrentDressUp();
+    c_saveUserCurrentDressUp.productIdList.addAll(ids.map((e) => Int64(e)));
 
     return SocketCtrl.ins.sendByteAsyncServer(
       CMD.C_SaveUserCurrentDressUp,

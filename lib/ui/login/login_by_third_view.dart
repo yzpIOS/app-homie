@@ -5,17 +5,25 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/ui/login/widgets/pact_view.dart';
+import 'package:wechat_kit/wechat_kit.dart';
 
 var _wxAuthLock = false;
 
 class LoginByThirdView extends StatelessWidget {
   const LoginByThirdView({super.key});
 
+  // wwxIsInstalled () {
+  //   final wxIsInstalled = WechatKitPlatform.instance.isInstalled();
+  //   return wxIsInstalled;
+  // }
+
   @override
   Widget build(BuildContext context) {
+
     final data = [
       // 'phone',
       // 'qq',
+      // if (wwxIsInstalled())
       'wx',
       // if (GetPlatform.isIOS) 'apple',
     ];

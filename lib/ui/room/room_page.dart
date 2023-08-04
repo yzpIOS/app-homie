@@ -121,6 +121,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
         msg = '加载失败';
       }
 
+      // Future.delayed(const Duration(seconds: 2)).whenComplete(() => Get.back());
+
+
       safePop().whenComplete(() => Get.alertDialog(msg));
     }
   }

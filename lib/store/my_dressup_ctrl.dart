@@ -2,8 +2,11 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/common/async_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/widgets.dart';
 
 class MyDressUpCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
+  RxList<dynamic> myDressList = RxList();
+
   MyDressUpCtrl({required super.uid}) : super(boxName: 'MyDressUpData');
 
   Iterable<int> get ids => dataRx.map((it) => (it['product_id'] ?? it['id']) as int);
@@ -40,5 +43,9 @@ class MyDressUpCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
         return {"id" : e.id.toInt()};
       }).toList(),
     );
+  }
+
+  Future getMyDressList() async {
+    myDressList.value = await Api.Shop.categoryList_();
   }
 }

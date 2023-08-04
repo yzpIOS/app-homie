@@ -1,7 +1,9 @@
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/shop/cart_sheet.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
+import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
@@ -14,6 +16,10 @@ import 'package:app/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../common/nets/cmds.dart';
+import '../common/nets/commons/proto/Message.pb.dart';
+import '../store/shop_category_ctrl.dart';
 
 class MyModelView extends StatefulWidget {
 
@@ -41,12 +47,29 @@ class _MyModelViewState extends State<MyModelView> {
         setState(() { });
       }
     });
+
+    //注册镜头位置监听回调
+    SocketCtrl.ins.onDataCmd(CMD.C_CameraSwitch, onUnityRequest);
+  }
+
+  //镜头位置监听回调
+  void onUnityRequest(int cmd, C_CameraSwitch? data) async {
+    if (data == null) {
+      return;
+    }
+    //position=1; 镜头位置 0：聚焦头部 1：概览全身
+    Get.find<ClothSelectorCtrl>().groupListId.value = data.position == 0 ? 1 : 2;
+    Get.find<ShopCategoryCtrl>().doRefresh();
+    Get.find<MyDressUpCtrl>().getMyDressList();
   }
 
   @override
   void dispose() {
     super.dispose();
     streamSubscription?.cancel();
+
+    //移除镜头位置监听回调
+    SocketCtrl.ins.removeOnDataCmd(CMD.C_CameraSwitch, onUnityRequest);
   }
 
   @override
@@ -88,6 +111,7 @@ class _MyModelViewState extends State<MyModelView> {
     child = Stack(
       children: [
         AspectRatio(aspectRatio: MyModelView.ratio, child: child),
+        // 加载成功后，根据"商城"、"我的衣柜"、"我的其他"显示
         if(unityLoadComplete)
           Positioned.fill(
             child: GetX<ClothSelectorCtrl>(
@@ -98,14 +122,21 @@ class _MyModelViewState extends State<MyModelView> {
               },
             ),
           ),
-        // 加载成功后，才显示下面的按钮
+        // 加载成功后，才显示广场按钮
         if(unityLoadComplete)
           Positioned(
-            top: AppSize.safeTop + 50,
-            right: 10,
+            bottom: 70,
+            left: 10,
             child: $Btn(action: '广场'),
           ),
-        // 加载成功后，才显示下面的按钮
+        // 加载成功后，才显示聚焦头部、概览全身的切换视图
+        // if(unityLoadComplete)
+        //   Positioned(
+        //     top: AppSize.safeTop + 118,
+        //     right: 10,
+        //     child: $HeadChangeCameraDressTypeView(),
+        //   ),
+        // 加载成功后，才显示"商城""我的"切换视图
         if(unityLoadComplete)
           Positioned(
             left: 10,
@@ -201,12 +232,54 @@ class _MyModelViewState extends State<MyModelView> {
     );
   }
 
+  Widget $HeadChangeCameraDressTypeView() {
+    return GetX<ClothSelectorCtrl>(
+      builder: (it) {
+        int groupListId = it.groupListId.value;
+        return Container(
+          padding: const Pad(horizontal: 1, vertical: 8),
+          decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFF5F5F5)),
+          child: Column(
+            children: [
+              OpacityButton(
+                onTap: () => onChangeCameraDressTypeClick(1),
+                child: Image.asset(IMG.format(groupListId == 1 ? 'shop/shangcheng_icon_tb_selected' : 'shop/shangcheng_icon_tb_unselected'), scale: 3),
+              ),
+              Spacing.h6,
+              OpacityButton(
+                onTap: () => onChangeCameraDressTypeClick(2),
+                child: Image.asset(IMG.format(groupListId == 2 ? 'shop/shangcheng_icon_fz_selected' : 'shop/shangcheng_icon_fz_unselected'), scale: 3),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void onItemClick(String action) {
     switch (action) {
       case '广场':
         Get.find<RoomManagerCtrl>().toSquare();
         break;
     }
+  }
+
+  // 点击切换groupListId 1.聚焦头部、2.概览全身按钮
+  void onChangeCameraDressTypeClick(int groupListId) {
+    final ctrl = Get.find<ClothSelectorCtrl>();
+    if (ctrl.groupListId.value == groupListId) {
+      return;
+    }
+
+    //position 镜头位置 0：聚焦头部 1：概览全身
+    C_CameraSwitch c_cameraSwitch = C_CameraSwitch();
+    c_cameraSwitch.position = groupListId == 1 ? 0 : 1;
+    SocketCtrl.ins.sendUnity(CMD.C_CameraSwitch, message: c_cameraSwitch);
+
+    ctrl.groupListId.value = groupListId;
+    Get.find<ShopCategoryCtrl>().doRefresh();
+    Get.find<MyDressUpCtrl>().getMyDressList();
   }
 }
 

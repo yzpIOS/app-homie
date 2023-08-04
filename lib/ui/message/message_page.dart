@@ -101,7 +101,8 @@ class _ActionView extends GetView<ConvManagerCtrl> {
             if(token == null) {
               return;
             }
-            C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
+            C_Role c_role = C_Role();
+            c_role.session = "家武，家武，收到请回答！";
             CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
           });
           CustomClient.ins.connect("localhost", 8321);
@@ -115,7 +116,8 @@ class _ActionView extends GetView<ConvManagerCtrl> {
           if(token == null) {
             return;
           }
-          C_Role c_role = C_Role(session: "家武，家武，收到请回答！");
+          C_Role c_role = C_Role();
+          c_role.session = "家武，家武，收到请回答！";
           CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
           return;
         }

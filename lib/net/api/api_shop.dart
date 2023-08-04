@@ -3,18 +3,23 @@ part of '../api.dart';
 class ApiShop extends ApiBase {
   const ApiShop(super.path);
 
-  Future categoryList_({int parentId = 0, onlyHead = false}) {
+  Future categoryList_({int parentId = 0}) {
     final data = {
       'status': 1,
       'parent_id_list': [parentId],
-      // 'group_id_list': [onlyHead ? 1 : 2],
+      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
   }
 
-  Future categoryList() {
-    return _doPost('sales_category/query', data: const PageNum(size: 999) + {}).then((val) => val?['items'] ?? []);
+  Future categoryList(bool needGroupListId) {
+    final data = {
+      if (needGroupListId)
+      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
+    };
+
+    return _doPost('sales_category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
   }
 
   Future recommendList() {
@@ -26,6 +31,7 @@ class ApiShop extends ApiBase {
       'status': 1,
       if (categoryId != null) 'sales_category_id_list': [categoryId],
       if (gender != null) 'gender': gender.code,
+      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('product/query', data: page + data);

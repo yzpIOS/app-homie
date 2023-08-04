@@ -144,6 +144,24 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
     );
   }
 
+  StreamSubscription? streamSubscription = null;
+
+  @override
+  void didUpdateWidget(covariant _DataView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    debugPrint("didUpdateWidget categoryId = ${widget.categoryId}");
+    streamSubscription?.cancel();
+    streamSubscription = Future.delayed(const Duration(milliseconds: 100)).asStream().listen((event) {
+      doRefresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
+  }
+
   @override
   Future fetchPage(PageNum page) {
     return Api.Shop.productList(page: page, categoryId: widget.categoryId, gender: myInfo().gender);
@@ -191,6 +209,7 @@ class _ItemView extends StatelessWidget {
   final Map data;
 
   const _ItemView({super.key, required this.data});
+
 
   @override
   Widget build(BuildContext context) {

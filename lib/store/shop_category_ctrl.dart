@@ -14,6 +14,7 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 class ShopCategoryCtrl extends AsyncListCtrl<Map> {
   ShopCategoryCtrl({required super.uid}) : super(boxName: 'ShopCategoryData');
 
+  RxList<dynamic> allCategoryList = RxList();
   late final myInfo = Get.find<MyInfoCtrl>().dataRx;
   // 待发送列表
   List<int> listGoods = [];
@@ -47,7 +48,8 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
       return;
     }
     debugPrint("send size ${listGoods.length}");
-    S_PushPreload payLoad = S_PushPreload(clothIds: listGoods);
+    S_PushPreload payLoad = S_PushPreload();
+    payLoad.clothIds.addAll(listGoods);
     SocketCtrl.ins.senByteUnity(CMD.S_PushPreload, datas: payLoad.writeToBuffer());
     listGoods.clear();
   }
@@ -64,7 +66,7 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
   }
 
   @override
-  Future get api => Api.Shop.categoryList();
+  Future get api => Api.Shop.categoryList(true);
 
 
   @override
@@ -75,5 +77,9 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
     streamSubscription?.cancel();
     isonUnityRequestCome = false;
     SocketCtrl.ins.removeOnDataCmd(CMD.C_PushPreload, onUnityRequest);
+  }
+
+  Future getAllCategoryList() async {
+    allCategoryList.value = await Api.Shop.categoryList(false);
   }
 }

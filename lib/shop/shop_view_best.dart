@@ -126,7 +126,13 @@ class ShopViewBest extends StatelessWidget {
       width: 65,
       color: const Color(0xFFF5F5F5),
       child: GetX<ShopCategoryCtrl>(
-        builder: (it) => $DataView(it.autoGet()),
+        builder: (it) {
+          final _data = it.allCategoryList ?? [];
+          return $DataView(_data);
+        },
+        initState: (value) {
+          value.controller?.getAllCategoryList();
+        },
       ),
     );
   }

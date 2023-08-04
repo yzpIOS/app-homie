@@ -16,7 +16,7 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
   final _mode2Rx = RxBool(true);
-  final groupListId = RxInt(2);// 选择的类型(1头部(头发口红等)、2着装(上衣下衣等))
+  final groupListId = RxInt(2);// 选择的类型(1聚焦头部(头发口红等)、2概览全身(上衣下衣等))
 
   bool get isShopMode => _modeRx() == 0;
 

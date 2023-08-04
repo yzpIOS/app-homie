@@ -20,20 +20,27 @@ class MyClothTabView extends StatefulWidget {
 }
 
 class _MyClothTabViewState extends State<MyClothTabView> with BusStateMixin, OverlayMixin {
-  final api = Api.Shop.categoryList_();
-
-  late final dressUpCtrl = Get.find<MyDressUpCtrl>();
-
   late final tabs = {
     '我的': MyView$Wardrobe(),
   };
 
   @override
   Widget build(BuildContext context) {
-    Widget builder(List? data) {
-      final _data = data ?? [];
+    return GetX<MyDressUpCtrl>(
+      builder: (it) {
+        final _data = it.myDressList ?? [];
+        return _createTabView(_data);
+      },
+      initState: (value) {
+        value.controller?.getMyDressList();
+      },
+    );
+  }
 
-      return DefaultTabController(
+  Widget _createTabView(List<dynamic> _data) {
+    return ConfigListState(
+      buildNoMoreView: ([_]) => Spacing.blank,
+      child: DefaultTabController(
         length: tabs.length + _data.length,
         child: BusView<GoWardrobeEvent>(
           onData: (context, _) => DefaultTabController.maybeOf(context)?.index = 0,
@@ -46,17 +53,8 @@ class _MyClothTabViewState extends State<MyClothTabView> with BusStateMixin, Ove
             ],
           ),
         ),
-      );
-    }
-
-    Widget child = XFutureBuilder(api, emptyAssert: (_) => false, onData: builder);
-
-    child = ConfigListState(
-      buildNoMoreView: ([_]) => Spacing.blank,
-      child: child,
+      ),
     );
-
-    return child;
   }
 
   Widget $TabBar(List data) {

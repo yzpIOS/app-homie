@@ -20,12 +20,29 @@ class MyView extends StatefulWidget {
 }
 
 class _MyViewState extends SimplePageState<Map, MyView> {
-  late final categoryId = widget.categoryId;
   late final selectorCtrl = Get.find<ClothSelectorCtrl>();
   late final selector = selectorCtrl.selectorCloth;
+  StreamSubscription? streamSubscription = null;
 
   @override
-  Future fetchPage(PageNum page) => Api.DressUp.myList(page: page, categoryId: categoryId);
+  void didUpdateWidget(covariant MyView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    streamSubscription?.cancel();
+    streamSubscription = Future.delayed(const Duration(milliseconds: 100)).asStream().listen((event) {
+      doRefresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
+  }
+
+  @override
+  Future fetchPage(PageNum page) {
+    return Api.DressUp.myList(page: page, categoryId: widget.categoryId);
+  }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
