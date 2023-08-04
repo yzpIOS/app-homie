@@ -40,8 +40,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   final _sceneLock = Lock(reentrant: true);
 
-  Completer sendSocketComplete = Completer();
-
   static UnityCtrl get ins {
     return Get.find<UnityCtrl>();
   }
@@ -233,7 +231,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           "role_id": OAuthCtrl.nUid.toInt()
         },
       );
-      sendSocketComplete.complete(true);
       debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
       debugPrint("[sendFlutterSocketInfo]: 连接失败, error = ${error.toString()}");
