@@ -9,25 +9,41 @@ import 'package:wechat_kit/wechat_kit.dart';
 
 var _wxAuthLock = false;
 
-class LoginByThirdView extends StatelessWidget {
+class LoginByThirdView extends StatefulWidget {
   const LoginByThirdView({super.key});
 
-  // wwxIsInstalled () {
-  //   final wxIsInstalled = WechatKitPlatform.instance.isInstalled();
-  //   return wxIsInstalled;
-  // }
+  @override
+  State<LoginByThirdView> createState() => _LoginByThirdViewState();
+}
+
+class _LoginByThirdViewState extends State<LoginByThirdView> {
+  final data = <String>[
+    // 'phone',
+    // 'qq',
+    // if (wxIsInstalled)
+    // 'wx',
+    // if (GetPlatform.isIOS) 'apple',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    //iOS端未安装微信则不显示入口
+    if (GetPlatform.isIOS) {
+      WechatKitPlatform.instance.isInstalled().then((value) {
+        if (value) {
+          data.add('wx');
+          setState(() {});
+        }
+      });
+    } else {
+      data.add('wx');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    final data = [
-      // 'phone',
-      // 'qq',
-      // if (wwxIsInstalled())
-      'wx',
-      // if (GetPlatform.isIOS) 'apple',
-    ];
-
     return Box(
       height: 50,
       child: Row(

@@ -2,20 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Homie想访问您的照册，用于分享和更改头像等功能</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Homie想访问您的麦克风，用于发送语音等功能</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Homie想访问您的相机，用于发布动态等功能</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Homie想访问您的媒体资料库，用于播放音乐等功能</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Homie想访问您的定位，用于推荐用户等功能</string>
-	<key>NSLocationUsageDescription</key>
-	<string>Homie想访问您的定位，用于推荐用户等功能</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -38,8 +24,54 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>alipay</string>
+		<string>wechat</string>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
+		<string>mqqapi</string>
+		<string>mqq</string>
+		<string>mqqOpensdkSSoLogin</string>
+		<string>mqqconnect</string>
+		<string>mqqopensdkdataline</string>
+		<string>mqqopensdkgrouptribeshare</string>
+		<string>mqqopensdkfriend</string>
+		<string>mqqopensdkapi</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqopensdkapiV3</string>
+		<string>mqzoneopensdk</string>
+		<string>wtloginmqq</string>
+		<string>wtloginmqq2</string>
+		<string>mqqwpa</string>
+		<string>mqzone</string>
+		<string>mqzonev2</string>
+		<string>mqzoneshare</string>
+		<string>wtloginqzone</string>
+		<string>mqzonewx</string>
+		<string>mqzoneopensdkapiV2</string>
+		<string>mqzoneopensdkapi19</string>
+		<string>mqzoneopensdkapi</string>
+		<string>mqqbrowser</string>
+		<string>mttbrowser</string>
+		<string>mqqopensdknopasteboard</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Homie想访问您的媒体资料库，用于播放音乐等功能</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Homie想访问您的相机，用于发布动态等功能</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Homie想访问您的定位，用于推荐用户等功能</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Homie想访问您的定位，用于推荐用户等功能</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Homie想访问您的麦克风，用于发送语音等功能</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Homie想访问您的照册，用于分享和更改头像等功能</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
