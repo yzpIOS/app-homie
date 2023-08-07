@@ -86,7 +86,6 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
   Future<void> _doJoin(Map data) async {
     switch (await Get.simpleDialog(msg: '已经在直播啦，进入直播间', cancelLabel: '下播')) {
       case '确定':
-        await Get.find<RoomManagerCtrl>().doCloseState();
         Get.find<RoomManagerCtrl>().toRoom(roomId: data['room_id'], off: true);
         break;
       case '下播':
