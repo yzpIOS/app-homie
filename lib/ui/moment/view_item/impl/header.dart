@@ -5,10 +5,12 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
+import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/moment/view_item/data_adapter.dart';
 import 'package:app/ui/moment/view_item/header.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/my/report_page.dart';
 
 mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
   double get avatarSize => 50;
@@ -43,6 +45,7 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
           ),
         ),
         if (!OAuthCtrl.isSelf(vm.author)) $FollowView(),
+        if (!OAuthCtrl.isSelf(vm.author)) $MoreView(),
         Spacing.w10,
       ],
     );
@@ -70,5 +73,18 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
               onTap: vm.data.doFollow,
             ),
     );
+  }
+
+  Widget $MoreView() {
+    return 'ic_menu_2'.toSvgAction(onPressed: () {
+      Get.showSheet(['举报']).onNotNull((val) {
+        switch (val) {
+          case '举报':
+            // Get.to(() => ReportPage(type: 3, id: vm.dynamicId));
+            Get.to(() => MomentReportPage(id: vm.dynamicId));
+            break;
+        }
+      });
+    });
   }
 }

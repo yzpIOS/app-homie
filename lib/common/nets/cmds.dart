@@ -104,7 +104,7 @@ class CMD {
 
   static const C_InFreeMikesArea =12002; //发送进入自由组麦区域=======对接完成
   static const S_InFreeMikesArea =12003; //下发进入自由组麦区域=======对接完成
-  static const C_CameraSwitch =12030;//告诉flutter镜头已经切换了，是聚焦头部还是概览全身(position=1;//镜头位置 0：聚焦头部 1：概览全身)
+  static const S_CameraSwitch =12030;//flutter告诉unity镜头已经切换了，是聚焦头部还是概览全身(position=1;//镜头位置 0：聚焦头部 1：概览全身)
 
 
   static const C_OutFreeMikesArea = 12006;//发送退出自由组麦区域

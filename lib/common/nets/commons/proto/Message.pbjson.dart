@@ -1824,17 +1824,17 @@ final $typed_data.Uint8List s_UseProductAndSaveUserCurrentDressUpDescriptor = $c
     'RHJlc3NVcFByb2R1Y3RMaXN0Ek4KEHVzZV9wcm9kdWN0X2xpc3QYAiADKAsyJC5jb20uc2F2dn'
     'kucHJvdG8uQmFja3BhY2tQcm9kdWN0SXRlbVIOdXNlUHJvZHVjdExpc3Q=');
 
-@$core.Deprecated('Use c_CameraSwitchDescriptor instead')
-const C_CameraSwitch$json = {
-  '1': 'C_CameraSwitch',
+@$core.Deprecated('Use s_CameraSwitchDescriptor instead')
+const S_CameraSwitch$json = {
+  '1': 'S_CameraSwitch',
   '2': [
     {'1': 'position', '3': 1, '4': 1, '5': 5, '10': 'position'},
   ],
 };
 
-/// Descriptor for `C_CameraSwitch`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_CameraSwitchDescriptor = $convert.base64Decode(
-    'Cg5DX0NhbWVyYVN3aXRjaBIaCghwb3NpdGlvbhgBIAEoBVIIcG9zaXRpb24=');
+/// Descriptor for `S_CameraSwitch`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_CameraSwitchDescriptor = $convert.base64Decode(
+    'Cg5TX0NhbWVyYVN3aXRjaBIaCghwb3NpdGlvbhgBIAEoBVIIcG9zaXRpb24=');
 
 @$core.Deprecated('Use c_PKInviteDescriptor instead')
 const C_PKInvite$json = {
@@ -2013,7 +2013,7 @@ const S_PKSyncSceneAttributes$json = {
   '1': 'S_PKSyncSceneAttributes',
   '2': [
     {'1': 'safeRadius', '3': 1, '4': 1, '5': 5, '10': 'safeRadius'},
-    {'1': 'remainingSeconds', '3': 2, '4': 1, '5': 3, '10': 'remainingSeconds'},
+    {'1': 'takeEffectTime', '3': 2, '4': 1, '5': 3, '10': 'takeEffectTime'},
     {'1': 'safePosition', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'safePosition'},
     {'1': 'gifts', '3': 4, '4': 3, '5': 11, '6': '.com.savvy.proto.PKGift', '10': 'gifts'},
   ],
@@ -2022,9 +2022,9 @@ const S_PKSyncSceneAttributes$json = {
 /// Descriptor for `S_PKSyncSceneAttributes`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_PKSyncSceneAttributesDescriptor = $convert.base64Decode(
     'ChdTX1BLU3luY1NjZW5lQXR0cmlidXRlcxIeCgpzYWZlUmFkaXVzGAEgASgFUgpzYWZlUmFkaX'
-    'VzEioKEHJlbWFpbmluZ1NlY29uZHMYAiABKANSEHJlbWFpbmluZ1NlY29uZHMSOAoMc2FmZVBv'
-    'c2l0aW9uGAMgASgLMhQuY29tLnNhdnZ5LnByb3RvLlhZWlIMc2FmZVBvc2l0aW9uEi0KBWdpZn'
-    'RzGAQgAygLMhcuY29tLnNhdnZ5LnByb3RvLlBLR2lmdFIFZ2lmdHM=');
+    'VzEiYKDnRha2VFZmZlY3RUaW1lGAIgASgDUg50YWtlRWZmZWN0VGltZRI4CgxzYWZlUG9zaXRp'
+    'b24YAyABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgxzYWZlUG9zaXRpb24SLQoFZ2lmdHMYBC'
+    'ADKAsyFy5jb20uc2F2dnkucHJvdG8uUEtHaWZ0UgVnaWZ0cw==');
 
 @$core.Deprecated('Use s_PKBattleEndDescriptor instead')
 const S_PKBattleEnd$json = {
@@ -2068,4 +2068,25 @@ const S_PKContinue$json = {
 /// Descriptor for `S_PKContinue`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_PKContinueDescriptor = $convert.base64Decode(
     'CgxTX1BLQ29udGludWUSHgoKaXNDb250aW51ZRgBIAEoCFIKaXNDb250aW51ZQ==');
+
+@$core.Deprecated('Use c_PickBuffGiftDescriptor instead')
+const C_PickBuffGift$json = {
+  '1': 'C_PickBuffGift',
+};
+
+/// Descriptor for `C_PickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_PickBuffGiftDescriptor = $convert.base64Decode(
+    'Cg5DX1BpY2tCdWZmR2lmdA==');
+
+@$core.Deprecated('Use s_PickBuffGiftDescriptor instead')
+const S_PickBuffGift$json = {
+  '1': 'S_PickBuffGift',
+  '2': [
+    {'1': 'is_pick_up', '3': 1, '4': 1, '5': 8, '10': 'isPickUp'},
+  ],
+};
+
+/// Descriptor for `S_PickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PickBuffGiftDescriptor = $convert.base64Decode(
+    'Cg5TX1BpY2tCdWZmR2lmdBIcCgppc19waWNrX3VwGAEgASgIUghpc1BpY2tVcA==');
 

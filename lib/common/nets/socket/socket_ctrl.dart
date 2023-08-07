@@ -235,6 +235,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_UpdateRole, S_UpdateRole.fromBuffer);
     register(CMD.S_SyncRoomInfo, S_SyncRoomInfo.fromBuffer);
     register(CMD.S_UseProductAndSaveUserCurrentDressUp, S_UseProductAndSaveUserCurrentDressUp.fromBuffer);
+    register(CMD.S_CameraSwitch, S_CameraSwitch.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
@@ -243,7 +244,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.C_OutFreeMikesArea, C_OutFreeMikesArea.fromBuffer);
     register(CMD.C_PlazaToRoom, C_PlazaToRoom.fromBuffer);
     register(CMD.C_InFreeMikesArea, C_InFreeMikesArea.fromBuffer);
-    register(CMD.C_CameraSwitch, C_CameraSwitch.fromBuffer);
 
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);

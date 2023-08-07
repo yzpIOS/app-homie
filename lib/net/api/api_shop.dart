@@ -26,15 +26,26 @@ class ApiShop extends ApiBase {
     return _doPost('recommend/query').then((val) => val?['items'] ?? []);
   }
 
-  Future productList({required PageNum page, int? categoryId, GenderEnum? gender, bool needGroupListId = true}) {
+  Future productList({required PageNum page, int? categoryId, GenderEnum? gender}) {
     final data = {
       'status': 1,
       if (categoryId != null) 'sales_category_id_list': [categoryId],
       if (gender != null) 'gender': gender.code,
-      if (needGroupListId) 'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
+      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('product/query', data: page + data);
+  }
+
+  //根据用户所属的用户组查看异性商品
+  Future oppositeSexProductList({required PageNum page, int? categoryId, GenderEnum? gender}) {
+    final data = {
+      'status': 1,
+      if (categoryId != null) 'sales_category_id_list': [categoryId],
+      if (gender != null) 'gender': gender.code,
+    };
+
+    return _doPost('product/opposite_sex/query', data: page + data);
   }
 
   Future buy({required int productId}) {

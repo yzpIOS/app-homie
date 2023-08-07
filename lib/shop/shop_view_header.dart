@@ -49,28 +49,28 @@ class _MyModelViewState extends State<MyModelView> {
     });
 
     //注册镜头位置监听回调
-    SocketCtrl.ins.onDataCmd(CMD.C_CameraSwitch, onUnityRequest);
+    // SocketCtrl.ins.onDataCmd(CMD.C_CameraSwitch, onUnityRequest);
   }
 
-  //镜头位置监听回调
-  void onUnityRequest(int cmd, C_CameraSwitch? data) async {
-    if (data == null) {
-      return;
-    }
-
-    //即将切换的镜头位置和已选中的位置一致，不处理
-    if (data.position == 0 && Get.find<ClothSelectorCtrl>().groupListId.value == 1) {
-      return;
-    }
-    if (data.position == 1 && Get.find<ClothSelectorCtrl>().groupListId.value == 2) {
-      return;
-    }
-
-    //position; 镜头位置 0：聚焦头部 1：概览全身
-    Get.find<ClothSelectorCtrl>().groupListId.value = data.position == 0 ? 1 : 2;
-    Get.find<ShopCategoryCtrl>().doRefresh();
-    Get.find<MyDressUpCtrl>().getMyDressList();
-  }
+  // //镜头位置监听回调
+  // void onUnityRequest(int cmd, C_CameraSwitch? data) async {
+  //   if (data == null) {
+  //     return;
+  //   }
+  //
+  //   //即将切换的镜头位置和已选中的位置一致，不处理
+  //   if (data.position == 0 && Get.find<ClothSelectorCtrl>().groupListId.value == 1) {
+  //     return;
+  //   }
+  //   if (data.position == 1 && Get.find<ClothSelectorCtrl>().groupListId.value == 2) {
+  //     return;
+  //   }
+  //
+  //   //position; 镜头位置 0：聚焦头部 1：概览全身
+  //   Get.find<ClothSelectorCtrl>().groupListId.value = data.position == 0 ? 1 : 2;
+  //   Get.find<ShopCategoryCtrl>().doRefresh();
+  //   Get.find<MyDressUpCtrl>().getMyDressList();
+  // }
 
   @override
   void dispose() {
@@ -78,7 +78,7 @@ class _MyModelViewState extends State<MyModelView> {
     streamSubscription?.cancel();
 
     //移除镜头位置监听回调
-    SocketCtrl.ins.removeOnDataCmd(CMD.C_CameraSwitch, onUnityRequest);
+    // SocketCtrl.ins.removeOnDataCmd(CMD.C_CameraSwitch, onUnityRequest);
   }
 
   @override
@@ -134,17 +134,17 @@ class _MyModelViewState extends State<MyModelView> {
         // 加载成功后，才显示广场按钮
         if(unityLoadComplete)
           Positioned(
-            bottom: 70,
-            left: 10,
+            bottom: 100,
+            left: 20,
             child: $Btn(action: '广场'),
           ),
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
-        // if(unityLoadComplete)
-        //   Positioned(
-        //     top: AppSize.safeTop + 118,
-        //     right: 10,
-        //     child: $HeadChangeCameraDressTypeView(),
-        //   ),
+        if(unityLoadComplete)
+          Positioned(
+            top: AppSize.safeTop + 56,
+            right: 25,
+            child: $HeadChangeCameraDressTypeView(),
+          ),
         // 加载成功后，才显示"商城""我的"切换视图
         if(unityLoadComplete)
           Positioned(
@@ -246,7 +246,8 @@ class _MyModelViewState extends State<MyModelView> {
       builder: (it) {
         int groupListId = it.groupListId.value;
         return Container(
-          padding: const Pad(horizontal: 1, vertical: 8),
+          width: 30,
+          padding: const Pad(vertical: 8),
           decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFF5F5F5)),
           child: Column(
             children: [
@@ -282,9 +283,9 @@ class _MyModelViewState extends State<MyModelView> {
     }
 
     //position 镜头位置 0：聚焦头部 1：概览全身
-    C_CameraSwitch c_cameraSwitch = C_CameraSwitch();
-    c_cameraSwitch.position = groupListId == 1 ? 0 : 1;
-    SocketCtrl.ins.sendUnity(CMD.C_CameraSwitch, message: c_cameraSwitch);
+    S_CameraSwitch s_cameraSwitch = S_CameraSwitch();
+    s_cameraSwitch.position = groupListId == 1 ? 0 : 1;
+    SocketCtrl.ins.sendUnity(CMD.S_CameraSwitch, message: s_cameraSwitch);
 
     ctrl.groupListId.value = groupListId;
     Get.find<ShopCategoryCtrl>().doRefresh();

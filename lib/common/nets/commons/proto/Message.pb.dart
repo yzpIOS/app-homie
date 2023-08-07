@@ -7001,13 +7001,13 @@ class S_UseProductAndSaveUserCurrentDressUp extends $pb.GeneratedMessage {
   $core.List<BackpackProductItem> get useProductList => $_getList(1);
 }
 
-class C_CameraSwitch extends $pb.GeneratedMessage {
-  factory C_CameraSwitch() => create();
-  C_CameraSwitch._() : super();
-  factory C_CameraSwitch.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory C_CameraSwitch.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class S_CameraSwitch extends $pb.GeneratedMessage {
+  factory S_CameraSwitch() => create();
+  S_CameraSwitch._() : super();
+  factory S_CameraSwitch.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_CameraSwitch.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_CameraSwitch', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_CameraSwitch', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'position', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
@@ -7016,22 +7016,22 @@ class C_CameraSwitch extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  C_CameraSwitch clone() => C_CameraSwitch()..mergeFromMessage(this);
+  S_CameraSwitch clone() => S_CameraSwitch()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  C_CameraSwitch copyWith(void Function(C_CameraSwitch) updates) => super.copyWith((message) => updates(message as C_CameraSwitch)) as C_CameraSwitch;
+  S_CameraSwitch copyWith(void Function(S_CameraSwitch) updates) => super.copyWith((message) => updates(message as S_CameraSwitch)) as S_CameraSwitch;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static C_CameraSwitch create() => C_CameraSwitch._();
-  C_CameraSwitch createEmptyInstance() => create();
-  static $pb.PbList<C_CameraSwitch> createRepeated() => $pb.PbList<C_CameraSwitch>();
+  static S_CameraSwitch create() => S_CameraSwitch._();
+  S_CameraSwitch createEmptyInstance() => create();
+  static $pb.PbList<S_CameraSwitch> createRepeated() => $pb.PbList<S_CameraSwitch>();
   @$core.pragma('dart2js:noInline')
-  static C_CameraSwitch getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_CameraSwitch>(create);
-  static C_CameraSwitch? _defaultInstance;
+  static S_CameraSwitch getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_CameraSwitch>(create);
+  static S_CameraSwitch? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.int get position => $_getIZ(0);
@@ -7677,7 +7677,7 @@ class S_PKSyncSceneAttributes extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncSceneAttributes', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'safeRadius', $pb.PbFieldType.O3, protoName: 'safeRadius')
-    ..aInt64(2, _omitFieldNames ? '' : 'remainingSeconds', protoName: 'remainingSeconds')
+    ..aInt64(2, _omitFieldNames ? '' : 'takeEffectTime', protoName: 'takeEffectTime')
     ..aOM<$0.XYZ>(3, _omitFieldNames ? '' : 'safePosition', protoName: 'safePosition', subBuilder: $0.XYZ.create)
     ..pc<$0.PKGift>(4, _omitFieldNames ? '' : 'gifts', $pb.PbFieldType.PM, subBuilder: $0.PKGift.create)
     ..hasRequiredFields = false
@@ -7714,13 +7714,13 @@ class S_PKSyncSceneAttributes extends $pb.GeneratedMessage {
   void clearSafeRadius() => clearField(1);
 
   @$pb.TagNumber(2)
-  $fixnum.Int64 get remainingSeconds => $_getI64(1);
+  $fixnum.Int64 get takeEffectTime => $_getI64(1);
   @$pb.TagNumber(2)
-  set remainingSeconds($fixnum.Int64 v) { $_setInt64(1, v); }
+  set takeEffectTime($fixnum.Int64 v) { $_setInt64(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasRemainingSeconds() => $_has(1);
+  $core.bool hasTakeEffectTime() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRemainingSeconds() => clearField(2);
+  void clearTakeEffectTime() => clearField(2);
 
   @$pb.TagNumber(3)
   $0.XYZ get safePosition => $_getN(2);
@@ -7879,6 +7879,80 @@ class S_PKContinue extends $pb.GeneratedMessage {
   $core.bool hasIsContinue() => $_has(0);
   @$pb.TagNumber(1)
   void clearIsContinue() => clearField(1);
+}
+
+class C_PickBuffGift extends $pb.GeneratedMessage {
+  factory C_PickBuffGift() => create();
+  C_PickBuffGift._() : super();
+  factory C_PickBuffGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_PickBuffGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_PickBuffGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_PickBuffGift clone() => C_PickBuffGift()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_PickBuffGift copyWith(void Function(C_PickBuffGift) updates) => super.copyWith((message) => updates(message as C_PickBuffGift)) as C_PickBuffGift;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_PickBuffGift create() => C_PickBuffGift._();
+  C_PickBuffGift createEmptyInstance() => create();
+  static $pb.PbList<C_PickBuffGift> createRepeated() => $pb.PbList<C_PickBuffGift>();
+  @$core.pragma('dart2js:noInline')
+  static C_PickBuffGift getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_PickBuffGift>(create);
+  static C_PickBuffGift? _defaultInstance;
+}
+
+class S_PickBuffGift extends $pb.GeneratedMessage {
+  factory S_PickBuffGift() => create();
+  S_PickBuffGift._() : super();
+  factory S_PickBuffGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PickBuffGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PickBuffGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'isPickUp')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_PickBuffGift clone() => S_PickBuffGift()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_PickBuffGift copyWith(void Function(S_PickBuffGift) updates) => super.copyWith((message) => updates(message as S_PickBuffGift)) as S_PickBuffGift;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_PickBuffGift create() => S_PickBuffGift._();
+  S_PickBuffGift createEmptyInstance() => create();
+  static $pb.PbList<S_PickBuffGift> createRepeated() => $pb.PbList<S_PickBuffGift>();
+  @$core.pragma('dart2js:noInline')
+  static S_PickBuffGift getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PickBuffGift>(create);
+  static S_PickBuffGift? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get isPickUp => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isPickUp($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsPickUp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsPickUp() => clearField(1);
 }
 
 

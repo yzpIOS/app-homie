@@ -40,7 +40,7 @@ class ShopViewList extends SimplePageView<Map> {
         assert(false, '数据错误 -> $myInfo');
     }
 
-    return Api.Shop.productList(page: page, categoryId: categoryId, gender: gender, needGroupListId: false);
+    return Api.Shop.oppositeSexProductList(page: page, categoryId: categoryId, gender: gender);
   }
 
   @override
