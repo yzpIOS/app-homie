@@ -38,6 +38,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   bool? netStatusValue = null;
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
+  Completer sendSockComplete = Completer();
+
   final _sceneLock = Lock(reentrant: true);
 
   static UnityCtrl get ins {
@@ -231,6 +233,12 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           "role_id": OAuthCtrl.nUid.toInt()
         },
       );
+
+      // 发送完成消息
+      if(!sendSockComplete.isCompleted) {
+        sendSockComplete.complete();
+      }
+      debugPrint("[showTransition] 如果未登录时，选角界面33333");
       debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
       debugPrint("[sendFlutterSocketInfo]: 连接失败, error = ${error.toString()}");
@@ -324,6 +332,12 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     // if(!sendSocketComplete.isCompleted) {
     //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
     // }
+    if(!sendSockComplete.isCompleted) {
+      debugPrint("[showTransition] 如果未登录时，选角界面44444");
+      await sendSockComplete.future;
+    } else {
+      debugPrint("[showTransition] 如果未登录时，选角界面55555");
+    }
     // 通知加载场景
     Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(

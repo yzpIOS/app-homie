@@ -82,6 +82,7 @@ class CustomSocket {
     _timeout = timeout;
     // 关闭之前的socket
     _socket?.close();
+    _socket = null;
     // 记录当前的host
     _host = host;
     // 记录当前port
@@ -251,6 +252,10 @@ class CustomSocket {
   /// 添加回调
   ///
   CustomSocket addConnect(Connected connected) {
+    if(_socket != null) {
+      connected.call();
+      return this;
+    }
     if(_connected.contains(connected)) {
       return this;
     }

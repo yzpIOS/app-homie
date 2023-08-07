@@ -49,6 +49,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     }
 
     FlutterNativeSplash.remove();
+
+    SocketCtrl.ins.addClientConnect(onConnectHandle);
   }
 
   //<editor-fold desc="登录">
@@ -176,12 +178,24 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       UserCtrl(_auth = data, init: info, showTransition: _auth?.sex != 0),
       permanent: true,
     );
-    // 开启socket连接
+    debugPrint("[showTransition] 如果未登录时，选角界面111111");
+    // 开启socket连接, 新建一个等待的队列
+    UnityCtrl.ins.sendSockComplete = Completer();
     SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
+  }
+
+  void onConnectHandle() {
+    debugPrint("[showTransition] 如果未登录时，选角界面22222");
     // 通知unity登录变化
     if(!UnityCtrl.ins.successSendInfo2Unity) {
       UnityCtrl.ins.sendFlutterSocketInfo();
     }
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    SocketCtrl.ins.removeListener(onConnectHandle);
   }
 
   //</editor-fold>
