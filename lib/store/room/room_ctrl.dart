@@ -54,6 +54,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   final String roomUid;
   final RoomType roomType;
 
+  bool isDisposed = false;
+
   late final RxString noticeRx;
 
   SceneCtrl({required this.info, this.pwd, required this.overlay})
@@ -124,6 +126,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     newMicList.clear();
     super.onClose();
     roomId = 0;
+    isDisposed = true;
   }
 
   @mustCallSuper
@@ -242,7 +245,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           }
         } catch (e, s) {
           markFail(e, s);
-          Get.alertDialog("场景加载错误");
+          if(!isDisposed) {
+            Get.alertDialog("场景加载错误");
+          }
 
           // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
 

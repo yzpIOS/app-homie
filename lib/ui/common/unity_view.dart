@@ -45,6 +45,8 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
   late final onInit = widget.onInit;
   late final onClose = widget.onClose;
 
+  bool isDisposed = false;
+
   late final gestureRecognizers = widget.gestureRecognizers;
 
   static Tuple2<String, num> _visible = const Tuple2('', 0);
@@ -78,8 +80,8 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
 
   @override
   void dispose() {
+    isDisposed = true;
     _ctrl.dispose();
-
     super.dispose();
   }
 
@@ -126,6 +128,9 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
   }
 
   void _doLoad(Tuple2<String, num> visible) async {
+    if(isDisposed) {
+      return;
+    }
     _ctrl
       ..value = 0
       ..animateTo(0.9999);
@@ -134,7 +139,9 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
 
     try {
       await onInit(_unity, _unity.loadScene, _onProcess);
-
+      if(isDisposed) {
+        return;
+      }
       _ctrl.fling();
     } catch (_) {
       if (_visible.value1 == uniqueKey) _visible = const Tuple2('', 0);
@@ -144,6 +151,9 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
   }
 
   void _onProcess(double val) async {
+    if(isDisposed) {
+      return;
+    }
     if (val == 1) {
       //ignore
     } else if (val > _ctrl.value) {
