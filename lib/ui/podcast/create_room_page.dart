@@ -91,6 +91,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
         break;
       case '下播':
         if(Get.find<RoomManagerCtrl>().sceneCtrl2 == null) {
+          await RoomManagerCtrl.ins.doCloseState();
           Get.back();
           return;
         }
@@ -100,7 +101,12 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
         RoomCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl as RoomCtrl?;
         if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
           // 不是公会，并且用户所在的房间是主人房
-          closeFunc = Api.Room.close;
+          closeFunc = () async {
+            // 请求关闭
+            await Api.Room.close();
+            // 关闭房间
+            await Get.find<RoomManagerCtrl>().doCloseState();
+          };
         } else {
           // 房间manager
           closeFunc = Get.find<RoomManagerCtrl>().doCloseState;
