@@ -365,10 +365,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         };
 
         // 防止重复加载
-        if(curScene != loader.scene) {
+        if(curScene == loader.scene) {
           debugPrint("场景切换太频繁=>loader.scene = ${loader.scene}, curScene = $curScene");
           return;
         }
+        curScene = loader.scene;
 
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
@@ -376,20 +377,19 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           timeout: const Duration(minutes: unity_time_out),
         );
 
+
         await loader.doOnAfter?.call();
       },
     );
   }
 
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) {
-    curScene = scene;
     return _loadScene(
       SceneInfo(scene, doOnAfter: doOnAfter, doOnBefore: doOnBefore),
     );
   }
 
   Future<void> loadSceneBlank() async {
-    curScene = "Transition";
     _loadScene(SceneInfo(curScene));
   }
 
