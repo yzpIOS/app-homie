@@ -31,7 +31,7 @@ class ModelOverlay$Cloth extends StatelessWidget {
         //   ),
         // ),
         Positioned(
-          right: 5,
+          right: 27,
           bottom: 120,
           child: Column(
             children: [
