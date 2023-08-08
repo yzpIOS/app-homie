@@ -278,7 +278,7 @@ class _MyModelViewState extends State<MyModelView> {
   // 点击切换groupListId 1.聚焦头部、2.概览全身按钮
   void onChangeCameraDressTypeClick(int groupListId) {
     final ctrl = Get.find<ClothSelectorCtrl>();
-    if (ctrl.groupListId.value == groupListId) {
+    if (groupListId == ctrl.groupListId.value) {
       return;
     }
 

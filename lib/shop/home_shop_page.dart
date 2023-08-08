@@ -34,7 +34,7 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
   void initState() {
     super.initState();
 
-    Get.find<ShopCategoryCtrl>().doRefresh();
+    // Get.find<ShopCategoryCtrl>().doRefresh();
     // Get.find<ShopRecommendCtrl>().doRefresh();
     cartCtrl.doRefresh();
 
