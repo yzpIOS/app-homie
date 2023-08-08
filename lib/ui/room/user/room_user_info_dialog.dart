@@ -17,6 +17,7 @@ import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
+import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/my/report_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
 import 'package:app/widgets.dart';
@@ -287,7 +288,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         final canManage = ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
 
         final items = {
-          '举报': () => Get.to(() => ReportPage(type: 2, id: uid)),
+          '举报': () => Get.to(() => MomentReportPage(type: 2, id: uid)),
           if (canManage && !ctrl.getRole(uid).isManager) //
             '加入黑名单': () => ctrl.setBlock(uid:widget.uid, isAdd: true)
         };

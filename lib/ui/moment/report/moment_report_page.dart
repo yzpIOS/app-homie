@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
 
+//新的举报页
 class MomentReportPage extends StatefulWidget {
+  final int type;//类型：1.房间 2.用户 3.动态
   final Object id;
 
-  const MomentReportPage({super.key, required this.id});
+  const MomentReportPage({super.key, required this.type, required this.id});
 
   @override
   State<MomentReportPage> createState() => _MomentReportPageState();
@@ -109,9 +111,9 @@ class _MomentReportPageState extends State<MomentReportPage> {
                   width: 100,
                   label: '取消',
                   textStyle: const TextStyle(fontSize: 14,
-                      color: AppPalette.txtDark,
-                      fontWeight: fw$SemiBold),
-                  side: const BorderSide(color: Color(0xFF707070)),
+                      color: AppPalette.c9,
+                      fontWeight: fw$Regular),
+                  side: const BorderSide(color: AppPalette.c9),
                   onTap: () => Get.back()
               ),
               const SizedBox(width: 55,),
@@ -238,7 +240,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
         final medias = await Future.wait(tasks.whereNotNull());
 
         return Api.Common.report(
-          type: 3,
+          type: widget.type,
           id: widget.id,
           reason: reportReasonRx.value,
           context: controller.text,

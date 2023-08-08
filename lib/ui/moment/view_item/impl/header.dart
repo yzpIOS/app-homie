@@ -81,7 +81,7 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
         switch (val) {
           case '举报':
             // Get.to(() => ReportPage(type: 3, id: vm.dynamicId));
-            Get.to(() => MomentReportPage(id: vm.dynamicId));
+            Get.to(() => MomentReportPage(type: 3, id: vm.dynamicId));
             break;
         }
       });
