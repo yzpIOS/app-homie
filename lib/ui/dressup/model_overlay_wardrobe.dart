@@ -18,7 +18,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          right: 5,
+          right: 27,
           bottom: 120,
           child: Column(
             children: [
