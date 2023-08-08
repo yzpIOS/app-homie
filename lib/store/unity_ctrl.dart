@@ -34,7 +34,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   bool _isUnityInitSuccess = false;
 
   // 当前加载的scene
-  String curScene = "";
   bool? netStatusValue = null;
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
@@ -150,8 +149,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             sendFlutterSocketInfo();
             // 监听flutter socketserver状态
             socketCtrlStatus();
-            // 初始化
-            curScene = "";
             break;
           default:
             final reqId = msg['requestId'];
@@ -364,13 +361,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           'sceneName': loader.scene,
         };
 
-        // 防止重复加载
-        if(curScene == loader.scene) {
-          debugPrint("场景切换太频繁=>loader.scene = ${loader.scene}, curScene = $curScene");
-          return;
-        }
-        curScene = loader.scene;
-
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
           data: data,
@@ -390,7 +380,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   Future<void> loadSceneBlank() async {
-    _loadScene(SceneInfo(curScene));
+    _loadScene(const SceneInfo('Transition'));
   }
 
   Future<void> loadSceneCombo(FutureOr<void> Function() action) => _sceneLock.synchronized(action);
