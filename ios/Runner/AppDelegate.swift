@@ -15,4 +15,12 @@ import UnityFramework
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
       }
+    
+    override func applicationDidEnterBackground(_ application: UIApplication) {
+        UnityFramework.getInstance().pause(true);
+    }
+    
+    override func applicationDidBecomeActive(_ application: UIApplication) {
+        UnityFramework.getInstance().pause(false);
+    }
 }

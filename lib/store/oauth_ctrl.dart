@@ -49,8 +49,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     }
 
     FlutterNativeSplash.remove();
-
-    SocketCtrl.ins.addClientConnect(onConnectHandle);
   }
 
   //<editor-fold desc="登录">
@@ -172,6 +170,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   ///
   /// [showTransition] 如果未登录时，选角界面
+  ///
   void _setup(AuthInfo data, bool showTransition, {Map? info}) {
     _auth = data;
     Get.put(
@@ -180,22 +179,10 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     );
     debugPrint("[showTransition] 如果未登录时，选角界面111111");
     // 开启socket连接, 新建一个等待的队列
-    UnityCtrl.ins.sendSockComplete = Completer();
     SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
-  }
 
-  void onConnectHandle() {
-    debugPrint("[showTransition] 如果未登录时，选角界面22222");
-    // 通知unity登录变化
-    if(!UnityCtrl.ins.successSendInfo2Unity) {
-      UnityCtrl.ins.sendFlutterSocketInfo();
-    }
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-    SocketCtrl.ins.removeListener(onConnectHandle);
+    // 此处unity选角成功后，发送用户信息给unity
+    UnityCtrl.ins.sendUserInfo2Unity();
   }
 
   //</editor-fold>
@@ -217,8 +204,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         ],
       );
     }
-    // 退出时，重置登录状态
-    UnityCtrl.ins.successSendInfo2Unity = false;
 
     _auth = null;
 

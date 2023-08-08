@@ -38,7 +38,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   bool? netStatusValue = null;
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
-  Completer sendSockComplete = Completer();
+  Completer _sendSockComplete = Completer();
 
   final _sceneLock = Lock(reentrant: true);
 
@@ -195,14 +195,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 发送flutter相关的socket信息
   ///
   void sendFlutterSocketInfo({int tryTimes = 0}) async {
-    if(isClosed) {
-      return;
-    }
-    // 未登录, 不发消息
-    if(!OAuthCtrl.isLogin || _isUnityInitSuccess == false) {
-      return;
-    }
-    if(tryTimes >= 100) {
+    if(isClosed || _isUnityInitSuccess == false || tryTimes >= 100) {
       return;
     }
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
@@ -212,7 +205,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     int delayTryTIme = 5;
     // 获取到端口号
     subscription?.cancel();
-    successSendInfo2Unity = true;
     subscription = SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {
@@ -229,15 +221,17 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         data: {
           "port": event,
           "uniqueId": SocketCtrl.ins.uniqueId,
-          "uid": OAuthCtrl.uid,
-          "role_id": OAuthCtrl.nUid.toInt()
         },
       );
 
       // 发送完成消息
-      if(!sendSockComplete.isCompleted) {
-        sendSockComplete.complete();
+      if(!_sendSockComplete.isCompleted) {
+        _sendSockComplete.complete();
       }
+
+      // 如果用户己登录，那么发送用户信息给unity
+      await sendUserInfo2Unity();
+
       debugPrint("[showTransition] 如果未登录时，选角界面33333");
       debugPrint("[sendFlutterSocketInfo]: 连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
@@ -246,6 +240,26 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       await Future.delayed(Duration(seconds: delayTryTIme));
       sendFlutterSocketInfo(tryTimes: tryTimes + 1);
     });
+  }
+
+  ///
+  /// 发送用户信息到unity
+  ///
+  Future sendUserInfo2Unity() async {
+    if(isClosed || _isUnityInitSuccess == false) {
+      return;
+    }
+    if(!OAuthCtrl.isLogin) {
+      return;
+    }
+    // 获取到端口
+    await sendMessage(
+      App2UnityEnum.FTU_SEND_USER_INFO,
+      data: {
+        "uid": OAuthCtrl.uid,
+        "role_id": OAuthCtrl.nUid.toInt()
+      },
+    );
   }
 
   ///
@@ -332,12 +346,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     // if(!sendSocketComplete.isCompleted) {
     //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
     // }
-    if(!sendSockComplete.isCompleted) {
+    if(!_sendSockComplete.isCompleted) {
       debugPrint("[showTransition] 如果未登录时，选角界面44444");
-      await sendSockComplete.future;
-    } else {
-      debugPrint("[showTransition] 如果未登录时，选角界面55555");
+      await _sendSockComplete.future;
     }
+    debugPrint("[showTransition] 如果未登录时，选角界面55555");
     // 通知加载场景
     Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(

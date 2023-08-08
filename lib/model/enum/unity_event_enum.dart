@@ -42,5 +42,6 @@ enum App2UnityEnum {
   FTU_PLAY_MOTION, //播放指定动作
   FTU_NEW_SOCKET_INFO, // 告诉unity flutter相关的socket信息
   FTU_IOS_RENDER_EVENT, // flutter告诉ios是否开启render event
+  FTU_SEND_USER_INFO, // 发送用户信息给unity
   ;
 }
