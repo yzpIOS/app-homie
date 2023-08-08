@@ -21,7 +21,7 @@ class MomentReportPage extends StatefulWidget {
 class _MomentReportPageState extends State<MomentReportPage> {
   final controller = TextEditingController();
 
-  final reportTypeRx = RxInt(0); //举报原因
+  final reportReasonRx = RxInt(0); //举报原因
   final contentCountRx = RxInt(0); //详情描述数字
   final assetRx = RxList<AssetEntity>(); //图片/视频证据数组
 
@@ -151,7 +151,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
       return Obx(() {
         return OpacityButton(
           onTap: () {
-            reportTypeRx.value = index + 1;
+            reportReasonRx.value = index + 1;
           },
           child: SizedBox(
             height: 50,
@@ -161,9 +161,9 @@ class _MomentReportPageState extends State<MomentReportPage> {
                     color: AppPalette.txtDark,
                     fontWeight: fw$Regular),)),
                 XRadio(
-                  value: index + 1 == reportTypeRx.value,
+                  value: index + 1 == reportReasonRx.value,
                   onChanged: (_) {
-                    reportTypeRx.value = index + 1;
+                    reportReasonRx.value = index + 1;
                   },
                 ),
               ],
@@ -213,7 +213,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
   }
 
   void doSub() {
-    if (reportTypeRx.value <= 0) {
+    if (reportReasonRx.value <= 0) {
       showToast('请选择举报原因');
       return;
     }
@@ -240,7 +240,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
         return Api.Common.report(
           type: 3,
           id: widget.id,
-          reportType: reportTypeRx.value,
+          reason: reportReasonRx.value,
           context: controller.text,
           medias: medias.map((it) => it.value2).toList(growable: false),
         );

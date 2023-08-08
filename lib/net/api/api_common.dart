@@ -54,12 +54,10 @@ class ApiCommon extends ApiBase {
 
   ///type 类型：1.房间 2.用户 3.动态
   ///report_type 举报类型 1.语音 2.个人信息 3.私信 4.公聊&留言板
-  ///report_reason 举报原因 1.低俗色情 2.侮辱谩骂 3.谣言政治
+  ///report_reason 举报原因 1.低俗色情 2.侮辱谩骂 3.谣言政治 4.漫骂攻击 5.虚假消息 6.推销广告 7.抄袭内容 8.危害未成年人 9.侵犯权益 10.其他
   Future report({
     required int type,
     required Object id,
-    // String? messageId,
-    // String? dynamicCommentId,
     int? reportType,
     int? reason,
     String? context,
@@ -68,8 +66,6 @@ class ApiCommon extends ApiBase {
     final data = {
       'type': type,
       if (type == 1) 'room_id': id else if (type == 2) 'uid': id else if (type == 3) 'dynamic_id': id,
-      // 'message_id': messageId,
-      // 'dynamic_comment_id': dynamicCommentId,
       if (reportType != null) 'report_type': reportType,
       if (reason != null) 'report_reason': reason,
       if (medias != null) 'medias': medias,
