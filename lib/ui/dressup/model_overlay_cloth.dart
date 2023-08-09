@@ -15,7 +15,7 @@ class ModelOverlay$Cloth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const ts = TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium);
+    const ts = TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold);
 
     return Stack(
       children: [
@@ -37,7 +37,7 @@ class ModelOverlay$Cloth extends StatelessWidget {
             children: [
               // $IconBtn(icon: '返回', color: AppPalette.c9, onTap: onItemClick),
               // $IconBtn(icon: '前进', color: AppPalette.c9, onTap: onItemClick),
-              $IconBtn(icon: '重置', color: AppPalette.c9, onTap: onItemClick),
+              $IconBtn(icon: '重置', color: AppPalette.primary, onTap: onItemClick),
             ],
           ),
         ),

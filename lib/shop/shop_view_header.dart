@@ -141,7 +141,7 @@ class _MyModelViewState extends State<MyModelView> {
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
         if(unityLoadComplete)
           Positioned(
-            top: AppSize.safeTop + 56,
+            top: AppSize.safeTop + 60,
             right: 25,
             child: $HeadChangeCameraDressTypeView(),
           ),
@@ -247,7 +247,7 @@ class _MyModelViewState extends State<MyModelView> {
         int groupListId = it.groupListId.value;
         return Container(
           width: 30,
-          padding: const Pad(vertical: 8),
+          padding: const Pad(vertical: 10),
           decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFF5F5F5)),
           child: Column(
             children: [
@@ -255,7 +255,7 @@ class _MyModelViewState extends State<MyModelView> {
                 onTap: () => onChangeCameraDressTypeClick(1),
                 child: Image.asset(IMG.format(groupListId == 1 ? 'shop/shangcheng_icon_tb_selected' : 'shop/shangcheng_icon_tb_unselected'), scale: 3),
               ),
-              Spacing.h6,
+              const Spacing(height: 10, flex: null),
               OpacityButton(
                 onTap: () => onChangeCameraDressTypeClick(2),
                 child: Image.asset(IMG.format(groupListId == 2 ? 'shop/shangcheng_icon_fz_selected' : 'shop/shangcheng_icon_fz_unselected'), scale: 3),
