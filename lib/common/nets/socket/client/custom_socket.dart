@@ -202,7 +202,8 @@ class CustomSocket {
     String host = _host;
     int port = _port;
 
-    resetConnect();
+
+    resetConnect(clearHost: foreceConnect);
 
     // 发起重联
     connect(host, port, timeout: _timeout);
@@ -317,7 +318,10 @@ class CustomSocket {
   /// 连接错误回调
   ///
   void _riseCallBack2(int cmd) {
-    socketStatusCallBack?.call(cmd);
+    try {
+      socketStatusCallBack?.call(cmd);
+    } catch(e) {
+    }
   }
 
   ///
