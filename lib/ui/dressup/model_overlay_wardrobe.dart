@@ -22,7 +22,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
           bottom: 120,
           child: Column(
             children: [
-              $IconBtn(icon: '重置', color: AppPalette.c9, onTap: _doReset),
+              $IconBtn(icon: '重置', color: AppPalette.primary, onTap: _doReset),
             ],
           ),
         ),
