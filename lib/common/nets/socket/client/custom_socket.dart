@@ -106,6 +106,10 @@ class CustomSocket {
     // 链接新的socket
     Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
       xlog("[socket]:连接成功, host=$host, port=$_port", type: LogType.SOCKET);
+      // 清理之前的链接
+      _socket?.close();
+      _socket = null;
+
       _socket = event;
       _isConnecting = false;
       // 处理连接
@@ -122,7 +126,6 @@ class CustomSocket {
       _riseCallBack2(BaseClient.CONNECT_SUC);
     }, onError: (error) async {
       xlog("[socket]:连接失败, host=$host, port=$_port", type: LogType.SOCKET);
-      _isConnecting = false;
       // 关闭之前的socket链接
       _socket?.close();
       _socket = null;
@@ -143,6 +146,7 @@ class CustomSocket {
       _host = "";
       _port = 0;
       // 网络连接
+      _isConnecting = false;
       connect(host, port, timeout: _timeout);
       // 连接失败
       _riseCallBack2(BaseClient.CONNECT_FAIL);
