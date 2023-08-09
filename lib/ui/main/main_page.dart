@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/shop/home_shop_page.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
@@ -90,7 +92,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     WidgetsBinding.instance.addObserver(this);
     // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
-
+    // 支付补单
     _appStreamSubscription = Future.delayed(const Duration(seconds: 1)).asStream().listen((event) {
       applePurchase = ApplePurchase(compensate: true);
     });
@@ -183,6 +185,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
         // 开始heart beat
         SocketCtrl.ins.startUnityHeartBeat();
+
+        // 关闭房间
+        try {
+          if(RoomManagerCtrl.ins.stateRx.value != RoomState.None) {
+            RoomManagerCtrl.ins.closeRoom2();
+          }
+        } catch(e) {
+          debugPrint(e.toString());
+        }
         break;
       case AppLifecycleState.paused:
         _closeCountDown?.cancel();

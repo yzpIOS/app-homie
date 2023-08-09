@@ -211,6 +211,24 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     stateRx(RoomState.Mini);
   }
 
+  void closeRoom2() async {
+    if(sceneCtrl2 == null) {
+      await doCloseState();
+      return;
+    }
+    // 房间
+    if(_sceneCtrl != null && _sceneCtrl?.roomType != RoomType.guild && _sceneCtrl?.roomId == OAuthCtrl.uid) {
+      // 不是公会，并且用户所在的房间是主人房
+      // 请求关闭
+      await Api.Room.close();
+      // 关闭房间
+      await doCloseState();
+    } else {
+      // 房间manager
+      await doCloseState();
+    }
+  }
+
   Future<void> doCloseState() async {
     stateRx(RoomState.None);
 
