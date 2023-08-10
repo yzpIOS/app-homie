@@ -182,4 +182,27 @@ class ApiUserInfo extends ApiBase {
 
     return _doPost('show_winning_lottery', data: data);
   }
+
+  //拉黑
+  Future blackListPull(UID uid) {
+    final data = {
+      'uid': uid,
+    };
+
+    return _doPost('black_list/pull', data: data);
+  }
+
+  //查询黑名单
+  Future blackListQuery({required PageNum page}) {
+    return _doPost('black_list/query', data: page + {}).then((it) => it?['uid_list'] ?? []);
+  }
+
+  //移出黑名单
+  Future blackListDelete(UID uid) {
+    final data = {
+      'uid': uid,
+    };
+
+    return _doPost('black_list/delete', data: data);
+  }
 }

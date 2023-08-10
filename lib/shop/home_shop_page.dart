@@ -2,6 +2,7 @@ import 'package:app/event/event.dart';
 import 'package:app/shop/cart_mini_view.dart';
 import 'package:app/shop/home_shop_and_dressup_view.dart';
 import 'package:app/shop/shop_view_best.dart';
+import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/intro_ctrl.dart';
 import 'package:app/store/shop_category_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
@@ -34,7 +35,7 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
   void initState() {
     super.initState();
 
-    // Get.find<ShopCategoryCtrl>().doRefresh();
+    Get.find<ShopCategoryCtrl>().doRefresh();
     // Get.find<ShopRecommendCtrl>().doRefresh();
     cartCtrl.doRefresh();
 

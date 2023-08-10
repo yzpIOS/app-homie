@@ -7,6 +7,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
 import 'package:app/ui/moment/my/user_moment_view.dart';
+import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/widgets.dart';
@@ -101,6 +102,27 @@ class _UserHomePageState extends State<UserHomePage> {
       'my/用户聊天'.toSvgAction(
         onPressed: () {
           ChatPage.to(SingleChatCtrl.fromUid(uid));
+        },
+      ),
+      'my/dontai_icon_siliao'.toSvgAction(
+        onPressed: () {
+          Get.showSheet(['举报', '拉黑']).onNotNull((val) {
+            switch (val) {
+              case '举报':
+                Get.to(() => MomentReportPage(type: 2, id: uid));
+                break;
+              case '拉黑':
+                Get.alertSub(
+                  () => Api.UserInfo.blackListPull(uid),
+                  alert: '是否拉黑？',
+                  callback: () {
+                    showToast('拉黑成功');
+                    Get.back();
+                  },
+                );
+                break;
+            }
+          });
         },
       ),
       Spacing.w8,

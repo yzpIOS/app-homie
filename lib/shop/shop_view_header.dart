@@ -1,3 +1,5 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
@@ -5,6 +7,7 @@ import 'package:app/shop/cart_sheet.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/shop_category_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
@@ -16,10 +19,6 @@ import 'package:app/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-import '../common/nets/cmds.dart';
-import '../common/nets/commons/proto/Message.pb.dart';
-import '../store/shop_category_ctrl.dart';
 
 class MyModelView extends StatefulWidget {
 
@@ -33,7 +32,7 @@ class MyModelView extends StatefulWidget {
 }
 
 class _MyModelViewState extends State<MyModelView> {
-
+  final clothSelectorCtrl = Get.find<ClothSelectorCtrl>();
   bool unityLoadComplete = false;
 
   StreamSubscription? streamSubscription;
@@ -242,6 +241,8 @@ class _MyModelViewState extends State<MyModelView> {
   }
 
   Widget $HeadChangeCameraDressTypeView() {
+    changeCameraSwitch();
+
     return GetX<ClothSelectorCtrl>(
       builder: (it) {
         int groupListId = it.groupListId.value;
@@ -277,19 +278,21 @@ class _MyModelViewState extends State<MyModelView> {
 
   // 点击切换groupListId 1.聚焦头部、2.概览全身按钮
   void onChangeCameraDressTypeClick(int groupListId) {
-    final ctrl = Get.find<ClothSelectorCtrl>();
-    if (groupListId == ctrl.groupListId.value) {
+    if (groupListId == clothSelectorCtrl.groupListId.value) {
       return;
     }
 
-    //position 镜头位置 0：聚焦头部 1：概览全身
-    S_CameraSwitch s_cameraSwitch = S_CameraSwitch();
-    s_cameraSwitch.position = groupListId == 1 ? 0 : 1;
-    SocketCtrl.ins.sendUnity(CMD.S_CameraSwitch, message: s_cameraSwitch);
-
-    ctrl.groupListId.value = groupListId;
+    clothSelectorCtrl.groupListId.value = groupListId;
+    changeCameraSwitch();
     Get.find<ShopCategoryCtrl>().doRefresh();
     Get.find<MyDressUpCtrl>().getMyDressList();
+  }
+
+  void changeCameraSwitch() {
+    //position 镜头位置 0：聚焦头部 1：概览全身
+    S_CameraSwitch s_cameraSwitch = S_CameraSwitch();
+    s_cameraSwitch.position = clothSelectorCtrl.groupListId.value == 1 ? 0 : 1;
+    SocketCtrl.ins.sendUnity(CMD.S_CameraSwitch, message: s_cameraSwitch);
   }
 }
 

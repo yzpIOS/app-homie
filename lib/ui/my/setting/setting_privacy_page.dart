@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/setting_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/my/setting/setting_blacklist_page.dart';
 import 'package:app/ui/my/setting/setting_permission_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class _SettingPrivacyPageState extends State<SettingPrivacyPage> {
 
   Widget $DataView() {
     final items1 = [
+      '通讯录黑名单',
       '系统权限管理',
     ];
 
@@ -77,6 +79,9 @@ class _SettingPrivacyPageState extends State<SettingPrivacyPage> {
 
   void onItemClick(String action) {
     switch (action) {
+      case '通讯录黑名单':
+        Get.to(() => const SettingBlackListPage());
+        break;
       case '系统权限管理':
         Get.to(() => const SettingPermissionPage());
         break;

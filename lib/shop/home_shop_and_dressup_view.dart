@@ -151,7 +151,7 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
     super.didUpdateWidget(oldWidget);
     debugPrint("didUpdateWidget categoryId = ${widget.categoryId}");
     streamSubscription?.cancel();
-    streamSubscription = Future.delayed(const Duration(milliseconds: 100)).asStream().listen((event) {
+    streamSubscription = Future.delayed(const Duration(milliseconds: 200)).asStream().listen((event) {
       doRefresh();
     });
   }
