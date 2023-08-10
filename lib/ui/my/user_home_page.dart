@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
+import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -117,6 +118,7 @@ class _UserHomePageState extends State<UserHomePage> {
                   alert: '是否拉黑？',
                   callback: () {
                     showToast('拉黑成功');
+                    ConvManagerCtrl.ins?.deleteAllBlackConservation(uid);
                     Get.back();
                   },
                 );

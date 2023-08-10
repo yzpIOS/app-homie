@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/model/enum/sys_conv_enum.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/im/im_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/widgets.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_conversation_result.dart';
 
 class ConvManagerCtrl extends GetxController with GetDisposableMixin {
   final _dataRx = RxMap<String, V2TimConversation>();
@@ -22,6 +25,14 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
   late final _sysExt = <String, Map<String, String>>{};
 
   late final _convMark = <String>[];
+
+  static ConvManagerCtrl? get ins {
+    try {
+      return Get.find<ConvManagerCtrl>();
+    } catch(e) {
+      return null;
+    }
+  }
 
   @override
   void onInit() {
@@ -197,6 +208,42 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
         }
       } catch (e, s) {
         errLog(e, s);
+      }
+    }
+  }
+
+  ///
+  /// 删除被拉黑的会话
+  /// [pageNo] 页码
+  ///
+  Future<void> deleteAllBlackConservation(UID uid) async {
+    V2TimValueCallback<V2TimConversationResult> list = await IM.conv.getConversationList(nextSeq: "0", count: 1000);
+    while(list.data?.conversationList?.isNotEmpty == true) {
+      bool complete = false;
+      for(var item in list.data?.conversationList ?? <V2TimConversation>[]) {
+        if(item?.userID == uid) {
+          // 删除会话
+          await IM.conv.deleteConversation(conversationID: item?.conversationID ?? "");
+          // 从列表中删除
+          _dataRx.remove(item?.conversationID ?? "");
+          _refresCount.removeWhere((element) => element == uid);
+          convRx.removeWhere((element) => element.userID == uid);
+          await Future.delayed(const Duration(seconds: 2));
+          // 刷新列表
+          doRefresh();
+          complete = true;
+          break;
+        }
+      }
+      if(complete) {
+        break;
+      }
+      // 缓存数据
+      // 获取下一页
+      if(list.data?.nextSeq?.isNotEmpty == true) {
+        list = await IM.conv.getConversationList(nextSeq: list.data?.nextSeq ?? "", count: 1000);
+      } else {
+        break;
       }
     }
   }
