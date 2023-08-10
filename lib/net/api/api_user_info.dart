@@ -205,4 +205,13 @@ class ApiUserInfo extends ApiBase {
 
     return _doPost('black_list/delete', data: data);
   }
+
+  //是否在黑名单内
+  Future blackListIsIn(UID uid) {
+    final data = {
+      'uid': uid,
+    };
+
+    return _doPost('black_list/is_in', data: data);
+  }
 }

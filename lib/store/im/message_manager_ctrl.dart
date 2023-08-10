@@ -3,7 +3,9 @@ import 'dart:io';
 
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/event/event.dart';
+import 'package:app/exception.dart';
 import 'package:app/model/conv.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/local_notify_ctrl.dart';
 import 'package:app/store/user/setting_ctrl.dart';
@@ -261,6 +263,11 @@ class MessageManagerCtrl extends GetxController
 
 extension on Future<V2TimValueCallback<V2TimMsgCreateInfoResult>> {
   Future<V2TimMessage> doSend(ChatConv conv, {JMap? localExt}) async {
+    Map<String, dynamic> mapData = await Api.UserInfo.blackListIsIn(conv.userId!) as Map<String, dynamic>;
+    if (mapData['is_in'] == true) {
+      throw const LogicException(-1, '消息已发出，但被对方拒收了');
+    }
+
     final resp = await dataGet;
 
     final group = conv.groupId ?? '';

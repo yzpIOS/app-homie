@@ -59,25 +59,28 @@ class _UserHomePageState extends State<UserHomePage> {
   Widget $AppBar() {
     final height = AppSize.appBar + AppSize.safeTop;
 
-    return SliverAppBar(
-      backgroundColor: Colors.white,
-      toolbarHeight: AppSize.appBar,
-      expandedHeight: _expHeight,
-      pinned: true,
-      actions: _actions(),
-      leading: Obx(() => BackButton(color: collapsedRx() ? Colors.black : Colors.white)),
-      flexibleSpace: LayoutBuilder(
-        builder: (_, c) {
-          final collapsed = c.maxHeight <= height;
+    return Obx(() {
+      return SliverAppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: AppSize.appBar,
+        expandedHeight: _expHeight,
+        pinned: true,
+        actions: (moreRx != null && moreRx['is_pull_black'] == false) ? _actions() : null,
+        leading: Obx(() =>
+            BackButton(color: collapsedRx() ? Colors.black : Colors.white)),
+        flexibleSpace: LayoutBuilder(
+          builder: (_, c) {
+            final collapsed = c.maxHeight <= height;
 
-          post(() => collapsedRx(collapsed));
+            post(() => collapsedRx(collapsed));
 
-          return FlexibleSpaceBar(
-            background: _InfoView(uid: uid, moreRx: moreRx),
-          );
-        },
-      ),
-    );
+            return FlexibleSpaceBar(
+              background: _InfoView(uid: uid, moreRx: moreRx),
+            );
+          },
+        ),
+      );
+    });
   }
 
   List<Widget>? _actions() {
