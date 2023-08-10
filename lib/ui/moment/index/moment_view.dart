@@ -39,6 +39,13 @@ class _MomentViewState extends SimplePageState<Rx<MomentDto>, MomentView> with B
         );
       },
     );
+
+    // 拉黑时需要刷新数据
+    on<UserBlackEvent>(
+      (event) {
+        controller.doRefresh();
+      }
+    );
   }
 
   @override
@@ -56,7 +63,9 @@ class _MomentViewState extends SimplePageState<Rx<MomentDto>, MomentView> with B
       global: false,
       init: MomentCtrl(item),
       dispose: (it) => it.controller?.onDelete(),
-      builder: (it) => _ItemView(MomentDtoAdapter(it.data)),
+      builder: (it) => _ItemView(MomentDtoAdapter(it.data), (data) {
+        Get.to(() => MomentDetailPage(data));
+      }),
     );
   }
 }
@@ -65,7 +74,9 @@ class _ItemView extends ViewAdapter<MomentDtoAdapter>
     with //
         MomentHeader,
         MomentBottomBar {
-  _ItemView(super.vm);
+  Function(MomentDtoAdapter) callBack;
+
+  _ItemView(super.vm, this.callBack);
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +97,9 @@ class _ItemView extends ViewAdapter<MomentDtoAdapter>
 
     child = DecorButton(
       child: child,
-      onTap: () => Get.to(() => MomentDetailPage(vm)),
+      onTap: () {
+        callBack.call(vm);
+      },
     );
 
     child = Material(color: Colors.white, child: child);

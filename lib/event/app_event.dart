@@ -48,3 +48,9 @@ class ShoppingCartDelEvent extends Event {
 class SwitchRoomEvent extends Event {
   const SwitchRoomEvent();
 }
+
+class UserBlackEvent extends Event {
+  UID userId;
+
+  UserBlackEvent({required this.userId});
+}

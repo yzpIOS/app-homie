@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
@@ -118,8 +119,12 @@ class _UserHomePageState extends State<UserHomePage> {
                   alert: '是否拉黑？',
                   callback: () {
                     showToast('拉黑成功');
+                    // 删除im信息
                     ConvManagerCtrl.ins?.deleteAllBlackConservation(uid);
+                    // 返回事件
                     Get.back();
+                    // 通知外面刷新
+                    UserBlackEvent(userId: uid).fire();
                   },
                 );
                 break;
