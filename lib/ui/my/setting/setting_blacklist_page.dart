@@ -28,7 +28,6 @@ class _DataView extends SimplePageView<String> {
   BaseConfig get config {
     return const ListConfig(
       divider: Divider(indent: 10, endIndent: 10),
-      itemExtent: 70,
     );
   }
 
@@ -44,6 +43,7 @@ class _DataView extends SimplePageView<String> {
         uid,
         builder: (it) {
           return ListTile(
+            contentPadding: const Pad(vertical: 7, horizontal: 10),
             onTap: toUserPage(uid),
             leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50),
             title: Text(

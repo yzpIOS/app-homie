@@ -59,9 +59,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
             children: [
               $SectionHeaderView(title: '举报原因', tips: '（必填）'),
               $ReasonsView(),
-              Obx(() => $SectionHeaderView(title: '详情描述',
-                  tips: '（选填）',
-                  rightTips: '${contentCountRx.value}/150')),
+              Obx(() => $SectionHeaderView(title: '详情描述', tips: '（选填）', rightTips: '${contentCountRx.value}/150')),
               Container(
                 alignment: Alignment.topLeft,
                 margin: const EdgeInsets.only(top: 5, bottom: 20),
@@ -72,9 +70,8 @@ class _MomentReportPageState extends State<MomentReportPage> {
                   color: AppPalette.background2,
                 ),
                 child: TextField(
-                  inputFormatters: [LengthLimitingTextInputFormatter(150)],
-                  //限制长度
-                  maxLines: 30,
+                  inputFormatters: [LengthLimitingTextInputFormatter(150)], //限制长度
+                  maxLines: null,
                   controller: controller,
                   decoration: const InputDecoration(
                     counterText: "",
@@ -89,9 +86,7 @@ class _MomentReportPageState extends State<MomentReportPage> {
                       fontWeight: fw$Regular),
                 ),
               ),
-              Obx(() => $SectionHeaderView(title: '图片/视频证据',
-                  tips: '（选填）',
-                  rightTips: '${assetRx.value.length}张/9')),
+              Obx(() => $SectionHeaderView(title: '图片/视频证据', tips: '（选填）', rightTips: '${assetRx.value.length}张/9')),
               const Spacing(height: 10, flex: null),
               ImageSelectView(assetRx, maxCount: 9, crossCount: 5, spacing: 10),
             ]
@@ -159,14 +154,13 @@ class _MomentReportPageState extends State<MomentReportPage> {
             height: 50,
             child: Row(
               children: [
-                Expanded(child: Text(text, style: const TextStyle(fontSize: 14,
-                    color: AppPalette.txtDark,
-                    fontWeight: fw$Regular),)),
-                XRadio(
-                  value: index + 1 == reportReasonRx.value,
-                  onChanged: (_) {
-                    reportReasonRx.value = index + 1;
-                  },
+                Expanded(
+                  child: Text(text, style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),)
+                ),
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: Image.asset(IMG.format((index + 1 == reportReasonRx.value) ? 'icon_dg_selected' : 'icon_dg_unselected')),
                 ),
               ],
             ),
