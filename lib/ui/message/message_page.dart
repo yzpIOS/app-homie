@@ -95,32 +95,9 @@ class _ActionView extends GetView<ConvManagerCtrl> {
     switch (action) {
       case SysConvEnum.like:
       case SysConvEnum.at:
-        if(Env.isDebug) {
-          CustomClient.ins.addConnect(() {
-            String? token = OAuthCtrl.token;
-            if(token == null) {
-              return;
-            }
-            C_Role c_role = C_Role();
-            c_role.session = "家武，家武，收到请回答！";
-            CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
-          });
-          CustomClient.ins.connect("localhost", 8321);
-          return;
-        }
         Get.to(() => InteractivePage(type: action));
         break;
       case SysConvEnum.guest:
-        if(Env.isDebug) {
-          String? token = OAuthCtrl.token;
-          if(token == null) {
-            return;
-          }
-          C_Role c_role = C_Role();
-          c_role.session = "家武，家武，收到请回答！";
-          CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
-          return;
-        }
         Get.to(() => const AccessPage());
         break;
       case SysConvEnum.follow:

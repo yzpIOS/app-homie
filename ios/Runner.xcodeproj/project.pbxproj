@@ -15,6 +15,7 @@
 		078783D32A615FAB00D451E3 /* NSObject+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783CC2A615FAA00D451E3 /* NSObject+Swizzling.m */; };
 		078783D42A615FAB00D451E3 /* NSArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783CD2A615FAA00D451E3 /* NSArray+Safe.m */; };
 		078783D52A615FAB00D451E3 /* NSObject+ImpChangeTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783CE2A615FAA00D451E3 /* NSObject+ImpChangeTool.m */; };
+		07D846FC2A838CE90092A200 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D846FB2A838CE90092A200 /* StoreKit.framework */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		41A0D7E90BBCA72D9EC7459B /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F1F26914AEB9C12EF40F67 /* Pods_Runner.framework */; };
@@ -56,6 +57,7 @@
 		078783CC2A615FAA00D451E3 /* NSObject+Swizzling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Swizzling.m"; sourceTree = "<group>"; };
 		078783CD2A615FAA00D451E3 /* NSArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Safe.m"; sourceTree = "<group>"; };
 		078783CE2A615FAA00D451E3 /* NSObject+ImpChangeTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ImpChangeTool.m"; sourceTree = "<group>"; };
+		07D846FB2A838CE90092A200 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		1B239300E937F44892FC3D4E /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41A0D7E90BBCA72D9EC7459B /* Pods_Runner.framework in Frameworks */,
+				07D846FC2A838CE90092A200 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +115,7 @@
 		64F01B7B31B39D39C1DB1FF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				07D846FB2A838CE90092A200 /* StoreKit.framework */,
 				0707289F2A57C3FB008BDA40 /* UnityFramework.framework */,
 				70F1F26914AEB9C12EF40F67 /* Pods_Runner.framework */,
 			);
