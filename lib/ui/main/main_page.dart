@@ -194,6 +194,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         } catch(e) {
           debugPrint(e.toString());
         }
+        RoomExitEvent("房间数据加载失败，请重试").fire();
         break;
       case AppLifecycleState.paused:
         _closeCountDown?.cancel();

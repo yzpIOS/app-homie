@@ -81,6 +81,11 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     _init();
     UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
         data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
+
+    // 强制退出房间事件
+    on<RoomExitEvent>((event) {
+      context.safePop().whenComplete(() => Get.alertDialog(event.message));
+    });
   }
 
   @override
