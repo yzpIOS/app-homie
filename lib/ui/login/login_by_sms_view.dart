@@ -8,6 +8,7 @@ import 'package:app/ui/login/login_pwd_page.dart';
 import 'package:app/ui/login/widgets/pact_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LoginBySmsView extends StatefulWidget {
   const LoginBySmsView({super.key});
@@ -60,6 +61,10 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           controller: inputs['验证码'.en()],
           hint: '验证码'.en(),
           keyboardType: TextInputType.number,
+          inputFormatters: [
+            // FilteringTextInputFormatter.digitsOnly,//数字，只能是整数
+            FilteringTextInputFormatter.allow(RegExp("[0-9]")),//数字包括小数
+          ],
           suffixIcon: SmsVerifyView(number: inputs['手机号'.en()]!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
         ),
         Spacing.h20,
