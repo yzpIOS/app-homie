@@ -57,13 +57,17 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           keyboardType: TextInputType.phone,
         ),
         Spacing.h20,
+
         FormInputView(
           controller: inputs['验证码'.en()],
           hint: '验证码'.en(),
+          maxLength: 6,
           keyboardType: TextInputType.number,
           inputFormatters: [
-            // FilteringTextInputFormatter.digitsOnly,//数字，只能是整数
-            FilteringTextInputFormatter.allow(RegExp("[0-9]")),//数字包括小数
+            // 数字，只能是整数
+            FilteringTextInputFormatter.digitsOnly,
+            // 数字包括小数
+            // FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
           ],
           suffixIcon: SmsVerifyView(number: inputs['手机号'.en()]!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
         ),

@@ -83,6 +83,7 @@ class FormInputView extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
+  final int? maxLength;
 
   FormInputView({
     super.key,
@@ -95,6 +96,7 @@ class FormInputView extends StatelessWidget {
     this.isPwd = false,
     this.enabled = true,
     this.autofocus = false,
+    this.maxLength,
     TextInputType? keyboardType,
   }) : keyboardType = keyboardType ?? (isPwd ? TextInputType.visiblePassword : TextInputType.text);
 
@@ -117,6 +119,7 @@ class FormInputView extends StatelessWidget {
         keyboardType: keyboardType,
         obscureText: obscureRx(),
         onChanged: onChanged,
+        maxLength: maxLength,
         inputFormatters: inputFormatters,
       );
     });
@@ -133,6 +136,7 @@ class FormInputView extends StatelessWidget {
       contentPadding: const Pad(horizontal: 16),
       filled: true,
       fillColor: const Color(0xFFF5F5F5),
+      counterText: "",
       border: const OutlineInputBorder(
         gapPadding: 0,
         borderSide: BorderSide.none,
