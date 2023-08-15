@@ -119,6 +119,10 @@ dependencies:
   # 苹果内购
   in_app_purchase: ^3.1.7
 
+  # open install
+  # https://pub.dev/packages/openinstall_flutter_plugin/install
+  openinstall_flutter_plugin: ^2.4.1
+
 
 link_kit:
   deep_link: homie:///
