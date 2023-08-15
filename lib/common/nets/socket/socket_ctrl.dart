@@ -248,6 +248,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     onDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
+
+    // 连接状态
+    onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
+    onDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
   }
 
   ///
@@ -339,8 +343,47 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
+    removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
+    removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
     removeClientConnect(onClientConnect);
+  }
+
+  // 连接错误次数
+  var errorTimes = 0;
+
+  // 记录无网络的弹窗是否弹起
+  var popUp = false;
+
+  var hasShowPopUp = false;
+
+  void onConnectSuccess(int cmd, GeneratedMessage? data) {
+    errorTimes = 0;
+    // 弹窗在调起时, 直接返回
+    if(popUp) {
+      Get.back();
+    }
+    if(hasShowPopUp) {
+      showToast("连接成功");
+      hasShowPopUp = false;
+    }
+  }
+
+  ///
+  /// 连接失败
+  ///
+  void onConnectFail(int cmd, GeneratedMessage? data) async {
+    errorTimes += 1;
+    if(errorTimes <= 2 || popUp) {
+      return;
+    }
+    popUp = true;
+    hasShowPopUp = true;
+    Get.alertDialog2("网络连接失败", button: "重连", callBack: () {
+      popUp = false;
+      errorTimes = 0;
+      Get.back();
+    });
   }
 
   ///
