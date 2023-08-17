@@ -20,7 +20,10 @@ class _RoomMiddlePageState extends State<RoomMiddlePage> {
   void initState() {
     super.initState();
     post(() async {
-      await RoomManagerCtrl.ins.doCloseState();
+      try {
+        await RoomManagerCtrl.ins.doCloseState();
+      } catch(e) {
+      }
       RoomManagerCtrl.ins.toRoom(roomId: widget.roomId, data: widget.data, off: true);
     });
   }
