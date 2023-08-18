@@ -1,3 +1,6 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/api_switch.dart';
@@ -10,7 +13,9 @@ import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
+import 'package:app/ui/room/user/accept_challenge_view.dart';
 import 'package:app/widgets.dart';
+import 'package:dartz/dartz.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
   final interval_time = 200;
@@ -77,6 +82,47 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       },
       (_) => _doClose('你被封禁了'),
     );
+
+    // 注册被邀请的F端，邀请对战信息监听回调
+    SocketCtrl.ins.onDataCmd(CMD.S_PKInvite, onPKInvite);
+
+    // 注册S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+    SocketCtrl.ins.onDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
+  }
+
+  // 被邀请的F端，邀请对战信息监听回调
+  void onPKInvite(int cmd, S_PKInvite? data) {
+    if (data == null) {
+      return;
+    }
+
+    // 显示是否接受挑战的弹窗
+    AcceptChallengeDialog.show(
+      '${data.invitingGuildName}直播间对你发起挑战\n是否接受？',
+      callback: (isAccept) {
+        Get.back();
+        simpleSub(
+          Api.Room.pkAccept(accept: isAccept, invitingGuildId: data.invitingGuildId),
+          callback1: (resp) {
+
+          }
+        );
+      },
+    );
+  }
+
+  // S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+  void onPKInviteResult(int cmd, S_PKInviteResult? data) {
+    if (data == null) {
+      return;
+    }
+
+    if (data.isSuccess) {//true进入PK场景
+      int pkRoomId = data.pkRoomId.toInt();//生成了一个PK房ID
+      toMiddleRoom(roomId: pkRoomId, off: true);
+    } else {
+      showToast('已取消挑战邀请');
+    }
   }
 
   @override
@@ -84,6 +130,12 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     super.onClose();
 
     doCloseState();
+
+    // 移除被邀请的F端，邀请对战信息监听回调
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInvite, onPKInvite);
+
+    // 移除S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
   }
 
   void _show({
