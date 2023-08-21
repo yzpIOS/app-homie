@@ -5,6 +5,7 @@ import 'package:app/widgets.dart';
 export 'package:app/model/enum/money_type.dart';
 
 class MoneyIcon extends StatelessWidget {
+
   final double size;
   final int? variant;
   final MoneyType type;

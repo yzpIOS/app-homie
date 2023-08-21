@@ -31,7 +31,7 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
     super.initState();
 
     on<GoWardrobeEvent>(
-      (_) => controller.setWardrobeMode(true),
+          (_) => controller.setWardrobeMode(true),
     );
   }
 
@@ -39,7 +39,7 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
     GetX<ShopCategoryCtrl>(
       builder: (it) {
         final data = <Category>[
-          const (null, '全部', (null, null)),
+          //const (null, '全部', (null, null)),
           ...it.autoGet.map((it) => (it['id'], it['name'], (it['icon'], it['select_icon']))),
         ];
 
@@ -68,7 +68,7 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
         Expanded(
           child: HoldRoot(
             child: Obx(
-              () => IndexedStack(index: controller.isShopMode ? 0 : 1, children: children),
+                  () => IndexedStack(index: controller.isShopMode ? 0 : 1, children: children),
             ),
           ),
         ),
@@ -77,7 +77,8 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
   }
 
   Widget $TabBar(List<Category> data) {
-    final tabs = data.skip(1).map((it) {
+    //data.skip(1)
+    final tabs = data.map((it) {
       final (_, title, icon) = it;
 
       return (b) {
@@ -90,13 +91,13 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
 
     return ShopTabBar(
       tabs: tabs,
-      beforeTab: Box(
-        //跟装扮里面的MY图标一样宽
-        width: 46,
-        height: 46,
-        alignment: Alignment.center,
-        child: XText(data.first.$2, style: const TextStyle(fontSize: 16)),
-      ),
+      // beforeTab: Box(
+      //   //跟装扮里面的MY图标一样宽
+      //   width: 46,
+      //   height: 46,
+      //   alignment: Alignment.center,
+      //   child: XText(data.first.$2, style: const TextStyle(fontSize: 16)),
+      // ),
     );
   }
 
@@ -188,7 +189,7 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
         return GestureDetector(
           onTap: taskId != null ? null : () => doHold(productId, selector.doSelect(item)),
           child: Obx(
-            () {
+                () {
               final isSelected = selector.isRxSelected(productId);
 
               return DecoratedBox(
@@ -234,17 +235,21 @@ class _ItemView extends StatelessWidget {
       },
     );
 
+    var itemBuyAble = true;
     if (data case {'label_list': List items}) {
       if (items.isNotEmpty) {
+        // 不能购买
+        itemBuyAble = items.isNotEmpty && items[0]["is_buy"] == true;
         child = Stack(
           children: [
             child,
-            for (var i = 0; i < items.length; ++i)
-              Positioned(
-                top: 5,
-                left: 5.0 * (i + 1) + 32 * i,
-                child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
-              ),
+              // 普通左上角的商品角标
+              if(items.isNotEmpty && items[0]["is_buy"] == true)
+                Positioned(
+                  top: 5,
+                  left: 5.0,
+                  child: NetImage(items[0]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+                ),
           ],
         );
       }
@@ -256,18 +261,30 @@ class _ItemView extends StatelessWidget {
       children: [
         Expanded(child: child),
         XText(data['name']),
-        XRichText(
-          TextSpan(
-            children: [
-              if (type != null)
-                WidgetSpan(
-                  alignment: PlaceholderAlignment.middle,
-                  child: MoneyIcon(type: type, size: 20),
-                ),
-              TextSpan(text: '${data['price']}'),
-            ],
+        // 可以购买，显示价格
+        if(itemBuyAble)
+          XRichText(
+            TextSpan(
+              children: [
+                if (type != null)
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: MoneyIcon(type: type, size: 20),
+                  ),
+                TextSpan(text: '${data['price']}'),
+              ],
+            ),
           ),
-        ),
+
+        // 不能购买
+        // label_list内增加is_buy字段，用于声明该商品是否可以加入购物车并购买
+        if(!itemBuyAble)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Positioned(
+              child: NetImage(data["label_list"][0]['icon'], fit: BoxFit.contain),
+            ),
+          ),
         Spacing.h2,
       ],
     );

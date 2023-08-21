@@ -164,11 +164,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   }
 
   void toRoom({required int roomId, Map? data, bool off = false}) {
-    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
-      return;
-    }
-    _preClickTime = DateTime.now().millisecondsSinceEpoch;
-
     return _show(
       roomId: roomId,
       off: off,

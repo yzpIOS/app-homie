@@ -169,7 +169,7 @@ class CustomClient with BaseClient {
     // 延尺执行
     _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       // 发送心跳成功，数值加1
-      if(sendBytes(1)) {
+      if(!sendBytes(1)) {
         heartBeatNumber += 1;
       }
       // 下一个心跳

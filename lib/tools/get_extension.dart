@@ -91,6 +91,21 @@ extension XGet on GetInterface {
     );
   }
 
+  Future<void> alertDialog2(String msg, {VoidCallback? callBack, String button = "确定"}) {
+    final content = Text(
+      msg,
+      style: const TextStyle(fontSize: 13, color: AppPalette.c3),
+    );
+
+    return Get.dialog<String>(
+      useSafeArea: false,
+      AppDialog(
+        content: content,
+        actions: callBack != null ? [OkDialogAction(onTap: callBack, title: button,)] : [],
+      ),
+    );
+  }
+
   Future<void> infoDialog({String? title, required String msg}) {
     return Get.dialog(
       useSafeArea: false,
