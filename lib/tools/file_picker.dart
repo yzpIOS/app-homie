@@ -1,10 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'dart:io';
+
 import 'package:app/exception.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 final _imagePicker = ImagePicker();
@@ -31,6 +34,9 @@ Future<List<_Asset>?> assetPicker({
   required int max,
   List<_Asset>? selected,
 }) async {
+  // android 13下没有存储权限读取不到照片
+  await Permission.storage.request();
+
   switch (await PhotoManager.requestPermissionExtend()) {
     case PermissionState.limited:
     case PermissionState.authorized:

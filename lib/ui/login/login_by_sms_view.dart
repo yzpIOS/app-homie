@@ -1,9 +1,12 @@
 import 'package:app/common/theme.dart';
 import 'package:app/common/utils/en.dart';
+import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/enum/verify_code_enum.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/sms_view.dart';
+import 'package:app/ui/login/init/user_init_1_page.dart';
+import 'package:app/ui/login/init/user_init_2_page.dart';
 import 'package:app/ui/login/login_pwd_page.dart';
 import 'package:app/ui/login/widgets/pact_view.dart';
 import 'package:app/widgets.dart';
@@ -111,6 +114,11 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
   }
 
   void doLogin() {
+    if(Env.isDebug) {
+      Get.to(() => UserInit2Page(token: "aaa", gender: GenderEnum.female,));
+      return;
+    }
+
     String? token = tokenRx();
     if(Env.isDebugCfg && (token == null || token.isEmpty == true)) {
       token = "1";
