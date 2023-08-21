@@ -114,11 +114,6 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
   }
 
   void doLogin() {
-    if(Env.isDebug) {
-      Get.to(() => UserInit2Page(token: "aaa", gender: GenderEnum.female,));
-      return;
-    }
-
     String? token = tokenRx();
     if(Env.isDebugCfg && (token == null || token.isEmpty == true)) {
       token = "1";
