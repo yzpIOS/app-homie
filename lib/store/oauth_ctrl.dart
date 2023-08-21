@@ -53,7 +53,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
       _openinstallFlutterPlugin?.init(wakeupHandler);
     }
-
     FlutterNativeSplash.remove();
   }
 

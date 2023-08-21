@@ -121,7 +121,7 @@ dependencies:
 
   # open install
   # https://pub.dev/packages/openinstall_flutter_plugin/install
-  openinstall_flutter_plugin: ^2.4.1
+  openinstall_flutter_plugin: ^2.4.0
 
 
 link_kit:
