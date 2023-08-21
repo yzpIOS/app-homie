@@ -42,6 +42,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     final isManager = myRole.isManager;
 
     final items = [
+      if (isOwner || isManager) '发起挑战',
       if (isOwner) '管理员',
       if (isManager) ...[
         '黑名单',
@@ -67,7 +68,10 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgView(SVG.$('room/setting/$item'), width: 34, height: 34),
+        if (item == '发起挑战')
+          Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
+        if (item != '发起挑战')
+          SvgView(SVG.$('room/setting/$item'), width: 34, height: 34),
         Spacing.h2,
         XText(
           item,

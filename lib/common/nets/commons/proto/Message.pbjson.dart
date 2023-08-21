@@ -1897,15 +1897,17 @@ const PKCreateRoleInfo$json = {
   '1': 'PKCreateRoleInfo',
   '2': [
     {'1': 'userInfo', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.PKUserInfo', '10': 'userInfo'},
-    {'1': 'roleInfo', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.PKRoleInfo', '10': 'roleInfo'},
+    {'1': 'roleInfoLf', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.PKRoleBattleInfoLF', '10': 'roleInfoLf'},
+    {'1': 'roleInfoHf', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.PKRoleBattleInfoHF', '10': 'roleInfoHf'},
   ],
 };
 
 /// Descriptor for `PKCreateRoleInfo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List pKCreateRoleInfoDescriptor = $convert.base64Decode(
     'ChBQS0NyZWF0ZVJvbGVJbmZvEjcKCHVzZXJJbmZvGAEgASgLMhsuY29tLnNhdnZ5LnByb3RvLl'
-    'BLVXNlckluZm9SCHVzZXJJbmZvEjcKCHJvbGVJbmZvGAIgASgLMhsuY29tLnNhdnZ5LnByb3Rv'
-    'LlBLUm9sZUluZm9SCHJvbGVJbmZv');
+    'BLVXNlckluZm9SCHVzZXJJbmZvEkMKCnJvbGVJbmZvTGYYAiABKAsyIy5jb20uc2F2dnkucHJv'
+    'dG8uUEtSb2xlQmF0dGxlSW5mb0xGUgpyb2xlSW5mb0xmEkMKCnJvbGVJbmZvSGYYAyABKAsyIy'
+    '5jb20uc2F2dnkucHJvdG8uUEtSb2xlQmF0dGxlSW5mb0hGUgpyb2xlSW5mb0hm');
 
 @$core.Deprecated('Use c_PKSceneLoadedDescriptor instead')
 const C_PKSceneLoaded$json = {
@@ -1986,62 +1988,75 @@ const C_PKMove$json = {
   '1': 'C_PKMove',
   '2': [
     {'1': 'rotation', '3': 1, '4': 1, '5': 5, '10': 'rotation'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'position'},
   ],
 };
 
 /// Descriptor for `C_PKMove`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_PKMoveDescriptor = $convert.base64Decode(
-    'CghDX1BLTW92ZRIaCghyb3RhdGlvbhgBIAEoBVIIcm90YXRpb24SMAoIcG9zaXRpb24YAiABKA'
-    'syFC5jb20uc2F2dnkucHJvdG8uWFlaUghwb3NpdGlvbg==');
+    'CghDX1BLTW92ZRIaCghyb3RhdGlvbhgBIAEoBVIIcm90YXRpb24=');
 
-@$core.Deprecated('Use s_PKSyncRoleAttributesDescriptor instead')
-const S_PKSyncRoleAttributes$json = {
-  '1': 'S_PKSyncRoleAttributes',
+@$core.Deprecated('Use s_PKSyncRoleAttsLFDescriptor instead')
+const S_PKSyncRoleAttsLF$json = {
+  '1': 'S_PKSyncRoleAttsLF',
   '2': [
-    {'1': 'roleInfos', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.PKRoleInfo', '10': 'roleInfos'},
+    {'1': 'roleInfos', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.PKRoleBattleInfoLF', '10': 'roleInfos'},
   ],
 };
 
-/// Descriptor for `S_PKSyncRoleAttributes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_PKSyncRoleAttributesDescriptor = $convert.base64Decode(
-    'ChZTX1BLU3luY1JvbGVBdHRyaWJ1dGVzEjkKCXJvbGVJbmZvcxgBIAMoCzIbLmNvbS5zYXZ2eS'
-    '5wcm90by5QS1JvbGVJbmZvUglyb2xlSW5mb3M=');
+/// Descriptor for `S_PKSyncRoleAttsLF`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PKSyncRoleAttsLFDescriptor = $convert.base64Decode(
+    'ChJTX1BLU3luY1JvbGVBdHRzTEYSQQoJcm9sZUluZm9zGAEgAygLMiMuY29tLnNhdnZ5LnByb3'
+    'RvLlBLUm9sZUJhdHRsZUluZm9MRlIJcm9sZUluZm9z');
 
-@$core.Deprecated('Use s_PKSyncSceneAttributesDescriptor instead')
-const S_PKSyncSceneAttributes$json = {
-  '1': 'S_PKSyncSceneAttributes',
+@$core.Deprecated('Use s_PKSyncRoleAttsHFDescriptor instead')
+const S_PKSyncRoleAttsHF$json = {
+  '1': 'S_PKSyncRoleAttsHF',
+  '2': [
+    {'1': 'roleInfos', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.PKRoleBattleInfoHF', '10': 'roleInfos'},
+  ],
+};
+
+/// Descriptor for `S_PKSyncRoleAttsHF`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PKSyncRoleAttsHFDescriptor = $convert.base64Decode(
+    'ChJTX1BLU3luY1JvbGVBdHRzSEYSQQoJcm9sZUluZm9zGAEgAygLMiMuY29tLnNhdnZ5LnByb3'
+    'RvLlBLUm9sZUJhdHRsZUluZm9IRlIJcm9sZUluZm9z');
+
+@$core.Deprecated('Use s_PKSyncSceneAttsDescriptor instead')
+const S_PKSyncSceneAtts$json = {
+  '1': 'S_PKSyncSceneAtts',
   '2': [
     {'1': 'safeRadius', '3': 1, '4': 1, '5': 5, '10': 'safeRadius'},
     {'1': 'takeEffectTime', '3': 2, '4': 1, '5': 3, '10': 'takeEffectTime'},
     {'1': 'safePosition', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'safePosition'},
     {'1': 'gifts', '3': 4, '4': 3, '5': 11, '6': '.com.savvy.proto.PKGift', '10': 'gifts'},
+    {'1': 'toxicFogSpeed', '3': 5, '4': 1, '5': 5, '10': 'toxicFogSpeed'},
   ],
 };
 
-/// Descriptor for `S_PKSyncSceneAttributes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_PKSyncSceneAttributesDescriptor = $convert.base64Decode(
-    'ChdTX1BLU3luY1NjZW5lQXR0cmlidXRlcxIeCgpzYWZlUmFkaXVzGAEgASgFUgpzYWZlUmFkaX'
-    'VzEiYKDnRha2VFZmZlY3RUaW1lGAIgASgDUg50YWtlRWZmZWN0VGltZRI4CgxzYWZlUG9zaXRp'
-    'b24YAyABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgxzYWZlUG9zaXRpb24SLQoFZ2lmdHMYBC'
-    'ADKAsyFy5jb20uc2F2dnkucHJvdG8uUEtHaWZ0UgVnaWZ0cw==');
+/// Descriptor for `S_PKSyncSceneAtts`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PKSyncSceneAttsDescriptor = $convert.base64Decode(
+    'ChFTX1BLU3luY1NjZW5lQXR0cxIeCgpzYWZlUmFkaXVzGAEgASgFUgpzYWZlUmFkaXVzEiYKDn'
+    'Rha2VFZmZlY3RUaW1lGAIgASgDUg50YWtlRWZmZWN0VGltZRI4CgxzYWZlUG9zaXRpb24YAyAB'
+    'KAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUgxzYWZlUG9zaXRpb24SLQoFZ2lmdHMYBCADKAsyFy'
+    '5jb20uc2F2dnkucHJvdG8uUEtHaWZ0UgVnaWZ0cxIkCg10b3hpY0ZvZ1NwZWVkGAUgASgFUg10'
+    'b3hpY0ZvZ1NwZWVk');
 
 @$core.Deprecated('Use s_PKBattleEndDescriptor instead')
 const S_PKBattleEnd$json = {
   '1': 'S_PKBattleEnd',
   '2': [
     {'1': 'winGuildId', '3': 1, '4': 1, '5': 3, '10': 'winGuildId'},
-    {'1': 'roleInfos', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.PKRoleInfo', '10': 'roleInfos'},
+    {'1': 'roleInfos', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.PKRoleSummary', '10': 'roleInfos'},
     {'1': 'presenterInfo', '3': 3, '4': 3, '5': 11, '6': '.com.savvy.proto.PKPresenterInfo', '10': 'presenterInfo'},
   ],
 };
 
 /// Descriptor for `S_PKBattleEnd`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_PKBattleEndDescriptor = $convert.base64Decode(
-    'Cg1TX1BLQmF0dGxlRW5kEh4KCndpbkd1aWxkSWQYASABKANSCndpbkd1aWxkSWQSOQoJcm9sZU'
-    'luZm9zGAIgAygLMhsuY29tLnNhdnZ5LnByb3RvLlBLUm9sZUluZm9SCXJvbGVJbmZvcxJGCg1w'
-    'cmVzZW50ZXJJbmZvGAMgAygLMiAuY29tLnNhdnZ5LnByb3RvLlBLUHJlc2VudGVySW5mb1INcH'
-    'Jlc2VudGVySW5mbw==');
+    'Cg1TX1BLQmF0dGxlRW5kEh4KCndpbkd1aWxkSWQYASABKANSCndpbkd1aWxkSWQSPAoJcm9sZU'
+    'luZm9zGAIgAygLMh4uY29tLnNhdnZ5LnByb3RvLlBLUm9sZVN1bW1hcnlSCXJvbGVJbmZvcxJG'
+    'Cg1wcmVzZW50ZXJJbmZvGAMgAygLMiAuY29tLnNhdnZ5LnByb3RvLlBLUHJlc2VudGVySW5mb1'
+    'INcHJlc2VudGVySW5mbw==');
 
 @$core.Deprecated('Use c_PKContinueDescriptor instead')
 const C_PKContinue$json = {
@@ -2069,24 +2084,55 @@ const S_PKContinue$json = {
 final $typed_data.Uint8List s_PKContinueDescriptor = $convert.base64Decode(
     'CgxTX1BLQ29udGludWUSHgoKaXNDb250aW51ZRgBIAEoCFIKaXNDb250aW51ZQ==');
 
-@$core.Deprecated('Use c_PickBuffGiftDescriptor instead')
-const C_PickBuffGift$json = {
-  '1': 'C_PickBuffGift',
+@$core.Deprecated('Use c_PKPickBuffGiftDescriptor instead')
+const C_PKPickBuffGift$json = {
+  '1': 'C_PKPickBuffGift',
 };
 
-/// Descriptor for `C_PickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_PickBuffGiftDescriptor = $convert.base64Decode(
-    'Cg5DX1BpY2tCdWZmR2lmdA==');
+/// Descriptor for `C_PKPickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_PKPickBuffGiftDescriptor = $convert.base64Decode(
+    'ChBDX1BLUGlja0J1ZmZHaWZ0');
 
-@$core.Deprecated('Use s_PickBuffGiftDescriptor instead')
-const S_PickBuffGift$json = {
-  '1': 'S_PickBuffGift',
+@$core.Deprecated('Use s_PKPickBuffGiftDescriptor instead')
+const S_PKPickBuffGift$json = {
+  '1': 'S_PKPickBuffGift',
   '2': [
     {'1': 'is_pick_up', '3': 1, '4': 1, '5': 8, '10': 'isPickUp'},
   ],
 };
 
-/// Descriptor for `S_PickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_PickBuffGiftDescriptor = $convert.base64Decode(
-    'Cg5TX1BpY2tCdWZmR2lmdBIcCgppc19waWNrX3VwGAEgASgIUghpc1BpY2tVcA==');
+/// Descriptor for `S_PKPickBuffGift`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PKPickBuffGiftDescriptor = $convert.base64Decode(
+    'ChBTX1BLUGlja0J1ZmZHaWZ0EhwKCmlzX3BpY2tfdXAYASABKAhSCGlzUGlja1Vw');
+
+@$core.Deprecated('Use c_PKRoomListDescriptor instead')
+const C_PKRoomList$json = {
+  '1': 'C_PKRoomList',
+  '2': [
+    {'1': 'offset', '3': 1, '4': 1, '5': 3, '9': 0, '10': 'offset', '17': true},
+    {'1': 'limit', '3': 2, '4': 1, '5': 3, '9': 1, '10': 'limit', '17': true},
+  ],
+  '8': [
+    {'1': '_offset'},
+    {'1': '_limit'},
+  ],
+};
+
+/// Descriptor for `C_PKRoomList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_PKRoomListDescriptor = $convert.base64Decode(
+    'CgxDX1BLUm9vbUxpc3QSGwoGb2Zmc2V0GAEgASgDSABSBm9mZnNldIgBARIZCgVsaW1pdBgCIA'
+    'EoA0gBUgVsaW1pdIgBAUIJCgdfb2Zmc2V0QggKBl9saW1pdA==');
+
+@$core.Deprecated('Use s_PKRoomListDescriptor instead')
+const S_PKRoomList$json = {
+  '1': 'S_PKRoomList',
+  '2': [
+    {'1': 'room_list', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.PkRoomInfo', '10': 'roomList'},
+  ],
+};
+
+/// Descriptor for `S_PKRoomList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_PKRoomListDescriptor = $convert.base64Decode(
+    'CgxTX1BLUm9vbUxpc3QSOAoJcm9vbV9saXN0GAIgAygLMhsuY29tLnNhdnZ5LnByb3RvLlBrUm'
+    '9vbUluZm9SCHJvb21MaXN0');
 

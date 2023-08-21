@@ -5,7 +5,6 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
-import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
@@ -19,6 +18,7 @@ import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_tool_dialog.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
+import 'package:app/ui/room/user/challenge_user_view.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:app/ui/room/user/room_admin_page.dart';
@@ -128,6 +128,12 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         break;
       case '意见反馈':
         Get.to(() => FeedbackPage(type: 1, id: controller.roomId));
+        break;
+      case '发起挑战':
+        OrientationSheet.show(
+          child: ChallengeUserPage(roomId: roomId),
+          direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+        );
         break;
       default:
         super.onItemClick(action);

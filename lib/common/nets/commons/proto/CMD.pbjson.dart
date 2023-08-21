@@ -157,6 +157,8 @@ const CMD$json = {
     {'1': 'S_PKInvite', '2': 13001},
     {'1': 'C_PKAccept', '2': 13002},
     {'1': 'S_PKInviteResult', '2': 13004},
+    {'1': 'C_PKRoomList', '2': 13005},
+    {'1': 'S_PKRoomList', '2': 13006},
     {'1': 'C_PKSceneLoaded', '2': 13010},
     {'1': 'S_PKGameInfo', '2': 13011},
     {'1': 'S_PKUserEnter', '2': 13012},
@@ -164,13 +166,14 @@ const CMD$json = {
     {'1': 'S_PKSyncRoles', '2': 13032},
     {'1': 'C_PKMove', '2': 13034},
     {'1': 'C_PKStop', '2': 13035},
-    {'1': 'S_PKSyncRoleAttributes', '2': 13036},
-    {'1': 'S_PKSyncSceneAttributes', '2': 13037},
-    {'1': 'S_PKBattleEnd', '2': 13038},
+    {'1': 'S_PKSyncRoleAttsLF', '2': 13036},
+    {'1': 'S_PKSyncRoleAttsHF', '2': 13037},
+    {'1': 'S_PKSyncSceneAtts', '2': 13038},
+    {'1': 'S_PKBattleEnd', '2': 13039},
     {'1': 'C_PKContinue', '2': 13050},
     {'1': 'S_PKContinue', '2': 13051},
-    {'1': 'C_PickBuffGift', '2': 13052},
-    {'1': 'S_PickBuffGift', '2': 13053},
+    {'1': 'C_PKPickBuffGift', '2': 13052},
+    {'1': 'S_PKPickBuffGift', '2': 13053},
   ],
 };
 
@@ -225,11 +228,12 @@ final $typed_data.Uint8List cMDDescriptor = $convert.base64Decode(
     'RnJlZU1pa2VzQXJlYRDmXRIXChJTX091dEZyZWVNaWtlc0FyZWEQ510SEgoNQ19QbGF6YVRvUm'
     '9vbRDkXRISCg1TX1BsYXphVG9Sb29tEOVdEhIKDUNfUHVzaFByZWxvYWQQ9F0SEgoNU19QdXNo'
     'UHJlbG9hZBD1XRITCg5TX0NhbWVyYVN3aXRjaBD+XRIPCgpDX1BLSW52aXRlEMhlEg8KClNfUE'
-    'tJbnZpdGUQyWUSDwoKQ19QS0FjY2VwdBDKZRIVChBTX1BLSW52aXRlUmVzdWx0EMxlEhQKD0Nf'
-    'UEtTY2VuZUxvYWRlZBDSZRIRCgxTX1BLR2FtZUluZm8Q02USEgoNU19QS1VzZXJFbnRlchDUZR'
-    'IUCg9DX1BLQmF0dGxlUmVhZHkQ52USEgoNU19QS1N5bmNSb2xlcxDoZRINCghDX1BLTW92ZRDq'
-    'ZRINCghDX1BLU3RvcBDrZRIbChZTX1BLU3luY1JvbGVBdHRyaWJ1dGVzEOxlEhwKF1NfUEtTeW'
-    '5jU2NlbmVBdHRyaWJ1dGVzEO1lEhIKDVNfUEtCYXR0bGVFbmQQ7mUSEQoMQ19QS0NvbnRpbnVl'
-    'EPplEhEKDFNfUEtDb250aW51ZRD7ZRITCg5DX1BpY2tCdWZmR2lmdBD8ZRITCg5TX1BpY2tCdW'
-    'ZmR2lmdBD9ZQ==');
+    'tJbnZpdGUQyWUSDwoKQ19QS0FjY2VwdBDKZRIVChBTX1BLSW52aXRlUmVzdWx0EMxlEhEKDENf'
+    'UEtSb29tTGlzdBDNZRIRCgxTX1BLUm9vbUxpc3QQzmUSFAoPQ19QS1NjZW5lTG9hZGVkENJlEh'
+    'EKDFNfUEtHYW1lSW5mbxDTZRISCg1TX1BLVXNlckVudGVyENRlEhQKD0NfUEtCYXR0bGVSZWFk'
+    'eRDnZRISCg1TX1BLU3luY1JvbGVzEOhlEg0KCENfUEtNb3ZlEOplEg0KCENfUEtTdG9wEOtlEh'
+    'cKElNfUEtTeW5jUm9sZUF0dHNMRhDsZRIXChJTX1BLU3luY1JvbGVBdHRzSEYQ7WUSFgoRU19Q'
+    'S1N5bmNTY2VuZUF0dHMQ7mUSEgoNU19QS0JhdHRsZUVuZBDvZRIRCgxDX1BLQ29udGludWUQ+m'
+    'USEQoMU19QS0NvbnRpbnVlEPtlEhUKEENfUEtQaWNrQnVmZkdpZnQQ/GUSFQoQU19QS1BpY2tC'
+    'dWZmR2lmdBD9ZQ==');
 
