@@ -419,8 +419,8 @@
 				CURRENT_PROJECT_VERSION = 10110;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.1.0;
-				FLUTTER_BUILD_NUMBER = 10110;
+				FLUTTER_BUILD_NAME = 1.1.1;
+				FLUTTER_BUILD_NUMBER = 10121;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -428,7 +428,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -559,8 +559,8 @@
 				CURRENT_PROJECT_VERSION = 10110;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.1.0;
-				FLUTTER_BUILD_NUMBER = 10110;
+				FLUTTER_BUILD_NAME = 1.1.1;
+				FLUTTER_BUILD_NUMBER = 10121;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -568,7 +568,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -593,8 +593,8 @@
 				CURRENT_PROJECT_VERSION = 10110;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.1.0;
-				FLUTTER_BUILD_NUMBER = 10110;
+				FLUTTER_BUILD_NAME = 1.1.1;
+				FLUTTER_BUILD_NUMBER = 10121;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -602,7 +602,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

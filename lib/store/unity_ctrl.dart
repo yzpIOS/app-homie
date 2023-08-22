@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
@@ -300,6 +301,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           {
             'action': req.action,
             'requestId': req.requestId,
+            'appVersion': Env.version,
+            'isAndroid': Platform.isAndroid,
+            'isIOS': Platform.isIOS,
             'data': data == null ? '{}' : (data is String ? data : jsonEncode(data)),
           },
         );
@@ -327,6 +331,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         {
           'action': action.name,
           'requestId': '',
+          'appVersion': Env.version,
+          'isAndroid': Platform.isAndroid,
+          'isIOS': Platform.isIOS,
           'data': data == null ? '{}' : (data is String ? data : jsonEncode(data)),
         },
       );
