@@ -5,6 +5,7 @@ import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/shop/home_shop_page.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
@@ -107,7 +108,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   /// 关闭房间
   ///
   void onDisconnectCallBack() {
-    RoomManagerCtrl.ins.closeRoom();
+    if(RoomManagerCtrl.ins.stateRx.value == RoomState.Mini) {
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    } else if(RoomManagerCtrl.ins.stateRx.value == RoomState.Normal) {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    }
   }
 
 

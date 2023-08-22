@@ -141,3 +141,10 @@ class RoomAtEvent extends EventPb {
 
   RoomAtEvent(this.nickName);
 }
+
+class RoomExitEvent extends EventPb {
+
+  final String message;
+
+  RoomExitEvent(this.message);
+}
