@@ -109,7 +109,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   /// 关闭房间
   ///
   void onDisconnectCallBack() {
-    RoomManagerCtrl.ins.closeRoom();
+    if(RoomManagerCtrl.ins.stateRx.value == RoomState.Mini) {
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    } else if(RoomManagerCtrl.ins.stateRx.value == RoomState.Normal) {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    }
   }
 
 
