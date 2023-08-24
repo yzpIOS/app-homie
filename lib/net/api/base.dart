@@ -11,8 +11,8 @@ mixin _HttpMixin on _IApi {
 
   String _withBasePath(String path) => '$_path/$path';
 
-  Future<dynamic> _doPost(String path, {JMap? ext, data}) async {
-    final _data = await _http.request('POST', _withBasePath(path), ext: ext, data: data ?? const {});
+  Future<dynamic> _doPost(String path, {JMap? ext, data, int tryTimes = 0}) async {
+    final _data = await _http.request('POST', _withBasePath(path), ext: ext, data: data ?? const {}, tryTimes: tryTimes);
 
     return _onResp(path, _data);
   }

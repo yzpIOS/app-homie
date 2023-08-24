@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
@@ -300,6 +301,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           {
             'action': req.action,
             'requestId': req.requestId,
+            'appVersion': Env.version,
+            'isAndroid': Platform.isAndroid,
+            'isIOS': Platform.isIOS,
             'data': data == null ? '{}' : (data is String ? data : jsonEncode(data)),
           },
         );
@@ -327,6 +331,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
         {
           'action': action.name,
           'requestId': '',
+          'appVersion': Env.version,
+          'isAndroid': Platform.isAndroid,
+          'isIOS': Platform.isIOS,
           'data': data == null ? '{}' : (data is String ? data : jsonEncode(data)),
         },
       );
@@ -373,12 +380,23 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     );
   }
 
-  Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) {
+  ///
+  /// 加载unity场景
+  ///
+  Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
+    print("aa");
+    // 等待socket连接成功才加载场景
+    await SocketCtrl.ins.isCConnect();
+    print("aa");
+    // 加载场景
     return _loadScene(
       SceneInfo(scene, doOnAfter: doOnAfter, doOnBefore: doOnBefore),
     );
   }
 
+  ///
+  /// 加载空白的unity场景
+  ///
   Future<void> loadSceneBlank() async {
     _loadScene(const SceneInfo('Transition'));
   }

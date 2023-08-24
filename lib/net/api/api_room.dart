@@ -52,13 +52,13 @@ class ApiRoom extends ApiBase {
   }
 
   ///type 1.自定义 2工会 3.广场
-  Future info({int? roomId, RoomType? type}) {
+  Future info({int? roomId, RoomType? type, int tryTimes = 0}) {
     final data = {
       if (roomId != null) 'room_id': roomId,
       if (type != null) 'room_type': type.code,
     };
 
-    return _doPost('get', data: data);
+    return _doPost('get', data: data, tryTimes: tryTimes);
   }
 
   Future homeRoom() {

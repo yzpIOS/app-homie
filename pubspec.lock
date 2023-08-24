@@ -1553,10 +1553,10 @@ packages:
     dependency: transitive
     description:
       name: screen_brightness
-      sha256: "62fd61a64e68b32b98b840bad7d8b6822bbc40e63c2b569a5f85528484c86b41"
+      sha256: ed8da4a4511e79422fc1aa88138e920e4008cd312b72cdaa15ccb426c0faaedd
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.2"
+    version: "0.2.2+1"
   screen_brightness_android:
     dependency: transitive
     description:
@@ -1593,10 +1593,10 @@ packages:
     dependency: transitive
     description:
       name: screen_brightness_windows
-      sha256: "80d90ecdc63fc0823f2ecb1be323471619287937e14210650d7b25ca181abd05"
+      sha256: db39219ce99aecd697a86a47f0c1866977e50ea5d881e7224aee26f48c27c6a4
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
