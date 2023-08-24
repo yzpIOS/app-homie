@@ -54,6 +54,7 @@ class CustomSocket {
 
   // 断开连接
   final List<Disconnect> _disconnects = <Disconnect>[];
+  int _preRiseTime = 0;
 
   // 过期时间
   int _timeout = 0;
@@ -150,6 +151,8 @@ class CustomSocket {
       connect(host, port, timeout: _timeout);
       // 连接失败
       _riseCallBack2(BaseClient.CONNECT_FAIL);
+      // 断开连接
+      riseDisconnect();
     });
     return this;
   }
@@ -354,6 +357,10 @@ class CustomSocket {
   }
 
   void riseDisconnect() {
+    if(_preRiseTime != 0 && DateTime.now().millisecondsSinceEpoch - _preRiseTime < 1000) {
+      return;
+    }
+    _preRiseTime = DateTime.now().millisecondsSinceEpoch;
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();

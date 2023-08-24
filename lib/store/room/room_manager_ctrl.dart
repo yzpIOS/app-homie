@@ -168,7 +168,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;
-
     return _show(
       roomId: roomId,
       off: off,
@@ -182,10 +181,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   /// 有更好的方式？？
   ///
   void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
-    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
-      return;
-    }
-    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
   }
 
