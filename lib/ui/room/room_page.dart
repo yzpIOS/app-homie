@@ -72,6 +72,7 @@ class RoomPage extends StatefulWidget {
 
 class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, OverlayMixin, RouteAware {
   late final controller = widget.controller;
+  bool isPopUp = false;
 
   @override
   void initState() {
@@ -84,6 +85,10 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     // 强制退出房间事件
     on<RoomExitEvent>((event) {
+      if(isPopUp) {
+        return;
+      }
+      isPopUp = true;
       context.safePop().whenComplete(() => Get.alertDialog(event.message));
     });
   }
