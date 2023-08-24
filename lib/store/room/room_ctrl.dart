@@ -122,7 +122,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   @override
   void onClose() {
     Api.Room.outRoom(roomId).ignore();
-    SocketCtrl.ins.removeDisconnect(onDisconnect);
     newMicList.clear();
     super.onClose();
     roomId = 0;
@@ -164,14 +163,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       test: (event) => event.code == Unity2AppEnum.UTF_DETECT_BUILDING && event.ext['type'] == 2,
       (_) => ActMainDialog.show(),
     );
-
-    SocketCtrl.ins.addDisconnect(onDisconnect);
-  }
-
-  void onDisconnect() {
-    Get.alertDialog('网络己断开').then((value) => {
-      Get.back()
-    });
   }
 
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {

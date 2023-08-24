@@ -3,7 +3,7 @@ description: A new Flutter application.
 
 publish_to: 'none'
 
-version: 1.0.0+100000000 #1.0.0+1_00_00_0000
+version: 1.1.1+100000001 #1.0.0+1_00_00_0000
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -35,7 +35,7 @@ dependencies:
     path: ./plugin/getx
   hive_flutter: ^1.1.0
   crypto: ^3.0.2
-  permission_handler: ^10.2.0
+  permission_handler: ^10.4.3
   url_launcher: ^6.1.8
   blurhash_dart: ^1.2.0
   octo_image: ^1.0.2
@@ -62,7 +62,7 @@ dependencies:
   extended_text: ^11.0.0
   extended_text_field: ^12.0.0
   extended_nested_scroll_view: ^6.0.0
-  photo_manager: ^2.3.0
+  photo_manager: ^2.7.1
   photo_view: ^0.14.0
   freezed_annotation: ^2.1.0
   json_annotation: ^4.8.0
