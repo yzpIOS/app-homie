@@ -373,12 +373,23 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     );
   }
 
-  Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) {
+  ///
+  /// 加载unity场景
+  ///
+  Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
+    print("aa");
+    // 等待socket连接成功才加载场景
+    await SocketCtrl.ins.isCConnect();
+    print("aa");
+    // 加载场景
     return _loadScene(
       SceneInfo(scene, doOnAfter: doOnAfter, doOnBefore: doOnBefore),
     );
   }
 
+  ///
+  /// 加载空白的unity场景
+  ///
   Future<void> loadSceneBlank() async {
     _loadScene(const SceneInfo('Transition'));
   }

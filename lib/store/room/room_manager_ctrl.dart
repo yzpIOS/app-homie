@@ -167,7 +167,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     return _show(
       roomId: roomId,
       off: off,
-      infoApi: (it) => data ?? Api.Room.info(roomId: it),
+      infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
     );
   }

@@ -67,7 +67,7 @@ class Http {
     SentryHelp.add(_dio);
   }
 
-  Future request(String method, String path, {JMap? ext, JMap? query, data}) async {
+  Future request(String method, String path, {JMap? ext, JMap? query, data, int tryTimes = 0}) async {
     await ConnState.ready;
 
     final token = CancelToken();
@@ -93,6 +93,10 @@ class Http {
         _cancel
           ..forEach((it) => it.cancel(401))
           ..clear();
+      }
+
+      if(tryTimes > 0) {
+        return request(method, path, ext: ext, query: query, data: data, tryTimes: tryTimes - 1);
       }
 
       _handleError(e);

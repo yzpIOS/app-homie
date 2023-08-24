@@ -35,18 +35,18 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   // flutter 内部的server, 用于与unity进行通信
   final CustomLocalServer local = CustomLocalServer();
 
+  Completer<bool> _socketStatus = new Completer();
+
   static SocketCtrl get ins {
     return Get.find<SocketCtrl>();
   }
-
-
 
   @override
   void onInit() {
     super.onInit();
     // 注册所有数据解析器
     registerAll();
-    // 初始化客户端socketserver, 用于与unity通仿
+    // 初始化客户端socketserver, 用于与unity通信
     local.bindServer();
     // 监听unity发送的消息
     local.onReceiveRawData((session, cmd, data) {
@@ -91,6 +91,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 接收到反序列化后的数据
     share.onData((cmd, data) {
       riseOnData(cmd, data);
+    });
+
+    // 断开连接时重置socket状态
+    share.addDisconnect(() {
+      if(!_socketStatus.isCompleted) {
+        _socketStatus.completeError(TimeoutException("Socket连接超时"));
+      }
+      _socketStatus = Completer();
     });
   }
 
@@ -301,6 +309,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     }
     var roleId = role.role.roleId;
     var name = role.role.name;
+    // 收到用户信息后，才认为是己经连接上
+    if(!_socketStatus.isCompleted) {
+      _socketStatus.complete(true);
+    }
   }
 
   ///
@@ -323,6 +335,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }
+  }
+
+  ///
+  /// 获取socket连接状态，认为收到用户信息时才是连接成功
+  ///
+  Future<bool> isCConnect() async {
+    if(_socketStatus.isCompleted) {
+      return Future.value(true);
+    }
+    return _socketStatus.future;
   }
 
   ///
