@@ -29,19 +29,19 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
     bindWorker(
       ever(_modeRx, (val) {
         switch (val) {
-          case 0:
-            // 商城
-            selectorShop.enterTryMode();
-            break;
-          case 1:
-            // 我的-衣柜
-            selectorWardrobe.enterTryMode();
-            break;
-          case 2:
-            // 我的-套装，头发等（除了衣柜）
-            selectorCloth.enterTryMode();
-
-            break;
+          // case 0:
+          //   // 商城
+          //   selectorShop.enterTryMode();
+          //   break;
+          // case 1:
+          //   // 我的-衣柜
+          //   selectorWardrobe.enterTryMode();
+          //   break;
+          // case 2:
+          //   // 我的-套装，头发等（除了衣柜）
+          //   selectorCloth.enterTryMode();
+          //
+          //   break;
         }
       }),
     );
@@ -59,7 +59,7 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
         final id = event.productId;
         final selector = selectorShop;
 
-        if (selector._dataRx.containsKey(id)) {
+        if (selector._dataRx.contains(id)) {
           selector._doTryUse(id);
         } else {
           xlog('数据异常 -> $event');
@@ -82,6 +82,12 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   }
 
   void setShopMode(bool isShopMode) {
+    late final _unity = Get.find<UnityCtrl>();
+    _unity.sendMessage(
+      App2UnityEnum.FTU_SWITCH_CLOTH,
+      data: {'instruction': isShopMode ? 1 : 2,},//instruction ：1是商城  2是我的
+    );
+
     _mode1Rx(isShopMode);
   }
 
@@ -106,48 +112,51 @@ abstract class ClothSelector {
 mixin _UnityDressUpMixin {
   late final _unity = Get.find<UnityCtrl>();
 
-  Future<List<int>> calcDressUp(int newId, List<int> ids) async {
-    final data = {
-      'newGoodsId': newId,
-      'currentGoodsIds': ids,
-    };
-
-    final resp = await _unity.sendMessage(App2UnityEnum.FTU_CALCULATE_CLOTH, data: data);
-
-    try {
-      final ids = jsonDecode(resp) as Iterable;
-
-      return ids.cast<int>().toList(growable: false);
-    } catch (e, s) {
-      errLog(e, s);
-
-      return [];
-    }
-  }
+  // Future<List<int>> calcDressUp(int newId, List<int> ids) async {
+  //   final data = {
+  //     'newGoodsId': newId,
+  //     'currentGoodsIds': ids,
+  //   };
+  //
+  //   final resp = await _unity.sendMessage(App2UnityEnum.FTU_CALCULATE_CLOTH, data: data);
+  //
+  //   try {
+  //     final ids = jsonDecode(resp) as Iterable;
+  //
+  //     return ids.cast<int>().toList(growable: false);
+  //   } catch (e, s) {
+  //     errLog(e, s);
+  //
+  //     return [];
+  //   }
+  // }
 
   Future<void> clearDressUp() {
-    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH);
+    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH, data: {'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,});
   }
 
   Future<Iterable<int>> setDressUp(List<int> ids) {
-    return _doDressUp(1, ids);
+    return _doDressUp(ids);
   }
 
   Future<Iterable<int>> updateDressUp(bool isAdd, int id) {
-    return _doDressUp(isAdd ? 2 : 3, [id]);
+    // return _doDressUp(isAdd ? 2 : 3, [id]);
+
+    return _doDressUp([id]);
   }
 
-  ///action: 1覆盖 2添加 3删除
-  Future<Iterable<int>> _doDressUp(int action, List<int> ids) async {
+  // ///action: 1覆盖 2添加 3删除
+  Future<Iterable<int>> _doDressUp(List<int> ids) async {
     final data = {
       'goodsIds': ids,
-      'instruction': action,
+      'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,//instruction 1是商城，2是我的
     };
 
     final resp = await _unity.sendMessage(App2UnityEnum.FTU_DRESSUP_CLOTH, data: data);
 
     try {
-      return (jsonDecode(resp) as Iterable).cast();
+      final ids = jsonDecode(resp) as Iterable;
+      return ids.cast<int>().toList(growable: false);
     } catch (e, s) {
       errLog(e, s);
 
@@ -182,20 +191,20 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
   // "122": [11, 12, 15, 17, 22],
   // "123":[11, 33, 122, 555],
   // }
-  final _dataRx = RxMap<int, List<int>>();
+  late final _dataRx = RxList<int>();
 
   @override
   bool isRxEmpty() => _dataRx.isEmpty;
 
   @override
-  bool isRxSelected(int id) => _dataRx.containsKey(id);
+  bool isRxSelected(int id) => _dataRx.value.contains(id);
 
   @override
   Future<List<int>> dressUpIds() {
     if (_dataRx.isEmpty) {
       return dressUpCtrl.fetchIds();
     } else {
-      return Future.value(_dataRx.values.last);
+      return Future.value(_dataRx.value);
     }
   }
 
@@ -207,73 +216,84 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
     FutureOr Function() task;
 
     // 保存原来的数据
-    final _dataRx2 = <int, List<int>>{};
-    _dataRx2.assignAll(_dataRx);
+    // final _dataRx2 = <int>[];
+    // _dataRx2.assignAll(_dataRx);
 
     // true: add, false: delete
     bool addOrDel = false;
 
-    if (_dataRx.containsKey(id)) {
+    if (_dataRx.contains(id)) {
       addOrDel = false;
 
-      final keys = _dataRx.keys.toList();
-      final keyIndex = keys.indexOf(id);
+      task = () => updateDressUp(false, id).then((val) => _dataRx.value = List.from(val));
 
-      _dataRx.remove(
-        keys.removeAt(keyIndex),
-      );
-
-      task = keys.isEmpty ? doReset2DressUp : () async {
-        final count = keys.length;
-        final isLast = keyIndex == keys.length - 1;
-
-        if (!isLast) {
-          for (var i = keyIndex; i < count; ++i) {
-            final key = keys[i];
-
-            final newIds = await calcDressUp(
-              key,
-              i == 0 ? dressUpCtrl.ids.toList(growable: false) : _dataRx[keys[i]]!,
-            );
-            _dataRx[key] = newIds;
-          }
-        }
-        return setDressUp(_dataRx.values.last);
-      };
+      // final keys = _dataRx.keys.toList();
+      // final keyIndex = keys.indexOf(id);
+      //
+      // _dataRx.remove(
+      //   keys.removeAt(keyIndex),
+      // );
+      //
+      // task = keys.isEmpty ? doReset2DressUp : () async {
+      //   final count = keys.length;
+      //   final isLast = keyIndex == keys.length - 1;
+      //
+      //   if (!isLast) {
+      //     for (var i = keyIndex; i < count; ++i) {
+      //       final key = keys[i];
+      //
+      //       final newIds = await calcDressUp(
+      //         key,
+      //         i == 0 ? dressUpCtrl.ids.toList(growable: false) : _dataRx[keys[i]]!,
+      //       );
+      //       _dataRx[key] = newIds;
+      //     }
+      //   }
+      //   return setDressUp(_dataRx.values.last);
+      // };
     } else {
       addOrDel = true;
 
-      task = () => updateDressUp(true, id).then((val) => _dataRx[id] = List.from(val));
+      task = () => updateDressUp(true, id).then((val) => _dataRx.value = List.from(val));
     }
 
     return simpleTry(task, callback: (result) {
-      // 我只是填坑：如果不成功，就重置原来数据
-      if(result is Iterable<int>) {
-        if(result.isEmpty) {
-          _dataRx.assignAll(_dataRx2);
-        } else {
-          // unity成功了
-          if(addOrDel) {
-            // 添加购物车
-            _doAdd(id);
-          } else {
-            // 删除购物车
-            _doDel(id);
-          }
-        }
+      // unity成功了
+      if(addOrDel) {
+        // 添加购物车
+        _doAdd(id);
+      } else {
+        // 删除购物车
+        _doDel(id);
       }
+
+      // // 我只是填坑：如果不成功，就重置原来数据
+      // if(result is Iterable<int>) {
+      //   if(result.isEmpty) {
+      //     _dataRx.assignAll(_dataRx2);
+      //   } else {
+      //     // unity成功了
+      //     if(addOrDel) {
+      //       // 添加购物车
+      //       _doAdd(id);
+      //     } else {
+      //       // 删除购物车
+      //       _doDel(id);
+      //     }
+      //   }
+      // }
       _debugTryUse();
     });
   }
 
-  void _debugTryUse() => xlog(_dataRx.debug);
+  void _debugTryUse() => xlog(_dataRx);
 }
 
 class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _MultiMixin {
   late final cartCtrl = Get.find<ShoppingCartCtrl>();
 
   @override
-  Iterable<int> _ids() => _dataRx.keys;
+  Iterable<int> _ids() => _dataRx;
 
   @override
   Future<void> doSelect(Map item) => _doTryUse(item['id']);
@@ -282,6 +302,7 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
     _dataRx.clear();
 
     doReset2DressUp();
+    clearDressUp();
   }
 
   @override
@@ -298,7 +319,7 @@ class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin
   final _data2Rx = RxSet<int>();
 
   @override
-  Iterable<int> _ids() => [..._dataRx.keys, ..._data2Rx];
+  Iterable<int> _ids() => [..._dataRx, ..._data2Rx];
 
   @override
   bool isRxEmpty() => super.isRxEmpty() && _data2Rx.isEmpty;

@@ -102,6 +102,7 @@ class _MyModelViewState extends State<MyModelView> {
                   data: {
                     'gender': myInfo.dataRx().gender!.code,
                     'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
+                    'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,
                   },
                 );
                 unityLoadComplete = true;

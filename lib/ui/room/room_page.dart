@@ -33,7 +33,7 @@ class RoomPage extends StatefulWidget {
     Future _show() {
       Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();
 
-      mgr.doNormalState();
+      // mgr.doNormalState();
       if(off) {
         return Get.off(
           builder,
@@ -211,7 +211,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       },
     );
 
-    bindGet(SuperGiftBroadcastCtrl());
+    bindGet(SuperGiftBroadcastCtrl(), tag: Slugid.nice().toString());
   }
 
   @override
@@ -225,6 +225,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       backgroundColor: Colors.grey,
       resizeToAvoidBottomInset: false,
       body: child,
+      appBar: Env.isDebugCfg ? AppBar(leading: GestureDetector(child: Text("返回"), onTap: () {
+        Get.back();
+      },),) : null
     );
 
     child = UiOverlayRegion.light(child: child);

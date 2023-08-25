@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
@@ -89,15 +90,10 @@ class _ItemView extends StatelessWidget {
           width: 60,
           height: 24,
           textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-          onTap: () {
+          onTap: () async {
+            Get.pop();
             simpleSub(
               Api.Room.sendPKInvite(selfGuildId: selfGuildId, invitedGuildId: data['roomId']),
-              callback1: (resp) {
-                if (resp != null) {
-                  Get.back();
-                  showToast('发起挑战成功，等待对方接受');
-                }
-              },
             );
           },
         ),

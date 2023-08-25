@@ -6,6 +6,7 @@ import 'package:app/exception.dart';
 import 'package:app/model/enum/api_switch.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
@@ -29,7 +30,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
     // 关闭函数
-    ;
+
     // 房间
     RoomCtrl? roomCtrl = _sceneCtrl as RoomCtrl?;
     if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
@@ -99,13 +100,10 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     // 显示是否接受挑战的弹窗
     AcceptChallengeDialog.show(
       '${data.invitingGuildName}直播间对你发起挑战\n是否接受？',
-      callback: (isAccept) {
-        Get.back();
+      callback: (isAccept) async {
+        Get.pop();
         simpleSub(
           Api.Room.pkAccept(accept: isAccept, invitingGuildId: data.invitingGuildId),
-          callback1: (resp) {
-
-          }
         );
       },
     );
@@ -119,7 +117,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     if (data.isSuccess) {//true进入PK场景
       int pkRoomId = data.pkRoomId.toInt();//生成了一个PK房ID
-      toMiddleRoom(roomId: pkRoomId, off: true);
+      toMiddleRoom(roomId: pkRoomId, off: true, callCloseRoom: false);
     } else {
       showToast('已取消挑战邀请');
     }
@@ -179,18 +177,25 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
       simpleSub(
         api(),
-        callback1: (resp) => onReady(storeCreate(resp)),
+        callback1: (resp) {
+          var result = storeCreate(resp);
+          return onReady(result);
+        },
         whenErr: off ? doBackWhenErr : null,
       );
     }
 
     switch (stateRx()) {
       case RoomState.Normal:
+        if (!tempCallCloseRoom) {
+          RoomPage.show(off);
+          return;
+        }
         assert(false, '数据错误');
         return;
       case RoomState.Mini:
-        if (_sceneCtrl!.roomId == roomId) {
-          RoomPage.show();
+        if (!tempCallCloseRoom || _sceneCtrl!.roomId == roomId) {
+          RoomPage.show(off);
 
           return;
         } else {
@@ -215,25 +220,31 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
   }
 
+  bool tempCallCloseRoom = true;
+
   void toRoom({required int roomId, Map? data, bool off = false}) {
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;
-    return _show(
+    _show(
       roomId: roomId,
       off: off,
       infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
     );
+    // reset tempCallCloseRoom param
+    tempCallCloseRoom = true;
   }
 
   ///
   /// 从房间大厅跳到房间B时，两个界面都是unity界面会报错，所以加一个中间界面来跳转
   /// 有更好的方式？？
   ///
-  void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
-    Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
+  void toMiddleRoom({required int roomId, Map? data, bool off = false, bool callCloseRoom = true}) {
+    // RoomMiddlePage will call toRoom method, and tempCallCloseRoom will be reset to true in the toRoom method
+    tempCallCloseRoom = callCloseRoom;
+    Get.off(() => RoomMiddlePage(roomId: roomId, data: data, callCloseRoom: callCloseRoom,), transition: Transition.noTransition);
   }
 
   int _preClickTime = 0;
