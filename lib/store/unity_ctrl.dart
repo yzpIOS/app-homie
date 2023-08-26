@@ -63,8 +63,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
+      _sendSockComplete = Completer();
       if(_isUnityInitSuccess) {
-        _netStatusChange?.cancel();
         return;
       }
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
@@ -195,6 +195,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   void sendFlutterSocketInfo({int tryTimes = 0}) async {
     if(isClosed || _isUnityInitSuccess == false || tryTimes >= 100) {
       return;
+    }
+    // 重新进入等待
+    if(_sendSockComplete.isCompleted) {
+      _sendSockComplete = Completer();
     }
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
