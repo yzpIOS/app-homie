@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
@@ -42,7 +43,8 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     final isManager = myRole.isManager;
 
     final items = [
-      if (isOwner || isManager) '发起挑战',
+      // 房主或管理员，且不在pk中，才显示发起挑战入口
+      if ((isOwner || isManager) && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom()) '发起挑战',
       if (isOwner) '管理员',
       if (isManager) ...[
         '黑名单',
