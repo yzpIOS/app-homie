@@ -3,6 +3,7 @@ import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
@@ -46,7 +47,8 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
 
         final showMicPanel = controller.maxMic > 0 && !freeMic;
 
-        final topMicMode = controller.roomType == RoomType.guild;
+        //公会房且不在pk中，才显示麦位
+        final topMicMode = (controller.roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
         final sideMicMode = controller.roomType == RoomType.customize;
 
         return Stack(
