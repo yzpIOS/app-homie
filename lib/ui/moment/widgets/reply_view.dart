@@ -31,7 +31,7 @@ class ReplySheet extends StatefulWidget {
 
 class _ReplySheetState extends State<ReplySheet> {
   late final controller = widget.controller;
-  late final autofocus = widget.autofocus;
+  late var autofocus = widget.autofocus;
   late final hintText = widget.hintText;
 
   @override
@@ -72,7 +72,7 @@ class _ReplySheetState extends State<ReplySheet> {
         children: [
           child,
           $KeyboardHolder(
-            child: EmojiView(
+            child: autofocus ? Spacing.blank : EmojiView(
               onSelect: controller.join,
               // doBackspace: controller.backspace,
               doSend: () => _doSub(controller.text),
@@ -92,7 +92,11 @@ class _ReplySheetState extends State<ReplySheet> {
 
   Widget get suffixIcon {
     return OpacityButton(
-      onTap: () => hideKeyboard(keepFocus: true),
+      onTap: () {
+        autofocus = false;
+        hideKeyboard(keepFocus: true);
+        setState(() {});
+      },
       child: Box(
         padding: const Pad(vertical: 4),
         child: SvgView(SVG.$('chat/表情')),
