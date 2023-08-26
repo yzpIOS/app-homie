@@ -31,7 +31,7 @@ enum App2UnityEnum {
   FTU_CLEAR_CLOTH, //脱下所有装扮
   FTU_CALCULATE_CLOTH, //计算穿着的结果
   FTU_GENDER_CLOTHING_SCENE, //在换装场景中推送角色性别
-  FTU_SWITCH_CLOTH,//如果玩家切换了商城和我的，发送该指令 instruction 1是商城 2是我的
+  FTU_SWITCH_CLOTH,//如果玩家切换了商城和我的，发送该指令 instruction 1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
   FTU_ROLE_SPEAK_GUILD_SCENE, //公会场景中谁在麦上说话
   FTU_PICTURE_ENTER, //进入拍照、录屏模式
   FTU_PICTURE_EXIT, //退出拍照、录屏模式

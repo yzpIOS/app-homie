@@ -191,7 +191,10 @@ class _MyModelViewState extends State<MyModelView> {
         final isShopMode = it.isShopMode;
 
         return OpacityButton(
-          onTap: () => it.setShopMode(!isShopMode),
+          onTap: () {
+            it.setShopMode(!isShopMode);
+            it.sendFlutterSwitchCloth();
+          },
           child: Stack(
             children: [
               AnimatedPositioned(

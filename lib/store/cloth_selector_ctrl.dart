@@ -82,18 +82,23 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   }
 
   void setShopMode(bool isShopMode) {
-    late final _unity = Get.find<UnityCtrl>();
-    _unity.sendMessage(
-      App2UnityEnum.FTU_SWITCH_CLOTH,
-      data: {'instruction': isShopMode ? 1 : 2,},//instruction ：1是商城  2是我的
-    );
-
     _mode1Rx(isShopMode);
   }
 
   void setWardrobeMode(bool isWardrobe) {
     setShopMode(false);
     _mode2Rx(isWardrobe);
+    sendFlutterSwitchCloth();
+  }
+
+  // 发送用户切换了“1:商城”、“2:我的-衣柜”、“3:我的-其他”的指令
+  void sendFlutterSwitchCloth() {
+    int instruction = isShopMode ? 1 : (isWardrobeMode ? 2 : 3);
+    late final _unity = Get.find<UnityCtrl>();
+    _unity.sendMessage(
+      App2UnityEnum.FTU_SWITCH_CLOTH,
+      data: {'instruction': instruction,},//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
+    );
   }
 }
 
