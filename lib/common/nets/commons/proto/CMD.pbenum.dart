@@ -150,27 +150,26 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD C_PushPreload = CMD._(12020, _omitEnumNames ? '' : 'C_PushPreload');
   static const CMD S_PushPreload = CMD._(12021, _omitEnumNames ? '' : 'S_PushPreload');
   static const CMD S_CameraSwitch = CMD._(12030, _omitEnumNames ? '' : 'S_CameraSwitch');
-  static const CMD C_PKInvite = CMD._(13000, _omitEnumNames ? '' : 'C_PKInvite');
-  static const CMD S_PKInvite = CMD._(13001, _omitEnumNames ? '' : 'S_PKInvite');
-  static const CMD C_PKAccept = CMD._(13002, _omitEnumNames ? '' : 'C_PKAccept');
-  static const CMD S_PKInviteResult = CMD._(13004, _omitEnumNames ? '' : 'S_PKInviteResult');
-  static const CMD C_PKRoomList = CMD._(13005, _omitEnumNames ? '' : 'C_PKRoomList');
-  static const CMD S_PKRoomList = CMD._(13006, _omitEnumNames ? '' : 'S_PKRoomList');
-  static const CMD C_PKSceneLoaded = CMD._(13010, _omitEnumNames ? '' : 'C_PKSceneLoaded');
-  static const CMD S_PKGameInfo = CMD._(13011, _omitEnumNames ? '' : 'S_PKGameInfo');
-  static const CMD S_PKUserEnter = CMD._(13012, _omitEnumNames ? '' : 'S_PKUserEnter');
-  static const CMD C_PKBattleReady = CMD._(13031, _omitEnumNames ? '' : 'C_PKBattleReady');
-  static const CMD S_PKSyncRoles = CMD._(13032, _omitEnumNames ? '' : 'S_PKSyncRoles');
-  static const CMD C_PKMove = CMD._(13034, _omitEnumNames ? '' : 'C_PKMove');
-  static const CMD C_PKStop = CMD._(13035, _omitEnumNames ? '' : 'C_PKStop');
-  static const CMD S_PKSyncRoleAttsLF = CMD._(13036, _omitEnumNames ? '' : 'S_PKSyncRoleAttsLF');
-  static const CMD S_PKSyncRoleAttsHF = CMD._(13037, _omitEnumNames ? '' : 'S_PKSyncRoleAttsHF');
-  static const CMD S_PKSyncSceneAtts = CMD._(13038, _omitEnumNames ? '' : 'S_PKSyncSceneAtts');
-  static const CMD S_PKBattleEnd = CMD._(13039, _omitEnumNames ? '' : 'S_PKBattleEnd');
-  static const CMD C_PKContinue = CMD._(13050, _omitEnumNames ? '' : 'C_PKContinue');
-  static const CMD S_PKContinue = CMD._(13051, _omitEnumNames ? '' : 'S_PKContinue');
-  static const CMD C_PKPickBuffGift = CMD._(13052, _omitEnumNames ? '' : 'C_PKPickBuffGift');
-  static const CMD S_PKPickBuffGift = CMD._(13053, _omitEnumNames ? '' : 'S_PKPickBuffGift');
+  static const CMD C_PKInvite = CMD._(20001, _omitEnumNames ? '' : 'C_PKInvite');
+  static const CMD S_PKInvite = CMD._(20002, _omitEnumNames ? '' : 'S_PKInvite');
+  static const CMD C_PKAccept = CMD._(20003, _omitEnumNames ? '' : 'C_PKAccept');
+  static const CMD S_PKInviteResult = CMD._(20004, _omitEnumNames ? '' : 'S_PKInviteResult');
+  static const CMD C_PKRoomList = CMD._(20005, _omitEnumNames ? '' : 'C_PKRoomList');
+  static const CMD S_PKRoomList = CMD._(20006, _omitEnumNames ? '' : 'S_PKRoomList');
+  static const CMD C_PKSceneLoaded = CMD._(20010, _omitEnumNames ? '' : 'C_PKSceneLoaded');
+  static const CMD S_PKGameInfo = CMD._(20011, _omitEnumNames ? '' : 'S_PKGameInfo');
+  static const CMD S_PKUserEnter = CMD._(20012, _omitEnumNames ? '' : 'S_PKUserEnter');
+  static const CMD C_PKBattleReady = CMD._(20031, _omitEnumNames ? '' : 'C_PKBattleReady');
+  static const CMD S_PKSyncRoles = CMD._(20032, _omitEnumNames ? '' : 'S_PKSyncRoles');
+  static const CMD C_PKMove = CMD._(20034, _omitEnumNames ? '' : 'C_PKMove');
+  static const CMD C_PKStop = CMD._(20035, _omitEnumNames ? '' : 'C_PKStop');
+  static const CMD S_PKSyncRoleAttsLF = CMD._(20036, _omitEnumNames ? '' : 'S_PKSyncRoleAttsLF');
+  static const CMD S_PKSyncRoleAttsHF = CMD._(20037, _omitEnumNames ? '' : 'S_PKSyncRoleAttsHF');
+  static const CMD S_PKSceneToxic = CMD._(20038, _omitEnumNames ? '' : 'S_PKSceneToxic');
+  static const CMD S_PKSceneGift = CMD._(20039, _omitEnumNames ? '' : 'S_PKSceneGift');
+  static const CMD S_PKBattleEnd = CMD._(20050, _omitEnumNames ? '' : 'S_PKBattleEnd');
+  static const CMD C_PKContinue = CMD._(20051, _omitEnumNames ? '' : 'C_PKContinue');
+  static const CMD S_PKContinue = CMD._(20052, _omitEnumNames ? '' : 'S_PKContinue');
 
   static const $core.List<CMD> values = <CMD> [
     NONE,
@@ -324,12 +323,11 @@ class CMD extends $pb.ProtobufEnum {
     C_PKStop,
     S_PKSyncRoleAttsLF,
     S_PKSyncRoleAttsHF,
-    S_PKSyncSceneAtts,
+    S_PKSceneToxic,
+    S_PKSceneGift,
     S_PKBattleEnd,
     C_PKContinue,
     S_PKContinue,
-    C_PKPickBuffGift,
-    S_PKPickBuffGift,
   ];
 
   static final $core.Map<$core.int, CMD> _byValue = $pb.ProtobufEnum.initByValue(values);
