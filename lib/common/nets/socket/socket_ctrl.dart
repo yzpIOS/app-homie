@@ -53,14 +53,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       if(session.uniqueId != uniqueId) {
         return;
       }
-      // flutter与unity之间的协义号从20001开始
-      // 大于20000的是unity发给flutter的信息
+      // flutter与unity之间协议通是区间：10000～20000之间
       if(cmd >= FLUTTER_UINITY_START && cmd <= FLUTTER_UINITY_END) {
         // 通知flutter收到信息
         riseOnRawData(cmd, data);
         return;
       }
-      // 发送数据到服务端
+      // unity发送数据到服务端
       share.sendBytes(cmd, datas: data, sendToUntiy: "unity>>>server");
     });
     // 监听unity发送的消息
@@ -303,6 +302,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.beatHeartCheck();
   }
 
+
+
   ///
   /// 用户信息返回
   ///
@@ -316,6 +317,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(!_socketStatus.isCompleted) {
       _socketStatus.complete(true);
     }
+    // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
+    var roomId = role.pkRoomId.toInt();
+    if(roomId <= 0) {
+      return;
+    }
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+      RoomManagerCtrl.ins.toMiddleRoom(roomId: roomId, off: true, callCloseRoom: false);
+    });
   }
 
   ///
