@@ -315,6 +315,7 @@ class S_Role extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'retryToken', protoName: 'retryToken')
     ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'time')
     ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pkRoomId')
+    ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..hasRequiredFields = false
   ;
 
@@ -324,6 +325,7 @@ class S_Role extends $pb.GeneratedMessage {
     $core.String? retryToken,
     $fixnum.Int64? time,
     $fixnum.Int64? pkRoomId,
+    $fixnum.Int64? roomId,
   }) {
     final _result = create();
     if (role != null) {
@@ -337,6 +339,9 @@ class S_Role extends $pb.GeneratedMessage {
     }
     if (pkRoomId != null) {
       _result.pkRoomId = pkRoomId;
+    }
+    if (roomId != null) {
+      _result.roomId = roomId;
     }
     return _result;
   }
@@ -398,6 +403,15 @@ class S_Role extends $pb.GeneratedMessage {
   $core.bool hasPkRoomId() => $_has(3);
   @$pb.TagNumber(4)
   void clearPkRoomId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get roomId => $_getI64(4);
+  @$pb.TagNumber(5)
+  set roomId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRoomId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRoomId() => clearField(5);
 }
 
 class C_UploadURL extends $pb.GeneratedMessage {

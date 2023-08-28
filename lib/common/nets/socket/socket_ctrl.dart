@@ -8,6 +8,7 @@ import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
@@ -318,12 +319,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       _socketStatus.complete(true);
     }
     // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
-    var roomId = role.pkRoomId.toInt();
-    if(roomId <= 0) {
+    var pkRoomId = role.pkRoomId.toInt();
+    var roomId = role.roomId.toInt();
+    // 数据异常
+    if(pkRoomId <= 0 || roomId <= 0) {
       return;
     }
-    Future.delayed(const Duration(seconds: 2)).whenComplete(() {
-      RoomManagerCtrl.ins.toMiddleRoom(roomId: roomId, off: true, callCloseRoom: false);
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+      var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
+      RoomManagerCtrl.ins.putPkInfo(roomInfo, pkRoomId);
+      RoomManagerCtrl.ins.toMiddleRoom(roomId: roomId, data: roomInfo, off: true, callCloseRoom: false);
     });
   }
 

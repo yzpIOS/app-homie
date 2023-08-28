@@ -117,7 +117,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     if (data.isSuccess) {//true进入PK场景
       int pkRoomId = data.pkRoomId.toInt();//生成了一个PK房ID
-      toMiddleRoom(roomId: pkRoomId, off: true, callCloseRoom: false);
+      if(sceneCtrl2?.info == null) {
+        return;
+      }
+      // pk房是一个场景，这里使用当前房间的信息
+      var curRoomInfo = sceneCtrl2?.info ?? {};
+      putPkInfo(curRoomInfo, pkRoomId);
+      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: curRoomInfo, callCloseRoom: false);
     } else {
       showToast('已取消挑战邀请');
     }
@@ -285,6 +291,15 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       // 房间manager
       await doCloseState();
     }
+  }
+
+  ///
+  /// 构建pk房的进房信息
+  ///
+  void putPkInfo(Map<dynamic, dynamic> roomInfo, int pkRoomId) {
+    roomInfo["scene_id"] = 4;
+    roomInfo["pk_status"] = 1;
+    roomInfo["pkRoomId"] = pkRoomId;
   }
 
   Future<void> doCloseState() async {

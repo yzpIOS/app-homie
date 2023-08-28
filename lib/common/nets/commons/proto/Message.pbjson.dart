@@ -91,11 +91,12 @@ const S_Role$json = const {
     const {'1': 'retryToken', '3': 2, '4': 1, '5': 9, '10': 'retryToken'},
     const {'1': 'time', '3': 3, '4': 1, '5': 3, '10': 'time'},
     const {'1': 'pk_room_id', '3': 4, '4': 1, '5': 3, '10': 'pkRoomId'},
+    const {'1': 'room_id', '3': 5, '4': 1, '5': 3, '10': 'roomId'},
   ],
 };
 
 /// Descriptor for `S_Role`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_RoleDescriptor = $convert.base64Decode('CgZTX1JvbGUSLQoEcm9sZRgBIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5Sb2xlSW5mb1IEcm9sZRIeCgpyZXRyeVRva2VuGAIgASgJUgpyZXRyeVRva2VuEhIKBHRpbWUYAyABKANSBHRpbWUSHAoKcGtfcm9vbV9pZBgEIAEoA1IIcGtSb29tSWQ=');
+final $typed_data.Uint8List s_RoleDescriptor = $convert.base64Decode('CgZTX1JvbGUSLQoEcm9sZRgBIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5Sb2xlSW5mb1IEcm9sZRIeCgpyZXRyeVRva2VuGAIgASgJUgpyZXRyeVRva2VuEhIKBHRpbWUYAyABKANSBHRpbWUSHAoKcGtfcm9vbV9pZBgEIAEoA1IIcGtSb29tSWQSFwoHcm9vbV9pZBgFIAEoA1IGcm9vbUlk');
 @$core.Deprecated('Use c_UploadURLDescriptor instead')
 const C_UploadURL$json = const {
   '1': 'C_UploadURL',
