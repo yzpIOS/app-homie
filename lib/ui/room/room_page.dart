@@ -80,8 +80,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     Wakelock.enable();
     _init();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
 
     // 强制退出房间事件
     on<RoomExitEvent>((event) {
@@ -105,8 +103,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   void dispose() {
     Wakelock.disable();
     AppNavObserver.unsubscribe(this);
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
 
     super.dispose();
   }
@@ -144,8 +140,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   @override
   void didPushNext() {
     super.didPushNext();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
   }
 
   ///
@@ -154,8 +148,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   @override
   void didPopNext() {
     super.didPopNext();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
   }
 
   void _initListener() {
