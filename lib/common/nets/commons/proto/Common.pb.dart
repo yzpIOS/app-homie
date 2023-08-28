@@ -1754,6 +1754,148 @@ class PkRoomInfo extends $pb.GeneratedMessage {
   void clearIsInvite() => clearField(5);
 }
 
+class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
+  factory PkRoleDefaultConfiguration() => create();
+  PkRoleDefaultConfiguration._() : super();
+  factory PkRoleDefaultConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PkRoleDefaultConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PkRoleDefaultConfiguration', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'roleRadius', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'weaponLength', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'weaponSpeed', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'maxWeaponNum', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'blood', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'TotalBlood', $pb.PbFieldType.O3, protoName: 'TotalBlood')
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'Shield', $pb.PbFieldType.O3, protoName: 'Shield')
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'Attack', $pb.PbFieldType.O3, protoName: 'Attack')
+    ..a<$core.int>(10, _omitFieldNames ? '' : 'countdown', $pb.PbFieldType.O3)
+    ..a<$core.int>(11, _omitFieldNames ? '' : 'swordCount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration clone() => PkRoleDefaultConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration copyWith(void Function(PkRoleDefaultConfiguration) updates) => super.copyWith((message) => updates(message as PkRoleDefaultConfiguration)) as PkRoleDefaultConfiguration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration create() => PkRoleDefaultConfiguration._();
+  PkRoleDefaultConfiguration createEmptyInstance() => create();
+  static $pb.PbList<PkRoleDefaultConfiguration> createRepeated() => $pb.PbList<PkRoleDefaultConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PkRoleDefaultConfiguration>(create);
+  static PkRoleDefaultConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get roleRadius => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set roleRadius($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleRadius() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleRadius() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get speed => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set speed($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpeed() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSpeed() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get weaponLength => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set weaponLength($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasWeaponLength() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearWeaponLength() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get weaponSpeed => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set weaponSpeed($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWeaponSpeed() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWeaponSpeed() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get maxWeaponNum => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set maxWeaponNum($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMaxWeaponNum() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMaxWeaponNum() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get blood => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set blood($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBlood() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBlood() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get totalBlood => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set totalBlood($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTotalBlood() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTotalBlood() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get shield => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set shield($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasShield() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearShield() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get attack => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set attack($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasAttack() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearAttack() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get countdown => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set countdown($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasCountdown() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearCountdown() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.int get swordCount => $_getIZ(10);
+  @$pb.TagNumber(11)
+  set swordCount($core.int v) { $_setSignedInt32(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasSwordCount() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearSwordCount() => clearField(11);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

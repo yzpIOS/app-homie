@@ -481,3 +481,31 @@ final $typed_data.Uint8List pkRoomInfoDescriptor = $convert.base64Decode(
     'lSCHJvb21OYW1lEh0KCnJvb21faW1hZ2UYAyABKAlSCXJvb21JbWFnZRIbCglob3RfdmFsdWUY'
     'BCABKAVSCGhvdFZhbHVlEhsKCWlzX2ludml0ZRgFIAEoCFIIaXNJbnZpdGU=');
 
+@$core.Deprecated('Use pkRoleDefaultConfigurationDescriptor instead')
+const PkRoleDefaultConfiguration$json = {
+  '1': 'PkRoleDefaultConfiguration',
+  '2': [
+    {'1': 'role_radius', '3': 1, '4': 1, '5': 5, '10': 'roleRadius'},
+    {'1': 'speed', '3': 2, '4': 1, '5': 5, '10': 'speed'},
+    {'1': 'weapon_length', '3': 3, '4': 1, '5': 5, '10': 'weaponLength'},
+    {'1': 'weapon_speed', '3': 4, '4': 1, '5': 5, '10': 'weaponSpeed'},
+    {'1': 'max_weapon_num', '3': 5, '4': 1, '5': 5, '10': 'maxWeaponNum'},
+    {'1': 'blood', '3': 6, '4': 1, '5': 5, '10': 'blood'},
+    {'1': 'TotalBlood', '3': 7, '4': 1, '5': 5, '10': 'TotalBlood'},
+    {'1': 'Shield', '3': 8, '4': 1, '5': 5, '10': 'Shield'},
+    {'1': 'Attack', '3': 9, '4': 1, '5': 5, '10': 'Attack'},
+    {'1': 'countdown', '3': 10, '4': 1, '5': 5, '10': 'countdown'},
+    {'1': 'sword_count', '3': 11, '4': 1, '5': 5, '10': 'swordCount'},
+  ],
+};
+
+/// Descriptor for `PkRoleDefaultConfiguration`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pkRoleDefaultConfigurationDescriptor = $convert.base64Decode(
+    'ChpQa1JvbGVEZWZhdWx0Q29uZmlndXJhdGlvbhIfCgtyb2xlX3JhZGl1cxgBIAEoBVIKcm9sZV'
+    'JhZGl1cxIUCgVzcGVlZBgCIAEoBVIFc3BlZWQSIwoNd2VhcG9uX2xlbmd0aBgDIAEoBVIMd2Vh'
+    'cG9uTGVuZ3RoEiEKDHdlYXBvbl9zcGVlZBgEIAEoBVILd2VhcG9uU3BlZWQSJAoObWF4X3dlYX'
+    'Bvbl9udW0YBSABKAVSDG1heFdlYXBvbk51bRIUCgVibG9vZBgGIAEoBVIFYmxvb2QSHgoKVG90'
+    'YWxCbG9vZBgHIAEoBVIKVG90YWxCbG9vZBIWCgZTaGllbGQYCCABKAVSBlNoaWVsZBIWCgZBdH'
+    'RhY2sYCSABKAVSBkF0dGFjaxIcCgljb3VudGRvd24YCiABKAVSCWNvdW50ZG93bhIfCgtzd29y'
+    'ZF9jb3VudBgLIAEoBVIKc3dvcmRDb3VudA==');
+
