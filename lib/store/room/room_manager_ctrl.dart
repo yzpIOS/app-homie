@@ -298,7 +298,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   void putPkInfo(Map<dynamic, dynamic> roomInfo, int pkRoomId) {
     roomInfo["scene_id"] = 4;
-    roomInfo["pk_status"] = 1;
+    roomInfo["pk_status"] = 0;
     roomInfo["pkRoomId"] = pkRoomId;
   }
 
