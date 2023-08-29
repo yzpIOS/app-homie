@@ -268,6 +268,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   /// 开启socket连接
   void startClient(String host, int port) {
+    removeClientConnect(onClientConnect);
+    removeOnDataCmd(CMD.S_Role, onRoleResponse);
+    removeOnDataCmd(CMD.S_Err, onServerError);
+
     // 连接socket
     post(() async {
       // 重置状态
@@ -385,6 +389,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
+    removeOnDataCmd(CMD.S_Role, onRoleResponse);
+    removeOnDataCmd(CMD.S_Err, onServerError);
     removeClientConnect(onClientConnect);
   }
 
