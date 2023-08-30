@@ -98,7 +98,8 @@ class UpGradePage extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: () {
-
+              // 关闭弹窗
+              Get.back();
             },
             child: Container(
               height: 34,
@@ -123,7 +124,7 @@ class UpGradePage extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: () {
-
+              toAppMarket();
             },
             child: Container(
               height: 34,

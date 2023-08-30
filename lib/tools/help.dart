@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:android_intent_plus/android_intent.dart';
@@ -5,6 +6,7 @@ import 'package:app/3rd/sentry/sentry.dart';
 import 'package:app/exception.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 typedef WhenErr = Map<int?, ValueChanged<LogicException>>;
 
@@ -15,6 +17,24 @@ Future<void> goHome() {
   );
 
   return intent.launch();
+}
+
+
+void toAppMarket() async {
+  if (Platform.isAndroid) {
+    // var appName = "com.jm.homie.app";
+    // var targetURL = Uri.parse("market://details?id=$appName");
+    // await launchUrl(targetURL);
+    const intent = AndroidIntent(
+      action: "android.intent.action.VIEW",
+      data: "market://details?id=com.jm.homie.app",
+    );
+    intent.launch();
+  } else if (Platform.isIOS) {
+    var appID = "6450973472";
+    var targetURL = Uri.parse("itms-apps://itunes.apple.com/app/$appID");
+    await launchUrl(targetURL);
+  }
 }
 
 //<editor-fold desc="提交">
