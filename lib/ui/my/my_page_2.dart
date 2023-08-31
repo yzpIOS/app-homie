@@ -9,6 +9,7 @@ import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/giftwall/mine_giftwall_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/personal_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -231,7 +232,7 @@ class _HeaderView extends StatelessWidget {
       return Row(
         children: [
           OpacityButton(
-            onTap: () => Get.to(() => const PersonalPage()),
+            onTap: () => Get.to(() => MineGiftWallPage(uid: data.uid ?? "")),
             child: AvatarView(
               data.avatar,
               blur: data.avatarEx,

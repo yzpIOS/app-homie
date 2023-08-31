@@ -2,6 +2,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/giftwall/mine_giftwall_page.dart';
 import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +97,10 @@ class UserHomeWrap extends StatelessWidget {
 
 VoidCallback toUserPage(UID uid) {
   return () {
+    if(Env.isDebug) {
+      Get.to(() => MineGiftWallPage(uid: uid));
+      return;
+    }
     // if (OAuthCtrl.uid == uid) {
     //   Get.to(() => const MyPage());
     // } else {
