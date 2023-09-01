@@ -8,10 +8,12 @@ import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
+import 'package:app/ui/moment/common/giftwall_view.dart';
 import 'package:app/ui/moment/my/user_moment_view.dart';
 import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
+import 'package:app/ui/my/personal_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/image/image_gallery.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
-  static const double _expHeight = 250;
+  static const double _expHeight = 404;
 
   late final collapsedRx = RxBool(false);
   late final uid = widget.uid;
@@ -85,7 +87,17 @@ class _UserHomePageState extends State<UserHomePage> {
   }
 
   List<Widget>? _actions() {
-    if (isSelf) return null;
+    if (isSelf) {
+      return [
+        GestureDetector(
+          onTap: () {
+            Get.to(() => const PersonalPage());
+          },
+          child: Image.asset(IMG.format("mine_edit"), width: 50, height: 24,),
+        ),
+        const SizedBox(width: 14,),
+      ];
+    }
 
     return [
       Obx(
@@ -251,6 +263,12 @@ class _InfoView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $NumView(),
+        // 礼物墙
+        SizedBox(
+          height: 153,
+          child: GiftWallView(),
+        ),
+        Container(color: const Color(0xFFF5F5F5), height: 10,),
         Expanded(child: child),
       ],
     );
