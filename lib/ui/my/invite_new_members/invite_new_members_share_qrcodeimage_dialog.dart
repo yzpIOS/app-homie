@@ -1,10 +1,12 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/repaint_boundary_utils.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
+  //二维码
   final String qrcode;
 
   const InviteNewMembersShareQrcodeImageDialog._({
@@ -19,19 +21,20 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.center,
-      children: [
-        Positioned(
-          child: Image.asset(IMG.format('my/invite_new_members_share_bgimage'), scale: 3),
-        ),
-        Positioned(top: 15, left: 10, child: Image.asset(IMG.format('my/icon_home60'), width: 60, height: 60, scale: 3,),),
-        Positioned(top: 23, left: 80, child: XText(appInfo.appName, style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
-        const Positioned(top: 48, left: 80, child: XText('另一个世界，另一个你', style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
-        Positioned(right: 10, top: 15, child: OpacityButton(onTap: () {}, child: Image.asset(IMG.format('my/ic_white_close'), width: 24, height: 24, scale: 3,)),),
-        Positioned(bottom: 6, left: 10, right: 10, child: $BottomItemsView()),
-      ],
+    Widget child = RepaintBoundary(
+      key: boundaryKey,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          Positioned(child: Image.asset(IMG.format('my/invite_new_members_share_bgimage'), scale: 3),),
+          Positioned(top: 15, left: 10, child: Image.asset(IMG.format('my/icon_home60'), width: 60, height: 60, scale: 3,),),
+          Positioned(top: 23, left: 80, child: XText(appInfo.appName, style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
+          const Positioned(top: 48, left: 80, child: XText('另一个世界，另一个你', style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
+          Positioned(right: 10, top: 15, child: OpacityButton(onTap: () => Get.back(), child: Image.asset(IMG.format('my/ic_white_close'), width: 24, height: 24, scale: 3,)),),
+          Positioned(bottom: 6, left: 10, right: 10, child: $BottomItemsView()),
+        ],
+      ),
     );
 
     child = Column(
@@ -43,9 +46,7 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
           width: 160,
           height: 34,
           textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
-          onTap: () {
-
-          },
+          onTap: () => RepaintBoundaryUtils().savePhoto(),
         ),
       ],
     );
@@ -67,10 +68,9 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
   Widget $BottomItemsView() {
     return Row(
       children: [
-        Expanded(child: XText('我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~', maxLines: 3, style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
+        Expanded(child: XText('我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~', maxLines: 3, style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
         Spacing.w10,
-        Container(width: 68, height: 68, color: Colors.lightBlueAccent,),
-        // Image.network('ffffff', color: Colors.red, width: 68, height: 68,),
+        const NetImage('http', width: 68, height: 68,),
       ],
     );
   }

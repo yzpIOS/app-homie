@@ -1,8 +1,15 @@
+import 'dart:typed_data';
+
+import 'package:app/3rd/tencent/wx.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/invite_new_members/invite_new_members_share_qrcodeimage_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:wechat_kit/wechat_kit.dart';
+import 'package:image/image.dart' as image;
 
 class CommonShareSheet extends StatelessWidget {
   const CommonShareSheet({super.key});
@@ -13,12 +20,12 @@ class CommonShareSheet extends StatelessWidget {
       children: [
         Spacing.h20,
         const XText('分享到', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$SemiBold),),
-        _Action2(),
+        _$Actions(),
       ],
     );
   }
 
-  Widget _Action2() {
+  Widget _$Actions() {
     final items = [
       '微信好友',
       '朋友圈',
@@ -60,15 +67,22 @@ class CommonShareSheet extends StatelessWidget {
     );
   }
 
-  void onItemClick(String action) {
+  Future<void> onItemClick(String action) async {
     Get.back();
 
     switch (action) {
       case '微信好友':
-
-        break;
       case '朋友圈':
+        final ByteData assetIcon = await rootBundle.load('assets/img/my/icon_home60.webp');
+        final Uint8List iconBytes = assetIcon.buffer.asUint8List();
 
+        Wx.doShare(WxShareModel(
+          shareType: 1,
+          scene: (action == '微信好友') ? WechatScene.kSession : WechatScene.kTimeline,
+          webpageUrl: 'http://www.baidu.com',
+          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',
+          thumbData: iconBytes,
+        ));
         break;
       case 'QQ好友':
 
