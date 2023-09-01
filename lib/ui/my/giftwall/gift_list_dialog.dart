@@ -101,7 +101,7 @@ class GiftPannel extends StatelessWidget {
   }
 
   Widget _createGridView() {
-    double ratio = type == 0 ? 110.0 / 137.0 : 110.0 / 116.0;
+    double ratio = type == 0 ? (110.0 / 137.0) : (110.0 / 116.0);
     return SliverGrid(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
             if(type == 0) {
