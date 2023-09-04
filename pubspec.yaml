@@ -129,6 +129,10 @@ wechat_kit:
   universal_link: ""
   ios: no_pay
 
+tencent_kit:
+  app_id: ""
+  universal_link: ""
+
 alipay_kit:
   scheme: ""
   ios: "noutdid"

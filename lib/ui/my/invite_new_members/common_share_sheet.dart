@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:app/3rd/tencent/qq.dart';
 import 'package:app/3rd/tencent/wx.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
@@ -8,6 +9,7 @@ import 'package:app/ui/my/invite_new_members/invite_new_members_share_qrcodeimag
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tencent_kit/tencent_kit.dart';
 import 'package:wechat_kit/wechat_kit.dart';
 import 'package:image/image.dart' as image;
 
@@ -85,10 +87,13 @@ class CommonShareSheet extends StatelessWidget {
         ));
         break;
       case 'QQ好友':
-
-        break;
       case 'QQ空间':
-
+        Qq.doShare(QqShareModel(
+            shareType: 1,
+            scene:  (action == 'QQ好友') ? TencentScene.kScene_QQ : TencentScene.kScene_QZone,
+            webpageUrl: 'http://www.sina.com',
+            title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',)
+        );
         break;
       case '生成二维码':
         InviteNewMembersShareQrcodeImageDialog.show();
