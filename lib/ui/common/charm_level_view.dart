@@ -1,5 +1,6 @@
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/charm_level_page.dart';
 import 'package:app/widgets.dart';
 
 class CharmLevelView extends StatelessWidget {
@@ -27,6 +28,13 @@ class CharmLevelView extends StatelessWidget {
       height: height,
       child: FittedBox(fit: BoxFit.fitHeight, child: child),
     );
+
+    if (uid != null) {
+      child = OpacityButton(
+        onTap: () => Get.to(() => CharmLevelPage(uid: uid!)),
+        child: child,
+      );
+    }
 
     return child;
   }

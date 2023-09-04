@@ -148,10 +148,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
               color: gender == GenderEnum.male ? const Color(0xFF6A83FF) : const Color(0xFFFF6594),
             ),
           itemWrap($IdView(info)),
-          if (_micCtrl is RoomMicCtrl && _micCtrl.dataRx.values.any((it) => it.uid == uid))
-            CharmLevelView(level: info?.charmLevel, height: itemH)
-          else
-            WealthyLevelView(level: info?.level, height: itemH),
+          CharmLevelView(level: info?.charmLevel, height: itemH),
+          WealthyLevelView(level: info?.level, height: itemH),
         ].separator(Spacing.w4).toList(growable: false),
       ),
     );
