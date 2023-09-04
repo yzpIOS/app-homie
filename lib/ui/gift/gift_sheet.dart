@@ -7,6 +7,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
+import 'package:app/ui/gift/gift_blind_box_details_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/widgets.dart';
@@ -25,17 +26,12 @@ class GiftSheet extends StatelessWidget {
   static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
     final sheet = GiftSheet._(logic: logic, hasShowUnityView: hasShowUnityView);
 
-    const decor = ShapeDecoration(
-      shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-      color: Color(0xCC333333),
-    );
-
     // 刷新金币
     WalletCtrl.ins.doRefresh();
 
     return OrientationSheet.show(
       child: sheet,
-      decoration: decor,
+      decoration: null,
       direction: logic.layout.value1,
       constraints: logic.layout.value2,
     );
@@ -68,7 +64,7 @@ class GiftSheet extends StatelessWidget {
         ),
     };
 
-    return XSnapshotWidget(
+    Widget child = XSnapshotWidget(
       child: DefaultTabController(
         length: data.length,
         child: Column(
@@ -89,6 +85,28 @@ class GiftSheet extends StatelessWidget {
         ),
       ),
     );
+
+    child = Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        GestureDetector(
+            child: SvgView(SVG.$('room/mh_pic_fc'), width: 145,),
+            onTap: () => GiftBlindBoxDetailsSheet.show(),
+        ),
+        const Spacing(height: 6, flex: null),
+        Expanded(
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+              color: Color(0xCC333333),
+            ),
+            child: child,
+          ),
+        )
+      ],
+    );
+
+    return child;
   }
 
   Widget $TabView(Iterable<String> keys) {
