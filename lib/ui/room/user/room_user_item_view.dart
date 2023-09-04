@@ -1,7 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class RoomUserItemView extends StatelessWidget {
                 style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
               ),
               Spacing.h4,
-              LevelView(level: data.level, height: 13),
+              WealthyLevelView(level: data.level, height: 13),
             ],
           ),
         ),

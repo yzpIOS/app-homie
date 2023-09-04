@@ -2,7 +2,7 @@ import 'package:app/event/event.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:async/async.dart';
@@ -139,7 +139,7 @@ class _WelcomeView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            LevelView(level: it?.level, height: 10),
+            WealthyLevelView(level: it?.level, height: 10),
             Flexible(
               child: Padding(
                 padding: const Pad(horizontal: 3),

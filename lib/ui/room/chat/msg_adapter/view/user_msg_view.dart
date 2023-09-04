@@ -1,7 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/chat/msg_adapter/view/base_msg_view.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
@@ -55,7 +55,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
               onTap: showUserDialog,
               child: Padding(
                 padding: const Pad(right: 4),
-                child: LevelView(level: level, height: 10),
+                child: WealthyLevelView(level: level, height: 10),
               ),
             ),
           ),

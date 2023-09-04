@@ -1,5 +1,5 @@
 import 'package:app/common/theme.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,7 @@ class UserSearchItemView extends StatelessWidget {
       children: [
         Row(
           children: [
-            LevelView(level: data['level']),
+            WealthyLevelView(level: data['level']),
             Spacing.w4,
             Expanded(
               child: XText(

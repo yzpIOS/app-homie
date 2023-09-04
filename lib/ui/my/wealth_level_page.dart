@@ -5,21 +5,24 @@ import 'package:app/net/api.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-class LevelPage extends StatefulWidget {
+///
+/// 财富等级
+///
+class WealthLevelPage extends StatefulWidget {
   final UID uid;
 
-  const LevelPage({super.key, required this.uid});
+  const WealthLevelPage({super.key, required this.uid});
 
   @override
-  State<LevelPage> createState() => _LevelPageState();
+  State<WealthLevelPage> createState() => _LevelPageState();
 }
 
-class _LevelPageState extends State<LevelPage> {
+class _LevelPageState extends State<WealthLevelPage> {
   late final uid = widget.uid;
   late final dataRx = Rxn<Map>();
 
@@ -53,7 +56,7 @@ class _LevelPageState extends State<LevelPage> {
           ),
           const Text('经验等级是你在Homie开启Homie人生之后的成长属性，随着你的等级上升，你的等级标志会有相应的颜色变化'),
           Spacing.h10,
-          Image.asset(IMG.format('my/level/说明'), fit: BoxFit.fitWidth, scale: 2),
+          Image.asset(IMG.format('my/level/wealth_level'), fit: BoxFit.fitWidth, scale: 2),
           const Padding(
             padding: Pad(top: 20, bottom: 5),
             child: Text(
@@ -61,7 +64,7 @@ class _LevelPageState extends State<LevelPage> {
               style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$SemiBold),
             ),
           ),
-          const Text('在聊天室送礼等一切聊天室内的消费，都可以提升用户等级。累计消费越多，对应的等级越高'),
+          const Text('在直播间送礼等一切直播间内的消费，都可以提升用户等级。累计消费越多，对应的等级越高 '),
         ],
       ),
     );
@@ -113,7 +116,7 @@ class _LevelPageState extends State<LevelPage> {
 
       final $GrowthView = Row(
         children: [
-          LevelView(level: data['level']),
+          WealthyLevelView(level: data['level']),
           Spacing.w4,
           Text('经验值：$growthVal'),
           Spacing.exp,
@@ -162,7 +165,7 @@ class _LevelPageState extends State<LevelPage> {
         ),
         Positioned(
           top: 80,
-          child: LevelView(level: info?.level),
+          child: WealthyLevelView(level: info?.level),
         ),
         Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),
       ],

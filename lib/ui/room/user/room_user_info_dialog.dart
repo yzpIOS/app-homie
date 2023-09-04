@@ -12,7 +12,7 @@ import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/charm_level_view.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
@@ -151,7 +151,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
           if (_micCtrl is RoomMicCtrl && _micCtrl.dataRx.values.any((it) => it.uid == uid))
             CharmLevelView(level: info?.charmLevel, height: itemH)
           else
-            LevelView(level: info?.level, height: itemH),
+            WealthyLevelView(level: info?.level, height: itemH),
         ].separator(Spacing.w4).toList(growable: false),
       ),
     );

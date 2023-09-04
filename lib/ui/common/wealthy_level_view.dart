@@ -2,14 +2,14 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 
-import 'package:app/ui/my/level_page.dart';
+import 'package:app/ui/my/wealth_level_page.dart';
 
-class LevelView extends StatelessWidget {
+class WealthyLevelView extends StatelessWidget {
   final UID? uid;
   final String? level;
   final double height;
 
-  const LevelView({super.key, this.level, this.uid, this.height = 17});
+  const WealthyLevelView({super.key, this.level, this.uid, this.height = 17});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class LevelView extends StatelessWidget {
 
     if (uid != null) {
       child = OpacityButton(
-        onTap: () => Get.to(() => LevelPage(uid: uid!)),
+        onTap: () => Get.to(() => WealthLevelPage(uid: uid!)),
         child: child,
       );
     }

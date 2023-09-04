@@ -1,6 +1,6 @@
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class UidView extends StatelessWidget {
             onTap: () => copyTxt(account),
           ),
         ],
-        if (level != null) LevelView(level: level!, height: 17, uid: uid),
+        if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
       ].separator(Spacing.w2).toList(growable: false),
     );
   }
