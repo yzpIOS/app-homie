@@ -196,6 +196,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if(isClosed || _isUnityInitSuccess == false || tryTimes >= 100) {
       return;
     }
+    // 重新进入等待
+    if(_sendSockComplete.isCompleted) {
+      _sendSockComplete = Completer();
+    }
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
     SocketCtrl.ins.updateUniqueId();
@@ -385,8 +389,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   ///
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
     print("aa");
-    // 等待socket连接成功才加载场景
-    await SocketCtrl.ins.isCConnect();
+    // 登录成功后才会连接上socket, 等待socket连接成功才加载场景
+    if(OAuthCtrl.isLogin) {
+      await SocketCtrl.ins.isCConnect();
+    }
     print("aa");
     // 加载场景
     return _loadScene(

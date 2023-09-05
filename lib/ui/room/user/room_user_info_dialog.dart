@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/gender_enum.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
@@ -66,26 +67,42 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   @override
   Widget build(BuildContext context) {
     Widget child = SizedBox(
-      height: 240,
+      height: 275,
       child: Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
           if (!isSelf) Positioned(top: 0, left: 0, child: $ReportView()),
           Positioned(top: -30, child: $Avatar()),
-          Positioned(
-            top: 60,
-            left: 20,
-            right: 20,
-            bottom: 66 + 14,
-            child: UserInfoCtrl.use(
-              uid,
-              builder: (it) => Column(
-                children: [$NickView(it), Spacing.h4, $LabelView(it), Spacing.h12, $DescView()],
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 60,),
+              UserInfoCtrl.use(
+                uid,
+                builder: (it) => Column(
+                  children: [$NickView(it), Spacing.h4, $LabelView(it), Spacing.h8, $DescView()],
+                ),
               ),
-            ),
+
+              // 礼物墙，装饰墙，魅力等级
+              SizedBox(height: 10,),
+              createLevel(),
+
+              const Expanded(child: SizedBox()),
+              // 查看其它用户的信息；私聊等按钮
+              if (!isSelf)
+                $ActionView(),
+
+              // 查看自己的信息：下麦和送礼
+              if (isSelf)
+                selfAction(),
+
+              const SizedBox(height: 20,),
+            ],
           ),
-          if (!isSelf) Positioned(left: 20, right: 20, bottom: 20, child: $ActionView()),
         ],
       ),
     );
@@ -204,6 +221,91 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     });
   }
 
+  Widget createLevel() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        // 礼物墙
+        Stack(
+          children: [
+            Image.asset(IMG.format("room/room_gift_entry"), width: 100, height: 46,),
+            const Positioned(
+              top: 5,
+              left: 5,
+              child: Text(
+                "礼物墙",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 24,
+              left: 5,
+              child: Text(
+                "0/100",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            )
+          ],
+        ),
+
+        // 装饰墙
+        const SizedBox(width: 10,),
+        Stack(
+          children: [
+            Image.asset(IMG.format("room/room_decorate_entry"), width: 100, height: 46,),
+            const Positioned(
+              top: 5,
+              left: 5,
+              child: Text(
+                "装饰墙",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+            const Positioned(
+              top: 24,
+              left: 5,
+              child: Text(
+                "0/100",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            )
+          ],
+        ),
+
+        // 魅力
+        const SizedBox(width: 10,),
+        Stack(
+          children: [
+            Image.asset(IMG.format("room/room_charm_entry"), width: 100, height: 46,),
+            const Positioned(
+              top: 5,
+              left: 5,
+              child: Text(
+                "魅力等级",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget $ActionView() {
     List<Widget> $BtnWrap({required List<Widget> children}) {
       return children //
@@ -235,6 +337,20 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     );
   }
 
+  Widget selfAction() {
+    return Row(
+      children: [
+        const Expanded(child: SizedBox()),
+        // 下麦
+        $Btn2('下麦'),
+        const SizedBox(width: 10,),
+        $Btn2('送礼物'),
+        // 自己给自己送物
+        const Expanded(child: SizedBox()),
+      ],
+    );
+  }
+
   Widget $Btn1(String title) {
     return XOutlinedBtn(
       label: title,
@@ -252,7 +368,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     );
   }
 
-  void onItemClick(String action) {
+  void onItemClick(String action) async {
     final ctrl = sceneCtrl;
 
     switch (action) {
@@ -302,6 +418,37 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
                 .onNotNull((val) => val.value());
         }
 
+        break;
+      case '下播':
+        if(Get.find<RoomManagerCtrl>().sceneCtrl2 == null) {
+          await RoomManagerCtrl.ins.doCloseState();
+          Get.back();
+          return;
+        }
+        // 关闭函数
+        Function closeFunc;
+        // 房间
+        RoomCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl as RoomCtrl?;
+        if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
+          // 不是公会，并且用户所在的房间是主人房
+          closeFunc = () async {
+            // 请求关闭
+            await Api.Room.close();
+            // 关闭房间
+            await Get.find<RoomManagerCtrl>().doCloseState();
+          };
+        } else {
+          // 房间manager
+          closeFunc = Get.find<RoomManagerCtrl>().doCloseState;
+        }
+        simpleSub(
+          closeFunc.call(),
+          msg: '操作成功',
+          whenErr: doBackWhenErr,
+          callback: () {
+            Get.back();
+          },
+        );
         break;
     }
   }

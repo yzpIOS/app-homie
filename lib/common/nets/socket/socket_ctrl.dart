@@ -95,10 +95,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
     // 断开连接时重置socket状态
     share.addDisconnect(() {
-      if(!_socketStatus.isCompleted) {
-        _socketStatus.completeError(TimeoutException("Socket连接超时"));
+      if(_socketStatus.isCompleted) {
+        _socketStatus = Completer();
+        return;
       }
-      _socketStatus = Completer();
     });
   }
 
