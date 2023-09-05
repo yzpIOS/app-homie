@@ -386,8 +386,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   ///
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
     print("aa");
-    // 等待socket连接成功才加载场景
-    await SocketCtrl.ins.isCConnect();
+    // 登录成功后才会连接上socket, 等待socket连接成功才加载场景
+    if(OAuthCtrl.isLogin) {
+      await SocketCtrl.ins.isCConnect();
+    }
     print("aa");
     // 加载场景
     return _loadScene(
