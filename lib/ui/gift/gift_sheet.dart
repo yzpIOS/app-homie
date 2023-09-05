@@ -111,7 +111,7 @@ class GiftSheet extends StatelessWidget {
 
   Widget $TabView(Iterable<String> keys) {
     return Padding(
-      padding: const Pad(horizontal: 10),
+      padding: const Pad(left: 10),
       child: Row(
         children: [
           TabBar(

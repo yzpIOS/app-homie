@@ -7,6 +7,7 @@ import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+/// 盲盒
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
   const GiftBlindBoxDetailsSheet._({super.key});
 
@@ -44,7 +45,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return const _BlindBoxRankingListDataView();
+          return const _BlindBoxRankingListMainDataView();
         },
       ),
     };
@@ -54,7 +55,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         length: data.length,
         child: Column(
           children: [
-            SizedBox(height: 62, child: $TabView(data.keys)),
+            SizedBox(height: 62, child: $TabView(data.keys, context)),
             Expanded(
               child: XFrameWidget(
                 child: $PageView(data.values),
@@ -68,20 +69,24 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
     return child;
   }
 
-  Widget $TabView(Iterable<String> keys) {
+  Widget $TabView(Iterable<String> keys, BuildContext context) {
     return Padding(
       padding: const Pad(left: 40),
       child: Row(
         children: [
-          Expanded(child: TabBar(
-            // isScrollable: true,
-            indicator: BoxDecoration(borderRadius: BorderRadius.circular(20.0), color: const Color(0xFFFCF6FF),),
-            labelColor: AppPalette.primary,
-            unselectedLabelColor: AppPalette.c9,
-            labelStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
-            unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: fw$Regular),
-            tabs: keys.map((it) => Tab(text: it, height: 32)).toList(growable: false),
-          ),),
+          Expanded(
+            child: ColoredBox(
+              color: Theme.of(context).canvasColor,
+              child: TabBar(
+                indicator: BoxDecoration(borderRadius: BorderRadius.circular(20.0), color: const Color(0xFFFCF6FF),),
+                labelColor: AppPalette.primary,
+                unselectedLabelColor: AppPalette.c9,
+                labelStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
+                unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: fw$Regular),
+                tabs: keys.map((it) => Tab(text: it, height: 32)).toList(growable: false),
+              ),
+            ),
+          ),
           const Spacing(width: 10, flex: null,),
           const CloseButton(color: Colors.black),
         ],
@@ -104,6 +109,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         children: [
           const Text.rich(
             TextSpan(
+              style: TextStyle(fontSize: 12, color: Colors.black),
               children: [
                 TextSpan(
                   text: '一、玩法说明\n',
@@ -116,14 +122,12 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
                 TextSpan(text: '5.平台内其他榜单与数值加分按照盲盒实际开出的礼物价值进行积分计算。\n'),
                 TextSpan(text: '6.本活动与Apple inc无关\n\n'),
                 TextSpan(
-                  text: '二、玩法奖励',
+                  text: '二、玩法奖励\n',
                   style: TextStyle(fontSize: 14, fontWeight: fw$Medium),
                 ),
-                TextSpan(text: '\n'),
                 TextSpan(text: '幸运礼物及概率如下'),
               ],
             ),
-            style: TextStyle(fontSize: 12, color: Colors.black),
           ),
           Spacing.h10,
           Image.asset(IMG.format('activity/说明'), scale: 2, fit: BoxFit.fitWidth),
@@ -234,22 +238,22 @@ class _BlindBoxRecordingDataView extends SimpleDataView<Map> {
   }
 }
 
-class _BlindBoxRankingListDataView extends StatefulWidget {
-  const _BlindBoxRankingListDataView({super.key});
+class _BlindBoxRankingListMainDataView extends StatefulWidget {
+  const _BlindBoxRankingListMainDataView();
 
   @override
-  State<_BlindBoxRankingListDataView> createState() => _BlindBoxRankingListDataViewState();
+  State<_BlindBoxRankingListMainDataView> createState() => _BlindBoxRankingListMainDataViewState();
 }
 
-class _BlindBoxRankingListDataViewState extends State<_BlindBoxRankingListDataView> with TickerProviderStateMixin {
+class _BlindBoxRankingListMainDataViewState extends State<_BlindBoxRankingListMainDataView> with TickerProviderStateMixin {
   late final ctrl = TabController(
     length: tabs.length,
     vsync: this,
   );
 
   late final tabs = {
-    '今日榜': _DataView(Api.Lottery.today),
-    '昨日榜': _DataView(Api.Lottery.yesterday),
+    '今日榜': _SubListDataView(Api.Lottery.today),
+    '昨日榜': _SubListDataView(Api.Lottery.yesterday),
   };
 
   @override
@@ -266,7 +270,11 @@ class _BlindBoxRankingListDataViewState extends State<_BlindBoxRankingListDataVi
           controller: ctrl,
           isScrollable: true,
           indicatorSize: TabBarIndicatorSize.label,
-          indicatorPadding:  const Pad(bottom: 5),
+          indicator: UnderlineTabIndicator(
+            borderRadius: BorderRadius.circular(2),
+            borderSide: const BorderSide(width: 1.5, color: AppPalette.primary),
+          ),
+          indicatorPadding:  const Pad(bottom: 6),
           labelPadding: const Pad(horizontal: 45),
           labelStyle: const TextStyle(fontSize: 14, fontWeight: fw$SemiBold),
           unselectedLabelStyle: const TextStyle(fontSize: 14, fontWeight: fw$Regular),
@@ -283,10 +291,10 @@ class _BlindBoxRankingListDataViewState extends State<_BlindBoxRankingListDataVi
   }
 }
 
-class _DataView extends SimpleDataView<Map> {
+class _SubListDataView extends SimpleDataView<Map> {
   final Future Function() api;
 
-  _DataView(this.api);
+  _SubListDataView(this.api);
 
   @override
   BaseConfig get config {
@@ -309,16 +317,16 @@ class _DataView extends SimpleDataView<Map> {
       child: Row(
         children: [
           index < 3
-              ? SvgView(SVG.$('top/$index'), width: 28, height: 28)
-              : Box(
-            width: 28,
-            height: 28,
-            alignment: Alignment.center,
-            child: Text(
-              '${index + 1}',
-              style: const TextStyle(fontSize: 12, color: Colors.black),
+            ? SvgView(SVG.$('top/$index'), width: 28, height: 28)
+            : Box(
+                width: 28,
+                height: 28,
+                alignment: Alignment.center,
+                child: Text(
+                  '${index + 1}',
+                  style: const TextStyle(fontSize: 12, color: Colors.black),
+                ),
             ),
-          ),
           Spacing.w10,
           AsyncAvatar(uid: uid, size: 32),
           Spacing.w10,
