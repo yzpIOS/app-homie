@@ -94,7 +94,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
               const Expanded(child: SizedBox()),
               // 查看其它用户的信息；私聊等按钮
               if (!isSelf)
-                $ActionView(),
+                $ActionView().horizonMargin(left: 20, right: 20),
 
               // 查看自己的信息：下麦和送礼
               if (isSelf)
@@ -222,13 +222,16 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   }
 
   Widget createLevel() {
+    var itemHeight = (AppSize.width - 28 * 2 - 10 * 2) / 3.0;
+    var itemWidth = (itemHeight / 100.0) * 46;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const SizedBox(width: 28,),
         // 礼物墙
         Stack(
           children: [
-            Image.asset(IMG.format("room/room_gift_entry"), width: 100, height: 46,),
+            Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
             const Positioned(
               top: 5,
               left: 5,
@@ -258,7 +261,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         const SizedBox(width: 10,),
         Stack(
           children: [
-            Image.asset(IMG.format("room/room_decorate_entry"), width: 100, height: 46,),
+            Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
             const Positioned(
               top: 5,
               left: 5,
@@ -288,7 +291,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         const SizedBox(width: 10,),
         Stack(
           children: [
-            Image.asset(IMG.format("room/room_charm_entry"), width: 100, height: 46,),
+            Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
             const Positioned(
               top: 5,
               left: 5,
@@ -302,6 +305,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
             ),
           ],
         ),
+        const SizedBox(width: 28,),
       ],
     );
   }
@@ -315,7 +319,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     }
 
     return SizedBox(
-      height: 32,
+      height: 43,
       child: Obx(() {
         final isFollow = dataRx['is_follow'];
 
@@ -342,9 +346,9 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       children: [
         const Expanded(child: SizedBox()),
         // 下麦
-        $Btn2('下麦'),
+        SizedBox(width: 80, height: 34, child: $Btn2('下麦'),),
         const SizedBox(width: 10,),
-        $Btn2('送礼物'),
+        SizedBox(width: 80, height: 34, child: $Btn2('送礼物'),),
         // 自己给自己送物
         const Expanded(child: SizedBox()),
       ],
@@ -419,36 +423,11 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         }
 
         break;
-      case '下播':
-        if(Get.find<RoomManagerCtrl>().sceneCtrl2 == null) {
-          await RoomManagerCtrl.ins.doCloseState();
-          Get.back();
-          return;
+      case '下麦':
+        try {
+          Api.Room.micDown(uid: OAuthCtrl.nUid);
+        } catch(e, s) {
         }
-        // 关闭函数
-        Function closeFunc;
-        // 房间
-        RoomCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl as RoomCtrl?;
-        if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
-          // 不是公会，并且用户所在的房间是主人房
-          closeFunc = () async {
-            // 请求关闭
-            await Api.Room.close();
-            // 关闭房间
-            await Get.find<RoomManagerCtrl>().doCloseState();
-          };
-        } else {
-          // 房间manager
-          closeFunc = Get.find<RoomManagerCtrl>().doCloseState;
-        }
-        simpleSub(
-          closeFunc.call(),
-          msg: '操作成功',
-          whenErr: doBackWhenErr,
-          callback: () {
-            Get.back();
-          },
-        );
         break;
     }
   }

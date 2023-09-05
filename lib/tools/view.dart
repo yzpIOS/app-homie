@@ -109,6 +109,13 @@ extension XWidget on Widget {
   RouteSettings toRouteSettings() {
     return RouteSettings(name: '$runtimeType');
   }
+
+  Widget horizonMargin({double left = 0, double right = 0}) {
+    return Container(
+      margin: EdgeInsets.only(left: left, right: right),
+      child: this,
+    );
+  }
 }
 
 extension XDimension on num {

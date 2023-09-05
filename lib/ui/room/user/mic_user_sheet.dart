@@ -79,7 +79,8 @@ abstract class MicUserSheet {
         },
       if (isSelf) //
         '下麦旁听': () {
-          sceneMicCtrl<RoomMicCtrl>().micDow(alert: '确定下麦', no: no);
+          // sceneMicCtrl<RoomMicCtrl>().micDow(alert: '确定下麦', no: no);
+          RoomUserInfoDialog.show(uid: posUid);
         },
     };
 
