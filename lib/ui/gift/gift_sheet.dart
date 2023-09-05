@@ -90,7 +90,7 @@ class GiftSheet extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         GestureDetector(
-            child: SvgView(SVG.$('room/mh_pic_fc'), width: 145,),
+            child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145,),
             onTap: () => GiftBlindBoxDetailsSheet.show(),
         ),
         const Spacing(height: 6, flex: null),

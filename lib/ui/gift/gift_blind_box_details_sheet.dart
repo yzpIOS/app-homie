@@ -1,17 +1,11 @@
 import 'package:app/common/theme.dart';
-import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
-import 'package:app/store/gift_ctrl.dart';
-import 'package:app/store/room/my_gift_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
-import 'package:app/widgets/sheet/bottom_sheet.dart';
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
   const GiftBlindBoxDetailsSheet._({super.key});
@@ -22,6 +16,10 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
     return OrientationSheet.show(
       child: sheet,
       direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+      constraints: BoxConstraints.tightFor(
+        width: AppSize.width,
+        height: 313 + AppSize.safeBottom,
+      ),
     );
   }
 
@@ -39,14 +37,14 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return _DataBlindBoxRecordingView();
+          return _BlindBoxRecordingDataView();
         },
       ),
       '排行榜': DelayView(
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return Container(color: Colors.blue,);
+          return const _BlindBoxRankingListDataView();
         },
       ),
     };
@@ -72,21 +70,19 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
 
   Widget $TabView(Iterable<String> keys) {
     return Padding(
-      padding: const Pad(left: 50),
+      padding: const Pad(left: 40),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(child: TabBar(
             // isScrollable: true,
-            indicator: BoxDecoration(borderRadius: BorderRadius.circular(22.0), color: const Color(0xFFFCF6FF),),
+            indicator: BoxDecoration(borderRadius: BorderRadius.circular(20.0), color: const Color(0xFFFCF6FF),),
             labelColor: AppPalette.primary,
             unselectedLabelColor: AppPalette.c9,
             labelStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
             unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: fw$Regular),
             tabs: keys.map((it) => Tab(text: it, height: 32)).toList(growable: false),
           ),),
-          // Spacing.exp,
+          const Spacing(width: 10, flex: null,),
           const CloseButton(color: Colors.black),
         ],
       ),
@@ -137,7 +133,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
   }
 }
 
-class _DataBlindBoxRecordingView extends SimpleDataView<Map> {
+class _BlindBoxRecordingDataView extends SimpleDataView<Map> {
   @override
   BaseConfig get config {
     return GridConfig(
@@ -235,5 +231,161 @@ class _DataBlindBoxRecordingView extends SimpleDataView<Map> {
     );
 
     return child;
+  }
+}
+
+class _BlindBoxRankingListDataView extends StatefulWidget {
+  const _BlindBoxRankingListDataView({super.key});
+
+  @override
+  State<_BlindBoxRankingListDataView> createState() => _BlindBoxRankingListDataViewState();
+}
+
+class _BlindBoxRankingListDataViewState extends State<_BlindBoxRankingListDataView> with TickerProviderStateMixin {
+  late final ctrl = TabController(
+    length: tabs.length,
+    vsync: this,
+  );
+
+  late final tabs = {
+    '今日榜': _DataView(Api.Lottery.today),
+    '昨日榜': _DataView(Api.Lottery.yesterday),
+  };
+
+  @override
+  void dispose() {
+    ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: ctrl,
+          isScrollable: true,
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorPadding:  const Pad(bottom: 5),
+          labelPadding: const Pad(horizontal: 45),
+          labelStyle: const TextStyle(fontSize: 14, fontWeight: fw$SemiBold),
+          unselectedLabelStyle: const TextStyle(fontSize: 14, fontWeight: fw$Regular),
+          tabs: tabs.keys.map((it) => Tab(height: 32, text: it)).toList(growable: false),
+        ),
+        Expanded(
+          child: TabBarView(
+            controller: ctrl,
+            children: tabs.values.toList(growable: false),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DataView extends SimpleDataView<Map> {
+  final Future Function() api;
+
+  _DataView(this.api);
+
+  @override
+  BaseConfig get config {
+    return ListConfig(
+      padding: Pad(top: 8, bottom: AppSize.safeBottom),
+      divider: const Divider(indent: 10, endIndent: 10),
+    );
+  }
+
+  @override
+  Future fetch() => api();
+
+  @override
+  Widget itemBuilder(BuildContext context, Map item, int index) {
+    final uid = item['uid'];
+
+    return Box(
+      padding: const Pad(horizontal: 10),
+      height: 52,
+      child: Row(
+        children: [
+          index < 3
+              ? SvgView(SVG.$('top/$index'), width: 28, height: 28)
+              : Box(
+            width: 28,
+            height: 28,
+            alignment: Alignment.center,
+            child: Text(
+              '${index + 1}',
+              style: const TextStyle(fontSize: 12, color: Colors.black),
+            ),
+          ),
+          Spacing.w10,
+          AsyncAvatar(uid: uid, size: 32),
+          Spacing.w10,
+          Expanded(
+            child: UserInfoCtrl.use(
+              uid,
+              builder: (it) => XText(
+                it?.showName() ?? '',
+                style: const TextStyle(fontSize: 12, color: Colors.black),
+              ),
+            ),
+          ),
+          Spacing.w10,
+          $GiftView(item['items']),
+        ],
+      ),
+    );
+  }
+
+  Widget $GiftView(Iterable items) {
+    const size = 32.0;
+    const space = 10.0;
+    const count = 3;
+
+    Widget itemBuilder(data) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(
+            width: size,
+            height: size,
+            decoration: const BoxDecoration(color: Color(0xFFF5F5F5), shape: BoxShape.circle),
+            child: Padding(
+              padding: const Pad(all: 6),
+              child: NetImage(data['image'], fit: BoxFit.cover),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            height: 12,
+            child: IntrinsicWidth(
+              child: Container(
+                constraints: const BoxConstraints(minWidth: 12, maxWidth: 24),
+                decoration: const BoxDecoration(color: Color(0xFF2CDFB9), shape: BoxShape.circle),
+                alignment: Alignment.center,
+                child: XText(
+                  '${data['count']}',
+                  textHeightBehavior: const TextHeightBehavior(
+                    applyHeightToFirstAscent: false,
+                    applyHeightToLastDescent: false,
+                  ),
+                  style: const TextStyle(fontSize: 8, color: Colors.white, fontWeight: fw$Medium, height: 1),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+
+    return SizedBox(
+      width: size * count + space * (count - 1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: items.take(count).map(itemBuilder).separator(Spacing.w10).toList(growable: false),
+      ),
+    );
   }
 }
