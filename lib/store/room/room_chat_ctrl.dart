@@ -19,6 +19,17 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
+    // dataRx.add(
+    //   SystemMsgView(
+    //     BaseMsgData<String>(data: "欢迎来到派对房，官方禁止末成年人充值消费。如存在用户在派对房内以陪玩、返利等方式诱导进行礼物赠送、私下交易，请谨慎判断，以防人身或财产 损失。官方提倡绿色健康游戏，严禁色情低俗、赌博、 谩骂、买卖金币/道具等违规行为，并对派对房进行24小时巡查。如发现违规行为，请及时举报。请您遵守派对房管理规范"),
+    //   ),
+    // );
+    // dataRx.add(
+    //   SystemMsgView(
+    //     BaseMsgData<String>(data: "该房间为高音质房间，房问音质提升，同时消耗的流量将增加。"),
+    //   ),
+    // );
+
     on<MsgTxtEvent>((data) {
       final uid = data.uid ?? "";
       final txt = data.data?.message ?? "";
