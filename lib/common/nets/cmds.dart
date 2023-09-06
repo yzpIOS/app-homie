@@ -123,4 +123,5 @@ class CMD {
   static const S_PKInviteResult=20004;//S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】
   static const C_PKRoomList = 20005; // PK房间列表
   static const S_PKRoomList = 20006; // PK房间列表反馈结果
+  static const S_PKContinue=20052;//一轮游戏结束后，两个C端选择是否继续下一轮的结果，都同意则C跳转为准备状态，否则都退出场景【Summary状态结束，可能Start状态】
 }

@@ -89,6 +89,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     // 注册S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
     SocketCtrl.ins.onDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
+
+    // 注册一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
+    SocketCtrl.ins.onDataCmd(CMD.S_PKContinue, onPKContinue);
   }
 
   // 被邀请的F端，邀请对战信息监听回调
@@ -129,6 +132,18 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
   }
 
+  // 一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
+  void onPKContinue(int cmd, S_PKContinue? data) {
+    if (data == null) {
+      return;
+    }
+
+    int isContinue = data.isContinue;
+    if (isContinue == 2) {
+      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: null, callCloseRoom: true);
+    }
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -140,6 +155,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     // 移除S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
+
+    // 移除一轮游戏结束后，两个C端选择是否继续下一轮的结果
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKContinue, onPKContinue);
   }
 
   void _show({
