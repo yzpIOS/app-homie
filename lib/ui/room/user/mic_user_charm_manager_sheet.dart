@@ -9,21 +9,22 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 ///
-/// 房间管理
+/// https://www.tapd.cn/68741847/prong/stories/view/1168741847001000563
+/// 麦上魅力值管理(2：魅力计数器)
 ///
-class MicUserManagerSheet extends StatefulWidget {
+class MicUserCharmManagerSheet extends StatefulWidget {
   // 用户uid
   final UID uid;
   // 场景类
   SceneCtrl? sceneCtrl = null;
 
-  MicUserManagerSheet._({required this.uid, this.sceneCtrl = null});
+  MicUserCharmManagerSheet._({required this.uid, this.sceneCtrl = null});
 
   static void show({required UID uid}) {
     // final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     OrientationSheet.show(
-      child: MicUserManagerSheet._(uid: uid, sceneCtrl: null),
+      child: MicUserCharmManagerSheet._(uid: uid, sceneCtrl: null),
       decoration: const ShapeDecoration(
         shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
         color: Color(0xCC333333),
@@ -33,10 +34,10 @@ class MicUserManagerSheet extends StatefulWidget {
   }
 
   @override
-  State<MicUserManagerSheet> createState() => _UserManagerSheetState();
+  State<MicUserCharmManagerSheet> createState() => _UserManagerSheetState();
 }
 
-class _UserManagerSheetState extends State<MicUserManagerSheet> {
+class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
   List<String> selectedIds = <String>[];
 
