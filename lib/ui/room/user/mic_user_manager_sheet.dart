@@ -38,6 +38,8 @@ class MicUserManagerSheet extends StatefulWidget {
 
 class _UserManagerSheetState extends State<MicUserManagerSheet> {
 
+  List<String> selectedIds = <String>[];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -47,106 +49,174 @@ class _UserManagerSheetState extends State<MicUserManagerSheet> {
         child: Column(
           children: [
             // 房间管理， 踢下麦
-            SizedBox(
-              height: 52,
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Text(
-                      "房间管理",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(width: 60, height: 24, child: $Btn2('清零'),),
-                ],
-              ),
-            ),
+            createTitle(),
 
             // 划线
             Divider(height: 0.5, color: const Color(0xFFCCCCCC).withAlpha(125),),
 
             // 房主,管理员
             // 人物列表
-            Expanded(
-              child: CustomScrollView(
-                slivers: [
-                  const SizedBox(height: 16,).toSliver(),
-                  createItem("11").toSliver(),
-                  SliverGrid(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return createItem(index.toString());
-                      }, childCount: 30),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15,
-                      childAspectRatio: 0.8
-                  ))
-                ],
-              ),
-            )
+            createUserList(),
           ],
         ),
       ),
     );
   }
 
-  Widget createItem(String uid) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        // 头像
-        SizedBox(
-          width: 55,
-          height: 55,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(1000),
-                    border: Border.all(color: Color(0xFFC567FF), width: 2)
-                ),
-                child: AsyncAvatar(uid: uid, size: 80),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(IMG.format("check"), width: 20, height: 20,),
-              )
-            ],
-          ),
-        ),
-
-        // 名称
-        const SizedBox(height: 5,),
-        Text(
-          "小星星",
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 14
-          ),
-        ),
-
-        // 热度
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(IMG.format("icon_hot"), width: 20, height: 20,),
-            Text(
-              "234",
+  ///
+  /// 创建标题
+  ///
+  Widget createTitle() {
+    return SizedBox(
+      height: 52,
+      child: Row(
+        children: [
+          const Expanded(
+            child: Text(
+              "房间管理",
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 16,
               ),
             ),
-          ],
-        )
-      ],
+          ),
+
+          // 全选按钮
+          GestureDetector(
+            onTap: () {
+              selectedIds.clear();
+              for(int index = 0; index < 20; index ++) {
+                selectedIds.add(index.toString());
+              }
+              setState(() { });
+            },
+            behavior: HitTestBehavior.opaque,
+            child: const Text(
+              "全选",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          const SizedBox(width: 5,),
+
+          // 清零
+          GestureDetector(
+            onTap: () {
+
+            },
+            behavior: HitTestBehavior.opaque,
+            child: SizedBox(width: 60, height: 24, child: $Btn2('清零'),),
+          ),
+        ],
+      ),
+    );
+  }
+
+  ///
+  /// 用户列表
+  ///
+  Widget createUserList() {
+    return Expanded(
+      child: CustomScrollView(
+        slivers: [
+          const SizedBox(height: 16,).toSliver(),
+          createItem("11").toSliver(),
+          SliverGrid(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return createItem(index.toString());
+              }, childCount: 30),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 0.8
+              ))
+        ],
+      ),
+    );
+  }
+
+  Widget createItem(String uid) {
+    // 选中时的圆圈
+    Decoration? decoration = null;
+    if(selectedIds.contains(uid)) {
+      decoration = BoxDecoration(
+          borderRadius: BorderRadius.circular(1000),
+          border: Border.all(color: Color(0xFFC567FF), width: 2)
+      );
+    }
+
+    return GestureDetector(
+      onTap: () {
+        if(selectedIds.contains(uid)) {
+          selectedIds.remove(uid);
+        } else {
+          selectedIds.add(uid);
+        }
+        setState(() { });
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // 头像
+          SizedBox(
+            width: 55,
+            height: 55,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: decoration,
+                  child: AsyncAvatar(uid: uid, size: 80, onTap: Some(() {
+                    if(selectedIds.contains(uid)) {
+                      selectedIds.remove(uid);
+                    } else {
+                      selectedIds.add(uid);
+                    }
+                    setState(() { });
+                  })),
+                ),
+
+                // 选中的状态
+                if(selectedIds.contains(uid))
+                  Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(IMG.format("check"), width: 20, height: 20,),
+                  )
+              ],
+            ),
+          ),
+
+          // 名称
+          const SizedBox(height: 5,),
+          const Text(
+            "小星星",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 14
+            ),
+          ),
+
+          // 热度
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(IMG.format("icon_hot"), width: 20, height: 20,),
+              Text(
+                "234",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 
