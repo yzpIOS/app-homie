@@ -43,6 +43,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
 
     final items = [
       if (isOwner) '管理员',
+      if(isOwner) '下麦',
       if (isManager) ...[
         '黑名单',
         '清零',

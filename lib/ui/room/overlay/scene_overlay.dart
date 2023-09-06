@@ -10,6 +10,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/moment/widgets/reply_view.dart';
 import 'package:app/ui/room/overlay/conv_dialog.dart';
 import 'package:app/ui/room/overlay/room_anime_dialog.dart';
+import 'package:app/ui/room/user/mic_user_manager_sheet.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -80,6 +81,9 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         } catch(e, s) {
         }
         Get.back();
+        break;
+      case '下麦':
+        MicUserManagerSheet.show(uid: "");
         break;
       default:
         assert(false, '未处理的业务 -> $action');
