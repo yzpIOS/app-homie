@@ -200,6 +200,15 @@ class GiftSend2Room extends GiftSendLogic {
       );
 
       Widget itemBuilder(GiftSend2RoomEntity item) {
+        // 分隔线
+        if(item.userType == GiftSend2RoomEntity.DIVIDE_TYPE) {
+          return Container(
+            color: Colors.white,
+            width: 1,
+            height: 20,
+          );
+        }
+
         final onTap = Some(() {
           if (!userRx.remove(item)) userRx.add(item);
         });
@@ -245,6 +254,18 @@ class GiftSend2Room extends GiftSendLogic {
                       ),
                     ),
                   ),
+
+                if(item.userType == 1)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(IMG.format("room/room_owner"), width: 24,height: 11,),
+                  ),
+
+                if(item.userType == 2)
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Image.asset(IMG.format("room/room_direct"), width: 24,height: 11,),
+                  )
               ],
             );
           },
@@ -256,7 +277,7 @@ class GiftSend2Room extends GiftSendLogic {
       }
 
       Widget child = Box(
-        padding: const Pad(vertical: 5),
+        padding: const Pad(vertical: 2),
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: const Pad(left: 10, right: 72),
@@ -327,23 +348,27 @@ class GiftSend2Room extends GiftSendLogic {
 
 class GiftSend2UserInRoom extends GiftSend2Room {
   GiftSend2UserInRoom({required super.roomId, required UID uid})
-      : super(users: [GiftSend2RoomEntity(uid: uid, no: '')]);
+      : super(users: [GiftSend2RoomEntity(uid: uid, no: '', userType: 0)]);
 
   @override
   Widget? get $MiddleView => null;
 }
 
 class GiftSend2RoomEntity {
+  static const DIVIDE_TYPE = 10000;
   final UID uid;
+  // 麦号
   final String no;
+  // 用户类型
+  final int userType;
 
-  const GiftSend2RoomEntity({required this.uid, required this.no});
+  const GiftSend2RoomEntity({required this.uid, required this.no, required this.userType});
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is GiftSend2RoomEntity && runtimeType == other.runtimeType && uid == other.uid && no == other.no;
+      other is GiftSend2RoomEntity && runtimeType == other.runtimeType && uid == other.uid && no == other.no && userType == other.userType;
 
   @override
-  int get hashCode => uid.hashCode ^ no.hashCode;
+  int get hashCode => uid.hashCode ^ no.hashCode ^ userType.hashCode;
 }

@@ -1,3 +1,6 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
@@ -32,6 +35,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:quiver/collection.dart';
+import 'package:fixnum/fixnum.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart' as Common;
 
 class RoomOverlay extends SceneOverlay<RoomCtrl> {
   RoomOverlay({super.key});
@@ -137,21 +142,72 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
   }
 
   void _showGiftSend() {
-    final myUid = OAuthCtrl.uid;
-    final dataRx = sceneMicCtrl<RoomMicCtrl>().dataRx;
+    // 获取房间在线的用户信息
+    post(() async {
+      WaitingCtrl.obj.show();
+      C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
+      c_roomEnterComplete.roomId = Int64(roomId ?? 0);
+      S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_RoomEnterComplete,
+          datas: c_roomEnterComplete.writeToBuffer(),
+          resCmd: CMD.S_SyncRoomInfo
+      );
+      WaitingCtrl.obj.hidden();
+      if(s_syncRoomInfo?.onlineList.isEmpty == true) {
+        showToast("暂无在麦用户");
+        return;
+      }
 
-    final users = TreeSet<GiftSend2RoomEntity>(comparator: (a, b) => a.no.compareTo(b.no));
+      // 找出的房主的信息
+      GiftSend2RoomEntity? roomOwner;
+      // 找出的主持的信息
+      GiftSend2RoomEntity? mainRole;
+      // 麦上的用户信息列表
+      List<GiftSend2RoomEntity> userInMicList = [];
+      // 获取麦上的用户列表
+      var micUsers = sceneMicCtrl<RoomMicCtrl>().dataRx;
+      // 根据麦号进行排序
+      var userList = micUsers.keys.toList();
+      userList.sort((a, b) => a.compareTo(b));
+      // 过滤出在麦上的用户列表
+      s_syncRoomInfo?.onlineList.forEach((element) {
+        if(element.type == 1) {
+          // 获取房主信息
+          roomOwner = GiftSend2RoomEntity(uid: element.uid, no: "", userType: element.type);
+        } else if(element.type == 2) {
+          // 主持信息
+          mainRole = GiftSend2RoomEntity(uid: element.uid, no: "", userType: element.type);
+        } else {
+          // 其它用户信息
+          for(int index = 0; index < userList.length; index ++) {
+            // 其它用户信息
+            // 其它在mic上的用户的信息
+            if(element.uid == micUsers[userList[index]]?.uid) {
+              userInMicList.add(GiftSend2RoomEntity(uid: element.uid, no: userList[index], userType: element.type));
+              break;
+            }
+          }
+        }
+      });
+      // 两个数据不为空时，添加分隔线
+      if((mainRole != null || roomOwner != null) && userInMicList.isNotEmpty) {
+        userInMicList.insert(0, const GiftSend2RoomEntity(uid: "", no: "", userType: GiftSend2RoomEntity.DIVIDE_TYPE));
+      }
 
-    users.addAll(
-      dataRx.entries //
-          .whereNot((it) => it.value.uid == myUid)
-          .map((it) => GiftSend2RoomEntity(uid: it.value.uid, no: it.key)),
-    );
+      // 主持
+      if(mainRole != null) {
+        userInMicList.insert(0, mainRole!);
+      }
+      // 房主
+      if(roomOwner != null) {
+        userInMicList.insert(0, roomOwner!);
+      }
+      GiftSheet.show(
+        GiftSend2Room(roomId: controller.roomId, users: userInMicList.toList(growable: false)),
+        hasShowUnityView: true,
+      );
+    });
 
-    GiftSheet.show(
-      GiftSend2Room(roomId: controller.roomId, users: users.toList(growable: false)),
-      hasShowUnityView: true,
-    );
   }
 
   void _resetHotCount() {
