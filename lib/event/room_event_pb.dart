@@ -92,6 +92,13 @@ class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;
 }
 
+// 多个礼物播放广播
+class MoreGiftPlayEvent extends RoomEvent<S_MoreGiftPlay> {
+  List<S_GiftPlay>? get items => data?.items;
+  String? get blindBoxName => data?.blindBoxName;
+  String? get blindBoxCover => data?.blindBoxCover;
+}
+
 // 房间管理员设置
 class AdminSetEvent extends RoomEvent<S_AdministratorBroadcast> {
 

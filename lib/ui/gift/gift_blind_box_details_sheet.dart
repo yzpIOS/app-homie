@@ -80,6 +80,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
               child: TabBar(
                 indicator: BoxDecoration(borderRadius: BorderRadius.circular(20.0), color: const Color(0xFFFCF6FF),),
                 labelColor: AppPalette.primary,
+                labelPadding: const Pad(),
                 unselectedLabelColor: AppPalette.c9,
                 labelStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
                 unselectedLabelStyle: const TextStyle(fontSize: 16, fontWeight: fw$Regular),

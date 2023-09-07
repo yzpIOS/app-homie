@@ -83,5 +83,33 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         }
       });
     });
+
+    // 多个礼物播放广播
+    on<MoreGiftPlayEvent>((data) async {
+      S_MoreGiftPlay? moreGift = data.data;
+      if(moreGift == null) {
+        return;
+      }
+      final List<S_GiftPlay>? items = data.items;
+      if(items == null) {
+        return;
+      }
+      for(var i = 0; i < items.length; i ++) {
+        S_GiftPlay? gift = items[i];
+
+        final sendUid = gift.sendId;
+        final ids = gift.acceptUidList ?? [];
+        final users = await findByUidX({sendUid, ...ids}, useNet: true);
+        users.forEach((key, value) {
+          if(sendUid != value.uid) {
+            dataRx.add(
+              BlindBoxOpenGiftMsgView(
+                BaseMsgData<String>(data: gift.name),
+              ),
+            );
+          }
+        });
+      }
+    });
   }
 }

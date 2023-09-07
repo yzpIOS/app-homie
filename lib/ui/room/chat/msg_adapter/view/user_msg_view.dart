@@ -98,6 +98,16 @@ class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
 
   @override
   InlineSpan richText(special, info) {
+    if (vm.data.type == 6) {//是盲盒礼物
+      return TextSpan(
+        children: [
+          const TextSpan(text: '赠送了 '),
+          TextSpan(text: vm.users[vm.acceptUid]?.showName() ?? '--'),
+          const TextSpan(text: ' 盲盒'),
+        ],
+        style: const TextStyle(color: AppPalette.colorY),
+      );
+    }
     return TextSpan(
       children: [
         const TextSpan(text: '给 '),

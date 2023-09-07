@@ -89,9 +89,16 @@ class GiftSheet extends StatelessWidget {
     child = Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        GestureDetector(
-            child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145,),
-            onTap: () => GiftBlindBoxDetailsSheet.show(),
+        Obx(
+          () {
+            ////  礼物类型货币枚举值，目前：0—2D静态礼物, 1—2D动态礼物, 2—3D礼物，4-抽奖烟花, 5-buff礼物, 6-盲盒礼物
+            return (logic.selectRx() != null && logic.selectRx()?['type'] == 6)
+                ? GestureDetector(
+                    child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145, height: 46.9,),
+                    onTap: () => GiftBlindBoxDetailsSheet.show(),
+                  )
+                : const Spacing(height: 46.9, flex: null);
+          }
         ),
         const Spacing(height: 6, flex: null),
         Expanded(

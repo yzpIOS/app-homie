@@ -124,6 +124,8 @@ const CMD$json = {
     {'1': 'S_GiveGiftByDynamic', '2': 3107},
     {'1': 'C_GiveGiftByIm', '2': 3109},
     {'1': 'S_GiveGiftByIm', '2': 3110},
+    {'1': 'S_MoreGiftPlay', '2': 3111},
+    {'1': 'S_MoreGiftFloatingScreen', '2': 3112},
     {'1': 'C_SaveUserCurrentDressUp', '2': 4100},
     {'1': 'S_SaveUserCurrentDressUp', '2': 4101},
     {'1': 'S_UpdateDressUp', '2': 4102},
@@ -153,24 +155,26 @@ const CMD$json = {
     {'1': 'C_PushPreload', '2': 12020},
     {'1': 'S_PushPreload', '2': 12021},
     {'1': 'S_CameraSwitch', '2': 12030},
-    {'1': 'C_PKInvite', '2': 13000},
-    {'1': 'S_PKInvite', '2': 13001},
-    {'1': 'C_PKAccept', '2': 13002},
-    {'1': 'S_PKInviteResult', '2': 13004},
-    {'1': 'C_PKSceneLoaded', '2': 13010},
-    {'1': 'S_PKGameInfo', '2': 13011},
-    {'1': 'S_PKUserEnter', '2': 13012},
-    {'1': 'C_PKBattleReady', '2': 13031},
-    {'1': 'S_PKSyncRoles', '2': 13032},
-    {'1': 'C_PKMove', '2': 13034},
-    {'1': 'C_PKStop', '2': 13035},
-    {'1': 'S_PKSyncRoleAttributes', '2': 13036},
-    {'1': 'S_PKSyncSceneAttributes', '2': 13037},
-    {'1': 'S_PKBattleEnd', '2': 13038},
-    {'1': 'C_PKContinue', '2': 13050},
-    {'1': 'S_PKContinue', '2': 13051},
-    {'1': 'C_PickBuffGift', '2': 13052},
-    {'1': 'S_PickBuffGift', '2': 13053},
+    {'1': 'C_PKInvite', '2': 20001},
+    {'1': 'S_PKInvite', '2': 20002},
+    {'1': 'C_PKAccept', '2': 20003},
+    {'1': 'S_PKInviteResult', '2': 20004},
+    {'1': 'C_PKRoomList', '2': 20005},
+    {'1': 'S_PKRoomList', '2': 20006},
+    {'1': 'C_PKSceneLoaded', '2': 20010},
+    {'1': 'S_PKGameInfo', '2': 20011},
+    {'1': 'S_PKUserEnter', '2': 20012},
+    {'1': 'C_PKBattleReady', '2': 20031},
+    {'1': 'S_PKSyncRoles', '2': 20032},
+    {'1': 'C_PKMove', '2': 20034},
+    {'1': 'C_PKStop', '2': 20035},
+    {'1': 'S_PKSyncRoleAttsLF', '2': 20036},
+    {'1': 'S_PKSyncRoleAttsHF', '2': 20037},
+    {'1': 'S_PKSceneToxic', '2': 20038},
+    {'1': 'S_PKSceneGift', '2': 20039},
+    {'1': 'S_PKBattleEnd', '2': 20050},
+    {'1': 'C_PKContinue', '2': 20051},
+    {'1': 'S_PKContinue', '2': 20052},
   ],
 };
 
@@ -213,23 +217,24 @@ final $typed_data.Uint8List cMDDescriptor = $convert.base64Decode(
     'b20QnBgSFQoQU19HaXZlR2lmdEJ5Um9vbRCdGBISCg1TX1VwZGF0ZUxldmVsEJ4YEhcKElNfVX'
     'BkYXRlQ2hhcm1MZXZlbBCfGBIPCgpTX0dpZnRQbGF5EKAYEhUKEFNfRmxvYXRpbmdTY3JlZW4Q'
     'oRgSGAoTQ19HaXZlR2lmdEJ5RHluYW1pYxCiGBIYChNTX0dpdmVHaWZ0QnlEeW5hbWljEKMYEh'
-    'MKDkNfR2l2ZUdpZnRCeUltEKUYEhMKDlNfR2l2ZUdpZnRCeUltEKYYEh0KGENfU2F2ZVVzZXJD'
-    'dXJyZW50RHJlc3NVcBCEIBIdChhTX1NhdmVVc2VyQ3VycmVudERyZXNzVXAQhSASFAoPU19VcG'
-    'RhdGVEcmVzc1VwEIYgEioKJUNfVXNlUHJvZHVjdEFuZFNhdmVVc2VyQ3VycmVudERyZXNzVXAQ'
-    'hyASKgolU19Vc2VQcm9kdWN0QW5kU2F2ZVVzZXJDdXJyZW50RHJlc3NVcBCIIBIMCgdDX1JvYm'
-    '90EIU0EgwKB1NfUm9ib3QQhjQSCwoGQ19UZXN0EIo0EgsKBlNfVGVzdBCLNBIMCgdDX0RlYnVn'
-    'EIw0EgwKB1NfRGVidWcQjTQSDgoJQ19PcHRUZXN0EI40Eg4KCVNfT3B0VGVzdBCPNBINCghDX1'
-    'ZlcmlmeRCQThILCgZDX0V4aXQQkU4SDgoJR19VRkhlYXJ0EJJOEg8KCkNfVUZSZUxpbmsQk04S'
-    'DwoKRl9HaWZ0U2hvdxD4VRIRCgxDX0dvQXdheVJvb20Q4F0SEQoMU19Hb0F3YXlSb29tEOFdEh'
-    'YKEUNfSW5GcmVlTWlrZXNBcmVhEOJdEhYKEVNfSW5GcmVlTWlrZXNBcmVhEONdEhcKEkNfT3V0'
-    'RnJlZU1pa2VzQXJlYRDmXRIXChJTX091dEZyZWVNaWtlc0FyZWEQ510SEgoNQ19QbGF6YVRvUm'
-    '9vbRDkXRISCg1TX1BsYXphVG9Sb29tEOVdEhIKDUNfUHVzaFByZWxvYWQQ9F0SEgoNU19QdXNo'
-    'UHJlbG9hZBD1XRITCg5TX0NhbWVyYVN3aXRjaBD+XRIPCgpDX1BLSW52aXRlEMhlEg8KClNfUE'
-    'tJbnZpdGUQyWUSDwoKQ19QS0FjY2VwdBDKZRIVChBTX1BLSW52aXRlUmVzdWx0EMxlEhQKD0Nf'
-    'UEtTY2VuZUxvYWRlZBDSZRIRCgxTX1BLR2FtZUluZm8Q02USEgoNU19QS1VzZXJFbnRlchDUZR'
-    'IUCg9DX1BLQmF0dGxlUmVhZHkQ52USEgoNU19QS1N5bmNSb2xlcxDoZRINCghDX1BLTW92ZRDq'
-    'ZRINCghDX1BLU3RvcBDrZRIbChZTX1BLU3luY1JvbGVBdHRyaWJ1dGVzEOxlEhwKF1NfUEtTeW'
-    '5jU2NlbmVBdHRyaWJ1dGVzEO1lEhIKDVNfUEtCYXR0bGVFbmQQ7mUSEQoMQ19QS0NvbnRpbnVl'
-    'EPplEhEKDFNfUEtDb250aW51ZRD7ZRITCg5DX1BpY2tCdWZmR2lmdBD8ZRITCg5TX1BpY2tCdW'
-    'ZmR2lmdBD9ZQ==');
+    'MKDkNfR2l2ZUdpZnRCeUltEKUYEhMKDlNfR2l2ZUdpZnRCeUltEKYYEhMKDlNfTW9yZUdpZnRQ'
+    'bGF5EKcYEh0KGFNfTW9yZUdpZnRGbG9hdGluZ1NjcmVlbhCoGBIdChhDX1NhdmVVc2VyQ3Vycm'
+    'VudERyZXNzVXAQhCASHQoYU19TYXZlVXNlckN1cnJlbnREcmVzc1VwEIUgEhQKD1NfVXBkYXRl'
+    'RHJlc3NVcBCGIBIqCiVDX1VzZVByb2R1Y3RBbmRTYXZlVXNlckN1cnJlbnREcmVzc1VwEIcgEi'
+    'oKJVNfVXNlUHJvZHVjdEFuZFNhdmVVc2VyQ3VycmVudERyZXNzVXAQiCASDAoHQ19Sb2JvdBCF'
+    'NBIMCgdTX1JvYm90EIY0EgsKBkNfVGVzdBCKNBILCgZTX1Rlc3QQizQSDAoHQ19EZWJ1ZxCMNB'
+    'IMCgdTX0RlYnVnEI00Eg4KCUNfT3B0VGVzdBCONBIOCglTX09wdFRlc3QQjzQSDQoIQ19WZXJp'
+    'ZnkQkE4SCwoGQ19FeGl0EJFOEg4KCUdfVUZIZWFydBCSThIPCgpDX1VGUmVMaW5rEJNOEg8KCk'
+    'ZfR2lmdFNob3cQ+FUSEQoMQ19Hb0F3YXlSb29tEOBdEhEKDFNfR29Bd2F5Um9vbRDhXRIWChFD'
+    'X0luRnJlZU1pa2VzQXJlYRDiXRIWChFTX0luRnJlZU1pa2VzQXJlYRDjXRIXChJDX091dEZyZW'
+    'VNaWtlc0FyZWEQ5l0SFwoSU19PdXRGcmVlTWlrZXNBcmVhEOddEhIKDUNfUGxhemFUb1Jvb20Q'
+    '5F0SEgoNU19QbGF6YVRvUm9vbRDlXRISCg1DX1B1c2hQcmVsb2FkEPRdEhIKDVNfUHVzaFByZW'
+    'xvYWQQ9V0SEwoOU19DYW1lcmFTd2l0Y2gQ/l0SEAoKQ19QS0ludml0ZRChnAESEAoKU19QS0lu'
+    'dml0ZRCinAESEAoKQ19QS0FjY2VwdBCjnAESFgoQU19QS0ludml0ZVJlc3VsdBCknAESEgoMQ1'
+    '9QS1Jvb21MaXN0EKWcARISCgxTX1BLUm9vbUxpc3QQppwBEhUKD0NfUEtTY2VuZUxvYWRlZBCq'
+    'nAESEgoMU19QS0dhbWVJbmZvEKucARITCg1TX1BLVXNlckVudGVyEKycARIVCg9DX1BLQmF0dG'
+    'xlUmVhZHkQv5wBEhMKDVNfUEtTeW5jUm9sZXMQwJwBEg4KCENfUEtNb3ZlEMKcARIOCghDX1BL'
+    'U3RvcBDDnAESGAoSU19QS1N5bmNSb2xlQXR0c0xGEMScARIYChJTX1BLU3luY1JvbGVBdHRzSE'
+    'YQxZwBEhQKDlNfUEtTY2VuZVRveGljEMacARITCg1TX1BLU2NlbmVHaWZ0EMecARITCg1TX1BL'
+    'QmF0dGxlRW5kENKcARISCgxDX1BLQ29udGludWUQ05wBEhIKDFNfUEtDb250aW51ZRDUnAE=');
 

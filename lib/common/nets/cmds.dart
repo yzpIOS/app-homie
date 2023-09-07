@@ -86,6 +86,8 @@ class CMD {
   static const S_GiveGiftByDynamic = 3107; // 直动态赠送礼物返回值
   static const C_GiveGiftByIm = 3109; // 聊天赠送礼物
   static const S_GiveGiftByIm = 3110; // 聊天赠送礼物返回值
+  static const S_MoreGiftPlay = 3111; // 多个礼物播放广播
+  static const S_MoreGiftFloatingScreen = 3112; // 多个礼物飘屏广播
 
 
   static const C_SaveUserCurrentDressUp = 4100; // 保存用户当前装扮
