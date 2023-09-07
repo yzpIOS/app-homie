@@ -19,6 +19,7 @@ import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_tool_dialog.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
+import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:app/ui/room/user/room_admin_page.dart';
@@ -124,7 +125,8 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         );
         break;
       case '清零':
-        _resetHotCount();
+        // _resetHotCount();
+        MicUserCharmManagerSheet.show();
         break;
       case '意见反馈':
         Get.to(() => FeedbackPage(type: 1, id: controller.roomId));

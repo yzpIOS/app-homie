@@ -81,10 +81,10 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
       'ic_create'.toSvgAction(
         color: null,
         onPressed: () async {
-          if(Env.isDebug) {
-            MicUserOnlineManagerSheet.show(uid: "a");
-            return;
-          }
+          // if(Env.isDebug) {
+          //   MicUserOnlineManagerSheet.show(uid: "a");
+          //   return;
+          // }
           Get.to(() => const CreateRoomPage());
         },
       ),

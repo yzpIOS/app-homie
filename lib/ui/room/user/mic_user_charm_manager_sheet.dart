@@ -1,30 +1,35 @@
 
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/room/room_mic_ctrl.dart';
+import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart' as Common;
+import 'package:fixnum/fixnum.dart';
 
 ///
 /// https://www.tapd.cn/68741847/prong/stories/view/1168741847001000563
 /// 麦上魅力值管理(2：魅力计数器)
 ///
 class MicUserCharmManagerSheet extends StatefulWidget {
-  // 用户uid
-  final UID uid;
   // 场景类
   SceneCtrl? sceneCtrl = null;
 
-  MicUserCharmManagerSheet._({required this.uid, this.sceneCtrl = null});
+  MicUserCharmManagerSheet._({this.sceneCtrl = null});
 
-  static void show({required UID uid}) {
+  static void show() {
     // final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     OrientationSheet.show(
-      child: MicUserCharmManagerSheet._(uid: uid, sceneCtrl: null),
+      child: MicUserCharmManagerSheet._(sceneCtrl: null),
       decoration: const ShapeDecoration(
         shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
         color: Color(0xCC333333),
@@ -38,8 +43,31 @@ class MicUserCharmManagerSheet extends StatefulWidget {
 }
 
 class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
+  S_SyncRoomInfo? s_syncRoomInfo;
 
   List<String> selectedIds = <String>[];
+
+  @override
+  void initState() {
+    super.initState();
+    // 获取房间在线的用户信息
+    post(() async {
+      WaitingCtrl.obj.show();
+      C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
+      c_roomEnterComplete.roomId = Int64(widget.sceneCtrl?.roomId ?? 0);
+      s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_RoomEnterComplete,
+          datas: c_roomEnterComplete.writeToBuffer(),
+          resCmd: CMD.S_SyncRoomInfo
+      );
+      WaitingCtrl.obj.hidden();
+      if(s_syncRoomInfo?.onlineList.isEmpty == true) {
+        showToast("暂无在麦用户");
+        return;
+      }
+      setState(() { });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,30 +148,64 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
   /// 用户列表
   ///
   Widget createUserList() {
+    SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
+    if(s_syncRoomInfo == null || roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+      return const SizedBox();
+    }
+
     return Expanded(
-      child: CustomScrollView(
-        slivers: [
-          const SizedBox(height: 16,).toSliver(),
-          createItem("11").toSliver(),
-          SliverGrid(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                return createItem(index.toString());
-              }, childCount: 30),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 15,
-                  childAspectRatio: 0.8
-              ))
-        ],
-      ),
+      child: Obx(() {
+        // 找出的房主的信息
+        Common.UserInfo? roomOwner = null;
+        // 麦上的用户信息列表
+        List<Common.UserInfo> userInMicList = [];
+        // 获取麦上的用户列表
+        var userList = roomMicCtrl.dataRx.values.toList();
+        s_syncRoomInfo?.onlineList.forEach((element) {
+          for(int index = 0; index < userList.length; index ++) {
+            // 获取房主信息
+            if(element.type == 1) {
+              roomOwner = element;
+              break;
+            }
+            // 其它在mic上的用户的信息
+            if(element.uid == userList[index].uid) {
+              userInMicList.add(element);
+              break;
+            }
+          }
+        });
+
+        return CustomScrollView(
+          slivers: [
+            const SizedBox(height: 16,).toSliver(),
+            // 房主的显示界面
+            if(roomOwner != null)
+              createItem(roomOwner!).toSliver(),
+            if(roomOwner != null)
+              const SizedBox(height: 30,).toSliver(),
+            // 其它在mike上的用户的信息
+            SliverGrid(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return createItem(userInMicList[index]);
+                }, childCount: userInMicList.length),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    mainAxisSpacing: 15,
+                    crossAxisSpacing: 15,
+                    childAspectRatio: 1.0
+                )
+            )
+          ],
+        );
+      }),
     );
   }
 
-  Widget createItem(String uid) {
+  Widget createItem(Common.UserInfo micInfo) {
     // 选中时的圆圈
     Decoration? decoration = null;
-    if(selectedIds.contains(uid)) {
+    if(selectedIds.contains(micInfo.uid)) {
       decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(1000),
           border: Border.all(color: Color(0xFFC567FF), width: 2)
@@ -152,10 +214,10 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
     return GestureDetector(
       onTap: () {
-        if(selectedIds.contains(uid)) {
-          selectedIds.remove(uid);
+        if(selectedIds.contains(micInfo.uid)) {
+          selectedIds.remove(micInfo.uid);
         } else {
-          selectedIds.add(uid);
+          selectedIds.add(micInfo.uid);
         }
         setState(() { });
       },
@@ -172,18 +234,18 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
               children: [
                 Container(
                   decoration: decoration,
-                  child: AsyncAvatar(uid: uid, size: 80, onTap: Some(() {
-                    if(selectedIds.contains(uid)) {
-                      selectedIds.remove(uid);
+                  child: AsyncAvatar(uid: micInfo.uid, size: 80, onTap: Some(() {
+                    if(selectedIds.contains(micInfo.uid)) {
+                      selectedIds.remove(micInfo.uid);
                     } else {
-                      selectedIds.add(uid);
+                      selectedIds.add(micInfo.uid);
                     }
                     setState(() { });
                   })),
                 ),
 
                 // 选中的状态
-                if(selectedIds.contains(uid))
+                if(selectedIds.contains(micInfo.uid))
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(IMG.format("check"), width: 20, height: 20,),
@@ -194,33 +256,17 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
           // 名称
           const SizedBox(height: 5,),
-          const Text(
-            "小星星",
-            style: TextStyle(
+          Text(
+            (micInfo.username ?? ""),
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14
             ),
           ),
-
-          // 热度
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(IMG.format("icon_hot"), width: 20, height: 20,),
-              Text(
-                "234",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );
   }
-
   void onItemClick(String action) {
 
   }
