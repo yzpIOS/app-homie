@@ -249,6 +249,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   Future doClose() {
     return Get.delete<SceneCtrl>(tag: '$runtimeType', force: true);
   }
+
+  SceneMicCtrl? getRoomMicCtrl() => null;
 }
 
 class RoomCtrl extends SceneCtrl {

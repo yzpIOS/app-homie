@@ -1,3 +1,4 @@
+import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/room_rtc_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';

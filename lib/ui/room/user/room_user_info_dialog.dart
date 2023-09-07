@@ -342,7 +342,10 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   }
 
   Widget selfAction() {
-    RoomMicCtrl roomMicCtrl = Get.find<RoomMicCtrl>();
+    SceneMicCtrl? roomMicCtrl = sceneCtrl.getRoomMicCtrl();
+    if(roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+      return const SizedBox();
+    }
     return Obx(() {
       var onLine = roomMicCtrl.dataRx;
       var isOnline = onLine.values.map((e) => e.uid == uid).isNotEmpty;

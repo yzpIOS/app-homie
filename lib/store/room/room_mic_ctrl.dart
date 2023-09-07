@@ -16,6 +16,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   int roomId;
   int maxMic;
   RoomType roomType;
+
   RxMap<String, MicInfo> dataRx = RxMap();
 
   RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType});

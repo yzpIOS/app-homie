@@ -26,10 +26,9 @@ abstract class RoomUserSheet {
     final posManage = posAdmin || posOwner;
 
     final actions = <String, FutureOr Function()>{
-      if (!isSelf) //
-        '查看资料'.en(): () {
-          RoomUserInfoDialog.show(uid: uid);
-        },
+      '查看资料'.en(): () {
+        RoomUserInfoDialog.show(uid: uid);
+      },
       if (canManage && notSelf && !posManage) //
         '加入黑名单'.en(): () {
           roomCtrl.setBlock(uid:uid, isAdd: true);
