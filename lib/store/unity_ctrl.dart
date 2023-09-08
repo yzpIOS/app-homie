@@ -60,7 +60,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
-      _sendSockComplete = Completer();
+      if(!_sendSockComplete.isCompleted) {
+        _sendSockComplete = Completer();
+      }
       if(_isUnityInitSuccess) {
         return;
       }
