@@ -26,10 +26,10 @@ class MicUserCharmManagerSheet extends StatefulWidget {
   MicUserCharmManagerSheet._({this.sceneCtrl = null});
 
   static void show() {
-    // final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
+    final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     OrientationSheet.show(
-      child: MicUserCharmManagerSheet._(sceneCtrl: null),
+      child: MicUserCharmManagerSheet._(sceneCtrl: sceneCtrl),
       decoration: const ShapeDecoration(
         shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
         color: Color(0xCC333333),

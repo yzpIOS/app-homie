@@ -202,10 +202,15 @@ class GiftSend2Room extends GiftSendLogic {
       Widget itemBuilder(GiftSend2RoomEntity item) {
         // 分隔线
         if(item.userType == GiftSend2RoomEntity.DIVIDE_TYPE) {
-          return Container(
-            color: Colors.white,
-            width: 1,
-            height: 20,
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                color: Colors.white,
+                width: 1,
+                height: 20,
+              )
+            ],
           );
         }
 
