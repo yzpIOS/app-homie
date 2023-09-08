@@ -328,7 +328,7 @@ class _MicAnimeBuilderState extends State<_MicAnimeBuilder> with SingleTickerPro
     end: const BoxDecoration(
       shape: BoxShape.circle,
       boxShadow: [
-        BoxShadow(color: AppPalette.primary, blurRadius: 6, spreadRadius: 2),
+        BoxShadow(color: AppPalette.primary, blurRadius: 8, spreadRadius: 10),
       ],
     ),
   );

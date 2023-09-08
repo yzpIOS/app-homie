@@ -21,9 +21,6 @@ export 'package:app/model/enum/unity_event_enum.dart';
 const unity_time_out = 90;
 
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
-  // 随便起的？？
-  static const UNITY_STOP_EVENT = "flutter_tell_ios_stop_render_event";
-  static const UNITY_RESUME_EVENT = "flutter_tell_ios_resume_render_event";
   late final _callback = _Callback();
 
   StreamSubscription? _netStatusChange;
@@ -63,8 +60,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
+      if(!_sendSockComplete.isCompleted) {
+        _sendSockComplete = Completer();
+      }
       if(_isUnityInitSuccess) {
-        _netStatusChange?.cancel();
         return;
       }
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);

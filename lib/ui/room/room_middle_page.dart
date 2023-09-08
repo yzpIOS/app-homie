@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class RoomMiddlePage extends StatefulWidget {
   int roomId;
   Map? data;
+  bool callCloseRoom;
 
-  RoomMiddlePage({required this.roomId, this.data, super.key});
+  RoomMiddlePage({required this.roomId, this.data, required this.callCloseRoom, super.key});
 
   @override
   State<StatefulWidget> createState() => _RoomMiddlePageState();
@@ -20,10 +21,13 @@ class _RoomMiddlePageState extends State<RoomMiddlePage> {
   void initState() {
     super.initState();
     post(() async {
-      try {
-        await RoomManagerCtrl.ins.doCloseState();
-      } catch(e) {
+      if (widget.callCloseRoom) {
+        try {
+          await RoomManagerCtrl.ins.doCloseState();
+        } catch(e) {
+        }
       }
+      await Future.delayed(const Duration(milliseconds: 500));
       RoomManagerCtrl.ins.toRoom(roomId: widget.roomId, data: widget.data, off: true);
     });
   }

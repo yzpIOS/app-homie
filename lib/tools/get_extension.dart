@@ -245,6 +245,8 @@ extension XGet on GetInterface {
   void backRoot() => navigator!.popUntil(ModalRoute.withName('/'));
 
   Future<T?> push<T>(Route<T> route) => navigator!.push<T>(route);
+
+  void pop() => navigator?.pop();
 }
 
 extension XRxn<T> on Rxn<T> {

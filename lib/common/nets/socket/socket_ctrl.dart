@@ -8,6 +8,7 @@ import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
@@ -53,14 +54,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       if(session.uniqueId != uniqueId) {
         return;
       }
-      // flutter与unity之间的协义号从20001开始
-      // 大于20000的是unity发给flutter的信息
+      // flutter与unity之间协议通是区间：10000～20000之间
       if(cmd >= FLUTTER_UINITY_START && cmd <= FLUTTER_UINITY_END) {
         // 通知flutter收到信息
         riseOnRawData(cmd, data);
         return;
       }
-      // 发送数据到服务端
+      // unity发送数据到服务端
       share.sendBytes(cmd, datas: data, sendToUntiy: "unity>>>server");
     });
     // 监听unity发送的消息
@@ -244,6 +244,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_SyncRoomInfo, S_SyncRoomInfo.fromBuffer);
     register(CMD.S_UseProductAndSaveUserCurrentDressUp, S_UseProductAndSaveUserCurrentDressUp.fromBuffer);
     register(CMD.S_CameraSwitch, S_CameraSwitch.fromBuffer);
+    register(CMD.S_PKRoomList, S_PKRoomList.fromBuffer);
+    register(CMD.S_PKInvite, S_PKInvite.fromBuffer);
+    register(CMD.S_PKInviteResult, S_PKInviteResult.fromBuffer);
+    register(CMD.S_PKContinue, S_PKContinue.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
@@ -265,6 +269,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   /// 开启socket连接
   void startClient(String host, int port) {
+    removeClientConnect(onClientConnect);
+    removeOnDataCmd(CMD.S_Role, onRoleResponse);
+    removeOnDataCmd(CMD.S_Err, onServerError);
+
     // 连接socket
     post(() async {
       // 重置状态
@@ -300,6 +308,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.beatHeartCheck();
   }
 
+
+
   ///
   /// 用户信息返回
   ///
@@ -313,6 +323,18 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(!_socketStatus.isCompleted) {
       _socketStatus.complete(true);
     }
+    // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
+    var pkRoomId = role.pkRoomId.toInt();
+    var roomId = role.roomId.toInt();
+    // 数据异常
+    if(pkRoomId <= 0 || roomId <= 0) {
+      return;
+    }
+    Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+      var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
+      RoomManagerCtrl.ins.putPkInfo(roomInfo, pkRoomId);
+      RoomManagerCtrl.ins.toMiddleRoom(roomId: roomId, data: roomInfo, off: true, callCloseRoom: false);
+    });
   }
 
   ///
@@ -368,6 +390,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
+    removeOnDataCmd(CMD.S_Role, onRoleResponse);
+    removeOnDataCmd(CMD.S_Err, onServerError);
     removeClientConnect(onClientConnect);
   }
 

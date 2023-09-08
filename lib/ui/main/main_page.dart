@@ -78,17 +78,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         },
       );
     }
-    selector.addListener(() {
-      if(selector.value == 2) {
-        // 切换到unity，需要开始Unity
-        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-            data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
-      } else {
-        // 切走了，停止unity
-        UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-            data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
-      }
-    });
     WidgetsBinding.instance.addObserver(this);
     // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
@@ -127,10 +116,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void didPushNext() {
     super.didPushNext();
-    if(selector.value == 2) {
-      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-          data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
-    }
     applePurchase?.dispose();
   }
 
@@ -140,10 +125,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void didPopNext() {
     super.didPopNext();
-    if(selector.value == 2) {
-      UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-          data: {UnityCtrl.UNITY_RESUME_EVENT: UnityCtrl.UNITY_RESUME_EVENT});
-    }
   }
 
   @override

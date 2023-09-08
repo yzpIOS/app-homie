@@ -1,13 +1,9 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: Common.proto
 //
 // @dart = 2.12
-
-// ignore_for_file: annotate_overrides, camel_case_types
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
 import 'dart:core' as $core;
 
@@ -19,17 +15,28 @@ import 'Common.pbenum.dart';
 export 'Common.pbenum.dart';
 
 class AttrVO extends $pb.GeneratedMessage {
-  factory AttrVO() => create();
-  AttrVO._() : super();
-  factory AttrVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AttrVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AttrVO', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..e<AttrCode>(1, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: AttrCode.none, valueOf: AttrCode.valueOf, enumValues: AttrCode.values)
-    ..aInt64(2, _omitFieldNames ? '' : 'val')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AttrVO', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..e<AttrCode>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: AttrCode.none, valueOf: AttrCode.valueOf, enumValues: AttrCode.values)
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'val')
     ..hasRequiredFields = false
   ;
 
+  AttrVO._() : super();
+  factory AttrVO({
+    AttrCode? code,
+    $fixnum.Int64? val,
+  }) {
+    final _result = create();
+    if (code != null) {
+      _result.code = code;
+    }
+    if (val != null) {
+      _result.val = val;
+    }
+    return _result;
+  }
+  factory AttrVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AttrVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -39,10 +46,8 @@ class AttrVO extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AttrVO copyWith(void Function(AttrVO) updates) => super.copyWith((message) => updates(message as AttrVO)) as AttrVO;
-
+  AttrVO copyWith(void Function(AttrVO) updates) => super.copyWith((message) => updates(message as AttrVO)) as AttrVO; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AttrVO create() => AttrVO._();
   AttrVO createEmptyInstance() => create();
@@ -71,17 +76,28 @@ class AttrVO extends $pb.GeneratedMessage {
 }
 
 class KV32 extends $pb.GeneratedMessage {
-  factory KV32() => create();
-  KV32._() : super();
-  factory KV32.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory KV32.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'KV32', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'key', $pb.PbFieldType.O3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'val', $pb.PbFieldType.O3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'KV32', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'val', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
+  KV32._() : super();
+  factory KV32({
+    $core.int? key,
+    $core.int? val,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (val != null) {
+      _result.val = val;
+    }
+    return _result;
+  }
+  factory KV32.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KV32.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -91,10 +107,8 @@ class KV32 extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  KV32 copyWith(void Function(KV32) updates) => super.copyWith((message) => updates(message as KV32)) as KV32;
-
+  KV32 copyWith(void Function(KV32) updates) => super.copyWith((message) => updates(message as KV32)) as KV32; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static KV32 create() => KV32._();
   KV32 createEmptyInstance() => create();
@@ -123,17 +137,28 @@ class KV32 extends $pb.GeneratedMessage {
 }
 
 class KV64 extends $pb.GeneratedMessage {
-  factory KV64() => create();
-  KV64._() : super();
-  factory KV64.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory KV64.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'KV64', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'key', $pb.PbFieldType.O3)
-    ..aInt64(2, _omitFieldNames ? '' : 'val')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'KV64', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.O3)
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'val')
     ..hasRequiredFields = false
   ;
 
+  KV64._() : super();
+  factory KV64({
+    $core.int? key,
+    $fixnum.Int64? val,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (val != null) {
+      _result.val = val;
+    }
+    return _result;
+  }
+  factory KV64.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KV64.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -143,10 +168,8 @@ class KV64 extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  KV64 copyWith(void Function(KV64) updates) => super.copyWith((message) => updates(message as KV64)) as KV64;
-
+  KV64 copyWith(void Function(KV64) updates) => super.copyWith((message) => updates(message as KV64)) as KV64; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static KV64 create() => KV64._();
   KV64 createEmptyInstance() => create();
@@ -175,17 +198,28 @@ class KV64 extends $pb.GeneratedMessage {
 }
 
 class KVStr extends $pb.GeneratedMessage {
-  factory KVStr() => create();
-  KVStr._() : super();
-  factory KVStr.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory KVStr.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'KVStr', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'key', $pb.PbFieldType.O3)
-    ..aOS(2, _omitFieldNames ? '' : 'val')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'KVStr', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'key', $pb.PbFieldType.O3)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'val')
     ..hasRequiredFields = false
   ;
 
+  KVStr._() : super();
+  factory KVStr({
+    $core.int? key,
+    $core.String? val,
+  }) {
+    final _result = create();
+    if (key != null) {
+      _result.key = key;
+    }
+    if (val != null) {
+      _result.val = val;
+    }
+    return _result;
+  }
+  factory KVStr.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KVStr.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -195,10 +229,8 @@ class KVStr extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  KVStr copyWith(void Function(KVStr) updates) => super.copyWith((message) => updates(message as KVStr)) as KVStr;
-
+  KVStr copyWith(void Function(KVStr) updates) => super.copyWith((message) => updates(message as KVStr)) as KVStr; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static KVStr create() => KVStr._();
   KVStr createEmptyInstance() => create();
@@ -227,17 +259,28 @@ class KVStr extends $pb.GeneratedMessage {
 }
 
 class SuitVO extends $pb.GeneratedMessage {
-  factory SuitVO() => create();
-  SuitVO._() : super();
-  factory SuitVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SuitVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SuitVO', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'positionId', protoName: 'positionId')
-    ..aInt64(2, _omitFieldNames ? '' : 'goodsId', protoName: 'goodsId')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuitVO', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'positionId', protoName: 'positionId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'goodsId', protoName: 'goodsId')
     ..hasRequiredFields = false
   ;
 
+  SuitVO._() : super();
+  factory SuitVO({
+    $fixnum.Int64? positionId,
+    $fixnum.Int64? goodsId,
+  }) {
+    final _result = create();
+    if (positionId != null) {
+      _result.positionId = positionId;
+    }
+    if (goodsId != null) {
+      _result.goodsId = goodsId;
+    }
+    return _result;
+  }
+  factory SuitVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SuitVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -247,10 +290,8 @@ class SuitVO extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SuitVO copyWith(void Function(SuitVO) updates) => super.copyWith((message) => updates(message as SuitVO)) as SuitVO;
-
+  SuitVO copyWith(void Function(SuitVO) updates) => super.copyWith((message) => updates(message as SuitVO)) as SuitVO; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SuitVO create() => SuitVO._();
   SuitVO createEmptyInstance() => create();
@@ -279,17 +320,28 @@ class SuitVO extends $pb.GeneratedMessage {
 }
 
 class KVState extends $pb.GeneratedMessage {
-  factory KVState() => create();
-  KVState._() : super();
-  factory KVState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory KVState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'KVState', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'state')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'KVState', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state')
     ..hasRequiredFields = false
   ;
 
+  KVState._() : super();
+  factory KVState({
+    $fixnum.Int64? roleId,
+    $core.String? state,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    return _result;
+  }
+  factory KVState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory KVState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -299,10 +351,8 @@ class KVState extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  KVState copyWith(void Function(KVState) updates) => super.copyWith((message) => updates(message as KVState)) as KVState;
-
+  KVState copyWith(void Function(KVState) updates) => super.copyWith((message) => updates(message as KVState)) as KVState; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static KVState create() => KVState._();
   KVState createEmptyInstance() => create();
@@ -331,16 +381,23 @@ class KVState extends $pb.GeneratedMessage {
 }
 
 class AttrInfo extends $pb.GeneratedMessage {
-  factory AttrInfo() => create();
-  AttrInfo._() : super();
-  factory AttrInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory AttrInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AttrInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<AttrVO>(1, _omitFieldNames ? '' : 'attrs', $pb.PbFieldType.PM, subBuilder: AttrVO.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AttrInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<AttrVO>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrs', $pb.PbFieldType.PM, subBuilder: AttrVO.create)
     ..hasRequiredFields = false
   ;
 
+  AttrInfo._() : super();
+  factory AttrInfo({
+    $core.Iterable<AttrVO>? attrs,
+  }) {
+    final _result = create();
+    if (attrs != null) {
+      _result.attrs.addAll(attrs);
+    }
+    return _result;
+  }
+  factory AttrInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AttrInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -350,10 +407,8 @@ class AttrInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AttrInfo copyWith(void Function(AttrInfo) updates) => super.copyWith((message) => updates(message as AttrInfo)) as AttrInfo;
-
+  AttrInfo copyWith(void Function(AttrInfo) updates) => super.copyWith((message) => updates(message as AttrInfo)) as AttrInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static AttrInfo create() => AttrInfo._();
   AttrInfo createEmptyInstance() => create();
@@ -367,16 +422,23 @@ class AttrInfo extends $pb.GeneratedMessage {
 }
 
 class SuitInfo extends $pb.GeneratedMessage {
-  factory SuitInfo() => create();
-  SuitInfo._() : super();
-  factory SuitInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SuitInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SuitInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<SuitVO>(1, _omitFieldNames ? '' : 'suits', $pb.PbFieldType.PM, subBuilder: SuitVO.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SuitInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<SuitVO>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suits', $pb.PbFieldType.PM, subBuilder: SuitVO.create)
     ..hasRequiredFields = false
   ;
 
+  SuitInfo._() : super();
+  factory SuitInfo({
+    $core.Iterable<SuitVO>? suits,
+  }) {
+    final _result = create();
+    if (suits != null) {
+      _result.suits.addAll(suits);
+    }
+    return _result;
+  }
+  factory SuitInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SuitInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -386,10 +448,8 @@ class SuitInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SuitInfo copyWith(void Function(SuitInfo) updates) => super.copyWith((message) => updates(message as SuitInfo)) as SuitInfo;
-
+  SuitInfo copyWith(void Function(SuitInfo) updates) => super.copyWith((message) => updates(message as SuitInfo)) as SuitInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static SuitInfo create() => SuitInfo._();
   SuitInfo createEmptyInstance() => create();
@@ -403,19 +463,38 @@ class SuitInfo extends $pb.GeneratedMessage {
 }
 
 class StateInfo extends $pb.GeneratedMessage {
-  factory StateInfo() => create();
-  StateInfo._() : super();
-  factory StateInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StateInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StateInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'id')
-    ..e<State>(2, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
-    ..aOM<XYZ>(3, _omitFieldNames ? '' : 'xyz', subBuilder: XYZ.create)
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'r', $pb.PbFieldType.O3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'StateInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..e<State>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
+    ..aOM<XYZ>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'xyz', subBuilder: XYZ.create)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'r', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
+  StateInfo._() : super();
+  factory StateInfo({
+    $fixnum.Int64? id,
+    State? state,
+    XYZ? xyz,
+    $core.int? r,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    if (xyz != null) {
+      _result.xyz = xyz;
+    }
+    if (r != null) {
+      _result.r = r;
+    }
+    return _result;
+  }
+  factory StateInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StateInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -425,10 +504,8 @@ class StateInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StateInfo copyWith(void Function(StateInfo) updates) => super.copyWith((message) => updates(message as StateInfo)) as StateInfo;
-
+  StateInfo copyWith(void Function(StateInfo) updates) => super.copyWith((message) => updates(message as StateInfo)) as StateInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static StateInfo create() => StateInfo._();
   StateInfo createEmptyInstance() => create();
@@ -477,18 +554,33 @@ class StateInfo extends $pb.GeneratedMessage {
 }
 
 class XYZ extends $pb.GeneratedMessage {
-  factory XYZ() => create();
-  XYZ._() : super();
-  factory XYZ.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory XYZ.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'XYZ', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'x', $pb.PbFieldType.O3)
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'y', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'z', $pb.PbFieldType.O3)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'XYZ', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'x', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'y', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'z', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
+  XYZ._() : super();
+  factory XYZ({
+    $core.int? x,
+    $core.int? y,
+    $core.int? z,
+  }) {
+    final _result = create();
+    if (x != null) {
+      _result.x = x;
+    }
+    if (y != null) {
+      _result.y = y;
+    }
+    if (z != null) {
+      _result.z = z;
+    }
+    return _result;
+  }
+  factory XYZ.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory XYZ.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -498,10 +590,8 @@ class XYZ extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  XYZ copyWith(void Function(XYZ) updates) => super.copyWith((message) => updates(message as XYZ)) as XYZ;
-
+  XYZ copyWith(void Function(XYZ) updates) => super.copyWith((message) => updates(message as XYZ)) as XYZ; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static XYZ create() => XYZ._();
   XYZ createEmptyInstance() => create();
@@ -539,21 +629,48 @@ class XYZ extends $pb.GeneratedMessage {
 }
 
 class RoleInfo extends $pb.GeneratedMessage {
-  factory RoleInfo() => create();
-  RoleInfo._() : super();
-  factory RoleInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'mark', $pb.PbFieldType.O3)
-    ..aOM<AttrInfo>(4, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(5, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..e<State>(6, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mark', $pb.PbFieldType.O3)
+    ..aOM<AttrInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
+    ..aOM<SuitInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
+    ..e<State>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
     ..hasRequiredFields = false
   ;
 
+  RoleInfo._() : super();
+  factory RoleInfo({
+    $fixnum.Int64? roleId,
+    $core.String? name,
+    $core.int? mark,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+    State? state,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (mark != null) {
+      _result.mark = mark;
+    }
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      _result.suitInfo = suitInfo;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    return _result;
+  }
+  factory RoleInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoleInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -563,10 +680,8 @@ class RoleInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RoleInfo copyWith(void Function(RoleInfo) updates) => super.copyWith((message) => updates(message as RoleInfo)) as RoleInfo;
-
+  RoleInfo copyWith(void Function(RoleInfo) updates) => super.copyWith((message) => updates(message as RoleInfo)) as RoleInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RoleInfo create() => RoleInfo._();
   RoleInfo createEmptyInstance() => create();
@@ -635,20 +750,43 @@ class RoleInfo extends $pb.GeneratedMessage {
 }
 
 class RoleDetailInfo extends $pb.GeneratedMessage {
-  factory RoleDetailInfo() => create();
-  RoleDetailInfo._() : super();
-  factory RoleDetailInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleDetailInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleDetailInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOM<AttrInfo>(3, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(4, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..e<State>(5, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleDetailInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<AttrInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
+    ..aOM<SuitInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
+    ..e<State>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
     ..hasRequiredFields = false
   ;
 
+  RoleDetailInfo._() : super();
+  factory RoleDetailInfo({
+    $fixnum.Int64? roleId,
+    $core.String? name,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+    State? state,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      _result.suitInfo = suitInfo;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    return _result;
+  }
+  factory RoleDetailInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoleDetailInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -658,10 +796,8 @@ class RoleDetailInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RoleDetailInfo copyWith(void Function(RoleDetailInfo) updates) => super.copyWith((message) => updates(message as RoleDetailInfo)) as RoleDetailInfo;
-
+  RoleDetailInfo copyWith(void Function(RoleDetailInfo) updates) => super.copyWith((message) => updates(message as RoleDetailInfo)) as RoleDetailInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RoleDetailInfo create() => RoleDetailInfo._();
   RoleDetailInfo createEmptyInstance() => create();
@@ -721,23 +857,58 @@ class RoleDetailInfo extends $pb.GeneratedMessage {
 }
 
 class RoleSceneInfo extends $pb.GeneratedMessage {
-  factory RoleSceneInfo() => create();
-  RoleSceneInfo._() : super();
-  factory RoleSceneInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleSceneInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleSceneInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOM<AttrInfo>(3, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(4, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..aOM<StateInfo>(5, _omitFieldNames ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
-    ..aOS(6, _omitFieldNames ? '' : 'seatGuid', protoName: 'seatGuid')
-    ..aInt64(7, _omitFieldNames ? '' : 'roomId', protoName: 'roomId')
-    ..aOS(8, _omitFieldNames ? '' : 'uid')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleSceneInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
+    ..aOM<AttrInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
+    ..aOM<SuitInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
+    ..aOM<StateInfo>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'seatGuid', protoName: 'seatGuid')
+    ..aInt64(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId', protoName: 'roomId')
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
+  RoleSceneInfo._() : super();
+  factory RoleSceneInfo({
+    $fixnum.Int64? roleId,
+    $core.String? name,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+    StateInfo? stateInfo,
+    $core.String? seatGuid,
+    $fixnum.Int64? roomId,
+    $core.String? uid,
+  }) {
+    final _result = create();
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (name != null) {
+      _result.name = name;
+    }
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      _result.suitInfo = suitInfo;
+    }
+    if (stateInfo != null) {
+      _result.stateInfo = stateInfo;
+    }
+    if (seatGuid != null) {
+      _result.seatGuid = seatGuid;
+    }
+    if (roomId != null) {
+      _result.roomId = roomId;
+    }
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    return _result;
+  }
+  factory RoleSceneInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoleSceneInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -747,10 +918,8 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RoleSceneInfo copyWith(void Function(RoleSceneInfo) updates) => super.copyWith((message) => updates(message as RoleSceneInfo)) as RoleSceneInfo;
-
+  RoleSceneInfo copyWith(void Function(RoleSceneInfo) updates) => super.copyWith((message) => updates(message as RoleSceneInfo)) as RoleSceneInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RoleSceneInfo create() => RoleSceneInfo._();
   RoleSceneInfo createEmptyInstance() => create();
@@ -839,19 +1008,38 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
 }
 
 class RoleData extends $pb.GeneratedMessage {
-  factory RoleData() => create();
-  RoleData._() : super();
-  factory RoleData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleData', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'id')
-    ..aOM<AttrInfo>(2, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(3, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..aOM<StateInfo>(4, _omitFieldNames ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoleData', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOM<AttrInfo>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
+    ..aOM<SuitInfo>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
+    ..aOM<StateInfo>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
     ..hasRequiredFields = false
   ;
 
+  RoleData._() : super();
+  factory RoleData({
+    $fixnum.Int64? id,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+    StateInfo? stateInfo,
+  }) {
+    final _result = create();
+    if (id != null) {
+      _result.id = id;
+    }
+    if (attrInfo != null) {
+      _result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      _result.suitInfo = suitInfo;
+    }
+    if (stateInfo != null) {
+      _result.stateInfo = stateInfo;
+    }
+    return _result;
+  }
+  factory RoleData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoleData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -861,10 +1049,8 @@ class RoleData extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RoleData copyWith(void Function(RoleData) updates) => super.copyWith((message) => updates(message as RoleData)) as RoleData;
-
+  RoleData copyWith(void Function(RoleData) updates) => super.copyWith((message) => updates(message as RoleData)) as RoleData; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static RoleData create() => RoleData._();
   RoleData createEmptyInstance() => create();
@@ -917,22 +1103,53 @@ class RoleData extends $pb.GeneratedMessage {
 }
 
 class UserInfo extends $pb.GeneratedMessage {
-  factory UserInfo() => create();
-  UserInfo._() : super();
-  factory UserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory UserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'uid')
-    ..aInt64(2, _omitFieldNames ? '' : 'roleId')
-    ..aOS(3, _omitFieldNames ? '' : 'username')
-    ..aOS(4, _omitFieldNames ? '' : 'avatarUrl')
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'adminType', $pb.PbFieldType.O3)
-    ..aOS(7, _omitFieldNames ? '' : 'level')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'adminType', $pb.PbFieldType.O3)
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level')
     ..hasRequiredFields = false
   ;
 
+  UserInfo._() : super();
+  factory UserInfo({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $core.String? username,
+    $core.String? avatarUrl,
+    $core.int? type,
+    $core.int? adminType,
+    $core.String? level,
+  }) {
+    final _result = create();
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (username != null) {
+      _result.username = username;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (adminType != null) {
+      _result.adminType = adminType;
+    }
+    if (level != null) {
+      _result.level = level;
+    }
+    return _result;
+  }
+  factory UserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -942,10 +1159,8 @@ class UserInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  UserInfo copyWith(void Function(UserInfo) updates) => super.copyWith((message) => updates(message as UserInfo)) as UserInfo;
-
+  UserInfo copyWith(void Function(UserInfo) updates) => super.copyWith((message) => updates(message as UserInfo)) as UserInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static UserInfo create() => UserInfo._();
   UserInfo createEmptyInstance() => create();
@@ -1019,21 +1234,48 @@ class UserInfo extends $pb.GeneratedMessage {
 }
 
 class MikeInfo extends $pb.GeneratedMessage {
-  factory MikeInfo() => create();
-  MikeInfo._() : super();
-  factory MikeInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory MikeInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MikeInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
-    ..aInt64(2, _omitFieldNames ? '' : 'mikeId')
-    ..aOS(3, _omitFieldNames ? '' : 'mikeNo')
-    ..aOS(4, _omitFieldNames ? '' : 'uid')
-    ..aInt64(6, _omitFieldNames ? '' : 'roleId')
-    ..aInt64(7, _omitFieldNames ? '' : 'number')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MikeInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aInt64(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'number')
     ..hasRequiredFields = false
   ;
 
+  MikeInfo._() : super();
+  factory MikeInfo({
+    $fixnum.Int64? roomId,
+    $fixnum.Int64? mikeId,
+    $core.String? mikeNo,
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? number,
+  }) {
+    final _result = create();
+    if (roomId != null) {
+      _result.roomId = roomId;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
+    }
+    if (mikeNo != null) {
+      _result.mikeNo = mikeNo;
+    }
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (number != null) {
+      _result.number = number;
+    }
+    return _result;
+  }
+  factory MikeInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MikeInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1043,10 +1285,8 @@ class MikeInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MikeInfo copyWith(void Function(MikeInfo) updates) => super.copyWith((message) => updates(message as MikeInfo)) as MikeInfo;
-
+  MikeInfo copyWith(void Function(MikeInfo) updates) => super.copyWith((message) => updates(message as MikeInfo)) as MikeInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static MikeInfo create() => MikeInfo._();
   MikeInfo createEmptyInstance() => create();
@@ -1110,18 +1350,174 @@ class MikeInfo extends $pb.GeneratedMessage {
   void clearNumber() => clearField(7);
 }
 
-class PKGuildInfo extends $pb.GeneratedMessage {
-  factory PKGuildInfo() => create();
-  PKGuildInfo._() : super();
-  factory PKGuildInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKGuildInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKGuildInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'guildId', protoName: 'guildId')
-    ..aOS(2, _omitFieldNames ? '' : 'guildName', protoName: 'guildName')
+class RoomUserInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoomUserInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'uid')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'username')
+    ..aOS(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl')
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'adminType', $pb.PbFieldType.O3)
+    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'level')
     ..hasRequiredFields = false
   ;
 
+  RoomUserInfo._() : super();
+  factory RoomUserInfo({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? roomId,
+    $core.String? username,
+    $core.String? avatarUrl,
+    $core.int? type,
+    $core.int? adminType,
+    $core.String? level,
+  }) {
+    final _result = create();
+    if (uid != null) {
+      _result.uid = uid;
+    }
+    if (roleId != null) {
+      _result.roleId = roleId;
+    }
+    if (roomId != null) {
+      _result.roomId = roomId;
+    }
+    if (username != null) {
+      _result.username = username;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (type != null) {
+      _result.type = type;
+    }
+    if (adminType != null) {
+      _result.adminType = adminType;
+    }
+    if (level != null) {
+      _result.level = level;
+    }
+    return _result;
+  }
+  factory RoomUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoomUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RoomUserInfo clone() => RoomUserInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RoomUserInfo copyWith(void Function(RoomUserInfo) updates) => super.copyWith((message) => updates(message as RoomUserInfo)) as RoomUserInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RoomUserInfo create() => RoomUserInfo._();
+  RoomUserInfo createEmptyInstance() => create();
+  static $pb.PbList<RoomUserInfo> createRepeated() => $pb.PbList<RoomUserInfo>();
+  @$core.pragma('dart2js:noInline')
+  static RoomUserInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoomUserInfo>(create);
+  static RoomUserInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roleId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoleId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoleId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get roomId => $_getI64(2);
+  @$pb.TagNumber(3)
+  set roomId($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoomId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoomId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get username => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set username($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUsername() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUsername() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get avatarUrl => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set avatarUrl($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAvatarUrl() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearAvatarUrl() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get type => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set type($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasType() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearType() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get adminType => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set adminType($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasAdminType() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearAdminType() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get level => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set level($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasLevel() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearLevel() => clearField(8);
+}
+
+class PKGuildInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKGuildInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guildId', protoName: 'guildId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guildName', protoName: 'guildName')
+    ..hasRequiredFields = false
+  ;
+
+  PKGuildInfo._() : super();
+  factory PKGuildInfo({
+    $fixnum.Int64? guildId,
+    $core.String? guildName,
+  }) {
+    final _result = create();
+    if (guildId != null) {
+      _result.guildId = guildId;
+    }
+    if (guildName != null) {
+      _result.guildName = guildName;
+    }
+    return _result;
+  }
+  factory PKGuildInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKGuildInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1131,10 +1527,8 @@ class PKGuildInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKGuildInfo copyWith(void Function(PKGuildInfo) updates) => super.copyWith((message) => updates(message as PKGuildInfo)) as PKGuildInfo;
-
+  PKGuildInfo copyWith(void Function(PKGuildInfo) updates) => super.copyWith((message) => updates(message as PKGuildInfo)) as PKGuildInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static PKGuildInfo create() => PKGuildInfo._();
   PKGuildInfo createEmptyInstance() => create();
@@ -1163,23 +1557,68 @@ class PKGuildInfo extends $pb.GeneratedMessage {
 }
 
 class PKUserInfo extends $pb.GeneratedMessage {
-  factory PKUserInfo() => create();
-  PKUserInfo._() : super();
-  factory PKUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKUserInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
-    ..aInt64(2, _omitFieldNames ? '' : 'gender')
-    ..aOS(3, _omitFieldNames ? '' : 'userName', protoName: 'userName')
-    ..aInt64(4, _omitFieldNames ? '' : 'guildId', protoName: 'guildId')
-    ..aOB(5, _omitFieldNames ? '' : 'isManager', protoName: 'isManager')
-    ..aOS(6, _omitFieldNames ? '' : 'avatarUrl', protoName: 'avatarUrl')
-    ..a<$core.int>(7, _omitFieldNames ? '' : 'mikeId', $pb.PbFieldType.O3, protoName: 'mikeId')
-    ..p<$fixnum.Int64>(8, _omitFieldNames ? '' : 'clothingIds', $pb.PbFieldType.K6, protoName: 'clothingIds')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKUserInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', protoName: 'userId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'gender')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName', protoName: 'userName')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guildId', protoName: 'guildId')
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isManager', protoName: 'isManager')
+    ..aOS(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl', protoName: 'avatarUrl')
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId', $pb.PbFieldType.O3, protoName: 'mikeId')
+    ..p<$fixnum.Int64>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'clothingIds', $pb.PbFieldType.K6, protoName: 'clothingIds')
+    ..aInt64(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pkRoomId', protoName: 'pkRoomId')
+    ..a<$core.int>(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'BattleStatus', $pb.PbFieldType.O3, protoName: 'BattleStatus')
     ..hasRequiredFields = false
   ;
 
+  PKUserInfo._() : super();
+  factory PKUserInfo({
+    $fixnum.Int64? userId,
+    $fixnum.Int64? gender,
+    $core.String? userName,
+    $fixnum.Int64? guildId,
+    $core.bool? isManager,
+    $core.String? avatarUrl,
+    $core.int? mikeId,
+    $core.Iterable<$fixnum.Int64>? clothingIds,
+    $fixnum.Int64? pkRoomId,
+    $core.int? battleStatus,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (gender != null) {
+      _result.gender = gender;
+    }
+    if (userName != null) {
+      _result.userName = userName;
+    }
+    if (guildId != null) {
+      _result.guildId = guildId;
+    }
+    if (isManager != null) {
+      _result.isManager = isManager;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (mikeId != null) {
+      _result.mikeId = mikeId;
+    }
+    if (clothingIds != null) {
+      _result.clothingIds.addAll(clothingIds);
+    }
+    if (pkRoomId != null) {
+      _result.pkRoomId = pkRoomId;
+    }
+    if (battleStatus != null) {
+      _result.battleStatus = battleStatus;
+    }
+    return _result;
+  }
+  factory PKUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1189,10 +1628,8 @@ class PKUserInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKUserInfo copyWith(void Function(PKUserInfo) updates) => super.copyWith((message) => updates(message as PKUserInfo)) as PKUserInfo;
-
+  PKUserInfo copyWith(void Function(PKUserInfo) updates) => super.copyWith((message) => updates(message as PKUserInfo)) as PKUserInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static PKUserInfo create() => PKUserInfo._();
   PKUserInfo createEmptyInstance() => create();
@@ -1266,50 +1703,92 @@ class PKUserInfo extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(8)
   $core.List<$fixnum.Int64> get clothingIds => $_getList(7);
+
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get pkRoomId => $_getI64(8);
+  @$pb.TagNumber(9)
+  set pkRoomId($fixnum.Int64 v) { $_setInt64(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasPkRoomId() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearPkRoomId() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get battleStatus => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set battleStatus($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasBattleStatus() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearBattleStatus() => clearField(10);
 }
 
-class PKRoleInfo extends $pb.GeneratedMessage {
-  factory PKRoleInfo() => create();
-  PKRoleInfo._() : super();
-  factory PKRoleInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKRoleInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKRoleInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
-    ..a<$core.int>(2, _omitFieldNames ? '' : 'currentBlood', $pb.PbFieldType.O3, protoName: 'currentBlood')
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'totalBlood', $pb.PbFieldType.O3, protoName: 'totalBlood')
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'shield', $pb.PbFieldType.O3)
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'attack', $pb.PbFieldType.O3)
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.O3)
-    ..aOM<XYZ>(7, _omitFieldNames ? '' : 'position', subBuilder: XYZ.create)
-    ..a<$core.int>(8, _omitFieldNames ? '' : 'rotation', $pb.PbFieldType.O3)
-    ..a<$core.int>(9, _omitFieldNames ? '' : 'totalDamage', $pb.PbFieldType.O3, protoName: 'totalDamage')
-    ..aInt64(10, _omitFieldNames ? '' : 'survivedTime', protoName: 'survivedTime')
-    ..a<$core.int>(11, _omitFieldNames ? '' : 'attackedCount', $pb.PbFieldType.O3, protoName: 'attackedCount')
-    ..a<$core.int>(12, _omitFieldNames ? '' : 'outBlood', $pb.PbFieldType.O3, protoName: 'outBlood')
+class PKRoleBattleInfoLF extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKRoleBattleInfoLF', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', protoName: 'userId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'currentBlood', $pb.PbFieldType.O3, protoName: 'currentBlood')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalBlood', $pb.PbFieldType.O3, protoName: 'totalBlood')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'shield', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attack', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'speed', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'swordCount', $pb.PbFieldType.O3, protoName: 'swordCount')
     ..hasRequiredFields = false
   ;
 
+  PKRoleBattleInfoLF._() : super();
+  factory PKRoleBattleInfoLF({
+    $fixnum.Int64? userId,
+    $core.int? currentBlood,
+    $core.int? totalBlood,
+    $core.int? shield,
+    $core.int? attack,
+    $core.int? speed,
+    $core.int? swordCount,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (currentBlood != null) {
+      _result.currentBlood = currentBlood;
+    }
+    if (totalBlood != null) {
+      _result.totalBlood = totalBlood;
+    }
+    if (shield != null) {
+      _result.shield = shield;
+    }
+    if (attack != null) {
+      _result.attack = attack;
+    }
+    if (speed != null) {
+      _result.speed = speed;
+    }
+    if (swordCount != null) {
+      _result.swordCount = swordCount;
+    }
+    return _result;
+  }
+  factory PKRoleBattleInfoLF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleBattleInfoLF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  PKRoleInfo clone() => PKRoleInfo()..mergeFromMessage(this);
+  PKRoleBattleInfoLF clone() => PKRoleBattleInfoLF()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKRoleInfo copyWith(void Function(PKRoleInfo) updates) => super.copyWith((message) => updates(message as PKRoleInfo)) as PKRoleInfo;
-
+  PKRoleBattleInfoLF copyWith(void Function(PKRoleBattleInfoLF) updates) => super.copyWith((message) => updates(message as PKRoleBattleInfoLF)) as PKRoleBattleInfoLF; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
-  static PKRoleInfo create() => PKRoleInfo._();
-  PKRoleInfo createEmptyInstance() => create();
-  static $pb.PbList<PKRoleInfo> createRepeated() => $pb.PbList<PKRoleInfo>();
+  static PKRoleBattleInfoLF create() => PKRoleBattleInfoLF._();
+  PKRoleBattleInfoLF createEmptyInstance() => create();
+  static $pb.PbList<PKRoleBattleInfoLF> createRepeated() => $pb.PbList<PKRoleBattleInfoLF>();
   @$core.pragma('dart2js:noInline')
-  static PKRoleInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleInfo>(create);
-  static PKRoleInfo? _defaultInstance;
+  static PKRoleBattleInfoLF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleBattleInfoLF>(create);
+  static PKRoleBattleInfoLF? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get userId => $_getI64(0);
@@ -1366,77 +1845,233 @@ class PKRoleInfo extends $pb.GeneratedMessage {
   void clearSpeed() => clearField(6);
 
   @$pb.TagNumber(7)
-  XYZ get position => $_getN(6);
+  $core.int get swordCount => $_getIZ(6);
   @$pb.TagNumber(7)
-  set position(XYZ v) { setField(7, v); }
+  set swordCount($core.int v) { $_setSignedInt32(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasPosition() => $_has(6);
+  $core.bool hasSwordCount() => $_has(6);
   @$pb.TagNumber(7)
-  void clearPosition() => clearField(7);
-  @$pb.TagNumber(7)
-  XYZ ensurePosition() => $_ensure(6);
-
-  @$pb.TagNumber(8)
-  $core.int get rotation => $_getIZ(7);
-  @$pb.TagNumber(8)
-  set rotation($core.int v) { $_setSignedInt32(7, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasRotation() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearRotation() => clearField(8);
-
-  @$pb.TagNumber(9)
-  $core.int get totalDamage => $_getIZ(8);
-  @$pb.TagNumber(9)
-  set totalDamage($core.int v) { $_setSignedInt32(8, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasTotalDamage() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearTotalDamage() => clearField(9);
-
-  @$pb.TagNumber(10)
-  $fixnum.Int64 get survivedTime => $_getI64(9);
-  @$pb.TagNumber(10)
-  set survivedTime($fixnum.Int64 v) { $_setInt64(9, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasSurvivedTime() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearSurvivedTime() => clearField(10);
-
-  @$pb.TagNumber(11)
-  $core.int get attackedCount => $_getIZ(10);
-  @$pb.TagNumber(11)
-  set attackedCount($core.int v) { $_setSignedInt32(10, v); }
-  @$pb.TagNumber(11)
-  $core.bool hasAttackedCount() => $_has(10);
-  @$pb.TagNumber(11)
-  void clearAttackedCount() => clearField(11);
-
-  @$pb.TagNumber(12)
-  $core.int get outBlood => $_getIZ(11);
-  @$pb.TagNumber(12)
-  set outBlood($core.int v) { $_setSignedInt32(11, v); }
-  @$pb.TagNumber(12)
-  $core.bool hasOutBlood() => $_has(11);
-  @$pb.TagNumber(12)
-  void clearOutBlood() => clearField(12);
+  void clearSwordCount() => clearField(7);
 }
 
-class PKPresenterInfo extends $pb.GeneratedMessage {
-  factory PKPresenterInfo() => create();
-  PKPresenterInfo._() : super();
-  factory PKPresenterInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKPresenterInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKPresenterInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
-    ..aOS(2, _omitFieldNames ? '' : 'userName', protoName: 'userName')
-    ..aOS(3, _omitFieldNames ? '' : 'avatarUrl', protoName: 'avatarUrl')
-    ..aInt64(4, _omitFieldNames ? '' : 'guildId', protoName: 'guildId')
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'contribution', $pb.PbFieldType.O3)
+class PKRoleBattleInfoHF extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKRoleBattleInfoHF', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', protoName: 'userId')
+    ..aOM<XYZ>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: XYZ.create)
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rotation')
     ..hasRequiredFields = false
   ;
 
+  PKRoleBattleInfoHF._() : super();
+  factory PKRoleBattleInfoHF({
+    $fixnum.Int64? userId,
+    XYZ? position,
+    $fixnum.Int64? rotation,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    if (rotation != null) {
+      _result.rotation = rotation;
+    }
+    return _result;
+  }
+  factory PKRoleBattleInfoHF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleBattleInfoHF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PKRoleBattleInfoHF clone() => PKRoleBattleInfoHF()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PKRoleBattleInfoHF copyWith(void Function(PKRoleBattleInfoHF) updates) => super.copyWith((message) => updates(message as PKRoleBattleInfoHF)) as PKRoleBattleInfoHF; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PKRoleBattleInfoHF create() => PKRoleBattleInfoHF._();
+  PKRoleBattleInfoHF createEmptyInstance() => create();
+  static $pb.PbList<PKRoleBattleInfoHF> createRepeated() => $pb.PbList<PKRoleBattleInfoHF>();
+  @$core.pragma('dart2js:noInline')
+  static PKRoleBattleInfoHF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleBattleInfoHF>(create);
+  static PKRoleBattleInfoHF? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get userId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set userId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  XYZ get position => $_getN(1);
+  @$pb.TagNumber(2)
+  set position(XYZ v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPosition() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPosition() => clearField(2);
+  @$pb.TagNumber(2)
+  XYZ ensurePosition() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get rotation => $_getI64(2);
+  @$pb.TagNumber(3)
+  set rotation($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRotation() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRotation() => clearField(3);
+}
+
+class PKRoleSummary extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKRoleSummary', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', protoName: 'userId')
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'totalDamage', $pb.PbFieldType.O3, protoName: 'totalDamage')
+    ..aInt64(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'survivedTime', protoName: 'survivedTime')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'attackedCount', $pb.PbFieldType.O3, protoName: 'attackedCount')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'outBlood', $pb.PbFieldType.O3, protoName: 'outBlood')
+    ..hasRequiredFields = false
+  ;
+
+  PKRoleSummary._() : super();
+  factory PKRoleSummary({
+    $fixnum.Int64? userId,
+    $core.int? totalDamage,
+    $fixnum.Int64? survivedTime,
+    $core.int? attackedCount,
+    $core.int? outBlood,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (totalDamage != null) {
+      _result.totalDamage = totalDamage;
+    }
+    if (survivedTime != null) {
+      _result.survivedTime = survivedTime;
+    }
+    if (attackedCount != null) {
+      _result.attackedCount = attackedCount;
+    }
+    if (outBlood != null) {
+      _result.outBlood = outBlood;
+    }
+    return _result;
+  }
+  factory PKRoleSummary.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleSummary.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PKRoleSummary clone() => PKRoleSummary()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PKRoleSummary copyWith(void Function(PKRoleSummary) updates) => super.copyWith((message) => updates(message as PKRoleSummary)) as PKRoleSummary; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PKRoleSummary create() => PKRoleSummary._();
+  PKRoleSummary createEmptyInstance() => create();
+  static $pb.PbList<PKRoleSummary> createRepeated() => $pb.PbList<PKRoleSummary>();
+  @$core.pragma('dart2js:noInline')
+  static PKRoleSummary getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleSummary>(create);
+  static PKRoleSummary? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get userId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set userId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get totalDamage => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set totalDamage($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTotalDamage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTotalDamage() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get survivedTime => $_getI64(2);
+  @$pb.TagNumber(3)
+  set survivedTime($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSurvivedTime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSurvivedTime() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get attackedCount => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set attackedCount($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAttackedCount() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAttackedCount() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get outBlood => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set outBlood($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasOutBlood() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearOutBlood() => clearField(5);
+}
+
+class PKPresenterInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKPresenterInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId', protoName: 'userId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userName', protoName: 'userName')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'avatarUrl', protoName: 'avatarUrl')
+    ..aInt64(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'guildId', protoName: 'guildId')
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'contribution', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  PKPresenterInfo._() : super();
+  factory PKPresenterInfo({
+    $fixnum.Int64? userId,
+    $core.String? userName,
+    $core.String? avatarUrl,
+    $fixnum.Int64? guildId,
+    $core.int? contribution,
+  }) {
+    final _result = create();
+    if (userId != null) {
+      _result.userId = userId;
+    }
+    if (userName != null) {
+      _result.userName = userName;
+    }
+    if (avatarUrl != null) {
+      _result.avatarUrl = avatarUrl;
+    }
+    if (guildId != null) {
+      _result.guildId = guildId;
+    }
+    if (contribution != null) {
+      _result.contribution = contribution;
+    }
+    return _result;
+  }
+  factory PKPresenterInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKPresenterInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1446,10 +2081,8 @@ class PKPresenterInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKPresenterInfo copyWith(void Function(PKPresenterInfo) updates) => super.copyWith((message) => updates(message as PKPresenterInfo)) as PKPresenterInfo;
-
+  PKPresenterInfo copyWith(void Function(PKPresenterInfo) updates) => super.copyWith((message) => updates(message as PKPresenterInfo)) as PKPresenterInfo; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static PKPresenterInfo create() => PKPresenterInfo._();
   PKPresenterInfo createEmptyInstance() => create();
@@ -1505,18 +2138,48 @@ class PKPresenterInfo extends $pb.GeneratedMessage {
 }
 
 class PKGift extends $pb.GeneratedMessage {
-  factory PKGift() => create();
-  PKGift._() : super();
-  factory PKGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'giftId', protoName: 'giftId')
-    ..aOM<XYZ>(2, _omitFieldNames ? '' : 'position', subBuilder: XYZ.create)
-    ..e<PKGiftState>(3, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: PKGiftState.Available, valueOf: PKGiftState.valueOf, enumValues: PKGiftState.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKGift', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'giftId', protoName: 'giftId')
+    ..aOM<XYZ>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'position', subBuilder: XYZ.create)
+    ..e<PKGiftState>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: PKGiftState.Available, valueOf: PKGiftState.valueOf, enumValues: PKGiftState.values)
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'modelId', protoName: 'modelId')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pickUserId', protoName: 'pickUserId')
+    ..aInt64(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
     ..hasRequiredFields = false
   ;
 
+  PKGift._() : super();
+  factory PKGift({
+    $fixnum.Int64? giftId,
+    XYZ? position,
+    PKGiftState? state,
+    $core.String? modelId,
+    $fixnum.Int64? pickUserId,
+    $fixnum.Int64? id,
+  }) {
+    final _result = create();
+    if (giftId != null) {
+      _result.giftId = giftId;
+    }
+    if (position != null) {
+      _result.position = position;
+    }
+    if (state != null) {
+      _result.state = state;
+    }
+    if (modelId != null) {
+      _result.modelId = modelId;
+    }
+    if (pickUserId != null) {
+      _result.pickUserId = pickUserId;
+    }
+    if (id != null) {
+      _result.id = id;
+    }
+    return _result;
+  }
+  factory PKGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1526,10 +2189,8 @@ class PKGift extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKGift copyWith(void Function(PKGift) updates) => super.copyWith((message) => updates(message as PKGift)) as PKGift;
-
+  PKGift copyWith(void Function(PKGift) updates) => super.copyWith((message) => updates(message as PKGift)) as PKGift; // ignore: deprecated_member_use
   $pb.BuilderInfo get info_ => _i;
-
   @$core.pragma('dart2js:noInline')
   static PKGift create() => PKGift._();
   PKGift createEmptyInstance() => create();
@@ -1566,8 +2227,441 @@ class PKGift extends $pb.GeneratedMessage {
   $core.bool hasState() => $_has(2);
   @$pb.TagNumber(3)
   void clearState() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get modelId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set modelId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasModelId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearModelId() => clearField(4);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get pickUserId => $_getI64(4);
+  @$pb.TagNumber(6)
+  set pickUserId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPickUserId() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearPickUserId() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get id => $_getI64(5);
+  @$pb.TagNumber(7)
+  set id($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasId() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearId() => clearField(7);
 }
 
+class PKSceneToxic extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PKSceneToxic', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'safeRadius', $pb.PbFieldType.O3, protoName: 'safeRadius')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'takeEffectTime', protoName: 'takeEffectTime')
+    ..aOM<XYZ>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'safePosition', protoName: 'safePosition', subBuilder: XYZ.create)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'toxicFogSpeed', $pb.PbFieldType.O3, protoName: 'toxicFogSpeed')
+    ..aInt64(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'nextSafeTakeEffectTime', protoName: 'nextSafeTakeEffectTime')
+    ..hasRequiredFields = false
+  ;
 
-const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+  PKSceneToxic._() : super();
+  factory PKSceneToxic({
+    $core.int? safeRadius,
+    $fixnum.Int64? takeEffectTime,
+    XYZ? safePosition,
+    $core.int? toxicFogSpeed,
+    $fixnum.Int64? nextSafeTakeEffectTime,
+  }) {
+    final _result = create();
+    if (safeRadius != null) {
+      _result.safeRadius = safeRadius;
+    }
+    if (takeEffectTime != null) {
+      _result.takeEffectTime = takeEffectTime;
+    }
+    if (safePosition != null) {
+      _result.safePosition = safePosition;
+    }
+    if (toxicFogSpeed != null) {
+      _result.toxicFogSpeed = toxicFogSpeed;
+    }
+    if (nextSafeTakeEffectTime != null) {
+      _result.nextSafeTakeEffectTime = nextSafeTakeEffectTime;
+    }
+    return _result;
+  }
+  factory PKSceneToxic.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKSceneToxic.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PKSceneToxic clone() => PKSceneToxic()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PKSceneToxic copyWith(void Function(PKSceneToxic) updates) => super.copyWith((message) => updates(message as PKSceneToxic)) as PKSceneToxic; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PKSceneToxic create() => PKSceneToxic._();
+  PKSceneToxic createEmptyInstance() => create();
+  static $pb.PbList<PKSceneToxic> createRepeated() => $pb.PbList<PKSceneToxic>();
+  @$core.pragma('dart2js:noInline')
+  static PKSceneToxic getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKSceneToxic>(create);
+  static PKSceneToxic? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get safeRadius => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set safeRadius($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSafeRadius() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSafeRadius() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get takeEffectTime => $_getI64(1);
+  @$pb.TagNumber(2)
+  set takeEffectTime($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTakeEffectTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTakeEffectTime() => clearField(2);
+
+  @$pb.TagNumber(3)
+  XYZ get safePosition => $_getN(2);
+  @$pb.TagNumber(3)
+  set safePosition(XYZ v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSafePosition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSafePosition() => clearField(3);
+  @$pb.TagNumber(3)
+  XYZ ensureSafePosition() => $_ensure(2);
+
+  @$pb.TagNumber(5)
+  $core.int get toxicFogSpeed => $_getIZ(3);
+  @$pb.TagNumber(5)
+  set toxicFogSpeed($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasToxicFogSpeed() => $_has(3);
+  @$pb.TagNumber(5)
+  void clearToxicFogSpeed() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get nextSafeTakeEffectTime => $_getI64(4);
+  @$pb.TagNumber(6)
+  set nextSafeTakeEffectTime($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasNextSafeTakeEffectTime() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearNextSafeTakeEffectTime() => clearField(6);
+}
+
+class PkRoomInfo extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PkRoomInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomName')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomImage')
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'hotValue', $pb.PbFieldType.O3)
+    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isInvite')
+    ..hasRequiredFields = false
+  ;
+
+  PkRoomInfo._() : super();
+  factory PkRoomInfo({
+    $fixnum.Int64? roomId,
+    $core.String? roomName,
+    $core.String? roomImage,
+    $core.int? hotValue,
+    $core.bool? isInvite,
+  }) {
+    final _result = create();
+    if (roomId != null) {
+      _result.roomId = roomId;
+    }
+    if (roomName != null) {
+      _result.roomName = roomName;
+    }
+    if (roomImage != null) {
+      _result.roomImage = roomImage;
+    }
+    if (hotValue != null) {
+      _result.hotValue = hotValue;
+    }
+    if (isInvite != null) {
+      _result.isInvite = isInvite;
+    }
+    return _result;
+  }
+  factory PkRoomInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PkRoomInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PkRoomInfo clone() => PkRoomInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PkRoomInfo copyWith(void Function(PkRoomInfo) updates) => super.copyWith((message) => updates(message as PkRoomInfo)) as PkRoomInfo; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PkRoomInfo create() => PkRoomInfo._();
+  PkRoomInfo createEmptyInstance() => create();
+  static $pb.PbList<PkRoomInfo> createRepeated() => $pb.PbList<PkRoomInfo>();
+  @$core.pragma('dart2js:noInline')
+  static PkRoomInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PkRoomInfo>(create);
+  static PkRoomInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get roomName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set roomName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get roomImage => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set roomImage($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoomImage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoomImage() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get hotValue => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set hotValue($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasHotValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearHotValue() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get isInvite => $_getBF(4);
+  @$pb.TagNumber(5)
+  set isInvite($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasIsInvite() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsInvite() => clearField(5);
+}
+
+class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PkRoleDefaultConfiguration', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleRadius', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'speed', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weaponLength', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'weaponSpeed', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxWeaponNum', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'blood', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'TotalBlood', $pb.PbFieldType.O3, protoName: 'TotalBlood')
+    ..a<$core.int>(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Shield', $pb.PbFieldType.O3, protoName: 'Shield')
+    ..a<$core.int>(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'Attack', $pb.PbFieldType.O3, protoName: 'Attack')
+    ..aInt64(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'countdown')
+    ..a<$core.int>(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'swordCount', $pb.PbFieldType.O3)
+    ..a<$core.int>(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'maxSpeed', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  PkRoleDefaultConfiguration._() : super();
+  factory PkRoleDefaultConfiguration({
+    $core.int? roleRadius,
+    $core.int? speed,
+    $core.int? weaponLength,
+    $core.int? weaponSpeed,
+    $core.int? maxWeaponNum,
+    $core.int? blood,
+    $core.int? totalBlood,
+    $core.int? shield,
+    $core.int? attack,
+    $fixnum.Int64? countdown,
+    $core.int? swordCount,
+    $core.int? maxSpeed,
+  }) {
+    final _result = create();
+    if (roleRadius != null) {
+      _result.roleRadius = roleRadius;
+    }
+    if (speed != null) {
+      _result.speed = speed;
+    }
+    if (weaponLength != null) {
+      _result.weaponLength = weaponLength;
+    }
+    if (weaponSpeed != null) {
+      _result.weaponSpeed = weaponSpeed;
+    }
+    if (maxWeaponNum != null) {
+      _result.maxWeaponNum = maxWeaponNum;
+    }
+    if (blood != null) {
+      _result.blood = blood;
+    }
+    if (totalBlood != null) {
+      _result.totalBlood = totalBlood;
+    }
+    if (shield != null) {
+      _result.shield = shield;
+    }
+    if (attack != null) {
+      _result.attack = attack;
+    }
+    if (countdown != null) {
+      _result.countdown = countdown;
+    }
+    if (swordCount != null) {
+      _result.swordCount = swordCount;
+    }
+    if (maxSpeed != null) {
+      _result.maxSpeed = maxSpeed;
+    }
+    return _result;
+  }
+  factory PkRoleDefaultConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PkRoleDefaultConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration clone() => PkRoleDefaultConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration copyWith(void Function(PkRoleDefaultConfiguration) updates) => super.copyWith((message) => updates(message as PkRoleDefaultConfiguration)) as PkRoleDefaultConfiguration; // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration create() => PkRoleDefaultConfiguration._();
+  PkRoleDefaultConfiguration createEmptyInstance() => create();
+  static $pb.PbList<PkRoleDefaultConfiguration> createRepeated() => $pb.PbList<PkRoleDefaultConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PkRoleDefaultConfiguration>(create);
+  static PkRoleDefaultConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get roleRadius => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set roleRadius($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleRadius() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleRadius() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get speed => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set speed($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpeed() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSpeed() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get weaponLength => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set weaponLength($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasWeaponLength() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearWeaponLength() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get weaponSpeed => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set weaponSpeed($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWeaponSpeed() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWeaponSpeed() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get maxWeaponNum => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set maxWeaponNum($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMaxWeaponNum() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMaxWeaponNum() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get blood => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set blood($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBlood() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBlood() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get totalBlood => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set totalBlood($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTotalBlood() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTotalBlood() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get shield => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set shield($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasShield() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearShield() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get attack => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set attack($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasAttack() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearAttack() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $fixnum.Int64 get countdown => $_getI64(9);
+  @$pb.TagNumber(10)
+  set countdown($fixnum.Int64 v) { $_setInt64(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasCountdown() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearCountdown() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.int get swordCount => $_getIZ(10);
+  @$pb.TagNumber(11)
+  set swordCount($core.int v) { $_setSignedInt32(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasSwordCount() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearSwordCount() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get maxSpeed => $_getIZ(11);
+  @$pb.TagNumber(12)
+  set maxSpeed($core.int v) { $_setSignedInt32(11, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasMaxSpeed() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearMaxSpeed() => clearField(12);
+}
+

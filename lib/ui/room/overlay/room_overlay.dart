@@ -1,14 +1,11 @@
-import 'package:app/common/nets/cmds.dart';
-import 'package:app/common/nets/commons/proto/Message.pb.dart';
-import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
-import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
@@ -23,6 +20,7 @@ import 'package:app/ui/room/overlay/room_tool_dialog.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
+import 'package:app/ui/room/user/challenge_user_view.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:app/ui/room/user/room_admin_page.dart';
@@ -52,7 +50,8 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
 
         final showMicPanel = controller.maxMic > 0 && !freeMic;
 
-        final topMicMode = controller.roomType == RoomType.guild;
+        //公会房且不在pk中，才显示麦位
+        final topMicMode = (controller.roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
         final sideMicMode = controller.roomType == RoomType.customize;
 
         return Stack(
@@ -135,6 +134,12 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         break;
       case '意见反馈':
         Get.to(() => FeedbackPage(type: 1, id: controller.roomId));
+        break;
+      case '发起挑战':
+        OrientationSheet.show(
+          child: ChallengeUserPage(roomId: roomId),
+          direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+        );
         break;
       default:
         super.onItemClick(action);

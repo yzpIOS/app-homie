@@ -36,9 +36,6 @@ class _UserInit1PageState extends State<UserInit1Page> with BusStateMixin {
         );
       },
     );
-    // 需要把unity重启
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
   }
 
   @override
