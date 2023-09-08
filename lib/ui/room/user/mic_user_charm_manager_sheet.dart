@@ -3,6 +3,7 @@ import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
@@ -267,10 +268,6 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
       ),
     );
   }
-  void onItemClick(String action) {
-
-  }
-
 
   Widget $Btn2(String title) {
     return XTextBtn(
@@ -278,5 +275,13 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
       textStyle: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
       onTap: () => onItemClick(title),
     );
+  }
+
+  void onItemClick(String action) async {
+    var roomId = widget.sceneCtrl?.roomId;
+    if(roomId == null) {
+      return;
+    }
+    await Api.Room.resetHotCount(roomId: roomId);
   }
 }
