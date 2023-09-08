@@ -247,6 +247,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_PKRoomList, S_PKRoomList.fromBuffer);
     register(CMD.S_PKInvite, S_PKInvite.fromBuffer);
     register(CMD.S_PKInviteResult, S_PKInviteResult.fromBuffer);
+    register(CMD.S_PKContinue, S_PKContinue.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
