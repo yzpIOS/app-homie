@@ -23,6 +23,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode MEDIA_VIOLATION = ErrorCode._(6, _omitEnumNames ? '' : 'MEDIA_VIOLATION');
   static const ErrorCode NOT_CONNECTION_CACHE = ErrorCode._(7, _omitEnumNames ? '' : 'NOT_CONNECTION_CACHE');
   static const ErrorCode RouterNotFound = ErrorCode._(10, _omitEnumNames ? '' : 'RouterNotFound');
+  static const ErrorCode NETWORK_ANOMALY = ErrorCode._(16, _omitEnumNames ? '' : 'NETWORK_ANOMALY');
   static const ErrorCode Success = ErrorCode._(200, _omitEnumNames ? '' : 'Success');
   static const ErrorCode NEED_BUY_PRODUCT = ErrorCode._(10001, _omitEnumNames ? '' : 'NEED_BUY_PRODUCT');
   static const ErrorCode REPEAT_PURCHASE = ErrorCode._(10002, _omitEnumNames ? '' : 'REPEAT_PURCHASE');
@@ -73,6 +74,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode USER_GIFT_RECORD_NOT_EXIST = ErrorCode._(14002, _omitEnumNames ? '' : 'USER_GIFT_RECORD_NOT_EXIST');
   static const ErrorCode GIVE_COUNT_MORE_THAN_OWNS_COUNT = ErrorCode._(14003, _omitEnumNames ? '' : 'GIVE_COUNT_MORE_THAN_OWNS_COUNT');
   static const ErrorCode GIFT_NOT_IN_BACKPACK = ErrorCode._(14004, _omitEnumNames ? '' : 'GIFT_NOT_IN_BACKPACK');
+  static const ErrorCode USE_COUNT_MORE_THAN_OWNS_COUNT = ErrorCode._(14005, _omitEnumNames ? '' : 'USE_COUNT_MORE_THAN_OWNS_COUNT');
   static const ErrorCode MEDIA_CONTENT_EMPTY = ErrorCode._(15001, _omitEnumNames ? '' : 'MEDIA_CONTENT_EMPTY');
   static const ErrorCode TOPIC_IS_EXISTS = ErrorCode._(15002, _omitEnumNames ? '' : 'TOPIC_IS_EXISTS');
   static const ErrorCode HAVE_BEEN_LIKED = ErrorCode._(15003, _omitEnumNames ? '' : 'HAVE_BEEN_LIKED');
@@ -113,12 +115,19 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode NOT_FACE_REAL_NAME = ErrorCode._(16202, _omitEnumNames ? '' : 'NOT_FACE_REAL_NAME');
   static const ErrorCode ROOM_ANCHOR_NOT_FOUND = ErrorCode._(16203, _omitEnumNames ? '' : 'ROOM_ANCHOR_NOT_FOUND');
   static const ErrorCode ROOM_SCENE_NOT_FOUND = ErrorCode._(16204, _omitEnumNames ? '' : 'ROOM_SCENE_NOT_FOUND');
+  static const ErrorCode ROOM_NOT_BELONG_GUILD_TYPE = ErrorCode._(16205, _omitEnumNames ? '' : 'ROOM_NOT_BELONG_GUILD_TYPE');
   static const ErrorCode GUILD_NOT_EXIST = ErrorCode._(16300, _omitEnumNames ? '' : 'GUILD_NOT_EXIST');
   static const ErrorCode GUILD_IS_EXIST = ErrorCode._(16301, _omitEnumNames ? '' : 'GUILD_IS_EXIST');
   static const ErrorCode GUILD_NOT_FOUND = ErrorCode._(16302, _omitEnumNames ? '' : 'GUILD_NOT_FOUND');
   static const ErrorCode GUILD_NOT_JOIN_USER = ErrorCode._(16303, _omitEnumNames ? '' : 'GUILD_NOT_JOIN_USER');
   static const ErrorCode GUILD_ANCHOR_IS_EXIST = ErrorCode._(16304, _omitEnumNames ? '' : 'GUILD_ANCHOR_IS_EXIST');
   static const ErrorCode GUILD_ANCHOR_NOT_EXIST = ErrorCode._(16305, _omitEnumNames ? '' : 'GUILD_ANCHOR_NOT_EXIST');
+  static const ErrorCode GUILD_LEDGER_RATIO_FAILED = ErrorCode._(16306, _omitEnumNames ? '' : 'GUILD_LEDGER_RATIO_FAILED');
+  static const ErrorCode PK_ROOM_NOT_FOUND = ErrorCode._(16500, _omitEnumNames ? '' : 'PK_ROOM_NOT_FOUND');
+  static const ErrorCode PK_ROOM_INVITE_EXIST = ErrorCode._(16501, _omitEnumNames ? '' : 'PK_ROOM_INVITE_EXIST');
+  static const ErrorCode PK_ROOM_EXECUTING = ErrorCode._(16502, _omitEnumNames ? '' : 'PK_ROOM_EXECUTING');
+  static const ErrorCode PK_ROOM_INVITING = ErrorCode._(16503, _omitEnumNames ? '' : 'PK_ROOM_INVITING');
+  static const ErrorCode PK_ROOM_INVITE_EXPIRE = ErrorCode._(16504, _omitEnumNames ? '' : 'PK_ROOM_INVITE_EXPIRE');
   static const ErrorCode ROOM_COLLECT_IS_EXIST = ErrorCode._(16400, _omitEnumNames ? '' : 'ROOM_COLLECT_IS_EXIST');
   static const ErrorCode FEEDBACK_ERROR = ErrorCode._(17000, _omitEnumNames ? '' : 'FEEDBACK_ERROR');
   static const ErrorCode REPORT_TYPE_NOT_EXIST = ErrorCode._(17001, _omitEnumNames ? '' : 'REPORT_TYPE_NOT_EXIST');
@@ -136,6 +145,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode BANK_ORDER_STATUS_NOT_FOUND = ErrorCode._(20009, _omitEnumNames ? '' : 'BANK_ORDER_STATUS_NOT_FOUND');
   static const ErrorCode WITHDRAW_CASH_LESS_THAN_ZERO = ErrorCode._(20010, _omitEnumNames ? '' : 'WITHDRAW_CASH_LESS_THAN_ZERO');
   static const ErrorCode FINE_AMOUNT_LESS_THAN_ZERO = ErrorCode._(20011, _omitEnumNames ? '' : 'FINE_AMOUNT_LESS_THAN_ZERO');
+  static const ErrorCode WITHDRAW_CASH_IS_TOO_SMALL = ErrorCode._(20012, _omitEnumNames ? '' : 'WITHDRAW_CASH_IS_TOO_SMALL');
   static const ErrorCode CONFIGURE_ERROR = ErrorCode._(21000, _omitEnumNames ? '' : 'CONFIGURE_ERROR');
   static const ErrorCode LOTTERY_ACTIVITY_NOT_EXISTS = ErrorCode._(22001, _omitEnumNames ? '' : 'LOTTERY_ACTIVITY_NOT_EXISTS');
   static const ErrorCode LOTTERY_POOL_NOT_EXISTS = ErrorCode._(22002, _omitEnumNames ? '' : 'LOTTERY_POOL_NOT_EXISTS');
@@ -151,6 +161,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode USER_NOT_REAL_NAME = ErrorCode._(99001, _omitEnumNames ? '' : 'USER_NOT_REAL_NAME');
   static const ErrorCode ACCOUNT_NAME_MISMATCH_REAL_NAME = ErrorCode._(99002, _omitEnumNames ? '' : 'ACCOUNT_NAME_MISMATCH_REAL_NAME');
   static const ErrorCode OVER_THE_LIMIT = ErrorCode._(25001, _omitEnumNames ? '' : 'OVER_THE_LIMIT');
+  static const ErrorCode RANDOM_BUFF_GIFT_IS_EMPTY = ErrorCode._(26001, _omitEnumNames ? '' : 'RANDOM_BUFF_GIFT_IS_EMPTY');
 
   static const $core.List<ErrorCode> values = <ErrorCode> [
     Ok,
@@ -162,6 +173,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     MEDIA_VIOLATION,
     NOT_CONNECTION_CACHE,
     RouterNotFound,
+    NETWORK_ANOMALY,
     Success,
     NEED_BUY_PRODUCT,
     REPEAT_PURCHASE,
@@ -212,6 +224,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     USER_GIFT_RECORD_NOT_EXIST,
     GIVE_COUNT_MORE_THAN_OWNS_COUNT,
     GIFT_NOT_IN_BACKPACK,
+    USE_COUNT_MORE_THAN_OWNS_COUNT,
     MEDIA_CONTENT_EMPTY,
     TOPIC_IS_EXISTS,
     HAVE_BEEN_LIKED,
@@ -252,12 +265,19 @@ class ErrorCode extends $pb.ProtobufEnum {
     NOT_FACE_REAL_NAME,
     ROOM_ANCHOR_NOT_FOUND,
     ROOM_SCENE_NOT_FOUND,
+    ROOM_NOT_BELONG_GUILD_TYPE,
     GUILD_NOT_EXIST,
     GUILD_IS_EXIST,
     GUILD_NOT_FOUND,
     GUILD_NOT_JOIN_USER,
     GUILD_ANCHOR_IS_EXIST,
     GUILD_ANCHOR_NOT_EXIST,
+    GUILD_LEDGER_RATIO_FAILED,
+    PK_ROOM_NOT_FOUND,
+    PK_ROOM_INVITE_EXIST,
+    PK_ROOM_EXECUTING,
+    PK_ROOM_INVITING,
+    PK_ROOM_INVITE_EXPIRE,
     ROOM_COLLECT_IS_EXIST,
     FEEDBACK_ERROR,
     REPORT_TYPE_NOT_EXIST,
@@ -275,6 +295,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     BANK_ORDER_STATUS_NOT_FOUND,
     WITHDRAW_CASH_LESS_THAN_ZERO,
     FINE_AMOUNT_LESS_THAN_ZERO,
+    WITHDRAW_CASH_IS_TOO_SMALL,
     CONFIGURE_ERROR,
     LOTTERY_ACTIVITY_NOT_EXISTS,
     LOTTERY_POOL_NOT_EXISTS,
@@ -290,6 +311,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     USER_NOT_REAL_NAME,
     ACCOUNT_NAME_MISMATCH_REAL_NAME,
     OVER_THE_LIMIT,
+    RANDOM_BUFF_GIFT_IS_EMPTY,
   ];
 
   static final $core.Map<$core.int, ErrorCode> _byValue = $pb.ProtobufEnum.initByValue(values);

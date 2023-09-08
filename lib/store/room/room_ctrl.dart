@@ -199,16 +199,21 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
             await doJoinGame();
           } else {
-            final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
-            if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-              if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-                throw const LogicException(-1, "你被封禁了");
-              } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-                throw const LogicException(-1, "输入的房间密码错误");
-              } else {
-                throw const LogicException(-1, "房间数据加载失败");
+            //pk的状态；1.房间pk中
+            if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
+              final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+              if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+                if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+                  throw const LogicException(-1, "你被封禁了");
+                } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+                  throw const LogicException(-1, "输入的房间密码错误");
+                } else {
+                  throw const LogicException(-1, "房间数据加载失败");
+                }
               }
             }
+            RoomManagerCtrl.ins.doNormalState();
+
             roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
             isNotClose();
 
@@ -248,6 +253,16 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   Future doClose() {
     return Get.delete<SceneCtrl>(tag: '$runtimeType', force: true);
+  }
+
+  bool isInPKRoom() {
+    return info.containsKey('pk_status') && info['pk_status'] == 1;
+  }
+
+  bool neeJoinRoom() {
+    // 如果不存在neeJoinRoom，默认就是true
+    return info.containsKey("neeJoinRoom") == false ||
+        (info.containsKey('neeJoinRoom') && info['neeJoinRoom'] == true);
   }
 }
 

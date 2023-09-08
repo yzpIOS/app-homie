@@ -38,7 +38,9 @@ class _ObxState extends State<ObxWidget> {
 
   void _updateTree(_) {
     if (mounted) {
-      setState(() {});
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
     }
   }
 

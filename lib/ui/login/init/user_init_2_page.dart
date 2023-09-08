@@ -32,14 +32,6 @@ class _UserInit2PageState extends State<UserInit2Page> {
   );
 
   @override
-  void dispose() {
-    super.dispose();
-    // 切走了，停止unity, 否则会报错
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
-  }
-
-  @override
   Widget build(BuildContext context) {
     return UserInitView(
       children: [

@@ -1177,6 +1177,7 @@ class PKUserInfo extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'avatarUrl', protoName: 'avatarUrl')
     ..a<$core.int>(7, _omitFieldNames ? '' : 'mikeId', $pb.PbFieldType.O3, protoName: 'mikeId')
     ..p<$fixnum.Int64>(8, _omitFieldNames ? '' : 'clothingIds', $pb.PbFieldType.K6, protoName: 'clothingIds')
+    ..aInt64(9, _omitFieldNames ? '' : 'pkRoomId', protoName: 'pkRoomId')
     ..hasRequiredFields = false
   ;
 
@@ -1266,27 +1267,31 @@ class PKUserInfo extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(8)
   $core.List<$fixnum.Int64> get clothingIds => $_getList(7);
+
+  @$pb.TagNumber(9)
+  $fixnum.Int64 get pkRoomId => $_getI64(8);
+  @$pb.TagNumber(9)
+  set pkRoomId($fixnum.Int64 v) { $_setInt64(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasPkRoomId() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearPkRoomId() => clearField(9);
 }
 
-class PKRoleInfo extends $pb.GeneratedMessage {
-  factory PKRoleInfo() => create();
-  PKRoleInfo._() : super();
-  factory PKRoleInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory PKRoleInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class PKRoleBattleInfoLF extends $pb.GeneratedMessage {
+  factory PKRoleBattleInfoLF() => create();
+  PKRoleBattleInfoLF._() : super();
+  factory PKRoleBattleInfoLF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleBattleInfoLF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKRoleInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKRoleBattleInfoLF', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'currentBlood', $pb.PbFieldType.O3, protoName: 'currentBlood')
     ..a<$core.int>(3, _omitFieldNames ? '' : 'totalBlood', $pb.PbFieldType.O3, protoName: 'totalBlood')
     ..a<$core.int>(4, _omitFieldNames ? '' : 'shield', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'attack', $pb.PbFieldType.O3)
     ..a<$core.int>(6, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.O3)
-    ..aOM<XYZ>(7, _omitFieldNames ? '' : 'position', subBuilder: XYZ.create)
-    ..a<$core.int>(8, _omitFieldNames ? '' : 'rotation', $pb.PbFieldType.O3)
-    ..a<$core.int>(9, _omitFieldNames ? '' : 'totalDamage', $pb.PbFieldType.O3, protoName: 'totalDamage')
-    ..aInt64(10, _omitFieldNames ? '' : 'survivedTime', protoName: 'survivedTime')
-    ..a<$core.int>(11, _omitFieldNames ? '' : 'attackedCount', $pb.PbFieldType.O3, protoName: 'attackedCount')
-    ..a<$core.int>(12, _omitFieldNames ? '' : 'outBlood', $pb.PbFieldType.O3, protoName: 'outBlood')
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'swordCount', $pb.PbFieldType.O3, protoName: 'swordCount')
     ..hasRequiredFields = false
   ;
 
@@ -1294,22 +1299,22 @@ class PKRoleInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  PKRoleInfo clone() => PKRoleInfo()..mergeFromMessage(this);
+  PKRoleBattleInfoLF clone() => PKRoleBattleInfoLF()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  PKRoleInfo copyWith(void Function(PKRoleInfo) updates) => super.copyWith((message) => updates(message as PKRoleInfo)) as PKRoleInfo;
+  PKRoleBattleInfoLF copyWith(void Function(PKRoleBattleInfoLF) updates) => super.copyWith((message) => updates(message as PKRoleBattleInfoLF)) as PKRoleBattleInfoLF;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static PKRoleInfo create() => PKRoleInfo._();
-  PKRoleInfo createEmptyInstance() => create();
-  static $pb.PbList<PKRoleInfo> createRepeated() => $pb.PbList<PKRoleInfo>();
+  static PKRoleBattleInfoLF create() => PKRoleBattleInfoLF._();
+  PKRoleBattleInfoLF createEmptyInstance() => create();
+  static $pb.PbList<PKRoleBattleInfoLF> createRepeated() => $pb.PbList<PKRoleBattleInfoLF>();
   @$core.pragma('dart2js:noInline')
-  static PKRoleInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleInfo>(create);
-  static PKRoleInfo? _defaultInstance;
+  static PKRoleBattleInfoLF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleBattleInfoLF>(create);
+  static PKRoleBattleInfoLF? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get userId => $_getI64(0);
@@ -1366,60 +1371,159 @@ class PKRoleInfo extends $pb.GeneratedMessage {
   void clearSpeed() => clearField(6);
 
   @$pb.TagNumber(7)
-  XYZ get position => $_getN(6);
+  $core.int get swordCount => $_getIZ(6);
   @$pb.TagNumber(7)
-  set position(XYZ v) { setField(7, v); }
+  set swordCount($core.int v) { $_setSignedInt32(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasPosition() => $_has(6);
+  $core.bool hasSwordCount() => $_has(6);
   @$pb.TagNumber(7)
-  void clearPosition() => clearField(7);
-  @$pb.TagNumber(7)
-  XYZ ensurePosition() => $_ensure(6);
+  void clearSwordCount() => clearField(7);
+}
 
-  @$pb.TagNumber(8)
-  $core.int get rotation => $_getIZ(7);
-  @$pb.TagNumber(8)
-  set rotation($core.int v) { $_setSignedInt32(7, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasRotation() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearRotation() => clearField(8);
+class PKRoleBattleInfoHF extends $pb.GeneratedMessage {
+  factory PKRoleBattleInfoHF() => create();
+  PKRoleBattleInfoHF._() : super();
+  factory PKRoleBattleInfoHF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleBattleInfoHF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  @$pb.TagNumber(9)
-  $core.int get totalDamage => $_getIZ(8);
-  @$pb.TagNumber(9)
-  set totalDamage($core.int v) { $_setSignedInt32(8, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasTotalDamage() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearTotalDamage() => clearField(9);
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKRoleBattleInfoHF', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
+    ..aOM<XYZ>(2, _omitFieldNames ? '' : 'position', subBuilder: XYZ.create)
+    ..aInt64(3, _omitFieldNames ? '' : 'rotation')
+    ..hasRequiredFields = false
+  ;
 
-  @$pb.TagNumber(10)
-  $fixnum.Int64 get survivedTime => $_getI64(9);
-  @$pb.TagNumber(10)
-  set survivedTime($fixnum.Int64 v) { $_setInt64(9, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasSurvivedTime() => $_has(9);
-  @$pb.TagNumber(10)
-  void clearSurvivedTime() => clearField(10);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PKRoleBattleInfoHF clone() => PKRoleBattleInfoHF()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PKRoleBattleInfoHF copyWith(void Function(PKRoleBattleInfoHF) updates) => super.copyWith((message) => updates(message as PKRoleBattleInfoHF)) as PKRoleBattleInfoHF;
 
-  @$pb.TagNumber(11)
-  $core.int get attackedCount => $_getIZ(10);
-  @$pb.TagNumber(11)
-  set attackedCount($core.int v) { $_setSignedInt32(10, v); }
-  @$pb.TagNumber(11)
-  $core.bool hasAttackedCount() => $_has(10);
-  @$pb.TagNumber(11)
-  void clearAttackedCount() => clearField(11);
+  $pb.BuilderInfo get info_ => _i;
 
-  @$pb.TagNumber(12)
-  $core.int get outBlood => $_getIZ(11);
-  @$pb.TagNumber(12)
-  set outBlood($core.int v) { $_setSignedInt32(11, v); }
-  @$pb.TagNumber(12)
-  $core.bool hasOutBlood() => $_has(11);
-  @$pb.TagNumber(12)
-  void clearOutBlood() => clearField(12);
+  @$core.pragma('dart2js:noInline')
+  static PKRoleBattleInfoHF create() => PKRoleBattleInfoHF._();
+  PKRoleBattleInfoHF createEmptyInstance() => create();
+  static $pb.PbList<PKRoleBattleInfoHF> createRepeated() => $pb.PbList<PKRoleBattleInfoHF>();
+  @$core.pragma('dart2js:noInline')
+  static PKRoleBattleInfoHF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleBattleInfoHF>(create);
+  static PKRoleBattleInfoHF? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get userId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set userId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  XYZ get position => $_getN(1);
+  @$pb.TagNumber(2)
+  set position(XYZ v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPosition() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPosition() => clearField(2);
+  @$pb.TagNumber(2)
+  XYZ ensurePosition() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get rotation => $_getI64(2);
+  @$pb.TagNumber(3)
+  set rotation($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRotation() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRotation() => clearField(3);
+}
+
+class PKRoleSummary extends $pb.GeneratedMessage {
+  factory PKRoleSummary() => create();
+  PKRoleSummary._() : super();
+  factory PKRoleSummary.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PKRoleSummary.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKRoleSummary', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'userId', protoName: 'userId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'totalDamage', $pb.PbFieldType.O3, protoName: 'totalDamage')
+    ..aInt64(3, _omitFieldNames ? '' : 'survivedTime', protoName: 'survivedTime')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'attackedCount', $pb.PbFieldType.O3, protoName: 'attackedCount')
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'outBlood', $pb.PbFieldType.O3, protoName: 'outBlood')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PKRoleSummary clone() => PKRoleSummary()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PKRoleSummary copyWith(void Function(PKRoleSummary) updates) => super.copyWith((message) => updates(message as PKRoleSummary)) as PKRoleSummary;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PKRoleSummary create() => PKRoleSummary._();
+  PKRoleSummary createEmptyInstance() => create();
+  static $pb.PbList<PKRoleSummary> createRepeated() => $pb.PbList<PKRoleSummary>();
+  @$core.pragma('dart2js:noInline')
+  static PKRoleSummary getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PKRoleSummary>(create);
+  static PKRoleSummary? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get userId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set userId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get totalDamage => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set totalDamage($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTotalDamage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTotalDamage() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get survivedTime => $_getI64(2);
+  @$pb.TagNumber(3)
+  set survivedTime($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSurvivedTime() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSurvivedTime() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get attackedCount => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set attackedCount($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAttackedCount() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAttackedCount() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get outBlood => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set outBlood($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasOutBlood() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearOutBlood() => clearField(5);
 }
 
 class PKPresenterInfo extends $pb.GeneratedMessage {
@@ -1566,6 +1670,230 @@ class PKGift extends $pb.GeneratedMessage {
   $core.bool hasState() => $_has(2);
   @$pb.TagNumber(3)
   void clearState() => clearField(3);
+}
+
+class PkRoomInfo extends $pb.GeneratedMessage {
+  factory PkRoomInfo() => create();
+  PkRoomInfo._() : super();
+  factory PkRoomInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PkRoomInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PkRoomInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..aOS(2, _omitFieldNames ? '' : 'roomName')
+    ..aOS(3, _omitFieldNames ? '' : 'roomImage')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'hotValue', $pb.PbFieldType.O3)
+    ..aOB(5, _omitFieldNames ? '' : 'isInvite')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PkRoomInfo clone() => PkRoomInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PkRoomInfo copyWith(void Function(PkRoomInfo) updates) => super.copyWith((message) => updates(message as PkRoomInfo)) as PkRoomInfo;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PkRoomInfo create() => PkRoomInfo._();
+  PkRoomInfo createEmptyInstance() => create();
+  static $pb.PbList<PkRoomInfo> createRepeated() => $pb.PbList<PkRoomInfo>();
+  @$core.pragma('dart2js:noInline')
+  static PkRoomInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PkRoomInfo>(create);
+  static PkRoomInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get roomName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set roomName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get roomImage => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set roomImage($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoomImage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoomImage() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get hotValue => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set hotValue($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasHotValue() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearHotValue() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.bool get isInvite => $_getBF(4);
+  @$pb.TagNumber(5)
+  set isInvite($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasIsInvite() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsInvite() => clearField(5);
+}
+
+class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
+  factory PkRoleDefaultConfiguration() => create();
+  PkRoleDefaultConfiguration._() : super();
+  factory PkRoleDefaultConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PkRoleDefaultConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PkRoleDefaultConfiguration', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'roleRadius', $pb.PbFieldType.O3)
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'speed', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'weaponLength', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'weaponSpeed', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'maxWeaponNum', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'blood', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'TotalBlood', $pb.PbFieldType.O3, protoName: 'TotalBlood')
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'Shield', $pb.PbFieldType.O3, protoName: 'Shield')
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'Attack', $pb.PbFieldType.O3, protoName: 'Attack')
+    ..a<$core.int>(10, _omitFieldNames ? '' : 'countdown', $pb.PbFieldType.O3)
+    ..a<$core.int>(11, _omitFieldNames ? '' : 'swordCount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration clone() => PkRoleDefaultConfiguration()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PkRoleDefaultConfiguration copyWith(void Function(PkRoleDefaultConfiguration) updates) => super.copyWith((message) => updates(message as PkRoleDefaultConfiguration)) as PkRoleDefaultConfiguration;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration create() => PkRoleDefaultConfiguration._();
+  PkRoleDefaultConfiguration createEmptyInstance() => create();
+  static $pb.PbList<PkRoleDefaultConfiguration> createRepeated() => $pb.PbList<PkRoleDefaultConfiguration>();
+  @$core.pragma('dart2js:noInline')
+  static PkRoleDefaultConfiguration getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PkRoleDefaultConfiguration>(create);
+  static PkRoleDefaultConfiguration? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get roleRadius => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set roleRadius($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleRadius() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleRadius() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get speed => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set speed($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSpeed() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSpeed() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get weaponLength => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set weaponLength($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasWeaponLength() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearWeaponLength() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get weaponSpeed => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set weaponSpeed($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWeaponSpeed() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWeaponSpeed() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get maxWeaponNum => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set maxWeaponNum($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMaxWeaponNum() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMaxWeaponNum() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get blood => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set blood($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBlood() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBlood() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get totalBlood => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set totalBlood($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasTotalBlood() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTotalBlood() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get shield => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set shield($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasShield() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearShield() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get attack => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set attack($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasAttack() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearAttack() => clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.int get countdown => $_getIZ(9);
+  @$pb.TagNumber(10)
+  set countdown($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasCountdown() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearCountdown() => clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.int get swordCount => $_getIZ(10);
+  @$pb.TagNumber(11)
+  set swordCount($core.int v) { $_setSignedInt32(10, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasSwordCount() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearSwordCount() => clearField(11);
 }
 
 

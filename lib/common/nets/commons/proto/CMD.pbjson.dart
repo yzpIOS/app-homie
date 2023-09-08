@@ -153,24 +153,26 @@ const CMD$json = {
     {'1': 'C_PushPreload', '2': 12020},
     {'1': 'S_PushPreload', '2': 12021},
     {'1': 'S_CameraSwitch', '2': 12030},
-    {'1': 'C_PKInvite', '2': 13000},
-    {'1': 'S_PKInvite', '2': 13001},
-    {'1': 'C_PKAccept', '2': 13002},
-    {'1': 'S_PKInviteResult', '2': 13004},
-    {'1': 'C_PKSceneLoaded', '2': 13010},
-    {'1': 'S_PKGameInfo', '2': 13011},
-    {'1': 'S_PKUserEnter', '2': 13012},
-    {'1': 'C_PKBattleReady', '2': 13031},
-    {'1': 'S_PKSyncRoles', '2': 13032},
-    {'1': 'C_PKMove', '2': 13034},
-    {'1': 'C_PKStop', '2': 13035},
-    {'1': 'S_PKSyncRoleAttributes', '2': 13036},
-    {'1': 'S_PKSyncSceneAttributes', '2': 13037},
-    {'1': 'S_PKBattleEnd', '2': 13038},
-    {'1': 'C_PKContinue', '2': 13050},
-    {'1': 'S_PKContinue', '2': 13051},
-    {'1': 'C_PickBuffGift', '2': 13052},
-    {'1': 'S_PickBuffGift', '2': 13053},
+    {'1': 'C_PKInvite', '2': 20001},
+    {'1': 'S_PKInvite', '2': 20002},
+    {'1': 'C_PKAccept', '2': 20003},
+    {'1': 'S_PKInviteResult', '2': 20004},
+    {'1': 'C_PKRoomList', '2': 20005},
+    {'1': 'S_PKRoomList', '2': 20006},
+    {'1': 'C_PKSceneLoaded', '2': 20010},
+    {'1': 'S_PKGameInfo', '2': 20011},
+    {'1': 'S_PKUserEnter', '2': 20012},
+    {'1': 'C_PKBattleReady', '2': 20031},
+    {'1': 'S_PKSyncRoles', '2': 20032},
+    {'1': 'C_PKMove', '2': 20034},
+    {'1': 'C_PKStop', '2': 20035},
+    {'1': 'S_PKSyncRoleAttsLF', '2': 20036},
+    {'1': 'S_PKSyncRoleAttsHF', '2': 20037},
+    {'1': 'S_PKSceneToxic', '2': 20038},
+    {'1': 'S_PKSceneGift', '2': 20039},
+    {'1': 'S_PKBattleEnd', '2': 20050},
+    {'1': 'C_PKContinue', '2': 20051},
+    {'1': 'S_PKContinue', '2': 20052},
   ],
 };
 
@@ -224,12 +226,13 @@ final $typed_data.Uint8List cMDDescriptor = $convert.base64Decode(
     'YKEUNfSW5GcmVlTWlrZXNBcmVhEOJdEhYKEVNfSW5GcmVlTWlrZXNBcmVhEONdEhcKEkNfT3V0'
     'RnJlZU1pa2VzQXJlYRDmXRIXChJTX091dEZyZWVNaWtlc0FyZWEQ510SEgoNQ19QbGF6YVRvUm'
     '9vbRDkXRISCg1TX1BsYXphVG9Sb29tEOVdEhIKDUNfUHVzaFByZWxvYWQQ9F0SEgoNU19QdXNo'
-    'UHJlbG9hZBD1XRITCg5TX0NhbWVyYVN3aXRjaBD+XRIPCgpDX1BLSW52aXRlEMhlEg8KClNfUE'
-    'tJbnZpdGUQyWUSDwoKQ19QS0FjY2VwdBDKZRIVChBTX1BLSW52aXRlUmVzdWx0EMxlEhQKD0Nf'
-    'UEtTY2VuZUxvYWRlZBDSZRIRCgxTX1BLR2FtZUluZm8Q02USEgoNU19QS1VzZXJFbnRlchDUZR'
-    'IUCg9DX1BLQmF0dGxlUmVhZHkQ52USEgoNU19QS1N5bmNSb2xlcxDoZRINCghDX1BLTW92ZRDq'
-    'ZRINCghDX1BLU3RvcBDrZRIbChZTX1BLU3luY1JvbGVBdHRyaWJ1dGVzEOxlEhwKF1NfUEtTeW'
-    '5jU2NlbmVBdHRyaWJ1dGVzEO1lEhIKDVNfUEtCYXR0bGVFbmQQ7mUSEQoMQ19QS0NvbnRpbnVl'
-    'EPplEhEKDFNfUEtDb250aW51ZRD7ZRITCg5DX1BpY2tCdWZmR2lmdBD8ZRITCg5TX1BpY2tCdW'
-    'ZmR2lmdBD9ZQ==');
+    'UHJlbG9hZBD1XRITCg5TX0NhbWVyYVN3aXRjaBD+XRIQCgpDX1BLSW52aXRlEKGcARIQCgpTX1'
+    'BLSW52aXRlEKKcARIQCgpDX1BLQWNjZXB0EKOcARIWChBTX1BLSW52aXRlUmVzdWx0EKScARIS'
+    'CgxDX1BLUm9vbUxpc3QQpZwBEhIKDFNfUEtSb29tTGlzdBCmnAESFQoPQ19QS1NjZW5lTG9hZG'
+    'VkEKqcARISCgxTX1BLR2FtZUluZm8Qq5wBEhMKDVNfUEtVc2VyRW50ZXIQrJwBEhUKD0NfUEtC'
+    'YXR0bGVSZWFkeRC/nAESEwoNU19QS1N5bmNSb2xlcxDAnAESDgoIQ19QS01vdmUQwpwBEg4KCE'
+    'NfUEtTdG9wEMOcARIYChJTX1BLU3luY1JvbGVBdHRzTEYQxJwBEhgKElNfUEtTeW5jUm9sZUF0'
+    'dHNIRhDFnAESFAoOU19QS1NjZW5lVG94aWMQxpwBEhMKDVNfUEtTY2VuZUdpZnQQx5wBEhMKDV'
+    'NfUEtCYXR0bGVFbmQQ0pwBEhIKDENfUEtDb250aW51ZRDTnAESEgoMU19QS0NvbnRpbnVlENSc'
+    'AQ==');
 

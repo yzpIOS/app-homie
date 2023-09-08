@@ -7,6 +7,11 @@ class ApiGift extends ApiBase {
     return _doPost('query').then(((it) => it['items']));
   }
 
+  /// 获取pk直播间的礼物列表
+  Future roomPKList() {
+    return _doPost('room/pk/query').then(((it) => it['items']));
+  }
+
   Future backpack() {
     return _doPost('backpack/query');
   }

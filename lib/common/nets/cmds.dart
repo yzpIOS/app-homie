@@ -115,4 +115,13 @@ class CMD {
 
   static const C_PushPreload=12020;//告诉flutter推送要预加载的商品id列表
   static const S_PushPreload=12021;//告诉unity可以预加载哪些商品
+
+
+  static const C_PKInvite=20001;//F告诉S端想新建对战，邀请与另一队对战
+  static const S_PKInvite=20002;//告诉被邀请的F端，邀请对战信息
+  static const C_PKAccept=20003;//被邀请的F端告诉S端选择是否接受邀请
+  static const S_PKInviteResult=20004;//S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】
+  static const C_PKRoomList = 20005; // PK房间列表
+  static const S_PKRoomList = 20006; // PK房间列表反馈结果
+  static const S_PKContinue=20052;//一轮游戏结束后，两个C端选择是否继续下一轮的结果，都同意则C跳转为准备状态，否则都退出场景【Summary状态结束，可能Start状态】
 }
