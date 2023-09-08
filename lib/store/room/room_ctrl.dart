@@ -231,6 +231,11 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
                 resCmd: CMD.S_SyncRoomInfo
               );
               onRender(s_syncRoomInfo);
+
+              /// 请求房间系统公告消息数组
+              var data = await Api.Common.systemQuery();
+              List systemNoticeList = data['system_notice_list'];
+              SystemMsgEvent(systemNoticeList).fire();
             }, onError: (error) {
               debugPrint(error);
             });

@@ -142,6 +142,12 @@ class MsgTxtEvent extends RoomEvent<S_ChatMessageBroadcast> {
   UID? get uid => data?.uid;
 }
 
+/// 房间系统公告
+class SystemMsgEvent extends EventPb {
+  final List systemMsgList;
+  SystemMsgEvent(this.systemMsgList);
+}
+
 // ?
 class RoomAtEvent extends EventPb {
   final String nickName;

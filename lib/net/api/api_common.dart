@@ -78,4 +78,9 @@ class ApiCommon extends ApiBase {
   Future config() {
     return _doPost('configure/query');
   }
+
+  /// 获取房间系统公告
+  Future systemQuery() {
+    return _doPost('configure/system/query');
+  }
 }
