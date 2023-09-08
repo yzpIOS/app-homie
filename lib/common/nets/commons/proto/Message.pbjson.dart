@@ -607,6 +607,34 @@ final $typed_data.Uint8List s_CloseSceneDescriptor = $convert.base64Decode(
     'CgxTX0Nsb3NlU2NlbmUSKgoEY29kZRgBIAEoCzIWLmNvbS5zYXZ2eS5wcm90by5TX0VyclIEY2'
     '9kZQ==');
 
+@$core.Deprecated('Use c_OnlineListDescriptor instead')
+const C_OnlineList$json = {
+  '1': 'C_OnlineList',
+  '2': [
+    {'1': 'offset', '3': 1, '4': 1, '5': 3, '10': 'offset'},
+    {'1': 'limit', '3': 2, '4': 1, '5': 3, '10': 'limit'},
+    {'1': 'room_id_list', '3': 3, '4': 3, '5': 3, '10': 'roomIdList'},
+  ],
+};
+
+/// Descriptor for `C_OnlineList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_OnlineListDescriptor = $convert.base64Decode(
+    'CgxDX09ubGluZUxpc3QSFgoGb2Zmc2V0GAEgASgDUgZvZmZzZXQSFAoFbGltaXQYAiABKANSBW'
+    'xpbWl0EiAKDHJvb21faWRfbGlzdBgDIAMoA1IKcm9vbUlkTGlzdA==');
+
+@$core.Deprecated('Use s_OnlineListDescriptor instead')
+const S_OnlineList$json = {
+  '1': 'S_OnlineList',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.RoomUserInfo', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_OnlineList`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_OnlineListDescriptor = $convert.base64Decode(
+    'CgxTX09ubGluZUxpc3QSMwoFaXRlbXMYASADKAsyHS5jb20uc2F2dnkucHJvdG8uUm9vbVVzZX'
+    'JJbmZvUgVpdGVtcw==');
+
 @$core.Deprecated('Use c_JoinSceneDescriptor instead')
 const C_JoinScene$json = {
   '1': 'C_JoinScene',
@@ -1583,6 +1611,7 @@ const S_MoreGiftPlay$json = {
     {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.S_GiftPlay', '10': 'items'},
     {'1': 'blind_box_name', '3': 2, '4': 1, '5': 9, '10': 'blindBoxName'},
     {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
+    {'1': 'blind_box_count', '3': 5, '4': 1, '5': 5, '10': 'blindBoxCount'},
   ],
 };
 
@@ -1590,7 +1619,8 @@ const S_MoreGiftPlay$json = {
 final $typed_data.Uint8List s_MoreGiftPlayDescriptor = $convert.base64Decode(
     'Cg5TX01vcmVHaWZ0UGxheRIxCgVpdGVtcxgBIAMoCzIbLmNvbS5zYXZ2eS5wcm90by5TX0dpZn'
     'RQbGF5UgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
-    'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3Zlcg==');
+    'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
+    'ABKAVSDWJsaW5kQm94Q291bnQ=');
 
 @$core.Deprecated('Use s_FloatingScreenDescriptor instead')
 const S_FloatingScreen$json = {
@@ -1974,6 +2004,9 @@ const S_PKGameInfo$json = {
     {'1': 'gameRoles', '3': 7, '4': 3, '5': 11, '6': '.com.savvy.proto.PKCreateRoleInfo', '10': 'gameRoles'},
     {'1': 'battleStartTime', '3': 8, '4': 1, '5': 3, '10': 'battleStartTime'},
     {'1': 'sceneRadius', '3': 9, '4': 1, '5': 5, '10': 'sceneRadius'},
+    {'1': 'sceneToxicList', '3': 10, '4': 3, '5': 11, '6': '.com.savvy.proto.PKSceneToxic', '10': 'sceneToxicList'},
+    {'1': 'gifts', '3': 11, '4': 3, '5': 11, '6': '.com.savvy.proto.PKGift', '10': 'gifts'},
+    {'1': 'battleStatus', '3': 12, '4': 1, '5': 5, '10': 'battleStatus'},
   ],
 };
 
@@ -1986,7 +2019,10 @@ final $typed_data.Uint8List s_PKGameInfoDescriptor = $convert.base64Decode(
     'aBIjCg13ZWFwb25fbGVuZ3RoGAUgASgFUgx3ZWFwb25MZW5ndGgSIQoMd2VhcG9uX3NwZWVkGA'
     'YgASgFUgt3ZWFwb25TcGVlZBI/CglnYW1lUm9sZXMYByADKAsyIS5jb20uc2F2dnkucHJvdG8u'
     'UEtDcmVhdGVSb2xlSW5mb1IJZ2FtZVJvbGVzEigKD2JhdHRsZVN0YXJ0VGltZRgIIAEoA1IPYm'
-    'F0dGxlU3RhcnRUaW1lEiAKC3NjZW5lUmFkaXVzGAkgASgFUgtzY2VuZVJhZGl1cw==');
+    'F0dGxlU3RhcnRUaW1lEiAKC3NjZW5lUmFkaXVzGAkgASgFUgtzY2VuZVJhZGl1cxJFCg5zY2Vu'
+    'ZVRveGljTGlzdBgKIAMoCzIdLmNvbS5zYXZ2eS5wcm90by5QS1NjZW5lVG94aWNSDnNjZW5lVG'
+    '94aWNMaXN0Ei0KBWdpZnRzGAsgAygLMhcuY29tLnNhdnZ5LnByb3RvLlBLR2lmdFIFZ2lmdHMS'
+    'IgoMYmF0dGxlU3RhdHVzGAwgASgFUgxiYXR0bGVTdGF0dXM=');
 
 @$core.Deprecated('Use s_PKSyncRolesDescriptor instead')
 const S_PKSyncRoles$json = {
@@ -2069,13 +2105,13 @@ final $typed_data.Uint8List s_PKSyncRoleAttsHFDescriptor = $convert.base64Decode
 const S_PKSceneToxic$json = {
   '1': 'S_PKSceneToxic',
   '2': [
-    {'1': 'sceneToxics', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.PKSceneToxic', '10': 'sceneToxics'},
+    {'1': 'sceneToxics', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.PKSceneToxic', '10': 'sceneToxics'},
   ],
 };
 
 /// Descriptor for `S_PKSceneToxic`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_PKSceneToxicDescriptor = $convert.base64Decode(
-    'Cg5TX1BLU2NlbmVUb3hpYxI/CgtzY2VuZVRveGljcxgBIAMoCzIdLmNvbS5zYXZ2eS5wcm90by'
+    'Cg5TX1BLU2NlbmVUb3hpYxI/CgtzY2VuZVRveGljcxgBIAEoCzIdLmNvbS5zYXZ2eS5wcm90by'
     '5QS1NjZW5lVG94aWNSC3NjZW5lVG94aWNz');
 
 @$core.Deprecated('Use s_PKSceneGiftDescriptor instead')

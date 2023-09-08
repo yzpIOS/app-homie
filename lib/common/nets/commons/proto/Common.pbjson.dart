@@ -335,6 +335,28 @@ final $typed_data.Uint8List mikeInfoDescriptor = $convert.base64Decode(
     'lrZUlkEhcKB21pa2Vfbm8YAyABKAlSBm1pa2VObxIQCgN1aWQYBCABKAlSA3VpZBIXCgdyb2xl'
     'X2lkGAYgASgDUgZyb2xlSWQSFgoGbnVtYmVyGAcgASgDUgZudW1iZXI=');
 
+@$core.Deprecated('Use roomUserInfoDescriptor instead')
+const RoomUserInfo$json = {
+  '1': 'RoomUserInfo',
+  '2': [
+    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'room_id', '3': 3, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'username', '3': 4, '4': 1, '5': 9, '10': 'username'},
+    {'1': 'avatar_url', '3': 5, '4': 1, '5': 9, '10': 'avatarUrl'},
+    {'1': 'type', '3': 6, '4': 1, '5': 5, '10': 'type'},
+    {'1': 'admin_type', '3': 7, '4': 1, '5': 5, '10': 'adminType'},
+    {'1': 'level', '3': 8, '4': 1, '5': 9, '10': 'level'},
+  ],
+};
+
+/// Descriptor for `RoomUserInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List roomUserInfoDescriptor = $convert.base64Decode(
+    'CgxSb29tVXNlckluZm8SEAoDdWlkGAEgASgJUgN1aWQSFwoHcm9sZV9pZBgCIAEoA1IGcm9sZU'
+    'lkEhcKB3Jvb21faWQYAyABKANSBnJvb21JZBIaCgh1c2VybmFtZRgEIAEoCVIIdXNlcm5hbWUS'
+    'HQoKYXZhdGFyX3VybBgFIAEoCVIJYXZhdGFyVXJsEhIKBHR5cGUYBiABKAVSBHR5cGUSHQoKYW'
+    'RtaW5fdHlwZRgHIAEoBVIJYWRtaW5UeXBlEhQKBWxldmVsGAggASgJUgVsZXZlbA==');
+
 @$core.Deprecated('Use pKGuildInfoDescriptor instead')
 const PKGuildInfo$json = {
   '1': 'PKGuildInfo',
@@ -477,6 +499,7 @@ const PKSceneToxic$json = {
     {'1': 'takeEffectTime', '3': 2, '4': 1, '5': 3, '10': 'takeEffectTime'},
     {'1': 'safePosition', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'safePosition'},
     {'1': 'toxicFogSpeed', '3': 5, '4': 1, '5': 5, '10': 'toxicFogSpeed'},
+    {'1': 'nextSafeTakeEffectTime', '3': 6, '4': 1, '5': 3, '10': 'nextSafeTakeEffectTime'},
   ],
 };
 
@@ -485,7 +508,8 @@ final $typed_data.Uint8List pKSceneToxicDescriptor = $convert.base64Decode(
     'CgxQS1NjZW5lVG94aWMSHgoKc2FmZVJhZGl1cxgBIAEoBVIKc2FmZVJhZGl1cxImCg50YWtlRW'
     'ZmZWN0VGltZRgCIAEoA1IOdGFrZUVmZmVjdFRpbWUSOAoMc2FmZVBvc2l0aW9uGAMgASgLMhQu'
     'Y29tLnNhdnZ5LnByb3RvLlhZWlIMc2FmZVBvc2l0aW9uEiQKDXRveGljRm9nU3BlZWQYBSABKA'
-    'VSDXRveGljRm9nU3BlZWQ=');
+    'VSDXRveGljRm9nU3BlZWQSNgoWbmV4dFNhZmVUYWtlRWZmZWN0VGltZRgGIAEoA1IWbmV4dFNh'
+    'ZmVUYWtlRWZmZWN0VGltZQ==');
 
 @$core.Deprecated('Use pkRoomInfoDescriptor instead')
 const PkRoomInfo$json = {
@@ -518,7 +542,7 @@ const PkRoleDefaultConfiguration$json = {
     {'1': 'TotalBlood', '3': 7, '4': 1, '5': 5, '10': 'TotalBlood'},
     {'1': 'Shield', '3': 8, '4': 1, '5': 5, '10': 'Shield'},
     {'1': 'Attack', '3': 9, '4': 1, '5': 5, '10': 'Attack'},
-    {'1': 'countdown', '3': 10, '4': 1, '5': 5, '10': 'countdown'},
+    {'1': 'countdown', '3': 10, '4': 1, '5': 3, '10': 'countdown'},
     {'1': 'sword_count', '3': 11, '4': 1, '5': 5, '10': 'swordCount'},
     {'1': 'max_speed', '3': 12, '4': 1, '5': 5, '10': 'maxSpeed'},
   ],
@@ -531,6 +555,6 @@ final $typed_data.Uint8List pkRoleDefaultConfigurationDescriptor = $convert.base
     'cG9uTGVuZ3RoEiEKDHdlYXBvbl9zcGVlZBgEIAEoBVILd2VhcG9uU3BlZWQSJAoObWF4X3dlYX'
     'Bvbl9udW0YBSABKAVSDG1heFdlYXBvbk51bRIUCgVibG9vZBgGIAEoBVIFYmxvb2QSHgoKVG90'
     'YWxCbG9vZBgHIAEoBVIKVG90YWxCbG9vZBIWCgZTaGllbGQYCCABKAVSBlNoaWVsZBIWCgZBdH'
-    'RhY2sYCSABKAVSBkF0dGFjaxIcCgljb3VudGRvd24YCiABKAVSCWNvdW50ZG93bhIfCgtzd29y'
+    'RhY2sYCSABKAVSBkF0dGFjaxIcCgljb3VudGRvd24YCiABKANSCWNvdW50ZG93bhIfCgtzd29y'
     'ZF9jb3VudBgLIAEoBVIKc3dvcmRDb3VudBIbCgltYXhfc3BlZWQYDCABKAVSCG1heFNwZWVk');
 

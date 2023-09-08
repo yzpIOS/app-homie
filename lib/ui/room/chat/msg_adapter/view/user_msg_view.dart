@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -7,6 +8,7 @@ import 'package:app/ui/room/chat/msg_adapter/view/base_msg_view.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
@@ -34,7 +36,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
         return;
       }
       RoomUserInfoDialog.show(uid: vm.uid, msg: vm.typeIf<TxtMsgData>());
-    };
+    }
 
     InlineSpan span = TextSpan(
       text: info.showName(),
@@ -93,25 +95,16 @@ class UserInMsgView extends _UserMsgView<UserInMsgData> {
   }
 }
 
+/// 送普通礼物消息视图  xxx给xxx送出了xxx
 class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
   const GiftMsgView(super.vm, {super.key});
 
   @override
   InlineSpan richText(special, info) {
-    if (vm.data.type == 6) {//是盲盒礼物
-      return TextSpan(
-        children: [
-          const TextSpan(text: '赠送了 '),
-          TextSpan(text: vm.users[vm.acceptUid]?.showName() ?? '--'),
-          const TextSpan(text: ' 盲盒'),
-        ],
-        style: const TextStyle(color: AppPalette.colorY),
-      );
-    }
     return TextSpan(
       children: [
         const TextSpan(text: '给 '),
-        TextSpan(text: vm.users[vm.acceptUid]?.showName() ?? '--'),
+        TextSpan(text: vm.users[vm.acceptUid]?.showName() ?? '--', style: const TextStyle(color: AppPalette.colorY),),
         const TextSpan(text: ' 送出了'),
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
@@ -121,7 +114,47 @@ class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
         ),
         TextSpan(text: 'x${vm.giftCount}'),
       ],
-      style: const TextStyle(color: AppPalette.colorY),
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+}
+
+/// 盲盒开出了礼物消息视图  xxx送出xxx给xxx，开出xxx
+class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
+  const BlindBoxGiftOpenMsgView(super.vm, {super.key});
+
+  @override
+  InlineSpan richText(special, info) {
+    List<InlineSpan> children = [
+      const TextSpan(text: '送出'),
+      TextSpan(text: '${vm.blindBoxName ?? '--'}x${vm.blindBoxCount}', style: const TextStyle(color: AppPalette.colorY)),
+      const TextSpan(text: '给'),
+      TextSpan(text: '${vm.users[vm.acceptUid]?.showName() ?? '--'}，', style: const TextStyle(color: AppPalette.colorY)),
+      const TextSpan(text: '开出'),
+    ];
+    for(var i = 0; i < vm.items.length; i ++) {
+      S_GiftPlay gift = vm.items[i];
+      children.add(
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: GiftImgState(
+            child: NetImage(gift.cover, width: 16, height: 16),
+          ),
+        ),
+      );
+      children.add(
+        TextSpan(text: 'x${gift.count}'),
+      );
+      if(i != vm.items.length - 1) {
+        children.add(
+          const TextSpan(text: ','),
+        );
+      }
+    }
+
+    return TextSpan(
+      children: children,
+      style: const TextStyle(color: Colors.white),
     );
   }
 }

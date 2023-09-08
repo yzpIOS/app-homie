@@ -1110,6 +1110,118 @@ class MikeInfo extends $pb.GeneratedMessage {
   void clearNumber() => clearField(7);
 }
 
+class RoomUserInfo extends $pb.GeneratedMessage {
+  factory RoomUserInfo() => create();
+  RoomUserInfo._() : super();
+  factory RoomUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoomUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoomUserInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
+    ..aInt64(2, _omitFieldNames ? '' : 'roleId')
+    ..aInt64(3, _omitFieldNames ? '' : 'roomId')
+    ..aOS(4, _omitFieldNames ? '' : 'username')
+    ..aOS(5, _omitFieldNames ? '' : 'avatarUrl')
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'adminType', $pb.PbFieldType.O3)
+    ..aOS(8, _omitFieldNames ? '' : 'level')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RoomUserInfo clone() => RoomUserInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RoomUserInfo copyWith(void Function(RoomUserInfo) updates) => super.copyWith((message) => updates(message as RoomUserInfo)) as RoomUserInfo;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RoomUserInfo create() => RoomUserInfo._();
+  RoomUserInfo createEmptyInstance() => create();
+  static $pb.PbList<RoomUserInfo> createRepeated() => $pb.PbList<RoomUserInfo>();
+  @$core.pragma('dart2js:noInline')
+  static RoomUserInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoomUserInfo>(create);
+  static RoomUserInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roleId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoleId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoleId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get roomId => $_getI64(2);
+  @$pb.TagNumber(3)
+  set roomId($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoomId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoomId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get username => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set username($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUsername() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUsername() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get avatarUrl => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set avatarUrl($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAvatarUrl() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearAvatarUrl() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get type => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set type($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasType() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearType() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get adminType => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set adminType($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasAdminType() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearAdminType() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get level => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set level($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasLevel() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearLevel() => clearField(8);
+}
+
 class PKGuildInfo extends $pb.GeneratedMessage {
   factory PKGuildInfo() => create();
   PKGuildInfo._() : super();
@@ -1723,6 +1835,7 @@ class PKSceneToxic extends $pb.GeneratedMessage {
     ..aInt64(2, _omitFieldNames ? '' : 'takeEffectTime', protoName: 'takeEffectTime')
     ..aOM<XYZ>(3, _omitFieldNames ? '' : 'safePosition', protoName: 'safePosition', subBuilder: XYZ.create)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'toxicFogSpeed', $pb.PbFieldType.O3, protoName: 'toxicFogSpeed')
+    ..aInt64(6, _omitFieldNames ? '' : 'nextSafeTakeEffectTime', protoName: 'nextSafeTakeEffectTime')
     ..hasRequiredFields = false
   ;
 
@@ -1784,6 +1897,15 @@ class PKSceneToxic extends $pb.GeneratedMessage {
   $core.bool hasToxicFogSpeed() => $_has(3);
   @$pb.TagNumber(5)
   void clearToxicFogSpeed() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get nextSafeTakeEffectTime => $_getI64(4);
+  @$pb.TagNumber(6)
+  set nextSafeTakeEffectTime($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasNextSafeTakeEffectTime() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearNextSafeTakeEffectTime() => clearField(6);
 }
 
 class PkRoomInfo extends $pb.GeneratedMessage {
@@ -1884,7 +2006,7 @@ class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
     ..a<$core.int>(7, _omitFieldNames ? '' : 'TotalBlood', $pb.PbFieldType.O3, protoName: 'TotalBlood')
     ..a<$core.int>(8, _omitFieldNames ? '' : 'Shield', $pb.PbFieldType.O3, protoName: 'Shield')
     ..a<$core.int>(9, _omitFieldNames ? '' : 'Attack', $pb.PbFieldType.O3, protoName: 'Attack')
-    ..a<$core.int>(10, _omitFieldNames ? '' : 'countdown', $pb.PbFieldType.O3)
+    ..aInt64(10, _omitFieldNames ? '' : 'countdown')
     ..a<$core.int>(11, _omitFieldNames ? '' : 'swordCount', $pb.PbFieldType.O3)
     ..a<$core.int>(12, _omitFieldNames ? '' : 'maxSpeed', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
@@ -1993,9 +2115,9 @@ class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
   void clearAttack() => clearField(9);
 
   @$pb.TagNumber(10)
-  $core.int get countdown => $_getIZ(9);
+  $fixnum.Int64 get countdown => $_getI64(9);
   @$pb.TagNumber(10)
-  set countdown($core.int v) { $_setSignedInt32(9, v); }
+  set countdown($fixnum.Int64 v) { $_setInt64(9, v); }
   @$pb.TagNumber(10)
   $core.bool hasCountdown() => $_has(9);
   @$pb.TagNumber(10)

@@ -74,7 +74,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
       users.forEach((key, value) {
-        if(sendUid != value.uid) {
+        if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
           dataRx.add(
             GiftMsgView(
               GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift),
@@ -94,22 +94,36 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       if(items == null) {
         return;
       }
-      for(var i = 0; i < items.length; i ++) {
-        S_GiftPlay? gift = items[i];
+      S_GiftPlay? gift = items.first;
+      final sendUid = gift.sendId;
+      final ids = gift.acceptUidList ?? [];
+      final users = await findByUidX({sendUid, ...ids}, useNet: true);
+      users.forEach((key, value) {
+        if(sendUid != value.uid) {
+          dataRx.add(
+            BlindBoxGiftOpenMsgView(
+              BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: moreGift),
+            ),
+          );
+        }
+      });
 
-        final sendUid = gift.sendId;
-        final ids = gift.acceptUidList ?? [];
-        final users = await findByUidX({sendUid, ...ids}, useNet: true);
-        users.forEach((key, value) {
-          if(sendUid != value.uid) {
-            dataRx.add(
-              BlindBoxOpenGiftMsgView(
-                BaseMsgData<String>(data: gift.name),
-              ),
-            );
-          }
-        });
-      }
+      // for(var i = 0; i < items.length; i ++) {
+      //   S_GiftPlay? gift = items[i];
+      //
+      //   final sendUid = gift.sendId;
+      //   final ids = gift.acceptUidList ?? [];
+      //   final users = await findByUidX({sendUid, ...ids}, useNet: true);
+      //   users.forEach((key, value) {
+      //     if(sendUid != value.uid) {
+      //       dataRx.add(
+      //         BlindBoxGiftOpenMsgView(
+      //           GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift, blindBoxName: data.blindBoxName),
+      //         ),
+      //       );
+      //     }
+      //   });
+      // }
     });
   }
 }

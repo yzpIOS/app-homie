@@ -88,22 +88,3 @@ class SystemMsgView extends BaseMsgView<BaseMsgData<String>> {
     return RichText(text: span, maxLines: null,);
   }
 }
-
-// 盲盒开出了礼物消息视图
-class BlindBoxOpenGiftMsgView extends BaseMsgView<BaseMsgData<String>> {
-  const BlindBoxOpenGiftMsgView(super.vm, {super.key});
-
-  @override
-  Widget msgView(BuildContext context) {
-    InlineSpan span = TextSpan(
-      children: [
-        const TextSpan(text: ' 盲盒开出了 ',),
-        TextSpan(text: vm.data,),
-        const TextSpan(text: ' 礼物',),
-      ],
-      style: const TextStyle(color: AppPalette.colorY),
-    );
-
-    return RichText(text: span, maxLines: null,);
-  }
-}

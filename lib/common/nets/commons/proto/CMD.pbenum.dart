@@ -68,6 +68,8 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_CreateScene = CMD._(2101, _omitEnumNames ? '' : 'S_CreateScene');
   static const CMD C_CloseScene = CMD._(2103, _omitEnumNames ? '' : 'C_CloseScene');
   static const CMD S_CloseScene = CMD._(2104, _omitEnumNames ? '' : 'S_CloseScene');
+  static const CMD C_OnlineList = CMD._(2110, _omitEnumNames ? '' : 'C_OnlineList');
+  static const CMD S_OnlineList = CMD._(2111, _omitEnumNames ? '' : 'S_OnlineList');
   static const CMD C_JoinScene = CMD._(2112, _omitEnumNames ? '' : 'C_JoinScene');
   static const CMD S_JoinScene = CMD._(2113, _omitEnumNames ? '' : 'S_JoinScene');
   static const CMD C_OutScene = CMD._(2114, _omitEnumNames ? '' : 'C_OutScene');
@@ -228,6 +230,8 @@ class CMD extends $pb.ProtobufEnum {
     S_CreateScene,
     C_CloseScene,
     S_CloseScene,
+    C_OnlineList,
+    S_OnlineList,
     C_JoinScene,
     S_JoinScene,
     C_OutScene,

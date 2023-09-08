@@ -4,8 +4,8 @@ class ApiGift extends ApiBase {
   const ApiGift(super.path);
 
   /// 获取直播间的礼物列表
-  Future list() {
-    return _doPost('room_query').then(((it) => it['items']));
+  Future list({required PageNum page}) {
+    return _doPost('room_query', data: page + {}).then(((it) => it['items']));
   }
 
   Future backpack() {
