@@ -51,7 +51,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
   void initState() {
     super.initState();
     // 获取房间在线的用户信息
-    post(() async {
+    delay(100, () async {
       WaitingCtrl.obj.show();
       C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
       c_roomEnterComplete.roomId = Int64(widget.sceneCtrl?.roomId ?? 0);
