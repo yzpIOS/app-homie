@@ -1,241 +1,179 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: CMD.proto
 //
 // @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,deprecated_member_use_from_same_package,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: annotate_overrides, camel_case_types
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
-
-import 'dart:convert' as $convert;
 import 'dart:core' as $core;
+import 'dart:convert' as $convert;
 import 'dart:typed_data' as $typed_data;
-
 @$core.Deprecated('Use cMDDescriptor instead')
-const CMD$json = {
+const CMD$json = const {
   '1': 'CMD',
-  '2': [
-    {'1': 'NONE', '2': 0},
-    {'1': 'G_Heart', '2': 1},
-    {'1': 'C_GetTime', '2': 2},
-    {'1': 'S_SysTime', '2': 3},
-    {'1': 'S_Err', '2': 4},
-    {'1': 'S_Tips', '2': 5},
-    {'1': 'S_GM', '2': 6},
-    {'1': 'SS_UserVerify', '2': 1000},
-    {'1': 'C_Role', '2': 103},
-    {'1': 'S_Role', '2': 104},
-    {'1': 'C_UploadURL', '2': 111},
-    {'1': 'S_UploadURL', '2': 112},
-    {'1': 'C_MediaId', '2': 113},
-    {'1': 'S_MediaId', '2': 114},
-    {'1': 'C_CreateRole', '2': 121},
-    {'1': 'S_CreateRole', '2': 122},
-    {'1': 'G_RemoveRole', '2': 123},
-    {'1': 'C_UpdateRole', '2': 124},
-    {'1': 'S_UpdateRole', '2': 125},
-    {'1': 'S_UpdateRoleBroadcast', '2': 126},
-    {'1': 'C_ReLink', '2': 131},
-    {'1': 'C_ExitGame', '2': 132},
-    {'1': 'G_SwitchScene', '2': 200},
-    {'1': 'C_EnterComplete', '2': 201},
-    {'1': 'S_SyncRound', '2': 202},
-    {'1': 'S_SyncAttr', '2': 203},
-    {'1': 'S_SyncAttrs', '2': 204},
-    {'1': 'S_SyncMultiAttr', '2': 205},
-    {'1': 'S_SyncMultiAttrs', '2': 206},
-    {'1': 'C_RoleDetail', '2': 207},
-    {'1': 'S_RoleDetail', '2': 208},
-    {'1': 'S_SyncRole', '2': 209},
-    {'1': 'C_ToZone', '2': 240},
-    {'1': 'C_EnforceZone', '2': 241},
-    {'1': 'S_SyncZone', '2': 242},
-    {'1': 'S_EnforceZone', '2': 243},
-    {'1': 'C_StopMove', '2': 245},
-    {'1': 'C_Animate', '2': 246},
-    {'1': 'C_Stage', '2': 247},
-    {'1': 'S_AddRole', '2': 250},
-    {'1': 'S_RemoveObj', '2': 251},
-    {'1': 'S_RemoveObjs', '2': 252},
-    {'1': 'C_State', '2': 260},
-    {'1': 'S_State', '2': 261},
-    {'1': 'C_ToSeatInfo', '2': 280},
-    {'1': 'S_SyncSeatInfo', '2': 281},
-    {'1': 'C_GoToRoom', '2': 300},
-    {'1': 'S_GoToRoom', '2': 301},
-    {'1': 'C_RoomEnterComplete', '2': 2000},
-    {'1': 'S_SyncRoomInfo', '2': 2001},
-    {'1': 'C_CreateScene', '2': 2100},
-    {'1': 'S_CreateScene', '2': 2101},
-    {'1': 'C_CloseScene', '2': 2103},
-    {'1': 'S_CloseScene', '2': 2104},
-    {'1': 'C_JoinScene', '2': 2112},
-    {'1': 'S_JoinScene', '2': 2113},
-    {'1': 'C_OutScene', '2': 2114},
-    {'1': 'S_OutScene', '2': 2115},
-    {'1': 'C_GoBack', '2': 2116},
-    {'1': 'C_MikeList', '2': 2120},
-    {'1': 'S_MikeList', '2': 2121},
-    {'1': 'C_UpMike', '2': 2122},
-    {'1': 'S_UpMike', '2': 2123},
-    {'1': 'C_OutMike', '2': 2124},
-    {'1': 'S_OutMike', '2': 2125},
-    {'1': 'C_BanMike', '2': 2126},
-    {'1': 'S_BanMike', '2': 2127},
-    {'1': 'C_AccMikeClear', '2': 2130},
-    {'1': 'S_AccMikeClear', '2': 2131},
-    {'1': 'C_SetNoticeMessage', '2': 2140},
-    {'1': 'S_SetNoticeMessage', '2': 2141},
-    {'1': 'C_SetAdministrator', '2': 2152},
-    {'1': 'S_SetAdministrator', '2': 2153},
-    {'1': 'C_SetBlack', '2': 2162},
-    {'1': 'S_SetBlack', '2': 2163},
-    {'1': 'C_ChatMessage', '2': 2180},
-    {'1': 'S_ChatMessage', '2': 2181},
-    {'1': 'C_BanChat', '2': 2196},
-    {'1': 'S_BanChat', '2': 2197},
-    {'1': 'S_LiveStartBroadcast', '2': 2200},
-    {'1': 'S_LiveStopBroadcast', '2': 2201},
-    {'1': 'S_JoinBroadcast', '2': 2210},
-    {'1': 'S_LeaveBroadcast', '2': 2211},
-    {'1': 'S_UpMikeBroadcast', '2': 2220},
-    {'1': 'S_DownMikeBroadcast', '2': 2221},
-    {'1': 'S_InviteMikeBroadcast', '2': 2222},
-    {'1': 'S_CloseMikeBroadcast', '2': 2223},
-    {'1': 'S_OpenBroadcast', '2': 2224},
-    {'1': 'S_ApplyUpMikeBroadcast', '2': 2225},
-    {'1': 'S_RefuseUpMikeBroadcast', '2': 2226},
-    {'1': 'S_BanMikeBroadcast', '2': 2227},
-    {'1': 'S_AccMikeBroadcast', '2': 2230},
-    {'1': 'S_NoticeBroadcast', '2': 2240},
-    {'1': 'S_BlackBroadcast', '2': 2250},
-    {'1': 'S_ChatMessageBroadcast', '2': 2270},
-    {'1': 'S_BanChatBroadcast', '2': 2271},
-    {'1': 'S_AdministratorBroadcast', '2': 2280},
-    {'1': 'C_GiveGiftByRoom', '2': 3100},
-    {'1': 'S_GiveGiftByRoom', '2': 3101},
-    {'1': 'S_UpdateLevel', '2': 3102},
-    {'1': 'S_UpdateCharmLevel', '2': 3103},
-    {'1': 'S_GiftPlay', '2': 3104},
-    {'1': 'S_FloatingScreen', '2': 3105},
-    {'1': 'C_GiveGiftByDynamic', '2': 3106},
-    {'1': 'S_GiveGiftByDynamic', '2': 3107},
-    {'1': 'C_GiveGiftByIm', '2': 3109},
-    {'1': 'S_GiveGiftByIm', '2': 3110},
-    {'1': 'S_MoreGiftPlay', '2': 3111},
-    {'1': 'S_MoreGiftFloatingScreen', '2': 3112},
-    {'1': 'C_SaveUserCurrentDressUp', '2': 4100},
-    {'1': 'S_SaveUserCurrentDressUp', '2': 4101},
-    {'1': 'S_UpdateDressUp', '2': 4102},
-    {'1': 'C_UseProductAndSaveUserCurrentDressUp', '2': 4103},
-    {'1': 'S_UseProductAndSaveUserCurrentDressUp', '2': 4104},
-    {'1': 'C_Robot', '2': 6661},
-    {'1': 'S_Robot', '2': 6662},
-    {'1': 'C_Test', '2': 6666},
-    {'1': 'S_Test', '2': 6667},
-    {'1': 'C_Debug', '2': 6668},
-    {'1': 'S_Debug', '2': 6669},
-    {'1': 'C_OptTest', '2': 6670},
-    {'1': 'S_OptTest', '2': 6671},
-    {'1': 'C_Verify', '2': 10000},
-    {'1': 'C_Exit', '2': 10001},
-    {'1': 'G_UFHeart', '2': 10002},
-    {'1': 'C_UFReLink', '2': 10003},
-    {'1': 'F_GiftShow', '2': 11000},
-    {'1': 'C_GoAwayRoom', '2': 12000},
-    {'1': 'S_GoAwayRoom', '2': 12001},
-    {'1': 'C_InFreeMikesArea', '2': 12002},
-    {'1': 'S_InFreeMikesArea', '2': 12003},
-    {'1': 'C_OutFreeMikesArea', '2': 12006},
-    {'1': 'S_OutFreeMikesArea', '2': 12007},
-    {'1': 'C_PlazaToRoom', '2': 12004},
-    {'1': 'S_PlazaToRoom', '2': 12005},
-    {'1': 'C_PushPreload', '2': 12020},
-    {'1': 'S_PushPreload', '2': 12021},
-    {'1': 'S_CameraSwitch', '2': 12030},
-    {'1': 'C_PKInvite', '2': 20001},
-    {'1': 'S_PKInvite', '2': 20002},
-    {'1': 'C_PKAccept', '2': 20003},
-    {'1': 'S_PKInviteResult', '2': 20004},
-    {'1': 'C_PKRoomList', '2': 20005},
-    {'1': 'S_PKRoomList', '2': 20006},
-    {'1': 'C_PKSceneLoaded', '2': 20010},
-    {'1': 'S_PKGameInfo', '2': 20011},
-    {'1': 'S_PKUserEnter', '2': 20012},
-    {'1': 'C_PKBattleReady', '2': 20031},
-    {'1': 'S_PKSyncRoles', '2': 20032},
-    {'1': 'C_PKMove', '2': 20034},
-    {'1': 'C_PKStop', '2': 20035},
-    {'1': 'S_PKSyncRoleAttsLF', '2': 20036},
-    {'1': 'S_PKSyncRoleAttsHF', '2': 20037},
-    {'1': 'S_PKSceneToxic', '2': 20038},
-    {'1': 'S_PKSceneGift', '2': 20039},
-    {'1': 'S_PKBattleEnd', '2': 20050},
-    {'1': 'C_PKContinue', '2': 20051},
-    {'1': 'S_PKContinue', '2': 20052},
+  '2': const [
+    const {'1': 'NONE', '2': 0},
+    const {'1': 'G_Heart', '2': 1},
+    const {'1': 'C_GetTime', '2': 2},
+    const {'1': 'S_SysTime', '2': 3},
+    const {'1': 'S_Err', '2': 4},
+    const {'1': 'S_Tips', '2': 5},
+    const {'1': 'S_GM', '2': 6},
+    const {'1': 'SS_UserVerify', '2': 1000},
+    const {'1': 'C_Role', '2': 103},
+    const {'1': 'S_Role', '2': 104},
+    const {'1': 'C_UploadURL', '2': 111},
+    const {'1': 'S_UploadURL', '2': 112},
+    const {'1': 'C_MediaId', '2': 113},
+    const {'1': 'S_MediaId', '2': 114},
+    const {'1': 'C_CreateRole', '2': 121},
+    const {'1': 'S_CreateRole', '2': 122},
+    const {'1': 'G_RemoveRole', '2': 123},
+    const {'1': 'C_UpdateRole', '2': 124},
+    const {'1': 'S_UpdateRole', '2': 125},
+    const {'1': 'S_UpdateRoleBroadcast', '2': 126},
+    const {'1': 'C_ReLink', '2': 131},
+    const {'1': 'C_ExitGame', '2': 132},
+    const {'1': 'G_SwitchScene', '2': 200},
+    const {'1': 'C_EnterComplete', '2': 201},
+    const {'1': 'S_SyncRound', '2': 202},
+    const {'1': 'S_SyncAttr', '2': 203},
+    const {'1': 'S_SyncAttrs', '2': 204},
+    const {'1': 'S_SyncMultiAttr', '2': 205},
+    const {'1': 'S_SyncMultiAttrs', '2': 206},
+    const {'1': 'C_RoleDetail', '2': 207},
+    const {'1': 'S_RoleDetail', '2': 208},
+    const {'1': 'S_SyncRole', '2': 209},
+    const {'1': 'C_ToZone', '2': 240},
+    const {'1': 'C_EnforceZone', '2': 241},
+    const {'1': 'S_SyncZone', '2': 242},
+    const {'1': 'S_EnforceZone', '2': 243},
+    const {'1': 'C_StopMove', '2': 245},
+    const {'1': 'C_Animate', '2': 246},
+    const {'1': 'C_Stage', '2': 247},
+    const {'1': 'S_AddRole', '2': 250},
+    const {'1': 'S_RemoveObj', '2': 251},
+    const {'1': 'S_RemoveObjs', '2': 252},
+    const {'1': 'C_State', '2': 260},
+    const {'1': 'S_State', '2': 261},
+    const {'1': 'C_ToSeatInfo', '2': 280},
+    const {'1': 'S_SyncSeatInfo', '2': 281},
+    const {'1': 'C_GoToRoom', '2': 300},
+    const {'1': 'S_GoToRoom', '2': 301},
+    const {'1': 'C_RoomEnterComplete', '2': 2000},
+    const {'1': 'S_SyncRoomInfo', '2': 2001},
+    const {'1': 'C_CreateScene', '2': 2100},
+    const {'1': 'S_CreateScene', '2': 2101},
+    const {'1': 'C_CloseScene', '2': 2103},
+    const {'1': 'S_CloseScene', '2': 2104},
+    const {'1': 'C_OnlineList', '2': 2110},
+    const {'1': 'S_OnlineList', '2': 2111},
+    const {'1': 'C_JoinScene', '2': 2112},
+    const {'1': 'S_JoinScene', '2': 2113},
+    const {'1': 'C_OutScene', '2': 2114},
+    const {'1': 'S_OutScene', '2': 2115},
+    const {'1': 'C_GoBack', '2': 2116},
+    const {'1': 'C_MikeList', '2': 2120},
+    const {'1': 'S_MikeList', '2': 2121},
+    const {'1': 'C_UpMike', '2': 2122},
+    const {'1': 'S_UpMike', '2': 2123},
+    const {'1': 'C_OutMike', '2': 2124},
+    const {'1': 'S_OutMike', '2': 2125},
+    const {'1': 'C_BanMike', '2': 2126},
+    const {'1': 'S_BanMike', '2': 2127},
+    const {'1': 'C_AccMikeClear', '2': 2130},
+    const {'1': 'S_AccMikeClear', '2': 2131},
+    const {'1': 'C_SetNoticeMessage', '2': 2140},
+    const {'1': 'S_SetNoticeMessage', '2': 2141},
+    const {'1': 'C_SetAdministrator', '2': 2152},
+    const {'1': 'S_SetAdministrator', '2': 2153},
+    const {'1': 'C_SetBlack', '2': 2162},
+    const {'1': 'S_SetBlack', '2': 2163},
+    const {'1': 'C_ChatMessage', '2': 2180},
+    const {'1': 'S_ChatMessage', '2': 2181},
+    const {'1': 'C_BanChat', '2': 2196},
+    const {'1': 'S_BanChat', '2': 2197},
+    const {'1': 'S_LiveStartBroadcast', '2': 2200},
+    const {'1': 'S_LiveStopBroadcast', '2': 2201},
+    const {'1': 'S_JoinBroadcast', '2': 2210},
+    const {'1': 'S_LeaveBroadcast', '2': 2211},
+    const {'1': 'S_UpMikeBroadcast', '2': 2220},
+    const {'1': 'S_DownMikeBroadcast', '2': 2221},
+    const {'1': 'S_InviteMikeBroadcast', '2': 2222},
+    const {'1': 'S_CloseMikeBroadcast', '2': 2223},
+    const {'1': 'S_OpenBroadcast', '2': 2224},
+    const {'1': 'S_ApplyUpMikeBroadcast', '2': 2225},
+    const {'1': 'S_RefuseUpMikeBroadcast', '2': 2226},
+    const {'1': 'S_BanMikeBroadcast', '2': 2227},
+    const {'1': 'S_AccMikeBroadcast', '2': 2230},
+    const {'1': 'S_NoticeBroadcast', '2': 2240},
+    const {'1': 'S_BlackBroadcast', '2': 2250},
+    const {'1': 'S_ChatMessageBroadcast', '2': 2270},
+    const {'1': 'S_BanChatBroadcast', '2': 2271},
+    const {'1': 'S_AdministratorBroadcast', '2': 2280},
+    const {'1': 'C_GiveGiftByRoom', '2': 3100},
+    const {'1': 'S_GiveGiftByRoom', '2': 3101},
+    const {'1': 'S_UpdateLevel', '2': 3102},
+    const {'1': 'S_UpdateCharmLevel', '2': 3103},
+    const {'1': 'S_GiftPlay', '2': 3104},
+    const {'1': 'S_FloatingScreen', '2': 3105},
+    const {'1': 'C_GiveGiftByDynamic', '2': 3106},
+    const {'1': 'S_GiveGiftByDynamic', '2': 3107},
+    const {'1': 'C_GiveGiftByIm', '2': 3109},
+    const {'1': 'S_GiveGiftByIm', '2': 3110},
+    const {'1': 'S_MoreGiftPlay', '2': 3111},
+    const {'1': 'S_MoreGiftFloatingScreen', '2': 3112},
+    const {'1': 'C_SaveUserCurrentDressUp', '2': 4100},
+    const {'1': 'S_SaveUserCurrentDressUp', '2': 4101},
+    const {'1': 'S_UpdateDressUp', '2': 4102},
+    const {'1': 'C_UseProductAndSaveUserCurrentDressUp', '2': 4103},
+    const {'1': 'S_UseProductAndSaveUserCurrentDressUp', '2': 4104},
+    const {'1': 'C_Robot', '2': 6661},
+    const {'1': 'S_Robot', '2': 6662},
+    const {'1': 'C_Test', '2': 6666},
+    const {'1': 'S_Test', '2': 6667},
+    const {'1': 'C_Debug', '2': 6668},
+    const {'1': 'S_Debug', '2': 6669},
+    const {'1': 'C_OptTest', '2': 6670},
+    const {'1': 'S_OptTest', '2': 6671},
+    const {'1': 'C_Verify', '2': 10000},
+    const {'1': 'C_Exit', '2': 10001},
+    const {'1': 'G_UFHeart', '2': 10002},
+    const {'1': 'C_UFReLink', '2': 10003},
+    const {'1': 'F_GiftShow', '2': 11000},
+    const {'1': 'C_GoAwayRoom', '2': 12000},
+    const {'1': 'S_GoAwayRoom', '2': 12001},
+    const {'1': 'C_InFreeMikesArea', '2': 12002},
+    const {'1': 'S_InFreeMikesArea', '2': 12003},
+    const {'1': 'C_OutFreeMikesArea', '2': 12006},
+    const {'1': 'S_OutFreeMikesArea', '2': 12007},
+    const {'1': 'C_PlazaToRoom', '2': 12004},
+    const {'1': 'S_PlazaToRoom', '2': 12005},
+    const {'1': 'C_PushPreload', '2': 12020},
+    const {'1': 'S_PushPreload', '2': 12021},
+    const {'1': 'S_CameraSwitch', '2': 12030},
+    const {'1': 'C_PKInvite', '2': 20001},
+    const {'1': 'S_PKInvite', '2': 20002},
+    const {'1': 'C_PKAccept', '2': 20003},
+    const {'1': 'S_PKInviteResult', '2': 20004},
+    const {'1': 'C_PKRoomList', '2': 20005},
+    const {'1': 'S_PKRoomList', '2': 20006},
+    const {'1': 'C_PKSceneLoaded', '2': 20010},
+    const {'1': 'S_PKGameInfo', '2': 20011},
+    const {'1': 'S_PKUserEnter', '2': 20012},
+    const {'1': 'C_PKBattleReady', '2': 20031},
+    const {'1': 'S_PKSyncRoles', '2': 20032},
+    const {'1': 'C_PKMove', '2': 20034},
+    const {'1': 'C_PKStop', '2': 20035},
+    const {'1': 'S_PKSyncRoleAttsLF', '2': 20036},
+    const {'1': 'S_PKSyncRoleAttsHF', '2': 20037},
+    const {'1': 'S_PKSceneToxic', '2': 20038},
+    const {'1': 'S_PKSceneGift', '2': 20039},
+    const {'1': 'S_PKBattleEnd', '2': 20050},
+    const {'1': 'C_PKContinue', '2': 20051},
+    const {'1': 'S_PKContinue', '2': 20052},
   ],
 };
 
 /// Descriptor for `CMD`. Decode as a `google.protobuf.EnumDescriptorProto`.
-final $typed_data.Uint8List cMDDescriptor = $convert.base64Decode(
-    'CgNDTUQSCAoETk9ORRAAEgsKB0dfSGVhcnQQARINCglDX0dldFRpbWUQAhINCglTX1N5c1RpbW'
-    'UQAxIJCgVTX0VychAEEgoKBlNfVGlwcxAFEggKBFNfR00QBhISCg1TU19Vc2VyVmVyaWZ5EOgH'
-    'EgoKBkNfUm9sZRBnEgoKBlNfUm9sZRBoEg8KC0NfVXBsb2FkVVJMEG8SDwoLU19VcGxvYWRVUk'
-    'wQcBINCglDX01lZGlhSWQQcRINCglTX01lZGlhSWQQchIQCgxDX0NyZWF0ZVJvbGUQeRIQCgxT'
-    'X0NyZWF0ZVJvbGUQehIQCgxHX1JlbW92ZVJvbGUQexIQCgxDX1VwZGF0ZVJvbGUQfBIQCgxTX1'
-    'VwZGF0ZVJvbGUQfRIZChVTX1VwZGF0ZVJvbGVCcm9hZGNhc3QQfhINCghDX1JlTGluaxCDARIP'
-    'CgpDX0V4aXRHYW1lEIQBEhIKDUdfU3dpdGNoU2NlbmUQyAESFAoPQ19FbnRlckNvbXBsZXRlEM'
-    'kBEhAKC1NfU3luY1JvdW5kEMoBEg8KClNfU3luY0F0dHIQywESEAoLU19TeW5jQXR0cnMQzAES'
-    'FAoPU19TeW5jTXVsdGlBdHRyEM0BEhUKEFNfU3luY011bHRpQXR0cnMQzgESEQoMQ19Sb2xlRG'
-    'V0YWlsEM8BEhEKDFNfUm9sZURldGFpbBDQARIPCgpTX1N5bmNSb2xlENEBEg0KCENfVG9ab25l'
-    'EPABEhIKDUNfRW5mb3JjZVpvbmUQ8QESDwoKU19TeW5jWm9uZRDyARISCg1TX0VuZm9yY2Vab2'
-    '5lEPMBEg8KCkNfU3RvcE1vdmUQ9QESDgoJQ19BbmltYXRlEPYBEgwKB0NfU3RhZ2UQ9wESDgoJ'
-    'U19BZGRSb2xlEPoBEhAKC1NfUmVtb3ZlT2JqEPsBEhEKDFNfUmVtb3ZlT2JqcxD8ARIMCgdDX1'
-    'N0YXRlEIQCEgwKB1NfU3RhdGUQhQISEQoMQ19Ub1NlYXRJbmZvEJgCEhMKDlNfU3luY1NlYXRJ'
-    'bmZvEJkCEg8KCkNfR29Ub1Jvb20QrAISDwoKU19Hb1RvUm9vbRCtAhIYChNDX1Jvb21FbnRlck'
-    'NvbXBsZXRlENAPEhMKDlNfU3luY1Jvb21JbmZvENEPEhIKDUNfQ3JlYXRlU2NlbmUQtBASEgoN'
-    'U19DcmVhdGVTY2VuZRC1EBIRCgxDX0Nsb3NlU2NlbmUQtxASEQoMU19DbG9zZVNjZW5lELgQEh'
-    'EKDENfT25saW5lTGlzdBC+EBIRCgxTX09ubGluZUxpc3QQvxASEAoLQ19Kb2luU2NlbmUQwBAS'
-    'EAoLU19Kb2luU2NlbmUQwRASDwoKQ19PdXRTY2VuZRDCEBIPCgpTX091dFNjZW5lEMMQEg0KCE'
-    'NfR29CYWNrEMQQEg8KCkNfTWlrZUxpc3QQyBASDwoKU19NaWtlTGlzdBDJEBINCghDX1VwTWlr'
-    'ZRDKEBINCghTX1VwTWlrZRDLEBIOCglDX091dE1pa2UQzBASDgoJU19PdXRNaWtlEM0QEg4KCU'
-    'NfQmFuTWlrZRDOEBIOCglTX0Jhbk1pa2UQzxASEwoOQ19BY2NNaWtlQ2xlYXIQ0hASEwoOU19B'
-    'Y2NNaWtlQ2xlYXIQ0xASFwoSQ19TZXROb3RpY2VNZXNzYWdlENwQEhcKElNfU2V0Tm90aWNlTW'
-    'Vzc2FnZRDdEBIXChJDX1NldEFkbWluaXN0cmF0b3IQ6BASFwoSU19TZXRBZG1pbmlzdHJhdG9y'
-    'EOkQEg8KCkNfU2V0QmxhY2sQ8hASDwoKU19TZXRCbGFjaxDzEBISCg1DX0NoYXRNZXNzYWdlEI'
-    'QREhIKDVNfQ2hhdE1lc3NhZ2UQhRESDgoJQ19CYW5DaGF0EJQREg4KCVNfQmFuQ2hhdBCVERIZ'
-    'ChRTX0xpdmVTdGFydEJyb2FkY2FzdBCYERIYChNTX0xpdmVTdG9wQnJvYWRjYXN0EJkREhQKD1'
-    'NfSm9pbkJyb2FkY2FzdBCiERIVChBTX0xlYXZlQnJvYWRjYXN0EKMREhYKEVNfVXBNaWtlQnJv'
-    'YWRjYXN0EKwREhgKE1NfRG93bk1pa2VCcm9hZGNhc3QQrRESGgoVU19JbnZpdGVNaWtlQnJvYW'
-    'RjYXN0EK4REhkKFFNfQ2xvc2VNaWtlQnJvYWRjYXN0EK8REhQKD1NfT3BlbkJyb2FkY2FzdBCw'
-    'ERIbChZTX0FwcGx5VXBNaWtlQnJvYWRjYXN0ELEREhwKF1NfUmVmdXNlVXBNaWtlQnJvYWRjYX'
-    'N0ELIREhcKElNfQmFuTWlrZUJyb2FkY2FzdBCzERIXChJTX0FjY01pa2VCcm9hZGNhc3QQthES'
-    'FgoRU19Ob3RpY2VCcm9hZGNhc3QQwBESFQoQU19CbGFja0Jyb2FkY2FzdBDKERIbChZTX0NoYX'
-    'RNZXNzYWdlQnJvYWRjYXN0EN4REhcKElNfQmFuQ2hhdEJyb2FkY2FzdBDfERIdChhTX0FkbWlu'
-    'aXN0cmF0b3JCcm9hZGNhc3QQ6BESFQoQQ19HaXZlR2lmdEJ5Um9vbRCcGBIVChBTX0dpdmVHaW'
-    'Z0QnlSb29tEJ0YEhIKDVNfVXBkYXRlTGV2ZWwQnhgSFwoSU19VcGRhdGVDaGFybUxldmVsEJ8Y'
-    'Eg8KClNfR2lmdFBsYXkQoBgSFQoQU19GbG9hdGluZ1NjcmVlbhChGBIYChNDX0dpdmVHaWZ0Qn'
-    'lEeW5hbWljEKIYEhgKE1NfR2l2ZUdpZnRCeUR5bmFtaWMQoxgSEwoOQ19HaXZlR2lmdEJ5SW0Q'
-    'pRgSEwoOU19HaXZlR2lmdEJ5SW0QphgSEwoOU19Nb3JlR2lmdFBsYXkQpxgSHQoYU19Nb3JlR2'
-    'lmdEZsb2F0aW5nU2NyZWVuEKgYEh0KGENfU2F2ZVVzZXJDdXJyZW50RHJlc3NVcBCEIBIdChhT'
-    'X1NhdmVVc2VyQ3VycmVudERyZXNzVXAQhSASFAoPU19VcGRhdGVEcmVzc1VwEIYgEioKJUNfVX'
-    'NlUHJvZHVjdEFuZFNhdmVVc2VyQ3VycmVudERyZXNzVXAQhyASKgolU19Vc2VQcm9kdWN0QW5k'
-    'U2F2ZVVzZXJDdXJyZW50RHJlc3NVcBCIIBIMCgdDX1JvYm90EIU0EgwKB1NfUm9ib3QQhjQSCw'
-    'oGQ19UZXN0EIo0EgsKBlNfVGVzdBCLNBIMCgdDX0RlYnVnEIw0EgwKB1NfRGVidWcQjTQSDgoJ'
-    'Q19PcHRUZXN0EI40Eg4KCVNfT3B0VGVzdBCPNBINCghDX1ZlcmlmeRCQThILCgZDX0V4aXQQkU'
-    '4SDgoJR19VRkhlYXJ0EJJOEg8KCkNfVUZSZUxpbmsQk04SDwoKRl9HaWZ0U2hvdxD4VRIRCgxD'
-    'X0dvQXdheVJvb20Q4F0SEQoMU19Hb0F3YXlSb29tEOFdEhYKEUNfSW5GcmVlTWlrZXNBcmVhEO'
-    'JdEhYKEVNfSW5GcmVlTWlrZXNBcmVhEONdEhcKEkNfT3V0RnJlZU1pa2VzQXJlYRDmXRIXChJT'
-    'X091dEZyZWVNaWtlc0FyZWEQ510SEgoNQ19QbGF6YVRvUm9vbRDkXRISCg1TX1BsYXphVG9Sb2'
-    '9tEOVdEhIKDUNfUHVzaFByZWxvYWQQ9F0SEgoNU19QdXNoUHJlbG9hZBD1XRITCg5TX0NhbWVy'
-    'YVN3aXRjaBD+XRIQCgpDX1BLSW52aXRlEKGcARIQCgpTX1BLSW52aXRlEKKcARIQCgpDX1BLQW'
-    'NjZXB0EKOcARIWChBTX1BLSW52aXRlUmVzdWx0EKScARISCgxDX1BLUm9vbUxpc3QQpZwBEhIK'
-    'DFNfUEtSb29tTGlzdBCmnAESFQoPQ19QS1NjZW5lTG9hZGVkEKqcARISCgxTX1BLR2FtZUluZm'
-    '8Qq5wBEhMKDVNfUEtVc2VyRW50ZXIQrJwBEhUKD0NfUEtCYXR0bGVSZWFkeRC/nAESEwoNU19Q'
-    'S1N5bmNSb2xlcxDAnAESDgoIQ19QS01vdmUQwpwBEg4KCENfUEtTdG9wEMOcARIYChJTX1BLU3'
-    'luY1JvbGVBdHRzTEYQxJwBEhgKElNfUEtTeW5jUm9sZUF0dHNIRhDFnAESFAoOU19QS1NjZW5l'
-    'VG94aWMQxpwBEhMKDVNfUEtTY2VuZUdpZnQQx5wBEhMKDVNfUEtCYXR0bGVFbmQQ0pwBEhIKDE'
-    'NfUEtDb250aW51ZRDTnAESEgoMU19QS0NvbnRpbnVlENScAQ==');
-
+final $typed_data.Uint8List cMDDescriptor = $convert.base64Decode('CgNDTUQSCAoETk9ORRAAEgsKB0dfSGVhcnQQARINCglDX0dldFRpbWUQAhINCglTX1N5c1RpbWUQAxIJCgVTX0VychAEEgoKBlNfVGlwcxAFEggKBFNfR00QBhISCg1TU19Vc2VyVmVyaWZ5EOgHEgoKBkNfUm9sZRBnEgoKBlNfUm9sZRBoEg8KC0NfVXBsb2FkVVJMEG8SDwoLU19VcGxvYWRVUkwQcBINCglDX01lZGlhSWQQcRINCglTX01lZGlhSWQQchIQCgxDX0NyZWF0ZVJvbGUQeRIQCgxTX0NyZWF0ZVJvbGUQehIQCgxHX1JlbW92ZVJvbGUQexIQCgxDX1VwZGF0ZVJvbGUQfBIQCgxTX1VwZGF0ZVJvbGUQfRIZChVTX1VwZGF0ZVJvbGVCcm9hZGNhc3QQfhINCghDX1JlTGluaxCDARIPCgpDX0V4aXRHYW1lEIQBEhIKDUdfU3dpdGNoU2NlbmUQyAESFAoPQ19FbnRlckNvbXBsZXRlEMkBEhAKC1NfU3luY1JvdW5kEMoBEg8KClNfU3luY0F0dHIQywESEAoLU19TeW5jQXR0cnMQzAESFAoPU19TeW5jTXVsdGlBdHRyEM0BEhUKEFNfU3luY011bHRpQXR0cnMQzgESEQoMQ19Sb2xlRGV0YWlsEM8BEhEKDFNfUm9sZURldGFpbBDQARIPCgpTX1N5bmNSb2xlENEBEg0KCENfVG9ab25lEPABEhIKDUNfRW5mb3JjZVpvbmUQ8QESDwoKU19TeW5jWm9uZRDyARISCg1TX0VuZm9yY2Vab25lEPMBEg8KCkNfU3RvcE1vdmUQ9QESDgoJQ19BbmltYXRlEPYBEgwKB0NfU3RhZ2UQ9wESDgoJU19BZGRSb2xlEPoBEhAKC1NfUmVtb3ZlT2JqEPsBEhEKDFNfUmVtb3ZlT2JqcxD8ARIMCgdDX1N0YXRlEIQCEgwKB1NfU3RhdGUQhQISEQoMQ19Ub1NlYXRJbmZvEJgCEhMKDlNfU3luY1NlYXRJbmZvEJkCEg8KCkNfR29Ub1Jvb20QrAISDwoKU19Hb1RvUm9vbRCtAhIYChNDX1Jvb21FbnRlckNvbXBsZXRlENAPEhMKDlNfU3luY1Jvb21JbmZvENEPEhIKDUNfQ3JlYXRlU2NlbmUQtBASEgoNU19DcmVhdGVTY2VuZRC1EBIRCgxDX0Nsb3NlU2NlbmUQtxASEQoMU19DbG9zZVNjZW5lELgQEhEKDENfT25saW5lTGlzdBC+EBIRCgxTX09ubGluZUxpc3QQvxASEAoLQ19Kb2luU2NlbmUQwBASEAoLU19Kb2luU2NlbmUQwRASDwoKQ19PdXRTY2VuZRDCEBIPCgpTX091dFNjZW5lEMMQEg0KCENfR29CYWNrEMQQEg8KCkNfTWlrZUxpc3QQyBASDwoKU19NaWtlTGlzdBDJEBINCghDX1VwTWlrZRDKEBINCghTX1VwTWlrZRDLEBIOCglDX091dE1pa2UQzBASDgoJU19PdXRNaWtlEM0QEg4KCUNfQmFuTWlrZRDOEBIOCglTX0Jhbk1pa2UQzxASEwoOQ19BY2NNaWtlQ2xlYXIQ0hASEwoOU19BY2NNaWtlQ2xlYXIQ0xASFwoSQ19TZXROb3RpY2VNZXNzYWdlENwQEhcKElNfU2V0Tm90aWNlTWVzc2FnZRDdEBIXChJDX1NldEFkbWluaXN0cmF0b3IQ6BASFwoSU19TZXRBZG1pbmlzdHJhdG9yEOkQEg8KCkNfU2V0QmxhY2sQ8hASDwoKU19TZXRCbGFjaxDzEBISCg1DX0NoYXRNZXNzYWdlEIQREhIKDVNfQ2hhdE1lc3NhZ2UQhRESDgoJQ19CYW5DaGF0EJQREg4KCVNfQmFuQ2hhdBCVERIZChRTX0xpdmVTdGFydEJyb2FkY2FzdBCYERIYChNTX0xpdmVTdG9wQnJvYWRjYXN0EJkREhQKD1NfSm9pbkJyb2FkY2FzdBCiERIVChBTX0xlYXZlQnJvYWRjYXN0EKMREhYKEVNfVXBNaWtlQnJvYWRjYXN0EKwREhgKE1NfRG93bk1pa2VCcm9hZGNhc3QQrRESGgoVU19JbnZpdGVNaWtlQnJvYWRjYXN0EK4REhkKFFNfQ2xvc2VNaWtlQnJvYWRjYXN0EK8REhQKD1NfT3BlbkJyb2FkY2FzdBCwERIbChZTX0FwcGx5VXBNaWtlQnJvYWRjYXN0ELEREhwKF1NfUmVmdXNlVXBNaWtlQnJvYWRjYXN0ELIREhcKElNfQmFuTWlrZUJyb2FkY2FzdBCzERIXChJTX0FjY01pa2VCcm9hZGNhc3QQthESFgoRU19Ob3RpY2VCcm9hZGNhc3QQwBESFQoQU19CbGFja0Jyb2FkY2FzdBDKERIbChZTX0NoYXRNZXNzYWdlQnJvYWRjYXN0EN4REhcKElNfQmFuQ2hhdEJyb2FkY2FzdBDfERIdChhTX0FkbWluaXN0cmF0b3JCcm9hZGNhc3QQ6BESFQoQQ19HaXZlR2lmdEJ5Um9vbRCcGBIVChBTX0dpdmVHaWZ0QnlSb29tEJ0YEhIKDVNfVXBkYXRlTGV2ZWwQnhgSFwoSU19VcGRhdGVDaGFybUxldmVsEJ8YEg8KClNfR2lmdFBsYXkQoBgSFQoQU19GbG9hdGluZ1NjcmVlbhChGBIYChNDX0dpdmVHaWZ0QnlEeW5hbWljEKIYEhgKE1NfR2l2ZUdpZnRCeUR5bmFtaWMQoxgSEwoOQ19HaXZlR2lmdEJ5SW0QpRgSEwoOU19HaXZlR2lmdEJ5SW0QphgSEwoOU19Nb3JlR2lmdFBsYXkQpxgSHQoYU19Nb3JlR2lmdEZsb2F0aW5nU2NyZWVuEKgYEh0KGENfU2F2ZVVzZXJDdXJyZW50RHJlc3NVcBCEIBIdChhTX1NhdmVVc2VyQ3VycmVudERyZXNzVXAQhSASFAoPU19VcGRhdGVEcmVzc1VwEIYgEioKJUNfVXNlUHJvZHVjdEFuZFNhdmVVc2VyQ3VycmVudERyZXNzVXAQhyASKgolU19Vc2VQcm9kdWN0QW5kU2F2ZVVzZXJDdXJyZW50RHJlc3NVcBCIIBIMCgdDX1JvYm90EIU0EgwKB1NfUm9ib3QQhjQSCwoGQ19UZXN0EIo0EgsKBlNfVGVzdBCLNBIMCgdDX0RlYnVnEIw0EgwKB1NfRGVidWcQjTQSDgoJQ19PcHRUZXN0EI40Eg4KCVNfT3B0VGVzdBCPNBINCghDX1ZlcmlmeRCQThILCgZDX0V4aXQQkU4SDgoJR19VRkhlYXJ0EJJOEg8KCkNfVUZSZUxpbmsQk04SDwoKRl9HaWZ0U2hvdxD4VRIRCgxDX0dvQXdheVJvb20Q4F0SEQoMU19Hb0F3YXlSb29tEOFdEhYKEUNfSW5GcmVlTWlrZXNBcmVhEOJdEhYKEVNfSW5GcmVlTWlrZXNBcmVhEONdEhcKEkNfT3V0RnJlZU1pa2VzQXJlYRDmXRIXChJTX091dEZyZWVNaWtlc0FyZWEQ510SEgoNQ19QbGF6YVRvUm9vbRDkXRISCg1TX1BsYXphVG9Sb29tEOVdEhIKDUNfUHVzaFByZWxvYWQQ9F0SEgoNU19QdXNoUHJlbG9hZBD1XRITCg5TX0NhbWVyYVN3aXRjaBD+XRIQCgpDX1BLSW52aXRlEKGcARIQCgpTX1BLSW52aXRlEKKcARIQCgpDX1BLQWNjZXB0EKOcARIWChBTX1BLSW52aXRlUmVzdWx0EKScARISCgxDX1BLUm9vbUxpc3QQpZwBEhIKDFNfUEtSb29tTGlzdBCmnAESFQoPQ19QS1NjZW5lTG9hZGVkEKqcARISCgxTX1BLR2FtZUluZm8Qq5wBEhMKDVNfUEtVc2VyRW50ZXIQrJwBEhUKD0NfUEtCYXR0bGVSZWFkeRC/nAESEwoNU19QS1N5bmNSb2xlcxDAnAESDgoIQ19QS01vdmUQwpwBEg4KCENfUEtTdG9wEMOcARIYChJTX1BLU3luY1JvbGVBdHRzTEYQxJwBEhgKElNfUEtTeW5jUm9sZUF0dHNIRhDFnAESFAoOU19QS1NjZW5lVG94aWMQxpwBEhMKDVNfUEtTY2VuZUdpZnQQx5wBEhMKDVNfUEtCYXR0bGVFbmQQ0pwBEhIKDENfUEtDb250aW51ZRDTnAESEgoMU19QS0NvbnRpbnVlENScAQ==');

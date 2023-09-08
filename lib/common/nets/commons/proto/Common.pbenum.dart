@@ -1,38 +1,34 @@
-//
+///
 //  Generated code. Do not modify.
 //  source: Common.proto
 //
 // @dart = 2.12
+// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: annotate_overrides, camel_case_types
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
-
+// ignore_for_file: UNDEFINED_SHOWN_NAME
 import 'dart:core' as $core;
-
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class AttrCode extends $pb.ProtobufEnum {
-  static const AttrCode none = AttrCode._(0, _omitEnumNames ? '' : 'none');
-  static const AttrCode lv = AttrCode._(1, _omitEnumNames ? '' : 'lv');
-  static const AttrCode charm_lv = AttrCode._(2, _omitEnumNames ? '' : 'charm_lv');
-  static const AttrCode sex = AttrCode._(3, _omitEnumNames ? '' : 'sex');
-  static const AttrCode career = AttrCode._(4, _omitEnumNames ? '' : 'career');
-  static const AttrCode speed = AttrCode._(5, _omitEnumNames ? '' : 'speed');
-  static const AttrCode scene = AttrCode._(6, _omitEnumNames ? '' : 'scene');
-  static const AttrCode room = AttrCode._(7, _omitEnumNames ? '' : 'room');
-  static const AttrCode job = AttrCode._(8, _omitEnumNames ? '' : 'job');
-  static const AttrCode avatar_url = AttrCode._(9, _omitEnumNames ? '' : 'avatar_url');
-  static const AttrCode public_id = AttrCode._(10, _omitEnumNames ? '' : 'public_id');
-  static const AttrCode description = AttrCode._(11, _omitEnumNames ? '' : 'description');
-  static const AttrCode growth_value = AttrCode._(12, _omitEnumNames ? '' : 'growth_value');
-  static const AttrCode charm_growth_value = AttrCode._(13, _omitEnumNames ? '' : 'charm_growth_value');
-  static const AttrCode real_name_type = AttrCode._(14, _omitEnumNames ? '' : 'real_name_type');
-  static const AttrCode mike_id = AttrCode._(16, _omitEnumNames ? '' : 'mike_id');
-  static const AttrCode mike_no = AttrCode._(17, _omitEnumNames ? '' : 'mike_no');
-  static const AttrCode animate = AttrCode._(15, _omitEnumNames ? '' : 'animate');
-  static const AttrCode stage = AttrCode._(18, _omitEnumNames ? '' : 'stage');
+  static const AttrCode none = AttrCode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'none');
+  static const AttrCode lv = AttrCode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'lv');
+  static const AttrCode charm_lv = AttrCode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'charm_lv');
+  static const AttrCode sex = AttrCode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'sex');
+  static const AttrCode career = AttrCode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'career');
+  static const AttrCode speed = AttrCode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'speed');
+  static const AttrCode scene = AttrCode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'scene');
+  static const AttrCode room = AttrCode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'room');
+  static const AttrCode job = AttrCode._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'job');
+  static const AttrCode avatar_url = AttrCode._(9, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'avatar_url');
+  static const AttrCode public_id = AttrCode._(10, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'public_id');
+  static const AttrCode description = AttrCode._(11, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'description');
+  static const AttrCode growth_value = AttrCode._(12, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'growth_value');
+  static const AttrCode charm_growth_value = AttrCode._(13, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'charm_growth_value');
+  static const AttrCode real_name_type = AttrCode._(14, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'real_name_type');
+  static const AttrCode mike_id = AttrCode._(16, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'mike_id');
+  static const AttrCode mike_no = AttrCode._(17, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'mike_no');
+  static const AttrCode animate = AttrCode._(15, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'animate');
+  static const AttrCode stage = AttrCode._(18, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'stage');
 
   static const $core.List<AttrCode> values = <AttrCode> [
     none,
@@ -63,10 +59,10 @@ class AttrCode extends $pb.ProtobufEnum {
 }
 
 class State extends $pb.ProtobufEnum {
-  static const State None = State._(0, _omitEnumNames ? '' : 'None');
-  static const State Mai = State._(1, _omitEnumNames ? '' : 'Mai');
-  static const State Sit = State._(2, _omitEnumNames ? '' : 'Sit');
-  static const State Swim = State._(3, _omitEnumNames ? '' : 'Swim');
+  static const State None = State._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'None');
+  static const State Mai = State._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Mai');
+  static const State Sit = State._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Sit');
+  static const State Swim = State._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Swim');
 
   static const $core.List<State> values = <State> [
     None,
@@ -82,8 +78,8 @@ class State extends $pb.ProtobufEnum {
 }
 
 class PKGiftState extends $pb.ProtobufEnum {
-  static const PKGiftState Available = PKGiftState._(0, _omitEnumNames ? '' : 'Available');
-  static const PKGiftState Disappeared = PKGiftState._(1, _omitEnumNames ? '' : 'Disappeared');
+  static const PKGiftState Available = PKGiftState._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Available');
+  static const PKGiftState Disappeared = PKGiftState._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Disappeared');
 
   static const $core.List<PKGiftState> values = <PKGiftState> [
     Available,
@@ -96,5 +92,3 @@ class PKGiftState extends $pb.ProtobufEnum {
   const PKGiftState._($core.int v, $core.String n) : super(v, n);
 }
 
-
-const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');
