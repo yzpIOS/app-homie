@@ -1,8 +1,12 @@
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/api_switch.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
@@ -10,7 +14,9 @@ import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
+import 'package:app/ui/room/user/accept_challenge_view.dart';
 import 'package:app/widgets.dart';
+import 'package:dartz/dartz.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
   final interval_time = 200;
@@ -24,7 +30,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
     // 关闭函数
-    ;
+
     // 房间
     RoomCtrl? roomCtrl = _sceneCtrl as RoomCtrl?;
     if(roomCtrl != null && roomCtrl.roomType != RoomType.guild && roomCtrl.getRole(OAuthCtrl.uid).isOwner) {
@@ -77,6 +83,65 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       },
       (_) => _doClose('你被封禁了'),
     );
+
+    // 注册被邀请的F端，邀请对战信息监听回调
+    SocketCtrl.ins.onDataCmd(CMD.S_PKInvite, onPKInvite);
+
+    // 注册S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+    SocketCtrl.ins.onDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
+
+    // 注册一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
+    SocketCtrl.ins.onDataCmd(CMD.S_PKContinue, onPKContinue);
+  }
+
+  // 被邀请的F端，邀请对战信息监听回调
+  void onPKInvite(int cmd, S_PKInvite? data) {
+    if (data == null) {
+      return;
+    }
+
+    // 显示是否接受挑战的弹窗
+    AcceptChallengeDialog.show(
+      '${data.invitingGuildName}直播间对你发起挑战\n是否接受？',
+      callback: (isAccept) async {
+        Get.pop();
+        simpleSub(
+          Api.Room.pkAccept(accept: isAccept, invitingGuildId: data.invitingGuildId),
+        );
+      },
+    );
+  }
+
+  // S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+  void onPKInviteResult(int cmd, S_PKInviteResult? data) {
+    if (data == null) {
+      return;
+    }
+
+    if (data.isSuccess) {//true进入PK场景
+      int pkRoomId = data.pkRoomId.toInt();//生成了一个PK房ID
+      if(sceneCtrl2?.info == null) {
+        return;
+      }
+      // pk房是一个场景，这里使用当前房间的信息
+      var curRoomInfo = sceneCtrl2?.info ?? {};
+      putPkInfo(curRoomInfo, pkRoomId);
+      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: curRoomInfo, callCloseRoom: false);
+    } else {
+      showToast('已取消挑战邀请');
+    }
+  }
+
+  // 一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
+  void onPKContinue(int cmd, S_PKContinue? data) {
+    if (data == null) {
+      return;
+    }
+
+    int isContinue = data.isContinue;
+    if (isContinue == 2) {
+      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: null, callCloseRoom: true);
+    }
   }
 
   @override
@@ -84,6 +149,15 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     super.onClose();
 
     doCloseState();
+
+    // 移除被邀请的F端，邀请对战信息监听回调
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInvite, onPKInvite);
+
+    // 移除S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
+
+    // 移除一轮游戏结束后，两个C端选择是否继续下一轮的结果
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_PKContinue, onPKContinue);
   }
 
   void _show({
@@ -127,18 +201,25 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
       simpleSub(
         api(),
-        callback1: (resp) => onReady(storeCreate(resp)),
+        callback1: (resp) {
+          var result = storeCreate(resp);
+          return onReady(result);
+        },
         whenErr: off ? doBackWhenErr : null,
       );
     }
 
     switch (stateRx()) {
       case RoomState.Normal:
+        if (!tempCallCloseRoom) {
+          RoomPage.show(off);
+          return;
+        }
         assert(false, '数据错误');
         return;
       case RoomState.Mini:
-        if (_sceneCtrl!.roomId == roomId) {
-          RoomPage.show();
+        if (!tempCallCloseRoom || _sceneCtrl!.roomId == roomId) {
+          RoomPage.show(off);
 
           return;
         } else {
@@ -163,25 +244,31 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
   }
 
+  bool tempCallCloseRoom = true;
+
   void toRoom({required int roomId, Map? data, bool off = false}) {
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;
-    return _show(
+    _show(
       roomId: roomId,
       off: off,
       infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
     );
+    // reset tempCallCloseRoom param
+    tempCallCloseRoom = true;
   }
 
   ///
   /// 从房间大厅跳到房间B时，两个界面都是unity界面会报错，所以加一个中间界面来跳转
   /// 有更好的方式？？
   ///
-  void toMiddleRoom({required int roomId, Map? data, bool off = false}) {
-    Get.off(() => RoomMiddlePage(roomId: roomId, data: data,), transition: Transition.noTransition);
+  void toMiddleRoom({required int roomId, Map? data, bool off = false, bool callCloseRoom = true}) {
+    // RoomMiddlePage will call toRoom method, and tempCallCloseRoom will be reset to true in the toRoom method
+    tempCallCloseRoom = callCloseRoom;
+    Get.off(() => RoomMiddlePage(roomId: roomId, data: data, callCloseRoom: callCloseRoom,), transition: Transition.noTransition);
   }
 
   int _preClickTime = 0;
@@ -222,6 +309,16 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       // 房间manager
       await doCloseState();
     }
+  }
+
+  ///
+  /// 构建pk房的进房信息
+  ///
+  void putPkInfo(Map<dynamic, dynamic> roomInfo, int pkRoomId) {
+    roomInfo["scene_id"] = 4;
+    roomInfo["pk_status"] = 1;
+    roomInfo["neeJoinRoom"] = false;
+    roomInfo["pkRoomId"] = pkRoomId;
   }
 
   Future<void> doCloseState() async {

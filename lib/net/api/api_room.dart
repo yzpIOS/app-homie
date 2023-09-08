@@ -332,4 +332,50 @@ class ApiRoom extends ApiBase {
 
     return _doPost('heartbeat', data: data);
   }
+
+  /// 获取PK房间列表
+  Future getPKRoomList({required PageNum page}) async {
+    C_PKRoomList c_pkRoomList = C_PKRoomList.create();
+    c_pkRoomList.limit = Int64(page.limit);
+    c_pkRoomList.offset = Int64(page.offset);
+
+    S_PKRoomList? roomList = await SocketCtrl.ins.sendByteAsyncServer(
+      CMD.C_PKRoomList,
+      datas: c_pkRoomList.writeToBuffer(),
+      resCmd: CMD.S_PKRoomList
+    );
+
+    return roomList?.roomList.map((e) {
+      return {
+        'roomId' : e.roomId.toInt(),//房间id
+        'roomName' : e.roomName,//房间名称
+        'roomImage' : e.roomImage,//房间图片
+        'hotValue' : e.hotValue,//房间热度
+        'isInvite' : e.isInvite,//是否已被邀请
+      };
+    }).toList();
+  }
+
+  /// 与房间服务器通信，对战前的匹配，仅管理可以操作
+  /// F告诉S端想新建对战，邀请与另一队对战
+  bool sendPKInvite({required int selfGuildId, required int invitedGuildId}) {
+    C_PKInvite c_pkInvite = C_PKInvite.create();
+    c_pkInvite.selfGuildId = Int64(selfGuildId);//己方公会ID
+    c_pkInvite.invitedGuildId = Int64(invitedGuildId);//被邀请的公会ID
+    return SocketCtrl.ins.sendSever(
+      CMD.C_PKInvite,
+      message: c_pkInvite,
+    );
+  }
+
+  /// 被邀请的F端选择是否接受邀请
+  bool pkAccept({required bool accept, required Int64 invitingGuildId}) {
+    C_PKAccept c_pkAccept = C_PKAccept.create();
+    c_pkAccept.accept = accept;//true为接受，false为拒绝
+    c_pkAccept.invitingGuildId = invitingGuildId;//接受了谁的邀请
+    return SocketCtrl.ins.sendSever(
+      CMD.C_PKAccept,
+      message: c_pkAccept,
+    );
+  }
 }

@@ -281,8 +281,6 @@ class S_Role extends $pb.GeneratedMessage {
     ..aOM<$0.RoleInfo>(1, _omitFieldNames ? '' : 'role', subBuilder: $0.RoleInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'retryToken', protoName: 'retryToken')
     ..aInt64(3, _omitFieldNames ? '' : 'time')
-    ..aInt64(4, _omitFieldNames ? '' : 'pkRoomId')
-    ..aInt64(5, _omitFieldNames ? '' : 'roomId')
     ..hasRequiredFields = false
   ;
 
@@ -335,24 +333,6 @@ class S_Role extends $pb.GeneratedMessage {
   $core.bool hasTime() => $_has(2);
   @$pb.TagNumber(3)
   void clearTime() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $fixnum.Int64 get pkRoomId => $_getI64(3);
-  @$pb.TagNumber(4)
-  set pkRoomId($fixnum.Int64 v) { $_setInt64(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasPkRoomId() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearPkRoomId() => clearField(4);
-
-  @$pb.TagNumber(5)
-  $fixnum.Int64 get roomId => $_getI64(4);
-  @$pb.TagNumber(5)
-  set roomId($fixnum.Int64 v) { $_setInt64(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasRoomId() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearRoomId() => clearField(5);
 }
 
 class C_UploadURL extends $pb.GeneratedMessage {
@@ -958,7 +938,6 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
     ..a<$core.int>(4, _omitFieldNames ? '' : 'total', $pb.PbFieldType.O3)
-    ..aInt64(5, _omitFieldNames ? '' : 'pkRoomId')
     ..hasRequiredFields = false
   ;
 
@@ -1018,15 +997,6 @@ class S_JoinBroadcast extends $pb.GeneratedMessage {
   $core.bool hasTotal() => $_has(3);
   @$pb.TagNumber(4)
   void clearTotal() => clearField(4);
-
-  @$pb.TagNumber(5)
-  $fixnum.Int64 get pkRoomId => $_getI64(4);
-  @$pb.TagNumber(5)
-  set pkRoomId($fixnum.Int64 v) { $_setInt64(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasPkRoomId() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearPkRoomId() => clearField(5);
 }
 
 class S_LeaveBroadcast extends $pb.GeneratedMessage {
@@ -2367,98 +2337,6 @@ class S_CloseScene extends $pb.GeneratedMessage {
   S_Err ensureCode() => $_ensure(0);
 }
 
-class C_OnlineList extends $pb.GeneratedMessage {
-  factory C_OnlineList() => create();
-  C_OnlineList._() : super();
-  factory C_OnlineList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory C_OnlineList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_OnlineList', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'offset')
-    ..aInt64(2, _omitFieldNames ? '' : 'limit')
-    ..p<$fixnum.Int64>(3, _omitFieldNames ? '' : 'roomIdList', $pb.PbFieldType.K6)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  C_OnlineList clone() => C_OnlineList()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  C_OnlineList copyWith(void Function(C_OnlineList) updates) => super.copyWith((message) => updates(message as C_OnlineList)) as C_OnlineList;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static C_OnlineList create() => C_OnlineList._();
-  C_OnlineList createEmptyInstance() => create();
-  static $pb.PbList<C_OnlineList> createRepeated() => $pb.PbList<C_OnlineList>();
-  @$core.pragma('dart2js:noInline')
-  static C_OnlineList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_OnlineList>(create);
-  static C_OnlineList? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get offset => $_getI64(0);
-  @$pb.TagNumber(1)
-  set offset($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasOffset() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearOffset() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get limit => $_getI64(1);
-  @$pb.TagNumber(2)
-  set limit($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasLimit() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearLimit() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.List<$fixnum.Int64> get roomIdList => $_getList(2);
-}
-
-class S_OnlineList extends $pb.GeneratedMessage {
-  factory S_OnlineList() => create();
-  S_OnlineList._() : super();
-  factory S_OnlineList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_OnlineList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_OnlineList', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<$0.RoomUserInfo>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: $0.RoomUserInfo.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_OnlineList clone() => S_OnlineList()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_OnlineList copyWith(void Function(S_OnlineList) updates) => super.copyWith((message) => updates(message as S_OnlineList)) as S_OnlineList;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_OnlineList create() => S_OnlineList._();
-  S_OnlineList createEmptyInstance() => create();
-  static $pb.PbList<S_OnlineList> createRepeated() => $pb.PbList<S_OnlineList>();
-  @$core.pragma('dart2js:noInline')
-  static S_OnlineList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_OnlineList>(create);
-  static S_OnlineList? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$0.RoomUserInfo> get items => $_getList(0);
-}
-
 class C_JoinScene extends $pb.GeneratedMessage {
   factory C_JoinScene() => create();
   C_JoinScene._() : super();
@@ -2518,9 +2396,7 @@ class S_JoinScene extends $pb.GeneratedMessage {
   factory S_JoinScene.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_JoinScene', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..e<$1.ErrorCode>(2, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
-    ..aInt64(3, _omitFieldNames ? '' : 'pkRoomId')
     ..hasRequiredFields = false
   ;
 
@@ -2545,32 +2421,14 @@ class S_JoinScene extends $pb.GeneratedMessage {
   static S_JoinScene getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_JoinScene>(create);
   static S_JoinScene? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roomId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $1.ErrorCode get code => $_getN(1);
+  $1.ErrorCode get code => $_getN(0);
   @$pb.TagNumber(2)
   set code($1.ErrorCode v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasCode() => $_has(1);
+  $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(2)
   void clearCode() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $fixnum.Int64 get pkRoomId => $_getI64(2);
-  @$pb.TagNumber(3)
-  set pkRoomId($fixnum.Int64 v) { $_setInt64(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasPkRoomId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearPkRoomId() => clearField(3);
 }
 
 class C_MikeList extends $pb.GeneratedMessage {
@@ -6113,72 +5971,6 @@ class S_GiftPlay extends $pb.GeneratedMessage {
   void clearLandscapeScreenShow() => clearField(18);
 }
 
-class S_MoreGiftPlay extends $pb.GeneratedMessage {
-  factory S_MoreGiftPlay() => create();
-  S_MoreGiftPlay._() : super();
-  factory S_MoreGiftPlay.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_MoreGiftPlay.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_MoreGiftPlay', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<S_GiftPlay>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: S_GiftPlay.create)
-    ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
-    ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
-    ..a<$core.int>(5, _omitFieldNames ? '' : 'blindBoxCount', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_MoreGiftPlay clone() => S_MoreGiftPlay()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_MoreGiftPlay copyWith(void Function(S_MoreGiftPlay) updates) => super.copyWith((message) => updates(message as S_MoreGiftPlay)) as S_MoreGiftPlay;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_MoreGiftPlay create() => S_MoreGiftPlay._();
-  S_MoreGiftPlay createEmptyInstance() => create();
-  static $pb.PbList<S_MoreGiftPlay> createRepeated() => $pb.PbList<S_MoreGiftPlay>();
-  @$core.pragma('dart2js:noInline')
-  static S_MoreGiftPlay getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_MoreGiftPlay>(create);
-  static S_MoreGiftPlay? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<S_GiftPlay> get items => $_getList(0);
-
-  @$pb.TagNumber(2)
-  $core.String get blindBoxName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set blindBoxName($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBlindBoxName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBlindBoxName() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get blindBoxCover => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set blindBoxCover($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasBlindBoxCover() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearBlindBoxCover() => clearField(3);
-
-  @$pb.TagNumber(5)
-  $core.int get blindBoxCount => $_getIZ(3);
-  @$pb.TagNumber(5)
-  set blindBoxCount($core.int v) { $_setSignedInt32(3, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasBlindBoxCount() => $_has(3);
-  @$pb.TagNumber(5)
-  void clearBlindBoxCount() => clearField(5);
-}
-
 class S_FloatingScreen extends $pb.GeneratedMessage {
   factory S_FloatingScreen() => create();
   S_FloatingScreen._() : super();
@@ -6317,62 +6109,6 @@ class S_FloatingScreen extends $pb.GeneratedMessage {
   $core.bool hasCount() => $_has(11);
   @$pb.TagNumber(12)
   void clearCount() => clearField(12);
-}
-
-class S_MoreGiftFloatingScreen extends $pb.GeneratedMessage {
-  factory S_MoreGiftFloatingScreen() => create();
-  S_MoreGiftFloatingScreen._() : super();
-  factory S_MoreGiftFloatingScreen.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_MoreGiftFloatingScreen.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_MoreGiftFloatingScreen', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<S_FloatingScreen>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: S_FloatingScreen.create)
-    ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
-    ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_MoreGiftFloatingScreen clone() => S_MoreGiftFloatingScreen()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_MoreGiftFloatingScreen copyWith(void Function(S_MoreGiftFloatingScreen) updates) => super.copyWith((message) => updates(message as S_MoreGiftFloatingScreen)) as S_MoreGiftFloatingScreen;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_MoreGiftFloatingScreen create() => S_MoreGiftFloatingScreen._();
-  S_MoreGiftFloatingScreen createEmptyInstance() => create();
-  static $pb.PbList<S_MoreGiftFloatingScreen> createRepeated() => $pb.PbList<S_MoreGiftFloatingScreen>();
-  @$core.pragma('dart2js:noInline')
-  static S_MoreGiftFloatingScreen getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_MoreGiftFloatingScreen>(create);
-  static S_MoreGiftFloatingScreen? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<S_FloatingScreen> get items => $_getList(0);
-
-  @$pb.TagNumber(2)
-  $core.String get blindBoxName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set blindBoxName($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBlindBoxName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBlindBoxName() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get blindBoxCover => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set blindBoxCover($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasBlindBoxCover() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearBlindBoxCover() => clearField(3);
 }
 
 class S_PushPreload extends $pb.GeneratedMessage {
@@ -7523,8 +7259,7 @@ class PKCreateRoleInfo extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PKCreateRoleInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aOM<$0.PKUserInfo>(1, _omitFieldNames ? '' : 'userInfo', protoName: 'userInfo', subBuilder: $0.PKUserInfo.create)
-    ..aOM<$0.PKRoleBattleInfoLF>(2, _omitFieldNames ? '' : 'roleInfoLf', protoName: 'roleInfoLf', subBuilder: $0.PKRoleBattleInfoLF.create)
-    ..aOM<$0.PKRoleBattleInfoHF>(3, _omitFieldNames ? '' : 'roleInfoHf', protoName: 'roleInfoHf', subBuilder: $0.PKRoleBattleInfoHF.create)
+    ..aOM<$0.PKRoleInfo>(2, _omitFieldNames ? '' : 'roleInfo', protoName: 'roleInfo', subBuilder: $0.PKRoleInfo.create)
     ..hasRequiredFields = false
   ;
 
@@ -7561,26 +7296,15 @@ class PKCreateRoleInfo extends $pb.GeneratedMessage {
   $0.PKUserInfo ensureUserInfo() => $_ensure(0);
 
   @$pb.TagNumber(2)
-  $0.PKRoleBattleInfoLF get roleInfoLf => $_getN(1);
+  $0.PKRoleInfo get roleInfo => $_getN(1);
   @$pb.TagNumber(2)
-  set roleInfoLf($0.PKRoleBattleInfoLF v) { setField(2, v); }
+  set roleInfo($0.PKRoleInfo v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasRoleInfoLf() => $_has(1);
+  $core.bool hasRoleInfo() => $_has(1);
   @$pb.TagNumber(2)
-  void clearRoleInfoLf() => clearField(2);
+  void clearRoleInfo() => clearField(2);
   @$pb.TagNumber(2)
-  $0.PKRoleBattleInfoLF ensureRoleInfoLf() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  $0.PKRoleBattleInfoHF get roleInfoHf => $_getN(2);
-  @$pb.TagNumber(3)
-  set roleInfoHf($0.PKRoleBattleInfoHF v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasRoleInfoHf() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearRoleInfoHf() => clearField(3);
-  @$pb.TagNumber(3)
-  $0.PKRoleBattleInfoHF ensureRoleInfoHf() => $_ensure(2);
+  $0.PKRoleInfo ensureRoleInfo() => $_ensure(1);
 }
 
 class C_PKSceneLoaded extends $pb.GeneratedMessage {
@@ -7638,12 +7362,7 @@ class S_PKGameInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(4, _omitFieldNames ? '' : 'weaponWidth', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'weaponLength', $pb.PbFieldType.O3)
     ..a<$core.int>(6, _omitFieldNames ? '' : 'weaponSpeed', $pb.PbFieldType.O3)
-    ..pc<PKCreateRoleInfo>(7, _omitFieldNames ? '' : 'gameRoles', $pb.PbFieldType.PM, protoName: 'gameRoles', subBuilder: PKCreateRoleInfo.create)
-    ..aInt64(8, _omitFieldNames ? '' : 'battleStartTime', protoName: 'battleStartTime')
-    ..a<$core.int>(9, _omitFieldNames ? '' : 'sceneRadius', $pb.PbFieldType.O3, protoName: 'sceneRadius')
-    ..pc<$0.PKSceneToxic>(10, _omitFieldNames ? '' : 'sceneToxicList', $pb.PbFieldType.PM, protoName: 'sceneToxicList', subBuilder: $0.PKSceneToxic.create)
-    ..pc<$0.PKGift>(11, _omitFieldNames ? '' : 'gifts', $pb.PbFieldType.PM, subBuilder: $0.PKGift.create)
-    ..a<$core.int>(12, _omitFieldNames ? '' : 'battleStatus', $pb.PbFieldType.O3, protoName: 'battleStatus')
+    ..aOM<PKCreateRoleInfo>(7, _omitFieldNames ? '' : 'mainRoleInfo', protoName: 'mainRoleInfo', subBuilder: PKCreateRoleInfo.create)
     ..hasRequiredFields = false
   ;
 
@@ -7727,76 +7446,15 @@ class S_PKGameInfo extends $pb.GeneratedMessage {
   void clearWeaponSpeed() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.List<PKCreateRoleInfo> get gameRoles => $_getList(6);
-
-  @$pb.TagNumber(8)
-  $fixnum.Int64 get battleStartTime => $_getI64(7);
-  @$pb.TagNumber(8)
-  set battleStartTime($fixnum.Int64 v) { $_setInt64(7, v); }
-  @$pb.TagNumber(8)
-  $core.bool hasBattleStartTime() => $_has(7);
-  @$pb.TagNumber(8)
-  void clearBattleStartTime() => clearField(8);
-
-  @$pb.TagNumber(9)
-  $core.int get sceneRadius => $_getIZ(8);
-  @$pb.TagNumber(9)
-  set sceneRadius($core.int v) { $_setSignedInt32(8, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasSceneRadius() => $_has(8);
-  @$pb.TagNumber(9)
-  void clearSceneRadius() => clearField(9);
-
-  @$pb.TagNumber(10)
-  $core.List<$0.PKSceneToxic> get sceneToxicList => $_getList(9);
-
-  @$pb.TagNumber(11)
-  $core.List<$0.PKGift> get gifts => $_getList(10);
-
-  @$pb.TagNumber(12)
-  $core.int get battleStatus => $_getIZ(11);
-  @$pb.TagNumber(12)
-  set battleStatus($core.int v) { $_setSignedInt32(11, v); }
-  @$pb.TagNumber(12)
-  $core.bool hasBattleStatus() => $_has(11);
-  @$pb.TagNumber(12)
-  void clearBattleStatus() => clearField(12);
-}
-
-class S_PKSyncRoles extends $pb.GeneratedMessage {
-  factory S_PKSyncRoles() => create();
-  S_PKSyncRoles._() : super();
-  factory S_PKSyncRoles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKSyncRoles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncRoles', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..p<$fixnum.Int64>(1, _omitFieldNames ? '' : 'roleIds', $pb.PbFieldType.K6, protoName: 'roleIds')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_PKSyncRoles clone() => S_PKSyncRoles()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_PKSyncRoles copyWith(void Function(S_PKSyncRoles) updates) => super.copyWith((message) => updates(message as S_PKSyncRoles)) as S_PKSyncRoles;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoles create() => S_PKSyncRoles._();
-  S_PKSyncRoles createEmptyInstance() => create();
-  static $pb.PbList<S_PKSyncRoles> createRepeated() => $pb.PbList<S_PKSyncRoles>();
-  @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncRoles>(create);
-  static S_PKSyncRoles? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$fixnum.Int64> get roleIds => $_getList(0);
+  PKCreateRoleInfo get mainRoleInfo => $_getN(6);
+  @$pb.TagNumber(7)
+  set mainRoleInfo(PKCreateRoleInfo v) { setField(7, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasMainRoleInfo() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearMainRoleInfo() => clearField(7);
+  @$pb.TagNumber(7)
+  PKCreateRoleInfo ensureMainRoleInfo() => $_ensure(6);
 }
 
 class S_PKUserEnter extends $pb.GeneratedMessage {
@@ -7807,7 +7465,6 @@ class S_PKUserEnter extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKUserEnter', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aOM<$0.PKUserInfo>(1, _omitFieldNames ? '' : 'userInfo', protoName: 'userInfo', subBuilder: $0.PKUserInfo.create)
-    ..aInt64(2, _omitFieldNames ? '' : 'battleStartTime')
     ..hasRequiredFields = false
   ;
 
@@ -7842,15 +7499,42 @@ class S_PKUserEnter extends $pb.GeneratedMessage {
   void clearUserInfo() => clearField(1);
   @$pb.TagNumber(1)
   $0.PKUserInfo ensureUserInfo() => $_ensure(0);
+}
 
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get battleStartTime => $_getI64(1);
-  @$pb.TagNumber(2)
-  set battleStartTime($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBattleStartTime() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBattleStartTime() => clearField(2);
+class S_PKSyncRoles extends $pb.GeneratedMessage {
+  factory S_PKSyncRoles() => create();
+  S_PKSyncRoles._() : super();
+  factory S_PKSyncRoles.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PKSyncRoles.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncRoles', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<PKCreateRoleInfo>(1, _omitFieldNames ? '' : 'createdRoles', $pb.PbFieldType.PM, protoName: 'createdRoles', subBuilder: PKCreateRoleInfo.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_PKSyncRoles clone() => S_PKSyncRoles()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_PKSyncRoles copyWith(void Function(S_PKSyncRoles) updates) => super.copyWith((message) => updates(message as S_PKSyncRoles)) as S_PKSyncRoles;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_PKSyncRoles create() => S_PKSyncRoles._();
+  S_PKSyncRoles createEmptyInstance() => create();
+  static $pb.PbList<S_PKSyncRoles> createRepeated() => $pb.PbList<S_PKSyncRoles>();
+  @$core.pragma('dart2js:noInline')
+  static S_PKSyncRoles getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncRoles>(create);
+  static S_PKSyncRoles? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<PKCreateRoleInfo> get createdRoles => $_getList(0);
 }
 
 class C_PKBattleReady extends $pb.GeneratedMessage {
@@ -7903,6 +7587,7 @@ class C_PKMove extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_PKMove', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..a<$core.int>(1, _omitFieldNames ? '' : 'rotation', $pb.PbFieldType.O3)
+    ..aOM<$0.XYZ>(2, _omitFieldNames ? '' : 'position', subBuilder: $0.XYZ.create)
     ..hasRequiredFields = false
   ;
 
@@ -7935,16 +7620,27 @@ class C_PKMove extends $pb.GeneratedMessage {
   $core.bool hasRotation() => $_has(0);
   @$pb.TagNumber(1)
   void clearRotation() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $0.XYZ get position => $_getN(1);
+  @$pb.TagNumber(2)
+  set position($0.XYZ v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPosition() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPosition() => clearField(2);
+  @$pb.TagNumber(2)
+  $0.XYZ ensurePosition() => $_ensure(1);
 }
 
-class S_PKSyncRoleAttsLF extends $pb.GeneratedMessage {
-  factory S_PKSyncRoleAttsLF() => create();
-  S_PKSyncRoleAttsLF._() : super();
-  factory S_PKSyncRoleAttsLF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKSyncRoleAttsLF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class S_PKSyncRoleAttributes extends $pb.GeneratedMessage {
+  factory S_PKSyncRoleAttributes() => create();
+  S_PKSyncRoleAttributes._() : super();
+  factory S_PKSyncRoleAttributes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PKSyncRoleAttributes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncRoleAttsLF', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<$0.PKRoleBattleInfoLF>(1, _omitFieldNames ? '' : 'roleInfos', $pb.PbFieldType.PM, protoName: 'roleInfos', subBuilder: $0.PKRoleBattleInfoLF.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncRoleAttributes', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<$0.PKRoleInfo>(1, _omitFieldNames ? '' : 'roleInfos', $pb.PbFieldType.PM, protoName: 'roleInfos', subBuilder: $0.PKRoleInfo.create)
     ..hasRequiredFields = false
   ;
 
@@ -7952,114 +7648,37 @@ class S_PKSyncRoleAttsLF extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  S_PKSyncRoleAttsLF clone() => S_PKSyncRoleAttsLF()..mergeFromMessage(this);
+  S_PKSyncRoleAttributes clone() => S_PKSyncRoleAttributes()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  S_PKSyncRoleAttsLF copyWith(void Function(S_PKSyncRoleAttsLF) updates) => super.copyWith((message) => updates(message as S_PKSyncRoleAttsLF)) as S_PKSyncRoleAttsLF;
+  S_PKSyncRoleAttributes copyWith(void Function(S_PKSyncRoleAttributes) updates) => super.copyWith((message) => updates(message as S_PKSyncRoleAttributes)) as S_PKSyncRoleAttributes;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoleAttsLF create() => S_PKSyncRoleAttsLF._();
-  S_PKSyncRoleAttsLF createEmptyInstance() => create();
-  static $pb.PbList<S_PKSyncRoleAttsLF> createRepeated() => $pb.PbList<S_PKSyncRoleAttsLF>();
+  static S_PKSyncRoleAttributes create() => S_PKSyncRoleAttributes._();
+  S_PKSyncRoleAttributes createEmptyInstance() => create();
+  static $pb.PbList<S_PKSyncRoleAttributes> createRepeated() => $pb.PbList<S_PKSyncRoleAttributes>();
   @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoleAttsLF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncRoleAttsLF>(create);
-  static S_PKSyncRoleAttsLF? _defaultInstance;
+  static S_PKSyncRoleAttributes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncRoleAttributes>(create);
+  static S_PKSyncRoleAttributes? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.PKRoleBattleInfoLF> get roleInfos => $_getList(0);
+  $core.List<$0.PKRoleInfo> get roleInfos => $_getList(0);
 }
 
-class S_PKSyncRoleAttsHF extends $pb.GeneratedMessage {
-  factory S_PKSyncRoleAttsHF() => create();
-  S_PKSyncRoleAttsHF._() : super();
-  factory S_PKSyncRoleAttsHF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKSyncRoleAttsHF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class S_PKSyncSceneAttributes extends $pb.GeneratedMessage {
+  factory S_PKSyncSceneAttributes() => create();
+  S_PKSyncSceneAttributes._() : super();
+  factory S_PKSyncSceneAttributes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PKSyncSceneAttributes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncRoleAttsHF', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<$0.PKRoleBattleInfoHF>(1, _omitFieldNames ? '' : 'roleInfos', $pb.PbFieldType.PM, protoName: 'roleInfos', subBuilder: $0.PKRoleBattleInfoHF.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_PKSyncRoleAttsHF clone() => S_PKSyncRoleAttsHF()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_PKSyncRoleAttsHF copyWith(void Function(S_PKSyncRoleAttsHF) updates) => super.copyWith((message) => updates(message as S_PKSyncRoleAttsHF)) as S_PKSyncRoleAttsHF;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoleAttsHF create() => S_PKSyncRoleAttsHF._();
-  S_PKSyncRoleAttsHF createEmptyInstance() => create();
-  static $pb.PbList<S_PKSyncRoleAttsHF> createRepeated() => $pb.PbList<S_PKSyncRoleAttsHF>();
-  @$core.pragma('dart2js:noInline')
-  static S_PKSyncRoleAttsHF getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncRoleAttsHF>(create);
-  static S_PKSyncRoleAttsHF? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<$0.PKRoleBattleInfoHF> get roleInfos => $_getList(0);
-}
-
-class S_PKSceneToxic extends $pb.GeneratedMessage {
-  factory S_PKSceneToxic() => create();
-  S_PKSceneToxic._() : super();
-  factory S_PKSceneToxic.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKSceneToxic.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSceneToxic', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aOM<$0.PKSceneToxic>(1, _omitFieldNames ? '' : 'sceneToxics', protoName: 'sceneToxics', subBuilder: $0.PKSceneToxic.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_PKSceneToxic clone() => S_PKSceneToxic()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_PKSceneToxic copyWith(void Function(S_PKSceneToxic) updates) => super.copyWith((message) => updates(message as S_PKSceneToxic)) as S_PKSceneToxic;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static S_PKSceneToxic create() => S_PKSceneToxic._();
-  S_PKSceneToxic createEmptyInstance() => create();
-  static $pb.PbList<S_PKSceneToxic> createRepeated() => $pb.PbList<S_PKSceneToxic>();
-  @$core.pragma('dart2js:noInline')
-  static S_PKSceneToxic getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSceneToxic>(create);
-  static S_PKSceneToxic? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $0.PKSceneToxic get sceneToxics => $_getN(0);
-  @$pb.TagNumber(1)
-  set sceneToxics($0.PKSceneToxic v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSceneToxics() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSceneToxics() => clearField(1);
-  @$pb.TagNumber(1)
-  $0.PKSceneToxic ensureSceneToxics() => $_ensure(0);
-}
-
-class S_PKSceneGift extends $pb.GeneratedMessage {
-  factory S_PKSceneGift() => create();
-  S_PKSceneGift._() : super();
-  factory S_PKSceneGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKSceneGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSceneGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKSyncSceneAttributes', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'safeRadius', $pb.PbFieldType.O3, protoName: 'safeRadius')
+    ..aInt64(2, _omitFieldNames ? '' : 'takeEffectTime', protoName: 'takeEffectTime')
+    ..aOM<$0.XYZ>(3, _omitFieldNames ? '' : 'safePosition', protoName: 'safePosition', subBuilder: $0.XYZ.create)
     ..pc<$0.PKGift>(4, _omitFieldNames ? '' : 'gifts', $pb.PbFieldType.PM, subBuilder: $0.PKGift.create)
     ..hasRequiredFields = false
   ;
@@ -8068,25 +7687,54 @@ class S_PKSceneGift extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  S_PKSceneGift clone() => S_PKSceneGift()..mergeFromMessage(this);
+  S_PKSyncSceneAttributes clone() => S_PKSyncSceneAttributes()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  S_PKSceneGift copyWith(void Function(S_PKSceneGift) updates) => super.copyWith((message) => updates(message as S_PKSceneGift)) as S_PKSceneGift;
+  S_PKSyncSceneAttributes copyWith(void Function(S_PKSyncSceneAttributes) updates) => super.copyWith((message) => updates(message as S_PKSyncSceneAttributes)) as S_PKSyncSceneAttributes;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static S_PKSceneGift create() => S_PKSceneGift._();
-  S_PKSceneGift createEmptyInstance() => create();
-  static $pb.PbList<S_PKSceneGift> createRepeated() => $pb.PbList<S_PKSceneGift>();
+  static S_PKSyncSceneAttributes create() => S_PKSyncSceneAttributes._();
+  S_PKSyncSceneAttributes createEmptyInstance() => create();
+  static $pb.PbList<S_PKSyncSceneAttributes> createRepeated() => $pb.PbList<S_PKSyncSceneAttributes>();
   @$core.pragma('dart2js:noInline')
-  static S_PKSceneGift getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSceneGift>(create);
-  static S_PKSceneGift? _defaultInstance;
+  static S_PKSyncSceneAttributes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKSyncSceneAttributes>(create);
+  static S_PKSyncSceneAttributes? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get safeRadius => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set safeRadius($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSafeRadius() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSafeRadius() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get takeEffectTime => $_getI64(1);
+  @$pb.TagNumber(2)
+  set takeEffectTime($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasTakeEffectTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTakeEffectTime() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $0.XYZ get safePosition => $_getN(2);
+  @$pb.TagNumber(3)
+  set safePosition($0.XYZ v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSafePosition() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSafePosition() => clearField(3);
+  @$pb.TagNumber(3)
+  $0.XYZ ensureSafePosition() => $_ensure(2);
 
   @$pb.TagNumber(4)
-  $core.List<$0.PKGift> get gifts => $_getList(0);
+  $core.List<$0.PKGift> get gifts => $_getList(3);
 }
 
 class S_PKBattleEnd extends $pb.GeneratedMessage {
@@ -8097,7 +7745,7 @@ class S_PKBattleEnd extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKBattleEnd', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'winGuildId', protoName: 'winGuildId')
-    ..pc<$0.PKRoleSummary>(2, _omitFieldNames ? '' : 'roleInfos', $pb.PbFieldType.PM, protoName: 'roleInfos', subBuilder: $0.PKRoleSummary.create)
+    ..pc<$0.PKRoleInfo>(2, _omitFieldNames ? '' : 'roleInfos', $pb.PbFieldType.PM, protoName: 'roleInfos', subBuilder: $0.PKRoleInfo.create)
     ..pc<$0.PKPresenterInfo>(3, _omitFieldNames ? '' : 'presenterInfo', $pb.PbFieldType.PM, protoName: 'presenterInfo', subBuilder: $0.PKPresenterInfo.create)
     ..hasRequiredFields = false
   ;
@@ -8133,7 +7781,7 @@ class S_PKBattleEnd extends $pb.GeneratedMessage {
   void clearWinGuildId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.List<$0.PKRoleSummary> get roleInfos => $_getList(1);
+  $core.List<$0.PKRoleInfo> get roleInfos => $_getList(1);
 
   @$pb.TagNumber(3)
   $core.List<$0.PKPresenterInfo> get presenterInfo => $_getList(2);
@@ -8146,7 +7794,7 @@ class C_PKContinue extends $pb.GeneratedMessage {
   factory C_PKContinue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_PKContinue', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'isContinue', $pb.PbFieldType.O3, protoName: 'isContinue')
+    ..aOB(1, _omitFieldNames ? '' : 'isContinue', protoName: 'isContinue')
     ..aInt64(2, _omitFieldNames ? '' : 'pkRoomId', protoName: 'pkRoomId')
     ..hasRequiredFields = false
   ;
@@ -8173,9 +7821,9 @@ class C_PKContinue extends $pb.GeneratedMessage {
   static C_PKContinue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get isContinue => $_getIZ(0);
+  $core.bool get isContinue => $_getBF(0);
   @$pb.TagNumber(1)
-  set isContinue($core.int v) { $_setSignedInt32(0, v); }
+  set isContinue($core.bool v) { $_setBool(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasIsContinue() => $_has(0);
   @$pb.TagNumber(1)
@@ -8198,7 +7846,7 @@ class S_PKContinue extends $pb.GeneratedMessage {
   factory S_PKContinue.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKContinue', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..a<$core.int>(1, _omitFieldNames ? '' : 'isContinue', $pb.PbFieldType.O3, protoName: 'isContinue')
+    ..aOB(1, _omitFieldNames ? '' : 'isContinue', protoName: 'isContinue')
     ..hasRequiredFields = false
   ;
 
@@ -8224,24 +7872,22 @@ class S_PKContinue extends $pb.GeneratedMessage {
   static S_PKContinue? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.int get isContinue => $_getIZ(0);
+  $core.bool get isContinue => $_getBF(0);
   @$pb.TagNumber(1)
-  set isContinue($core.int v) { $_setSignedInt32(0, v); }
+  set isContinue($core.bool v) { $_setBool(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasIsContinue() => $_has(0);
   @$pb.TagNumber(1)
   void clearIsContinue() => clearField(1);
 }
 
-class C_PKRoomList extends $pb.GeneratedMessage {
-  factory C_PKRoomList() => create();
-  C_PKRoomList._() : super();
-  factory C_PKRoomList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory C_PKRoomList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class C_PickBuffGift extends $pb.GeneratedMessage {
+  factory C_PickBuffGift() => create();
+  C_PickBuffGift._() : super();
+  factory C_PickBuffGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_PickBuffGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_PKRoomList', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'offset')
-    ..aInt64(2, _omitFieldNames ? '' : 'limit')
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_PickBuffGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..hasRequiredFields = false
   ;
 
@@ -8249,50 +7895,32 @@ class C_PKRoomList extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  C_PKRoomList clone() => C_PKRoomList()..mergeFromMessage(this);
+  C_PickBuffGift clone() => C_PickBuffGift()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  C_PKRoomList copyWith(void Function(C_PKRoomList) updates) => super.copyWith((message) => updates(message as C_PKRoomList)) as C_PKRoomList;
+  C_PickBuffGift copyWith(void Function(C_PickBuffGift) updates) => super.copyWith((message) => updates(message as C_PickBuffGift)) as C_PickBuffGift;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static C_PKRoomList create() => C_PKRoomList._();
-  C_PKRoomList createEmptyInstance() => create();
-  static $pb.PbList<C_PKRoomList> createRepeated() => $pb.PbList<C_PKRoomList>();
+  static C_PickBuffGift create() => C_PickBuffGift._();
+  C_PickBuffGift createEmptyInstance() => create();
+  static $pb.PbList<C_PickBuffGift> createRepeated() => $pb.PbList<C_PickBuffGift>();
   @$core.pragma('dart2js:noInline')
-  static C_PKRoomList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_PKRoomList>(create);
-  static C_PKRoomList? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get offset => $_getI64(0);
-  @$pb.TagNumber(1)
-  set offset($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasOffset() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearOffset() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get limit => $_getI64(1);
-  @$pb.TagNumber(2)
-  set limit($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasLimit() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearLimit() => clearField(2);
+  static C_PickBuffGift getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_PickBuffGift>(create);
+  static C_PickBuffGift? _defaultInstance;
 }
 
-class S_PKRoomList extends $pb.GeneratedMessage {
-  factory S_PKRoomList() => create();
-  S_PKRoomList._() : super();
-  factory S_PKRoomList.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_PKRoomList.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+class S_PickBuffGift extends $pb.GeneratedMessage {
+  factory S_PickBuffGift() => create();
+  S_PickBuffGift._() : super();
+  factory S_PickBuffGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_PickBuffGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PKRoomList', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<$0.PkRoomInfo>(2, _omitFieldNames ? '' : 'roomList', $pb.PbFieldType.PM, subBuilder: $0.PkRoomInfo.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_PickBuffGift', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'isPickUp')
     ..hasRequiredFields = false
   ;
 
@@ -8300,25 +7928,31 @@ class S_PKRoomList extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  S_PKRoomList clone() => S_PKRoomList()..mergeFromMessage(this);
+  S_PickBuffGift clone() => S_PickBuffGift()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  S_PKRoomList copyWith(void Function(S_PKRoomList) updates) => super.copyWith((message) => updates(message as S_PKRoomList)) as S_PKRoomList;
+  S_PickBuffGift copyWith(void Function(S_PickBuffGift) updates) => super.copyWith((message) => updates(message as S_PickBuffGift)) as S_PickBuffGift;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static S_PKRoomList create() => S_PKRoomList._();
-  S_PKRoomList createEmptyInstance() => create();
-  static $pb.PbList<S_PKRoomList> createRepeated() => $pb.PbList<S_PKRoomList>();
+  static S_PickBuffGift create() => S_PickBuffGift._();
+  S_PickBuffGift createEmptyInstance() => create();
+  static $pb.PbList<S_PickBuffGift> createRepeated() => $pb.PbList<S_PickBuffGift>();
   @$core.pragma('dart2js:noInline')
-  static S_PKRoomList getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PKRoomList>(create);
-  static S_PKRoomList? _defaultInstance;
+  static S_PickBuffGift getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_PickBuffGift>(create);
+  static S_PickBuffGift? _defaultInstance;
 
-  @$pb.TagNumber(2)
-  $core.List<$0.PkRoomInfo> get roomList => $_getList(0);
+  @$pb.TagNumber(1)
+  $core.bool get isPickUp => $_getBF(0);
+  @$pb.TagNumber(1)
+  set isPickUp($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasIsPickUp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearIsPickUp() => clearField(1);
 }
 
 

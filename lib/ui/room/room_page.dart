@@ -33,7 +33,7 @@ class RoomPage extends StatefulWidget {
     Future _show() {
       Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();
 
-      mgr.doNormalState();
+      // mgr.doNormalState();
       if(off) {
         return Get.off(
           builder,
@@ -80,8 +80,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     Wakelock.enable();
     _init();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
 
     // 强制退出房间事件
     on<RoomExitEvent>((event) {
@@ -105,8 +103,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   void dispose() {
     Wakelock.disable();
     AppNavObserver.unsubscribe(this);
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
 
     super.dispose();
   }
@@ -144,8 +140,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   @override
   void didPushNext() {
     super.didPushNext();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_STOP_EVENT:UnityCtrl.UNITY_STOP_EVENT});
   }
 
   ///
@@ -154,8 +148,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   @override
   void didPopNext() {
     super.didPopNext();
-    UnityCtrl.ins.sendCmd(App2UnityEnum.FTU_IOS_RENDER_EVENT,
-        data: {UnityCtrl.UNITY_RESUME_EVENT:UnityCtrl.UNITY_RESUME_EVENT});
   }
 
   void _initListener() {
@@ -211,7 +203,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       },
     );
 
-    bindGet(SuperGiftBroadcastCtrl());
+    bindGet(SuperGiftBroadcastCtrl(), tag: Slugid.nice().toString());
   }
 
   @override
@@ -225,6 +217,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       backgroundColor: Colors.grey,
       resizeToAvoidBottomInset: false,
       body: child,
+      appBar: Env.isDebugCfg ? AppBar(leading: GestureDetector(child: Text("返回"), onTap: () {
+        Get.back();
+      },),) : null
     );
 
     child = UiOverlayRegion.light(child: child);

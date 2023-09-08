@@ -335,28 +335,6 @@ final $typed_data.Uint8List mikeInfoDescriptor = $convert.base64Decode(
     'lrZUlkEhcKB21pa2Vfbm8YAyABKAlSBm1pa2VObxIQCgN1aWQYBCABKAlSA3VpZBIXCgdyb2xl'
     'X2lkGAYgASgDUgZyb2xlSWQSFgoGbnVtYmVyGAcgASgDUgZudW1iZXI=');
 
-@$core.Deprecated('Use roomUserInfoDescriptor instead')
-const RoomUserInfo$json = {
-  '1': 'RoomUserInfo',
-  '2': [
-    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
-    {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
-    {'1': 'room_id', '3': 3, '4': 1, '5': 3, '10': 'roomId'},
-    {'1': 'username', '3': 4, '4': 1, '5': 9, '10': 'username'},
-    {'1': 'avatar_url', '3': 5, '4': 1, '5': 9, '10': 'avatarUrl'},
-    {'1': 'type', '3': 6, '4': 1, '5': 5, '10': 'type'},
-    {'1': 'admin_type', '3': 7, '4': 1, '5': 5, '10': 'adminType'},
-    {'1': 'level', '3': 8, '4': 1, '5': 9, '10': 'level'},
-  ],
-};
-
-/// Descriptor for `RoomUserInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roomUserInfoDescriptor = $convert.base64Decode(
-    'CgxSb29tVXNlckluZm8SEAoDdWlkGAEgASgJUgN1aWQSFwoHcm9sZV9pZBgCIAEoA1IGcm9sZU'
-    'lkEhcKB3Jvb21faWQYAyABKANSBnJvb21JZBIaCgh1c2VybmFtZRgEIAEoCVIIdXNlcm5hbWUS'
-    'HQoKYXZhdGFyX3VybBgFIAEoCVIJYXZhdGFyVXJsEhIKBHR5cGUYBiABKAVSBHR5cGUSHQoKYW'
-    'RtaW5fdHlwZRgHIAEoBVIJYWRtaW5UeXBlEhQKBWxldmVsGAggASgJUgVsZXZlbA==');
-
 @$core.Deprecated('Use pKGuildInfoDescriptor instead')
 const PKGuildInfo$json = {
   '1': 'PKGuildInfo',
@@ -383,8 +361,6 @@ const PKUserInfo$json = {
     {'1': 'avatarUrl', '3': 6, '4': 1, '5': 9, '10': 'avatarUrl'},
     {'1': 'mikeId', '3': 7, '4': 1, '5': 5, '10': 'mikeId'},
     {'1': 'clothingIds', '3': 8, '4': 3, '5': 3, '10': 'clothingIds'},
-    {'1': 'pkRoomId', '3': 9, '4': 1, '5': 3, '10': 'pkRoomId'},
-    {'1': 'BattleStatus', '3': 10, '4': 1, '5': 5, '10': 'BattleStatus'},
   ],
 };
 
@@ -394,12 +370,11 @@ final $typed_data.Uint8List pKUserInfoDescriptor = $convert.base64Decode(
     'VuZGVyEhoKCHVzZXJOYW1lGAMgASgJUgh1c2VyTmFtZRIYCgdndWlsZElkGAQgASgDUgdndWls'
     'ZElkEhwKCWlzTWFuYWdlchgFIAEoCFIJaXNNYW5hZ2VyEhwKCWF2YXRhclVybBgGIAEoCVIJYX'
     'ZhdGFyVXJsEhYKBm1pa2VJZBgHIAEoBVIGbWlrZUlkEiAKC2Nsb3RoaW5nSWRzGAggAygDUgtj'
-    'bG90aGluZ0lkcxIaCghwa1Jvb21JZBgJIAEoA1IIcGtSb29tSWQSIgoMQmF0dGxlU3RhdHVzGA'
-    'ogASgFUgxCYXR0bGVTdGF0dXM=');
+    'bG90aGluZ0lkcw==');
 
-@$core.Deprecated('Use pKRoleBattleInfoLFDescriptor instead')
-const PKRoleBattleInfoLF$json = {
-  '1': 'PKRoleBattleInfoLF',
+@$core.Deprecated('Use pKRoleInfoDescriptor instead')
+const PKRoleInfo$json = {
+  '1': 'PKRoleInfo',
   '2': [
     {'1': 'userId', '3': 1, '4': 1, '5': 3, '10': 'userId'},
     {'1': 'currentBlood', '3': 2, '4': 1, '5': 5, '10': 'currentBlood'},
@@ -407,51 +382,25 @@ const PKRoleBattleInfoLF$json = {
     {'1': 'shield', '3': 4, '4': 1, '5': 5, '10': 'shield'},
     {'1': 'attack', '3': 5, '4': 1, '5': 5, '10': 'attack'},
     {'1': 'speed', '3': 6, '4': 1, '5': 5, '10': 'speed'},
-    {'1': 'swordCount', '3': 7, '4': 1, '5': 5, '10': 'swordCount'},
+    {'1': 'position', '3': 7, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'position'},
+    {'1': 'rotation', '3': 8, '4': 1, '5': 5, '10': 'rotation'},
+    {'1': 'totalDamage', '3': 9, '4': 1, '5': 5, '10': 'totalDamage'},
+    {'1': 'survivedTime', '3': 10, '4': 1, '5': 3, '10': 'survivedTime'},
+    {'1': 'attackedCount', '3': 11, '4': 1, '5': 5, '10': 'attackedCount'},
+    {'1': 'outBlood', '3': 12, '4': 1, '5': 5, '10': 'outBlood'},
   ],
 };
 
-/// Descriptor for `PKRoleBattleInfoLF`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pKRoleBattleInfoLFDescriptor = $convert.base64Decode(
-    'ChJQS1JvbGVCYXR0bGVJbmZvTEYSFgoGdXNlcklkGAEgASgDUgZ1c2VySWQSIgoMY3VycmVudE'
-    'Jsb29kGAIgASgFUgxjdXJyZW50Qmxvb2QSHgoKdG90YWxCbG9vZBgDIAEoBVIKdG90YWxCbG9v'
-    'ZBIWCgZzaGllbGQYBCABKAVSBnNoaWVsZBIWCgZhdHRhY2sYBSABKAVSBmF0dGFjaxIUCgVzcG'
-    'VlZBgGIAEoBVIFc3BlZWQSHgoKc3dvcmRDb3VudBgHIAEoBVIKc3dvcmRDb3VudA==');
-
-@$core.Deprecated('Use pKRoleBattleInfoHFDescriptor instead')
-const PKRoleBattleInfoHF$json = {
-  '1': 'PKRoleBattleInfoHF',
-  '2': [
-    {'1': 'userId', '3': 1, '4': 1, '5': 3, '10': 'userId'},
-    {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'position'},
-    {'1': 'rotation', '3': 3, '4': 1, '5': 3, '10': 'rotation'},
-  ],
-};
-
-/// Descriptor for `PKRoleBattleInfoHF`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pKRoleBattleInfoHFDescriptor = $convert.base64Decode(
-    'ChJQS1JvbGVCYXR0bGVJbmZvSEYSFgoGdXNlcklkGAEgASgDUgZ1c2VySWQSMAoIcG9zaXRpb2'
-    '4YAiABKAsyFC5jb20uc2F2dnkucHJvdG8uWFlaUghwb3NpdGlvbhIaCghyb3RhdGlvbhgDIAEo'
-    'A1IIcm90YXRpb24=');
-
-@$core.Deprecated('Use pKRoleSummaryDescriptor instead')
-const PKRoleSummary$json = {
-  '1': 'PKRoleSummary',
-  '2': [
-    {'1': 'userId', '3': 1, '4': 1, '5': 3, '10': 'userId'},
-    {'1': 'totalDamage', '3': 2, '4': 1, '5': 5, '10': 'totalDamage'},
-    {'1': 'survivedTime', '3': 3, '4': 1, '5': 3, '10': 'survivedTime'},
-    {'1': 'attackedCount', '3': 4, '4': 1, '5': 5, '10': 'attackedCount'},
-    {'1': 'outBlood', '3': 5, '4': 1, '5': 5, '10': 'outBlood'},
-  ],
-};
-
-/// Descriptor for `PKRoleSummary`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pKRoleSummaryDescriptor = $convert.base64Decode(
-    'Cg1QS1JvbGVTdW1tYXJ5EhYKBnVzZXJJZBgBIAEoA1IGdXNlcklkEiAKC3RvdGFsRGFtYWdlGA'
-    'IgASgFUgt0b3RhbERhbWFnZRIiCgxzdXJ2aXZlZFRpbWUYAyABKANSDHN1cnZpdmVkVGltZRIk'
-    'Cg1hdHRhY2tlZENvdW50GAQgASgFUg1hdHRhY2tlZENvdW50EhoKCG91dEJsb29kGAUgASgFUg'
-    'hvdXRCbG9vZA==');
+/// Descriptor for `PKRoleInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List pKRoleInfoDescriptor = $convert.base64Decode(
+    'CgpQS1JvbGVJbmZvEhYKBnVzZXJJZBgBIAEoA1IGdXNlcklkEiIKDGN1cnJlbnRCbG9vZBgCIA'
+    'EoBVIMY3VycmVudEJsb29kEh4KCnRvdGFsQmxvb2QYAyABKAVSCnRvdGFsQmxvb2QSFgoGc2hp'
+    'ZWxkGAQgASgFUgZzaGllbGQSFgoGYXR0YWNrGAUgASgFUgZhdHRhY2sSFAoFc3BlZWQYBiABKA'
+    'VSBXNwZWVkEjAKCHBvc2l0aW9uGAcgASgLMhQuY29tLnNhdnZ5LnByb3RvLlhZWlIIcG9zaXRp'
+    'b24SGgoIcm90YXRpb24YCCABKAVSCHJvdGF0aW9uEiAKC3RvdGFsRGFtYWdlGAkgASgFUgt0b3'
+    'RhbERhbWFnZRIiCgxzdXJ2aXZlZFRpbWUYCiABKANSDHN1cnZpdmVkVGltZRIkCg1hdHRhY2tl'
+    'ZENvdW50GAsgASgFUg1hdHRhY2tlZENvdW50EhoKCG91dEJsb29kGAwgASgFUghvdXRCbG9vZA'
+    '==');
 
 @$core.Deprecated('Use pKPresenterInfoDescriptor instead')
 const PKPresenterInfo$json = {
@@ -478,9 +427,6 @@ const PKGift$json = {
     {'1': 'giftId', '3': 1, '4': 1, '5': 3, '10': 'giftId'},
     {'1': 'position', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'position'},
     {'1': 'state', '3': 3, '4': 1, '5': 14, '6': '.com.savvy.proto.PKGiftState', '10': 'state'},
-    {'1': 'modelId', '3': 4, '4': 1, '5': 9, '10': 'modelId'},
-    {'1': 'pickUserId', '3': 6, '4': 1, '5': 3, '10': 'pickUserId'},
-    {'1': 'id', '3': 7, '4': 1, '5': 3, '10': 'id'},
   ],
 };
 
@@ -488,73 +434,5 @@ const PKGift$json = {
 final $typed_data.Uint8List pKGiftDescriptor = $convert.base64Decode(
     'CgZQS0dpZnQSFgoGZ2lmdElkGAEgASgDUgZnaWZ0SWQSMAoIcG9zaXRpb24YAiABKAsyFC5jb2'
     '0uc2F2dnkucHJvdG8uWFlaUghwb3NpdGlvbhIyCgVzdGF0ZRgDIAEoDjIcLmNvbS5zYXZ2eS5w'
-    'cm90by5QS0dpZnRTdGF0ZVIFc3RhdGUSGAoHbW9kZWxJZBgEIAEoCVIHbW9kZWxJZBIeCgpwaW'
-    'NrVXNlcklkGAYgASgDUgpwaWNrVXNlcklkEg4KAmlkGAcgASgDUgJpZA==');
-
-@$core.Deprecated('Use pKSceneToxicDescriptor instead')
-const PKSceneToxic$json = {
-  '1': 'PKSceneToxic',
-  '2': [
-    {'1': 'safeRadius', '3': 1, '4': 1, '5': 5, '10': 'safeRadius'},
-    {'1': 'takeEffectTime', '3': 2, '4': 1, '5': 3, '10': 'takeEffectTime'},
-    {'1': 'safePosition', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'safePosition'},
-    {'1': 'toxicFogSpeed', '3': 5, '4': 1, '5': 5, '10': 'toxicFogSpeed'},
-    {'1': 'nextSafeTakeEffectTime', '3': 6, '4': 1, '5': 3, '10': 'nextSafeTakeEffectTime'},
-  ],
-};
-
-/// Descriptor for `PKSceneToxic`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pKSceneToxicDescriptor = $convert.base64Decode(
-    'CgxQS1NjZW5lVG94aWMSHgoKc2FmZVJhZGl1cxgBIAEoBVIKc2FmZVJhZGl1cxImCg50YWtlRW'
-    'ZmZWN0VGltZRgCIAEoA1IOdGFrZUVmZmVjdFRpbWUSOAoMc2FmZVBvc2l0aW9uGAMgASgLMhQu'
-    'Y29tLnNhdnZ5LnByb3RvLlhZWlIMc2FmZVBvc2l0aW9uEiQKDXRveGljRm9nU3BlZWQYBSABKA'
-    'VSDXRveGljRm9nU3BlZWQSNgoWbmV4dFNhZmVUYWtlRWZmZWN0VGltZRgGIAEoA1IWbmV4dFNh'
-    'ZmVUYWtlRWZmZWN0VGltZQ==');
-
-@$core.Deprecated('Use pkRoomInfoDescriptor instead')
-const PkRoomInfo$json = {
-  '1': 'PkRoomInfo',
-  '2': [
-    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
-    {'1': 'room_name', '3': 2, '4': 1, '5': 9, '10': 'roomName'},
-    {'1': 'room_image', '3': 3, '4': 1, '5': 9, '10': 'roomImage'},
-    {'1': 'hot_value', '3': 4, '4': 1, '5': 5, '10': 'hotValue'},
-    {'1': 'is_invite', '3': 5, '4': 1, '5': 8, '10': 'isInvite'},
-  ],
-};
-
-/// Descriptor for `PkRoomInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pkRoomInfoDescriptor = $convert.base64Decode(
-    'CgpQa1Jvb21JbmZvEhcKB3Jvb21faWQYASABKANSBnJvb21JZBIbCglyb29tX25hbWUYAiABKA'
-    'lSCHJvb21OYW1lEh0KCnJvb21faW1hZ2UYAyABKAlSCXJvb21JbWFnZRIbCglob3RfdmFsdWUY'
-    'BCABKAVSCGhvdFZhbHVlEhsKCWlzX2ludml0ZRgFIAEoCFIIaXNJbnZpdGU=');
-
-@$core.Deprecated('Use pkRoleDefaultConfigurationDescriptor instead')
-const PkRoleDefaultConfiguration$json = {
-  '1': 'PkRoleDefaultConfiguration',
-  '2': [
-    {'1': 'role_radius', '3': 1, '4': 1, '5': 5, '10': 'roleRadius'},
-    {'1': 'speed', '3': 2, '4': 1, '5': 5, '10': 'speed'},
-    {'1': 'weapon_length', '3': 3, '4': 1, '5': 5, '10': 'weaponLength'},
-    {'1': 'weapon_speed', '3': 4, '4': 1, '5': 5, '10': 'weaponSpeed'},
-    {'1': 'max_weapon_num', '3': 5, '4': 1, '5': 5, '10': 'maxWeaponNum'},
-    {'1': 'blood', '3': 6, '4': 1, '5': 5, '10': 'blood'},
-    {'1': 'TotalBlood', '3': 7, '4': 1, '5': 5, '10': 'TotalBlood'},
-    {'1': 'Shield', '3': 8, '4': 1, '5': 5, '10': 'Shield'},
-    {'1': 'Attack', '3': 9, '4': 1, '5': 5, '10': 'Attack'},
-    {'1': 'countdown', '3': 10, '4': 1, '5': 3, '10': 'countdown'},
-    {'1': 'sword_count', '3': 11, '4': 1, '5': 5, '10': 'swordCount'},
-    {'1': 'max_speed', '3': 12, '4': 1, '5': 5, '10': 'maxSpeed'},
-  ],
-};
-
-/// Descriptor for `PkRoleDefaultConfiguration`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List pkRoleDefaultConfigurationDescriptor = $convert.base64Decode(
-    'ChpQa1JvbGVEZWZhdWx0Q29uZmlndXJhdGlvbhIfCgtyb2xlX3JhZGl1cxgBIAEoBVIKcm9sZV'
-    'JhZGl1cxIUCgVzcGVlZBgCIAEoBVIFc3BlZWQSIwoNd2VhcG9uX2xlbmd0aBgDIAEoBVIMd2Vh'
-    'cG9uTGVuZ3RoEiEKDHdlYXBvbl9zcGVlZBgEIAEoBVILd2VhcG9uU3BlZWQSJAoObWF4X3dlYX'
-    'Bvbl9udW0YBSABKAVSDG1heFdlYXBvbk51bRIUCgVibG9vZBgGIAEoBVIFYmxvb2QSHgoKVG90'
-    'YWxCbG9vZBgHIAEoBVIKVG90YWxCbG9vZBIWCgZTaGllbGQYCCABKAVSBlNoaWVsZBIWCgZBdH'
-    'RhY2sYCSABKAVSBkF0dGFjaxIcCgljb3VudGRvd24YCiABKANSCWNvdW50ZG93bhIfCgtzd29y'
-    'ZF9jb3VudBgLIAEoBVIKc3dvcmRDb3VudBIbCgltYXhfc3BlZWQYDCABKAVSCG1heFNwZWVk');
+    'cm90by5QS0dpZnRTdGF0ZVIFc3RhdGU=');
 

@@ -257,6 +257,7 @@ class _ItemView extends StatelessWidget {
 
     child = BlankImgState(child: child);
 
+    double space = 5.0;
     child = Column(
       children: [
         Expanded(child: child),
@@ -281,8 +282,11 @@ class _ItemView extends StatelessWidget {
         if(!itemBuyAble)
           Align(
             alignment: Alignment.bottomCenter,
-            child: Positioned(
-              child: NetImage(data["label_list"][0]['icon'], fit: BoxFit.contain),
+            child: NetImage(
+                data["label_list"][0]['icon'],
+                fit: BoxFit.contain,
+                width: (AppSize.width - (3 * space + 4 * space)) / 3.5,
+                height: 20
             ),
           ),
         Spacing.h2,

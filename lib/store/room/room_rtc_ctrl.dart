@@ -137,7 +137,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     await Rtc.init;
     await Rtc.leave(isJoinBefore: true);
 
-    xlog('用户[$_myUid]准备加入房间 -> $roomId', type: LogType.RTC);
+    xlog('用户[$OAuthCtrl.uid]准备加入房间 -> $roomId', type: LogType.RTC);
 
     final token = await Get.find<ImAuth>().fetchToken();
 
@@ -146,7 +146,7 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
         sdkAppId: appId,
         roomId: 0,
         strRoomId: roomId,
-        userId: _myUid,
+        userId: OAuthCtrl.uid,
         userSig: token,
         role: TRTCCloudDef.TRTCRoleAudience,
       ),

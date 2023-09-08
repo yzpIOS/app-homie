@@ -71,8 +71,6 @@ const CMD$json = {
     {'1': 'S_CreateScene', '2': 2101},
     {'1': 'C_CloseScene', '2': 2103},
     {'1': 'S_CloseScene', '2': 2104},
-    {'1': 'C_OnlineList', '2': 2110},
-    {'1': 'S_OnlineList', '2': 2111},
     {'1': 'C_JoinScene', '2': 2112},
     {'1': 'S_JoinScene', '2': 2113},
     {'1': 'C_OutScene', '2': 2114},

@@ -21,9 +21,6 @@ export 'package:app/model/enum/unity_event_enum.dart';
 const unity_time_out = 90;
 
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
-  // 随便起的？？
-  static const UNITY_STOP_EVENT = "flutter_tell_ios_stop_render_event";
-  static const UNITY_RESUME_EVENT = "flutter_tell_ios_resume_render_event";
   late final _callback = _Callback();
 
   StreamSubscription? _netStatusChange;
@@ -63,8 +60,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
     // 网络变化
     _netStatusChange = Connectivity().onConnectivityChanged.listen((event) async {
+      _sendSockComplete = Completer();
       if(_isUnityInitSuccess) {
-        _netStatusChange?.cancel();
         return;
       }
       tellUnityNetStatus(event == ConnectivityResult.wifi || event == ConnectivityResult.mobile);
@@ -195,6 +192,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   void sendFlutterSocketInfo({int tryTimes = 0}) async {
     if(isClosed || _isUnityInitSuccess == false || tryTimes >= 100) {
       return;
+    }
+    // 重新进入等待
+    if(_sendSockComplete.isCompleted) {
+      _sendSockComplete = Completer();
     }
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
@@ -385,8 +386,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   ///
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
     print("aa");
-    // 等待socket连接成功才加载场景
-    await SocketCtrl.ins.isCConnect();
+    // 登录成功后才会连接上socket, 等待socket连接成功才加载场景
+    if(OAuthCtrl.isLogin) {
+      await SocketCtrl.ins.isCConnect();
+    }
     print("aa");
     // 加载场景
     return _loadScene(
