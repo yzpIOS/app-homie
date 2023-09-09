@@ -26,12 +26,15 @@ import 'package:flutter/material.dart';
 
 class RoomUserInfoDialog extends StatefulWidget {
   final UID uid;
+  final NUID nuid;
   final TxtMsgData? msg;
   final SceneCtrl sceneCtrl;
+  // 麦位,
+  final String micNo;
 
-  const RoomUserInfoDialog._({required this.uid, required this.sceneCtrl, this.msg});
+  const RoomUserInfoDialog._({required this.uid, required this.nuid, required this.sceneCtrl, this.msg, required this.micNo});
 
-  static void show({required UID uid, TxtMsgData? msg}) {
+  static void show({required UID uid, required NUID nuid, TxtMsgData? msg, String micNo = ""}) {
     final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     const decor = ShapeDecoration(
@@ -40,7 +43,7 @@ class RoomUserInfoDialog extends StatefulWidget {
     );
 
     OrientationSheet.show(
-      child: RoomUserInfoDialog._(uid: uid, sceneCtrl: sceneCtrl, msg: msg),
+      child: RoomUserInfoDialog._(uid: uid, nuid: nuid, sceneCtrl: sceneCtrl, msg: msg, micNo: micNo),
       decoration: decor,
       minHeight: 0,
     );
@@ -434,7 +437,13 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         break;
       case '下麦':
         try {
-          Api.Room.micDown(uid: OAuthCtrl.nUid);
+          Api.Room.micDown(uid: widget.nuid);
+        } catch(e, s) {
+        }
+        break;
+      case '上麦':
+        try {
+          Api.Room.micUp(roomId: widget.sceneCtrl.roomId,uid: widget.nuid, no: widget.micNo);
         } catch(e, s) {
         }
         break;

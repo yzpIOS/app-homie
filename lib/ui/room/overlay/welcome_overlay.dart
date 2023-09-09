@@ -33,10 +33,11 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
     on<UserInEvent>(
       (data) {
         final UID? myUid = data.uid;
-        if(myUid == null) {
+        final NUID? myNUid = data.nuid;
+        if(myUid == null || myNUid == null) {
           return;
         }
-        _ctrl.add(_WelcomeView(uid: myUid));
+        _ctrl.add(_WelcomeView(uid: myUid, myNUid: myNUid,));
       },
     );
 
@@ -128,7 +129,8 @@ class _AnimateView extends StatelessWidget {
 
 class _WelcomeView extends StatelessWidget {
   final UID uid;
-  _WelcomeView({required this.uid}) : super(key: UniqueKey());
+  final NUID myNUid;
+  _WelcomeView({required this.uid, required this.myNUid}) : super(key: UniqueKey());
 
   @override
   Widget build(BuildContext context) {
@@ -178,7 +180,7 @@ class _WelcomeView extends StatelessWidget {
     );
 
     child = OpacityButton(
-      onTap: () => RoomUserInfoDialog.show(uid: uid),
+      onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
       child: child,
     );
 

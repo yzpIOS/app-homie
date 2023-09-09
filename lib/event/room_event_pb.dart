@@ -18,6 +18,8 @@ abstract class RoomEvent<T extends GeneratedMessage> extends EventPb {
 
   UID? get uid => null;
 
+  NUID? get nuid => null;
+
   void myFire(T? msg) {
     data = msg;
     fire();
@@ -31,6 +33,8 @@ abstract class UserTotalEvent<T extends GeneratedMessage> extends RoomEvent<T> {
 // 用户进入房间
 class UserInEvent extends UserTotalEvent<S_JoinBroadcast> {
   UID? get uid => data?.uid;
+
+  NUID? get nuid => data?.roleId;
 
   int? get total => data?.total;
 }
@@ -90,6 +94,7 @@ class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;
+  NUID? get nuid => data?.roleId;
 }
 
 // 房间管理员设置

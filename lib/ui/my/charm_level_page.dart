@@ -30,7 +30,7 @@ class _LevelPageState extends State<CharmLevelPage> {
   void initState() {
     super.initState();
 
-    Api.UserInfo.level(uid).then((it) => dataRx(it));
+    Api.UserInfo.charmLevel(uid).then((it) => dataRx(it));
   }
 
   @override
@@ -109,14 +109,14 @@ class _LevelPageState extends State<CharmLevelPage> {
     Widget builder(Map? data) {
       if (data == null) return Spacing.blank;
 
-      final num growthVal = data['growth_value'];//用户当前经验值
-      final num levelGrowthValue = data['level_growth_value'];//本级总经验值
-      final num nextLevelGrowthVal = data['next_level_growth_value'];//下一级总经验值
+      final num growthVal = data['charm_growth_value'];//用户当前经验值
+      final num levelGrowthValue = data['level_charm_growth_value'];//本级总经验值
+      final num nextLevelGrowthVal = data['next_charm_level_growth_value'];//下一级总经验值
       final num growthToNextNeedVal = nextLevelGrowthVal - growthVal;//升到下一级所需经验值
 
       final $GrowthView = Row(
         children: [
-          WealthyLevelView(level: data['level']),
+          WealthyLevelView(level: data['charm_level']),
           Spacing.w4,
           Text('经验值：$growthVal'),
           Spacing.exp,
@@ -127,8 +127,8 @@ class _LevelPageState extends State<CharmLevelPage> {
       final $LevelView = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('lv${data['level']}'),
-          Text('lv${data['next_level']}'),
+          Text('lv${data['charm_level']}'),
+          Text('lv${data['next_charm_level']}'),
         ],
       );
 

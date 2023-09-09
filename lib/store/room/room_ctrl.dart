@@ -32,6 +32,8 @@ import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
+import 'package:fixnum/fixnum.dart';
+
 
 export 'package:app/model/enum/room_role_type.dart';
 
@@ -154,7 +156,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       (event) {
         final data = jsonDecode(event.data);
 
-        RoomUserInfoDialog.show(uid: data['uid']);
+        RoomUserInfoDialog.show(uid: data['uid'], nuid: Int64(data['role_id']));
       },
     );
 

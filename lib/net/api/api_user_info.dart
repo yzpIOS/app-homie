@@ -167,6 +167,13 @@ class ApiUserInfo extends ApiBase {
     return _doPost('level/next/query', data: data);
   }
 
+  Future charmLevel(UID uid) {
+    final data = {
+      'uid': uid,
+    };
+    return _doPost('charm_level/next/query', data: data);
+  }
+
   Future charm(UID uid) {
     final data = {
       'uid': uid,

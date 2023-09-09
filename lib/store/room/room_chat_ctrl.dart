@@ -6,6 +6,8 @@ import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:fixnum/fixnum.dart';
+
 class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   final int roomId;
 
@@ -26,7 +28,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
       dataRx.add(
         TxtMsgView(
-          TxtMsgData(uid: uid, data: txt, nuid: nuid),
+          TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
         ),
       );
     });
@@ -34,7 +36,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<UserInEvent>((data) {
       dataRx.add(
         UserInMsgView(
-          UserInMsgData(uid: data.uid ?? "", nuid: data.data?.roleId),
+          UserInMsgData(uid: data.uid ?? "", nuid: data.data?.roleId ?? Int64(0)),
         ),
       );
     });

@@ -38,16 +38,18 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
         return;
       }
       final sendUid = data.uid;
-      if(sendUid == null) {
+      final sendNUid = data.nuid;
+      if(sendUid == null || sendNUid == null) {
         return;
       }
       final ids = data.data?.acceptUidList ?? [];
+      final nids = data.data?.acceptRoleIdList ?? [];
 
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
-      for (final uid in ids) {
+      for(int index = 0; index < ids.length; index ++) {
         _ctrl.add(
-          _BigGiftView(uid: sendUid, acceptUid: uid, users: users, data: giftModel),
+          _BigGiftView(uid: sendUid, nuid: sendNUid, acceptUid: ids[index], acceptNUid: nids[index], users: users, data: giftModel),
         );
       }
     });
@@ -167,11 +169,14 @@ class _AnimateView extends StatelessWidget {
 
 class _BigGiftView extends StatelessWidget {
   final UID uid;
+  final NUID nuid;
+
   final UID acceptUid;
+  final NUID acceptNUid;
   final Map<UID, UserInfoDto> users;
   final S_GiftPlay data;
 
-  _BigGiftView({required this.uid, required this.acceptUid, required this.users, required this.data})
+  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.acceptNUid, required this.users, required this.data})
       : super(key: UniqueKey());
 
   @override
@@ -208,7 +213,7 @@ class _BigGiftView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         OpacityButton(
-          onTap: () => RoomUserInfoDialog.show(uid: uid),
+          onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: nuid),
           child: AvatarView(user?.avatar, blur: user?.avatarEx, size: 30),
         ),
         Expanded(

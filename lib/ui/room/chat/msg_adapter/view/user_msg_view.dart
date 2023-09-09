@@ -29,11 +29,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
   Widget _builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
 
     void showUserDialog() {
-      var nuid = vm.nuid;
-      if(nuid == null) {
-        return;
-      }
-      RoomUserInfoDialog.show(uid: vm.uid, msg: vm.typeIf<TxtMsgData>());
+      RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
     };
 
     InlineSpan span = TextSpan(
