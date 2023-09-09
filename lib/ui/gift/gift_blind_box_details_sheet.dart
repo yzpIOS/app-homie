@@ -371,8 +371,8 @@ class _SubListDataView extends SimpleDataView<Map> {
             height: 12,
             child: IntrinsicWidth(
               child: Container(
-                constraints: const BoxConstraints(minWidth: 12, maxWidth: 24),
-                decoration: const BoxDecoration(color: Color(0xFF2CDFB9), shape: BoxShape.circle),
+                constraints: const BoxConstraints(minWidth: 12, maxWidth: 30),
+                decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFF2CDFB9)),
                 alignment: Alignment.center,
                 child: XText(
                   '${data['count']}',
