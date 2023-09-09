@@ -19,8 +19,10 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
 import 'package:app/ui/moment/report/moment_report_page.dart';
+import 'package:app/ui/my/charm_level_page.dart';
 import 'package:app/ui/my/report_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
+import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +56,11 @@ class RoomUserInfoDialog extends StatefulWidget {
 }
 
 class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
+
+  static const String CHARM_LEVEL = "魅力等级";
+  static const String GIFT_WALL = "礼物墙";
+  static const String DECORATE_WALL = "装饰墙";
+
   late final uid = widget.uid;
   late final dataRx = RxMap();
   late final isSelf = OAuthCtrl.isSelf(uid);
@@ -232,81 +239,96 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       children: [
         const SizedBox(width: 28,),
         // 礼物墙
-        Stack(
-          children: [
-            Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
-            const Positioned(
-              top: 5,
-              left: 5,
-              child: Text(
-                "礼物墙",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+        GestureDetector(
+          onTap: () {
+            onItemClick(GIFT_WALL);
+          },
+          child: Stack(
+            children: [
+              Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
+              const Positioned(
+                top: 5,
+                left: 5,
+                child: Text(
+                  GIFT_WALL,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            const Positioned(
-              top: 24,
-              left: 5,
-              child: Text(
-                "0/100",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+              const Positioned(
+                top: 24,
+                left: 5,
+                child: Text(
+                  "0/100",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
 
         // 装饰墙
         const SizedBox(width: 10,),
-        Stack(
-          children: [
-            Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
-            const Positioned(
-              top: 5,
-              left: 5,
-              child: Text(
-                "装饰墙",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+        GestureDetector(
+          onTap: () {
+            onItemClick(DECORATE_WALL);
+          },
+          child: Stack(
+            children: [
+              Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
+              const Positioned(
+                top: 5,
+                left: 5,
+                child: Text(
+                  DECORATE_WALL,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            const Positioned(
-              top: 24,
-              left: 5,
-              child: Text(
-                "0/100",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+              const Positioned(
+                top: 24,
+                left: 5,
+                child: Text(
+                  "0/100",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
 
         // 魅力
         const SizedBox(width: 10,),
-        Stack(
-          children: [
-            Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
-            const Positioned(
-              top: 5,
-              left: 5,
-              child: Text(
-                "魅力等级",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+        GestureDetector(
+          onTap: () {
+            onItemClick(CHARM_LEVEL);
+          },
+          child: Stack(
+            children: [
+              Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
+              const Positioned(
+                top: 5,
+                left: 5,
+                child: Text(
+                  CHARM_LEVEL,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const SizedBox(width: 28,),
       ],
@@ -446,6 +468,15 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
           Api.Room.micUp(roomId: widget.sceneCtrl.roomId,uid: widget.nuid, no: widget.micNo);
         } catch(e, s) {
         }
+        break;
+      case GIFT_WALL:
+        // todo 等待合并分支
+        break;
+      case CHARM_LEVEL:
+        Get.to(() => CharmLevelPage(uid: uid));
+        break;
+      case DECORATE_WALL:
+        showToast("敬请期待");
         break;
     }
   }
