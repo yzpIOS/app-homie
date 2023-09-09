@@ -67,16 +67,17 @@ class SystemMsgView extends BaseMsgView<BaseMsgData<String>> {
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
           child: Image.asset(
-            IMG.format('money_gold_1'),
-            width: 24,
-            height: 24,
+            IMG.format('room/系统消息铃铛'),
+            width: 14,
+            height: 14,
             scale: 3,
             fit: BoxFit.contain,
           ),
         ),
+        const WidgetSpan(child: Spacing(width: 2, flex: null)),
         const TextSpan(
-          text: '系统：',
-          style: TextStyle(color: Colors.yellow),
+          text: '系统消息：',
+          style: TextStyle(color: AppPalette.colorY),
         ),
         TextSpan(
           text: vm.data,

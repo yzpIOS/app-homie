@@ -31,6 +31,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       });
     });
 
+    /// 文本消息
     on<MsgTxtEvent>((data) {
       final uid = data.uid ?? "";
       final txt = data.data?.message ?? "";
@@ -43,6 +44,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       );
     });
 
+    /// xxx进入了房间消息
     on<UserInEvent>((data) {
       dataRx.add(
         UserInMsgView(
@@ -51,6 +53,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       );
     });
 
+    /// 房间公告
     on<NoticeEvent>((data) {
       dataRx.add(
         NoticeMsgView(
@@ -61,6 +64,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
 
+    /// 礼物消息
     on<GiftEvent>((data) async {
       S_GiftPlay? gift = data.data;
       if(gift == null) {
@@ -85,7 +89,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       });
     });
 
-    // 多个礼物播放广播
+    /// 多个礼物播放广播（盲盒开出的礼物数组）
     on<MoreGiftPlayEvent>((data) async {
       S_MoreGiftPlay? moreGift = data.data;
       if(moreGift == null) {
@@ -108,23 +112,6 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
           );
         }
       });
-
-      // for(var i = 0; i < items.length; i ++) {
-      //   S_GiftPlay? gift = items[i];
-      //
-      //   final sendUid = gift.sendId;
-      //   final ids = gift.acceptUidList ?? [];
-      //   final users = await findByUidX({sendUid, ...ids}, useNet: true);
-      //   users.forEach((key, value) {
-      //     if(sendUid != value.uid) {
-      //       dataRx.add(
-      //         BlindBoxGiftOpenMsgView(
-      //           GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift, blindBoxName: data.blindBoxName),
-      //         ),
-      //       );
-      //     }
-      //   });
-      // }
     });
   }
 }
