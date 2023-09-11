@@ -2,7 +2,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/my/giftwall/gift_list_dialog.dart';
+import 'package:app/ui/common/gift_list_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
