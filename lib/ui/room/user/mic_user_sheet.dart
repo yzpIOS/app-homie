@@ -97,7 +97,7 @@ abstract class MicUserSheet {
     // }
     if(info == null) {
       // 用户上麦
-      sceneMicCtrl<RoomMicCtrl>().inviteMicUp(no: no, uid: OAuthCtrl.nUid);
+      sceneMicCtrl<RoomMicCtrl>().micUp(no: no);
     } else {
       // 显示用户信息
       RoomUserInfoDialog.show(uid: info.uid, nuid: info.nUid, micNo: no);
