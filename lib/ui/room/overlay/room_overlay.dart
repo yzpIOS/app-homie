@@ -179,7 +179,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       userList.sort((a, b) => a.compareTo(b));
 
       // 获取房主的信息
-      var roomOwnerInfo = s_syncRoomInfo?.items.firstWhere((element) => element.type == 1);
+      var roomOwnerInfo = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.type == 1);
+      if(roomOwnerInfo != null) {
+        roomOwner = GiftSend2RoomEntity(uid: roomOwnerInfo.uid, no: "", userType: 1);
+      }
 
       // 其它用户信息
       for(int index = 0; index < userList.length; index ++) {
