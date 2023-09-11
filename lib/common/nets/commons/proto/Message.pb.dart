@@ -3162,90 +3162,15 @@ class C_MikeList extends $pb.GeneratedMessage {
   void clearRoomId() => clearField(1);
 }
 
-class S_MikeList_Mike extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_MikeList.Mike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
-    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeNo')
-    ..hasRequiredFields = false
-  ;
-
-  S_MikeList_Mike._() : super();
-  factory S_MikeList_Mike({
-    $fixnum.Int64? roleId,
-    $fixnum.Int64? mikeId,
-    $core.String? mikeNo,
-  }) {
-    final _result = create();
-    if (roleId != null) {
-      _result.roleId = roleId;
-    }
-    if (mikeId != null) {
-      _result.mikeId = mikeId;
-    }
-    if (mikeNo != null) {
-      _result.mikeNo = mikeNo;
-    }
-    return _result;
-  }
-  factory S_MikeList_Mike.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory S_MikeList_Mike.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  S_MikeList_Mike clone() => S_MikeList_Mike()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  S_MikeList_Mike copyWith(void Function(S_MikeList_Mike) updates) => super.copyWith((message) => updates(message as S_MikeList_Mike)) as S_MikeList_Mike; // ignore: deprecated_member_use
-  $pb.BuilderInfo get info_ => _i;
-  @$core.pragma('dart2js:noInline')
-  static S_MikeList_Mike create() => S_MikeList_Mike._();
-  S_MikeList_Mike createEmptyInstance() => create();
-  static $pb.PbList<S_MikeList_Mike> createRepeated() => $pb.PbList<S_MikeList_Mike>();
-  @$core.pragma('dart2js:noInline')
-  static S_MikeList_Mike getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_MikeList_Mike>(create);
-  static S_MikeList_Mike? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roleId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoleId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoleId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $fixnum.Int64 get mikeId => $_getI64(1);
-  @$pb.TagNumber(2)
-  set mikeId($fixnum.Int64 v) { $_setInt64(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasMikeId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearMikeId() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get mikeNo => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set mikeNo($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasMikeNo() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearMikeNo() => clearField(3);
-}
-
 class S_MikeList extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'S_MikeList', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<S_MikeList_Mike>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikes', $pb.PbFieldType.PM, subBuilder: S_MikeList_Mike.create)
+    ..pc<$0.MikeInfo>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikes', $pb.PbFieldType.PM, subBuilder: $0.MikeInfo.create)
     ..hasRequiredFields = false
   ;
 
   S_MikeList._() : super();
   factory S_MikeList({
-    $core.Iterable<S_MikeList_Mike>? mikes,
+    $core.Iterable<$0.MikeInfo>? mikes,
   }) {
     final _result = create();
     if (mikes != null) {
@@ -3275,7 +3200,7 @@ class S_MikeList extends $pb.GeneratedMessage {
   static S_MikeList? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<S_MikeList_Mike> get mikes => $_getList(0);
+  $core.List<$0.MikeInfo> get mikes => $_getList(0);
 }
 
 class C_UpMike extends $pb.GeneratedMessage {
