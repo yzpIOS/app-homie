@@ -374,12 +374,12 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     }
     return Obx(() {
       var onLine = roomMicCtrl.dataRx;
-      var isOnline = onLine.values.map((e) => e.uid == uid).isNotEmpty;
+      var mineMic = onLine.values.firstWhereOrNull((e) => e.uid == OAuthCtrl.uid);
       return Row(
         children: [
           const Expanded(child: SizedBox()),
           // 下麦
-          if(isOnline)
+          if(mineMic != null)
             SizedBox(width: 80, height: 34, child: $Btn2('下麦'),),
           const SizedBox(width: 10,),
           SizedBox(width: 80, height: 34, child: $Btn2('送礼物'),),
