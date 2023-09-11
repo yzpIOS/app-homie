@@ -154,7 +154,9 @@ class GiftSend2Room extends GiftSendLogic {
   @override
   Future<int> doSend(Map data, int count) async {
     final type = MoneyType.fromVal(data['currency']);
-    final users = userRx.map((it) => it.uid).toList(growable: false);
+    final users = userRx.map((it) => it.uid).toList();
+    // 删除空数据
+    users.removeWhere((element) => element.isEmpty);
 
     if (users.isEmpty) {
       throw LogicException(-1, '请选择礼物赠送对象'.en());
