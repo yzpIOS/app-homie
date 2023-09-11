@@ -153,15 +153,15 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
     // 获取房间在线的用户信息
     post(() async {
       WaitingCtrl.obj.show();
-      C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
-      c_roomEnterComplete.roomId = Int64(roomId ?? 0);
-      S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-          CMD.C_RoomEnterComplete,
+      C_OnlineList c_roomEnterComplete = C_OnlineList.create();
+      c_roomEnterComplete.roomIdList.add(Int64(roomId ?? 0));
+      S_OnlineList? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_OnlineList,
           datas: c_roomEnterComplete.writeToBuffer(),
-          resCmd: CMD.S_SyncRoomInfo
+          resCmd: CMD.S_OnlineList
       );
       WaitingCtrl.obj.hidden();
-      if(s_syncRoomInfo?.onlineList.isEmpty == true) {
+      if(s_syncRoomInfo?.items.isEmpty == true) {
         showToast("暂无在麦用户");
         return;
       }
@@ -178,7 +178,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       var userList = micUsers.keys.toList();
       userList.sort((a, b) => a.compareTo(b));
       // 过滤出在麦上的用户列表
-      s_syncRoomInfo?.onlineList.forEach((element) {
+      s_syncRoomInfo?.items.forEach((element) {
         if(element.type == 1) {
           // 获取房主信息
           roomOwner = GiftSend2RoomEntity(uid: element.uid, no: "", userType: element.type);

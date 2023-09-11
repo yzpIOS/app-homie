@@ -17,6 +17,9 @@ class CMD {
   static const C_CreateScene = 2100; // 创建房间场景=======对接完成
   static const S_CreateScene = 2101; // 返回创建房间场景结果=======对接完成
 
+  static const C_OnlineList = 2110; // 用户房间在线列表
+  static const S_OnlineList = 2111; //用户房间在线列表反馈结果
+
   static const C_CloseScene = 2103; // 关闭房间场景=======对接完成
   static const S_CloseScene = 2104; // 关闭房间场景结果=======对接完成
 

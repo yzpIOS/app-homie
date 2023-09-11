@@ -46,7 +46,7 @@ class MicUserOnlineManagerSheet extends StatefulWidget {
 
 class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
 
-  S_SyncRoomInfo? s_syncRoomInfo;
+  S_OnlineList? s_syncRoomInfo;
 
   List<String> selectedIds = <String>[];
 
@@ -56,15 +56,15 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
     // 获取房间在线的用户信息
     delay(100, () async {
       WaitingCtrl.obj.show();
-      C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
-      c_roomEnterComplete.roomId = Int64(widget.sceneCtrl?.roomId ?? 0);
+      C_OnlineList c_roomEnterComplete = C_OnlineList.create();
+      c_roomEnterComplete.roomIdList.add(Int64(widget.sceneCtrl.roomId ?? 0));
       s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-          CMD.C_RoomEnterComplete,
+          CMD.C_OnlineList,
           datas: c_roomEnterComplete.writeToBuffer(),
-          resCmd: CMD.S_SyncRoomInfo
+          resCmd: CMD.S_OnlineList
       );
       WaitingCtrl.obj.hidden();
-      if(s_syncRoomInfo?.onlineList.isEmpty == true) {
+      if(s_syncRoomInfo?.items.isEmpty == true) {
         showToast("暂无在麦用户");
         return;
       }
@@ -139,12 +139,12 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
     return Expanded(
       child: Obx(() {
         // 找出的房主的信息
-        Common.UserInfo? roomOwner = null;
+        Common.RoomUserInfo? roomOwner = null;
         // 麦上的用户信息列表
-        List<Common.UserInfo> userInMicList = [];
+        List<Common.RoomUserInfo> userInMicList = [];
         // 获取麦上的用户列表
         var userList = roomMicCtrl.dataRx.values.toList();
-        s_syncRoomInfo?.onlineList.forEach((element) {
+        s_syncRoomInfo?.items.forEach((element) {
           for(int index = 0; index < userList.length; index ++) {
             // 获取房主信息
             if(element.type == 1) {
@@ -185,7 +185,7 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
     );
   }
 
-  Widget createItem(Common.UserInfo micInfo) {
+  Widget createItem(Common.RoomUserInfo micInfo) {
     // 选中时的圆圈
     Decoration? decoration = null;
     if(selectedIds.contains(micInfo.uid)) {

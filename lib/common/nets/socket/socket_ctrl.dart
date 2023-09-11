@@ -256,6 +256,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.C_OutFreeMikesArea, C_OutFreeMikesArea.fromBuffer);
     register(CMD.C_PlazaToRoom, C_PlazaToRoom.fromBuffer);
     register(CMD.C_InFreeMikesArea, C_InFreeMikesArea.fromBuffer);
+    register(CMD.S_OnlineList, S_OnlineList.fromBuffer);
 
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
@@ -264,6 +265,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 连接状态
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     onDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
+
   }
 
   ///
