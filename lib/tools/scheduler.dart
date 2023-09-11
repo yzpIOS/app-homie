@@ -1,12 +1,19 @@
 import 'dart:async';
 
+import 'package:app/widgets.dart';
 import 'package:flutter/scheduler.dart';
 
 final _ = SchedulerBinding.instance;
 final _addPostFrameCallback = _.addPostFrameCallback;
 
 void post(VoidCallback callback) {
-  _addPostFrameCallback((_) => callback());
+  _addPostFrameCallback((_) {
+    try {
+      callback();
+    } catch(e) {
+      debugPrint(e.toString());
+    }
+  });
 }
 
 void delay(int milliseconds, VoidCallback callBack,) {

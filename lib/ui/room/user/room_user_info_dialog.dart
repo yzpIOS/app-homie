@@ -99,7 +99,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
               ),
 
               // 礼物墙，装饰墙，魅力等级
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
               createLevel(),
 
               const Expanded(child: SizedBox()),

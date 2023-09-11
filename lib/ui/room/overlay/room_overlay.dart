@@ -177,38 +177,38 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       // 根据麦号进行排序
       var userList = micUsers.keys.toList();
       userList.sort((a, b) => a.compareTo(b));
-      // 过滤出在麦上的用户列表
-      s_syncRoomInfo?.items.forEach((element) {
-        if(element.type == 1) {
-          // 获取房主信息
-          roomOwner = GiftSend2RoomEntity(uid: element.uid, no: "", userType: element.type);
-        } else if(element.type == 2) {
+
+      // 获取房主的信息
+      var roomOwnerInfo = s_syncRoomInfo?.items.firstWhere((element) => element.type == 1);
+
+      // 其它用户信息
+      for(int index = 0; index < userList.length; index ++) {
+        // 其它用户信息
+        if(roomOwnerInfo?.uid == micUsers[userList[index]]?.uid) {
+          roomOwner = GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: "", userType: 1);
+        } else if(userList[index] == "1") {
           // 主持信息
-          mainRole = GiftSend2RoomEntity(uid: element.uid, no: "", userType: element.type);
+          mainRole = GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: "", userType: 2);
+        } else if(userList[index] == "8"){
+          // 板板位不显示
+          continue;
         } else {
-          // 其它用户信息
-          for(int index = 0; index < userList.length; index ++) {
-            // 其它用户信息
-            // 其它在mic上的用户的信息
-            if(element.uid == micUsers[userList[index]]?.uid) {
-              userInMicList.add(GiftSend2RoomEntity(uid: element.uid, no: userList[index], userType: element.type));
-              break;
-            }
-          }
+          userInMicList.add(GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: userList[index], userType: 3));
         }
-      });
+      }
+
       // 两个数据不为空时，添加分隔线
       if((mainRole != null || roomOwner != null) && userInMicList.isNotEmpty) {
         userInMicList.insert(0, const GiftSend2RoomEntity(uid: "", no: "", userType: GiftSend2RoomEntity.DIVIDE_TYPE));
       }
 
-      // 主持
-      if(mainRole != null) {
-        userInMicList.insert(0, mainRole!);
+      // 主持，艾文确认：如果房主坐了主持位，那么就不显示主持的信息
+      if(mainRole != null && mainRole.uid != roomOwner?.uid) {
+        userInMicList.insert(0, mainRole);
       }
       // 房主
       if(roomOwner != null) {
-        userInMicList.insert(0, roomOwner!);
+        userInMicList.insert(0, roomOwner);
       }
       GiftSheet.show(
         GiftSend2Room(roomId: controller.roomId, users: userInMicList.toList(growable: false)),
