@@ -10,6 +10,9 @@ AppBar xAppBar({
   Color? bgColor,
   actions,
   PreferredSizeWidget? bottom,
+  automaticallyImplyLeading =  true,
+  ShapeBorder? shape,
+
 }) {
   List<Widget>? _actions;
 
@@ -65,6 +68,8 @@ AppBar xAppBar({
     centerTitle: centerTitle,
     leading: leading,
     bottom: bottom,
+    automaticallyImplyLeading: automaticallyImplyLeading,
+    shape: shape,
   );
 }
 

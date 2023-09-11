@@ -96,6 +96,10 @@ class UserHomeWrap extends StatelessWidget {
 
 VoidCallback toUserPage(UID uid) {
   return () {
+    // if(Env.isDebug) {
+    //   Get.to(() => MineGiftWallPage(uid: uid));
+    //   return;
+    // }
     // if (OAuthCtrl.uid == uid) {
     //   Get.to(() => const MyPage());
     // } else {
