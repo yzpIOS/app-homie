@@ -538,23 +538,12 @@ final $typed_data.Uint8List c_MikeListDescriptor = $convert.base64Decode('CgpDX0
 const S_MikeList$json = const {
   '1': 'S_MikeList',
   '2': const [
-    const {'1': 'mikes', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.S_MikeList.Mike', '10': 'mikes'},
-  ],
-  '3': const [S_MikeList_Mike$json],
-};
-
-@$core.Deprecated('Use s_MikeListDescriptor instead')
-const S_MikeList_Mike$json = const {
-  '1': 'Mike',
-  '2': const [
-    const {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-    const {'1': 'mike_id', '3': 2, '4': 1, '5': 3, '10': 'mikeId'},
-    const {'1': 'mike_no', '3': 3, '4': 1, '5': 9, '10': 'mikeNo'},
+    const {'1': 'mikes', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.MikeInfo', '10': 'mikes'},
   ],
 };
 
 /// Descriptor for `S_MikeList`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_MikeListDescriptor = $convert.base64Decode('CgpTX01pa2VMaXN0EjYKBW1pa2VzGAEgAygLMiAuY29tLnNhdnZ5LnByb3RvLlNfTWlrZUxpc3QuTWlrZVIFbWlrZXMaUQoETWlrZRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSFwoHbWlrZV9pZBgCIAEoA1IGbWlrZUlkEhcKB21pa2Vfbm8YAyABKAlSBm1pa2VObw==');
+final $typed_data.Uint8List s_MikeListDescriptor = $convert.base64Decode('CgpTX01pa2VMaXN0Ei8KBW1pa2VzGAEgAygLMhkuY29tLnNhdnZ5LnByb3RvLk1pa2VJbmZvUgVtaWtlcw==');
 @$core.Deprecated('Use c_UpMikeDescriptor instead')
 const C_UpMike$json = const {
   '1': 'C_UpMike',
