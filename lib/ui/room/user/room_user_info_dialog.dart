@@ -170,8 +170,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CharmLevelView(level: info?.charmLevel, uid: info?.uid, height: itemH),
           WealthyLevelView(level: info?.level, uid: info?.uid, height: itemH),
+          CharmLevelView(level: info?.charmLevel, uid: info?.uid, height: itemH),
           if (gender != null)
             itemWrap(
               SvgView(SVG.$('common/性别_${gender.code}'), width: 16, height: 16),
