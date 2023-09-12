@@ -473,7 +473,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       case GIFT_WALL:
         // todo 等待合并分支
         Get.showBottomSheet(
-            GiftListDialog(),
+            GiftListDialog(uid: widget.uid,),
             shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
             isScrollControlled: false
         );

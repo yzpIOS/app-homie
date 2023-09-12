@@ -28,7 +28,7 @@ class UserHomePage extends StatefulWidget {
 }
 
 class _UserHomePageState extends State<UserHomePage> {
-  static const double _expHeight = 404;
+  double _expHeight = 404 - 153;
 
   late final collapsedRx = RxBool(false);
   late final uid = widget.uid;
@@ -45,7 +45,17 @@ class _UserHomePageState extends State<UserHomePage> {
       Api.UserInfo.access(uid);
     }
 
-    Api.UserInfo.home(uid).onType<Map>(moreRx);
+    Api.UserInfo.home(uid).then((value) {
+      var curMap = value as Map;
+      if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
+        _expHeight = 404;
+      } else {
+        _expHeight = 404 - 153;
+      }
+      moreRx.value = value as Map;
+    });
+
+    // Api.UserInfo.home(uid).onType<Map>(moreRx);
   }
 
   @override
@@ -258,17 +268,20 @@ class _InfoView extends StatelessWidget {
         ],
       ),
     );
+    bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List).length > 0;
 
     child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $NumView(),
         // 礼物墙
-        SizedBox(
-          height: 153,
-          child: GiftWallView(),
-        ),
-        Container(color: const Color(0xFFF5F5F5), height: 10,),
+        if(hasGiftWall)
+          SizedBox(
+            height: 153,
+            child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
+          ),
+        if(hasGiftWall)
+          Container(color: const Color(0xFFF5F5F5), height: 10,),
         Expanded(child: child),
       ],
     );

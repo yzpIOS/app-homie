@@ -221,4 +221,19 @@ class ApiUserInfo extends ApiBase {
 
     return _doPost('black_list/is_in', data: data);
   }
+
+  ///
+  /// 礼物墙
+  /// [uid] 用户id
+  /// [nuid] 新的用户id
+  ///
+  Future getWallGift({UID? uid, NUID? nuid}) {
+    final data = {
+      if(uid != null)
+        'uid': uid,
+      if(nuid != null)
+        'role_id': nuid,
+    };
+    return _doPost('gift_wall', data: data);
+  }
 }

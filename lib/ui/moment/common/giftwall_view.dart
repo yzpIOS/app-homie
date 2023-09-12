@@ -7,6 +7,13 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class GiftWallView extends StatefulWidget {
+  UID uid;
+  NUID? nuid;
+
+  final List<Map> datas;
+
+  GiftWallView({required this.datas, required this.uid, this.nuid});
+
   @override
   State<StatefulWidget> createState() => _GiftWallViewState();
 }
@@ -22,7 +29,7 @@ class _GiftWallViewState extends State<GiftWallView> {
     return GestureDetector(
       onTap: () {
         Get.showBottomSheet(
-          GiftListDialog(),
+          GiftListDialog(uid: widget.uid, nuid: widget.nuid,),
           shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
           isScrollControlled: false
         );
@@ -37,7 +44,7 @@ class _GiftWallViewState extends State<GiftWallView> {
             // 标题
             Container(
               height: 35,
-              margin: EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: 10, right: 10),
               child: Row(
                 children: [
                   Expanded(
@@ -56,7 +63,7 @@ class _GiftWallViewState extends State<GiftWallView> {
               child: ColoredBox(
                 color: const Color(0xFFF6FDFF),
                 child: ListView.separated(
-                  itemCount: 4,
+                  itemCount: widget.datas.length,
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
@@ -67,7 +74,7 @@ class _GiftWallViewState extends State<GiftWallView> {
                         border: Border.all(color: const Color(0xFF7CCCE5).withAlpha(27), width: 1),
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      child: _createItem(index),
+                      child: _createItem(widget.datas[index]),
                     );
                   },
                   separatorBuilder: (context, index) {
@@ -77,40 +84,60 @@ class _GiftWallViewState extends State<GiftWallView> {
               ),
             ),
 
-            SizedBox(height: 10)
+            const SizedBox(height: 10)
           ],
         ),
       ),
     );
   }
 
-  Widget _createItem(int index) {
+  Widget _createItem(Map data) {
+    int accept_count = data["accept_count"];
+    int lighten_need_count = data["lighten_need_count"];
+
+    String lightText;
+    bool isLighten = false;
+    // 点亮图标
+    Widget giftImage;
+    if(accept_count >= lighten_need_count) {
+      giftImage = AspectRatio(
+        aspectRatio: 1.0 / 1.0,
+        child: NetImage(data["cover"], fit: BoxFit.cover),
+      );
+      lightText = "己点亮";
+      isLighten = true;
+    } else {
+      giftImage = AspectRatio(
+        aspectRatio: 1.0 / 1.0,
+        child: ColorFiltered(
+          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.color),
+          child: NetImage(data["cover"], fit: BoxFit.cover),
+        ),
+      );
+      lightText = "未点亮";
+    }
+
     return Column(
       children: [
-        SizedBox(height: 5,),
+        const SizedBox(height: 5,),
         Expanded(
-          child: AspectRatio(
-            aspectRatio: 1.0 / 1.0,
-            child: Container(
-              color: Colors.red,
-            ),
-          ),
+          child: giftImage,
         ),
         Text(
-          "小兔子",
+          data["name"],
           style: TextStyle(
-            color: Color(0xFF999999),
-            fontSize: 14,
-          ),
-        ),
-        Text(
-          "未拥有",
-          style: TextStyle(
-            color: Color(0xFF999999),
+            color: isLighten ? Colors.black : const Color(0xFF999999),
             fontSize: 12,
           ),
         ),
-        SizedBox(height: 6,)
+        Text(
+          lightText,
+          style: TextStyle(
+            color: isLighten ? Colors.black : const Color(0xFF999999),
+            fontSize: 12,
+          ),
+        ),
+        const SizedBox(height: 6,)
       ],
     );
   }

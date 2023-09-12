@@ -1,15 +1,18 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class GiftListDialog extends StatefulWidget {
 
-  static GiftListDialog show() {
-    return GiftListDialog();
-  }
+  UID uid;
+  NUID? nuid;
+
+  GiftListDialog({required this.uid, this.nuid});
 
   @override
   State<StatefulWidget> createState() => _GiftListDialogState();
@@ -18,41 +21,67 @@ class GiftListDialog extends StatefulWidget {
 
 class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProviderStateMixin {
 
-  final data = {
+  Map data = {
     "礼物": GiftPannel(type: 0,),
     "装饰": GiftPannel(type: 1,),
   };
 
+  // 点亮礼物
+  List? lighten;
+  // 没点亮礼物
+  List? notLighten;
+
   late final controller = TabController(vsync: this, length: data.length);
+
+  @override
+  void initState() {
+    super.initState();
+    Api.UserInfo.getWallGift(uid: widget.uid).then((value) {
+      var mapValue = value as Map;
+      lighten = mapValue.containsKey("lighten_items") ? mapValue["lighten_items"] : null;
+      notLighten = mapValue.containsKey("not_lighten_items") ? mapValue["not_lighten_items"] : null;
+      setState(() { });
+    });
+  }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     backgroundColor: const Color(0xFF312753),
+  //     appBar: xAppBar(
+  //       bgColor: const Color(0xFF312753),
+  //       title: xAppBar$TabBar(
+  //         data.keys,
+  //         controller: controller,
+  //         alignment: Alignment.center,
+  //         labelColor: const Tuple2(AppPalette.primary, Color(0xFF999999))
+  //       ),
+  //       automaticallyImplyLeading: false,
+  //     ),
+  //     body: ConfigList(
+  //       config: const ListConfig(
+  //         divider: Spacing.h10,
+  //         padding: Pad(bottom: 64),
+  //       ),
+  //       child: TabBarView(
+  //         controller: controller,
+  //         children: data.values
+  //             .map((it) => (_) => it)
+  //             .map((it) => DelayView(keepAlive: true, builder: it))
+  //             .toList(growable: false),
+  //       ),
+  //     ),
+  //     bottomNavigationBar: SizedBox(height: 30,),
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF312753),
-      appBar: xAppBar(
-        bgColor: const Color(0xFF312753),
-        title: xAppBar$TabBar(
-          data.keys,
-          controller: controller,
-          alignment: Alignment.center,
-          labelColor: const Tuple2(AppPalette.primary, Color(0xFF999999))
-        ),
-        automaticallyImplyLeading: false,
-      ),
-      body: ConfigList(
-        config: const ListConfig(
-          divider: Spacing.h10,
-          padding: Pad(bottom: 64),
-        ),
-        child: TabBarView(
-          controller: controller,
-          children: data.values
-              .map((it) => (_) => it)
-              .map((it) => DelayView(keepAlive: true, builder: it))
-              .toList(growable: false),
-        ),
-      ),
-      bottomNavigationBar: SizedBox(height: 30,),
+      body: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+      bottomNavigationBar: const SizedBox(height: 30,),
     );
   }
 
@@ -67,23 +96,29 @@ class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProvid
 class GiftPannel extends StatelessWidget {
 
   int type;
+  // 点亮礼物
+  List? lighten;
+  // 没点亮礼物
+  List? notLighten;
 
-  GiftPannel({required this.type});
+  GiftPannel({required this.type, this.lighten, this.notLighten});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: 10, right: 10),
+      margin: const EdgeInsets.only(left: 10, right: 10),
       child: CustomScrollView(
         slivers: [
-          _createTitle("己点亮", 10),
+          _createTitle("己点亮", lighten?.length ?? 0),
           const SizedBox(height: 10,).toSliver(),
-          _createGridView(),
+          if(lighten != null && (lighten?.length ?? 0) > 0)
+            _createGridView(lighten!),
 
           const SizedBox(height: 20,).toSliver(),
-          _createTitle("己点亮", 30),
+          _createTitle("未点亮", notLighten?.length ?? 0),
           const SizedBox(height: 10,).toSliver(),
-          _createGridView(),
+          if(notLighten != null && (notLighten?.length ?? 0) > 0)
+            _createGridView(notLighten!),
         ],
       ),
     );
@@ -100,16 +135,16 @@ class GiftPannel extends StatelessWidget {
     ).toSliver();
   }
 
-  Widget _createGridView() {
+  Widget _createGridView(List data) {
     double ratio = type == 0 ? (110.0 / 137.0) : (110.0 / 116.0);
     return SliverGrid(
         delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
             if(type == 0) {
-              return _createGiftItem();
+              return _createGiftItem(data[index]);
             }
-            return _createDecorationItem();
+            return _createDecorationItem(data[index]);
           },
-          childCount: 10
+          childCount: data.length
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
@@ -123,7 +158,7 @@ class GiftPannel extends StatelessWidget {
   ///
   /// 礼物下面的Item
   ///
-  Widget _createGiftItem() {
+  Widget _createGiftItem(Map data) {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -138,12 +173,12 @@ class GiftPannel extends StatelessWidget {
           children: [
             // 礼物图片
             Container(color: Colors.red, width: 76, height: 76,),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             // 礼物名称
             Expanded(
               child: Text(
-                "西瓜少女",
-                style: TextStyle(
+                data["name"],
+                style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                     fontSize: 14
@@ -152,29 +187,29 @@ class GiftPannel extends StatelessWidget {
             ),
 
             // 进度条上的文字
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             Row(
               children: [
-                SizedBox(width: 10,),
+                const SizedBox(width: 10,),
                 Expanded(
                   child: Text(
-                    "2/10",
-                    style: TextStyle(
+                    "${data["accept_count"]}/${data["lighten_need_count"]}",
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                         fontSize: 12
                     ),
                   ),
                 ),
-                Text(
-                  "+1星",
-                  style: TextStyle(
-                      color: Color(0xFFF54390),
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12
-                  ),
-                ),
-                SizedBox(width: 10,)
+                // Text(
+                //   "+1星",
+                //   style: TextStyle(
+                //       color: Color(0xFFF54390),
+                //       fontWeight: FontWeight.normal,
+                //       fontSize: 12
+                //   ),
+                // ),
+                const SizedBox(width: 10,)
               ],
             ),
             SizedBox(
@@ -182,14 +217,14 @@ class GiftPannel extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
                       color: Colors.black.withAlpha(30),
                       borderRadius: BorderRadius.circular(1000),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
+                    margin: const EdgeInsets.only(left: 10, right: 10),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
                         colors: [Color(0xFF9F5284), Color(0xFFF54390)],
@@ -215,7 +250,7 @@ class GiftPannel extends StatelessWidget {
               color: Colors.white.withAlpha(16),
               borderRadius: BorderRadius.circular(2),
             ),
-            child: Text(
+            child: const Text(
               "活动",
               style: TextStyle(
                 fontSize: 10,
@@ -232,7 +267,7 @@ class GiftPannel extends StatelessWidget {
   ///
   /// 礼物下面的Item
   ///
-  Widget _createDecorationItem() {
+  Widget _createDecorationItem(Map data) {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -247,9 +282,9 @@ class GiftPannel extends StatelessWidget {
           children: [
             // 礼物图片
             Container(color: Colors.red, width: 86, height: 86,),
-            SizedBox(height: 5,),
+            const SizedBox(height: 5,),
             // 礼物名称
-            Expanded(
+            const Expanded(
               child: Text(
                 "西瓜少女",
                 style: TextStyle(
@@ -274,7 +309,7 @@ class GiftPannel extends StatelessWidget {
               color: Colors.white.withAlpha(16),
               borderRadius: BorderRadius.circular(2),
             ),
-            child: Text(
+            child: const Text(
               "活动",
               style: TextStyle(
                   fontSize: 10,
