@@ -571,11 +571,12 @@ const C_OutMike$json = const {
   '1': 'C_OutMike',
   '2': const [
     const {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    const {'1': 'role_ids', '3': 2, '4': 3, '5': 3, '10': 'roleIds'},
   ],
 };
 
 /// Descriptor for `C_OutMike`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_OutMikeDescriptor = $convert.base64Decode('CglDX091dE1pa2USFwoHcm9sZV9pZBgBIAEoA1IGcm9sZUlk');
+final $typed_data.Uint8List c_OutMikeDescriptor = $convert.base64Decode('CglDX091dE1pa2USFwoHcm9sZV9pZBgBIAEoA1IGcm9sZUlkEhkKCHJvbGVfaWRzGAIgAygDUgdyb2xlSWRz');
 @$core.Deprecated('Use c_BanMikeDescriptor instead')
 const C_BanMike$json = const {
   '1': 'C_BanMike',
@@ -592,11 +593,12 @@ const C_AccMikeClear$json = const {
   '1': 'C_AccMikeClear',
   '2': const [
     const {'1': 'mike_id', '3': 1, '4': 1, '5': 3, '10': 'mikeId'},
+    const {'1': 'mike_ids', '3': 2, '4': 3, '5': 3, '10': 'mikeIds'},
   ],
 };
 
 /// Descriptor for `C_AccMikeClear`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_AccMikeClearDescriptor = $convert.base64Decode('Cg5DX0FjY01pa2VDbGVhchIXCgdtaWtlX2lkGAEgASgDUgZtaWtlSWQ=');
+final $typed_data.Uint8List c_AccMikeClearDescriptor = $convert.base64Decode('Cg5DX0FjY01pa2VDbGVhchIXCgdtaWtlX2lkGAEgASgDUgZtaWtlSWQSGQoIbWlrZV9pZHMYAiADKANSB21pa2VJZHM=');
 @$core.Deprecated('Use c_SetNoticeMessageDescriptor instead')
 const C_SetNoticeMessage$json = const {
   '1': 'C_SetNoticeMessage',
