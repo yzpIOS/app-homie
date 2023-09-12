@@ -46,7 +46,7 @@ class MicUserCharmManagerSheet extends StatefulWidget {
 class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
   S_OnlineList? s_syncRoomInfo;
 
-  List<String> selectedIds = <String>[];
+  List<Int64> selectedIds = <Int64>[];
 
   @override
   void initState() {
@@ -116,9 +116,12 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
           GestureDetector(
             onTap: () {
               selectedIds.clear();
-              for(int index = 0; index < 20; index ++) {
-                selectedIds.add(index.toString());
+              SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
+              if(roomMicCtrl is! RoomMicCtrl) {
+                return;
               }
+              var userList = roomMicCtrl.dataRx.values.map((e) => e.nUid);
+              selectedIds.addAll(userList);
               setState(() { });
             },
             behavior: HitTestBehavior.opaque,
@@ -162,20 +165,18 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
         List<Common.RoomUserInfo> userInMicList = [];
         // 获取麦上的用户列表
         var userList = roomMicCtrl.dataRx.values.toList();
-        s_syncRoomInfo?.items.forEach((element) {
-          for(int index = 0; index < userList.length; index ++) {
-            // 获取房主信息
-            if(element.type == 1) {
-              roomOwner = element;
-              break;
-            }
-            // 其它在mic上的用户的信息
-            if(element.uid == userList[index].uid) {
-              userInMicList.add(element);
-              break;
-            }
+        roomOwner = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.type == 1);
+        for(int index = 0; index < userList.length; index ++) {
+          // 获取房主信息
+          if(roomOwner?.roleId == userList[index].nUid) {
+            continue;
           }
-        });
+          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == userList[index].nUid);
+          // 其它在mic上的用户的信息
+          if(result != null) {
+            userInMicList.add(result);
+          }
+        }
 
         return CustomScrollView(
           slivers: [
@@ -205,8 +206,8 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
   Widget createItem(Common.RoomUserInfo micInfo) {
     // 选中时的圆圈
-    Decoration? decoration = null;
-    if(selectedIds.contains(micInfo.uid)) {
+    Decoration? decoration;
+    if(selectedIds.contains(micInfo.roleId)) {
       decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(1000),
           border: Border.all(color: Color(0xFFC567FF), width: 2)
@@ -215,10 +216,10 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
     return GestureDetector(
       onTap: () {
-        if(selectedIds.contains(micInfo.uid)) {
-          selectedIds.remove(micInfo.uid);
+        if(selectedIds.contains(micInfo.roleId)) {
+          selectedIds.remove(micInfo.roleId);
         } else {
-          selectedIds.add(micInfo.uid);
+          selectedIds.add(micInfo.roleId);
         }
         setState(() { });
       },
@@ -236,17 +237,17 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
                 Container(
                   decoration: decoration,
                   child: AsyncAvatar(uid: micInfo.uid, size: 80, onTap: Some(() {
-                    if(selectedIds.contains(micInfo.uid)) {
-                      selectedIds.remove(micInfo.uid);
+                    if(selectedIds.contains(micInfo.roleId)) {
+                      selectedIds.remove(micInfo.roleId);
                     } else {
-                      selectedIds.add(micInfo.uid);
+                      selectedIds.add(micInfo.roleId);
                     }
                     setState(() { });
                   })),
                 ),
 
                 // 选中的状态
-                if(selectedIds.contains(micInfo.uid))
+                if(selectedIds.contains(micInfo.roleId))
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(IMG.format("check"), width: 20, height: 20,),

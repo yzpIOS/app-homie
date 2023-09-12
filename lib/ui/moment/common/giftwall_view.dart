@@ -45,7 +45,7 @@ class _GiftWallViewState extends State<GiftWallView> {
             Container(
               height: 35,
               margin: const EdgeInsets.only(left: 10, right: 10),
-              child: Row(
+              child: const Row(
                 children: [
                   Expanded(
                       child: Text(

@@ -255,30 +255,34 @@ class GiftPannel extends StatelessWidget {
                 const SizedBox(width: 10,)
               ],
             ),
-            SizedBox(
-              height: 6,
-              child: Stack(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withAlpha(30),
-                      borderRadius: BorderRadius.circular(1000),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF9F5284), Color(0xFFF54390)],
+            LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+              double width = (double.tryParse(data["accept_count"].toString()) ?? 0.0) / ((double.tryParse(data["lighten_need_count"]) ?? 1.0) + 0.01);
+              return SizedBox(
+                height: 6,
+                child: Stack(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withAlpha(30),
+                        borderRadius: BorderRadius.circular(1000),
                       ),
-                      borderRadius: BorderRadius.circular(1000),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 10,),
+                    Container(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      width: constraints.maxWidth * width,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF9F5284), Color(0xFFF54390)],
+                        ),
+                        borderRadius: BorderRadius.circular(1000),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+            const SizedBox(height: 10,),
           ],
         ),
 
