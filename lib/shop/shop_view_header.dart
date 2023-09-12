@@ -12,6 +12,7 @@ import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/activity/act_main_dialog.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/dressup/model_overlay_cloth.dart';
 import 'package:app/ui/dressup/model_overlay_wardrobe.dart';
@@ -137,6 +138,8 @@ class _MyModelViewState extends State<MyModelView> {
             bottom: 100,
             left: 20,
             child: $Btn(action: '广场'),
+            // left: 10,
+            // child: $Btn(action: '装扮抽奖入口'),
           ),
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
         if(unityLoadComplete)
@@ -276,6 +279,9 @@ class _MyModelViewState extends State<MyModelView> {
     switch (action) {
       case '广场':
         Get.find<RoomManagerCtrl>().toSquare();
+        break;
+      case '装扮抽奖入口':
+        ActMainDialog.show();
         break;
     }
   }
