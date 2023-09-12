@@ -6,6 +6,7 @@ import 'package:app/common/nets/commons/proto/Common.pb.dart' as Common;
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
@@ -144,17 +145,17 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
         // 麦上的用户信息列表
         List<Common.RoomUserInfo> userInMicList = [];
         // 获取麦上的用户列表
-        var userList = roomMicCtrl.dataRx.values.toList();
-        roomOwner = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.type == 1);
+        var userList = roomMicCtrl.dataRx.keys.toList();
         for(int index = 0; index < userList.length; index ++) {
-          // 获取房主信息
-          if(roomOwner?.roleId == userList[index].nUid) {
-            continue;
-          }
-          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == userList[index].nUid);
+          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == roomMicCtrl.dataRx[userList[index]]?.nUid);
           // 其它在mic上的用户的信息
           if(result != null) {
-            userInMicList.add(result);
+            if(userList[index] == "1") {
+              roomOwner = result;
+            } else if(userList[index] == "8") {
+            } else {
+              userInMicList.add(result);
+            }
           }
         }
 
