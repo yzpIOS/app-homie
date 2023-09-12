@@ -140,7 +140,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     int isContinue = data.isContinue;
     if (isContinue == 2) {
-      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: null, callCloseRoom: true);
+      toMiddleRoom(roomId: sceneCtrl2?.roomId ?? 0, off: true, data: null, callCloseRoom: false);
     }
   }
 

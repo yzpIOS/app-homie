@@ -44,7 +44,7 @@ class _DataView extends GetView<RoomChatCtrl> {
           reverse: true,
           itemCount: length,
           itemBuilder: (_, i) => data[length - 1 - i],
-          separatorBuilder: (_, __) => Spacing.h4,
+          separatorBuilder: (_, __) => const Spacing(height: 3, flex: null,),
         );
       },
     );

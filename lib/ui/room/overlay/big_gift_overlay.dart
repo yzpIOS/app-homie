@@ -90,10 +90,16 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
           return Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              lines,
-              (_) => _X(size: c.biggest, padding: padding, queue: _queue),
-            ),
+            children: [
+              _X(size: c.biggest, padding: padding, queue: _queue),
+              Row(
+                children: [
+                  _X(size: c.biggest, padding: padding, queue: _queue),
+                  const Spacing(width: 5, flex: null,),
+                  _X(size: c.biggest, padding: padding, queue: _queue),
+                ],
+              ),
+            ],
           );
         },
       ),
