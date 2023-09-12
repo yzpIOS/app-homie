@@ -112,9 +112,14 @@ class ApiRoom extends ApiBase {
   ///
   /// 房间下麦
   ///
-  void micDown({required Int64 uid}) {
+  void micDown({Int64? uid, List<Int64>? uids}) {
     C_OutMike c_outMike = C_OutMike.create();
-    c_outMike.roleId = uid;
+    if(uid != null) {
+      c_outMike.roleId = uid;
+    }
+    if(uids != null) {
+      c_outMike.roleIds.addAll(uids);
+    }
     SocketCtrl.ins.sendSever(
       CMD.C_OutMike,
       message: c_outMike,
@@ -285,18 +290,17 @@ class ApiRoom extends ApiBase {
   /// 清除麦克风热度计数器
   /// https://yapi.pro/project/11739/interface/api/457358
   ///
-  Future resetHotCount({required int roomId, int? micId}) {
+  Future resetHotCount({int? micId, List<Int64>? mics}) {
     C_AccMikeClear cAccmikeclear = C_AccMikeClear.create();
-    cAccmikeclear.mikeId = Int64(micId ?? 0);
+    if(micId != null) {
+      cAccmikeclear.mikeId = Int64(micId ?? 0);
+    }
+    if(mics != null) {
+      cAccmikeclear.mikeIds.addAll(mics);
+    }
     SocketCtrl.ins.sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
     return Future.value(1);
-    
-    final data = {
-      'room_id': roomId,
-      if (micId != null) 'mike_id': micId,
-    };
 
-    return _doPost('mike/clear-hots', data: data);
   }
 
   Future hotCount({required int roomId}) {

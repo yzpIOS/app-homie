@@ -58,7 +58,7 @@ class RoomUserInfoDialog extends StatefulWidget {
 
 class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
 
-  static const String CHARM_LEVEL = "魅力等级";
+  static const String CHARM_LEVEL = "粉丝团";
   static const String GIFT_WALL = "礼物墙";
   static const String DECORATE_WALL = "装饰墙";
 
@@ -479,7 +479,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         );
         break;
       case CHARM_LEVEL:
-        Get.to(() => CharmLevelPage(uid: uid));
+        showToast("敬请期待");
         break;
       case DECORATE_WALL:
         showToast("敬请期待");

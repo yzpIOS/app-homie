@@ -279,10 +279,10 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
   }
 
   void onItemClick(String action) async {
-    var roomId = widget.sceneCtrl?.roomId;
-    if(roomId == null) {
+    if(selectedIds.isEmpty) {
+      showToast("请选择下麦用户");
       return;
     }
-    await Api.Room.resetHotCount(roomId: roomId);
+    await Api.Room.resetHotCount(mics: selectedIds);
   }
 }

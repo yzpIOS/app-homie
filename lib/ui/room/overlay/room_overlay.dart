@@ -223,7 +223,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
 
   void _resetHotCount() {
     simpleSub(
-      Api.Room.resetHotCount(roomId: roomId),
+      Api.Room.resetHotCount(),
     );
   }
 }

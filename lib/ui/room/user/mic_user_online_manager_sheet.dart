@@ -16,6 +16,7 @@ import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:app/net/api.dart';
 
 ///
 /// https://www.tapd.cn/68741847/prong/stories/view/1168741847001000563
@@ -258,6 +259,10 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
   }
 
   void onItemClick(String action) {
-
+    if(selectedIds.isEmpty) {
+      showToast("请选择下麦用户");
+      return;
+    }
+    Api.Room.micDown(uids: selectedIds);
   }
 }
