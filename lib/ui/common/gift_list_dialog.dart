@@ -7,6 +7,9 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+///
+/// 礼物墙
+///
 class GiftListDialog extends StatefulWidget {
 
   UID uid;
@@ -21,9 +24,8 @@ class GiftListDialog extends StatefulWidget {
 
 class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProviderStateMixin {
 
-  Map data = {
-    "礼物": GiftPannel(type: 0,),
-    "装饰": GiftPannel(type: 1,),
+  Map<String, Widget> data = {
+    "礼物": GiftPannel(type: 0, lighten: [], notLighten: [],),
   };
 
   // 点亮礼物
@@ -36,10 +38,28 @@ class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    Api.UserInfo.getWallGift(uid: widget.uid).then((value) {
-      var mapValue = value as Map;
+    delay(100, () async {
+      WaitingCtrl.obj.show();
+      Map mapValue = {};
+      try {
+        mapValue = await Api.UserInfo.getWallGift(uid: widget.uid);
+      } catch(e, s) {
+        debugPrint(e.toString());
+      } finally {
+        WaitingCtrl.obj.hidden();
+      }
+      // 礼物数据
       lighten = mapValue.containsKey("lighten_items") ? mapValue["lighten_items"] : null;
       notLighten = mapValue.containsKey("not_lighten_items") ? mapValue["not_lighten_items"] : null;
+      if((lighten == null || lighten?.isEmpty == true) && (notLighten == null || notLighten?.isEmpty == true)) {
+        showToast("数据为空");
+        Get.back();
+        return;
+      }
+      // 设置礼物的值
+      data = {
+        "礼物": GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+      };
       setState(() { });
     });
   }
@@ -75,12 +95,34 @@ class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProvid
   //   );
   // }
 
-
   @override
   Widget build(BuildContext context) {
+    if((lighten == null || lighten?.isEmpty == true) && (notLighten == null || notLighten?.isEmpty == true)) {
+      return SizedBox();
+    }
     return Scaffold(
       backgroundColor: const Color(0xFF312753),
-      body: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Container(
+          //   height: 40,
+          //   alignment: Alignment.center,
+          //   child: Text(
+          //     "礼物",
+          //     style: TextStyle(
+          //         color: Colors.white,
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.bold
+          //     ),
+          //   ),
+          // ),
+          SizedBox(height: 14,),
+          Expanded(
+            child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+          )
+        ],
+      ),
       bottomNavigationBar: const SizedBox(height: 30,),
     );
   }
@@ -108,6 +150,7 @@ class GiftPannel extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
       child: CustomScrollView(
+        key: Key(this.hashCode.toString()),
         slivers: [
           _createTitle("己点亮", lighten?.length ?? 0),
           const SizedBox(height: 10,).toSliver(),
