@@ -3328,16 +3328,21 @@ class S_UpMike extends $pb.GeneratedMessage {
 class C_OutMike extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_OutMike', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleId')
+    ..p<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roleIds', $pb.PbFieldType.K6)
     ..hasRequiredFields = false
   ;
 
   C_OutMike._() : super();
   factory C_OutMike({
     $fixnum.Int64? roleId,
+    $core.Iterable<$fixnum.Int64>? roleIds,
   }) {
     final _result = create();
     if (roleId != null) {
       _result.roleId = roleId;
+    }
+    if (roleIds != null) {
+      _result.roleIds.addAll(roleIds);
     }
     return _result;
   }
@@ -3370,6 +3375,9 @@ class C_OutMike extends $pb.GeneratedMessage {
   $core.bool hasRoleId() => $_has(0);
   @$pb.TagNumber(1)
   void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$fixnum.Int64> get roleIds => $_getList(1);
 }
 
 class C_BanMike extends $pb.GeneratedMessage {
@@ -3436,16 +3444,21 @@ class C_BanMike extends $pb.GeneratedMessage {
 class C_AccMikeClear extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'C_AccMikeClear', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aInt64(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeId')
+    ..p<$fixnum.Int64>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mikeIds', $pb.PbFieldType.K6)
     ..hasRequiredFields = false
   ;
 
   C_AccMikeClear._() : super();
   factory C_AccMikeClear({
     $fixnum.Int64? mikeId,
+    $core.Iterable<$fixnum.Int64>? mikeIds,
   }) {
     final _result = create();
     if (mikeId != null) {
       _result.mikeId = mikeId;
+    }
+    if (mikeIds != null) {
+      _result.mikeIds.addAll(mikeIds);
     }
     return _result;
   }
@@ -3478,6 +3491,9 @@ class C_AccMikeClear extends $pb.GeneratedMessage {
   $core.bool hasMikeId() => $_has(0);
   @$pb.TagNumber(1)
   void clearMikeId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$fixnum.Int64> get mikeIds => $_getList(1);
 }
 
 class C_SetNoticeMessage extends $pb.GeneratedMessage {
