@@ -54,7 +54,7 @@ class _LevelPageState extends State<CharmLevelPage> {
               style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$SemiBold),
             ),
           ),
-          const Text('经验等级是你在Homie开启Homie人生之后的成长属性，随着你的等级上升，你的等级标志会有相应的颜色变化'),
+          const Text('魅力等级是你在Homie开启Homie人生之后的成长属性，随着你的等级上升，你的等级标志会有相应的颜色变化    '),
           Spacing.h10,
           Image.asset(IMG.format('my/level/charm_level'), fit: BoxFit.fitWidth, scale: 2),
           const Padding(
@@ -64,7 +64,7 @@ class _LevelPageState extends State<CharmLevelPage> {
               style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$SemiBold),
             ),
           ),
-          const Text('在直播间送礼等一切直播间内的消费，都可以提升用户等级。累计消费越多，对应的等级越高'),
+          const Text('在直播间收礼等一切直播间内的收礼，都可以提升用户等级。累计收礼越多，对应的等级越高'),
         ],
       ),
     );
