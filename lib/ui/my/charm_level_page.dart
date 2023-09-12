@@ -5,7 +5,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/wealthy_level_view.dart';
+import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -116,7 +116,7 @@ class _LevelPageState extends State<CharmLevelPage> {
 
       final $GrowthView = Row(
         children: [
-          WealthyLevelView(level: data['charm_level']),
+          CharmLevelView(level: data['charm_level']),
           Spacing.w4,
           Text('经验值：$growthVal'),
           Spacing.exp,
@@ -165,7 +165,7 @@ class _LevelPageState extends State<CharmLevelPage> {
         ),
         Positioned(
           top: 80,
-          child: WealthyLevelView(level: info?.level),
+          child: CharmLevelView(level: info?.level),
         ),
         Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),
       ],
