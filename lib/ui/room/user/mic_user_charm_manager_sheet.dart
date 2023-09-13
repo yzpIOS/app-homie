@@ -283,6 +283,17 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
       showToast("请选择下麦用户");
       return;
     }
-    await Api.Room.resetHotCount(mics: selectedIds);
+    SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
+    if(s_syncRoomInfo == null || roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+      return;
+    }
+    var userList = roomMicCtrl.dataRx.values.toList();
+    // 获取在麦上的用户id
+    var userRoleids = userList.where((e) => selectedIds.contains(e.nUid)).map((e) => Int64(e.micId)).toList();
+    if(userRoleids.isEmpty) {
+      return;
+    }
+
+    await Api.Room.resetHotCount(mics: userRoleids);
   }
 }
