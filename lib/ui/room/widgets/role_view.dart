@@ -13,12 +13,12 @@ class RoleView extends StatelessWidget {
     final role = this.role;
 
     return SizedBox(
-      width: 18,
-      height: 18,
+      width: 34,
+      height: 16,
       child: role == null
           ? null
           : Container(
-              decoration: const BoxDecoration(color: AppPalette.primary, shape: BoxShape.circle),
+              decoration: BoxDecoration(color: AppPalette.primary, borderRadius: BorderRadius.circular(8)),
               alignment: Alignment.center,
               child: XText(
                 role.label,

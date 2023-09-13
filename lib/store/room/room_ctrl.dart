@@ -375,10 +375,20 @@ class RoomCtrl extends SceneCtrl {
 
   bool isAdmin(UID uid) => managerRx.contains(uid);
 
+  bool isCharge(UID uid) {
+    try {
+      return (roomMicCtrl as RoomMicCtrl?)?.dataRx["1"]?.uid == uid;
+    } catch(e) {
+    }
+    return false;
+  }
+
   RoomRoleType? getRole(UID uid) {
     final owner = isOwner(uid);
     final admin = isAdmin(uid);
+    final charge = isCharge(uid);
 
+    if(charge) return RoomRoleType.charge;
     if (owner) return RoomRoleType.owner;
     if (admin) return RoomRoleType.manager;
     return null;

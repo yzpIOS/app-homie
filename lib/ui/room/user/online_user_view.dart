@@ -70,10 +70,10 @@ class _ItemView extends StatelessWidget {
     Widget child = Row(
       children: [
         Spacing.w10,
-        RoleView(role: role),
         Expanded(
           child: RoomUserItemView(
             uid: uid,
+            role: role,
             padding: const Pad(left: 10, right: 20),
           ),
         ),
