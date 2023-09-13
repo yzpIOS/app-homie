@@ -181,11 +181,18 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       // 获取房主的信息
       var roomOwnerInfo = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.type == 1);
       if(roomOwnerInfo != null) {
-        roomOwner = GiftSend2RoomEntity(uid: roomOwnerInfo.uid, no: "", userType: 1);
+        // 送礼过滤自己
+        if(!OAuthCtrl.isSelf(roomOwnerInfo.uid)) {
+          roomOwner = GiftSend2RoomEntity(uid: roomOwnerInfo.uid, no: "", userType: 1);
+        }
       }
 
       // 其它用户信息
       for(int index = 0; index < userList.length; index ++) {
+        // 过滤自己
+        if(OAuthCtrl.isSelf(micUsers[userList[index]]?.uid)) {
+          continue;
+        }
         // 其它用户信息
         if(roomOwnerInfo?.uid == micUsers[userList[index]]?.uid) {
           roomOwner = GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: "", userType: 1);

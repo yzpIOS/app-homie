@@ -216,21 +216,29 @@ class GiftPannel extends StatelessWidget {
 
     // 点亮图标
     Widget giftImage;
+    bool isLighten = false;
     if(accept_count >= lighten_need_count) {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: NetImage(data["cover"], fit: BoxFit.cover),
       );
+      isLighten = true;
     } else {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: ColorFiltered(
-          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.color),
+          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.modulate),
           child: NetImage(data["cover"], fit: BoxFit.cover),
         ),
       );
     }
-    double progressWidth = (AppSize.width - 10 * 2 - 12 * 2) / 3.0 - 14;
+
+    // 计算进度
+    double ratio =  (accept_count.toDouble() / (lighten_need_count.toDouble() + 0.001));
+    if(ratio >= 1.0) {
+      ratio = 1.0;
+    }
+    double progressWidth = ((AppSize.width - 10 * 2 - 12 * 2) / 3.0 - 14) * ratio;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -251,8 +259,8 @@ class GiftPannel extends StatelessWidget {
             Expanded(
               child: Text(
                 data["name"],
-                style: const TextStyle(
-                    color: Colors.white,
+                style: TextStyle(
+                    color: isLighten ? Colors.white : const Color(0xFF999999),
                     fontWeight: FontWeight.normal,
                     fontSize: 14
                 ),

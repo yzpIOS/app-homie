@@ -110,7 +110,7 @@ class _GiftWallViewState extends State<GiftWallView> {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: ColorFiltered(
-          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.color),
+          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.modulate),
           child: NetImage(data["cover"], fit: BoxFit.cover),
         ),
       );
