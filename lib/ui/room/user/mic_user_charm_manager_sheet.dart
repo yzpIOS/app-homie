@@ -307,7 +307,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
   void onItemClick(String action) async {
     if(selectedIds.isEmpty) {
-      showToast("请选择下麦用户");
+      showToast("请选择清零用户");
       return;
     }
     SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
