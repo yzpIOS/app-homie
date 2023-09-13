@@ -268,20 +268,26 @@ class _InfoView extends StatelessWidget {
         ],
       ),
     );
-    bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).length > 0;
 
     child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $NumView(),
-        // 礼物墙
-        if(hasGiftWall)
-          SizedBox(
-            height: 153,
-            child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
-          ),
-        if(hasGiftWall)
-          Container(color: const Color(0xFFF5F5F5), height: 10,),
+        Obx(() {
+          bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).isNotEmpty;
+          return Column(
+            children: [
+              // 礼物墙
+              if(hasGiftWall)
+                SizedBox(
+                  height: 153,
+                  child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
+                ),
+              if(hasGiftWall)
+                Container(color: const Color(0xFFF5F5F5), height: 10,),
+            ],
+          );
+        }),
         Expanded(child: child),
       ],
     );

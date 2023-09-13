@@ -24,7 +24,7 @@ class _GiftWallViewState extends State<GiftWallView> {
   Widget build(BuildContext context) {
 
     double gapWidth = 10.0;
-    double itemWidth = (AppSize.width - gapWidth * 5) / 4.0;
+    double itemWidth = (AppSize.width - gapWidth * 5 - 20) / 4.0;
     double itemHeight = (108.0 / 80.0) * gapWidth;
     return GestureDetector(
       onTap: () {
@@ -81,7 +81,7 @@ class _GiftWallViewState extends State<GiftWallView> {
                     return Container(width: gapWidth,);
                   },
                 ),
-              ),
+              ).horizonMargin(left: 10, right: 10),
             ),
 
             const SizedBox(height: 10)
