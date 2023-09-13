@@ -57,7 +57,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           alignment: Alignment.center,
           children: [
             Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? 65 : AppSize.safeTop + MediaQuery.of(context).padding.top + 232,
+              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + MediaQuery.of(context).padding.top + 26 : AppSize.safeTop + MediaQuery.of(context).padding.top + 232,
               child: const RoomChatView(),
             ),
             if (showMicPanel && (sideMicMode || isLandscape))

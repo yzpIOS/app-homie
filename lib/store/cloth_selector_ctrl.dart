@@ -137,7 +137,7 @@ mixin _UnityDressUpMixin {
   // }
 
   Future<void> clearDressUp() {
-    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH, data: {'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,});
+    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH);
   }
 
   Future<Iterable<int>> setDressUp(List<int> ids) {
@@ -150,11 +150,9 @@ mixin _UnityDressUpMixin {
     return _doDressUp([id]);
   }
 
-  // ///action: 1覆盖 2添加 3删除
   Future<Iterable<int>> _doDressUp(List<int> ids) async {
     final data = {
       'goodsIds': ids,
-      'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,//instruction 1是商城，2是我的
     };
 
     final resp = await _unity.sendMessage(App2UnityEnum.FTU_DRESSUP_CLOTH, data: data);
