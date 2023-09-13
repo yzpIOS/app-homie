@@ -235,105 +235,107 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   Widget createLevel() {
     var itemHeight = (AppSize.width - 28 * 2 - 10 * 2) / 3.0;
     var itemWidth = (itemHeight / 100.0) * 46;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(width: 28,),
-        // 礼物墙
-        GestureDetector(
-          onTap: () {
-            onItemClick(GIFT_WALL);
-          },
-          child: Stack(
-            children: [
-              Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
-              const Positioned(
-                top: 5,
-                left: 5,
-                child: Text(
-                  GIFT_WALL,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+    return Obx(() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(width: 28,),
+          // 礼物墙
+          GestureDetector(
+            onTap: () {
+              onItemClick(GIFT_WALL);
+            },
+            child: Stack(
+              children: [
+                Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
+                const Positioned(
+                  top: 5,
+                  left: 5,
+                  child: Text(
+                    GIFT_WALL,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              const Positioned(
-                top: 24,
-                left: 5,
-                child: Text(
-                  "0/100",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+                Positioned(
+                  top: 24,
+                  left: 5,
+                  child: Text(
+                    "${dataRx["lighten_gift_wall_count"]?.toString() ?? "0"}/${dataRx["gift_wall_count"]?.toString() ?? "0"}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
 
-        // 装饰墙
-        const SizedBox(width: 10,),
-        GestureDetector(
-          onTap: () {
-            onItemClick(DECORATE_WALL);
-          },
-          child: Stack(
-            children: [
-              Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
-              const Positioned(
-                top: 5,
-                left: 5,
-                child: Text(
-                  DECORATE_WALL,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+          // 装饰墙
+          const SizedBox(width: 10,),
+          GestureDetector(
+            onTap: () {
+              onItemClick(DECORATE_WALL);
+            },
+            child: Stack(
+              children: [
+                Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
+                const Positioned(
+                  top: 5,
+                  left: 5,
+                  child: Text(
+                    DECORATE_WALL,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-              const Positioned(
-                top: 24,
-                left: 5,
-                child: Text(
-                  "0/100",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+                const Positioned(
+                  top: 24,
+                  left: 5,
+                  child: Text(
+                    "0/0",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
 
-        // 魅力
-        const SizedBox(width: 10,),
-        GestureDetector(
-          onTap: () {
-            onItemClick(CHARM_LEVEL);
-          },
-          child: Stack(
-            children: [
-              Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
-              const Positioned(
-                top: 5,
-                left: 5,
-                child: Text(
-                  CHARM_LEVEL,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
+          // 魅力
+          const SizedBox(width: 10,),
+          GestureDetector(
+            onTap: () {
+              onItemClick(CHARM_LEVEL);
+            },
+            child: Stack(
+              children: [
+                Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
+                const Positioned(
+                  top: 5,
+                  left: 5,
+                  child: Text(
+                    CHARM_LEVEL,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(width: 28,),
-      ],
-    );
+          const SizedBox(width: 28,),
+        ],
+      );
+    });
   }
 
   Widget $ActionView() {
