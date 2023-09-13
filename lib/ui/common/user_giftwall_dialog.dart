@@ -101,28 +101,34 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
       return SizedBox();
     }
     return Scaffold(
-      backgroundColor: const Color(0xFF312753),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Container(
-          //   height: 40,
-          //   alignment: Alignment.center,
-          //   child: Text(
-          //     "礼物",
-          //     style: TextStyle(
-          //         color: Colors.white,
-          //         fontSize: 14,
-          //         fontWeight: FontWeight.bold
-          //     ),
-          //   ),
-          // ),
-          Expanded(
-            child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
-          )
-        ],
+      backgroundColor: Colors.transparent,
+      body: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+          color: const Color(0xFF312753),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Container(
+            //   height: 40,
+            //   alignment: Alignment.center,
+            //   child: Text(
+            //     "礼物",
+            //     style: TextStyle(
+            //         color: Colors.white,
+            //         fontSize: 14,
+            //         fontWeight: FontWeight.bold
+            //     ),
+            //   ),
+            // ),
+            Expanded(
+              child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+            )
+          ],
+        ),
       ),
-      bottomNavigationBar: const SizedBox(height: 30,),
+      bottomNavigationBar: Container(height: 20, color: Color(0xFF312753),),
     );
   }
 
