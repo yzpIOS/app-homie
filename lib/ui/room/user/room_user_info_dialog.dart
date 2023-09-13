@@ -381,8 +381,12 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
           // 下麦
           if(mineMic != null)
             SizedBox(width: 80, height: 34, child: $Btn2('下麦'),),
-          const SizedBox(width: 10,),
-          SizedBox(width: 80, height: 34, child: $Btn2('送礼物'),),
+
+          // 不可以给自己送礼，怕涉及赌博
+          if(!OAuthCtrl.isSelf(widget.uid))
+            const SizedBox(width: 10,),
+          if(!OAuthCtrl.isSelf(widget.uid))
+            SizedBox(width: 80, height: 34, child: $Btn2('送礼物'),),
           // 自己给自己送物
           const Expanded(child: SizedBox()),
         ],
