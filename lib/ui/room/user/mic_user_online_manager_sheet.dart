@@ -259,7 +259,7 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
     );
   }
 
-  void onItemClick(String action) {
+  void onItemClick(String action) async {
     if(selectedIds.isEmpty) {
       showToast("请选择下麦用户");
       return;
