@@ -13,7 +13,7 @@ import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/charm_level_view.dart';
-import 'package:app/ui/common/gift_list_dialog.dart';
+import 'package:app/ui/common/user_giftwall_dialog.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
@@ -473,7 +473,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       case GIFT_WALL:
         // todo 等待合并分支
         Get.showBottomSheet(
-            GiftListDialog(uid: widget.uid,),
+            UserGiftWallDialog(uid: widget.uid,),
             shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
             isScrollControlled: false
         );

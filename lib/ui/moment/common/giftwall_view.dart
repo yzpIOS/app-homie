@@ -2,7 +2,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/gift_list_dialog.dart';
+import 'package:app/ui/common/user_giftwall_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +29,7 @@ class _GiftWallViewState extends State<GiftWallView> {
     return GestureDetector(
       onTap: () {
         Get.showBottomSheet(
-          GiftListDialog(uid: widget.uid, nuid: widget.nuid,),
+          UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,),
           shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
           isScrollControlled: false
         );

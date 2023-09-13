@@ -10,19 +10,19 @@ import 'package:flutter/rendering.dart';
 ///
 /// 礼物墙
 ///
-class GiftListDialog extends StatefulWidget {
+class UserGiftWallDialog extends StatefulWidget {
 
   UID uid;
   NUID? nuid;
 
-  GiftListDialog({required this.uid, this.nuid});
+  UserGiftWallDialog({required this.uid, this.nuid});
 
   @override
-  State<StatefulWidget> createState() => _GiftListDialogState();
+  State<StatefulWidget> createState() => _UserGiftWallDialogState();
 
 }
 
-class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProviderStateMixin {
+class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTickerProviderStateMixin {
 
   Map<String, Widget> data = {
     "礼物": GiftPannel(type: 0, lighten: [], notLighten: [],),
@@ -117,7 +117,6 @@ class _GiftListDialogState extends State<GiftListDialog> with SingleTickerProvid
           //     ),
           //   ),
           // ),
-          SizedBox(height: 14,),
           Expanded(
             child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
           )
@@ -152,14 +151,24 @@ class GiftPannel extends StatelessWidget {
       child: CustomScrollView(
         key: Key(this.hashCode.toString()),
         slivers: [
-          _createTitle("己点亮", lighten?.length ?? 0),
-          const SizedBox(height: 10,).toSliver(),
+          if(lighten != null && (lighten?.length ?? 0) > 0)
+            const SizedBox(height: 10,).toSliver(),
+          if(lighten != null && (lighten?.length ?? 0) > 0)
+            _createTitle("己点亮", lighten?.length ?? 0),
+          if(lighten != null && (lighten?.length ?? 0) > 0)
+            const SizedBox(height: 10,).toSliver(),
           if(lighten != null && (lighten?.length ?? 0) > 0)
             _createGridView(lighten!),
 
-          const SizedBox(height: 20,).toSliver(),
-          _createTitle("未点亮", notLighten?.length ?? 0),
-          const SizedBox(height: 10,).toSliver(),
+          if(notLighten != null && (notLighten?.length ?? 0) > 0)
+            if(lighten != null && (lighten?.length ?? 0) > 0)
+              const SizedBox(height: 20,).toSliver(),
+            if(lighten == null || lighten?.isEmpty == true)
+              const SizedBox(height: 10,).toSliver(),
+          if(notLighten != null && (notLighten?.length ?? 0) > 0)
+            _createTitle("未点亮", notLighten?.length ?? 0),
+          if(notLighten != null && (notLighten?.length ?? 0) > 0)
+            const SizedBox(height: 10,).toSliver(),
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
             _createGridView(notLighten!),
         ],
@@ -202,6 +211,27 @@ class GiftPannel extends StatelessWidget {
   /// 礼物下面的Item
   ///
   Widget _createGiftItem(Map data) {
+    int accept_count = data["accept_count"];
+    int lighten_need_count = data["lighten_need_count"];
+
+    // 点亮图标
+    Widget giftImage;
+    if(accept_count >= lighten_need_count) {
+      giftImage = AspectRatio(
+        aspectRatio: 1.0 / 1.0,
+        child: NetImage(data["cover"], fit: BoxFit.cover),
+      );
+    } else {
+      giftImage = AspectRatio(
+        aspectRatio: 1.0 / 1.0,
+        child: ColorFiltered(
+          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.color),
+          child: NetImage(data["cover"], fit: BoxFit.cover),
+        ),
+      );
+    }
+    double progressWidth = (AppSize.width - 10 * 2 - 12 * 2) / 3.0 - 14;
+
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -215,7 +245,7 @@ class GiftPannel extends StatelessWidget {
         Column(
           children: [
             // 礼物图片
-            Container(color: Colors.red, width: 76, height: 76,),
+            Container(child: giftImage, width: 76, height: 76,),
             const SizedBox(height: 5,),
             // 礼物名称
             Expanded(
@@ -255,54 +285,54 @@ class GiftPannel extends StatelessWidget {
                 const SizedBox(width: 10,)
               ],
             ),
-            LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-              double width = (double.tryParse(data["accept_count"].toString()) ?? 0.0) / ((double.tryParse(data["lighten_need_count"]) ?? 1.0) + 0.01);
-              return SizedBox(
-                height: 6,
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withAlpha(30),
-                        borderRadius: BorderRadius.circular(1000),
-                      ),
+            SizedBox(
+              height: 6,
+              child: Stack(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(30),
+                      borderRadius: BorderRadius.circular(1000),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10, right: 10),
-                      width: constraints.maxWidth * width,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF9F5284), Color(0xFFF54390)],
-                        ),
-                        borderRadius: BorderRadius.circular(1000),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 10, right: 10),
+                    width: progressWidth,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF9F5284), Color(0xFFF54390)],
                       ),
+                      borderRadius: BorderRadius.circular(1000),
                     ),
-                  ],
-                ),
-              );
-            }),
+                  ),
+                ],
+              ),
+            ),
             const SizedBox(height: 10,),
           ],
         ),
 
         // 活动标签
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            width: 26,
-            height: 14,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(16),
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: const Text(
-              "活动",
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.normal,
-                color: Colors.white
+        Visibility(
+          visible: false,
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 26,
+              height: 14,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(16),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: const Text(
+                "活动",
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white
+                ),
               ),
             ),
           ),
@@ -346,22 +376,25 @@ class GiftPannel extends StatelessWidget {
         ),
 
         // 活动标签
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            width: 26,
-            height: 14,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white.withAlpha(16),
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: const Text(
-              "活动",
-              style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.white
+        Visibility(
+          visible: false,
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              width: 26,
+              height: 14,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white.withAlpha(16),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: const Text(
+                "活动",
+                style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white
+                ),
               ),
             ),
           ),
