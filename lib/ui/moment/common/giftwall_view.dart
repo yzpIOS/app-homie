@@ -49,7 +49,7 @@ class _GiftWallViewState extends State<GiftWallView> {
                 children: [
                   Expanded(
                       child: Text(
-                        "礼物",
+                        "礼物墙",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black),
                       )
                   ),

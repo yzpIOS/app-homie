@@ -46,7 +46,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       // 房主或管理员，且不在pk中，才显示发起挑战入口
       if ((isOwner || isManager) && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom()) '发起挑战',
       if (isOwner) '管理员',
-      if(isOwner) '下麦',
+      if(isOwner || isManager) '下麦',
       if (isManager) ...[
         '黑名单',
         '清零',
