@@ -172,6 +172,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
         Common.RoomUserInfo? roomOwner = null;
         // 麦上的用户信息列表
         List<Common.RoomUserInfo> userInMicList = [];
+        Map<Int64, MicInfo?> micInfos = {};
         // 获取麦上的用户列表
         var userList = roomMicCtrl.dataRx.keys.toList();
         for(int index = 0; index < userList.length; index ++) {
@@ -180,9 +181,11 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
           if(result != null) {
             if(userList[index] == "1") {
               roomOwner = result;
+              micInfos[result.roleId] = roomMicCtrl.dataRx[userList[index]];
             } else if(userList[index] == "8") {
             } else {
               userInMicList.add(result);
+              micInfos[result.roleId] = roomMicCtrl.dataRx[userList[index]];
             }
           }
         }
@@ -196,19 +199,19 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
             const SizedBox(height: 16,).toSliver(),
             // 房主的显示界面
             if(roomOwner != null)
-              createItem(roomOwner!, totalCount).toSliver(),
+              createItem(roomOwner!, micInfos[roomOwner.roleId], totalCount).toSliver(),
             if(roomOwner != null)
               const SizedBox(height: 30,).toSliver(),
             // 其它在mike上的用户的信息
             SliverGrid(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return createItem(userInMicList[index], totalCount);
+                  return createItem(userInMicList[index], micInfos[userInMicList[index].roleId], totalCount);
                 }, childCount: userInMicList.length),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15,
-                    childAspectRatio: 1.0
+                    childAspectRatio: 0.80
                 )
             )
           ],
@@ -217,10 +220,10 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     );
   }
 
-  Widget createItem(Common.RoomUserInfo micInfo, int totalCount) {
+  Widget createItem(Common.RoomUserInfo roomUserInfo, MicInfo? micInfo, int totalCount) {
     // 选中时的圆圈
     Decoration? decoration;
-    if(selectedIds.contains(micInfo.roleId)) {
+    if(selectedIds.contains(roomUserInfo.roleId)) {
       decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(1000),
           border: Border.all(color: Color(0xFFC567FF), width: 2)
@@ -229,11 +232,11 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
 
     return GestureDetector(
       onTap: () {
-        if(selectedIds.contains(micInfo.roleId)) {
-          selectedIds.remove(micInfo.roleId);
+        if(selectedIds.contains(roomUserInfo.roleId)) {
+          selectedIds.remove(roomUserInfo.roleId);
           selectedAll.value = false;
         } else {
-          selectedIds.add(micInfo.roleId);
+          selectedIds.add(roomUserInfo.roleId);
           // 全选
           if(selectedIds.length >= totalCount) {
             selectedAll.value = true;
@@ -256,12 +259,12 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
               children: [
                 Container(
                   decoration: decoration,
-                  child: AsyncAvatar(uid: micInfo.uid, size: 80, onTap: Some(() {
-                    if(selectedIds.contains(micInfo.roleId)) {
-                      selectedIds.remove(micInfo.roleId);
+                  child: AsyncAvatar(uid: roomUserInfo.uid, size: 80, onTap: Some(() {
+                    if(selectedIds.contains(roomUserInfo.roleId)) {
+                      selectedIds.remove(roomUserInfo.roleId);
                       selectedAll.value = false;
                     } else {
-                      selectedIds.add(micInfo.roleId);
+                      selectedIds.add(roomUserInfo.roleId);
                       // 全选
                       if(selectedIds.length >= totalCount) {
                         selectedAll.value = true;
@@ -274,7 +277,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
                 ),
 
                 // 选中的状态
-                if(selectedIds.contains(micInfo.roleId))
+                if(selectedIds.contains(roomUserInfo.roleId))
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(IMG.format("check"), width: 20, height: 20,),
@@ -286,12 +289,26 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
           // 名称
           const SizedBox(height: 5,),
           Text(
-            (micInfo.username ?? ""),
+            (roomUserInfo.username ?? ""),
             style: const TextStyle(
                 color: Colors.white,
                 fontSize: 14
             ),
           ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgView(SVG.$('room/热度'), width: 12, height: 12),
+              Text(
+                micInfo?.hotCount != null ? micInfo!.hotCount.toString(): "0",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              )
+            ],
+          )
         ],
       ),
     );
