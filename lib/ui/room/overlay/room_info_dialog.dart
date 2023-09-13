@@ -56,7 +56,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
             ),
             Spacing.h12,
             SelectableText(
-              'ID:${data['room_id']}',
+              'ID:${data['room_no'] ?? data['room_id']}',
               style: const TextStyle(fontSize: 12, color: AppPalette.cc),
             ),
           ],
