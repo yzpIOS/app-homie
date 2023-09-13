@@ -10,7 +10,7 @@ class GiftWallView extends StatefulWidget {
   UID uid;
   NUID? nuid;
 
-  final List<Map> datas;
+  final List<dynamic> datas;
 
   GiftWallView({required this.datas, required this.uid, this.nuid});
 

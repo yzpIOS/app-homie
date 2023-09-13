@@ -224,10 +224,17 @@ class GiftPannel extends StatelessWidget {
       );
       isLighten = true;
     } else {
+      const ColorFilter sepia = ColorFilter.matrix(<double>[
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0,      0,      0,      1, 0,
+      ]);
+
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: ColorFiltered(
-          colorFilter: const ColorFilter.mode(Colors.grey, BlendMode.modulate),
+          colorFilter: sepia,
           child: NetImage(data["cover"], fit: BoxFit.cover),
         ),
       );

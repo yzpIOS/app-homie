@@ -268,7 +268,7 @@ class _InfoView extends StatelessWidget {
         ],
       ),
     );
-    bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List).length > 0;
+    bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).length > 0;
 
     child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
