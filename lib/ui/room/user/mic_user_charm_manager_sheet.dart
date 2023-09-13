@@ -46,6 +46,8 @@ class MicUserCharmManagerSheet extends StatefulWidget {
 class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
   S_OnlineList? s_syncRoomInfo;
 
+  RxBool selectedAll = RxBool(false);
+
   List<Int64> selectedIds = <Int64>[];
 
   @override
@@ -115,23 +117,30 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
           // 全选按钮
           GestureDetector(
             onTap: () {
-              selectedIds.clear();
-              SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
-              if(roomMicCtrl is! RoomMicCtrl) {
-                return;
+              if(selectedAll.value) {
+                selectedIds.clear();
+                selectedAll.value = false;
+              } else {
+                SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
+                if(roomMicCtrl is! RoomMicCtrl) {
+                  return;
+                }
+                var userList = roomMicCtrl.dataRx.values.map((e) => e.nUid);
+                selectedIds.addAll(userList);
+                selectedAll.value = true;
               }
-              var userList = roomMicCtrl.dataRx.values.map((e) => e.nUid);
-              selectedIds.addAll(userList);
               setState(() { });
             },
             behavior: HitTestBehavior.opaque,
-            child: const Text(
-              "全选",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-              ),
-            ),
+            child: Obx(() {
+              return Text(
+                selectedAll.value ? "取消" : "全选",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+              );
+            }),
           ),
           const SizedBox(width: 5,),
 
@@ -177,19 +186,23 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
             }
           }
         }
+        int totalCount = userInMicList.length;
+        if(roomOwner != null) {
+          totalCount += 1;
+        }
 
         return CustomScrollView(
           slivers: [
             const SizedBox(height: 16,).toSliver(),
             // 房主的显示界面
             if(roomOwner != null)
-              createItem(roomOwner!).toSliver(),
+              createItem(roomOwner!, totalCount).toSliver(),
             if(roomOwner != null)
               const SizedBox(height: 30,).toSliver(),
             // 其它在mike上的用户的信息
             SliverGrid(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  return createItem(userInMicList[index]);
+                  return createItem(userInMicList[index], totalCount);
                 }, childCount: userInMicList.length),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
@@ -204,7 +217,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     );
   }
 
-  Widget createItem(Common.RoomUserInfo micInfo) {
+  Widget createItem(Common.RoomUserInfo micInfo, int totalCount) {
     // 选中时的圆圈
     Decoration? decoration;
     if(selectedIds.contains(micInfo.roleId)) {
@@ -218,8 +231,15 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
       onTap: () {
         if(selectedIds.contains(micInfo.roleId)) {
           selectedIds.remove(micInfo.roleId);
+          selectedAll.value = false;
         } else {
           selectedIds.add(micInfo.roleId);
+          // 全选
+          if(selectedIds.length >= totalCount) {
+            selectedAll.value = true;
+          } else {
+            selectedAll.value = false;
+          }
         }
         setState(() { });
       },
@@ -239,8 +259,15 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
                   child: AsyncAvatar(uid: micInfo.uid, size: 80, onTap: Some(() {
                     if(selectedIds.contains(micInfo.roleId)) {
                       selectedIds.remove(micInfo.roleId);
+                      selectedAll.value = false;
                     } else {
                       selectedIds.add(micInfo.roleId);
+                      // 全选
+                      if(selectedIds.length >= totalCount) {
+                        selectedAll.value = true;
+                      } else {
+                        selectedAll.value = false;
+                      }
                     }
                     setState(() { });
                   })),
