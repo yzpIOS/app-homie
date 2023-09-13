@@ -86,6 +86,10 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   }
 
   void setWardrobeMode(bool isWardrobe) {
+    if (isWardrobeMode == isWardrobe) {
+      return;
+    }
+
     setShopMode(false);
     _mode2Rx(isWardrobe);
     sendFlutterSwitchCloth();
@@ -304,7 +308,8 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
   void doReset() {
     _dataRx.clear();
 
-    doReset2DressUp();
+    // doReset2DressUp();
+    clearDressUp();
   }
 
   @override
