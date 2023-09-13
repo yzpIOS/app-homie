@@ -211,7 +211,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
                     crossAxisCount: 4,
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 15,
-                    childAspectRatio: 0.80
+                    childAspectRatio: 0.8
                 )
             )
           ],
