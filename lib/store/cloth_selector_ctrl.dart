@@ -9,9 +9,9 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 
 class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin {
-  final selectorShop = _SelectorShop();
-  final selectorCloth = _SelectorCloth();
-  final selectorWardrobe = _SelectorWardrobe();
+  final selectorShop = _SelectorShop();//商城
+  final selectorCloth = _SelectorCloth();//我的-其他
+  final selectorWardrobe = _SelectorWardrobe();//我的-衣柜
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
@@ -106,6 +106,15 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
         'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
       },
     );
+  }
+
+  void addIds(Iterable<int>? items) {
+    if (items == null) {
+      return;
+    }
+    isShopMode
+        ? selectorShop._dataRx.assignAll(items)
+        : (isWardrobeMode ? selectorWardrobe._dataRx.assignAll(items) : selectorCloth._dataRx.assignAll(items));
   }
 }
 
@@ -311,8 +320,8 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
   void doReset() {
     _dataRx.clear();
 
-    // doReset2DressUp();
-    clearDressUp();
+    doReset2DressUp();
+    // clearDressUp();
   }
 
   @override

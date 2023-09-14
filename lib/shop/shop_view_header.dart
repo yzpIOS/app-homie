@@ -100,11 +100,14 @@ class _MyModelViewState extends State<MyModelView> {
                 final clothSeCtrl = Get.find<ClothSelectorCtrl>();
                 int instruction = clothSeCtrl.isShopMode ? 1 : (clothSeCtrl.isWardrobeMode ? 2 : 3);
 
+                final goodsIds = await Get.find<ClothSelectorCtrl>().initIds();
+                Get.find<ClothSelectorCtrl>().addIds(goodsIds);//获取自身穿着加进数组
+
                 await unity.sendMessage(
                   App2UnityEnum.FTU_GENDER_CLOTHING_SCENE,
                   data: {
                     'gender': myInfo.dataRx().gender!.code,
-                    'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
+                    'goodsIds': goodsIds,
                     'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
                   },
                 );
