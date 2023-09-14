@@ -39,6 +39,8 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
   // 没点亮礼物
   List? notLighten;
 
+  Map? userInfo;
+
   late final controller = TabController(vsync: this, length: data.length);
 
   @override
@@ -66,6 +68,11 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
       data = {
         "礼物": GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
       };
+
+      setState(() { });
+
+      userInfo = await Api.UserInfo.detail(widget.uid);
+
       setState(() { });
     });
   }
@@ -172,7 +179,7 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
                   ),
                   padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                   child: Text(
-                    "己收集星星 ${100}",
+                    "己收集星星 ${userInfo?["collect_start_count"] ?? "0"}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -227,7 +234,7 @@ class GiftPannel extends StatelessWidget {
           if(lighten != null && (lighten?.length ?? 0) > 0)
             const SizedBox(height: 10,).toSliver(),
           if(lighten != null && (lighten?.length ?? 0) > 0)
-            _createGridView(lighten!),
+            _createGridView(lighten!, true),
 
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
             if(lighten != null && (lighten?.length ?? 0) > 0)
@@ -240,7 +247,7 @@ class GiftPannel extends StatelessWidget {
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
             const SizedBox(height: 10,).toSliver(),
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
-            _createGridView(notLighten!),
+            _createGridView(notLighten!, false),
         ],
       ),
     );
@@ -257,12 +264,12 @@ class GiftPannel extends StatelessWidget {
     ).toSliver();
   }
 
-  Widget _createGridView(List data) {
+  Widget _createGridView(List data, bool lighten) {
     double ratio = type == 0 ? (110.0 / 137.0) : (110.0 / 116.0);
     return SliverGrid(
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           if(type == 0) {
-            return _createGiftItem(data[index]);
+            return _createGiftItem(data[index], lighten);
           }
           return _createDecorationItem(data[index]);
         },
@@ -280,14 +287,14 @@ class GiftPannel extends StatelessWidget {
   ///
   /// 礼物下面的Item
   ///
-  Widget _createGiftItem(Map data) {
-    int accept_count = data["accept_count"];
+  Widget _createGiftItem(Map data, bool lighten) {
+    int accept_count = data["count"];
     int lighten_need_count = data["lighten_need_count"];
 
     // 点亮图标
     Widget giftImage;
     bool isLighten = false;
-    if(accept_count >= lighten_need_count) {
+    if(lighten) {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: NetImage(data["cover"], fit: BoxFit.cover),
@@ -351,7 +358,7 @@ class GiftPannel extends StatelessWidget {
                 const SizedBox(width: 10,),
                 Expanded(
                   child: Text(
-                    "${data["accept_count"]}/${data["lighten_need_count"]}",
+                    "${data["count"]}/${data["lighten_need_count"]}",
                     style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
@@ -359,14 +366,14 @@ class GiftPannel extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Text(
-                //   "+1星",
-                //   style: TextStyle(
-                //       color: Color(0xFFF54390),
-                //       fontWeight: FontWeight.normal,
-                //       fontSize: 12
-                //   ),
-                // ),
+                Text(
+                  "+${data["start_count"]}星",
+                  style: TextStyle(
+                      color: Color(0xFFF54390),
+                      fontWeight: FontWeight.normal,
+                      fontSize: 12
+                  ),
+                ),
                 const SizedBox(width: 10,)
               ],
             ),

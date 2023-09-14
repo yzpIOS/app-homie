@@ -88,7 +88,7 @@ class _GiftWallViewState extends State<GiftWallView> {
   }
 
   Widget _createItem(Map data) {
-    int accept_count = data["accept_count"];
+    int accept_count = data["count"];
     int lighten_need_count = data["lighten_need_count"];
 
     String lightText;
