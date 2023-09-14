@@ -28,11 +28,7 @@ class _GiftWallViewState extends State<GiftWallView> {
     double itemHeight = (108.0 / 80.0) * gapWidth;
     return GestureDetector(
       onTap: () {
-        Get.showBottomSheet(
-          UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,),
-          shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
-          isScrollControlled: false
-        );
+        Get.to(() => UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,));
       },
       behavior: HitTestBehavior.opaque,
       child: Container(

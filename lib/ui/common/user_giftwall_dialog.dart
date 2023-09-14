@@ -1,9 +1,15 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/common/nick_view.dart';
+import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/app_bar2.dart';
+import 'package:app/widgets/image/image_gallery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -64,72 +70,125 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
     });
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: const Color(0xFF312753),
-  //     appBar: xAppBar(
-  //       bgColor: const Color(0xFF312753),
-  //       title: xAppBar$TabBar(
-  //         data.keys,
-  //         controller: controller,
-  //         alignment: Alignment.center,
-  //         labelColor: const Tuple2(AppPalette.primary, Color(0xFF999999))
-  //       ),
-  //       automaticallyImplyLeading: false,
-  //     ),
-  //     body: ConfigList(
-  //       config: const ListConfig(
-  //         divider: Spacing.h10,
-  //         padding: Pad(bottom: 64),
-  //       ),
-  //       child: TabBarView(
-  //         controller: controller,
-  //         children: data.values
-  //             .map((it) => (_) => it)
-  //             .map((it) => DelayView(keepAlive: true, builder: it))
-  //             .toList(growable: false),
-  //       ),
-  //     ),
-  //     bottomNavigationBar: SizedBox(height: 30,),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    if((lighten == null || lighten?.isEmpty == true) && (notLighten == null || notLighten?.isEmpty == true)) {
-      return SizedBox();
-    }
+
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-          color: const Color(0xFF312753),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Container(
-            //   height: 40,
-            //   alignment: Alignment.center,
-            //   child: Text(
-            //     "礼物",
-            //     style: TextStyle(
-            //         color: Colors.white,
-            //         fontSize: 14,
-            //         fontWeight: FontWeight.bold
-            //     ),
-            //   ),
-            // ),
-            Expanded(
-              child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
-            )
-          ],
+      body: Stack(
+        children: [
+          XNestedScrollView(
+            pinnedHeaderSliverHeightBuilder: () => AppSize.appBar + AppSize.safeTop,
+            headerSliverBuilder: (_, __) => [
+              SizedBox(
+                height: 200,
+                child: Stack(
+                  children: [
+                    _creaetBgView(),
+                    $UserView().margin(top: 60, left: 10),
+                  ],
+                ),
+              ).toSliver()
+            ],
+            body: Stack(
+              children: [
+                Container(
+                  height: 8,
+                  color: const Color(0xFFD898FF),
+                ),
+
+                Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    color: Color(0xFF312753),
+                  ),
+                  child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
+                )
+              ],
+            ),
+          ),
+          AppBar2(),
+        ],
+
+      ),
+    );
+  }
+
+  Widget _creaetBgView() {
+    return Container(
+      height: AppSize.safeTop + 202,
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xFFD89BFE), Color(0xFFE6BFFF), Color(0xFFD898FF)],
         ),
       ),
-      bottomNavigationBar: Container(height: 20, color: Color(0xFF312753),),
     );
+  }
+
+  Widget $UserView() {
+    Widget builder(UserInfoDto? data) {
+      final avatar = data?.avatar;
+
+      final onTap = avatar == null
+          ? null
+          : () {
+        ImageGallery.show(
+          data: ImageGalleryItem(
+            image: const ImageToWebp().toProvider(Left(avatar)),
+            thumb: const ImageToThumb().toProvider(Left(avatar)),
+          ),
+        );
+      };
+
+      return Row(
+        children: [
+          OpacityButton(
+            onTap: onTap,
+            child: AvatarView(
+              avatar,
+              blur: data?.avatarEx,
+              size: 70,
+              side: const BorderSide(color: Colors.white, width: 1),
+            ),
+          ),
+          Spacing.w10,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NickView(nickName: data?.showName()),
+                SizedBox(height: 5,),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withAlpha(25),
+                    borderRadius: BorderRadius.circular(100)
+                  ),
+                  padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
+                  child: Text(
+                    "己收集星星 ${100}",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
+    Widget child = UserInfoCtrl.use(widget.uid, builder: builder);
+
+    child = DefaultTextStyle.merge(
+      style: const TextStyle(fontSize: 12, color: Colors.white),
+      child: child,
+    );
+
+    return child;
   }
 
   @override
@@ -155,7 +214,6 @@ class GiftPannel extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(left: 10, right: 10),
       child: CustomScrollView(
-        key: Key(this.hashCode.toString()),
         slivers: [
           if(lighten != null && (lighten?.length ?? 0) > 0)
             const SizedBox(height: 10,).toSliver(),
@@ -171,6 +229,7 @@ class GiftPannel extends StatelessWidget {
               const SizedBox(height: 20,).toSliver(),
             if(lighten == null || lighten?.isEmpty == true)
               const SizedBox(height: 10,).toSliver(),
+
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
             _createTitle("未点亮", notLighten?.length ?? 0),
           if(notLighten != null && (notLighten?.length ?? 0) > 0)
@@ -196,20 +255,20 @@ class GiftPannel extends StatelessWidget {
   Widget _createGridView(List data) {
     double ratio = type == 0 ? (110.0 / 137.0) : (110.0 / 116.0);
     return SliverGrid(
-        delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-            if(type == 0) {
-              return _createGiftItem(data[index]);
-            }
-            return _createDecorationItem(data[index]);
-          },
-          childCount: data.length
-        ),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 13,
-          crossAxisSpacing: 10,
-          childAspectRatio: ratio,
-        )
+      delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+          if(type == 0) {
+            return _createGiftItem(data[index]);
+          }
+          return _createDecorationItem(data[index]);
+        },
+        childCount: data.length
+      ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 13,
+        crossAxisSpacing: 10,
+        childAspectRatio: ratio,
+      ),
     );
   }
 

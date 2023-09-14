@@ -477,12 +477,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         }
         break;
       case GIFT_WALL:
-        // todo 等待合并分支
-        Get.showBottomSheet(
-            UserGiftWallDialog(uid: widget.uid,),
-            shape: const XRectangleBorder(borderRadius: AppBorderRadius.t10,),
-            isScrollControlled: false
-        );
+        Get.to(() => UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,));
         break;
       case CHARM_LEVEL:
         showToast("敬请期待");

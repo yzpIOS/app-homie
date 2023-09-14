@@ -116,6 +116,20 @@ extension XWidget on Widget {
       child: this,
     );
   }
+
+  Widget verticalMargin({double top = 0, double bottom = 0}) {
+    return Container(
+      margin: EdgeInsets.only(top: top, bottom: bottom),
+      child: this,
+    );
+  }
+
+  Widget margin({double left = 0, double right = 0, double top = 0, double bottom = 0}) {
+    return Container(
+      margin: EdgeInsets.only(left:left, right: right, top: top, bottom: bottom),
+      child: this,
+    );
+  }
 }
 
 extension XDimension on num {
