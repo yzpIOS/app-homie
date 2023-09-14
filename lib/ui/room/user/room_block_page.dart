@@ -1,4 +1,5 @@
 import 'package:app/net/api.dart';
+import 'package:app/tools/help.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -45,20 +46,39 @@ class _DataView extends SimplePageView<Map> {
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final uid = item['uid'];
 
-    Widget child = RoomUserItemView(uid: uid);
-
-    child = xSlidable(
-      key: ValueKey(item),
-      onDismissed: () => controller.removeItem(item),
-      actions: [
-        SlidAction(
-          label: '移除',
-          bgColor: Colors.red,
-          onWillDismiss: () => Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: false),
+    Widget child = Row(
+      children: [
+        Expanded(
+          child: RoomUserItemView(uid: uid,),
         ),
+        XTextBtn(
+          label: '解封',
+          width: 60,
+          height: 24,
+          textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+          onTap: () async {
+            await Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: false);
+            controller.removeItem(item);
+          },
+        ),
+        Spacing.w20,
       ],
-      child: child,
     );
+
+    // Widget child = RoomUserItemView(uid: uid);
+    //
+    // child = xSlidable(
+    //   key: ValueKey(item),
+    //   onDismissed: () => controller.removeItem(item),
+    //   actions: [
+    //     SlidAction(
+    //       label: '移除',
+    //       bgColor: Colors.red,
+    //       onWillDismiss: () => Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: false),
+    //     ),
+    //   ],
+    //   child: child,
+    // );
 
     return child;
   }

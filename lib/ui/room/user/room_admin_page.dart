@@ -26,7 +26,7 @@ class _RoomAdminPageState extends State<RoomAdminPage> {
   @override
   Widget build(BuildContext context) {
     return OrientationSheet.scaffold(
-      title: '管理员',
+      title: '管理员列表',
       body: Obx(
         () => SimpleListView<String>(
           controller.dataRx.toList(growable: false),
@@ -40,20 +40,39 @@ class _RoomAdminPageState extends State<RoomAdminPage> {
   Widget itemBuilder(BuildContext context, String item, int index) {
     final uid = item;
 
-    Widget child = RoomUserItemView(uid: uid);
-
-    child = xSlidable(
-      key: ValueKey(uid),
-      onDismissed: () => controller.dataRx.remove(uid),
-      actions: [
-        SlidAction(
-          label: '移除',
-          bgColor: Colors.red,
-          onWillDismiss: () => Api.Room.setManager(roomId: controller.roomId, uid: uid, isAdd: false),
+    Widget child = Row(
+      children: [
+        Expanded(
+          child: RoomUserItemView(uid: uid,),
         ),
+        XTextBtn(
+          label: '移除',
+          width: 60,
+          height: 24,
+          textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+          onTap: () async {
+            await Api.Room.setManager(roomId: controller.roomId, uid: uid, isAdd: false);
+            controller.dataRx.remove(uid);
+          },
+        ),
+        Spacing.w20,
       ],
-      child: child,
     );
+
+    // Widget child = RoomUserItemView(uid: uid);
+    //
+    // child = xSlidable(
+    //   key: ValueKey(uid),
+    //   onDismissed: () => controller.dataRx.remove(uid),
+    //   actions: [
+    //     SlidAction(
+    //       label: '移除',
+    //       bgColor: Colors.red,
+    //       onWillDismiss: () => Api.Room.setManager(roomId: controller.roomId, uid: uid, isAdd: false),
+    //     ),
+    //   ],
+    //   child: child,
+    // );
 
     return child;
   }

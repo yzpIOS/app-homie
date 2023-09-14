@@ -249,7 +249,7 @@ class ApiRoom extends ApiBase {
 
   Future setBlock({required UID uid, required int roomId, required bool isAdd}) {
     C_SetBlack c_setBlack = C_SetBlack.create();
-    c_setBlack.status = isAdd ? 1 : 2;
+    c_setBlack.status = isAdd ? 1 : 2;//1.拉黑  2拉白
     c_setBlack.uid = uid;
     SocketCtrl.ins.sendSever(CMD.C_SetBlack, message: c_setBlack);
     return Future.value(1);
