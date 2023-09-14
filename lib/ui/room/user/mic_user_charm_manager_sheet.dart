@@ -340,6 +340,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     await Api.Room.resetHotCount(mics: userRoleids);
     // 清理选择的数据
     selectedIds.clear();
+    selectedAll.value = false;
     setState(() { });
   }
 }
