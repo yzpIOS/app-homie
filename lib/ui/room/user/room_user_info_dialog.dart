@@ -165,22 +165,26 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
 
     final _micCtrl = micCtrl;
 
-    return DefaultTextStyle(
-      style: const TextStyle(fontSize: 10, color: AppPalette.cc),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          WealthyLevelView(level: info?.level, uid: info?.uid, height: itemH),
-          CharmLevelView(level: info?.charmLevel, uid: info?.uid, height: itemH),
-          if (gender != null)
-            itemWrap(
-              SvgView(SVG.$('common/性别_${gender.code}'), width: 16, height: 16),
-              color: gender == GenderEnum.male ? const Color(0xFF6A83FF) : const Color(0xFFFF6594),
-            ),
-          itemWrap($IdView(info))
-        ].separator(Spacing.w4).toList(growable: false),
-      ),
-    );
+    return Obx(() {
+      var level = dataRx.containsKey("level") ? dataRx["level"] : info?.level;
+      var charmLevel = dataRx.containsKey("charm_level") ? dataRx["charm_level"] : info?.charmLevel;
+      return DefaultTextStyle(
+        style: const TextStyle(fontSize: 10, color: AppPalette.cc),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            WealthyLevelView(level: level, uid: info?.uid, height: itemH),
+            CharmLevelView(level: charmLevel, uid: info?.uid, height: itemH),
+            if (gender != null)
+              itemWrap(
+                SvgView(SVG.$('common/性别_${gender.code}'), width: 16, height: 16),
+                color: gender == GenderEnum.male ? const Color(0xFF6A83FF) : const Color(0xFFFF6594),
+              ),
+            itemWrap($IdView(info))
+          ].separator(Spacing.w4).toList(growable: false),
+        ),
+      );
+    });
   }
 
   // Widget $OnlineView() {
