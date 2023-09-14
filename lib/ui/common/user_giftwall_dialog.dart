@@ -85,6 +85,11 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
                   children: [
                     _creaetBgView(),
                     $UserView().margin(top: 60, left: 10),
+                    Positioned(
+                      bottom: 0,
+                      right: 10,
+                      child: Image.asset(IMG.format("my/gift_box"), width: 121, height: 94,),
+                    )
                   ],
                 ),
               ).toSliver()
