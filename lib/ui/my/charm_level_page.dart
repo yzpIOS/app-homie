@@ -165,7 +165,10 @@ class _LevelPageState extends State<CharmLevelPage> {
         ),
         Positioned(
           top: 80,
-          child: CharmLevelView(level: info?.charmLevel),
+          child: Obx(() {
+            var charmLevel = dataRx.value?.containsKey("charm_level") == true ? dataRx.value!["charm_level"] : info?.charmLevel;
+            return CharmLevelView(level: charmLevel);
+          }),
         ),
         Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),
       ],

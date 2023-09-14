@@ -165,7 +165,10 @@ class _LevelPageState extends State<WealthLevelPage> {
         ),
         Positioned(
           top: 80,
-          child: WealthyLevelView(level: info?.level),
+          child: Obx(() {
+            var level = dataRx.value?.containsKey("level") == true ? dataRx.value!["level"] : info?.level;
+            return WealthyLevelView(level: level);
+          }),
         ),
         Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),
       ],
