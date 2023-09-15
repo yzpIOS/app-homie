@@ -88,14 +88,13 @@ class _GiftWallViewState extends State<GiftWallView> {
   }
 
   Widget _createItem(Map data) {
-    int accept_count = data["count"];
-    int lighten_need_count = data["lighten_need_count"];
+    int startCount = data["start_count"];
 
     String lightText;
     bool isLighten = false;
     // 点亮图标
     Widget giftImage;
-    if(accept_count >= lighten_need_count) {
+    if(startCount >= 1) {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
         child: NetImage(data["cover"], fit: BoxFit.cover),
