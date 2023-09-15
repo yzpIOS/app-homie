@@ -99,7 +99,7 @@ class _GiftWallViewState extends State<GiftWallView> {
         aspectRatio: 1.0 / 1.0,
         child: NetImage(data["cover"], fit: BoxFit.cover),
       );
-      lightText = "己点亮";
+      lightText = "已点亮";
       isLighten = true;
     } else {
       const ColorFilter sepia = ColorFilter.matrix(<double>[

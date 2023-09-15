@@ -171,7 +171,7 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
                   ),
                   padding: EdgeInsets.only(left: 10, right: 10, top: 3, bottom: 3),
                   child: Text(
-                    "己收集星星 ${userInfo?["collect_start_count"] ?? "0"}",
+                    "已收集星星 ${userInfo?["collect_start_count"] ?? "0"}",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 12,
@@ -222,7 +222,7 @@ class GiftPannel extends StatelessWidget {
           if(lighten != null && (lighten?.length ?? 0) > 0)
             const SizedBox(height: 10,).toSliver(),
           if(lighten != null && (lighten?.length ?? 0) > 0)
-            _createTitle("己点亮", lighten?.length ?? 0),
+            _createTitle("已点亮", lighten?.length ?? 0),
           if(lighten != null && (lighten?.length ?? 0) > 0)
             const SizedBox(height: 10,).toSliver(),
           if(lighten != null && (lighten?.length ?? 0) > 0)
