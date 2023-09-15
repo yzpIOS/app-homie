@@ -25,18 +25,18 @@ class _OnlineUserPageState extends State<OnlineUserPage> {
   Widget build(BuildContext context) {
     return OrientationSheet.scaffold(
       title: '房间成员',
-      body: OnlineUserView(widget.roomId, myRole: sceneCtrl<RoomCtrl>().getRole(OAuthCtrl.uid),),
+      body: OnlineUserView(widget.roomId,),
     );
   }
 }
 
 class OnlineUserView extends SimplePageView<Map> {
   final int roomId;
-  final RoomRoleType? myRole;
 
-  OnlineUserView(this.roomId, {super.key, this.myRole});
+  OnlineUserView(this.roomId, {super.key});
 
   late final _ctrl = sceneCtrl<RoomCtrl>();
+  late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   @override
   Future fetchPage(PageNum page) => Api.Room.onlineUser(page: page, roomId: roomId);
@@ -56,7 +56,10 @@ class OnlineUserView extends SimplePageView<Map> {
     final dataUserIsSelf = OAuthCtrl.isSelf(uid);//这条数据用户是否是我本人
     final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
     final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
-    final isShowActions = myRole.isManager && !dataUserIsSelf && !dataUserIsOwner;
+    /// 房主能对管理员、普通用户进行"添加"“移除”"封禁"管理员的操作
+    /// 管理员能对普通用户进行“封禁”操作
+    var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
+    var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
 
     /// 添加或移除管理员
     Widget $EditManagerView() {
@@ -107,9 +110,9 @@ class OnlineUserView extends SimplePageView<Map> {
             padding: const Pad(left: 10, right: 20),
           ),
         ),
-        if (isShowActions) $EditManagerView(),
+        if (isShowEditManagerAction) $EditManagerView(),
         Spacing.w6,
-        if (isShowActions) $EditBlackListView(),
+        if (isShowEditBlackListAction) $EditBlackListView(),
         Spacing.w20,
       ],
     );
