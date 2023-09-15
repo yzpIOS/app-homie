@@ -1,7 +1,7 @@
 enum RoomRoleType {
   owner('房主'),
-  manager('房管'),
-  charge('主持');
+  manager('房管');
+  // charge('主持');
 
   final String label;
 
@@ -14,7 +14,7 @@ extension XRoomRoleType on RoomRoleType? {
   bool get isManager {
     switch (this) {
       case null:
-      case RoomRoleType.charge:
+      // case RoomRoleType.charge:
         return false;
       case RoomRoleType.owner:
       case RoomRoleType.manager:

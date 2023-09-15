@@ -386,9 +386,9 @@ class RoomCtrl extends SceneCtrl {
   RoomRoleType? getRole(UID uid) {
     final owner = isOwner(uid);
     final admin = isAdmin(uid);
-    final charge = isCharge(uid);
+    // final charge = isCharge(uid);
 
-    if(charge) return RoomRoleType.charge;
+    // if(charge) return RoomRoleType.charge;
     if (owner) return RoomRoleType.owner;
     if (admin) return RoomRoleType.manager;
     return null;
