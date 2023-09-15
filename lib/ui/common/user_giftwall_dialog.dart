@@ -79,13 +79,12 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: const Color(0xFFD898FF),
       body: Stack(
         children: [
-          XNestedScrollView(
-            pinnedHeaderSliverHeightBuilder: () => AppSize.appBar + AppSize.safeTop,
-            headerSliverBuilder: (_, __) => [
+          Column(
+            children: [
               SizedBox(
                 height: 200,
                 child: Stack(
@@ -99,28 +98,21 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
                     )
                   ],
                 ),
-              ).toSliver()
-            ],
-            body: Stack(
-              children: [
-                Container(
-                  height: 8,
-                  color: const Color(0xFFD898FF),
-                ),
-
-                Container(
+              ),
+              Expanded(
+                child: Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                     color: Color(0xFF312753),
                   ),
                   child: GiftPannel(type: 0, lighten: lighten, notLighten: notLighten,),
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
+
           AppBar2(),
         ],
-
       ),
     );
   }
