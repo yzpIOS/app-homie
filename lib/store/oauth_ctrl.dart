@@ -20,9 +20,12 @@ import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
 
 import 'package:fixnum/fixnum.dart';
+import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static AuthInfo? _auth;
+
+  OpeninstallFlutterPlugin? _openinstallFlutterPlugin;
 
   @override
   void onInit() async {
@@ -46,9 +49,15 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
+      // 未登录时，初始化OpeninstallFlutterPlugin
+      _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
+      _openinstallFlutterPlugin?.init(wakeupHandler);
     }
-
     FlutterNativeSplash.remove();
+  }
+
+  Future wakeupHandler(Map<String, Object> data) async {
+    showToast("wakeupHandler : " + data.toString());
   }
 
   //<editor-fold desc="登录">

@@ -64,6 +64,7 @@ android {
 
         manifestPlaceholders += [
                 app_name: appName,
+                OPENINSTALL_APPKEY : "xgf2vh",
         ]
 
         buildConfigField 'String', 'BUILD_INFO', project.hasProperty('build_info') ? build_info : '""'

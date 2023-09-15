@@ -1213,6 +1213,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.3.1"
+  openinstall_flutter_plugin:
+    dependency: "direct main"
+    description:
+      name: openinstall_flutter_plugin
+      sha256: da3f86b783ca778d0f4e73edaff1a84f5eeb7f992cab70b4fd5b964cf2925196
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.4.1"
   package_config:
     dependency: transitive
     description:
