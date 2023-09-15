@@ -217,9 +217,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       backgroundColor: Colors.grey,
       resizeToAvoidBottomInset: false,
       body: child,
-      appBar: Env.isDebugCfg ? AppBar(leading: GestureDetector(child: Text("返回"), onTap: () {
-        Get.back();
-      },),) : null
+      // appBar: Env.isDebugCfg ? AppBar(leading: GestureDetector(child: Text("返回"), onTap: () {
+      //   Get.back();
+      // },),) : null
     );
 
     child = UiOverlayRegion.light(child: child);
