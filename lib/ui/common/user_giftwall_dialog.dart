@@ -265,7 +265,7 @@ class GiftPannel extends StatelessWidget {
   }
 
   Widget _createGridView(List data, bool lighten) {
-    double ratio = type == 0 ? (110.0 / 137.0) : (110.0 / 116.0);
+    double ratio = type == 0 ? (110.0 / 140.0) : (110.0 / 116.0);
     return SliverGrid(
       delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
           if(type == 0) {
@@ -337,16 +337,18 @@ class GiftPannel extends StatelessWidget {
         Column(
           children: [
             // 礼物图片
-            Container(child: giftImage, width: 76, height: 76,),
+            Container(width: 76, height: 76,child: giftImage,),
             const SizedBox(height: 5,),
             // 礼物名称
             Expanded(
               child: Text(
                 data["name"],
+                overflow: TextOverflow.clip,
+                maxLines: 1,
                 style: TextStyle(
-                    color: isLighten ? Colors.white : const Color(0xFF999999),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14
+                  color: isLighten ? Colors.white : const Color(0xFF999999),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 13,
                 ),
               ),
             ),
@@ -366,14 +368,15 @@ class GiftPannel extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  "+${data["start_count"]}星",
-                  style: TextStyle(
-                      color: Color(0xFFF54390),
-                      fontWeight: FontWeight.normal,
-                      fontSize: 12
+                if(lighten)
+                  Text(
+                    "+${data["start_count"]}星",
+                    style: TextStyle(
+                        color: Color(0xFFF54390),
+                        fontWeight: FontWeight.normal,
+                        fontSize: 12
+                    ),
                   ),
-                ),
                 const SizedBox(width: 10,)
               ],
             ),

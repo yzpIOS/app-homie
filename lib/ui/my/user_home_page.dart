@@ -48,7 +48,7 @@ class _UserHomePageState extends State<UserHomePage> {
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
-        _expHeight = 404;
+        _expHeight = 434;
       } else {
         _expHeight = 404 - 153;
       }
@@ -273,6 +273,7 @@ class _InfoView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $NumView(),
+        SizedBox(height: 16,),
         Obx(() {
           bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).isNotEmpty;
           return Column(
@@ -284,10 +285,13 @@ class _InfoView extends StatelessWidget {
                   child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
                 ),
               if(hasGiftWall)
+                Container(color: Colors.white, height: 10,),
+              if(hasGiftWall)
                 Container(color: const Color(0xFFF5F5F5), height: 10,),
             ],
           );
         }),
+
         Expanded(child: child),
       ],
     );
@@ -334,7 +338,7 @@ class _InfoView extends StatelessWidget {
 
   Widget $BgView() {
     return Container(
-      height: AppSize.safeTop + 202,
+      height: AppSize.safeTop + 232,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
