@@ -34,7 +34,7 @@ class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
   final Map<UID, UserInfoDto> users;
   final String acceptUid;
 
-  BlindBoxGiftOpenMsgAdapter({required this.acceptUid, super.nuid, required this.users, required super.uid, required super.data});
+  BlindBoxGiftOpenMsgAdapter({required this.acceptUid, required super.nuid, required this.users, required super.uid, required super.data});
 
   late final List<S_GiftPlay> items = data.items;
   late final int blindBoxCount = data.blindBoxCount;

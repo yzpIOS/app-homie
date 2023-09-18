@@ -43,13 +43,12 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
         return;
       }
       final ids = data.data?.acceptUidList ?? [];
-      final nids = data.data?.acceptRoleIdList ?? [];
 
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
       for(int index = 0; index < ids.length; index ++) {
         _ctrl.add(
-          _BigGiftView(uid: sendUid, nuid: sendNUid, acceptUid: ids[index], acceptNUid: nids[index], users: users, data: giftModel),
+          _BigGiftView(uid: sendUid, nuid: sendNUid, acceptUid: ids[index], users: users, data: giftModel),
         );
       }
     });
@@ -63,12 +62,16 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
       if(items == null) {
         return;
       }
+      final sendNUid = data.nuid;
+      if(sendNUid == null) {
+        return;
+      }
       for(S_GiftPlay gift in items) {
         final sendUid = gift.sendId;
         final ids = gift.acceptUidList ?? [];
         final users = await findByUidX({sendUid, ...ids}, useNet: true);
         _ctrl.add(
-          _BigGiftView(uid: sendUid, acceptUid: '', users: users, data: gift, blindBoxName: moreGift.blindBoxName,),
+          _BigGiftView(uid: sendUid, nuid: sendNUid, acceptUid: '', users: users, data: gift, blindBoxName: moreGift.blindBoxName,),
         );
       }
     });
@@ -197,12 +200,11 @@ class _BigGiftView extends StatelessWidget {
   final NUID nuid;
 
   final UID acceptUid;
-  final NUID acceptNUid;
   final Map<UID, UserInfoDto> users;
   final S_GiftPlay data;
   final String? blindBoxName;//盲盒名称
 
-  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.acceptNUid, required this.users, required this.data, this.blindBoxName})
+  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.users, required this.data, this.blindBoxName})
       : super(key: UniqueKey());
 
   @override
