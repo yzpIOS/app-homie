@@ -155,14 +155,16 @@ mixin class _MsgNotifyMixin {
   void _showImLocalNotify({required int id, required String title, required String body}) {
     final playSound = _settingCtrl.boolValGet('消息通知-声音');
     final enableVibration = _settingCtrl.boolValGet('消息通知-震动');
-
-    _notifyCtrl.showImLocalNotify(
-      id: id,
-      title: title,
-      body: body,
-      playSound: playSound,
-      enableVibration: enableVibration,
-    );
+    try {
+      _notifyCtrl.showImLocalNotify(
+        id: id,
+        title: title,
+        body: body,
+        playSound: playSound,
+        enableVibration: enableVibration,
+      );
+    } catch(e, s) {
+    }
   }
 }
 

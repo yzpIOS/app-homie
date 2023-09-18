@@ -67,6 +67,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
         level: result.level,
       );
     });
+    dataRx.value = result;
   }
 
   MyInfoDto _dataRebuild(Map json) {
