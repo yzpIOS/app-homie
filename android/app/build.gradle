@@ -78,9 +78,9 @@ android {
             }
         }
 
-        if (project.hasProperty('is_debug') && (is_debug == true || is_debug == 'true')) {
-            applicationIdSuffix = '.debug'
-        }
+//        if (project.hasProperty('is_debug') && (is_debug == true || is_debug == 'true')) {
+//            applicationIdSuffix = '.debug'
+//        }
 
         if (localProperties.getProperty('flutter.buildMode') == 'release') {
             archivesBaseName = "$appName-$flutterVersionName-$yyMMddHHmm"
