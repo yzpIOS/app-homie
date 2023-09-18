@@ -154,10 +154,10 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return data;
   }
 
-  Rxn<UserInfoDto> simpleFetch(UID uid) {
+  Rxn<UserInfoDto> simpleFetch(UID uid, {bool refresh = false}) {
     final rxVal = _getOrCreate(uid);
 
-    if (rxVal.isNull()) _loadByDbOrNet(uid, true);
+    if (rxVal.isNull() || refresh) _loadByDbOrNet(uid, true);
 
     return rxVal;
   }
@@ -209,10 +209,10 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return Get.find<UserInfoCtrl>()._doUpdate(uid, rebuild: rebuild);
   }
 
-  static Widget use(UID uid, {required Widget Function(UserInfoDto?) builder}) {
+  static Widget use(UID uid, {required Widget Function(UserInfoDto?) builder, bool refresh = false}) {
     assert(uid != '${null}');
 
-    final rxVal = Get.find<UserInfoCtrl>().simpleFetch(uid);
+    final rxVal = Get.find<UserInfoCtrl>().simpleFetch(uid, refresh: refresh);
 
     return KeyedSubtree(
       key: Key(uid),

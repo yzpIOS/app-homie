@@ -11,10 +11,15 @@ import 'package:flutter/material.dart';
 class UserMomentView extends SimplePageView<Rx<MomentDto>> {
   final UID? uid;
 
-  UserMomentView({super.key, this.uid});
+  Function? callBack;
+
+  UserMomentView({super.key, this.uid, this.callBack});
 
   @override
-  Future fetchPage(PageNum page) => Api.Moment.list(page: page, uid: uid);
+  Future fetchPage(PageNum page) {
+    callBack?.call();
+    return Api.Moment.list(page: page, uid: uid);
+  }
 
   @override
   DataTr<Rx<MomentDto>> get transform {

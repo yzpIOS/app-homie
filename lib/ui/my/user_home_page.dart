@@ -33,8 +33,11 @@ class _UserHomePageState extends State<UserHomePage> {
   late final collapsedRx = RxBool(false);
   late final uid = widget.uid;
   late final isSelf = OAuthCtrl.isSelf(uid);
+  final refresh = RxBool(false);
 
   final moreRx = RxMap();
+
+  bool firstRefresh = true;
 
   @override
   void initState() {
@@ -44,7 +47,12 @@ class _UserHomePageState extends State<UserHomePage> {
       Get.find<UserInfoCtrl>().loadByNet(uid);
       Api.UserInfo.access(uid);
     }
+    updateUserInfo();
 
+    // Api.UserInfo.home(uid).onType<Map>(moreRx);
+  }
+
+  void updateUserInfo() {
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
@@ -54,8 +62,6 @@ class _UserHomePageState extends State<UserHomePage> {
       }
       moreRx.value = value as Map;
     });
-
-    // Api.UserInfo.home(uid).onType<Map>(moreRx);
   }
 
   @override
@@ -64,7 +70,13 @@ class _UserHomePageState extends State<UserHomePage> {
       body: XNestedScrollView(
         pinnedHeaderSliverHeightBuilder: () => AppSize.appBar + AppSize.safeTop,
         headerSliverBuilder: (_, __) => [$AppBar()],
-        body: UserMomentView(uid: uid),
+        body: UserMomentView(uid: uid, callBack: () {
+          if(firstRefresh) {
+            firstRefresh = false;
+            return;
+          }
+          updateUserInfo();
+        }),
       ),
     );
   }
@@ -73,6 +85,8 @@ class _UserHomePageState extends State<UserHomePage> {
     final height = AppSize.appBar + AppSize.safeTop;
 
     return Obx(() {
+      // 只为了刷新
+      refresh.value;
       return SliverAppBar(
         backgroundColor: Colors.white,
         toolbarHeight: AppSize.appBar,
@@ -236,7 +250,7 @@ class _InfoView extends StatelessWidget {
       );
     }
 
-    Widget child = UserInfoCtrl.use(uid, builder: builder);
+    Widget child = UserInfoCtrl.use(uid, builder: builder, refresh: true);
 
     child = DefaultTextStyle.merge(
       style: const TextStyle(fontSize: 12, color: Colors.white),
