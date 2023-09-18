@@ -94,13 +94,7 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _X(size: c.biggest, padding: padding, queue: _queue),
-              Row(
-                children: [
-                  _X(size: c.biggest, padding: padding, queue: _queue),
-                  const Spacing(width: 5, flex: null,),
-                  _X(size: c.biggest, padding: padding, queue: _queue),
-                ],
-              ),
+              _X(size: c.biggest, padding: padding, queue: _queue),
             ],
           );
         },
