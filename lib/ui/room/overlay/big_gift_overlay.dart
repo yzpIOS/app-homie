@@ -62,12 +62,9 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
       if(items == null) {
         return;
       }
-      final sendNUid = data.nuid;
-      if(sendNUid == null) {
-        return;
-      }
       for(S_GiftPlay gift in items) {
         final sendUid = gift.sendId;
+        final sendNUid = gift.roleId;
         final ids = gift.acceptUidList ?? [];
         final users = await findByUidX({sendUid, ...ids}, useNet: true);
         _ctrl.add(
