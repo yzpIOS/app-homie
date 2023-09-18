@@ -1,4 +1,5 @@
 import 'package:app/store/moment/moment_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/moment/view_item/bottom_bar.dart';
 import 'package:app/ui/moment/view_item/data_adapter.dart';
@@ -17,15 +18,17 @@ mixin MomentBottomBar implements IBottomBar<MomentDtoAdapter> {
         () {
           final more = vm.more;
           final count = vm.count;
+          final isSelf = OAuthCtrl.isSelf(vm.author);
 
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              NumView(
-                action: '礼物',
-                num: $NumFormat(count.giftCount),
-                onTap: onItemClick,
-              ),
+              if (!isSelf)
+                NumView(
+                  action: '礼物',
+                  num: $NumFormat(count.giftCount),
+                  onTap: onItemClick,
+                ),
               ...<Widget>[
                 NumView(
                   action: '收藏${more.isCollect == true ? '_1' : ''}',
