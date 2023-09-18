@@ -53,6 +53,25 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
         );
       }
     });
+
+    on<MoreGiftPlayEvent>((data) async {
+      S_MoreGiftPlay? moreGift = data.data;
+      if(moreGift == null) {
+        return;
+      }
+      final List<S_GiftPlay>? items = data.items;
+      if(items == null) {
+        return;
+      }
+      for(S_GiftPlay gift in items) {
+        final sendUid = gift.sendId;
+        final ids = gift.acceptUidList ?? [];
+        final users = await findByUidX({sendUid, ...ids}, useNet: true);
+        _ctrl.add(
+          _BigGiftView(uid: sendUid, acceptUid: '', users: users, data: gift, blindBoxName: moreGift.blindBoxName,),
+        );
+      }
+    });
   }
 
   @override
@@ -73,10 +92,16 @@ class _BigGiftOverlayState extends State<BigGiftOverlay> with BusStateMixin {
           return Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              lines,
-              (_) => _X(size: c.biggest, padding: padding, queue: _queue),
-            ),
+            children: [
+              _X(size: c.biggest, padding: padding, queue: _queue),
+              Row(
+                children: [
+                  _X(size: c.biggest, padding: padding, queue: _queue),
+                  const Spacing(width: 5, flex: null,),
+                  _X(size: c.biggest, padding: padding, queue: _queue),
+                ],
+              ),
+            ],
           );
         },
       ),
@@ -175,8 +200,9 @@ class _BigGiftView extends StatelessWidget {
   final NUID acceptNUid;
   final Map<UID, UserInfoDto> users;
   final S_GiftPlay data;
+  final String? blindBoxName;//盲盒名称
 
-  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.acceptNUid, required this.users, required this.data})
+  _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.acceptNUid, required this.users, required this.data, this.blindBoxName})
       : super(key: UniqueKey());
 
   @override
@@ -197,9 +223,10 @@ class _BigGiftView extends StatelessWidget {
             text: '送',
             children: [
               TextSpan(
-                text: users[acceptUid]?.showName() ?? '--',
+                text: blindBoxName ?? users[acceptUid]?.showName() ?? '--',
                 style: const TextStyle(color: AppPalette.colorY),
               ),
+              if (blindBoxName != null) const TextSpan(text: '开出'),
             ],
           ),
           overflow: TextOverflow.fade,

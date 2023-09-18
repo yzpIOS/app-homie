@@ -1,5 +1,6 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -21,6 +22,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
+    /// 显示系统公告消息
+    on<SystemMsgEvent>((data) {
+      data.systemMsgList.forEach((element) {
+        dataRx.add(
+          SystemMsgView(
+            BaseMsgData<String>(data: element),
+          ),
+        );
+      });
+    });
+
+    /// 文本消息
     on<MsgTxtEvent>((data) {
       final uid = data.uid ?? "";
       final txt = data.data?.message ?? "";
@@ -33,6 +46,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       );
     });
 
+    /// xxx进入了房间消息
     on<UserInEvent>((data) {
       dataRx.add(
         UserInMsgView(
@@ -41,6 +55,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       );
     });
 
+    /// 房间公告
     on<NoticeEvent>((data) {
       dataRx.add(
         NoticeMsgView(
@@ -51,6 +66,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
 
+    /// 礼物消息
     on<GiftEvent>((data) async {
       S_GiftPlay? gift = data.data;
       if(gift == null) {
@@ -65,10 +81,35 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       final users = await findByUidX({sendUid, ...ids}, useNet: true);
 
       users.forEach((key, value) {
-        if(sendUid != value.uid) {
+        if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
           dataRx.add(
             GiftMsgView(
               GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift),
+            ),
+          );
+        }
+      });
+    });
+
+    /// 多个礼物播放广播（盲盒开出的礼物数组）
+    on<MoreGiftPlayEvent>((data) async {
+      S_MoreGiftPlay? moreGift = data.data;
+      if(moreGift == null) {
+        return;
+      }
+      final List<S_GiftPlay>? items = data.items;
+      if(items == null) {
+        return;
+      }
+      S_GiftPlay? gift = items.first;
+      final sendUid = gift.sendId;
+      final ids = gift.acceptUidList ?? [];
+      final users = await findByUidX({sendUid, ...ids}, useNet: true);
+      users.forEach((key, value) {
+        if(sendUid != value.uid) {
+          dataRx.add(
+            BlindBoxGiftOpenMsgView(
+              BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: moreGift),
             ),
           );
         }

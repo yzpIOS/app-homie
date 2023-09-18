@@ -7,6 +7,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
+import 'package:app/ui/gift/gift_blind_box_details_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/widgets.dart';
@@ -25,17 +26,12 @@ class GiftSheet extends StatelessWidget {
   static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
     final sheet = GiftSheet._(logic: logic, hasShowUnityView: hasShowUnityView);
 
-    const decor = ShapeDecoration(
-      shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-      color: Color(0xCC333333),
-    );
-
     // 刷新金币
     WalletCtrl.ins.doRefresh();
 
     return OrientationSheet.show(
       child: sheet,
-      decoration: decor,
+      decoration: null,
       direction: logic.layout.value1,
       constraints: logic.layout.value2,
     );
@@ -68,7 +64,7 @@ class GiftSheet extends StatelessWidget {
         ),
     };
 
-    return XSnapshotWidget(
+    Widget child = XSnapshotWidget(
       child: DefaultTabController(
         length: data.length,
         child: Column(
@@ -89,11 +85,40 @@ class GiftSheet extends StatelessWidget {
         ),
       ),
     );
+
+    child = Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Obx(
+          () {
+            ////  礼物类型货币枚举值，目前：0—2D静态礼物, 1—2D动态礼物, 2—3D礼物，4-抽奖烟花, 5-buff礼物, 6-盲盒礼物
+            return (logic.selectRx() != null && logic.selectRx()?['type'] == 6)
+                ? GestureDetector(
+                    child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145, height: 46.9,),
+                    onTap: () => GiftBlindBoxDetailsSheet.show(),
+                  )
+                : const Spacing(height: 46.9, flex: null);
+          }
+        ),
+        const Spacing(height: 6, flex: null),
+        Expanded(
+          child: DecoratedBox(
+            decoration: const ShapeDecoration(
+              shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+              color: Color(0xCC333333),
+            ),
+            child: child,
+          ),
+        )
+      ],
+    );
+
+    return child;
   }
 
   Widget $TabView(Iterable<String> keys) {
     return Padding(
-      padding: const Pad(horizontal: 10),
+      padding: const Pad(left: 10),
       child: Row(
         children: [
           TabBar(

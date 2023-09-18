@@ -30,7 +30,7 @@ abstract class GiftSendLogic {
   Tuple2<SheetOrientation, BoxConstraints> get layout {
     final constraints = BoxConstraints.tightFor(
       width: AppSize.width,
-      height: 313 + AppSize.safeBottom,
+      height: 313 + 52 + AppSize.safeBottom,
     );
 
     return Tuple2(SheetOrientation.bottom, constraints);

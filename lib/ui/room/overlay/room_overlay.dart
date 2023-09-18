@@ -11,6 +11,7 @@ import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/activity/act_main_dialog.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
@@ -45,6 +46,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
   @override
   Widget build(BuildContext context) {
     final isLandscape = context.watch<Orientation>() == Orientation.landscape;
+    ValueNotifier<double> _changedValue = ValueNotifier<double>(AppSize.height - AppSize.safeBottom - 127 - 100);
 
     return Obx(
       () {
@@ -61,7 +63,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           alignment: Alignment.center,
           children: [
             Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? 150 : 310,
+              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + MediaQuery.of(context).padding.top + 26 : AppSize.safeTop + MediaQuery.of(context).padding.top + 232,
               child: const RoomChatView(),
             ),
             if (showMicPanel && (sideMicMode || isLandscape))
@@ -95,6 +97,28 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                 onItemClick: onItemClick,
               ),
             ),
+            // if (!isLandscape)
+            //   ValueListenableBuilder(
+            //     valueListenable: _changedValue,
+            //     builder: (BuildContext context, double value, Widget? child) {
+            //       return Positioned(
+            //         top: value,
+            //         right: 10,
+            //         child: GestureDetector(
+            //           child: InkWell(
+            //             onTap: () => onItemClick('装扮抽奖入口'),
+            //             child: Image.asset(IMG.format('shop/装扮抽奖入口'), scale: 3),
+            //           ),
+            //           onPanUpdate: (DragUpdateDetails details) {
+            //             double top = value + details.delta.dy;
+            //             if (top < AppSize.safeTop) top = AppSize.safeTop;
+            //             if (top > AppSize.height - AppSize.safeBottom - 127 - 100) top = AppSize.height - AppSize.safeBottom - 127 - 100;
+            //             _changedValue.value = top;
+            //           },
+            //         ),
+            //       );
+            //     }
+            //   ),
           ],
         );
       },
@@ -143,6 +167,9 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           child: ChallengeUserPage(roomId: roomId),
           direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
         );
+        break;
+      case '装扮抽奖入口':
+        ActMainDialog.show();
         break;
       default:
         super.onItemClick(action);

@@ -12,6 +12,7 @@ import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/activity/act_main_dialog.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/dressup/model_overlay_cloth.dart';
 import 'package:app/ui/dressup/model_overlay_wardrobe.dart';
@@ -96,13 +97,18 @@ class _MyModelViewState extends State<MyModelView> {
 
               try {
                 final myInfo = Get.find<MyInfoCtrl>();
+                final clothSeCtrl = Get.find<ClothSelectorCtrl>();
+                int instruction = clothSeCtrl.isShopMode ? 1 : (clothSeCtrl.isWardrobeMode ? 2 : 3);
+
+                final goodsIds = await Get.find<ClothSelectorCtrl>().initIds();
+                Get.find<ClothSelectorCtrl>().addIds(goodsIds);//获取自身穿着加进数组
 
                 await unity.sendMessage(
                   App2UnityEnum.FTU_GENDER_CLOTHING_SCENE,
                   data: {
                     'gender': myInfo.dataRx().gender!.code,
-                    'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
-                    'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,
+                    'goodsIds': goodsIds,
+                    'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
                   },
                 );
                 unityLoadComplete = true;
@@ -137,6 +143,8 @@ class _MyModelViewState extends State<MyModelView> {
             bottom: 100,
             left: 20,
             child: $Btn(action: '广场'),
+            // left: 10,
+            // child: $Btn(action: '装扮抽奖入口'),
           ),
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
         if(unityLoadComplete)
@@ -276,6 +284,9 @@ class _MyModelViewState extends State<MyModelView> {
     switch (action) {
       case '广场':
         Get.find<RoomManagerCtrl>().toSquare();
+        break;
+      case '装扮抽奖入口':
+        ActMainDialog.show();
         break;
     }
   }

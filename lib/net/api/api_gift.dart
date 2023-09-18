@@ -3,8 +3,9 @@ part of '../api.dart';
 class ApiGift extends ApiBase {
   const ApiGift(super.path);
 
-  Future list() {
-    return _doPost('query').then(((it) => it['items']));
+  /// 获取直播间的礼物列表
+  Future list({required PageNum page}) {
+    return _doPost('room_query', data: page + {}).then(((it) => it['items']));
   }
 
   /// 获取pk直播间的礼物列表

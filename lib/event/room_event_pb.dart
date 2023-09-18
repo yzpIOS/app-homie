@@ -97,6 +97,13 @@ class GiftEvent extends RoomEvent<S_GiftPlay> {
   NUID? get nuid => data?.roleId;
 }
 
+// 多个礼物播放广播
+class MoreGiftPlayEvent extends RoomEvent<S_MoreGiftPlay> {
+  List<S_GiftPlay>? get items => data?.items;
+  String? get blindBoxName => data?.blindBoxName;
+  String? get blindBoxCover => data?.blindBoxCover;
+}
+
 // 房间管理员设置
 class AdminSetEvent extends RoomEvent<S_AdministratorBroadcast> {
 
@@ -138,6 +145,12 @@ class UpdateHotCountEvent extends RoomEvent<S_AccMikeBroadcast> {
 
 class MsgTxtEvent extends RoomEvent<S_ChatMessageBroadcast> {
   UID? get uid => data?.uid;
+}
+
+/// 房间系统公告
+class SystemMsgEvent extends EventPb {
+  final List systemMsgList;
+  SystemMsgEvent(this.systemMsgList);
 }
 
 // ?

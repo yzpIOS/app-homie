@@ -228,6 +228,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_OpenBroadcast, S_OpenBroadcast.fromBuffer);
     register(CMD.S_AccMikeBroadcast, S_AccMikeBroadcast.fromBuffer);
     register(CMD.S_GiftPlay, S_GiftPlay.fromBuffer);
+    register(CMD.S_MoreGiftPlay, S_MoreGiftPlay.fromBuffer);
     register(CMD.S_UpdateLevel, S_UpdateLevel.fromBuffer);
     register(CMD.S_UpdateCharmLevel, S_UpdateCharmLevel.fromBuffer);
     register(CMD.S_LiveStopBroadcast, S_LiveStopBroadcast.fromBuffer);
@@ -235,6 +236,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
     register(CMD.S_GiveGiftByRoom, S_GiveGiftByRoom.fromBuffer);
     register(CMD.S_FloatingScreen, S_FloatingScreen.fromBuffer);
+    register(CMD.S_MoreGiftFloatingScreen, S_MoreGiftFloatingScreen.fromBuffer);
     register(CMD.S_JoinScene, S_JoinScene.fromBuffer);
     register(CMD.S_GoToRoom, S_GoToRoom.fromBuffer);
     register(CMD.S_InFreeMikesArea, S_InFreeMikesArea.fromBuffer);
@@ -261,6 +263,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 漂屏礼物广播
     onDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     onDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
+
+    // 多个礼物飘屏广播广播
+    onDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
 
     // 连接状态
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
@@ -389,6 +394,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
+    removeOnDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
     removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
@@ -442,5 +448,17 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       return;
     }
     SuperGiftEvent(sFloatingscreen).fire();
+  }
+
+  ///
+  /// 多个礼物漂屏
+  ///
+  void onMoreGiftFloatingScreen(int cmd, S_MoreGiftFloatingScreen? sMoreGiftFloatingScreen) {
+    if(sMoreGiftFloatingScreen == null) {
+      return;
+    }
+    sMoreGiftFloatingScreen.items.forEach((element) {
+      SuperGiftEvent(element).fire();
+    });
   }
 }

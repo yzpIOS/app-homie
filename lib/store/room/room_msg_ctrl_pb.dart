@@ -28,6 +28,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_ChatMessageBroadcast: MsgTxtEvent.new,
     // 礼物
     CMD.S_GiftPlay: GiftEvent.new,
+    // 多个礼物播放
+    CMD.S_MoreGiftPlay: MoreGiftPlayEvent.new,
     // 设置管理员
     CMD.S_AdministratorBroadcast: AdminSetEvent.new,
     // 申请上麦

@@ -55,3 +55,37 @@ class NoticeMsgView extends BaseMsgView<BaseMsgData<String>> {
     );
   }
 }
+
+// 系统消息视图
+class SystemMsgView extends BaseMsgView<BaseMsgData<String>> {
+  const SystemMsgView(super.vm, {super.key});
+
+  @override
+  Widget msgView(BuildContext context) {
+    InlineSpan span = TextSpan(
+      children: [
+        WidgetSpan(
+          alignment: PlaceholderAlignment.middle,
+          child: Image.asset(
+            IMG.format('room/系统消息铃铛'),
+            width: 14,
+            height: 14,
+            scale: 3,
+            fit: BoxFit.contain,
+          ),
+        ),
+        const WidgetSpan(child: Spacing(width: 2, flex: null)),
+        const TextSpan(
+          text: '系统消息：',
+          style: TextStyle(color: AppPalette.colorY),
+        ),
+        TextSpan(
+          text: vm.data,
+          style: const TextStyle(color: Colors.white),
+        ),
+      ],
+    );
+
+    return RichText(text: span, maxLines: null,);
+  }
+}

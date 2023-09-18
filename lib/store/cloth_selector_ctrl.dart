@@ -9,9 +9,9 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 
 class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin {
-  final selectorShop = _SelectorShop();
-  final selectorCloth = _SelectorCloth();
-  final selectorWardrobe = _SelectorWardrobe();
+  final selectorShop = _SelectorShop();//商城
+  final selectorCloth = _SelectorCloth();//我的-其他
+  final selectorWardrobe = _SelectorWardrobe();//我的-衣柜
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
@@ -86,19 +86,35 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   }
 
   void setWardrobeMode(bool isWardrobe) {
+    if (isWardrobeMode == isWardrobe) {
+      return;
+    }
+
     setShopMode(false);
     _mode2Rx(isWardrobe);
     sendFlutterSwitchCloth();
   }
 
   // 发送用户切换了“1:商城”、“2:我的-衣柜”、“3:我的-其他”的指令
-  void sendFlutterSwitchCloth() {
+  void sendFlutterSwitchCloth() async {
     int instruction = isShopMode ? 1 : (isWardrobeMode ? 2 : 3);
     late final _unity = Get.find<UnityCtrl>();
     _unity.sendMessage(
       App2UnityEnum.FTU_SWITCH_CLOTH,
-      data: {'instruction': instruction,},//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
+      data: {
+        'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
+        'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
+      },
     );
+  }
+
+  void addIds(Iterable<int>? items) {
+    if (items == null) {
+      return;
+    }
+    isShopMode
+        ? selectorShop._dataRx.assignAll(items)
+        : (isWardrobeMode ? selectorWardrobe._dataRx.assignAll(items) : selectorCloth._dataRx.assignAll(items));
   }
 }
 
@@ -137,7 +153,7 @@ mixin _UnityDressUpMixin {
   // }
 
   Future<void> clearDressUp() {
-    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH, data: {'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,});
+    return _unity.sendMessage(App2UnityEnum.FTU_CLEAR_CLOTH);
   }
 
   Future<Iterable<int>> setDressUp(List<int> ids) {
@@ -150,11 +166,9 @@ mixin _UnityDressUpMixin {
     return _doDressUp([id]);
   }
 
-  // ///action: 1覆盖 2添加 3删除
   Future<Iterable<int>> _doDressUp(List<int> ids) async {
     final data = {
       'goodsIds': ids,
-      'instruction': Get.find<ClothSelectorCtrl>().isShopMode ? 1 : 2,//instruction 1是商城，2是我的
     };
 
     final resp = await _unity.sendMessage(App2UnityEnum.FTU_DRESSUP_CLOTH, data: data);
@@ -307,7 +321,7 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
     _dataRx.clear();
 
     doReset2DressUp();
-    clearDressUp();
+    // clearDressUp();
   }
 
   @override

@@ -29,3 +29,15 @@ class GiftMsgAdapter extends UserMsgData<S_GiftPlay> {
   late final String giftName = data.name;
   late final String giftCover = data.cover;
 }
+
+class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
+  final Map<UID, UserInfoDto> users;
+  final String acceptUid;
+
+  BlindBoxGiftOpenMsgAdapter({required this.acceptUid, super.nuid, required this.users, required super.uid, required super.data});
+
+  late final List<S_GiftPlay> items = data.items;
+  late final int blindBoxCount = data.blindBoxCount;
+  late final String blindBoxName = data.blindBoxName;
+  late final String blindBoxCover = data.blindBoxCover;
+}
