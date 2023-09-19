@@ -186,6 +186,8 @@ class _UserInit2PageState extends State<UserInit2Page> {
           await Api.UserInfo.setInfo(nickName: inputs.by('昵称'), gender: gender, avatar: avatar, token: token);
           Map info = await Api.UserInfo.myInfo(token: token);
           // await OAuthCtrl.ins.updateUserInfo(info, token);
+
+          await KvBox.remove(PrefKey.OpenInstallBlindData);
           return info;
         },
         callback1: (resp) {

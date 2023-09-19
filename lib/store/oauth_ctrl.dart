@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -58,14 +59,10 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   Future wakeupHandler(Map<String, Object> data) async {
     // showToast("wakeupHandler : " + data.toString());
-    final tempBindData = data['bindData'];
-    if (tempBindData != null) {
-      KvBox.write(PrefKey.OpenInstallBlindData, tempBindData);
-
-      // Map bindData = tempBindData as Map;
-      // if (bindData['invite_uid'] != null) {
-      //
-      // }
+    final bindData = data['bindData'].toString();
+    if (bindData != null) {
+      final Map<String, dynamic> result = jsonDecode(bindData);
+      KvBox.write(PrefKey.OpenInstallBlindData, result);
     }
   }
 
@@ -222,7 +219,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     _auth = null;
 
     await KvBox.remove(PrefKey.AuthInfo);
-    await KvBox.remove(PrefKey.OpenInstallBlindData);
 
     await Get.delete<UserCtrl>(force: true);
 

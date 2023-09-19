@@ -39,7 +39,7 @@ class ApiUserInfo extends ApiBase {
     return _doPost('list', data: page + data);
   }
 
-  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) {
+  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) async {
     final data = <dynamic, dynamic>{
       if (nickName != null) //
         'username': nickName,
@@ -54,7 +54,7 @@ class ApiUserInfo extends ApiBase {
     };
 
     /// 拉新数据
-    KvBox.read<Map>(PrefKey.OpenInstallBlindData).onNotNull((val) {
+    await KvBox.read<Map>(PrefKey.OpenInstallBlindData).onNotNull((val) {
       data.addAll(val);
     });
 
