@@ -53,15 +53,12 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
       _openinstallFlutterPlugin?.init(wakeupHandler);
-      delay(2000, () {
-        _openinstallFlutterPlugin?.install(installHandler);
-      });
     }
     FlutterNativeSplash.remove();
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    showToast("wakeupHandler : " + data.toString());
+    // showToast("wakeupHandler : " + data.toString());
     final bindData = data['bindData'];
     if (bindData != null) {
       final bindDataStr = bindData.toString();
@@ -82,6 +79,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   //<editor-fold desc="登录">
   Future<void> doPwdLogin({required String phone, required String pwd}) {
+    _openinstallFlutterPlugin?.install(installHandler);
+
     return _doLoginBy(
       Api.UserAuth.loginByPwd(name: phone, pwd: pwd),
       onOk: () => KvBox.write(PrefKey.LastPhone, phone),
@@ -89,6 +88,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future<void> doSmsLogin({required String phone, required String smsToken, required String smsCode}) {
+    _openinstallFlutterPlugin?.install(installHandler);
+
     return _doLoginBy(
       Api.UserAuth.loginBySms(phone: phone, smsToken: smsToken, smsCode: smsCode),
       onOk: () => KvBox.write(PrefKey.LastPhone, phone),
