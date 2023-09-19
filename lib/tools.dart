@@ -131,5 +131,5 @@ class PrefKey {
   static const AuthInfo = '登录信息';
   static const MyInfo = '我的信息';
   static const LastPhone = '最后登录号码';
-  static const OpenInstallInviteUid = 'OpenInstall-invite_uid';
+  static const OpenInstallBlindData = 'OpenInstallBlindData';
 }

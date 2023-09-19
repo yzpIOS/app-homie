@@ -60,7 +60,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     // showToast("wakeupHandler : " + data.toString());
     final tempBindData = data['bindData'];
     if (tempBindData != null) {
-      KvBox.write(PrefKey.OpenInstallInviteUid, tempBindData);
+      KvBox.write(PrefKey.OpenInstallBlindData, tempBindData);
 
       // Map bindData = tempBindData as Map;
       // if (bindData['invite_uid'] != null) {

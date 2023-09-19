@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -139,7 +140,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   void onItemClick(String action) {
     switch (action) {
       case '分享房间':
-        Share.share('http://app.web.homieyy.com', subject: '房间分享');
+        Share.share('http://app.web.homieyy.com?invite_id=${OAuthCtrl.uid}', subject: '房间分享');
         break;
       case '已关注':
       case '关注房间':

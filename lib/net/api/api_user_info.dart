@@ -54,7 +54,7 @@ class ApiUserInfo extends ApiBase {
     };
 
     /// 拉新数据
-    KvBox.read<Map>(PrefKey.OpenInstallInviteUid).onNotNull((val) {
+    KvBox.read<Map>(PrefKey.OpenInstallBlindData).onNotNull((val) {
       data.addAll(val);
     });
 
