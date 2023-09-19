@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -100,17 +102,22 @@ class _MyModelViewState extends State<MyModelView> {
                 final clothSeCtrl = Get.find<ClothSelectorCtrl>();
                 int instruction = clothSeCtrl.isShopMode ? 1 : (clothSeCtrl.isWardrobeMode ? 2 : 3);
 
-                final goodsIds = await Get.find<ClothSelectorCtrl>().initIds();
-                Get.find<ClothSelectorCtrl>().addIds(goodsIds);//获取自身穿着加进数组
-
-                await unity.sendMessage(
+                final resp = await unity.sendMessage(
                   App2UnityEnum.FTU_GENDER_CLOTHING_SCENE,
                   data: {
                     'gender': myInfo.dataRx().gender!.code,
-                    'goodsIds': goodsIds,
+                    'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
                     'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
                   },
                 );
+
+                try {
+                  final ids = jsonDecode(resp) as Iterable;
+                  Get.find<ClothSelectorCtrl>().addIds(ids.cast<int>().toList(growable: false));//获取返回的穿着加进数组
+                } catch (e, s) {
+                  errLog(e, s);
+                }
+
                 unityLoadComplete = true;
                 myInfo.modeUnityLoadStatus.value = true;
                 setState(() { });
