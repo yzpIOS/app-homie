@@ -40,7 +40,7 @@ class ApiUserInfo extends ApiBase {
   }
 
   Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) {
-    final data = {
+    final data = <dynamic, dynamic>{
       if (nickName != null) //
         'username': nickName,
       if (gender != null) //
@@ -52,6 +52,11 @@ class ApiUserInfo extends ApiBase {
       if (birth != null) //
         'data_birth': birth.millisecondsSinceEpoch,
     };
+
+    /// 拉新数据
+    KvBox.read<Map>(PrefKey.OpenInstallInviteUid).onNotNull((val) {
+      data.addAll(val);
+    });
 
     return _doPost('update', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }

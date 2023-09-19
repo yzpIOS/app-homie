@@ -140,7 +140,7 @@ abstract class AsyncCtrl<RX extends RxInterface<DATA>, DATA, T> extends GetxCont
     int tryTime = 0;
 
     final task = _cache ??= Future.doWhile(() async {
-      if(tryTime >= 3) {
+      if(tryTime >= 5) {
         throw TimeoutException("time out");
       }
       tryTime += 1;
