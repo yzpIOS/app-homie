@@ -30,7 +30,7 @@ class RoomGiftCtrl extends SvgaEffectCtrl with BusGetLifeMixin {
             // sendCmd2Unity(App2UnityEnum.FTU_GIVEGIFT, data: data.toProto3Json());
             break;
           default:
-            assert(false, '未处理的业务 -> $data');
+            // assert(false, '未处理的业务 -> $data');
         }
       },
     );
