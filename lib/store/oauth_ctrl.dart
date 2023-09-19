@@ -222,6 +222,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     _auth = null;
 
     await KvBox.remove(PrefKey.AuthInfo);
+    await KvBox.remove(PrefKey.OpenInstallBlindData);
 
     await Get.delete<UserCtrl>(force: true);
 
