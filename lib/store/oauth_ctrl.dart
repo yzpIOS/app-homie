@@ -52,12 +52,13 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       App.toLogin();
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
-      _openinstallFlutterPlugin?.init(wakeupHandler);
+      _openinstallFlutterPlugin?.init(wakeupAndInstallHandler);
+      _openinstallFlutterPlugin?.install(wakeupAndInstallHandler);
     }
     FlutterNativeSplash.remove();
   }
 
-  Future wakeupHandler(Map<String, Object> data) async {
+  Future wakeupAndInstallHandler(Map<String, Object> data) async {
     // showToast("wakeupHandler : " + data.toString());
     final bindData = data['bindData'];
     if (bindData != null) {
