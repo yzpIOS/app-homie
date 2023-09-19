@@ -17,7 +17,9 @@ class UserMomentView extends SimplePageView<Rx<MomentDto>> {
 
   @override
   Future fetchPage(PageNum page) {
-    callBack?.call();
+    if(page.firstPage()) {
+      callBack?.call();
+    }
     return Api.Moment.list(page: page, uid: uid);
   }
 

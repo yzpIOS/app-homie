@@ -24,6 +24,8 @@ class PageNum {
   }
 
   PageNum nextPage() => PageNum(index: index + 1, size: size);
+
+  bool firstPage() => page == 1;
 }
 
 mixin LazyData<T> {
