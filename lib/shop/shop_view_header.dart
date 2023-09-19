@@ -299,7 +299,11 @@ class _MyModelViewState extends State<MyModelView> {
 
     clothSelectorCtrl.groupListId.value = groupListId;
     changeCameraSwitch();
-    Get.find<ShopCategoryCtrl>().doRefresh();
+    try {
+      Get.find<ShopCategoryCtrl>().doRefresh();
+    } catch (e) {
+      showToast('请求超时，请稍后重试');
+    }
     Get.find<MyDressUpCtrl>().getMyDressList();
   }
 
