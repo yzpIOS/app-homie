@@ -15,6 +15,7 @@ class RevenuePage extends StatefulWidget {
 
 class _RevenuePageState extends State<RevenuePage> {
   final selectRx = Rxn<Map>();
+  final refresh = RxBool(false);
 
   final type = MoneyType.diamond;
 
@@ -34,7 +35,10 @@ class _RevenuePageState extends State<RevenuePage> {
             left: 20,
             right: 20,
             height: 179,
-            child: $TotalView(),
+            child: Obx(() {
+              refresh.value;
+              return $TotalView();
+            }),
           ),
           const Positioned(
             top: 230,
@@ -46,7 +50,12 @@ class _RevenuePageState extends State<RevenuePage> {
           ),
           Positioned.fill(
             top: 255,
-            child: _DataView(),
+            child: _DataView(
+              callBack: () async {
+                await WalletCtrl.ins.doRefresh();
+                refresh.value = !refresh.value;
+              },
+            ),
           ),
         ],
       ),
@@ -63,6 +72,7 @@ class _RevenuePageState extends State<RevenuePage> {
         ),
         const Spacer(flex: 20),
         WalletCtrl.use(
+          refresh: true,
           builder: (it) {
             final data = it[MoneyType.homie];
 
@@ -100,6 +110,9 @@ class _RevenuePageState extends State<RevenuePage> {
 }
 
 class _DataView extends SimplePageView<Map> {
+
+  Function? callBack;
+
   @override
   BaseConfig get config {
     return const ListConfig(
@@ -107,8 +120,15 @@ class _DataView extends SimplePageView<Map> {
     );
   }
 
+  _DataView({this.callBack});
+
   @override
-  Future fetchPage(PageNum page) => Api.Finance.record(page: page);
+  Future fetchPage(PageNum page) {
+    if(page.firstPage()) {
+      callBack?.call();
+    }
+    return Api.Finance.record(page: page);
+  }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {

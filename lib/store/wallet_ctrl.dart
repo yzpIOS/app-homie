@@ -58,7 +58,7 @@ class WalletCtrl extends AsyncMapCtrl with BusGetLifeMixin {
     );
   }
 
-  static Widget use({required Widget Function(Map<MoneyType, num?> data) builder}) {
+  static Widget use({required Widget Function(Map<MoneyType, num?> data) builder, bool refresh = false}) {
     final keys = {
       MoneyType.gold: 'gold_coins_balance',
       MoneyType.diamond: 'diamond_balance',
@@ -67,8 +67,7 @@ class WalletCtrl extends AsyncMapCtrl with BusGetLifeMixin {
 
     return GetX<WalletCtrl>(
       builder: (it) {
-        final data = it.autoGet();
-
+        dynamic data = it.autoGet();
         return builder(keys.map((k, v) => MapEntry(k, data[v])));
       },
     );
