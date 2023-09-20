@@ -140,7 +140,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   void onItemClick(String action) {
     switch (action) {
       case '分享房间':
-        Share.share('http://app.web.homieyy.com/?invite_uid=${OAuthCtrl.uid}', subject: '房间分享');
+        Share.share('http://app.web.homieyy.com/?channelCode=1&invite_uid=${OAuthCtrl.uid}', subject: '房间分享');
         break;
       case '已关注':
       case '关注房间':
