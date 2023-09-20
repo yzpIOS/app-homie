@@ -59,7 +59,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    showToast("wakeupHandler : " + data.toString());
     // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
     //   return;
     // }
@@ -74,7 +73,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future onInstall(Map<String, Object> data) async {
-    showToast("onInstall : " + data.toString());
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }
