@@ -3,7 +3,7 @@
   "app_name": "Homie.Test",
   "wx_app_id": "wxed5f4b391e3356ed",
   "im_app_id": 1400804755,
-  "api_url": "http://dev.gz.internal.jumaiyx.cn",
+  "api_url": "http://192.168.1.156:31448",
   "api_img_url": "http://dev.gz.internal.jumaiyx.cn:80/",
   "mq_acc": "app",
   "mq_pwd": "app",
