@@ -369,10 +369,11 @@ class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin
   }
 
   void doReset() {
-    simpleSub(
-      doReset2DressUp,
-      callback: _doClear,
-    );
+    // simpleSub(
+    //   doReset2DressUp,
+    //   callback: _doClear,
+    // );
+    _doClear();
   }
 
   void doClear() {
