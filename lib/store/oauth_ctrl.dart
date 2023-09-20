@@ -58,28 +58,22 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    // showToast("wakeupHandler : " + data.toString());
-    final bindData = data['bindData'];
-    if (bindData != null) {
-      final bindDataStr = bindData.toString();
-      final Map<String, dynamic> result = jsonDecode(bindDataStr);
-      KvBox.write(PrefKey.OpenInstallBlindData, result);
+    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
+      return;
     }
-  }
-
-  Future installHandler(Map<String, Object> data) async {
     showToast("installHandler : " + data.toString());
     final bindData = data['bindData'];
     if (bindData != null) {
       final bindDataStr = bindData.toString();
       final Map<String, dynamic> result = jsonDecode(bindDataStr);
       KvBox.write(PrefKey.OpenInstallBlindData, result);
+      // 记录己经上传过
+      KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
     }
   }
 
   //<editor-fold desc="登录">
   Future<void> doPwdLogin({required String phone, required String pwd}) {
-    _openinstallFlutterPlugin?.install(installHandler);
 
     return _doLoginBy(
       Api.UserAuth.loginByPwd(name: phone, pwd: pwd),
@@ -88,8 +82,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future<void> doSmsLogin({required String phone, required String smsToken, required String smsCode}) {
-    _openinstallFlutterPlugin?.install(installHandler);
-
     return _doLoginBy(
       Api.UserAuth.loginBySms(phone: phone, smsToken: smsToken, smsCode: smsCode),
       onOk: () => KvBox.write(PrefKey.LastPhone, phone),
