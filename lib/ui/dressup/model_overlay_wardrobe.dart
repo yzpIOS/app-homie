@@ -97,7 +97,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
   }
 
   void _doUseAndSave(List<int> ids) async {
-    final saveIds = await selector.dressUpIds();
+    final saveIds = await selector.getCurrentCloth();
 
     wardrobeCtrl.doUseAndSave(
       useIds: ids,
