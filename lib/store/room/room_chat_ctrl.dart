@@ -101,18 +101,35 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       if(items == null) {
         return;
       }
-      S_GiftPlay? gift = items.first;
-      final sendUid = gift.sendId;
-      final ids = gift.acceptUidList ?? [];
-      final users = await findByUidX({sendUid, ...ids}, useNet: true);
-      users.forEach((key, value) {
-        if(sendUid != value.uid) {
-          dataRx.add(
-            BlindBoxGiftOpenMsgView(
-              BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: moreGift),
-            ),
-          );
+
+      /// 配置数据，多个人多个礼物
+      var dataMap = <List, List<S_GiftPlay>>{};
+      for(S_GiftPlay gift in items) {
+        final ids = gift.acceptUidList ?? [];
+        if (dataMap.keys.contains(ids)) {
+           var giftArray = dataMap[ids];
+           giftArray?.add(gift);
+           dataMap[ids] = giftArray ?? [];
+        } else {
+          dataMap[ids] = [gift];
         }
+      }
+
+      /// 生成每个人的礼物消息
+      dataMap.forEach((dataKey, dataValue) async {
+        S_GiftPlay? gift = dataValue.first;
+        final sendUid = gift.sendId;
+        final ids = gift.acceptUidList ?? [];
+        final users = await findByUidX({sendUid, ...ids}, useNet: true);
+        users.forEach((key, value) {
+          if(sendUid != value.uid) {
+            dataRx.add(
+              BlindBoxGiftOpenMsgView(
+                BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, items: dataValue, data: moreGift),
+              ),
+            );
+          }
+        });
       });
     });
   }
