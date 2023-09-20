@@ -61,7 +61,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }
-    showToast("installHandler : " + data.toString());
     final bindData = data['bindData'];
     if (bindData != null) {
       final bindDataStr = bindData.toString();
