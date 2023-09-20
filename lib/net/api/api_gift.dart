@@ -4,8 +4,8 @@ class ApiGift extends ApiBase {
   const ApiGift(super.path);
 
   /// 普通查询礼物接口
-  Future normalList() {
-    return _doPost('query').then(((it) => it['items']));
+  Future normalList({required PageNum page}) {
+    return _doPost('query', data: page + {}).then(((it) => it['items']));
   }
 
   /// 获取直播间的礼物列表
