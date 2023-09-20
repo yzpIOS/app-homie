@@ -386,6 +386,22 @@ class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin
     _dataRx.clear();
     _data2Rx.clear();
   }
+
+  // 返回当前身上穿着的装扮
+  Future<List<int>> getCurrentCloth() async {
+    late final _unity = Get.find<UnityCtrl>();
+    final resp = await _unity.sendMessage(
+      App2UnityEnum.FTU_CURRENT_CLOTH,
+    );
+
+    try {
+      final ids = jsonDecode(resp) as Iterable;
+      return ids.cast<int>().toList(growable: false);
+    } catch (e, s) {
+      errLog(e, s);
+      return [];
+    }
+  }
 }
 
 class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
