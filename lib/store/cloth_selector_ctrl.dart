@@ -320,8 +320,8 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
   void doReset() {
     _dataRx.clear();
 
-    doReset2DressUp();
-    // clearDressUp();
+    // doReset2DressUp();
+    clearDressUp();
   }
 
   @override
