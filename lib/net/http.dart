@@ -11,6 +11,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class Http {
   late Dio _dio;
@@ -73,7 +74,7 @@ class Http {
     final token = CancelToken();
 
     try {
-      Future<Response> request() {
+      Future<Response> doRequest() {
         _cancel.add(token);
 
         return _dio.request(
@@ -85,7 +86,12 @@ class Http {
         );
       }
 
-      final response = await asyncTrack('HTTP请求[$path]', action: request);
+      final response = await asyncTrack('HTTP请求[$path]', action: doRequest);
+
+      if(response.statusCode != 200 && tryTimes > 0) {
+        debugPrint("失败重试: httpCode = ${response.statusCode}, tryTimes = ${tryTimes}");
+        return await request(method, path, ext: ext, query: query, data: data, tryTimes: tryTimes - 1);
+      }
 
       return response.data;
     } on DioError catch (e) {
