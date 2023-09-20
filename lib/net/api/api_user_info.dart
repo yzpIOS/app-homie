@@ -20,7 +20,7 @@ class ApiUserInfo extends ApiBase {
   }
 
   Future myInfo({String? token}) {
-    return _doPost('detail/query', ext: {HttpHeaders.authorizationHeader: token});
+    return _doPost('detail/query', ext: {HttpHeaders.authorizationHeader: token}, tryTimes: 2);
   }
 
   Future<Map> simple(List<UID> uid) {
