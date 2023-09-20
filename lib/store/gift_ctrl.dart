@@ -10,5 +10,5 @@ class GiftCtrl extends AsyncListCtrl<Map> {
   GiftCtrl({required super.uid}) : super(boxName: 'GiftData');
 
   @override
-  Future get api => hasShowUnityView ? Api.Gift.list(page: const PageNum(size: 999)) : Api.Gift.normalList();
+  Future get api => hasShowUnityView ? Api.Gift.list(page: const PageNum(size: 999)) : Api.Gift.normalList(page: const PageNum(size: 999));
 }
