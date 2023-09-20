@@ -99,13 +99,21 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   void sendFlutterSwitchCloth() async {
     int instruction = isShopMode ? 1 : (isWardrobeMode ? 2 : 3);
     late final _unity = Get.find<UnityCtrl>();
-    _unity.sendMessage(
+    final resp = await _unity.sendMessage(
       App2UnityEnum.FTU_SWITCH_CLOTH,
       data: {
         'goodsIds': await Get.find<ClothSelectorCtrl>().initIds(),
         'instruction': instruction,//instruction ：1是商城 2是我的-衣柜 3是我的-其他(套装、上装、下装等tab)
       },
     );
+
+    try {
+      final ids = jsonDecode(resp) as Iterable;
+      addIds(ids.cast<int>().toList(growable: false));
+    } catch (e, s) {
+      errLog(e, s);
+      addIds([]);
+    }
   }
 
   void addIds(Iterable<int>? items) {

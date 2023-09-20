@@ -24,6 +24,9 @@ class GiftSheet extends StatelessWidget {
   final numRx = RxInt(1);
 
   static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
+    // 配置请求礼物列表类型 true房间礼物列表  false普通礼物列表
+    Get.find<GiftCtrl>().hasShowUnityView = hasShowUnityView;
+
     final sheet = GiftSheet._(logic: logic, hasShowUnityView: hasShowUnityView);
 
     // 刷新金币
