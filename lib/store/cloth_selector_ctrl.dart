@@ -442,10 +442,19 @@ class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
   void doClear() {
     simpleSub(
       clearDressUp,
-      callback: () {
+      callback1: (resp) {
         final dressUpCtrl = Get.find<MyDressUpCtrl>();
         dressUpCtrl.dataRx.clear();
-        _dataRx.clear();
+        // _dataRx.clear();
+
+        /// 修复 - 商城装扮-清除所有单品后，保存按钮置灰状态无法保存初始装
+        try {
+          final ids = jsonDecode(resp) as Iterable;
+          _dataRx.assignAll(ids.cast<int>().toList(growable: false));
+        } catch (e, s) {
+          errLog(e, s);
+          _dataRx.clear();
+        }
       }
     );
   }

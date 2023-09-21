@@ -34,6 +34,7 @@ class _CommentItemViewState extends State<CommentItemView> with MomentActionMixi
       child: XText(
         comment['text'],
         specialTextSpanBuilder: context.watch<SpecialTextSpanBuilder?>(),
+        maxLines: 100,
       ),
     );
 
