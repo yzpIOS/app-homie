@@ -442,7 +442,11 @@ class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
   void doClear() {
     simpleSub(
       clearDressUp,
-      callback: _dataRx.clear,
+      callback: () {
+        final dressUpCtrl = Get.find<MyDressUpCtrl>();
+        dressUpCtrl.dataRx.clear();
+        _dataRx.clear();
+      }
     );
   }
   void updateDressUp2(List data) {
