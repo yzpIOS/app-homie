@@ -78,6 +78,9 @@ class ModelOverlay$Cloth extends StatelessWidget {
   void onItemClick(String action) {
     switch (action) {
       case '保存':
+        if (selector.ids.isEmpty) {
+          return;
+        }
         dressUpCtrl.doSave(ids: selector.ids);
         break;
       case '重置':
