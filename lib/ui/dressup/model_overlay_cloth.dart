@@ -47,13 +47,18 @@ class ModelOverlay$Cloth extends StatelessWidget {
           width: 60,
           height: 30,
           child: Obx(() {
-            // final isEqual = listEquals(selector.ids, dressUpCtrl.ids.toList(growable: false));
-
+            final isEqual = listEquals(selector.ids, dressUpCtrl.ids.toList(growable: false));
+            
             return XTextBtn(
               label: '保存',
               textStyle: ts,
-              color: selector.ids.isEmpty ? AppPalette.hint : AppPalette.primary,
-              onTap: () => onItemClick('保存'),
+              color: isEqual ? AppPalette.hint : AppPalette.primary,
+              onTap: () {
+                if (isEqual) {
+                  return;
+                }
+                onItemClick('保存');
+              },
             );
           }),
         ),
@@ -78,9 +83,6 @@ class ModelOverlay$Cloth extends StatelessWidget {
   void onItemClick(String action) {
     switch (action) {
       case '保存':
-        if (selector.ids.isEmpty) {
-          return;
-        }
         dressUpCtrl.doSave(ids: selector.ids);
         break;
       case '重置':
