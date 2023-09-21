@@ -299,21 +299,26 @@ class _MyModelViewState extends State<MyModelView> {
   }
 
   // 点击切换groupListId 1.聚焦头部、2.概览全身按钮
-  void onChangeCameraDressTypeClick(int groupListId) {
+  void onChangeCameraDressTypeClick(int groupListId) async {
     if (groupListId == clothSelectorCtrl.groupListId.value) {
       return;
     }
 
     clothSelectorCtrl.groupListId.value = groupListId;
     changeCameraSwitch();
+
+    //先请求“商城”分栏下的分类
     try {
-      Get.find<ShopCategoryCtrl>().doRefresh();
+      await Get.find<ShopCategoryCtrl>().doRefresh();
     } catch (e) {
       showToast('请求超时，请稍后重试');
     }
+
+    //再请求“我的”分栏下的分类
     Get.find<MyDressUpCtrl>().getMyDressList();
   }
 
+  // 发送更改镜头位置给unity
   void changeCameraSwitch() {
     //position 镜头位置 0：聚焦头部 1：概览全身
     S_CameraSwitch s_cameraSwitch = S_CameraSwitch();

@@ -3,6 +3,7 @@ part of '../api.dart';
 class ApiShop extends ApiBase {
   const ApiShop(super.path);
 
+  /// 查询装扮分类
   Future categoryList_({int parentId = 0}) {
     final data = {
       'status': 1,
@@ -13,6 +14,7 @@ class ApiShop extends ApiBase {
     return _doPost('category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
   }
 
+  /// 查询商城分类
   Future categoryList(bool needGroupListId) {
     final data = {
       if (needGroupListId)
