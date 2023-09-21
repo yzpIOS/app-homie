@@ -4,6 +4,8 @@ import 'package:app/store/common/async_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 
+import 'cloth_selector_ctrl.dart';
+
 class MyDressUpCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
   RxList<dynamic> myDressList = RxList();
 
@@ -24,7 +26,13 @@ class MyDressUpCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
     simpleSub(
       Api.DressUp.save(ids: ids),
       msg: '操作成功',
-      callback1: (resp) => updateDressUp2(resp),
+      callback1: (resp) {
+        final selector = Get.find<ClothSelectorCtrl>().selectorCloth;
+        selector.updateDressUp2(resp.items.map((e) {
+          return {"product_id" : e.id.toInt()};
+        }).toList());
+        updateDressUp2(resp);
+      },
     );
   }
 

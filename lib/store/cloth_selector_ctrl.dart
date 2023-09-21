@@ -228,11 +228,11 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
 
   @override
   Future<List<int>> dressUpIds() {
-    if (_dataRx.isEmpty) {
+    // if (_dataRx.isEmpty) {
       return dressUpCtrl.fetchIds();
-    } else {
-      return Future.value(_dataRx.value);
-    }
+    // } else {
+    //   return Future.value(_dataRx.value);
+    // }
   }
 
   void _doAdd(int id) {}
@@ -442,7 +442,11 @@ class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
   void doClear() {
     simpleSub(
       clearDressUp,
-      callback: _dataRx.clear,
+      callback: () {
+        final dressUpCtrl = Get.find<MyDressUpCtrl>();
+        dressUpCtrl.dataRx.clear();
+        _dataRx.clear();
+      }
     );
   }
   void updateDressUp2(List data) {
