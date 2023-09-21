@@ -152,7 +152,6 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
           if(result != null) {
             if(userList[index] == "1") {
               roomOwner = result;
-            } else if(userList[index] == "8") {
             } else {
               userInMicList.add(result);
             }
