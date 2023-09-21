@@ -228,11 +228,11 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
 
   @override
   Future<List<int>> dressUpIds() {
-    if (_dataRx.isEmpty) {
+    // if (_dataRx.isEmpty) {
       return dressUpCtrl.fetchIds();
-    } else {
-      return Future.value(_dataRx.value);
-    }
+    // } else {
+    //   return Future.value(_dataRx.value);
+    // }
   }
 
   void _doAdd(int id) {}
