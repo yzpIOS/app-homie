@@ -141,4 +141,7 @@ class _ContentView extends MomentContentView$Detail<MomentDtoAdapter>
 
   @override
   late final videoCreator = VideoCreator$Detail();
+
+  @override
+  int? get maxLines => 100;
 }
