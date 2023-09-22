@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/config_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/app_dialog.dart';
 import 'package:app/widgets.dart';
@@ -33,7 +34,7 @@ abstract class IPact {
 
   Widget $PactTxt();
 
-  void alertSub({VoidCallback? doSub}) {
+  void alertSub({VoidCallback? doSub, bool fromLogin = true}) {
     if (pactRx.isTrue) {
       doSub?.call();
     } else {
@@ -52,6 +53,11 @@ abstract class IPact {
       Get.dialog(dialog, useSafeArea: false).then((val) {
         if (val == true) {
           agree();
+
+          // 来自登录, 同意后才进行初始化
+          if(fromLogin) {
+            OAuthCtrl.ins.initPrivacy();
+          }
 
           doSub?.call();
         }

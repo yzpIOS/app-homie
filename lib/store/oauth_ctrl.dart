@@ -26,6 +26,10 @@ import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static AuthInfo? _auth;
 
+  static OAuthCtrl get ins {
+    return Get.find<OAuthCtrl>();
+  }
+
   OpeninstallFlutterPlugin? _openinstallFlutterPlugin;
 
   @override
@@ -50,12 +54,21 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
+    }
+    FlutterNativeSplash.remove();
+  }
+
+  ///
+  /// 同意隐私协议后，才进行初始化
+  ///
+  void initPrivacy() {
+    // 未登录时，初始化OpeninstallFlutterPlugin
+    if(_openinstallFlutterPlugin == null) {
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
       _openinstallFlutterPlugin?.init(wakeupHandler);
       _openinstallFlutterPlugin?.install(onInstall);
     }
-    FlutterNativeSplash.remove();
   }
 
   Future wakeupHandler(Map<String, Object> data) async {

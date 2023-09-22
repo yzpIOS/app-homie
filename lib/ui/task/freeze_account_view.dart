@@ -93,6 +93,7 @@ class _FreezeAccountPageState extends State<FreezeAccountPage> {
 
   void _doSub() {
     Pact.freezeAccount.alertSub(
+      fromLogin: false,
       doSub: () {
         Get.alertSub(
           alert: '确定注销',
