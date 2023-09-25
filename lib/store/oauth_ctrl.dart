@@ -99,6 +99,18 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     }
   }
 
+  ///
+  /// 上传注册信息
+  ///
+  Future<void> reportRegister() async {
+    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag2)) {
+      return;
+    }
+    _openinstallFlutterPlugin?.reportRegister();
+    // 记录己经上传过
+    KvBox.write(PrefKey.OpenInstallBlindDataFlag2, PrefKey.OpenInstallBlindDataFlag2);
+  }
+
   //<editor-fold desc="登录">
   Future<void> doPwdLogin({required String phone, required String pwd}) {
 
@@ -183,6 +195,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         } else {
           throw const CanceledException();
         }
+
+        // 上传注册信息
+        await reportRegister();
       } else {
         await updateUserInfo(myInfo, token);
         _setup(_auth!, true, info: myInfo);

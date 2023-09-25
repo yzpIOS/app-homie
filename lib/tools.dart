@@ -135,5 +135,7 @@ class PrefKey {
   static const OpenInstallBlindData = 'OpenInstallBlindData';
   // 记录是否上传openInstall
   static const OpenInstallBlindDataFlag = 'OpenInstallBlindDataFlag';
+  // 记录是否上传openInstall
+  static const OpenInstallBlindDataFlag2 = 'OpenInstallBlindDataFlag2';
 
 }
