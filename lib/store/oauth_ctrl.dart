@@ -103,7 +103,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   /// 上传注册信息
   ///
   Future<void> reportRegister() async {
-    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag2)) {
+    if(Env.isDebugCfg) {
       return;
     }
     _openinstallFlutterPlugin?.reportRegister();
