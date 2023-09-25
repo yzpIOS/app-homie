@@ -10,6 +10,7 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
+import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +173,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
         final info = await holderProgress(
           Get.to(
-                () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
+                // () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
+            () => MyUserInitPerfectInfoPage(token: token),
             transition: Transition.noTransition,
           )!,
         );
