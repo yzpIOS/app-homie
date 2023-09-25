@@ -63,9 +63,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           alignment: Alignment.center,
           children: [
             Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + MediaQuery.of(context).padding.top + 26 : AppSize.safeTop + MediaQuery.of(context).padding.top + 232,
+              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 235,
               child: const RoomChatView(),
             ),
+            // 横屏右侧视图
             if (showMicPanel && (sideMicMode || isLandscape))
               Positioned(
                 right: 0,
@@ -273,8 +274,10 @@ class _RoomHeader extends RoomGetView<RoomCtrl> {
 
   @override
   Widget build(BuildContext context) {
+    // 横屏
     if (isLandscape || !showMicPanel) return $AppBar();
 
+    // 竖屏
     Widget child = $AppBar(
       [
         if (!showMic)

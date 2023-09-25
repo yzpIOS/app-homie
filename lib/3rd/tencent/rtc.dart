@@ -5,6 +5,8 @@ import 'package:tencent_trtc_cloud/trtc_cloud.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_listener.dart';
 
+import 'keys.dart';
+
 export 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 
 class Rtc {
@@ -19,19 +21,19 @@ class Rtc {
   static final videoRx = RxBool(false);
   static final netQualityRx = RxInt(0);
 
-  static late final TRTCCloud rtcClient;
+  static late final TRTCCloud _rtcClient;
 
   static Future<void> _init() async {
-    rtcClient = (await TRTCCloud.sharedInstance())!;
+    _rtcClient = (await TRTCCloud.sharedInstance())!;
 
     await Future.wait(
       [
-        rtcClient.setLogLevel(TRTCCloudDef.TRTC_LOG_LEVEL_NULL),
-        rtcClient.setConsoleEnabled(canLog(LogType.RTC)),
+        _rtcClient.setLogLevel(TRTCCloudDef.TRTC_LOG_LEVEL_NULL),
+        _rtcClient.setConsoleEnabled(canLog(LogType.RTC)),
       ],
     );
 
-    rtcClient.registerListener((type, args) {
+    _rtcClient.registerListener((type, args) {
       switch (type) {
         case TRTCCloudListener.onNetworkQuality:
           netQualityRx(args['localQuality']['quality']);
@@ -169,7 +171,7 @@ class Rtc {
     xlog('用户进入房间 -> $args', type: LogType.RTC);
 
     if (args > 0) {
-      rtcClient.enableAudioVolumeEvaluation(400);
+      _rtcClient.enableAudioVolumeEvaluation(400);
     } else if (args < 0) {
       assert(false);
     } else {
@@ -203,12 +205,12 @@ class Rtc {
     try {
       await Future.wait(
         [
-          rtcClient.muteLocalAudio(!enable),
+          _rtcClient.muteLocalAudio(!enable),
           if (enable) //
-            rtcClient.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
+            _rtcClient.startLocalAudio(TRTCCloudDef.TRTC_AUDIO_QUALITY_MUSIC)
           else
-            rtcClient.stopLocalAudio(),
-          rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
+            _rtcClient.stopLocalAudio(),
+          _rtcClient.switchRole(enable ? TRTCCloudDef.TRTCRoleAnchor : TRTCCloudDef.TRTCRoleAudience)
         ],
       );
 
@@ -221,7 +223,7 @@ class Rtc {
   //开关声音
   static Future<void> _enableAudio(bool enable) async {
     try {
-      await rtcClient.muteAllRemoteAudio(!enable);
+      await _rtcClient.muteAllRemoteAudio(!enable);
 
       xlog(() => '声音状态设置为[$enable]', type: LogType.RTC);
     } catch (e, s) {
@@ -229,16 +231,38 @@ class Rtc {
     }
   }
 
+  static Future<void> enterRoom(String roomId, String token) async {
+    await Rtc.init;
+    await Rtc.leave(isJoinBefore: true);
+    _rtcClient.enterRoom(
+      TRTCParams(
+        sdkAppId: appId,
+        roomId: 0,
+        strRoomId: roomId,
+        userId: OAuthCtrl.uid,
+        userSig: token,
+        role: TRTCCloudDef.TRTCRoleAudience,
+      ),
+      TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM,
+    );
+
+    Rtc.micRx(false);
+  }
+
+  static Future<void> setAudioCaptureVolume(int volume) async {
+    await Rtc._rtcClient.setAudioCaptureVolume(volume.toInt());
+  }
+
   //开关视频
   static Future<void> _enableVideo(bool enable) async {
     try {
       await Future.wait(
         [
-          rtcClient.muteLocalVideo(!enable),
+          _rtcClient.muteLocalVideo(!enable),
           if (enable) //
-            rtcClient.startLocalPreview(true, null)
+            _rtcClient.startLocalPreview(true, null)
           else
-            rtcClient.stopLocalPreview(),
+            _rtcClient.stopLocalPreview(),
         ],
       );
 
@@ -261,13 +285,17 @@ class Rtc {
     micRx.toggle();
   }
 
+  static Future<void> switchRole(int role) async {
+    await _rtcClient.switchRole(TRTCCloudDef.TRTCRoleAnchor);
+  }
+
   static Future<void> leave({bool isJoinBefore = false}) async {
     try {
       audioRx(true);
       await Future.wait(
         [
           // $.switchRole(TRTCCloudDef.TRTCRoleAudience),
-          rtcClient.exitRoom(),
+          _rtcClient.exitRoom(),
         ],
       );
 
