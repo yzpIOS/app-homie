@@ -161,6 +161,7 @@ flutter:
     #
     - assets/img/
     - assets/img/msg/
+    - assets/img/login/
     - assets/img/my/
     - assets/img/my/level/
     - assets/img/emoji/

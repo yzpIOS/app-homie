@@ -20,6 +20,10 @@ class HomeShopPage extends StatefulWidget {
 }
 
 class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, OverlayMixin {
+  StreamSubscription? streamSubscription;
+  bool modelSceneUnityLoadComplete = false;//商城模特unity界面是否加载完成
+
+  late final clothSelectorCtrl = Get.find<ClothSelectorCtrl>();
   late final cartCtrl = Get.find<ShoppingCartCtrl>();
 
   late final pageCtrl = PageController();
@@ -32,6 +36,12 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
   final _key = UniqueKey();
 
   @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
+  }
+
+  @override
   void initState() {
     super.initState();
 
@@ -39,10 +49,29 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
     // Get.find<ShopRecommendCtrl>().doRefresh();
     cartCtrl.doRefresh();
 
+    /// unity界面加载事件
+    streamSubscription = Bus.on<LoadScene>((event) {
+      modelSceneUnityLoadComplete = (event.sceneName == "ModelScene");
+      if (modelSceneUnityLoadComplete && clothSelectorCtrl.needGoToMyWardrobe) {
+        const GoWardrobeEvent().fire();
+        clothSelectorCtrl.needGoToMyWardrobe = false;
+      }
+    });
+
+    /// 我的页点击“我的装扮”，跳转“商城-我的-衣柜”事件
     on<GoDressUpEvent>(
-      (_) => pageCtrl.jumpToPage(0),
+      // (_) => pageCtrl.jumpToPage(0),
+      (_) {
+        if (modelSceneUnityLoadComplete) {
+          const GoWardrobeEvent().fire();
+          clothSelectorCtrl.needGoToMyWardrobe = false;
+        } else {
+          clothSelectorCtrl.needGoToMyWardrobe = true;
+        }
+      },
     );
 
+    /// 点击“去使用”，跳转“商城-我的-衣柜”事件
     on<GoWardrobeEvent>(
       (_) => pageCtrl.jumpToPage(0),
     );

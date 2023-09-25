@@ -12,6 +12,8 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   final selectorShop = _SelectorShop();//商城
   final selectorCloth = _SelectorCloth();//我的-其他
   final selectorWardrobe = _SelectorWardrobe();//我的-衣柜
+  bool needGoToMyWardrobe = false;//是否要跳转我的装扮
+  bool modelSceneUnityLoadComplete = false;//商城模特unity界面是否加载完成
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
@@ -140,6 +142,7 @@ abstract class ClothSelector {
 
 mixin _UnityDressUpMixin {
   late final _unity = Get.find<UnityCtrl>();
+  late final _clothSelectorCtrl = Get.find<ClothSelectorCtrl>();
 
   // Future<List<int>> calcDressUp(int newId, List<int> ids) async {
   //   final data = {
@@ -175,10 +178,14 @@ mixin _UnityDressUpMixin {
   }
 
   Future<Iterable<int>> _doDressUp(List<int> ids) async {
+    /// 商城模特unity界面没加载成功，不能穿上新服装
+    if (_clothSelectorCtrl.modelSceneUnityLoadComplete == false) {
+      return [];
+    }
+
     final data = {
       'goodsIds': ids,
     };
-
     final resp = await _unity.sendMessage(App2UnityEnum.FTU_DRESSUP_CLOTH, data: data);
 
     try {

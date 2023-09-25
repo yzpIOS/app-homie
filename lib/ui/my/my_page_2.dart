@@ -1,8 +1,10 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/api/my_info_dto.dart';
+import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/my/backpack/backpack_page.dart';
 import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
@@ -154,10 +156,12 @@ class _MyPage2State extends State<MyPage2> {
         Get.to(() => const WalletPage());
         break;
       case '我的装扮':
+        Get.find<ClothSelectorCtrl>().needGoToMyWardrobe = true;
         const GoDressUpEvent().fire();
         break;
       case '我的背包':
         Get.to(() => const BackpackPage());
+        // Get.to(() => const MyUserInitPerfectInfoPage(token: '123',), popGesture: false,);
         break;
       case '我的任务':
         SignDialog.show(isManual: true);

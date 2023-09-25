@@ -84,6 +84,7 @@ class FormInputView extends StatelessWidget {
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final BorderRadius? borderRadius;
 
   FormInputView({
     super.key,
@@ -97,6 +98,7 @@ class FormInputView extends StatelessWidget {
     this.enabled = true,
     this.autofocus = false,
     this.maxLength,
+    this.borderRadius,
     TextInputType? keyboardType,
   }) : keyboardType = keyboardType ?? (isPwd ? TextInputType.visiblePassword : TextInputType.text);
 
@@ -137,10 +139,10 @@ class FormInputView extends StatelessWidget {
       filled: true,
       fillColor: const Color(0xFFF5F5F5),
       counterText: "",
-      border: const OutlineInputBorder(
+      border: OutlineInputBorder(
         gapPadding: 0,
         borderSide: BorderSide.none,
-        borderRadius: AppBorderRadius.max,
+        borderRadius: borderRadius ?? AppBorderRadius.max,
       ),
     );
   }
