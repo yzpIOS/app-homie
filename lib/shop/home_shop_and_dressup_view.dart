@@ -145,7 +145,7 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
     );
   }
 
-  StreamSubscription? streamSubscription = null;
+  StreamSubscription? streamSubscription;
   static bool needDoRefresh = false;
 
   @override

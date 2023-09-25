@@ -36,7 +36,6 @@ class MyModelView extends StatefulWidget {
 
 class _MyModelViewState extends State<MyModelView> {
   final clothSelectorCtrl = Get.find<ClothSelectorCtrl>();
-  bool unityLoadComplete = false;
 
   StreamSubscription? streamSubscription;
 
@@ -45,7 +44,7 @@ class _MyModelViewState extends State<MyModelView> {
     super.initState();
     streamSubscription = Bus.on<LoadScene>((event) {
       if(event.sceneName != "ModelScene") {
-        unityLoadComplete = false;
+        clothSelectorCtrl.modelSceneUnityLoadComplete = false;
         setState(() { });
       }
     });
@@ -118,7 +117,7 @@ class _MyModelViewState extends State<MyModelView> {
                   errLog(e, s);
                 }
 
-                unityLoadComplete = true;
+                clothSelectorCtrl.modelSceneUnityLoadComplete = true;
                 myInfo.modeUnityLoadStatus.value = true;
                 setState(() { });
               } catch (e, s) {
@@ -134,7 +133,7 @@ class _MyModelViewState extends State<MyModelView> {
       children: [
         AspectRatio(aspectRatio: MyModelView.ratio, child: child),
         // 加载成功后，根据"商城"、"我的衣柜"、"我的其他"显示
-        if(unityLoadComplete)
+        if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned.fill(
             child: GetX<ClothSelectorCtrl>(
               builder: (it) {
@@ -145,7 +144,7 @@ class _MyModelViewState extends State<MyModelView> {
             ),
           ),
         // 加载成功后，才显示广场按钮
-        if(unityLoadComplete)
+        if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned(
             bottom: 100,
             left: 20,
@@ -154,14 +153,14 @@ class _MyModelViewState extends State<MyModelView> {
             // child: $Btn(action: '装扮抽奖入口'),
           ),
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
-        if(unityLoadComplete)
+        if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned(
             top: AppSize.safeTop + 60,
             right: 25,
             child: $HeadChangeCameraDressTypeView(),
           ),
         // 加载成功后，才显示"商城""我的"切换视图
-        if(unityLoadComplete)
+        if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned(
             left: 10,
             bottom: 20,
