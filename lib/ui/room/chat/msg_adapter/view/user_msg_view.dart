@@ -63,8 +63,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
       ],
     );
 
-    //TODO maxLines
-    return RichText(text: span, maxLines: 4);
+    return RichText(text: span);
   }
 }
 
