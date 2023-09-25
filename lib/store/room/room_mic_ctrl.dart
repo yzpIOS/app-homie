@@ -125,7 +125,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         assert(event.channel == '$roomId', '数据错误 -> $event');
 
         if (dataRx.values.any((it) => it.uid == myUid)) {
-          await Rtc.rtcClient.switchRole(TRTCCloudDef.TRTCRoleAnchor);
+          await Rtc.switchRole(TRTCCloudDef.TRTCRoleAnchor);
         }
       },
     );

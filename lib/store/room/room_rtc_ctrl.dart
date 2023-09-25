@@ -134,26 +134,9 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   }
 
   Future<void> joinRoom({required String roomId}) async {
-    await Rtc.init;
-    await Rtc.leave(isJoinBefore: true);
-
     xlog('用户[$OAuthCtrl.uid]准备加入房间 -> $roomId', type: LogType.RTC);
-
     final token = await Get.find<ImAuth>().fetchToken();
-
-    await Rtc.rtcClient.enterRoom(
-      TRTCParams(
-        sdkAppId: appId,
-        roomId: 0,
-        strRoomId: roomId,
-        userId: OAuthCtrl.uid,
-        userSig: token,
-        role: TRTCCloudDef.TRTCRoleAudience,
-      ),
-      TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM,
-    );
-
-    Rtc.micRx(false);
+    await Rtc.enterRoom(roomId, token);
   }
 
   Future<void> leaveRoom() {
@@ -162,5 +145,5 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
     return Rtc.leave();
   }
 
-  Future<void> setMicVol(double volume) => Rtc.rtcClient.setAudioCaptureVolume(volume.toInt());
+  Future<void> setMicVol(double volume) => Rtc.setAudioCaptureVolume(volume.toInt());
 }
