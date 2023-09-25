@@ -146,16 +146,11 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
   }
 
   StreamSubscription? streamSubscription;
-  static bool needDoRefresh = false;
-
+  
   @override
   void didUpdateWidget(covariant _DataView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (needDoRefresh == false) {
-      needDoRefresh = true;
-      return;
-    }
     debugPrint("didUpdateWidget categoryId = ${widget.categoryId}");
     streamSubscription?.cancel();
     streamSubscription = Future.delayed(const Duration(milliseconds: 200)).asStream().listen((event) {
