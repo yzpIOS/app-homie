@@ -37,11 +37,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver, RouteAware {
   final selector = ValueNotifier(1);
 
-  bool resumeReconnect = false;
-  StreamSubscription? _closeCountDown;
-  StreamSubscription? _appStreamSubscription;
-
   // 用于苹果支付补单用
+  StreamSubscription? _appStreamSubscription;
   ApplePurchase? applePurchase = null;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
@@ -129,7 +126,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
 
   @override
   void dispose() {
-    _closeCountDown?.cancel();
     applePurchase?.dispose();
     _appStreamSubscription?.cancel();
     AppNavObserver.unsubscribe(this);
@@ -163,35 +159,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
-        _closeCountDown?.cancel();
-        // 从后台到前台了
-        // 开启socket连接
-        if(!resumeReconnect) {
-          return;
-        }
-        resumeReconnect = false;
-        // 重新连接
-        SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
-        // 开始heart beat
-        SocketCtrl.ins.startUnityHeartBeat();
-
-        // 关闭房间
-        try {
-          if(RoomManagerCtrl.ins.stateRx.value != RoomState.None) {
-            RoomManagerCtrl.ins.closeRoom2();
-          }
-        } catch(e) {
-          debugPrint(e.toString());
-        }
-        RoomExitEvent("房间数据加载失败，请重试").fire();
         break;
       case AppLifecycleState.paused:
-        _closeCountDown?.cancel();
-        _closeCountDown = Future.delayed(const Duration(seconds: 40)).asStream().listen((event) {
-          resumeReconnect = true;
-          SocketCtrl.ins.closeSocket();
-          SocketCtrl.ins.cancelUnityHeartBeat();
-        });
         break;
       case AppLifecycleState.detached:
         // app 结束时调用
