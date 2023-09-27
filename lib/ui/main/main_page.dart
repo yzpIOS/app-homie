@@ -79,7 +79,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
     // 支付补单
-    _appStreamSubscription = Future.delayed(const Duration(seconds: 1)).asStream().listen((event) {
+    _appStreamSubscription = Future.delayed(const Duration(seconds: 10)).asStream().listen((event) {
+      showToastQueue("开始补单111");
       applePurchase = ApplePurchase(compensate: true);
     });
   }
