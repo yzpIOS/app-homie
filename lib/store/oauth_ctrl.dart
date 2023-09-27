@@ -27,6 +27,8 @@ import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static AuthInfo? _auth;
 
+  String? jumpUri;
+
   static OAuthCtrl get ins {
     return Get.find<OAuthCtrl>();
   }
@@ -52,6 +54,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     if(isLogin && _auth?.sex != 0) {
       // 己登录，并且资料己经填完
       App.toApp();
+      // 己登录
+      initPrivacy();
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
@@ -73,31 +77,52 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-    //   return;
-    // }
-    // final bindData = data['bindData'];
-    // if (bindData != null) {
-    //   final bindDataStr = bindData.toString();
-    //   final Map<String, dynamic> result = jsonDecode(bindDataStr);
-    //   KvBox.write(PrefKey.OpenInstallBlindData, result);
-    //   // 记录己经上传过
-    //   KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
-    // }
+    // 获取json数据
+    final bindData = data['bindData'];
+    if(bindData == null) {
+      return;
+    }
+    final bindDataStr = bindData.toString();
+    // json数据解析
+    final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    // 处理跳转问题
+    handleBridge(result);
   }
 
   Future onInstall(Map<String, Object> data) async {
+    // 获取json数据
+    final bindData = data['bindData'];
+    if(bindData == null) {
+      return;
+    }
+    final bindDataStr = bindData.toString();
+    // json数据解析
+    final Map<String, dynamic> result = jsonDecode(bindDataStr);
+
+    // 处理跳转问题
+    handleBridge(result);
+
+    // 把渠道信息记录在缓存中
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }
-    final bindData = data['bindData'];
-    if (bindData != null) {
-      final bindDataStr = bindData.toString();
-      final Map<String, dynamic> result = jsonDecode(bindDataStr);
-      KvBox.write(PrefKey.OpenInstallBlindData, result);
-      // 记录己经上传过
-      KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+    KvBox.write(PrefKey.OpenInstallBlindData, result);
+    // 记录己经上传过
+    KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+  }
+
+  ///
+  /// 处理跳转
+  ///
+  Future<void> handleBridge(Map<String, dynamic> result) async {
+    if(!result.containsKey(PrefKey.BridgeUrl)) {
+      return;
     }
+    var bridgeUrl = result[PrefKey.BridgeUrl].toString();
+    if(bridgeUrl.isEmpty) {
+      return;
+    }
+    jumpUri = bridgeUrl;
   }
 
   ///

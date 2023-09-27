@@ -5,6 +5,7 @@ import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/common/utils/route_utils.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/shop/home_shop_page.dart';
@@ -38,8 +39,11 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   final selector = ValueNotifier(1);
 
   // 用于苹果支付补单用
+  ApplePurchase? applePurchase;
   StreamSubscription? _appStreamSubscription;
-  ApplePurchase? applePurchase = null;
+
+  // 延迟跳转到
+  StreamSubscription? _delayJumpSubscription;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -82,6 +86,13 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     _appStreamSubscription = Future.delayed(const Duration(seconds: 10)).asStream().listen((event) {
       showToastQueue("开始补单111");
       applePurchase = ApplePurchase(compensate: true);
+    });
+    // 跳转到新页面
+    _delayJumpSubscription = Future.delayed(const Duration(seconds: 3)).asStream().listen((event) {
+      // 跳转
+      RouteUtil.j ump("homie://webView?url=https://www.baidu.com/");
+      // 重置为空
+      OAuthCtrl.ins.jumpUri = null;
     });
   }
 
@@ -128,6 +139,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void dispose() {
     applePurchase?.dispose();
+    _delayJumpSubscription?.cancel();
     _appStreamSubscription?.cancel();
     AppNavObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
