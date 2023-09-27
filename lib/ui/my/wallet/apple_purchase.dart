@@ -202,7 +202,6 @@ class ApplePurchase {
     if(details is AppStorePurchaseDetails) {
       try {
         var result = await Api.Wallet.checkAppPayStatus(recordNumber, details.purchaseID ?? "");
-        showToastQueue("服务端补单结果：${convert.jsonEncode(result)}");
 
         if(result is Map == false || result["code"] != 0) {
           return Future.value(false);
