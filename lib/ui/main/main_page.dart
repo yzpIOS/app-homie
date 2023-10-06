@@ -90,7 +90,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     // 跳转到新页面
     _delayJumpSubscription = Future.delayed(const Duration(seconds: 3)).asStream().listen((event) {
       // 跳转
-      RouteUtil.jump("homie://webView?url=https://www.baidu.com/");
+      RouteUtil.jump(OAuthCtrl.ins.jumpUri);
       // 重置为空
       OAuthCtrl.ins.jumpUri = null;
     });

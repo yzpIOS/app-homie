@@ -21,7 +21,7 @@ class RouteUtil {
       return;
     }
     var data = uri.queryParameters;
-    switch(uri.host) {
+    switch(uri.host.toLowerCase()) {
       case "room":
         // 房间
         String? roomId = data["roomId"];
@@ -34,7 +34,7 @@ class RouteUtil {
         }
         RoomManagerCtrl.ins.toRoom(roomId: roomIdInt, data: uri.data?.parameters);
         break;
-      case "webView":
+      case "webview":
         // 跳到webview
         var jumpUrl = data['url'];
         if(jumpUrl == null || jumpUrl.isEmpty) {
@@ -46,7 +46,7 @@ class RouteUtil {
         // 跳到webview
         Get.to(() => RechargePage(hasShowUnityView: false,));
         break;
-      case "userCenter":
+      case "usercenter":
         // 跳到webview
         var userId = data['userId'];
         if(userId == null || userId.isEmpty) {
