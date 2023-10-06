@@ -24,7 +24,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     const {'昵称'},
     value: (_) => TextEditingController(),
   );
-  final nickNameCountRx = RxInt(0); //昵称数字
+  final nickNameLengthRx = RxInt(0); //昵称长度
   final selectedGender = Rxn<GenderEnum>(); //性别
 
   @override
@@ -32,7 +32,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     super.initState();
 
     inputs['昵称']?.addListener(() {
-      nickNameCountRx.value = inputs['昵称']!.text.length;
+      nickNameLengthRx.value = inputs['昵称']!.text.length;
     });
   }
 
@@ -76,10 +76,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
             Positioned(
               bottom: 0,
               right: 0,
-              child: Image.asset(
-                  IMG.format('login/login_small_camera'), width: 24,
-                  height: 24,
-                  scale: 3),
+              child: Image.asset(IMG.format('login/login_small_camera'), width: 24, height: 24, scale: 3),
             ),
           ],
         ),
@@ -99,15 +96,18 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
         children: [
           Row(
             children: [
-              const Expanded(child: XText('请输入您的昵称', style: TextStyle(
-                fontSize: 16,
-                color: AppPalette.txtDark,
-                fontWeight: fw$Regular),)),
+              const Expanded(
+                child: XText(
+                  '请输入您的昵称',
+                  style: TextStyle(fontSize: 16, color: AppPalette.txtDark, fontWeight: fw$Regular),
+                )
+              ),
               Obx(() =>
-                  XText('${nickNameCountRx.value}/8', style: const TextStyle(
-                    fontSize: 14,
-                    color: AppPalette.c9,
-                    fontWeight: fw$Regular),)),
+                XText(
+                  '${nickNameLengthRx.value}/8',
+                  style: const TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$Regular),
+                )
+              ),
             ],
           ),
           const Spacing(height: 5, flex: null,),
@@ -117,7 +117,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
             borderRadius: AppBorderRadius.a4,
             maxLength: 8,
             onChanged: (text) {
-              nickNameCountRx.value = text.length;
+              nickNameLengthRx.value = text.length;
             },
           ),
         ],
@@ -169,8 +169,10 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
             )
         ),
         const Spacing(height: 10, flex: null,),
-        XText('${gender.label}生', style: const TextStyle(
-            fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),),
+        XText(
+          '${gender.label}生',
+          style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
+        ),
       ],
     );
   }
@@ -179,13 +181,12 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     return Box(
       padding: const Pad(horizontal: 48),
       child: Obx(() {
-        bool isEnable = nickNameCountRx.value > 0 && selectedGender.value != null;
+        bool isEnable = nickNameLengthRx.value > 0 && selectedGender.value != null;
         return XTextBtn(
           color: isEnable ? AppPalette.primary : AppPalette.cc,
           label: '下一步',
-          textStyle: TextStyle(
-              fontSize: 16, color: isEnable ? AppPalette.txtWhite : AppPalette.background2, fontWeight: fw$SemiBold),
-          onTap: doSub,
+          textStyle: TextStyle(fontSize: 16, color: isEnable ? AppPalette.txtWhite : AppPalette.background2, fontWeight: fw$SemiBold),
+          onTap: isEnable ? doSub : null,
         );
       }),
     );
@@ -215,20 +216,36 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
       hideKeyboard();
 
       final avatar = avatarRx()?.value1;
+      // if (avatar == null) {
+      //   final resp = await Get.simpleDialog(msg: '上传头像', okLabel: '确定', cancelLabel: '跳过');
+      //
+      //   switch (resp) {
+      //     case '跳过':
+      //       break;
+      //     case '确定':
+      //       doSelectImage();
+      //       return;
+      //     default:
+      //       return;
+      //   }
+      // }
 
-      if (avatar == null) {
-        final resp = await Get.simpleDialog(msg: '上传头像', okLabel: '确定', cancelLabel: '跳过');
-
-        switch (resp) {
-          case '跳过':
-            break;
-          case '确定':
-            doSelectImage();
-            return;
-          default:
-            return;
-        }
-      }
+      // //检验昵称是否重复
+      // simpleSub(
+      //   Api.Wallet.info(id: 123),
+      //   callback: () async {
+      //     //跳转角色展示页
+      //     final result = await holderProgress(
+      //       Get.to(
+      //         () => MyUserInitViewGenderModelPage(token: widget.token, nickName: inputs.by('昵称'), gender: selectedGender.value!, avatar: avatar),
+      //         transition: Transition.noTransition,
+      //       )!,
+      //     );
+      //     if (result != null) {
+      //       Get.back(result: result);
+      //     }
+      //   }
+      // );
 
       final result = await holderProgress(
         Get.to(
