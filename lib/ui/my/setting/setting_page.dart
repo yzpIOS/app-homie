@@ -5,6 +5,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/common/web_page.dart';
 import 'package:app/ui/my/setting/setting_account_page.dart';
 import 'package:app/ui/my/setting/setting_notify_page.dart';
 import 'package:app/ui/my/setting/setting_privacy_page.dart';
@@ -45,8 +46,20 @@ class _SettingPageState extends State<SettingPage> {
         child: Column(
           children: [
             $DataView(),
+            TextButton(
+              child: const Text.rich(
+                TextSpan(
+                  style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: fw$Regular),
+                  children: [
+                    TextSpan(text: 'ICP备案号：桂ICP备2023001721号-2A',),
+                    WidgetSpan(child: RightArrowIcon(), alignment: PlaceholderAlignment.middle,),
+                  ],
+                ),
+              ),
+              onPressed: () => onItemClick('备案号'),
+            ),
             Padding(
-              padding: const Pad(horizontal: 32, top: 20, bottom: 68),
+              padding: const Pad(horizontal: 32, bottom: 68),
               child: XTextBtn(
                 label: '退出登录',
                 color: Colors.white,
@@ -167,6 +180,9 @@ class _SettingPageState extends State<SettingPage> {
         break;
       case '关于':
         Get.to(() => const SettingVersionPage());
+        break;
+      case '备案号':
+        Get.to(() => WebPage(title: "ICP/IP地址/域名信息备案管理", uri: Uri.parse("https://beian.miit.gov.cn")));
         break;
       case '退出登录':
         Get.alertSub(
