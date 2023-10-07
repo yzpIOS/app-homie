@@ -41,15 +41,15 @@ class ApiUserInfo extends ApiBase {
 
   Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) async {
     final data = <dynamic, dynamic>{
-      if (nickName != null) //
+      if (nickName != null) //昵称
         'username': nickName,
-      if (gender != null) //
+      if (gender != null) //性别
         'sex': gender.code,
-      if (desc != null) //
+      if (desc != null) //用户描述
         'description': desc,
-      if (avatar != null) //
+      if (avatar != null) //头像
         'media_id': avatar,
-      if (birth != null) //
+      if (birth != null) //出生日期的时间戳
         'data_birth': birth.millisecondsSinceEpoch,
     };
 
