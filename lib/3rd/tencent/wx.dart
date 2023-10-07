@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:app/exception.dart';
 import 'package:app/tools.dart';
 import 'package:slugid/slugid.dart';
@@ -30,6 +32,26 @@ class Wx {
     final wx = await _init;
 
     return fn(wx, wx.respStream());
+  }
+
+  static Future<String> doShare(WxShareModel shareModel) async {
+    return _use(
+      (wx, resp) {
+        switch (shareModel.shareType) {
+          case 1:
+            wx.shareWebpage(
+              scene: shareModel.scene,
+              webpageUrl: shareModel.webpageUrl ?? '',
+              title: shareModel.title,
+              description: shareModel.description,
+              thumbData: shareModel.thumbData,
+            );
+            break;
+        }
+
+        return resp.once<String, WechatShareMsgResp>((it) => it.errorMsg!);
+      },
+    );
   }
 
   static Future<String> doAuth() async {
@@ -99,4 +121,24 @@ extension on Stream<WechatResp> {
 
     return completer.future;
   }
+}
+
+class WxShareModel {
+  final int shareType;//分享类型 1网页
+  final int scene;
+  final String? title;
+  final String? description;
+  final Uint8List? thumbData;
+  final String? webpageUrl;
+
+  WxShareModel({
+    required this.shareType,
+    required this.scene,
+    this.title,
+    this.description,
+    this.thumbData,
+    this.webpageUrl,
+  }) : assert(
+          (shareType == 1 && webpageUrl != null)
+        );
 }

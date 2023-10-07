@@ -3,6 +3,7 @@
   "app_name": "Homie.Debug",
   "wx_app_id": "wxed5f4b391e3356ed",
   "im_app_id": 1400792766,
+  "qq_app_id": "",
   "api_url": "http://dev.gz.internal.jumaiyx.cn:80/",
   "api_img_url": "http://dev.gz.internal.jumaiyx.cn:80/",
   "mq_acc": "app",
