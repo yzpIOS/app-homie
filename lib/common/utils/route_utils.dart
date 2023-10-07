@@ -58,7 +58,10 @@ class RouteUtil {
     }
   }
 
-  static String generateShareRoom(String roomId) {
-    return 'http://app.web.homieyy.com/?channelCode=1&invite_uid=${OAuthCtrl.uid}&data=homie://room?roomId=$roomId';
+  ///
+  /// 生成分享房间的链接
+  ///
+  static String generateShareRoom(int roomId) {
+    return 'http://app.web.homieyy.com/?channelCode=1&invite_uid=${OAuthCtrl.uid}&data=${Uri.encodeComponent('homie://room?roomId=$roomId')}';
   }
 }
