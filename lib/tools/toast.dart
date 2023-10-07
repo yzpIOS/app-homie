@@ -23,7 +23,7 @@ List<String> queues = <String>[];
 /// 显示toast
 ///
 void showToastQueue(String toast) {
-  if(!Env.isDebug) {
+  if(Env.isRelease) {
     return;
   }
   if(isQueuing) {
