@@ -3,6 +3,7 @@
   "app_name": "Homie世界",
   "wx_app_id": "wxed5f4b391e3356ed",
   "im_app_id": 1400823818,
+  "qq_app_id": "",
   "api_url": "https://api.homieyy.com/",
   "api_img_url": "http://document.homieyy.com/",
   "mq_acc": "app",

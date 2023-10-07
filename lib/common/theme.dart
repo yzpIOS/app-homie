@@ -203,6 +203,7 @@ abstract class AppBorderRadius {
   static const t12 = XBorderRadius.vertical(top: AppRadius.r12);
   static const t16 = XBorderRadius.vertical(top: AppRadius.r16);
 
+  static const l6 = XBorderRadius.horizontal(left: AppRadius.r6);
   static const l10 = XBorderRadius.horizontal(left: AppRadius.r10);
 
   static const r6 = XBorderRadius.horizontal(right: AppRadius.r6);
