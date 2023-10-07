@@ -117,8 +117,8 @@ class CustomClient with BaseClient {
   ///
   /// 连接服务器
   ///
-  CustomClient connect(String host, int port, {int timeout = 10}) {
-    _customSocket.connect(host, port, timeout: timeout);
+  CustomClient connect(String host, int port) {
+    _customSocket.connect(host, port);
     return this;
   }
 
@@ -159,7 +159,7 @@ class CustomClient with BaseClient {
   ///
   CustomClient startHeartBeat({int interval = 5}) {
     // 心跳没有响应的次数
-    if(heartBeatNumber > 3) {
+    if(heartBeatNumber >= 3) {
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }

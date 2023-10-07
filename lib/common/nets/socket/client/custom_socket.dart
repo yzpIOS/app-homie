@@ -71,7 +71,7 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 5, int delayReconnect = 3}) {
+  CustomSocket connect(String host, int port, {int timeout = 3000, int delayReconnect = 3}) {
     if(_isDisposed) {
       return this;
     }
@@ -105,7 +105,7 @@ class CustomSocket {
     // 正在连接中
     _isConnecting = true;
     // 链接新的socket
-    Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
+    Socket.connect(host, port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
       xlog("[socket]:连接成功, host=$host, port=$_port", type: LogType.SOCKET);
       // 清理之前的链接
       _socket?.close();
