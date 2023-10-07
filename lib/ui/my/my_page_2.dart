@@ -4,15 +4,14 @@ import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/my/backpack/backpack_page.dart';
 import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/invite_new_members/invite_new_members_activity_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
-import 'package:app/ui/my/personal_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/my/setting/setting_page.dart';
 import 'package:app/ui/my/user_home_page.dart';
@@ -161,7 +160,7 @@ class _MyPage2State extends State<MyPage2> {
         break;
       case '我的背包':
         Get.to(() => const BackpackPage());
-        // Get.to(() => const MyUserInitPerfectInfoPage(token: '123',), popGesture: false,);
+        // Get.to(() => const InviteNewMembersActivityPage());
         break;
       case '我的任务':
         SignDialog.show(isManual: true);
