@@ -1,4 +1,5 @@
 
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/web_page.dart';
@@ -55,5 +56,9 @@ class RouteUtil {
         Get.to(() => UserHomePage(uid: userId,));
         break;
     }
+  }
+
+  static String generateShareRoom(String roomId) {
+    return 'http://app.web.homieyy.com/?channelCode=1&invite_uid=${OAuthCtrl.uid}&data=homie://room?roomId=$roomId';
   }
 }

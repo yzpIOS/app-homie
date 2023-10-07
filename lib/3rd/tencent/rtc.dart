@@ -102,6 +102,10 @@ class Rtc {
         case TRTCCloudListener.onTestSpeakerVolume:
           xlog(() => '$type -> $args', type: LogType.RTC);
           break;
+        case TRTCCloudListener.onStartPublishMediaStream:
+          break;
+        default:
+          break;
       }
     });
 
