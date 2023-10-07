@@ -8,6 +8,8 @@ import 'package:app/ui/my/wallet/recharge_page.dart';
 
 class RouteUtil {
 
+  static bool showMain = false;
+
   ///
   /// 跳转到个页面
   ///

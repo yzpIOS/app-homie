@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/common/utils/route_utils.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/auth_info.dart';
 import 'package:app/model/enum/gender_enum.dart';
@@ -13,6 +14,7 @@ import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
 import 'package:app/widgets.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -86,7 +88,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
     // 处理跳转问题
-    handleBridge(result);
+    handleBridge(md5.convert(utf8.encode(bindDataStr)).toString(), result);
   }
 
   Future onInstall(Map<String, Object> data) async {
@@ -100,7 +102,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
 
     // 处理跳转问题
-    handleBridge(result);
+    handleBridge(md5.convert(utf8.encode(bindDataStr)).toString(), result);
 
     // 把渠道信息记录在缓存中
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
@@ -114,7 +116,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   ///
   /// 处理跳转
   ///
-  Future<void> handleBridge(Map<String, dynamic> result) async {
+  Future<void> handleBridge(String key, Map<String, dynamic> result) async {
     if(!result.containsKey(PrefKey.BridgeUrl)) {
       return;
     }
@@ -122,7 +124,17 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     if(bridgeUrl.isEmpty) {
       return;
     }
-    jumpUri = bridgeUrl;
+
+    // 防止重复
+    if((await KvBox.contains(key)) == true) {
+      return;
+    }
+    await KvBox.write(key, key);
+    if(RouteUtil.showMain) {
+      RouteUtil.jump(bridgeUrl);
+    } else {
+      jumpUri = bridgeUrl;
+    }
   }
 
   ///
