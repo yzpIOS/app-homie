@@ -138,6 +138,6 @@ class PrefKey {
   // 记录是否上传openInstall
   static const OpenInstallBlindDataFlag2 = 'OpenInstallBlindDataFlag2';
   // 跳转url
-  static const BridgeUrl = "bridgeUrl";
+  static const BridgeUrl = "data";
 
 }

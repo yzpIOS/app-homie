@@ -83,6 +83,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       return;
     }
     final bindDataStr = bindData.toString();
+    showToastQueue(bindDataStr);
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
     // 处理跳转问题
@@ -96,6 +97,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       return;
     }
     final bindDataStr = bindData.toString();
+    showToastQueue(bindDataStr);
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
 
