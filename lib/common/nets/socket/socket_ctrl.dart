@@ -94,8 +94,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.onData((cmd, data) {
       riseOnData(cmd, data);
       // 数据返回，通知网络通了
-      if(cmd != CMD.S_Err && !_socketStatus.isCompleted) {
-        _socketStatus.complete(true);
+      if(cmd != CMD.S_Err) {
+        // 重置
+        forceWaitTimes = 0;
+        // 网络连接连上了
+        if(!_socketStatus.isCompleted) {
+          _socketStatus.complete(true);
+        }
       }
     });
 
