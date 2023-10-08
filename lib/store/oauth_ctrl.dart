@@ -79,7 +79,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    showToast('wake=  $data');
     // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
     if(bindData == null) {
@@ -93,7 +92,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future onInstall(Map<String, Object> data) async {
-    showToast('install=  $data');
     // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
     // 渠道编号
