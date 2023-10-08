@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/commons/utils/byte_utils.dart';
 import 'package:app/common/nets/commons/utils/call_back.dart';
@@ -13,7 +14,6 @@ import 'package:app/widgets.dart';
 import 'custom_socket.dart';
 import 'dart:core';
 import 'package:protobuf/protobuf.dart';
-
 
 class CustomClient with BaseClient {
 
@@ -157,9 +157,16 @@ class CustomClient with BaseClient {
   ///
   /// 心跳
   ///
-  CustomClient startHeartBeat({int interval = 5}) {
+  CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
+    // 没有连接
+    if(!_customSocket.isSocketConnected()) {
+      // 下一个心跳
+      startHeartBeat(interval: interval);
+      return this;
+    }
+
     // 心跳没有响应的次数
-    if(heartBeatNumber >= 3) {
+    if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }
@@ -169,9 +176,8 @@ class CustomClient with BaseClient {
     // 延尺执行
     _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       // 发送心跳成功，数值加1
-      if(!sendBytes(1)) {
-        heartBeatNumber += 1;
-      }
+      sendBytes(1);
+      heartBeatNumber += 1;
       // 下一个心跳
       startHeartBeat(interval: interval);
     }, onError: (error){
@@ -208,6 +214,21 @@ class CustomClient with BaseClient {
   ///
   void resetConnect() {
     _customSocket.resetConnect();
+  }
+
+  ///
+  /// 重置连接数据
+  ///
+  void reConnect({bool foreceConnect = false}) {
+    _customSocket.reconnect(foreceConnect: foreceConnect);
+  }
+
+  int getReceiveTime() {
+    return _customSocket.preReceiveTime;
+  }
+
+  bool isSocketConnect() {
+    return _customSocket.isSocketConnected();
   }
 
   ///

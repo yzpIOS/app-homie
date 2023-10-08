@@ -54,7 +54,7 @@ PODS:
     - Flutter
   - flutter_mxlogger (0.0.1):
     - Flutter
-    - MXLogger (= 1.2.5)
+    - MXLogger (= 1.2.8)
   - flutter_native_splash (0.0.1):
     - Flutter
   - FMDB (2.7.5):
@@ -84,9 +84,9 @@ PODS:
     - Flutter
   - media_kit_video (0.0.1):
     - Flutter
-  - MXLogger (1.2.5):
-    - MXLoggerCore (= 1.2.5)
-  - MXLoggerCore (1.2.5)
+  - MXLogger (1.2.8):
+    - MXLoggerCore (= 1.2.8)
+  - MXLoggerCore (1.2.8)
   - openinstall_flutter_plugin (0.0.1):
     - Flutter
     - libOpenInstallSDK
@@ -105,28 +105,33 @@ PODS:
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - SDWebImage (5.17.0):
-    - SDWebImage/Core (= 5.17.0)
-  - SDWebImage/Core (5.17.0)
+  - SDWebImage (5.18.2):
+    - SDWebImage/Core (= 5.18.2)
+  - SDWebImage/Core (5.18.2)
   - share_plus (0.0.1):
     - Flutter
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.4)
-  - tencent_cloud_chat_sdk (5.1.2):
+  - tencent_cloud_chat_sdk (5.2.4):
     - Flutter
     - HydraAsync
-    - TXIMSDK_Plus_iOS (>= 7.2.4146)
+    - TXIMSDK_Plus_iOS (>= 7.4.4661)
+  - tencent_kit (6.0.1):
+    - Flutter
+    - tencent_kit/vendor (= 6.0.1)
+  - tencent_kit/vendor (6.0.1):
+    - Flutter
   - tencent_trtc_cloud (10.7):
     - Flutter
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
-    - TXLiteAVSDK_Professional (= 11.1.14143)
+    - TXLiteAVSDK_Professional (~> 11.4.14445)
   - TXCustomBeautyProcesserPlugin (1.0.2)
-  - TXIMSDK_Plus_iOS (7.3.4358)
-  - TXLiteAVSDK_Professional (11.1.14143):
-    - TXLiteAVSDK_Professional/Professional (= 11.1.14143)
-  - TXLiteAVSDK_Professional/Professional (11.1.14143)
+  - TXIMSDK_Plus_iOS (7.5.4852)
+  - TXLiteAVSDK_Professional (11.4.14445):
+    - TXLiteAVSDK_Professional/Professional (= 11.4.14445)
+  - TXLiteAVSDK_Professional/Professional (11.4.14445)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_compress (0.3.0):
@@ -177,6 +182,7 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tencent_cloud_chat_sdk (from `.symlinks/plugins/tencent_cloud_chat_sdk/ios`)
+  - tencent_kit (from `.symlinks/plugins/tencent_kit/ios`)
   - tencent_trtc_cloud (from `.symlinks/plugins/tencent_trtc_cloud/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_compress (from `.symlinks/plugins/video_compress/ios`)
@@ -263,6 +269,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   tencent_cloud_chat_sdk:
     :path: ".symlinks/plugins/tencent_cloud_chat_sdk/ios"
+  tencent_kit:
+    :path: ".symlinks/plugins/tencent_kit/ios"
   tencent_trtc_cloud:
     :path: ".symlinks/plugins/tencent_trtc_cloud/ios"
   url_launcher_ios:
@@ -294,7 +302,7 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  flutter_mxlogger: 77e81891f0b0cf394aa512b0e3260778f0eb0c79
+  flutter_mxlogger: 09c765ca6dee4c1294bfe8693e5c4adcd583eaa9
   flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
@@ -306,27 +314,28 @@ SPEC CHECKSUMS:
   libOpenInstallSDK: 3c24ebe6cc0eb7856918023f07b2e8d3202c7db8
   link_kit: d7bfc53a95ba13ef377f4c2dc208015a7902d21e
   media_kit_libs_ios_video: a5fe24bc7875ccd6378a0978c13185e1344651c1
-  media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
+  media_kit_native_event_loop: e6b2ab20cf0746eb1c33be961fcf79667304fa2a
   media_kit_video: 5da63f157170e5bf303bf85453b7ef6971218a2e
-  MXLogger: dfb2200493abbad1bab08e200bed73f4a30f2fa6
-  MXLoggerCore: 31d90b8f080d5769f982b9a4fc8c21267fb07a97
+  MXLogger: 3faeff5e06ff7af0c7d90ce9cdd868ebe8876cdb
+  MXLoggerCore: 8ec85ade559f68d408618a05f42163cd686ac68d
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
+  SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
-  tencent_cloud_chat_sdk: 8a2bceccaf81e7f922e7b6509ab93c39c3884dda
-  tencent_trtc_cloud: 8e7982c2423cb0187cefedd4a1d913767a778536
+  tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
+  tencent_kit: 81ca28c061c5e239043b3a266f9316ab60141e1b
+  tencent_trtc_cloud: 8b55aa23005a77db473cdbc13841a4b13b261946
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
-  TXIMSDK_Plus_iOS: bc72c7cec1b5e975c3cc6629692c849513a932f5
-  TXLiteAVSDK_Professional: a20fdf458f2e9c1c24cc4219310707c74d410d1c
+  TXIMSDK_Plus_iOS: 455bd59244a305ed9f34536730b6e36f2646e515
+  TXLiteAVSDK_Professional: 0c3b51b758f5ae91f6f13a502b6c5f1b8e6e819c
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
   video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126

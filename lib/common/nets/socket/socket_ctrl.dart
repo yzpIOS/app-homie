@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
+import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
@@ -20,8 +22,6 @@ import 'package:get/get.dart';
 import 'package:slugid/slugid.dart';
 
 
-const FLUTTER_UINITY_START = 10000;
-const FLUTTER_UINITY_END = 20000;
 
 ///
 /// socket控制器
@@ -37,6 +37,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   final CustomLocalServer local = CustomLocalServer();
 
   Completer<bool> _socketStatus = new Completer();
+
+  int forceWaitTimes = 0;
 
   static SocketCtrl get ins {
     return Get.find<SocketCtrl>();
@@ -91,6 +93,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 接收到反序列化后的数据
     share.onData((cmd, data) {
       riseOnData(cmd, data);
+      // 数据返回，通知网络通了
+      if(cmd != CMD.S_Err && !_socketStatus.isCompleted) {
+        _socketStatus.complete(true);
+      }
     });
 
     // 断开连接时重置socket状态
@@ -275,6 +281,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   ///
   /// 开启socket连接
+  ///
   void startClient(String host, int port) {
     removeClientConnect(onClientConnect);
     removeOnDataCmd(CMD.S_Role, onRoleResponse);
@@ -314,8 +321,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void startUnityHeartBeat() {
     local.beatHeartCheck();
   }
-
-
 
   ///
   /// 用户信息返回
@@ -360,16 +365,32 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 服务端错误
   ///
   void onServerError(int cmd, S_Err? role) {
+    // 网络连接非法
+    if(role?.code == ErrorCode.NETWORK_ANOMALY) {
+      if(!_socketStatus.isCompleted) {
+        _socketStatus.complete(false);
+      }
+      share.reConnect();
+      _socketStatus = Completer();
+    }
+
     xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }
+
   }
 
   ///
   /// 获取socket连接状态，认为收到用户信息时才是连接成功
   ///
   Future<bool> isCConnect() async {
+    // socket己经连接，但是没有收到数据包超过10秒时间
+    // 没有收到数据包超过10秒时间
+    if(forceWaitTimes > 0) {
+      _socketStatus = Completer();
+      forceWaitTimes = 0;
+    }
     if(_socketStatus.isCompleted) {
       return Future.value(true);
     }
@@ -404,7 +425,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   // 连接错误次数
-  var errorTimes = 0;
+  int errorTimes = 0;
 
   // 记录无网络的弹窗是否弹起
   var popUp = false;

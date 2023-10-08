@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/utils/route_utils.dart';
@@ -167,6 +168,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     }
   }
 
+  bool needHandleSocketTime = false;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
@@ -175,9 +178,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
+        if(!needHandleSocketTime) {
+          needHandleSocketTime = true;
+          return;
+        }
+        // 设置进房需要等待服务端返回数据，才能进房
+        SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
         break;
       case AppLifecycleState.paused:
-        break;
+        break;x
       case AppLifecycleState.detached:
         // app 结束时调用
         break;
