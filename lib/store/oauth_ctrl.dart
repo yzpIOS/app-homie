@@ -79,7 +79,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    // 获取json数据
+    showToast('wake=  $data');
+    // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
     if(bindData == null) {
       return;
@@ -92,14 +93,20 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   }
 
   Future onInstall(Map<String, Object> data) async {
-    // 获取json数据
+    showToast('install=  $data');
+    // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
+    // 渠道编号
+    final channelCode = data['channelCode'];
     if(bindData == null) {
       return;
     }
     final bindDataStr = bindData.toString();
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    if(channelCode != null) {
+      result['channelCode'] = channelCode;
+    }
 
     // 处理跳转问题
     handleBridge(md5.convert(utf8.encode(bindDataStr)).toString(), result);

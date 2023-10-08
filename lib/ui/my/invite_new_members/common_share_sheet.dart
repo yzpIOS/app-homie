@@ -89,10 +89,10 @@ class CommonShareSheet extends StatelessWidget {
       case 'QQ好友':
       case 'QQ空间':
         Qq.doShare(QqShareModel(
-            shareType: 1,
-            scene:  (action == 'QQ好友') ? TencentScene.kScene_QQ : TencentScene.kScene_QZone,
-            webpageUrl: 'http://www.sina.com',
-            title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',)
+          shareType: 1,
+          scene:  (action == 'QQ好友') ? TencentScene.kScene_QQ : TencentScene.kScene_QZone,
+          webpageUrl: 'http://www.sina.com',
+          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',)
         );
         break;
       case '生成二维码':
