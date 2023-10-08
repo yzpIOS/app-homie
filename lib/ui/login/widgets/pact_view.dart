@@ -42,7 +42,7 @@ abstract class IPact {
         title: null,
         content: $PactTxt(),
         actions: [
-          CancelDialogAction(),
+          CancelDialogAction(title: '拒绝',),
           OkDialogAction(
             title: '同意',
             onTap: () => Get.back(result: true),

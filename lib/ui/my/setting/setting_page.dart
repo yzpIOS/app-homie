@@ -46,20 +46,23 @@ class _SettingPageState extends State<SettingPage> {
         child: Column(
           children: [
             $DataView(),
-            TextButton(
-              child: const Text.rich(
-                TextSpan(
-                  style: TextStyle(fontSize: 13, color: Colors.black, fontWeight: fw$Regular),
-                  children: [
-                    TextSpan(text: 'ICP备案号：桂ICP备2023001721号-2A',),
-                    WidgetSpan(child: RightArrowIcon(), alignment: PlaceholderAlignment.middle,),
-                  ],
+            Padding(
+              padding: const Pad(top: 32, bottom: 5),
+              child: TextButton(
+                child: const Text.rich(
+                  TextSpan(
+                    style: TextStyle(fontSize: 12, color: AppPalette.c9, fontWeight: fw$Regular),
+                    children: [
+                      TextSpan(text: 'ICP备案号:桂ICP备2023001721号-2A',),
+                      WidgetSpan(child: RightArrowIcon(color: AppPalette.c9,), alignment: PlaceholderAlignment.middle,),
+                    ],
+                  ),
                 ),
+                onPressed: () => onItemClick('备案号'),
               ),
-              onPressed: () => onItemClick('备案号'),
             ),
             Padding(
-              padding: const Pad(horizontal: 32, bottom: 68),
+              padding: const Pad(horizontal: 32, bottom: 20),
               child: XTextBtn(
                 label: '退出登录',
                 color: Colors.white,
