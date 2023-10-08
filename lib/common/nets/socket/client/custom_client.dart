@@ -158,13 +158,6 @@ class CustomClient with BaseClient {
   /// 心跳
   ///
   CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
-    // 没有连接
-    if(!_customSocket.isSocketConnected()) {
-      // 下一个心跳
-      startHeartBeat(interval: interval);
-      return this;
-    }
-
     // 心跳没有响应的次数
     if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
       _customSocket.reconnect(foreceConnect: true);

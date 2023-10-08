@@ -186,7 +186,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
         break;
       case AppLifecycleState.paused:
-        break;x
+        break;
       case AppLifecycleState.detached:
         // app 结束时调用
         break;
