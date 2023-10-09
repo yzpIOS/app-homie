@@ -119,6 +119,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       RoomExitEvent("房间数据加载失败，请重试").fire();
       // 房间最小化中
       RoomManagerCtrl.ins.closeRoom2();
+    } else {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
     }
   }
 
