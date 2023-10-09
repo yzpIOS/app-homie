@@ -88,9 +88,7 @@ class CustomLocalServer with BaseClient {
       // 绑定server
       _handleServer();
 
-      _serverStatusCallBacks.forEach((element) {
-        element.call();
-      });
+      riseServerStatusCallBacks();
     }, onError: (error) async {
       _isBindingServer = false;
       _currentPort = 0;
