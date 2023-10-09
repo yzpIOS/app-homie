@@ -178,10 +178,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
-        if(!needHandleSocketTime) {
-          needHandleSocketTime = true;
-          return;
-        }
         // 设置进房需要等待服务端返回数据，才能进房
         SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
         break;

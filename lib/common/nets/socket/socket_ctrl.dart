@@ -386,7 +386,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   Future<bool> isCConnect() async {
     // socket己经连接，但是没有收到数据包超过10秒时间
-    // 没有收到数据包超过10秒时间
     if(forceWaitTimes > 0) {
       _socketStatus = Completer();
       forceWaitTimes = 0;
