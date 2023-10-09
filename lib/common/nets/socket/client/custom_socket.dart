@@ -241,7 +241,6 @@ class CustomSocket {
       if(!hasNet) {
         xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
         // 回调断开连接
-        riseDisconnect();
         resetConnect(clearHost: false);
         return;
       }
