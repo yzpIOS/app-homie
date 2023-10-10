@@ -62,9 +62,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         return Stack(
           alignment: Alignment.center,
           children: [
+            // 聊天消息视图
             Positioned.fill(
               top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 235,
-              child: const RoomChatView(),
+              child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
             ),
             // 横屏右侧视图
             if (showMicPanel && (sideMicMode || isLandscape))
@@ -75,18 +76,19 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                   child: const _RoomRight(),
                 ),
               ),
-            Positioned(
-              bottom: AppSize.safeBottom,
-              height: 50,
-              width: AppSize.width,
-              child: Box(
-                padding: const Pad(horizontal: 5),
-                child: Animate(
-                  effects: bottomEffect,
-                  child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
+            if (controller.bottomBarIsShowRx())
+              Positioned(
+                bottom: AppSize.safeBottom,
+                height: 50,
+                width: AppSize.width,
+                child: Box(
+                  padding: const Pad(horizontal: 5),
+                  child: Animate(
+                    effects: bottomEffect,
+                    child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
+                  ),
                 ),
               ),
-            ),
             Positioned(
               top: 0,
               left: 0,

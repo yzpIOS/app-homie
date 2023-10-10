@@ -104,6 +104,9 @@ class CMD {
 
   static const C_Verify = 10000;//连接验证
 
+  static const C_ControlAppUI=11001;//Unity控制AppUI  开关(在列表中表示关闭状态)
+  static const F_ControlAppUI=11002;//App控制UnityUI  开关(在列表中表示关闭状态)
+
   static const C_GoAwayRoom = 12000; //远离建筑后，请求结束直播间语音 【服务端暂时不需要】
   static const S_GoAwayRoom = 12001; //离开建筑结果【服务端暂时不需要】
 

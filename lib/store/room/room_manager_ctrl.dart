@@ -1,4 +1,5 @@
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
@@ -92,6 +93,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     // 注册一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
     SocketCtrl.ins.onDataCmd(CMD.S_PKContinue, onPKContinue);
+
+    // 注册Unity控制AppUI开关
+    SocketCtrl.ins.onDataCmd(CMD.C_ControlAppUI, onControlAppUI);
   }
 
   // 被邀请的F端，邀请对战信息监听回调
@@ -144,6 +148,26 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
   }
 
+  // Unity控制AppUI开关
+  void onControlAppUI(int cmd, C_ControlAppUI? data) {
+    if (data == null) {
+      return;
+    }
+
+    RoomCtrl? roomCtrl = _sceneCtrl as RoomCtrl?;
+    data.parts.forEach((element) {
+      //part 约定id[1: 麦位面板节点, 20:左侧消息UI节点, 30:底部栏面板节点]
+      //close 1打开, 2关闭
+      if (element.part == 1) {
+        roomCtrl?.micPanelRx(element.close == 1);
+      } else if (element.part == 20) {
+        roomCtrl?.chatMsgViewIsShowRx(element.close == 1);
+      } else if (element.part == 30) {
+        roomCtrl?.bottomBarIsShowRx(element.close == 1);
+      }
+    });
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -158,6 +182,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     // 移除一轮游戏结束后，两个C端选择是否继续下一轮的结果
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKContinue, onPKContinue);
+
+    // 移除Unity控制AppUI开关
+    SocketCtrl.ins.removeOnDataCmd(CMD.C_ControlAppUI, onControlAppUI);
   }
 
   void _show({
