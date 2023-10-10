@@ -301,6 +301,7 @@ class RoomCtrl extends SceneCtrl {
         managerRx = RxSet();
 
   final micPanelRx = RxBool(true);
+  final chatMsgViewIsShowRx = RxBool(true);//聊天消息视图是否显示
   final noticePanelRx = RxBool(false);
 
   @override

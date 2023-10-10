@@ -46,12 +46,10 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       // 房主或管理员，且不在pk中，才显示发起挑战入口
       // if ((isOwner || isManager) && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom()) '发起挑战',
       if (isOwner) '管理员',
-      if(isOwner || isManager) '下麦',
-      if (isManager) ...[
-        '黑名单',
-        '清零',
-      ],
-      if (Env.isDebug) '切换横竖屏',
+      if (isManager) '清零',
+      if (isOwner || isManager) '下麦',
+      if (isManager) '黑名单',
+      // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',
     ];
@@ -71,14 +69,12 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (item == '发起挑战')
-          Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
-        if (item != '发起挑战')
-          SvgView(SVG.$('room/setting/$item'), width: 34, height: 34),
-        Spacing.h2,
+        // SvgView(SVG.$('room/setting/$item'), width: 34, height: 34)
+        Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
+        Spacing.h4,
         XText(
           item,
-          style: const TextStyle(fontSize: 12, color: Colors.white),
+          style: const TextStyle(fontSize: 11, color: Colors.white),
         ),
       ],
     );
