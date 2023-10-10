@@ -106,6 +106,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
     });
+
+    // 连接成功回调
+    addClientConnect(onClientConnect);
+    onDataCmd(CMD.S_Role, onRoleResponse);
+    onDataCmd(CMD.S_Err, onServerError);
   }
 
   Future<int> getLocalServerPort() async {
@@ -283,20 +288,12 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 开启socket连接
   ///
   void startClient(String host, int port) {
-    removeClientConnect(onClientConnect);
-    removeOnDataCmd(CMD.S_Role, onRoleResponse);
-    removeOnDataCmd(CMD.S_Err, onServerError);
-
     // 连接socket
     post(() async {
       // 重置状态
       share.onCanConnected(true);
       // 连接服务器
       share.connect(host, port);
-      // 连接成功回调
-      addClientConnect(onClientConnect);
-      onDataCmd(CMD.S_Role, onRoleResponse);
-      onDataCmd(CMD.S_Err, onServerError);
     });
   }
 
@@ -368,11 +365,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 网络连接非法
     if(role?.code == ErrorCode.NETWORK_ANOMALY) {
       if(!_shareSocketStatus.isCompleted) {
-        _shareSocketStatus.complete(false);
+        _shareSocketStatus.completeError(TimeoutException("time out"));
       }
-      share.reConnect(foreceConnect: true);
       _shareSocketStatus = Completer();
-
+      share.reConnect(foreceConnect: true);
     }
 
     xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);

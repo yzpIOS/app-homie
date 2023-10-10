@@ -41,6 +41,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   // 用于苹果支付补单用
   ApplePurchase? applePurchase;
   StreamSubscription? _appStreamSubscription;
+  bool _needSendCloseEvent = true;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -107,7 +108,10 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       RoomManagerCtrl.ins.closeRoom2();
     } else {
       // 现在在房间中
-      RoomExitEvent("房间数据加载失败，请重试").fire();
+      if(_needSendCloseEvent) {
+        RoomExitEvent("房间数据加载失败，请重试").fire();
+      }
+      _needSendCloseEvent = true;
     }
   }
 
@@ -132,6 +136,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void dispose() {
     applePurchase?.dispose();
+    _streamSubscription?.cancel();
     _appStreamSubscription?.cancel();
     AppNavObserver.unsubscribe(this);
     WidgetsBinding.instance.removeObserver(this);
@@ -157,6 +162,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   }
 
   bool needHandleSocketTime = false;
+  StreamSubscription? _streamSubscription;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -167,9 +173,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         break;
       case AppLifecycleState.resumed:
         // 设置进房需要等待服务端返回数据，才能进房
+        _streamSubscription?.cancel();
         SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
+        _streamSubscription = Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+          _needSendCloseEvent = true;
+        });
         break;
       case AppLifecycleState.paused:
+        _needSendCloseEvent = false;
+        _streamSubscription?.cancel();
         break;
       case AppLifecycleState.detached:
         // app 结束时调用

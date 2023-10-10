@@ -210,6 +210,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
                 } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
                   throw const LogicException(-1, "输入的房间密码错误");
                 } else {
+                  showToast("加房失败: code = ${(joinResult?.code.value ?? 0).toString()}; name = ${joinResult?.code.toString()}");
                   throw const LogicException(-1, "房间数据加载失败");
                 }
               }
