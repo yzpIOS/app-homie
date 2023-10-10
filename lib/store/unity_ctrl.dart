@@ -197,9 +197,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       return;
     }
     // 重新进入等待
-    if(_sendSockComplete.isCompleted) {
-      _sendSockComplete = Completer();
+    if(!_sendSockComplete.isCompleted) {
+      _sendSockComplete.completeError(TimeoutException("time out"));
     }
+    _sendSockComplete = Completer();
     debugPrint("[sendFlutterSocketInfo]: 发送socket相关信息给unity");
     // 更新唯一id
     SocketCtrl.ins.updateUniqueId();

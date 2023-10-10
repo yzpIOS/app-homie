@@ -52,6 +52,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     if(isLogin && _auth?.sex != 0) {
       // 己登录，并且资料己经填完
       App.toApp();
+      // 己登录
+      initPrivacy();
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
