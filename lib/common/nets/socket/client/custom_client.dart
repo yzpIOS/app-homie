@@ -188,7 +188,7 @@ class CustomClient with BaseClient {
   ///
   /// 心跳返回处理
   void handleHeartBeatRes(int cmd) {
-    if(cmd != CMD.G_Heart) {
+    if(cmd == CMD.S_Err) {
       return;
     }
     // 尺到心跳回庆重新置成0
