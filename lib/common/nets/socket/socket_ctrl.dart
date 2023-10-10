@@ -186,6 +186,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.removeDisconnect(disconnect);
   }
 
+
+  void addLocalDisconnect(Disconnect disconnect) {
+    local.addDisconnect(disconnect);
+  }
+
+  void removeLocalDisconnect(Disconnect disconnect) {
+    local.removeDisconnect(disconnect);
+  }
   ///
   /// 删除回调
   ///

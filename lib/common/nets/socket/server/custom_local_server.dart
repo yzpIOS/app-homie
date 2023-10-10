@@ -59,6 +59,10 @@ class CustomLocalServer with BaseClient {
   // 网络状态订阅
   StreamSubscription? _netStateSubscription;
 
+  // 断开连接
+  int _preRiseTime = 0;
+  final List<Disconnect> _disconnects = <Disconnect>[];
+
   CustomLocalServer() {
   }
 
@@ -211,9 +215,11 @@ class CustomLocalServer with BaseClient {
         // 如果断开就重连
         if(deletes.isNotEmpty && _sessions.isEmpty) {
           riseServerStatusCallBacks();
+          riseDisconnect();
         }
       } else {
         riseServerStatusCallBacks();
+        riseDisconnect();
       }
       beatHeartCheck();
     }, onError: (error) {
@@ -326,12 +332,48 @@ class CustomLocalServer with BaseClient {
     super.registerFromBuffers(cmd, parseData);
   }
 
+  ///
+  /// 断开回调
+  ///
+  CustomLocalServer addDisconnect(Disconnect disconnect) {
+    if(_disconnects.contains(disconnect)) {
+      return this;
+    }
+    _disconnects.add(disconnect);
+    return this;
+  }
+
+  ///
+  /// 断开回调
+  ///
+  CustomLocalServer removeDisconnect(Disconnect disconnect) {
+    if(!_disconnects.contains(disconnect)) {
+      return this;
+    }
+    _disconnects.remove(disconnect);
+    return this;
+  }
+
+  void riseDisconnect() {
+    if(_preRiseTime != 0 && DateTime.now().millisecondsSinceEpoch - _preRiseTime < 1000) {
+      return;
+    }
+    _preRiseTime = DateTime.now().millisecondsSinceEpoch;
+    for(int index = 0; index < _disconnects.length; index ++) {
+      try {
+        _disconnects[index].call();
+      } catch(e) {
+        xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
+      }
+    }
+  }
   @override
   void dispose() {
     super.dispose();
     _sessions.values.forEach((element) {
       element.dispose();
     });
+    _disconnects.clear();
     _sessions.clear();
     _onReceiveFromU.clear();
     _onReceiveRawFromU.clear();
