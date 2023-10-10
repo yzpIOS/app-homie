@@ -1,18 +1,22 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: Message.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME
+// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class S_Tips_Code extends $pb.ProtobufEnum {
-  static const S_Tips_Code MESSAGE = S_Tips_Code._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MESSAGE');
-  static const S_Tips_Code ALERT = S_Tips_Code._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ALERT');
-  static const S_Tips_Code ROLL = S_Tips_Code._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'ROLL');
+  static const S_Tips_Code MESSAGE = S_Tips_Code._(0, _omitEnumNames ? '' : 'MESSAGE');
+  static const S_Tips_Code ALERT = S_Tips_Code._(1, _omitEnumNames ? '' : 'ALERT');
+  static const S_Tips_Code ROLL = S_Tips_Code._(2, _omitEnumNames ? '' : 'ROLL');
 
   static const $core.List<S_Tips_Code> values = <S_Tips_Code> [
     MESSAGE,
@@ -27,8 +31,8 @@ class S_Tips_Code extends $pb.ProtobufEnum {
 }
 
 class S_GM_Code extends $pb.ProtobufEnum {
-  static const S_GM_Code KICK = S_GM_Code._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'KICK');
-  static const S_GM_Code MUTE = S_GM_Code._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'MUTE');
+  static const S_GM_Code KICK = S_GM_Code._(0, _omitEnumNames ? '' : 'KICK');
+  static const S_GM_Code MUTE = S_GM_Code._(1, _omitEnumNames ? '' : 'MUTE');
 
   static const $core.List<S_GM_Code> values = <S_GM_Code> [
     KICK,
@@ -41,3 +45,5 @@ class S_GM_Code extends $pb.ProtobufEnum {
   const S_GM_Code._($core.int v, $core.String n) : super(v, n);
 }
 
+
+const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

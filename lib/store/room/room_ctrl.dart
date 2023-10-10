@@ -67,6 +67,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         noticeRx = RxString(info['notice_message'] ?? '');
 
   final sceneHudRx = Rx(RoomHudState.None);
+  final micPanelRx = RxBool(true);//麦位是否显示
+  final chatMsgViewIsShowRx = RxBool(true);//聊天消息视图是否显示
+  final bottomBarIsShowRx = RxBool(true);//底部栏视图是否显示
 
   abstract bool keepState;
 
@@ -301,7 +304,6 @@ class RoomCtrl extends SceneCtrl {
         examineMicRx = RxBool(info['mike_examine_status'] == ApiSwitch.open.code),
         managerRx = RxSet();
 
-  final micPanelRx = RxBool(true);
   final noticePanelRx = RxBool(false);
 
   @override
