@@ -235,6 +235,20 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       );
     }
 
+    if(SocketCtrl.ins.forceWaitTimes > 0) {
+      // 显示loading
+      WaitingCtrl.obj.show();
+      // 添加超时时间
+      Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+        WaitingCtrl.obj.hidden();
+      });
+      // 待主待
+      await SocketCtrl.ins.isCConnect();
+      await Future.delayed(const Duration(seconds: 2));
+      // 关闭loading
+      WaitingCtrl.obj.hidden();
+    }
+
     switch (stateRx()) {
       case RoomState.Normal:
         if (!tempCallCloseRoom) {

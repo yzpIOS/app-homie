@@ -95,6 +95,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       riseOnData(cmd, data);
       // 数据返回，通知网络通了
       if(cmd != CMD.S_Err && !_shareSocketStatus.isCompleted) {
+        forceWaitTimes = 0;
         _shareSocketStatus.complete(true);
       }
     });
@@ -386,7 +387,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // socket己经连接，但是没有收到数据包超过10秒时间
     if(forceWaitTimes > 0) {
       _shareSocketStatus = Completer();
-      forceWaitTimes = 0;
     }
     if(_shareSocketStatus.isCompleted) {
       return Future.value(true);

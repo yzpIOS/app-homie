@@ -4,7 +4,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/env.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools/log.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -107,7 +109,9 @@ class CustomSocket {
     if(!_canConnected) {
       return this;
     }
-
+    if(SocketCtrl.ins.forceWaitTimes > 0) {
+      RoomManagerCtrl.ins.closeRoom2();
+    }
     xlog("[socket]:发起连接, host=$host, port=$_port", type: LogType.SOCKET);
     // 正在连接中
     _isConnecting = true;
