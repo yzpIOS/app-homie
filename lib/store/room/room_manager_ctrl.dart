@@ -154,16 +154,15 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
 
-    RoomCtrl? roomCtrl = _sceneCtrl as RoomCtrl?;
     data.parts.forEach((element) {
       //part 约定id[1: 麦位面板节点, 20:左侧消息UI节点, 30:底部栏面板节点]
       //close 1打开, 2关闭
       if (element.part == 1) {
-        roomCtrl?.micPanelRx(element.close == 1);
+        _sceneCtrl?.micPanelRx(element.close == 1);
       } else if (element.part == 20) {
-        roomCtrl?.chatMsgViewIsShowRx(element.close == 1);
+        _sceneCtrl?.chatMsgViewIsShowRx(element.close == 1);
       } else if (element.part == 30) {
-        roomCtrl?.bottomBarIsShowRx(element.close == 1);
+        _sceneCtrl?.bottomBarIsShowRx(element.close == 1);
       }
     });
   }
