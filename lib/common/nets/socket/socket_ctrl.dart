@@ -375,7 +375,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   void onServerError(int cmd, S_Err? role) {
     // 网络连接非法
-    if(role?.code == ErrorCode.NETWORK_ANOMALY || role?.code == ErrorCode.UID_NOT_FOUND) {
+    if(role?.code == ErrorCode.NETWORK_ANOMALY) {
       if(!_shareSocketStatus.isCompleted) {
         _shareSocketStatus.completeError(TimeoutException("time out"));
       }
