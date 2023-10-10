@@ -155,12 +155,14 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
 
     data.parts.forEach((element) {
-      // int32 part=1;//约定id [1: 麦位面板节点, 20:左侧消息UI节点]
-      // int32 close=2;//0打开, 1关闭
+      //part 约定id[1: 麦位面板节点, 20:左侧消息UI节点, 30:底部栏面板节点]
+      //close 1打开, 2关闭
       if (element.part == 1) {
-        Get.find<RoomCtrl>().micPanelRx(element.close == 0);
+        Get.find<RoomCtrl>().micPanelRx.value = element.close == 1;
       } else if (element.part == 20) {
-        Get.find<RoomCtrl>().chatMsgViewIsShowRx(element.close == 0);
+        Get.find<RoomCtrl>().chatMsgViewIsShowRx.value = element.close == 1;
+      } else if (element.part == 30) {
+        Get.find<RoomCtrl>().bottomBarIsShowRx.value = element.close == 1;
       }
     });
   }

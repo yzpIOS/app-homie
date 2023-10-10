@@ -76,18 +76,19 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                   child: const _RoomRight(),
                 ),
               ),
-            Positioned(
-              bottom: AppSize.safeBottom,
-              height: 50,
-              width: AppSize.width,
-              child: Box(
-                padding: const Pad(horizontal: 5),
-                child: Animate(
-                  effects: bottomEffect,
-                  child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
+            if (controller.bottomBarIsShowRx())
+              Positioned(
+                bottom: AppSize.safeBottom,
+                height: 50,
+                width: AppSize.width,
+                child: Box(
+                  padding: const Pad(horizontal: 5),
+                  child: Animate(
+                    effects: bottomEffect,
+                    child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
+                  ),
                 ),
               ),
-            ),
             Positioned(
               top: 0,
               left: 0,
