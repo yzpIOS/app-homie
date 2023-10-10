@@ -454,7 +454,9 @@ class VideoMsg extends UserMsg<VideoMsgAdapter> {
 class VoiceMsg extends UserMsg<VoiceMsgAdapter> {
   VoiceMsg(super.vm, {super.key});
 
-  late final uri = getUri();
+  Future<Uri?> get uri async {
+     return getUri();
+   }
 
   @override
   Widget $PopView() {
@@ -463,38 +465,51 @@ class VoiceMsg extends UserMsg<VoiceMsgAdapter> {
       style: const TextStyle(fontSize: 14, color: AppPalette.c3),
     );
 
-    Widget playView = SoundCtrl.use(uri, (playing, state) {
-      return AnimatedSwitcher(
-        duration: kTabScrollDuration,
-        child: Builder(
-          key: ValueKey(Tuple2(playing, state)),
-          builder: (_) {
-            if (playing) return const Icon(Icons.pause_circle_outline_rounded);
+    Widget playView = FutureBuilder(
+      future: getUri(),
+      builder: (a, b) {
+        if(b.data == null) {
+          return const SizedBox();
+        }
+        return SoundCtrl.use(b.data!, (playing, state) {
+          return AnimatedSwitcher(
+            duration: kTabScrollDuration,
+            child: Builder(
+              key: ValueKey(Tuple2(playing, state)),
+              builder: (_) {
+                if (playing) return const Icon(Icons.pause_circle_outline_rounded);
 
-            switch (state) {
-              case null:
-              case ProcessingState.idle:
-              case ProcessingState.ready:
-              case ProcessingState.completed:
-                return const Icon(Icons.play_circle_outline_rounded);
-              case ProcessingState.loading:
-              case ProcessingState.buffering:
-                return const Padding(
-                  padding: Pad(all: 12),
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                );
-            }
-          },
-        ),
-      );
-    });
+                switch (state) {
+                  case null:
+                  case ProcessingState.idle:
+                  case ProcessingState.ready:
+                  case ProcessingState.completed:
+                    return const Icon(Icons.play_circle_outline_rounded);
+                  case ProcessingState.loading:
+                  case ProcessingState.buffering:
+                    return const Padding(
+                      padding: Pad(all: 12),
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    );
+                }
+              },
+            ),
+          );
+        });
+      },
+    );
 
     playView = Box(
       width: 44,
       height: 44,
       alignment: Alignment.center,
       child: InkResponse(
-        onTap: () => Get.find<SoundCtrl>().doPlay(uri),
+        onTap: () async {
+          if(await uri == null) {
+            return;
+          }
+          Get.find<SoundCtrl>().doPlay((await uri)!);
+        },
         child: playView,
       ),
     );
@@ -507,13 +522,19 @@ class VoiceMsg extends UserMsg<VoiceMsgAdapter> {
     );
   }
 
-  Uri getUri() {
+  Future<Uri> getUri() async {
     final localFile = vm.localFile;
 
     if (localFile != null && localFile.existsSync()) {
       return Uri.file(localFile.path);
     } else {
-      return Uri.parse('');
+      // return Uri.parse('');
+
+      String? url;
+      await IM.chat.getMessageOnlineUrl(msgID: vm.msgId).dataGet.then((val) {
+        url = val.soundElem?.url;
+      });
+      return Uri.parse(url ?? '');
     }
   }
 }
