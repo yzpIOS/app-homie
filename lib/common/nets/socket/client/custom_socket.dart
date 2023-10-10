@@ -2,11 +2,13 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/log.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+
 
 // 链接回调, 底层在多次重连时，会多次调用
 typedef Connected = void Function();
@@ -63,7 +65,12 @@ class CustomSocket {
   // socket状态回调
   SocketStatusCallBack? socketStatusCallBack;
 
+  // 是否可以发起链接
   bool _canConnected = true;
+
+  // 记录上一次收到数据的时间，用于判断太久没有收到数据时，认为是断开连接
+  int preReceiveTime = 0;
+
 
   ///
   /// 链接socket
@@ -71,7 +78,7 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = 5, int delayReconnect = 3}) {
+  CustomSocket connect(String host, int port, {int timeout = SOCKET_CONNECT_TIMEOUT, int delayReconnect = 3}) {
     if(_isDisposed) {
       return this;
     }
@@ -105,7 +112,7 @@ class CustomSocket {
     // 正在连接中
     _isConnecting = true;
     // 链接新的socket
-    Socket.connect(host, port, timeout: Duration(seconds: timeout)).then((Socket event) {
+    Socket.connect(host, port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
       xlog("[socket]:连接成功, host=$host, port=$_port", type: LogType.SOCKET);
       // 清理之前的链接
       _socket?.close();
@@ -179,6 +186,8 @@ class CustomSocket {
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
+      // 记录上一次收到数据的时间，用于判断太久没有收到数据时，认为是断开连接
+      preReceiveTime = DateTime.now().millisecondsSinceEpoch;
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {
@@ -232,7 +241,6 @@ class CustomSocket {
       if(!hasNet) {
         xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
         // 回调断开连接
-        riseDisconnect();
         resetConnect(clearHost: false);
         return;
       }
@@ -363,10 +371,15 @@ class CustomSocket {
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();
+        xlog("[socket]:断开连接回调处理成功", type: LogType.SOCKET);
       } catch(e) {
         xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
       }
     }
+  }
+
+  bool isSocketConnected() {
+    return _socket != null;
   }
 
   void dispose() {

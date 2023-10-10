@@ -71,7 +71,7 @@ class _RealIdentityPageState extends State<RealIdentityPage> with BusStateMixin 
                 ...[
                   (icon: '手机号', label: '绑定手机号', status: phone is String && phone.isNotEmpty),
                   (icon: '实名', label: '完成实名认证', status: data1?['is_real_name'] == true),
-                  (icon: '实名2', label: '完成人脸实名认证', status: data2?['result'] == true),
+                  // (icon: '实名2', label: '完成人脸实名认证', status: data2?['result'] == true),
                 ].map(itemBuilder).separator(Spacing.h20),
               ],
             );
@@ -133,9 +133,9 @@ class _RealIdentityPageState extends State<RealIdentityPage> with BusStateMixin 
       case '实名':
         Get.to(() => const RealIdentity1Page()).xx();
         break;
-      case '实名2':
-        Get.to(() => const RealIdentity2Page()).xx();
-        break;
+      // case '实名2':
+      //   Get.to(() => const RealIdentity2Page()).xx();
+      //   break;
     }
   }
 }

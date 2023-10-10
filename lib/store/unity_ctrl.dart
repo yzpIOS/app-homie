@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
@@ -226,9 +227,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       );
 
       // 发送完成消息
-      if(!_sendSockComplete.isCompleted) {
-        _sendSockComplete.complete();
-      }
+      _sendSockComplete.complete();
 
       // 如果用户己登录，那么发送用户信息给unity
       await sendUserInfo2Unity();
@@ -305,8 +304,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             'action': req.action,
             'requestId': req.requestId,
             'appVersion': Env.version,
-            'isAndroid': Platform.isAndroid,
-            'isIOS': Platform.isIOS,
+            'screenWidth': AppSize.width.toInt(),
+            'screenHeight': AppSize.height.toInt(),
             'data': data == null ? '{}' : (data is String ? data : jsonEncode(data)),
           },
         );

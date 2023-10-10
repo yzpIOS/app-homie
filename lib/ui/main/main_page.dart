@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
@@ -37,12 +38,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingObserver, RouteAware {
   final selector = ValueNotifier(1);
 
-  bool resumeReconnect = false;
-  StreamSubscription? _closeCountDown;
-  StreamSubscription? _appStreamSubscription;
-
   // 用于苹果支付补单用
-  ApplePurchase? applePurchase = null;
+  ApplePurchase? applePurchase;
+  StreamSubscription? _appStreamSubscription;
 
   final pages = <Widget>[], navs = <NavBarItem>[];
 
@@ -82,7 +80,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     // 添加监听订阅页面的生命周期
     SocketCtrl.ins.addDisconnect(onDisconnectCallBack);
     // 支付补单
-    _appStreamSubscription = Future.delayed(const Duration(seconds: 1)).asStream().listen((event) {
+    _appStreamSubscription = Future.delayed(const Duration(seconds: 10)).asStream().listen((event) {
+      showToastQueue("开始补单111");
       applePurchase = ApplePurchase(compensate: true);
     });
   }
@@ -106,6 +105,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       RoomExitEvent("房间数据加载失败，请重试").fire();
       // 房间最小化中
       RoomManagerCtrl.ins.closeRoom2();
+    } else {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
     }
   }
 
@@ -129,7 +131,6 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
 
   @override
   void dispose() {
-    _closeCountDown?.cancel();
     applePurchase?.dispose();
     _appStreamSubscription?.cancel();
     AppNavObserver.unsubscribe(this);
@@ -155,6 +156,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     }
   }
 
+  bool needHandleSocketTime = false;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
@@ -163,35 +166,10 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
-        _closeCountDown?.cancel();
-        // 从后台到前台了
-        // 开启socket连接
-        if(!resumeReconnect) {
-          return;
-        }
-        resumeReconnect = false;
-        // 重新连接
-        SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
-        // 开始heart beat
-        SocketCtrl.ins.startUnityHeartBeat();
-
-        // 关闭房间
-        try {
-          if(RoomManagerCtrl.ins.stateRx.value != RoomState.None) {
-            RoomManagerCtrl.ins.closeRoom2();
-          }
-        } catch(e) {
-          debugPrint(e.toString());
-        }
-        RoomExitEvent("房间数据加载失败，请重试").fire();
+        // 设置进房需要等待服务端返回数据，才能进房
+        SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
         break;
       case AppLifecycleState.paused:
-        _closeCountDown?.cancel();
-        _closeCountDown = Future.delayed(const Duration(seconds: 40)).asStream().listen((event) {
-          resumeReconnect = true;
-          SocketCtrl.ins.closeSocket();
-          SocketCtrl.ins.cancelUnityHeartBeat();
-        });
         break;
       case AppLifecycleState.detached:
         // app 结束时调用

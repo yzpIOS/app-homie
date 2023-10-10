@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
+import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/commons/utils/base_client.dart';
 import 'package:app/common/nets/socket/client/custom_client.dart';
@@ -20,8 +22,6 @@ import 'package:get/get.dart';
 import 'package:slugid/slugid.dart';
 
 
-const FLUTTER_UINITY_START = 10000;
-const FLUTTER_UINITY_END = 20000;
 
 ///
 /// socket控制器
@@ -30,13 +30,15 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   // client, 用于与后台通信
   final CustomClient share = CustomClient();
+  Completer<bool> _shareSocketStatus = new Completer();
 
   // 分配给unity的唯一id
   String uniqueId = Slugid.nice().toString();
   // flutter 内部的server, 用于与unity进行通信
   final CustomLocalServer local = CustomLocalServer();
+  Completer<bool> _localSocketStatus = new Completer();
 
-  Completer<bool> _socketStatus = new Completer();
+  int forceWaitTimes = 0;
 
   static SocketCtrl get ins {
     return Get.find<SocketCtrl>();
@@ -91,12 +93,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 接收到反序列化后的数据
     share.onData((cmd, data) {
       riseOnData(cmd, data);
+      // 数据返回，通知网络通了
+      if(cmd != CMD.S_Err && !_shareSocketStatus.isCompleted) {
+        _shareSocketStatus.complete(true);
+      }
     });
 
     // 断开连接时重置socket状态
     share.addDisconnect(() {
-      if(_socketStatus.isCompleted) {
-        _socketStatus = Completer();
+      if(_shareSocketStatus.isCompleted) {
+        _shareSocketStatus = Completer();
         return;
       }
     });
@@ -275,6 +281,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   ///
   /// 开启socket连接
+  ///
   void startClient(String host, int port) {
     removeClientConnect(onClientConnect);
     removeOnDataCmd(CMD.S_Role, onRoleResponse);
@@ -315,8 +322,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.beatHeartCheck();
   }
 
-
-
   ///
   /// 用户信息返回
   ///
@@ -327,8 +332,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     var roleId = role.role.roleId;
     var name = role.role.name;
     // 收到用户信息后，才认为是己经连接上
-    if(!_socketStatus.isCompleted) {
-      _socketStatus.complete(true);
+    if(!_shareSocketStatus.isCompleted) {
+      _shareSocketStatus.complete(true);
     }
     // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
     var pkRoomId = role.pkRoomId.toInt();
@@ -360,20 +365,36 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 服务端错误
   ///
   void onServerError(int cmd, S_Err? role) {
+    // 网络连接非法
+    if(role?.code == ErrorCode.NETWORK_ANOMALY) {
+      if(!_shareSocketStatus.isCompleted) {
+        _shareSocketStatus.complete(false);
+      }
+      share.reConnect(foreceConnect: true);
+      _shareSocketStatus = Completer();
+
+    }
+
     xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }
+
   }
 
   ///
   /// 获取socket连接状态，认为收到用户信息时才是连接成功
   ///
   Future<bool> isCConnect() async {
-    if(_socketStatus.isCompleted) {
+    // socket己经连接，但是没有收到数据包超过10秒时间
+    if(forceWaitTimes > 0) {
+      _shareSocketStatus = Completer();
+      forceWaitTimes = 0;
+    }
+    if(_shareSocketStatus.isCompleted) {
       return Future.value(true);
     }
-    return _socketStatus.future;
+    return _shareSocketStatus.future;
   }
 
   ///
@@ -404,7 +425,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   // 连接错误次数
-  var errorTimes = 0;
+  int errorTimes = 0;
 
   // 记录无网络的弹窗是否弹起
   var popUp = false;

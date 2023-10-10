@@ -285,6 +285,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
           _dataRx.assignAll(
             data.groupFoldBy((val) => val.conversationID, (_, val) => val),
           );
+          _refresCount.addAll(data.map((e) => e.convId));
 
           xlog(() => '刷新会话列表[成功] -> ${_dataRx.length}', type: LogType.IM);
         } catch (e, s) {
