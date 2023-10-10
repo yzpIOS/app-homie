@@ -172,8 +172,11 @@ class CustomSocket {
   /// 发送数据
   ///
   bool send(Uint8List datas) {
-    if(datas.isEmpty || _socket == null) {
+    if(_socket == null) {
       return false;
+    }
+    if(datas.isEmpty) {
+      return true;
     }
     _socket?.add(datas);
     return true;
@@ -375,7 +378,6 @@ class CustomSocket {
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();
-        xlog("[socket]:断开连接回调处理成功", type: LogType.SOCKET);
       } catch(e) {
         xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
       }
