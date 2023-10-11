@@ -11,7 +11,19 @@
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
-   <application
+    <!--在应用的AndroidManifest.xml添加如下<queries>标签-->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+    <queries>
+        <!--指定微信包名-->
+        <package android:name="com.tencent.mm" />
+        <!--支付宝支付-->
+        <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="hk.alipay.wallet" />
+    </queries>
+
+
+    <application
         android:label="${app_name}"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
