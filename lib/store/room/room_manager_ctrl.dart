@@ -168,6 +168,25 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     });
   }
 
+  // Unity控制AppUI开关
+  void onControlAppUI(int cmd, C_ControlAppUI? data) {
+    if (data == null) {
+      return;
+    }
+
+    data.parts.forEach((element) {
+      //part 约定id[1: 麦位面板节点, 20:左侧消息UI节点, 30:底部栏面板节点]
+      //close 1打开, 2关闭
+      if (element.part == 1) {
+        _sceneCtrl?.micPanelRx(element.close == 1);
+      } else if (element.part == 20) {
+        _sceneCtrl?.chatMsgViewIsShowRx(element.close == 1);
+      } else if (element.part == 30) {
+        _sceneCtrl?.bottomBarIsShowRx(element.close == 1);
+      }
+    });
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -234,6 +253,20 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         },
         whenErr: off ? doBackWhenErr : null,
       );
+    }
+
+    if(SocketCtrl.ins.forceWaitTimes > 0) {
+      // 显示loading
+      WaitingCtrl.obj.show();
+      // 添加超时时间
+      Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+        WaitingCtrl.obj.hidden();
+      });
+      // 待主待
+      await SocketCtrl.ins.isCConnect();
+      await Future.delayed(const Duration(seconds: 2));
+      // 关闭loading
+      WaitingCtrl.obj.hidden();
     }
 
     switch (stateRx()) {

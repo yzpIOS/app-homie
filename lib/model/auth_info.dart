@@ -11,6 +11,7 @@ class AuthInfo with _$AuthInfo {
     required UID uid,
     required NUID nuid,
     required int sex,
+    required int real_name_type,
   }) = _AuthInfo;
 
   factory AuthInfo.fromJson(Map<String, dynamic> json) => _$AuthInfoFromJson(json);

@@ -1,5 +1,7 @@
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -52,13 +54,36 @@ class _SettingAccountPageState extends State<SettingAccountPage> {
               ?.onNotNull((val) => setState(() => data['is_set_password'] = true));
         },
       ),
+      // TableItem(
+      //   title: '实名认证',
+      //   tips: isRealName ? '已认证' : '未认证',
+      //   onTap: () => Get.to(() => RealIdentityPage(data: data)),
+      // ),
       TableItem(
-        title: '实名认证',
-        tips: isRealName ? '已认证' : '未认证',
-        onTap: () => Get.to(() => RealIdentityPage(data: data)),
+        title: '完成人脸实名认证',
+        tips: OAuthCtrl.isFaceValidate ? '已认证' : '未认证',
+        onTap: () async {
+          // 己认证
+          if(OAuthCtrl.isFaceValidate) {
+            return;
+          }
+          // 未认证，去认证
+          await Get.to(() => const RealIdentity2Page());
+          // 刷新用户数据
+          OAuthCtrl.ins.useAuth(OAuthCtrl.token ?? "");
+        },
       ),
     ];
 
     return TableView([TableGroup(items)]);
+  }
+}
+
+
+extension on Future? {
+  void xx() {
+    this?.then((val) {
+      if (val == true) Get.back(result: val);
+    });
   }
 }

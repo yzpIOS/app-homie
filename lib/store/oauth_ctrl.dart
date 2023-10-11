@@ -189,7 +189,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
           resp = await middleware(resp);
         }
 
-        await _useAuth(resp['session']);
+        await useAuth(resp['session']);
       },
       callback: () {
         App.toApp();
@@ -213,7 +213,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     }
   }
 
-  Future<void> _useAuth(String token) async {
+  Future<void> useAuth(String token) async {
     try {
       var myInfo = await Api.UserInfo.myInfo(token: token);
       // 性别为空，那么需要去选择角色
@@ -259,6 +259,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       uid: uid,
       nuid: nUid,
       sex: info["sex"] ?? 0,
+      real_name_type: info["real_name_type"] ?? 0,
     );
 
     Map<String, dynamic> data = auth.toJson();
@@ -320,6 +321,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   static String get uid => _auth!.uid;
   static NUID get nUid => _auth!.nuid;
+
+  // 是否人脸识别
+  static bool get isFaceValidate => _auth?.real_name_type == 2;
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;

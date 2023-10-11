@@ -9,6 +9,7 @@ import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/im/message_manager_ctrl.dart';
 import 'package:app/store/im/tool/chat_scroll_mixin.dart';
 import 'package:app/store/im/tool/conv_creator.dart';
+import 'package:app/store/sound_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -93,6 +94,14 @@ abstract class ChatCtrl extends GetxController
     );
 
     convCtrl.markConvIn(convId);
+  }
+
+  @override
+  void onClose() {
+    //关闭正在播放的语音
+    Get.find<SoundCtrl>().player.pause();
+
+    super.onClose();
   }
 
   @override

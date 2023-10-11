@@ -98,6 +98,7 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
+        xlog("[socket]:断开连接回调处理成功2222", type: LogType.SOCKET);
         _customSocket.reconnect();
         sendFailTime = 0;
       }
@@ -160,6 +161,7 @@ class CustomClient with BaseClient {
   CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
     // 心跳没有响应的次数
     if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
+      xlog("[socket]:断开连接回调处理成功44444 ${heartBeatNumber}", type: LogType.SOCKET);
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }
@@ -188,7 +190,7 @@ class CustomClient with BaseClient {
   ///
   /// 心跳返回处理
   void handleHeartBeatRes(int cmd) {
-    if(cmd != CMD.G_Heart) {
+    if(cmd == CMD.S_Err) {
       return;
     }
     // 尺到心跳回庆重新置成0
@@ -213,6 +215,7 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void reConnect({bool foreceConnect = false}) {
+    xlog("[socket]:断开连接回调处理成功66666 ${heartBeatNumber}", type: LogType.SOCKET);
     _customSocket.reconnect(foreceConnect: foreceConnect);
   }
 

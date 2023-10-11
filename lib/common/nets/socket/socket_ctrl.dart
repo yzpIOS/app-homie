@@ -22,6 +22,8 @@ import 'package:get/get.dart';
 import 'package:slugid/slugid.dart';
 
 
+const FLUTTER_UINITY_START = 10000;
+const FLUTTER_UINITY_END = 20000;
 
 ///
 /// socket控制器
@@ -94,8 +96,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.onData((cmd, data) {
       riseOnData(cmd, data);
       // 数据返回，通知网络通了
-      if(cmd != CMD.S_Err && !_shareSocketStatus.isCompleted) {
-        _shareSocketStatus.complete(true);
+      if(cmd != CMD.S_Err) {
+        forceWaitTimes = 0;
+        if(!_shareSocketStatus.isCompleted) {
+          _shareSocketStatus.complete(true);
+        }
       }
     });
 
@@ -106,6 +111,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         return;
       }
     });
+
+    // 连接成功回调
+    addClientConnect(onClientConnect);
+    onDataCmd(CMD.S_Role, onRoleResponse);
+    onDataCmd(CMD.S_Err, onServerError);
   }
 
   Future<int> getLocalServerPort() async {
@@ -178,6 +188,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.removeDisconnect(disconnect);
   }
 
+
+  void addLocalDisconnect(Disconnect disconnect) {
+    local.addDisconnect(disconnect);
+  }
+
+  void removeLocalDisconnect(Disconnect disconnect) {
+    local.removeDisconnect(disconnect);
+  }
   ///
   /// 删除回调
   ///
@@ -256,7 +274,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     register(CMD.S_PKInvite, S_PKInvite.fromBuffer);
     register(CMD.S_PKInviteResult, S_PKInviteResult.fromBuffer);
     register(CMD.S_PKContinue, S_PKContinue.fromBuffer);
-    register(CMD.C_ControlAppUI, C_ControlAppUI.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
@@ -284,20 +301,12 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 开启socket连接
   ///
   void startClient(String host, int port) {
-    removeClientConnect(onClientConnect);
-    removeOnDataCmd(CMD.S_Role, onRoleResponse);
-    removeOnDataCmd(CMD.S_Err, onServerError);
-
     // 连接socket
     post(() async {
       // 重置状态
       share.onCanConnected(true);
       // 连接服务器
       share.connect(host, port);
-      // 连接成功回调
-      addClientConnect(onClientConnect);
-      onDataCmd(CMD.S_Role, onRoleResponse);
-      onDataCmd(CMD.S_Err, onServerError);
     });
   }
 
@@ -322,6 +331,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void startUnityHeartBeat() {
     local.beatHeartCheck();
   }
+
+
 
   ///
   /// 用户信息返回
@@ -369,10 +380,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 网络连接非法
     if(role?.code == ErrorCode.NETWORK_ANOMALY) {
       if(!_shareSocketStatus.isCompleted) {
-        _shareSocketStatus.complete(false);
+        _shareSocketStatus.completeError(TimeoutException("time out"));
       }
-      share.reConnect();
       _shareSocketStatus = Completer();
+      share.reConnect(foreceConnect: true);
     }
 
     xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
@@ -389,7 +400,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // socket己经连接，但是没有收到数据包超过10秒时间
     if(forceWaitTimes > 0) {
       _shareSocketStatus = Completer();
-      forceWaitTimes = 0;
     }
     if(_shareSocketStatus.isCompleted) {
       return Future.value(true);

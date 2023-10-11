@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
@@ -17,41 +18,44 @@ class SquareOverlay extends SceneOverlay<SquareCtrl> {
   Widget build(BuildContext context) {
     final isLandscape = context.watch<Orientation>() == Orientation.landscape;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned(
-          top: AppSize.safeTop,
-          left: 5,
-          right: 5,
-          height: 44,
-          child: _RoomHeader(onItemClick: onItemClick),
-        ),
-        Positioned.fill(
-          top: isLandscape ? 80 : 110,
-          child: const RoomChatView(),
-        ),
-        // Positioned(
-        //   right: 10,
-        //   child: Animate(
-        //     effects: rightEffect,
-        //     child: _RoomRight(onItemClick: onItemClick),
-        //   ),
-        // ),
-        Positioned(
-          bottom: AppSize.safeBottom,
-          height: 50,
-          width: AppSize.width,
-          child: Padding(
-            padding: const Pad(horizontal: 5),
-            child: Animate(
-              effects: bottomEffect,
-              child: SceneOverlayBottomBar<SquareCtrl>(onItemClick: onItemClick),
-            ),
+    return Obx(() {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            top: AppSize.safeTop,
+            left: 5,
+            right: 5,
+            height: 44,
+            child: _RoomHeader(onItemClick: onItemClick),
           ),
-        ),
-      ],
-    );
+          Positioned.fill(
+            top: isLandscape ? 80 : 110,
+            child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
+          ),
+          // Positioned(
+          //   right: 10,
+          //   child: Animate(
+          //     effects: rightEffect,
+          //     child: _RoomRight(onItemClick: onItemClick),
+          //   ),
+          // ),
+          if (controller.bottomBarIsShowRx())
+            Positioned(
+              bottom: AppSize.safeBottom,
+              height: 50,
+              width: AppSize.width,
+              child: Padding(
+                padding: const Pad(horizontal: 5),
+                child: Animate(
+                  effects: bottomEffect,
+                  child: SceneOverlayBottomBar<SquareCtrl>(onItemClick: onItemClick),
+                ),
+              ),
+            ),
+        ],
+      );
+    });
   }
 
   @override
@@ -60,9 +64,9 @@ class SquareOverlay extends SceneOverlay<SquareCtrl> {
       case '更多':
         Get.showActionSheet(['退出']).onNotNull(onItemClick);
         break;
-      // case '公告2':
-      //   Get.dialog(RoomNoticeDialog());
-      //   break;
+    // case '公告2':
+    //   Get.dialog(RoomNoticeDialog());
+    //   break;
       case '地图':
         break;
       default:

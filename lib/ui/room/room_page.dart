@@ -1,4 +1,5 @@
 import 'package:app/common/AppNavObserver.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/room_state.dart';
@@ -27,8 +28,27 @@ class RoomPage extends StatefulWidget {
 
   const RoomPage._(this.controller);
 
-  static void show([bool off = false]) async {
+  static Future<void> show([bool off = false]) async {
     final mgr = Get.find<RoomManagerCtrl>();
+
+    // 处理异常
+    if(SocketCtrl.ins.forceWaitTimes > 0) {
+      // 显示loading
+      WaitingCtrl.obj.show();
+      // 添加超时时间
+      Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+        WaitingCtrl.obj.hidden();
+      });
+      // 待主待
+      await SocketCtrl.ins.isCConnect();
+      await Future.delayed(const Duration(seconds: 2));
+      // 关闭loading
+      WaitingCtrl.obj.hidden();
+      if(mgr.sceneCtrl2 == null) {
+        showToast("网络异常，请重试");
+        return;
+      }
+    }
 
     Future _show() {
       Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();

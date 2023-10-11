@@ -5,10 +5,12 @@ import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
+import 'package:app/model/enum/room_state.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/scene_loader.dart';
 import 'package:app/widgets.dart';
@@ -269,6 +271,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   void socketCtrlStatus() {
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
     SocketCtrl.ins.addServerStatusCallBacks(onServerStatusCallBacks);
+
+    SocketCtrl.ins.removeLocalDisconnect(localServerStatusChange);
+    SocketCtrl.ins.addLocalDisconnect(localServerStatusChange);
   }
 
   ///
@@ -278,6 +283,23 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     sendFlutterSocketInfo();
   }
 
+  void localServerStatusChange() {
+    if(loadSceneComplete) {
+      return;
+    }
+    if(RoomManagerCtrl.ins.stateRx.value == RoomState.Mini) {
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    } else if(RoomManagerCtrl.ins.stateRx.value == RoomState.Normal) {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
+      // 房间最小化中
+      RoomManagerCtrl.ins.closeRoom2();
+    } else {
+      RoomExitEvent("房间数据加载失败，请重试").fire();
+    }
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -285,6 +307,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     _netStatusChange?.cancel();
     _netStatusMessageTick?.cancel();
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
+    SocketCtrl.ins.removeLocalDisconnect(localServerStatusChange);
   }
 
   Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: unity_time_out)}) async {
@@ -347,12 +370,15 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     }
   }
 
+  bool loadSceneComplete = false;
+
   Future<void> _loadScene(SceneInfo loader) async {
     await _sceneLock.synchronized(() {});
     // 没有完成，需要等待
     // if(!sendSocketComplete.isCompleted) {
     //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
     // }
+    loadSceneComplete = false;
     if(!_sendSockComplete.isCompleted) {
       debugPrint("[showTransition] 如果未登录时，选角界面44444");
       await _sendSockComplete.future;
@@ -376,6 +402,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           data: data,
           timeout: const Duration(minutes: unity_time_out),
         );
+        loadSceneComplete = true;
 
 
         await loader.doOnAfter?.call();

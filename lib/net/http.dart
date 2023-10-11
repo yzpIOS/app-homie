@@ -53,6 +53,10 @@ class Http {
               if (isNotEmpty(token)) {
                 options.headers['MetaChat-Session'] = token;
               }
+              try {
+                options.headers["version"] = Env.version;
+              } catch(e) {
+              }
 
               handler.next(options);
             },
