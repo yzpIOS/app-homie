@@ -20,5 +20,5 @@ abstract class Env {
   static const serverIP = String.fromEnvironment('server_ip');
   static const serverPort = int.fromEnvironment('server_port');
 
-  static const version = 10159;
+  static const version = 10167;
 }

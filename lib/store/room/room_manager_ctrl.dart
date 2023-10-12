@@ -259,6 +259,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
     switch (stateRx()) {
       case RoomState.Normal:
+        WaitingCtrl.obj.hidden();
         if (!tempCallCloseRoom) {
           RoomPage.show(off);
           return;
@@ -266,6 +267,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         assert(false, '数据错误');
         return;
       case RoomState.Mini:
+        WaitingCtrl.obj.hidden();
         if (!tempCallCloseRoom || _sceneCtrl!.roomId == roomId) {
           RoomPage.show(off);
 
