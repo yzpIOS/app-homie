@@ -145,10 +145,11 @@ void logForDebug(String? msg, {LogType type = LogType.SOCKET}) {
   if(msg == null) {
     return;
   }
+  debugPrint(msg);
   if(!cachesLogs.containsKey(type)) {
     cachesLogs[type] = RxList();
   }
-  cachesLogs[type]?.insert(0, msg);
+  cachesLogs[type]?.add(msg);
   // 最多只能存1万条数据
   if((cachesLogs[type]?.length ?? 0) < 300) {
     return;

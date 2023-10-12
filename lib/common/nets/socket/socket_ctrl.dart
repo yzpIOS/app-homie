@@ -36,7 +36,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   String uniqueId = Slugid.nice().toString();
   // flutter 内部的server, 用于与unity进行通信
   final CustomLocalServer local = CustomLocalServer();
-  Completer<bool> _localSocketStatus = new Completer();
+  Completer<bool> _localSocketStatus = Completer();
 
   int forceWaitTimes = 0;
 
@@ -71,6 +71,12 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       if(session.uniqueId != uniqueId) {
         return;
       }
+
+      // 发送成功事件
+      if(!local.statusCompleter.isCompleted) {
+        local.statusCompleter.complete(true);
+      }
+
       // 小于20000的不处理, 因为unity发给服务端的
       if(cmd < FLUTTER_UINITY_START || cmd > FLUTTER_UINITY_END) {
         return;
@@ -403,10 +409,19 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(forceWaitTimes > 0) {
       _shareSocketStatus = Completer();
     }
-    if(_shareSocketStatus.isCompleted) {
-      return Future.value(true);
+    // 等待socket连接成功
+    if(!_shareSocketStatus.isCompleted) {
+      logForDebug("socket没有连接，等待socket连接");
+      await _shareSocketStatus.future;
+      logForDebug("socket连接成功111");
     }
-    return _shareSocketStatus.future;
+    // 等待unity连接成功
+    if(!local.statusCompleter.isCompleted) {
+      logForDebug("unity没有连接，等待unity连接");
+      await local.statusCompleter.future;
+      logForDebug("unity连接成功111");
+    }
+    return Future.value(true);
   }
 
   ///

@@ -42,9 +42,6 @@ class RoomPage extends StatefulWidget {
       });
       // 待主待
       await SocketCtrl.ins.isCConnect();
-      await Future.delayed(const Duration(seconds: 2));
-      // 关闭loading
-      WaitingCtrl.obj.hidden();
       if(mgr.sceneCtrl2 == null) {
         showToast("网络异常，请重试");
         logForDebug("进房过程中发现网络断掉，房间己关闭，直接退出");
@@ -112,6 +109,8 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       isPopUp = true;
       context.safePop().whenComplete(() => Get.alertDialog(event.message));
     });
+    // 进房后，关闭所有的loading
+    WaitingCtrl.obj.hidden();
   }
 
   @override

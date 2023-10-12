@@ -37,7 +37,7 @@ class _RoomDebugViewState extends State<RoomDebugView> {
               return _itemBuilder(context, index);
             },
             separatorBuilder: (context, index) {
-              return const SizedBox(height: 10,);
+              return const SizedBox(height: 15,);
             },
             itemCount: roomDebugCtrl?.rxList?.length ?? 0,
           );

@@ -253,9 +253,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       });
       // 待主待
       await SocketCtrl.ins.isCConnect();
-      await Future.delayed(const Duration(seconds: 2));
-      // 关闭loading
-      WaitingCtrl.obj.hidden();
     }
 
     logForDebug("[RoomManagerCtrl:_show]:开始进房流程, 此时stateRx= ${stateRx.value}");

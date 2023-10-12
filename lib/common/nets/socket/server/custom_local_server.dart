@@ -59,6 +59,8 @@ class CustomLocalServer with BaseClient {
   // 网络状态订阅
   StreamSubscription? _netStateSubscription;
 
+  Completer statusCompleter = Completer();
+
   // 断开连接
   int _preRiseTime = 0;
   final List<Disconnect> _disconnects = <Disconnect>[];
@@ -111,7 +113,6 @@ class CustomLocalServer with BaseClient {
   ///
   void _handleServer() {
     logForDebug("[CustomLocalServer:_handleServer]:SocketServer开启成功");
-
     serverSocket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
@@ -220,11 +221,19 @@ class CustomLocalServer with BaseClient {
         // 如果断开就重连
         if(deletes.isNotEmpty && _sessions.isEmpty) {
           logForDebug("[CustomLocalServer:beatHeartCheck]:没有unity与flutter有socket连接1");
+          // 己经连接成功
+          if(statusCompleter.isCompleted) {
+            statusCompleter = Completer();
+          }
           riseServerStatusCallBacks();
           riseDisconnect();
         }
       } else {
         logForDebug("[CustomLocalServer:beatHeartCheck]:没有unity与flutter有socket连接2");
+        // 己经连接成功
+        if(statusCompleter.isCompleted) {
+          statusCompleter = Completer();
+        }
         riseServerStatusCallBacks();
         riseDisconnect();
       }
