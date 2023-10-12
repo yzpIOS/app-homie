@@ -33,6 +33,7 @@ class RoomPage extends StatefulWidget {
 
     // 处理异常
     if(SocketCtrl.ins.forceWaitTimes > 0) {
+      logForDebug("用户从后台到前台，并进入房间, 需要等待网络包的响应， 此时 waitTimes = ${SocketCtrl.ins.forceWaitTimes}");
       // 显示loading
       WaitingCtrl.obj.show();
       // 添加超时时间
@@ -46,11 +47,13 @@ class RoomPage extends StatefulWidget {
       WaitingCtrl.obj.hidden();
       if(mgr.sceneCtrl2 == null) {
         showToast("网络异常，请重试");
+        logForDebug("进房过程中发现网络断掉，房间己关闭，直接退出");
         return;
       }
     }
 
     Future _show() {
+      logForDebug("打开房间，请稍后");
       Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();
 
       // mgr.doNormalState();

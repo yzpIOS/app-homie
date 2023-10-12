@@ -81,6 +81,8 @@ class CustomLocalServer with BaseClient {
     }
     _currentPort = 0;
     _isBindingServer = true;
+    logForDebug("[CustomLocalServer:bindServer]:开启与Unity通信的本地SocketServer, port = $port");
+
     // 开启ServerSocket
     ServerSocket.bind("127.0.0.1", port).asStream().listen((event) {
       _isBindingServer = false;
@@ -91,7 +93,7 @@ class CustomLocalServer with BaseClient {
       serverSocket = event;
       // 绑定server
       _handleServer();
-
+      logForDebug("[CustomLocalServer:_handleServer]:SocketServer开启成功，通知Unity进行连接");
       riseServerStatusCallBacks();
     }, onError: (error) async {
       _isBindingServer = false;
@@ -108,6 +110,8 @@ class CustomLocalServer with BaseClient {
   /// 处理server连接
   ///
   void _handleServer() {
+    logForDebug("[CustomLocalServer:_handleServer]:SocketServer开启成功");
+
     serverSocket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
@@ -198,7 +202,8 @@ class CustomLocalServer with BaseClient {
           }
           // 心跳
           if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
-            xlog("收不到unity心跳，断开链接", type: LogType.SOCKET);
+            logForDebug("[CustomLocalServer:beatHeartCheck]:收不到unity心跳，断开链接");
+
             // 移除session
             deletes.add(key);
             // 己经挂掉
@@ -214,10 +219,12 @@ class CustomLocalServer with BaseClient {
 
         // 如果断开就重连
         if(deletes.isNotEmpty && _sessions.isEmpty) {
+          logForDebug("[CustomLocalServer:beatHeartCheck]:没有unity与flutter有socket连接1");
           riseServerStatusCallBacks();
           riseDisconnect();
         }
       } else {
+        logForDebug("[CustomLocalServer:beatHeartCheck]:没有unity与flutter有socket连接2");
         riseServerStatusCallBacks();
         riseDisconnect();
       }
@@ -238,13 +245,13 @@ class CustomLocalServer with BaseClient {
     _netStateSubscription?.cancel();
     // 订阅网络变化
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) async {
-      xlog("[socket]:网络发生变化, state = $state", type: LogType.SOCKET);
+      logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化, state = $state");
       // 是否有网络
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       // 没有网络直接返回
       if(!hasNet) {
         previouseHasNet = false;
-        xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
+        logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；无网络, state = $state");
         _sessions.forEach((key, value) {
           value.dispose();
         });
@@ -257,6 +264,7 @@ class CustomLocalServer with BaseClient {
       }
       previouseHasNet = true;
       await Future.delayed(const Duration(seconds: 1));
+      logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；有网络，请求与unity进行连接, state = $state");
       riseServerStatusCallBacks();
     });
     return this;
@@ -359,6 +367,7 @@ class CustomLocalServer with BaseClient {
       return;
     }
     _preRiseTime = DateTime.now().millisecondsSinceEpoch;
+    logForDebug("[CustomLocalServer:riseDisconnect]:unity断开连接，执行断开回调方法, 方法数：${_disconnects.length}");
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();

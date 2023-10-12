@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:app/tools.dart';
+import 'package:app/widgets.dart';
 import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 import 'package:stack_trace/stack_trace.dart';
 
@@ -56,8 +57,8 @@ enum LogType {
 const _visible = <LogType>{
   // LogType.App,
   // LogType.BUS,
-  LogType.HTTP,
-  LogType.TRACK,
+  // LogType.HTTP,
+  // LogType.TRACK,
   // LogType.BOX,
   // LogType.IMG,
   // LogType.API,
@@ -67,12 +68,12 @@ const _visible = <LogType>{
   // LogType.ASYNC_CTRL,
   // LogType.SIMPLE_TRY,
   // LogType.EXECUTOR,
-  LogType.UNITY,
+  // LogType.UNITY,
   // LogType.STOMP,
-  LogType.RTC,
+  // LogType.RTC,
   // LogType.GIFT_EFFECT,
   // LogType.GETX,
-  LogType.SOCKET,
+  // LogType.SOCKET,
 };
 
 bool canLog(LogType? type) {
@@ -128,4 +129,105 @@ void _log(String msg, {required String name, required int level}) {
 
 void _print(String msg, {required String name}) {
   log(msg, name: name, sequenceNumber: _seq++);
+}
+
+// 缓存的日志
+Map<LogType, RxList<String>> cachesLogs = {};
+// 日志开启标志
+Map<LogType, int> openers = {};
+// 调试信息缓存前缀
+const String CACHE_PREFIX = "homie_app_debug_view_key_";
+
+///
+/// 记录日志
+///
+void logForDebug(String? msg, {LogType type = LogType.SOCKET}) {
+  if(msg == null) {
+    return;
+  }
+  if(!cachesLogs.containsKey(type)) {
+    cachesLogs[type] = RxList();
+  }
+  cachesLogs[type]?.insert(0, msg);
+  // 最多只能存1万条数据
+  if((cachesLogs[type]?.length ?? 0) < 300) {
+    return;
+  }
+  // 删除最后一条
+  cachesLogs.remove((cachesLogs[type]?.length ?? 0) - 1);
+}
+
+///
+/// 开启日志
+///
+void openDebug(LogType type) async {
+  openers[type] = 0;
+  if(!(await KvBox.contains(CACHE_PREFIX + type.name))) {
+    await KvBox.write(CACHE_PREFIX + type.name, type.name);
+  }
+}
+
+/// 关闭日志
+void closeDebug(LogType type) async {
+  if(openers.containsKey(type)) {
+    // 关闭日志
+    openers.remove(type);
+  }
+  // 判断是否存在
+  if((await KvBox.contains(CACHE_PREFIX + type.name))) {
+    await KvBox.remove(CACHE_PREFIX + type.name);
+  }
+}
+
+///
+/// 加载调试信息
+///
+void loadDebugConfig() {
+  LogType.values.forEach((element) async {
+    if(await KvBox.contains(CACHE_PREFIX + element.name)) {
+      openers[element] = 0;
+    }
+  });
+}
+
+///
+/// 获取日志
+///
+List<String>? getDebugLogs(LogType type) {
+  if(openers.containsKey(type)) {
+    return null;
+  }
+  return cachesLogs[type];
+}
+
+///
+/// 调试模式是否打开
+///
+bool isDebugOpen(LogType type) {
+  if(Env.isDebugCfg) {
+    return true;
+  }
+  return openers.containsKey(type);
+}
+
+///
+/// 开启debugView
+///
+bool openDebugView(String text) {
+  if(text == "hello homie, please open the room debug view for me and the password is cqeY2ZR4JcCZ7giJvMU7") {
+    openDebug(LogType.SOCKET);
+    return true;
+  }
+  return false;
+}
+
+///
+/// 关闭debugView
+///
+bool closeDebugView(String text) {
+  if(text == "hello homie, please close the room debug view for me and the password is cqeY2ZR4JcCZ7giJvMU7") {
+    closeDebug(LogType.SOCKET);
+    return true;
+  }
+  return false;
 }

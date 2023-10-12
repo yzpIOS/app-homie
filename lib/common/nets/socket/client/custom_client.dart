@@ -78,8 +78,6 @@ class CustomClient with BaseClient {
   /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
   bool sendBytes(int cmd, {Uint8List? datas, String sendToUntiy = ""}) {
-    debugPrint("[socket]:${sendToUntiy}发送数据, cmd = $cmd, data = ${datas
-        .toString()}");
     int len = datas?.length ?? 0;
     // 加密
     ByteUtils.encryption(datas);
@@ -98,7 +96,7 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
-        xlog("[socket]:断开连接回调处理成功2222", type: LogType.SOCKET);
+        logForDebug("[CustomClient:sendBytes]:多次网络请求发送异常，sendFailTime = ${sendFailTime}");
         _customSocket.reconnect();
         sendFailTime = 0;
       }
@@ -161,7 +159,7 @@ class CustomClient with BaseClient {
   CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
     // 心跳没有响应的次数
     if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
-      xlog("[socket]:断开连接回调处理成功44444 ${heartBeatNumber}", type: LogType.SOCKET);
+      logForDebug("[CustomClient:resetConnect]:长时间没有接收服务端的心跳， heartBeatNumber = ${heartBeatNumber}");
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }
@@ -208,6 +206,7 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void resetConnect() {
+    logForDebug("[CustomClient:resetConnect]: 重置网络状态 ${heartBeatNumber}");
     _customSocket.resetConnect();
   }
 
@@ -215,7 +214,7 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void reConnect({bool foreceConnect = false}) {
-    xlog("[socket]:断开连接回调处理成功66666 ${heartBeatNumber}", type: LogType.SOCKET);
+    logForDebug("[CustomClient:reConnect]: socket重新连接 ${heartBeatNumber}");
     _customSocket.reconnect(foreceConnect: foreceConnect);
   }
 

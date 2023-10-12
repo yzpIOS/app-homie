@@ -86,7 +86,7 @@ class CustomSocket {
     }
     // 防止重复调用
     if(_host == host && _port == port) {
-      xlog("[socket]:连接地址相同, host=$host, port=$port", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:connect]:连接地址相同, host=$host, port=$port");
       return this;
     }
     _timeout = timeout;
@@ -101,23 +101,27 @@ class CustomSocket {
     _socketSubscription?.cancel();
 
     if(_isConnecting) {
-      xlog("[socket]:连接条件不满足, _isConnecting=$_isConnecting", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:connect]:连接条件不满足, _isConnecting=$_isConnecting");
       return this;
     }
 
     // 是否可以连接
     if(!_canConnected) {
+      logForDebug("[CustomSocket:connect]:发起连接, 不能自动连接 _canConnected = $_canConnected");
       return this;
     }
+
     if(SocketCtrl.ins.forceWaitTimes > 0) {
+      logForDebug("[CustomSocket:connect]:发起连接, 此时要把房间关闭");
       RoomManagerCtrl.ins.closeRoom2();
     }
-    xlog("[socket]:发起连接, host=$host, port=$_port", type: LogType.SOCKET);
+
+    logForDebug("[CustomSocket:connect]:发起连接, host=$host, port=$_port");
     // 正在连接中
     _isConnecting = true;
     // 链接新的socket
     Socket.connect(host, port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
-      xlog("[socket]:连接成功, host=$host, port=$_port", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:connect]:连接成功, host=$host, port=$_port");
       // 清理之前的链接
       _socket?.close();
       _socket = null;
@@ -131,13 +135,13 @@ class CustomSocket {
         try {
           _connected[index].call();
         } catch(e) {
-          xlog("[socket]:_connected热行失败", type: LogType.SOCKET);
+          logForDebug("[CustomSocket:connect]:_connected热行失败");
         }
       }
       // 连接成功回调
       _riseCallBack2(BaseClient.CONNECT_SUC);
     }, onError: (error) async {
-      xlog("[socket]:连接失败, host=$host, port=$_port", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:connect]:连接失败, host=$host, port=$_port");
       // 关闭之前的socket链接
       _socket?.close();
       _socket = null;
@@ -147,7 +151,7 @@ class CustomSocket {
         try {
           _connectError[index].call();
         } catch(e) {
-          xlog("[socket]:onError热行失败", type: LogType.SOCKET);
+          logForDebug("[CustomSocket:connect]:onError热行失败");
         }
       }
 
@@ -188,7 +192,7 @@ class CustomSocket {
   void _handleConnect() {
     // 把前一个订阅取消掉
     _socketSubscription?.cancel();
-    xlog("[socket]:监听网络数据, ${_socket?.address}", type: LogType.SOCKET);
+    logForDebug("[CustomSocket:_handleConnect]:网络连接成功，开始监听网络数据, ${_socket?.address}");
 
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
@@ -198,7 +202,7 @@ class CustomSocket {
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {
-      xlog("[socket]:网络连接错误, ${error.toString()}", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:_handleConnect]:网络连接错误, ${error.toString()}");
       // 接收到数据报错，需要断开重接吗？
       // 关闭之前的socket链接
       _socket?.close();
@@ -219,7 +223,7 @@ class CustomSocket {
     }
     String host = _host;
     int port = _port;
-
+    logForDebug("[CustomSocket:reconnect]:重置网络状态 foreceConnect = ${foreceConnect}");
 
     resetConnect(clearHost: foreceConnect);
 
@@ -241,12 +245,11 @@ class CustomSocket {
     _netStateSubscription?.cancel();
     // 订阅网络变化
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
-      xlog("[socket]:网络发生变化, state = $state", type: LogType.SOCKET);
       // 是否有网络
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       // 没有网络直接返回
       if(!hasNet) {
-        xlog("[socket]:网络发生变化；无网络, state = $state", type: LogType.SOCKET);
+        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；无网络, state = $state");
         // 回调断开连接
         resetConnect(clearHost: false);
         return;
@@ -254,10 +257,10 @@ class CustomSocket {
 
       // 己经连接, 或者在重连中
       if(_socket != null) {
-        xlog("[socket]:网络发生变化；己连接, state = $state", type: LogType.SOCKET);
+        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；己连接, state = $state");
         return;
       }
-      xlog("[socket]:网络发生变化；发送连接请求, state = $state", type: LogType.SOCKET);
+      logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；没连接，重连, state = $state");
       // ip和端口
       String host = _host;
       int port = _port;
@@ -356,6 +359,8 @@ class CustomSocket {
   /// 重置连接数据
   ///
   void resetConnect({bool clearHost = true}) {
+    logForDebug("[CustomSocket:resetConnect]:resetConnect, 重置网络状态 clearHost = ${clearHost}");
+
     _socket?.close();
     _socket = null;
     _socketSubscription?.cancel();
@@ -374,6 +379,7 @@ class CustomSocket {
     if(_preRiseTime != 0 && DateTime.now().millisecondsSinceEpoch - _preRiseTime < 1000) {
       return;
     }
+    logForDebug("[CustomSocket:riseDisconnect]:riseDisconnect, 回调socket关闭回调方法");
     _preRiseTime = DateTime.now().millisecondsSinceEpoch;
     for(int index = 0; index < _disconnects.length; index ++) {
       try {

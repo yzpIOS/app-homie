@@ -95,6 +95,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       riseOnData(cmd, data);
       // 数据返回，通知网络通了
       if(cmd != CMD.S_Err) {
+        if(forceWaitTimes > 0) {
+          logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted}");
+        }
         forceWaitTimes = 0;
         if(!_shareSocketStatus.isCompleted) {
           _shareSocketStatus.complete(true);
@@ -338,6 +341,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(role == null) {
       return;
     }
+    logForDebug("[SocketCtrl:onRoleResponse]:连接成功，收到用户信息, role = ${role.toString()}");
+
     var roleId = role.role.roleId;
     var name = role.role.name;
     // 收到用户信息后，才认为是己经连接上
@@ -383,7 +388,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       share.reConnect(foreceConnect: true);
     }
 
-    xlog("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
+    logForDebug("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }

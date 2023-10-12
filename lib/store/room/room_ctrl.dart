@@ -195,8 +195,10 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           Future<void> doJoinGame() {
             const dur = Duration(seconds: unity_time_out);
             final data = {'token': OAuthCtrl.token, 'scene': info};
-
-            return unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
+            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity, type = ${App2UnityEnum.FTU_JOIN_GAME}, data = ${data.toString()}");
+            var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
+            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity返回");
+            return result;
           }
 
           if (isReady) {
@@ -206,7 +208,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           } else {
             //pk的状态；1.房间pk中
             if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
+              logForDebug("[SceneCtrl:loadScene]:非pk状态，调用加入房间接口");
               final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+              logForDebug("[SceneCtrl:loadScene]:房间接口返回数据, joinResult = ${joinResult.toString()}");
               if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
                 if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
                   throw const LogicException(-1, "你被封禁了");
@@ -216,17 +220,23 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
                   throw const LogicException(-1, "房间数据加载失败");
                 }
               }
+            } else {
+              logForDebug("[SceneCtrl:loadScene]:pk状态，不需要调用加入房间接口");
             }
             RoomManagerCtrl.ins.doNormalState();
 
+            logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
             roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+            logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
             isNotClose();
 
             await doJoinGame();
             isNotClose();
 
             // 监听unity发过来的信息
+            logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
             unity.ready.asStream().listen((event) async{
+              logForDebug("[SceneCtrl:loadScene]:unity返回信息，开始发送进入房间信息，让服务端同步相关信息");
               // unity初始化完成后，发送同步信息指令
               C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
               c_roomEnterComplete.roomId = Int64(roomId);
@@ -236,11 +246,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
                 resCmd: CMD.S_SyncRoomInfo
               );
               onRender(s_syncRoomInfo);
+              logForDebug("[SceneCtrl:loadScene]:开始发送进入房间信息，让服务端同步相关信息, s_syncRoomInfo = ${s_syncRoomInfo.toString()}");
 
               /// 请求房间系统公告消息数组
               var data = await Api.Common.systemQuery();
               List systemNoticeList = data['system_notice_list'];
               SystemMsgEvent(systemNoticeList).fire();
+
+              logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data = ${systemNoticeList.toString()}");
             }, onError: (error) {
               debugPrint(error);
             });
