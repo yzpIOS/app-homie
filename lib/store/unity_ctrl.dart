@@ -26,6 +26,8 @@ const unity_time_out = 90;
 class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposableMixin {
   late final _callback = _Callback();
 
+  int unityStartLoadTime = 0;
+
   StreamSubscription? _netStatusChange;
   StreamSubscription? _netStatusMessageTick;
   StreamSubscription? subscription;
@@ -410,6 +412,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   /// 加载unity场景
   ///
   Future<void> loadScene(final String scene, {DoOnAfter? doOnAfter, DoOnBefore? doOnBefore}) async {
+    // 记加载载时间
+    unityStartLoadTime = DateTime.now().millisecondsSinceEpoch;
     // 登录成功后才会连接上socket, 等待socket连接成功才加载场景
     if(OAuthCtrl.isLogin) {
       logForDebug("[UnityCtrl:loadScene]:开始加载场景, 等待网络状态返回, scene = $scene");

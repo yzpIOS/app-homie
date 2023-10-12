@@ -193,7 +193,7 @@ void loadDebugConfig() {
 ///
 /// 获取日志
 ///
-List<String>? getDebugLogs(LogType type) {
+RxList<String>? getDebugLogs(LogType type) {
   if(openers.containsKey(type)) {
     return null;
   }

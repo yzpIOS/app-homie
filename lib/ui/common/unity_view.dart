@@ -4,6 +4,8 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/scene_loader.dart';
+import 'package:app/ui/debug/debug_view_entry.dart';
+import 'package:app/ui/debug/room_debug_view.dart';
 import 'package:app/widgets.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:f_unity/unity_widget.dart';
@@ -299,6 +301,54 @@ class UnityLoading extends StatelessWidget {
 
     child = AbsorbPointer(child: child);
 
-    return child;
+    return GestureDetector(
+      onTap: () {
+        handleTap();
+      },
+      child: child,
+    );
+  }
+
+  int tapTimes = 0;
+  int preTapTime = 0;
+
+  void handleTap() {
+    int curTime = DateTime.now().millisecondsSinceEpoch;
+    int unityStartLoadTime = UnityCtrl.ins.unityStartLoadTime;
+
+    // 最小加载时间，大于这个时间时，连续点击屏屏打开调试面板
+    double minTime = 1.5 * 60 * 1000;
+    // 最少点击次数, 大于这个次数时才会打开调试面板
+    double minClickTimes = 10;
+
+    // 调试状态时，配置数值小于
+    if(!Env.isRelease) {
+      minTime = 500;
+      minClickTimes = 2;
+    }
+
+    // 加载时间小于1分钟
+    if(curTime - unityStartLoadTime < minTime) {
+      return;
+    }
+
+    // 相邻两次点击的时间不能大于500毫秒
+    if(preTapTime != 0 && curTime - preTapTime > 500) {
+      tapTimes = 0;
+      preTapTime = 0;
+      return;
+    }
+    tapTimes += 1;
+    preTapTime = curTime;
+
+    // 大于10次
+    if(tapTimes < minClickTimes) {
+      return;
+    }
+    // 生置数据
+    tapTimes = 0;
+    preTapTime = 0;
+
+    Get.off(() => RoomDebugView());
   }
 }
