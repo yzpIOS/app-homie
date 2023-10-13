@@ -38,6 +38,9 @@ mixin _HttpMixin on _IApi {
           return data['data'];
         // case 1:
         //   throw const NetException('服务异常');
+        case 17:
+          Get.alertDialog(data['msg'] ?? '服务异常');
+          throw NetException(data['msg'] ?? '服务异常');
         default:
           String genMsg() {
             final sb = StringBuffer();
