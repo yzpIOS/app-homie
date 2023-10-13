@@ -107,7 +107,14 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
         return;
       }
       isPopUp = true;
-      context.safePop().whenComplete(() => Get.alertDialog(event.message));
+      // context.safePop().whenComplete(() => Get.alertDialog(event.message));
+
+      Get.until((route) {
+        return route.isFirst;
+      });
+      delay(300, () {
+        Get.alertDialog(event.message);
+      });
     });
     // 进房后，关闭所有的loading
     WaitingCtrl.obj.hidden();
