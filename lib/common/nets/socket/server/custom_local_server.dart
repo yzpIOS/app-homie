@@ -138,8 +138,6 @@ class CustomLocalServer with BaseClient {
       };
       _sessions[CustomSocketSession.getUniqueKey2(data)] = customSocketSession;
     }, onError: (error) {
-      // 服务端断开
-      dispose();
       // 重新打开server
       bindServer();
     });

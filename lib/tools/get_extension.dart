@@ -76,7 +76,7 @@ extension XGet on GetInterface {
     );
   }
 
-  Future<void> alertDialog(String msg) {
+  Future<void> alertDialog(String msg, {Function? callBack}) {
     final content = Text(
       msg,
       style: const TextStyle(fontSize: 13, color: AppPalette.c3),
