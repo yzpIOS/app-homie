@@ -73,8 +73,8 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
     switch (status) {
       case MessageStatus.V2TIM_MSG_STATUS_SEND_SUCC: //消息发送成功
         return Padding(
-            padding: const Pad(right: 4, bottom: 2),
-            child: Image.asset(IMG.format(vm.isPeerRead ? 'chat/消息已读' : 'chat/消息未读'), width: 20, height: 20, scale: 3, fit: BoxFit.contain)
+            padding: Pad(right: $showNip ? 0 : 5),
+            child: Image.asset(IMG.format(vm.isPeerRead ? 'chat/消息已读' : 'chat/消息未读'), width: 14, height: 14, scale: 3, fit: BoxFit.contain)
         );
       case MessageStatus.V2TIM_MSG_STATUS_SENDING: //消息发送中
         switch (vm.msg.elemType) {
