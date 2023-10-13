@@ -72,8 +72,8 @@ class UserCtrl extends GetxController with GetDisposableMixin {
     super.onReady();
 
     if (Env.useUnity && showTransition == true) {
-      Get.find<UnityCtrl>() //
-          .loadScene('Transition');
+      // Get.find<UnityCtrl>() //
+      //     .loadScene('Transition');
     }
   }
 
