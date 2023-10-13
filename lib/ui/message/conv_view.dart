@@ -120,8 +120,6 @@ class _ItemView extends StatelessWidget {
             case ConversationType.V2TIM_C2C:
               // 打开聊天
               ChatPage.to(SingleChatCtrl.fromUid(data.userID!));
-              // 设置为己读
-              convManagerCtrl.markUserConvAsRead(data.userID!);
               break;
             default:
               showToast('当前版本不支持');

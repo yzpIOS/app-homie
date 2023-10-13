@@ -21,6 +21,14 @@ class NewMsgEvent extends _MsgEvent {
 }
 //</editor-fold>
 
+//<editor-fold desc="单聊消息已读回执事件">
+class C2CReadReceiptEvent extends Event {
+  final List<V2TimMessageReceipt> receiptList;
+
+  C2CReadReceiptEvent(this.receiptList);
+}
+//</editor-fold>
+
 //<editor-fold desc="群事件">
 class GroupEvent extends Event {
   final String groupId;

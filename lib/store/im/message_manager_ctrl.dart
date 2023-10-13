@@ -191,6 +191,14 @@ mixin _MsgMixin on GetxController, GetDisposableMixin {
 
         MsgStateEvent(msg).fire();
       },
+      onRecvC2CReadReceipt: (receiptList) {
+        xlog(() => '单聊全部消息已读回执 -> $receiptList', type: LogType.IM);
+
+        C2CReadReceiptEvent(receiptList).fire();
+      },
+      // onRecvMessageReadReceipts: (receiptList) {
+      //   xlog(() => '单个消息已读回执 -> $receiptList', type: LogType.IM);
+      // },
       onRecvMessageRevoked: (msgID) {
         xlog(() => '消息撤回 -> $msgID', type: LogType.IM);
       },

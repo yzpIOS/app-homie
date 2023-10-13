@@ -21,6 +21,7 @@ import 'package:app/ui/message/input/input_ctrl.dart';
 import 'package:app/ui/message/input/input_view.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_message_receipt.dart';
 
 mixin GetConvMixin {
   abstract final Either<V2TimConversation, ConvCreator> _conv;
@@ -85,6 +86,9 @@ abstract class ChatCtrl extends GetxController
 
     final convCtrl = Get.find<ConvManagerCtrl>();
     final convId = conv.convId;
+
+    //设置当前会话的所有消息已读
+    convCtrl.markUserConvAsRead(conv.userId!);
 
     bindWorker(
       Worker(
@@ -187,10 +191,40 @@ abstract class ChatCtrl extends GetxController
 
         if (!isClosed) {
           final items = addNewMsg(msg);
+          // 设置为已读  IM.chat.sendMessageReadReceipts(messageIDList: []);
+          // conv.markMessageAsRead;
+          Get.find<ConvManagerCtrl>().markUserConvAsRead(conv.userId!);
 
           if (items != null && (autoRx.isTrue || msg.isSend)) animeToEnd();
         }
       },
+    );
+
+    /// 收到消息已读回执
+    on<C2CReadReceiptEvent>(
+        test: (it) {
+          for (V2TimMessageReceipt element in it.receiptList) {
+            return element.userID == conv.userId!;
+          }
+          return false;
+        },
+            (event) {
+          if (isClosed) {
+            return;
+          }
+          [newMsgRx, oldMsgRx].any((data) {
+            for (var i = 0; i < data.length; ++i) {
+              final item = data[i];
+
+              if (item.isPeerRead == false) {
+                item.isPeerRead = true;
+              }
+            }
+
+            data.refresh();
+            return true;
+          });
+        }
     );
 
     on<MsgStateEvent>(

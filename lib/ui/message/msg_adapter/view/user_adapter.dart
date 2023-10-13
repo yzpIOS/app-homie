@@ -72,7 +72,10 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
 
     switch (status) {
       case MessageStatus.V2TIM_MSG_STATUS_SEND_SUCC: //消息发送成功
-        return null;
+        return Padding(
+            padding: const Pad(right: 4, bottom: 2),
+            child: Image.asset(IMG.format(vm.isPeerRead ? 'chat/消息已读' : 'chat/消息未读'), width: 20, height: 20, scale: 3, fit: BoxFit.contain)
+        );
       case MessageStatus.V2TIM_MSG_STATUS_SENDING: //消息发送中
         switch (vm.msg.elemType) {
           case MessageElemType.V2TIM_ELEM_TYPE_IMAGE:
@@ -114,15 +117,15 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
         break;
     }
 
-    if (Env.isDebug) {
-      return Padding(
-        padding: _padding,
-        child: XText(
-          '$status',
-          style: const TextStyle(fontSize: 10),
-        ),
-      );
-    }
+    // if (Env.isDebug) {
+    //   return Padding(
+    //     padding: _padding,
+    //     child: XText(
+    //       '$status',
+    //       style: const TextStyle(fontSize: 10),
+    //     ),
+    //   );
+    // }
 
     return null;
   }
@@ -159,7 +162,7 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
     if (state != null) {
       child = Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [state, child],
       );
     }
@@ -238,7 +241,7 @@ class TxtMsg extends UserMsg<TxtMsgAdapter> {
       builder: (context) {
         return XText(
           vm.txt,
-          maxLines: 20,
+          maxLines: 100,
           specialTextSpanBuilder: context.watch<SpecialTextSpanBuilder?>(),
         );
       },

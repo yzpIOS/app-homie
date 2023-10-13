@@ -68,10 +68,12 @@ mixin _SizeMixin<T> on _Adapter<T> {
 class MsgAdapter<T> extends _Adapter<T> {
   final bool isSend;
   final int status;
+  final bool isPeerRead;
 
   MsgAdapter(super.msg)
       : status = msg.status!,
-        isSend = msg.isSend;
+        isSend = msg.isSend,
+        isPeerRead = msg.isPeerRead!;
 
   @override
   T get body => throw 'Err';

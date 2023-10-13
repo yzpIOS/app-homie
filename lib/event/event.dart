@@ -12,6 +12,7 @@ import 'package:app/types.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/tools/bus.dart';
 import 'package:protobuf/protobuf.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_message_receipt.dart';
 
 part 'app_event.dart';
 part 'broadcast_event.dart';
