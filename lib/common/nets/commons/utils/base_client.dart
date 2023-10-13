@@ -135,7 +135,7 @@ mixin BaseClient {
   /// 唤起回调
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
-      xlog("接收数据, cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}", type: LogType.SOCKET);
+    debugPrint("接收数据, cmd = $curCmd, data = ${generatedMessage?.toProto3Json()}");
 
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {
