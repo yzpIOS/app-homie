@@ -36,6 +36,12 @@ class CustomClient with BaseClient {
   // 发送数据错误次数
   int sendFailTime = 0;
 
+  // 从后台到前台时，把下面的值设成不为0，然后就会待待socket数据包
+  int forceWaitTimes = 0;
+
+  // socket状态
+  Completer<bool> shareSocketStatus = Completer();
+
   CustomClient() {
     // 收到消息时的回调
     _customSocket.addReceive((data) {
@@ -46,6 +52,11 @@ class CustomClient with BaseClient {
     _customSocket.addDisconnect(() {
       serverByteBuffer.clearBuffer();
       _heartBeatStream?.cancel();
+      // 设成没有完成
+      if(shareSocketStatus.isCompleted) {
+        shareSocketStatus = Completer();
+        return;
+      }
     });
 
     // 监听开始心跳
@@ -60,6 +71,36 @@ class CustomClient with BaseClient {
       // 原始数据
       riseOnRawData(cmd, null);
     };
+  }
+
+  @override
+  void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
+    super.riseOnData(curCmd, generatedMessage);
+    // 数据返回，通知网络通了
+    if(curCmd != CMD.S_Err) {
+      if(forceWaitTimes > 0) {
+        logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${shareSocketStatus.isCompleted}");
+      }
+      forceWaitTimes = 0;
+      if(!shareSocketStatus.isCompleted) {
+        shareSocketStatus.complete(true);
+      }
+    }
+  }
+
+  Future<bool> isConnect() async {
+    if(forceWaitTimes > 0) {
+      shareSocketStatus = Completer();
+    }
+    // 等待socket连接成功
+    if(!shareSocketStatus.isCompleted) {
+      logForDebug("socket没有连接，等待socket连接");
+      await shareSocketStatus.future;
+      logForDebug("socket连接成功111");
+    } else {
+      return Future.value(true);
+    }
+    return shareSocketStatus.future;
   }
 
   ///
@@ -212,6 +253,9 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void reConnect({bool foreceConnect = false}) {
+    if(shareSocketStatus.isCompleted) {
+      shareSocketStatus = Completer();
+    }
     logForDebug("[CustomClient:reConnect]: socket重新连接 ${heartBeatNumber}");
     _customSocket.reconnect(foreceConnect: foreceConnect);
   }

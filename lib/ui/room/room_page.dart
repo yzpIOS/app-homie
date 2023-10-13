@@ -32,12 +32,12 @@ class RoomPage extends StatefulWidget {
     final mgr = Get.find<RoomManagerCtrl>();
 
     // 处理异常
-    if(SocketCtrl.ins.forceWaitTimes > 0) {
-      logForDebug("用户从后台到前台，并进入房间, 需要等待网络包的响应， 此时 waitTimes = ${SocketCtrl.ins.forceWaitTimes}");
+    if(SocketCtrl.ins.share.forceWaitTimes > 0) {
+      logForDebug("用户从后台到前台，并进入房间, 需要等待网络包的响应， 此时 waitTimes = ${SocketCtrl.ins.share.forceWaitTimes}");
       // 显示loading
       WaitingCtrl.obj.show();
       // 添加超时时间
-      Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+      Future.delayed(Duration(seconds: SocketCtrl.ins.share.forceWaitTimes)).asStream().listen((event) {
         WaitingCtrl.obj.hidden();
       });
       // 待主待

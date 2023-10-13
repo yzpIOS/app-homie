@@ -32,15 +32,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   // client, 用于与后台通信
   final CustomClient share = CustomClient();
-  Completer<bool> _shareSocketStatus = new Completer();
 
   // 分配给unity的唯一id
   String uniqueId = Slugid.nice().toString();
   // flutter 内部的server, 用于与unity进行通信
   final CustomLocalServer local = CustomLocalServer();
-  Completer<bool> _localSocketStatus = Completer();
-
-  int forceWaitTimes = 0;
 
   // 网络状态订阅
   StreamSubscription? _netStateSubscription;
@@ -105,24 +101,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 接收到反序列化后的数据
     share.onData((cmd, data) {
       riseOnData(cmd, data);
-      // 数据返回，通知网络通了
-      if(cmd != CMD.S_Err) {
-        if(forceWaitTimes > 0) {
-          logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted}");
-        }
-        forceWaitTimes = 0;
-        if(!_shareSocketStatus.isCompleted) {
-          _shareSocketStatus.complete(true);
-        }
-      }
-    });
-
-    // 断开连接时重置socket状态
-    share.addDisconnect(() {
-      if(_shareSocketStatus.isCompleted) {
-        _shareSocketStatus = Completer();
-        return;
-      }
     });
 
     // 连接成功回调
@@ -312,8 +290,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     var roleId = role.role.roleId;
     var name = role.role.name;
     // 收到用户信息后，才认为是己经连接上
-    if(!_shareSocketStatus.isCompleted) {
-      _shareSocketStatus.complete(true);
+    if(!share.shareSocketStatus.isCompleted) {
+      share.shareSocketStatus.complete(true);
     }
     // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
     var pkRoomId = role.pkRoomId.toInt();
@@ -347,10 +325,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void onServerError(int cmd, S_Err? role) {
     // 网络连接非法
     if(role?.code == ErrorCode.NETWORK_ANOMALY) {
-      if(!_shareSocketStatus.isCompleted) {
-        _shareSocketStatus.completeError(TimeoutException("time out"));
+      if(!share.shareSocketStatus.isCompleted) {
+        share.shareSocketStatus.completeError(TimeoutException("time out"));
       }
-      _shareSocketStatus = Completer();
       share.reConnect(foreceConnect: true);
     }
 
@@ -366,15 +343,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   Future<bool> isCConnect() async {
     // socket己经连接，但是没有收到数据包超过10秒时间
-    if(forceWaitTimes > 0) {
-      _shareSocketStatus = Completer();
-    }
-    // 等待socket连接成功
-    if(!_shareSocketStatus.isCompleted) {
-      logForDebug("socket没有连接，等待socket连接");
-      await _shareSocketStatus.future;
-      logForDebug("socket连接成功111");
-    }
+    await share.isConnect();
+
     // 等待unity连接成功
     if(!local.statusCompleter.isCompleted) {
       logForDebug("unity没有连接，等待unity连接");

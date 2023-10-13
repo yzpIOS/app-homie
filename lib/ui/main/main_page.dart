@@ -174,11 +174,11 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       case AppLifecycleState.resumed:
         // 设置进房需要等待服务端返回数据，才能进房
         _streamSubscription?.cancel();
-        SocketCtrl.ins.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
-        _streamSubscription = Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+        SocketCtrl.ins.share.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
+        _streamSubscription = Future.delayed(Duration(seconds: SocketCtrl.ins.share.forceWaitTimes)).asStream().listen((event) {
           _needSendCloseEvent = true;
           // 长时间连不上, 做兜底连接
-          if(SocketCtrl.ins.forceWaitTimes > 0) {
+          if(SocketCtrl.ins.share.forceWaitTimes > 0) {
             SocketCtrl.ins.share.reConnect(foreceConnect: true);
           }
         });

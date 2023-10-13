@@ -243,12 +243,12 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       );
     }
 
-    if(SocketCtrl.ins.forceWaitTimes > 0) {
+    if(SocketCtrl.ins.share.forceWaitTimes > 0) {
       logForDebug("[RoomManagerCtrl:_show]:从后台到前台时，进房时等待心跳返回");
       // 显示loading
       WaitingCtrl.obj.show();
       // 添加超时时间
-      Future.delayed(Duration(seconds: SocketCtrl.ins.forceWaitTimes)).asStream().listen((event) {
+      Future.delayed(Duration(seconds: SocketCtrl.ins.share.forceWaitTimes)).asStream().listen((event) {
         WaitingCtrl.obj.hidden();
       });
       // 待主待
