@@ -37,8 +37,6 @@ class CustomClient with BaseClient {
   int sendFailTime = 0;
 
   CustomClient() {
-    // 断开自动连接
-    _customSocket.closeAutoConnect();
     // 收到消息时的回调
     _customSocket.addReceive((data) {
       onReceive(data);
@@ -96,7 +94,6 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
-        logForDebug("[CustomClient:sendBytes]:多次网络请求发送异常，sendFailTime = ${sendFailTime}");
         _customSocket.reconnect();
         sendFailTime = 0;
       }
@@ -205,9 +202,9 @@ class CustomClient with BaseClient {
   ///
   /// 重置连接数据
   ///
-  void resetConnect() {
+  void resetConnect({bool clearHost = true}) {
     logForDebug("[CustomClient:resetConnect]: 重置网络状态 ${heartBeatNumber}");
-    _customSocket.resetConnect();
+    _customSocket.resetConnect(clearHost: clearHost);
   }
 
   ///

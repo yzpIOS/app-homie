@@ -15,6 +15,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
@@ -39,6 +40,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   Completer<bool> _localSocketStatus = Completer();
 
   int forceWaitTimes = 0;
+
+  // 网络状态订阅
+  StreamSubscription? _netStateSubscription;
 
   static SocketCtrl get ins {
     return Get.find<SocketCtrl>();
@@ -86,7 +90,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     });
     // 开心跳心检查
     local.beatHeartCheck();
-    local.closeAutoConnect();
 
     // 接收到原始数据
     share.onRawData((cmd, data) {
@@ -123,6 +126,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     addClientConnect(onClientConnect);
     onDataCmd(CMD.S_Role, onRoleResponse);
     onDataCmd(CMD.S_Err, onServerError);
+
+    // 监听网络状态
+    netStateChangeListener();
   }
 
   Future<int> getLocalServerPort() async {
@@ -440,6 +446,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.dispose();
     lastSendTime.clear();
 
+    _netStateSubscription?.cancel();
+
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
     removeOnDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
@@ -507,6 +515,44 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     }
     sMoreGiftFloatingScreen.items.forEach((element) {
       SuperGiftEvent(element).fire();
+    });
+  }
+
+  ConnectivityResult? preState;
+
+  ///
+  /// 连接关闭时自动连接
+  ///
+  void netStateChangeListener() {
+    _netStateSubscription?.cancel();
+    // 订阅网络变化
+    _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
+      // 如果网络变化的值一样，就不处理
+      if(preState == state) {
+        return;
+      }
+      preState = state;
+      // 没有网络直接返回
+      final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
+      if(!hasNet) {
+        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；无网络000, state = $state");
+        // 重置所有与unity相关的socket连接
+        local.resetConnect();
+        local.cancelHeartBeat();
+        // 重置所有的网
+        share.resetConnect(clearHost: false);
+        // 不给自动重连
+        share.onCanConnected(false);
+        return;
+      }
+      logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；有网络111, state = $state");
+      // 设置自动重连
+      share.onCanConnected(true);
+      // 连接server
+      share.reConnect(foreceConnect: true);
+      // 唤起unity相关的回调，与unity进行socket连接
+      local.riseServerStatusCallBacks();
+      local.beatHeartCheck();
     });
   }
 }

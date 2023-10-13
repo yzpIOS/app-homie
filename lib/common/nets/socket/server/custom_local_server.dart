@@ -248,37 +248,15 @@ class CustomLocalServer with BaseClient {
   }
 
   ///
-  /// 连接关闭时自动连接
+  /// 无网时，重置所有的连接
   ///
-  CustomLocalServer closeAutoConnect() {
-    _netStateSubscription?.cancel();
-    // 订阅网络变化
-    _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) async {
-      logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化, state = $state");
-      // 是否有网络
-      final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
-      // 没有网络直接返回
-      if(!hasNet) {
-        previouseHasNet = false;
-        logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；无网络, state = $state");
-        _sessions.forEach((key, value) {
-          value.dispose();
-        });
-        _sessions.clear();
-        return;
-      }
-      // 防止重复调用
-      if(previouseHasNet) {
-        return;
-      }
-      previouseHasNet = true;
-      await Future.delayed(const Duration(seconds: 1));
-      logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；有网络，请求与unity进行连接, state = $state");
-      riseServerStatusCallBacks();
+  void resetConnect() {
+    logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；无网络");
+    _sessions.forEach((key, value) {
+      value.dispose();
     });
-    return this;
+    _sessions.clear();
   }
-
 
   ///
   /// 注册数据回调
@@ -335,6 +313,7 @@ class CustomLocalServer with BaseClient {
   }
 
   void riseServerStatusCallBacks() {
+    logForDebug("[CustomLocalServer:beatHeartCheck]:网络发生变化；有网络，请求与unity进行连接");
     _serverStatusCallBacks.forEach((element) {
       element.call();
     });

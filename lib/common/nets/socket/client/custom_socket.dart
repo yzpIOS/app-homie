@@ -238,40 +238,6 @@ class CustomSocket {
     _canConnected = canConnect;
   }
 
-  ///
-  /// 连接关闭时自动连接
-  ///
-  CustomSocket closeAutoConnect() {
-    _netStateSubscription?.cancel();
-    // 订阅网络变化
-    _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
-      // 是否有网络
-      final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
-      // 没有网络直接返回
-      if(!hasNet) {
-        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；无网络, state = $state");
-        // 回调断开连接
-        resetConnect(clearHost: false);
-        return;
-      }
-
-      // 己经连接, 或者在重连中
-      if(_socket != null) {
-        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；己连接, state = $state");
-        return;
-      }
-      logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；没连接，重连, state = $state");
-      // ip和端口
-      String host = _host;
-      int port = _port;
-      // 重置数据
-      _host = "";
-      _port = 0;
-      // 网络连接
-      connect(host, port, timeout: _timeout);
-    });
-    return this;
-  }
 
   ///
   /// 添加回调
