@@ -117,6 +117,8 @@ class CustomClient with BaseClient {
   /// CustomClient.ins.sendBytes(6666, datas: c_role.writeToBuffer());
   ///
   bool sendBytes(int cmd, {Uint8List? datas, String sendToUntiy = ""}) {
+    debugPrint("[socket]:${sendToUntiy}发送数据, cmd = $cmd, data = ${datas
+        .toString()}");
     int len = datas?.length ?? 0;
     // 加密
     ByteUtils.encryption(datas);
