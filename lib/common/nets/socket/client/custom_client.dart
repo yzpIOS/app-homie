@@ -207,12 +207,12 @@ class CustomClient with BaseClient {
 
     // 取消定时器
     _heartBeatStream?.cancel();
-    // 发送心跳成功，数值加1
-    sendBytes(1);
-    heartBeatNumber += 1;
 
     // 延尺执行
     _heartBeatStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
+      // 发送心跳成功，数值加1
+      sendBytes(1);
+      heartBeatNumber += 1;
       // 下一个心跳
       startHeartBeat(interval: interval);
     }, onError: (error){
