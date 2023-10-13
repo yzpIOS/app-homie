@@ -38,6 +38,8 @@ class CustomClient with BaseClient {
 
   // 从后台到前台时，把下面的值设成不为0，然后就会待待socket数据包
   int forceWaitTimes = 0;
+  // 是否可以连接，连接时不能重置forceWaitTimes值
+  bool _canForceWaitTimes = true;
 
   // socket状态
   Completer<bool> _shareSocketStatus = Completer();
@@ -71,6 +73,8 @@ class CustomClient with BaseClient {
 
     // 开始连接时，重新设置网络状态
     _customSocket.startConnect = () {
+      logForDebug("socket开始重新连接....");
+      _canForceWaitTimes = false;
       resetShareSocketStatus();
     };
   }
@@ -79,11 +83,8 @@ class CustomClient with BaseClient {
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
     super.riseOnData(curCmd, generatedMessage);
     // 数据返回，通知网络通了
-    if(curCmd != CMD.S_Err) {
-      if(forceWaitTimes > 0) {
-        logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted}");
-      }
-      forceWaitTimes = 0;
+    if(curCmd != CMD.S_Err && _canForceWaitTimes) {
+      logForDebug("收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted} ,_canForceWaitTimes = $_canForceWaitTimes");
       completeShareSocketStatus();
     }
   }
@@ -275,6 +276,8 @@ class CustomClient with BaseClient {
     if(!_shareSocketStatus.isCompleted) {
       _shareSocketStatus.complete(true);
     }
+    forceWaitTimes = 0;
+    _canForceWaitTimes = true;
   }
 
   void completeErrorShareSocketStatus() {
