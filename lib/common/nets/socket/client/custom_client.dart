@@ -94,6 +94,7 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
+        logForDebug("[CustomClient:sendBytes]:多次网络请求发送异常，sendFailTime = ${sendFailTime}");
         _customSocket.reconnect();
         sendFailTime = 0;
       }
