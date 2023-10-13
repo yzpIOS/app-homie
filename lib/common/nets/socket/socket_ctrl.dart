@@ -290,9 +290,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     var roleId = role.role.roleId;
     var name = role.role.name;
     // 收到用户信息后，才认为是己经连接上
-    if(!share.shareSocketStatus.isCompleted) {
-      share.shareSocketStatus.complete(true);
-    }
+    share.completeShareSocketStatus();
     // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
     var pkRoomId = role.pkRoomId.toInt();
     var roomId = role.roomId.toInt();
@@ -325,9 +323,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   void onServerError(int cmd, S_Err? role) {
     // 网络连接非法
     if(role?.code == ErrorCode.NETWORK_ANOMALY) {
-      if(!share.shareSocketStatus.isCompleted) {
-        share.shareSocketStatus.completeError(TimeoutException("time out"));
-      }
+      share.completeErrorShareSocketStatus();
       share.reConnect(foreceConnect: true);
     }
 
@@ -335,7 +331,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }
-
   }
 
   ///

@@ -11,6 +11,7 @@ import 'package:app/tools/log.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
+typedef StartConnect = void Function();
 
 // 链接回调, 底层在多次重连时，会多次调用
 typedef Connected = void Function();
@@ -73,6 +74,7 @@ class CustomSocket {
   // 记录上一次收到数据的时间，用于判断太久没有收到数据时，认为是断开连接
   int preReceiveTime = 0;
 
+  StartConnect? startConnect;
 
   ///
   /// 链接socket
@@ -115,6 +117,8 @@ class CustomSocket {
       logForDebug("[CustomSocket:connect]:发起连接, 此时要把房间关闭");
       RoomManagerCtrl.ins.closeRoom2();
     }
+
+    startConnect?.call();
 
     logForDebug("[CustomSocket:connect]:发起连接, host=$host, port=$_port");
     // 正在连接中
@@ -224,9 +228,8 @@ class CustomSocket {
     String host = _host;
     int port = _port;
     logForDebug("[CustomSocket:reconnect]:重置网络状态 foreceConnect = ${foreceConnect}");
-
+    // 重置网络状态
     resetConnect(clearHost: foreceConnect);
-
     // 发起重联
     connect(host, port, timeout: _timeout);
   }
@@ -341,6 +344,9 @@ class CustomSocket {
     riseDisconnect();
   }
 
+  ///
+  /// 唤起断开回调
+  ///
   void riseDisconnect() {
     if(_preRiseTime != 0 && DateTime.now().millisecondsSinceEpoch - _preRiseTime < 1000) {
       return;

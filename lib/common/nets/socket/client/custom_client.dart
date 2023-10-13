@@ -40,7 +40,7 @@ class CustomClient with BaseClient {
   int forceWaitTimes = 0;
 
   // socket状态
-  Completer<bool> shareSocketStatus = Completer();
+  Completer<bool> _shareSocketStatus = Completer();
 
   CustomClient() {
     // 收到消息时的回调
@@ -53,10 +53,7 @@ class CustomClient with BaseClient {
       serverByteBuffer.clearBuffer();
       _heartBeatStream?.cancel();
       // 设成没有完成
-      if(shareSocketStatus.isCompleted) {
-        shareSocketStatus = Completer();
-        return;
-      }
+      resetShareSocketStatus();
     });
 
     // 监听开始心跳
@@ -71,6 +68,11 @@ class CustomClient with BaseClient {
       // 原始数据
       riseOnRawData(cmd, null);
     };
+
+    // 开始连接时，重新设置网络状态
+    _customSocket.startConnect = () {
+      resetShareSocketStatus();
+    };
   }
 
   @override
@@ -79,28 +81,26 @@ class CustomClient with BaseClient {
     // 数据返回，通知网络通了
     if(curCmd != CMD.S_Err) {
       if(forceWaitTimes > 0) {
-        logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${shareSocketStatus.isCompleted}");
+        logForDebug("[SocketCtrl:onInit]:收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted}");
       }
       forceWaitTimes = 0;
-      if(!shareSocketStatus.isCompleted) {
-        shareSocketStatus.complete(true);
-      }
+      completeShareSocketStatus();
     }
   }
 
   Future<bool> isConnect() async {
     if(forceWaitTimes > 0) {
-      shareSocketStatus = Completer();
+      resetShareSocketStatus();
     }
     // 等待socket连接成功
-    if(!shareSocketStatus.isCompleted) {
+    if(!_shareSocketStatus.isCompleted) {
       logForDebug("socket没有连接，等待socket连接");
-      await shareSocketStatus.future;
+      await _shareSocketStatus.future;
       logForDebug("socket连接成功111");
     } else {
       return Future.value(true);
     }
-    return shareSocketStatus.future;
+    return _shareSocketStatus.future;
   }
 
   ///
@@ -253,8 +253,8 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void reConnect({bool foreceConnect = false}) {
-    if(shareSocketStatus.isCompleted) {
-      shareSocketStatus = Completer();
+    if(_shareSocketStatus.isCompleted) {
+      _shareSocketStatus = Completer();
     }
     logForDebug("[CustomClient:reConnect]: socket重新连接 ${heartBeatNumber}");
     _customSocket.reconnect(foreceConnect: foreceConnect);
@@ -266,6 +266,24 @@ class CustomClient with BaseClient {
 
   bool isSocketConnect() {
     return _customSocket.isSocketConnected();
+  }
+
+  void completeShareSocketStatus() {
+    if(!_shareSocketStatus.isCompleted) {
+      _shareSocketStatus.complete(true);
+    }
+  }
+
+  void completeErrorShareSocketStatus() {
+    if(!_shareSocketStatus.isCompleted) {
+      _shareSocketStatus.completeError(TimeoutException("time out"));
+    }
+  }
+
+  void resetShareSocketStatus() {
+    if(_shareSocketStatus.isCompleted) {
+      _shareSocketStatus = Completer();
+    }
   }
 
   ///
