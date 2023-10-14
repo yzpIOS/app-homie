@@ -59,6 +59,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode NOT_SET_PASSWORD = ErrorCode._(12017, _omitEnumNames ? '' : 'NOT_SET_PASSWORD');
   static const ErrorCode PHONE_BIND_OTHER_USER = ErrorCode._(12018, _omitEnumNames ? '' : 'PHONE_BIND_OTHER_USER');
   static const ErrorCode USER_CARD_NO_NOT_FOUND = ErrorCode._(12019, _omitEnumNames ? '' : 'USER_CARD_NO_NOT_FOUND');
+  static const ErrorCode ACCOUNT_LOGIN_USED = ErrorCode._(12020, _omitEnumNames ? '' : 'ACCOUNT_LOGIN_USED');
   static const ErrorCode BAD_USERNAME_FORMAT = ErrorCode._(13001, _omitEnumNames ? '' : 'BAD_USERNAME_FORMAT');
   static const ErrorCode BAD_PUBLIC_ID_FORMAT = ErrorCode._(13002, _omitEnumNames ? '' : 'BAD_PUBLIC_ID_FORMAT');
   static const ErrorCode PUBLIC_ID_CONFLICT = ErrorCode._(13003, _omitEnumNames ? '' : 'PUBLIC_ID_CONFLICT');
@@ -213,6 +214,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     NOT_SET_PASSWORD,
     PHONE_BIND_OTHER_USER,
     USER_CARD_NO_NOT_FOUND,
+    ACCOUNT_LOGIN_USED,
     BAD_USERNAME_FORMAT,
     BAD_PUBLIC_ID_FORMAT,
     PUBLIC_ID_CONFLICT,

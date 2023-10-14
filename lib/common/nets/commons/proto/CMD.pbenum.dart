@@ -130,6 +130,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_UpdateDressUp = CMD._(4102, _omitEnumNames ? '' : 'S_UpdateDressUp');
   static const CMD C_UseProductAndSaveUserCurrentDressUp = CMD._(4103, _omitEnumNames ? '' : 'C_UseProductAndSaveUserCurrentDressUp');
   static const CMD S_UseProductAndSaveUserCurrentDressUp = CMD._(4104, _omitEnumNames ? '' : 'S_UseProductAndSaveUserCurrentDressUp');
+  static const CMD S_BulletinBroadcast = CMD._(5000, _omitEnumNames ? '' : 'S_BulletinBroadcast');
   static const CMD C_Robot = CMD._(6661, _omitEnumNames ? '' : 'C_Robot');
   static const CMD S_Robot = CMD._(6662, _omitEnumNames ? '' : 'S_Robot');
   static const CMD C_Test = CMD._(6666, _omitEnumNames ? '' : 'C_Test');
@@ -294,6 +295,7 @@ class CMD extends $pb.ProtobufEnum {
     S_UpdateDressUp,
     C_UseProductAndSaveUserCurrentDressUp,
     S_UseProductAndSaveUserCurrentDressUp,
+    S_BulletinBroadcast,
     C_Robot,
     S_Robot,
     C_Test,

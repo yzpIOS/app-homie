@@ -98,6 +98,7 @@ class CMD {
   static const C_UseProductAndSaveUserCurrentDressUp = 4103; // 使用商品并保存用户装扮
   static const S_UseProductAndSaveUserCurrentDressUp = 4104; // 使用商品并保存用户装扮响应
 
+  static const S_BulletinBroadcast = 5000;// 公告广播
 
   static const C_Role = 103;//请求角色
   static const S_Role = 104;//角色(性别=0表示无角色)

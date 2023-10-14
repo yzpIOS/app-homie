@@ -1913,6 +1913,20 @@ final $typed_data.Uint8List s_UseProductAndSaveUserCurrentDressUpDescriptor = $c
     'RHJlc3NVcFByb2R1Y3RMaXN0Ek4KEHVzZV9wcm9kdWN0X2xpc3QYAiADKAsyJC5jb20uc2F2dn'
     'kucHJvdG8uQmFja3BhY2tQcm9kdWN0SXRlbVIOdXNlUHJvZHVjdExpc3Q=');
 
+@$core.Deprecated('Use s_BulletinBroadcastDescriptor instead')
+const S_BulletinBroadcast$json = {
+  '1': 'S_BulletinBroadcast',
+  '2': [
+    {'1': 'bulletin_id', '3': 1, '4': 1, '5': 3, '10': 'bulletinId'},
+    {'1': 'message', '3': 2, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `S_BulletinBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_BulletinBroadcastDescriptor = $convert.base64Decode(
+    'ChNTX0J1bGxldGluQnJvYWRjYXN0Eh8KC2J1bGxldGluX2lkGAEgASgDUgpidWxsZXRpbklkEh'
+    'gKB21lc3NhZ2UYAiABKAlSB21lc3NhZ2U=');
+
 @$core.Deprecated('Use s_CameraSwitchDescriptor instead')
 const S_CameraSwitch$json = {
   '1': 'S_CameraSwitch',

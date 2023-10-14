@@ -15,6 +15,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/message/announcement_message_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:protobuf/protobuf.dart';
@@ -237,6 +238,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 多个礼物飘屏广播广播
     onDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
 
+    // 公告广播(公告板)
+    onDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
+
     // 连接状态
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     onDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
@@ -370,6 +374,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
     removeOnDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
+    removeOnDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
     removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
@@ -435,6 +440,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     sMoreGiftFloatingScreen.items.forEach((element) {
       SuperGiftEvent(element).fire();
     });
+  }
+
+  ///
+  /// 公告广播(公告板)
+  ///
+  void onBulletinBroadcast(int cmd, S_BulletinBroadcast? sBulletinBroadcast) {
+    if(sBulletinBroadcast == null) {
+      return;
+    }
+    Get.dialog(AnnouncementMessageDialog(bulletinId: sBulletinBroadcast.bulletinId.toInt(), message: sBulletinBroadcast.message,));
   }
 
   ConnectivityResult? preState;

@@ -7293,6 +7293,58 @@ class S_UseProductAndSaveUserCurrentDressUp extends $pb.GeneratedMessage {
   $core.List<BackpackProductItem> get useProductList => $_getList(1);
 }
 
+class S_BulletinBroadcast extends $pb.GeneratedMessage {
+  factory S_BulletinBroadcast() => create();
+  S_BulletinBroadcast._() : super();
+  factory S_BulletinBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_BulletinBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_BulletinBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'bulletinId')
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_BulletinBroadcast clone() => S_BulletinBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_BulletinBroadcast copyWith(void Function(S_BulletinBroadcast) updates) => super.copyWith((message) => updates(message as S_BulletinBroadcast)) as S_BulletinBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_BulletinBroadcast create() => S_BulletinBroadcast._();
+  S_BulletinBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_BulletinBroadcast> createRepeated() => $pb.PbList<S_BulletinBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_BulletinBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_BulletinBroadcast>(create);
+  static S_BulletinBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get bulletinId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set bulletinId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasBulletinId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBulletinId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get message => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set message($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessage() => clearField(2);
+}
+
 class S_CameraSwitch extends $pb.GeneratedMessage {
   factory S_CameraSwitch() => create();
   S_CameraSwitch._() : super();
