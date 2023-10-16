@@ -79,7 +79,14 @@ class _ReplySheetState extends State<ReplySheet> {
           child,
           $KeyboardHolder(
             child: autofocus ? Spacing.blank : EmojiView(
-              onSelect: controller.join,
+              onSelect: (value) {
+                if (maxLength != null) {
+                  if (controller.text.length >= maxLength!) {
+                    return;
+                  }
+                }
+                controller.join(value);
+              },
               // doBackspace: controller.backspace,
               doSend: () => _doSub(controller.text),
             ),
