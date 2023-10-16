@@ -96,6 +96,7 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
       TextEditingController(),
       autofocus: autofocus,
       barrierColor: Colors.transparent,
+      maxLength: 127,
     );
 
     sheet.onType<String>((it) {

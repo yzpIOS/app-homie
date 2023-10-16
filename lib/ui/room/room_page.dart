@@ -222,6 +222,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
           TextEditingController(text: '@${event.nickName} '),
           autofocus: true,
           barrierColor: Colors.transparent,
+          maxLength: 127,
         );
 
         sheet.onType<String>((it) {
