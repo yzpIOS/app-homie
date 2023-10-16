@@ -74,7 +74,15 @@ class CustomSocket {
   // 记录上一次收到数据的时间，用于判断太久没有收到数据时，认为是断开连接
   int preReceiveTime = 0;
 
+  // 开始连接时的回调
   StartConnect? startConnect;
+
+  void setHostAndPort(String host, int port) {
+    // 记录当前的host
+    _host = host;
+    // 记录当前port
+    _port = port;
+  }
 
   ///
   /// 链接socket
@@ -82,28 +90,20 @@ class CustomSocket {
   /// [port]              端口号
   /// [timeout]           过期时间
   ///
-  CustomSocket connect(String host, int port, {int timeout = SOCKET_CONNECT_TIMEOUT, int delayReconnect = 3}) {
+  CustomSocket connect({int timeout = SOCKET_CONNECT_TIMEOUT, int delayReconnect = 3}) {
     if(_isDisposed) {
-      return this;
-    }
-    // 防止重复调用
-    if(_host == host && _port == port) {
-      logForDebug("[CustomSocket:connect]:连接地址相同, host=$host, port=$port");
+      logForDebug("CustomSocket类己被销毁");
       return this;
     }
     _timeout = timeout;
     // 关闭之前的socket
     _socket?.close();
     _socket = null;
-    // 记录当前的host
-    _host = host;
-    // 记录当前port
-    _port = port;
     // 取消回调监听
     _socketSubscription?.cancel();
 
     if(_isConnecting) {
-      logForDebug("[CustomSocket:connect]:连接条件不满足, _isConnecting=$_isConnecting");
+      logForDebug("[CustomSocket:connect]:正在连接中，不需要重连, _isConnecting=$_isConnecting");
       return this;
     }
 
@@ -120,12 +120,12 @@ class CustomSocket {
 
     startConnect?.call();
 
-    logForDebug("[CustomSocket:connect]:发起连接, host=$host, port=$_port");
+    logForDebug("[CustomSocket:connect]:发起连接, host=$_host, port=$_port");
     // 正在连接中
     _isConnecting = true;
     // 链接新的socket
-    Socket.connect(host, port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
-      logForDebug("[CustomSocket:connect]:连接成功, host=$host, port=$_port");
+    Socket.connect(_host, _port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
+      logForDebug("[CustomSocket:connect]:连接成功, host=$_host, port=$_port");
       // 清理之前的链接
       _socket?.close();
       _socket = null;
@@ -135,6 +135,7 @@ class CustomSocket {
       // 处理连接
       _handleConnect();
       // 连接成功
+      logForDebug("[CustomSocket:connect]:连接成功，唤起成功回调，_connected.length = ${_connected.length}");
       for(int index = 0; index < _connected.length; index ++) {
         try {
           _connected[index].call();
@@ -145,12 +146,12 @@ class CustomSocket {
       // 连接成功回调
       _riseCallBack2(BaseClient.CONNECT_SUC);
     }, onError: (error) async {
-      logForDebug("[CustomSocket:connect]:连接失败, host=$host, port=$_port");
       // 关闭之前的socket链接
       _socket?.close();
       _socket = null;
       // 取消回调监听
       _socketSubscription?.cancel();
+      logForDebug("[CustomSocket:connect]:连接失败, host=$_host, port=$_port, 唤起回调_connectError.length = ${_connectError.length}");
       for(int index = 0; index < _connectError.length; index ++) {
         try {
           _connectError[index].call();
@@ -158,16 +159,11 @@ class CustomSocket {
           logForDebug("[CustomSocket:connect]:onError热行失败");
         }
       }
-
       // 延迟去重新连接
       await Future.delayed(Duration(seconds: delayReconnect));
-
-      // 重置数据
-      _host = "";
-      _port = 0;
       // 网络连接
       _isConnecting = false;
-      connect(host, port, timeout: _timeout);
+      connect(timeout: _timeout);
       // 连接失败
       _riseCallBack2(BaseClient.CONNECT_FAIL);
       // 断开连接
@@ -225,13 +221,11 @@ class CustomSocket {
     if(foreceConnect) {
       _canConnected = true;
     }
-    String host = _host;
-    int port = _port;
     logForDebug("[CustomSocket:reconnect]:重置网络状态 foreceConnect = ${foreceConnect}");
     // 重置网络状态
     resetConnect(clearHost: foreceConnect);
     // 发起重联
-    connect(host, port, timeout: _timeout);
+    connect(timeout: _timeout);
   }
 
   ///
@@ -240,7 +234,6 @@ class CustomSocket {
   void onCanConnected(bool canConnect) {
     _canConnected = canConnect;
   }
-
 
   ///
   /// 添加回调
@@ -335,11 +328,6 @@ class CustomSocket {
     _socketSubscription?.cancel();
     _socketSubscription = null;
 
-    // 重置数据
-    if(clearHost) {
-      _host = "";
-      _port = 0;
-    }
     // 唤起断开连接
     riseDisconnect();
   }
@@ -360,10 +348,6 @@ class CustomSocket {
         xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
       }
     }
-  }
-
-  bool isSocketConnected() {
-    return _socket != null;
   }
 
   void dispose() {

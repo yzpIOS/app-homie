@@ -251,12 +251,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 开启socket连接
   ///
   void startClient(String host, int port) {
+    // 设置host和port
+    share.setHostAndPort(host, port);
     // 连接socket
     post(() async {
       // 重置状态
       share.onCanConnected(true);
       // 连接服务器
-      share.connect(host, port);
+      share.connect();
     });
   }
 

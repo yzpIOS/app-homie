@@ -156,10 +156,17 @@ class CustomClient with BaseClient {
   }
 
   ///
+  /// 设置host和port
+  ///
+  void setHostAndPort(String host, int port) {
+    _customSocket.setHostAndPort(host, port);
+  }
+
+  ///
   /// 连接服务器
   ///
-  CustomClient connect(String host, int port) {
-    _customSocket.connect(host, port);
+  CustomClient connect() {
+    _customSocket.connect();
     return this;
   }
 
@@ -266,10 +273,6 @@ class CustomClient with BaseClient {
 
   int getReceiveTime() {
     return _customSocket.preReceiveTime;
-  }
-
-  bool isSocketConnect() {
-    return _customSocket.isSocketConnected();
   }
 
   void completeShareSocketStatus() {
