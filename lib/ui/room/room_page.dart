@@ -240,6 +240,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     Widget child = UnityView(
       uniqueKey: 'RoomScene[${controller.roomId}]',
       onInit: controller.loadScene,
+      fromRoom: true,
     );
 
     child = Scaffold(

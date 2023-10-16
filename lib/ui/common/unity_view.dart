@@ -23,6 +23,8 @@ class UnityView extends StatefulWidget {
 
   final OnInit onInit;
   final OnClose? onClose;
+  
+  final bool fromRoom;
 
   final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
@@ -31,6 +33,7 @@ class UnityView extends StatefulWidget {
     required this.onInit,
     this.onClose,
     this.gestureRecognizers,
+    this.fromRoom = false,
   })  : assert(uniqueKey.isNotEmpty),
         super(key: Key(uniqueKey));
 
@@ -109,7 +112,27 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
                 child: AnimatedBuilder(
                   animation: _ctrl,
                   child: UnityLoading(controller: _ctrl),
-                  builder: (_, child) => _ctrl.value == 1 ? Spacing.blank : child!,
+                  builder: (_, child) {
+                    // 己经加载完成
+                    if(_ctrl.value >= 1) {
+                      return Spacing.blank;
+                    }
+                    // 房间背景
+                    if(widget.fromRoom || child == null) {
+                      return DecoratedBox(
+                          decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(IMG.format('room_background')),
+                            scale: 2,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: SizedBox(width: AppSize.width, height: AppSize.height),
+                      );
+                    }
+                    // 其它的背景
+                    return child;
+                  },
                 ),
               ),
             ],

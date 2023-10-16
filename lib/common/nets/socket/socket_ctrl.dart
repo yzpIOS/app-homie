@@ -409,6 +409,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   /// 连接失败
   ///
   void onConnectFail(int cmd, GeneratedMessage? data) async {
+    if(!OAuthCtrl.isLogin) {
+      return;
+    }
     errorTimes += 1;
     if(errorTimes <= 2 || popUp) {
       return;
