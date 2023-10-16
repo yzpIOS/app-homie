@@ -8,17 +8,19 @@ class ReplySheet extends StatefulWidget {
   final bool autofocus;
   final String? hintText;
   final TextEditingController controller;
+  final int? maxLength;
 
-  const ReplySheet._({required this.controller, required this.autofocus, this.hintText});
+  const ReplySheet._({required this.controller, required this.autofocus, this.hintText, this.maxLength});
 
   static Future<String?> show(
     TextEditingController controller, {
     bool autofocus = true,
-    String? hintText = '请输入…',
+    String? hintText = '…',
     Color? barrierColor,
+    int? maxLength,
   }) {
     return Get.dialog(
-      ReplySheet._(controller: controller, autofocus: autofocus, hintText: hintText),
+      ReplySheet._(controller: controller, autofocus: autofocus, hintText: hintText, maxLength: maxLength,),
       name: '$ReplySheet',
       barrierColor: barrierColor,
       useSafeArea: false,
@@ -33,19 +35,23 @@ class _ReplySheetState extends State<ReplySheet> {
   late final controller = widget.controller;
   late var autofocus = widget.autofocus;
   late final hintText = widget.hintText;
+  late final maxLength = widget.maxLength;
 
   @override
   Widget build(BuildContext context) {
     Widget child = Row(
       children: [
         Expanded(
-          child: XInputView(
+          child: SizedBox(
             height: 32,
-            controller: controller,
-            hintText: hintText,
-            autofocus: autofocus,
-            suffixIcon: suffixIcon,
-            onSubmitted: _doSub,
+            child: FormInputView(
+              controller: controller,
+              hint: hintText,
+              autofocus: autofocus,
+              suffixIcon: suffixIcon,
+              onSubmitted: _doSub,
+              maxLength: maxLength,
+            ),
           ),
         ),
         Spacing.w10,

@@ -80,6 +80,7 @@ class FormInputView extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextInputType keyboardType;
+  final ValueChanged<String>? onSubmitted;
   final ValueChanged<String>? onChanged;
   final TextEditingController? controller;
   final List<TextInputFormatter>? inputFormatters;
@@ -99,6 +100,7 @@ class FormInputView extends StatelessWidget {
     this.autofocus = false,
     this.maxLength,
     this.borderRadius,
+    this.onSubmitted,
     TextInputType? keyboardType,
   }) : keyboardType = keyboardType ?? (isPwd ? TextInputType.visiblePassword : TextInputType.text);
 
@@ -123,6 +125,7 @@ class FormInputView extends StatelessWidget {
         onChanged: onChanged,
         maxLength: maxLength,
         inputFormatters: inputFormatters,
+        onSubmitted: onSubmitted,
       );
     });
   }
