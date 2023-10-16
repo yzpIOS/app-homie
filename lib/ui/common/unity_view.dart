@@ -113,6 +113,7 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
                   animation: _ctrl,
                   child: UnityLoading(controller: _ctrl),
                   builder: (_, child) {
+                    // debugPrint("unity加载进度: ${_ctrl.value}");
                     // 己经加载完成
                     if(_ctrl.value >= 1) {
                       return Spacing.blank;
