@@ -244,8 +244,8 @@ class MessageManagerCtrl extends GetxController
         action: () async {
           final getType = //
               queryNew == true
-                  ? HistoryMsgGetTypeEnum.V2TIM_GET_LOCAL_NEWER_MSG
-                  : HistoryMsgGetTypeEnum.V2TIM_GET_LOCAL_OLDER_MSG;
+                  ? HistoryMsgGetTypeEnum.V2TIM_GET_CLOUD_NEWER_MSG
+                  : HistoryMsgGetTypeEnum.V2TIM_GET_CLOUD_OLDER_MSG;
 
           final api = IM.chat.getHistoryMessageList(
             userID: conv.userId,
