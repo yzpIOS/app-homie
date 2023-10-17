@@ -16,7 +16,7 @@ class ReplySheet extends StatefulWidget {
   static Future<String?> show(
     TextEditingController controller, {
     bool autofocus = true,
-    String? hintText = '…',
+    String? hintText = '请输入…',
     Color? barrierColor,
     int? maxLength,
   }) {

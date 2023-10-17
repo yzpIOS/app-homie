@@ -36,7 +36,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     /// 文本消息
     on<MsgTxtEvent>((data) {
       final uid = data.uid ?? "";
-      final txt = data.data?.message ?? "";
+      final txt = FiltrationChatText.filterChat(data.data?.message ?? "");
       final nuid = data.data?.roleId;
 
       dataRx.add(
