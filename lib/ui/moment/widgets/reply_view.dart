@@ -3,6 +3,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/emoji_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ReplySheet extends StatefulWidget {
   final bool autofocus;
@@ -15,7 +16,7 @@ class ReplySheet extends StatefulWidget {
   static Future<String?> show(
     TextEditingController controller, {
     bool autofocus = true,
-    String? hintText = '…',
+    String? hintText = '请输入…',
     Color? barrierColor,
     int? maxLength,
   }) {
@@ -42,16 +43,20 @@ class _ReplySheetState extends State<ReplySheet> {
     Widget child = Row(
       children: [
         Expanded(
-          child: SizedBox(
+          child: XInputView(
             height: 32,
-            child: FormInputView(
-              controller: controller,
-              hint: hintText,
-              autofocus: autofocus,
-              suffixIcon: suffixIcon,
-              onSubmitted: _doSub,
-              maxLength: maxLength,
-            ),
+            controller: controller,
+            hintText: hintText,
+            autofocus: autofocus,
+            suffixIcon: suffixIcon,
+            onSubmitted: _doSub,
+            inputFormatters: [//输入文本过滤器
+              //自定义的输入过滤器
+              ChatTextInputFormatter(),
+              if(maxLength != null)
+              //只允许输入最大文本数
+                LengthLimitingTextInputFormatter(maxLength),
+            ],
           ),
         ),
         Spacing.w10,
@@ -79,7 +84,14 @@ class _ReplySheetState extends State<ReplySheet> {
           child,
           $KeyboardHolder(
             child: autofocus ? Spacing.blank : EmojiView(
-              onSelect: controller.join,
+              onSelect: (value) {
+                if (maxLength != null) {
+                  if (controller.text.length >= maxLength!) {
+                    return;
+                  }
+                }
+                controller.join(value);
+              },
               // doBackspace: controller.backspace,
               doSend: () => _doSub(controller.text),
             ),

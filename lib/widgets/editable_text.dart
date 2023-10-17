@@ -20,6 +20,7 @@ class XInputView extends StatelessWidget {
   final Widget? suffixIcon;
   final TextInputAction? textInputAction;
   final Color bgColor;
+  final List<TextInputFormatter>? inputFormatters;
 
   const XInputView({
     super.key,
@@ -36,6 +37,7 @@ class XInputView extends StatelessWidget {
     this.fontSize = 14,
     this.autofocus = false,
     this.bgColor = const Color(0xFFF5F5F5),
+    this.inputFormatters,
   });
 
   @override
@@ -66,6 +68,7 @@ class XInputView extends StatelessWidget {
       ),
       keyboardType: TextInputType.text,
       textInputAction: textInputAction,
+      inputFormatters: inputFormatters,
       onSubmitted: onSubmitted,
       onChanged: onChanged,
     );
