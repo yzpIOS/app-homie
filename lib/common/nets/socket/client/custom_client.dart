@@ -275,6 +275,9 @@ class CustomClient with BaseClient {
     return _customSocket.preReceiveTime;
   }
 
+  ///
+  /// 连接成功状态设置
+  ///
   void completeShareSocketStatus() {
     if(!_shareSocketStatus.isCompleted) {
       _shareSocketStatus.complete(true);
@@ -283,12 +286,18 @@ class CustomClient with BaseClient {
     _canForceWaitTimes = true;
   }
 
+  ///
+  /// 设置连接成时错误
+  ///
   void completeErrorShareSocketStatus() {
     if(!_shareSocketStatus.isCompleted) {
       _shareSocketStatus.completeError(TimeoutException("time out"));
     }
   }
 
+  ///
+  /// 重置_shareSocketStatus状态
+  ///
   void resetShareSocketStatus() {
     if(_shareSocketStatus.isCompleted) {
       _shareSocketStatus = Completer();

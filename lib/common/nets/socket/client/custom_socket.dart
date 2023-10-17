@@ -102,6 +102,10 @@ class CustomSocket {
     // 取消回调监听
     _socketSubscription?.cancel();
 
+    if(_host == "" || _port == 0) {
+      return this;
+    }
+
     if(_isConnecting) {
       logForDebug("[CustomSocket:connect]:正在连接中，不需要重连, _isConnecting=$_isConnecting");
       return this;

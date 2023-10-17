@@ -293,22 +293,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     }
     logForDebug("[SocketCtrl:onRoleResponse]:连接成功，收到用户信息, role = ${role.toString()}");
 
-    var roleId = role.role.roleId;
-    var name = role.role.name;
     // 收到用户信息后，才认为是己经连接上
     share.completeShareSocketStatus();
-    // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
-    var pkRoomId = role.pkRoomId.toInt();
-    var roomId = role.roomId.toInt();
-    // 数据异常
-    if(pkRoomId <= 0 || roomId <= 0) {
-      return;
-    }
-    Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
-      var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
-      RoomManagerCtrl.ins.putPkInfo(roomInfo, pkRoomId);
-      RoomManagerCtrl.ins.toMiddleRoom(roomId: roomId, data: roomInfo, off: true, callCloseRoom: false);
-    });
   }
 
   ///

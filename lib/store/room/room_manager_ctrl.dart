@@ -93,9 +93,57 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.onDataCmd(CMD.S_PKContinue, onPKContinue);
     // 注册Unity控制AppUI开关
     SocketCtrl.ins.onDataCmd(CMD.C_ControlAppUI, onControlAppUI);
+    // 连接成功时，服务端通知的用户信息
+    SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
 
-    // socket断开
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
     SocketCtrl.ins.addDisconnect(onSocketDisconnect);
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+    // todo socket断开，不退出房间
+  }
+
+  ///
+  /// socket连接成功时，服务端返回的用户信息
+  ///
+  void onRoleResponse(int cmd, S_Role? role) {
+    if(role == null) {
+      return;
+    }
+    // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
+    var pkRoomId = role.pkRoomId.toInt();
+    var roomId = role.roomId.toInt();
+    // 数据异常
+    if(pkRoomId > 0 && roomId > 0) {
+      // 在pk房中
+      Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+        var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
+        putPkInfo(roomInfo, pkRoomId);
+        toMiddleRoom(roomId: roomId, data: roomInfo, off: true, callCloseRoom: false);
+      });
+    } else if(roomId > 0) {
+      // 在普通房间中
+      if(sceneCtrl2 != null) {
+        // 加载房间数据
+        sceneCtrl2?.loadSceneInfo();
+      } else {
+        // 房间己关闭, 从新打开房间
+        Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+          var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
+          putRoomInfo(roomInfo);
+          toRoom(roomId: roomId, data: roomInfo, off: true);
+        });
+      }
+    } else {
+      // 没有在房间中
+      onSocketDisconnect();
+    }
   }
 
   ///
@@ -199,6 +247,8 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKContinue, onPKContinue);
     // 移除Unity控制AppUI开关
     SocketCtrl.ins.removeOnDataCmd(CMD.C_ControlAppUI, onControlAppUI);
+    // 移除用户监听
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_Role, onRoleResponse);
     // 移除监听
     SocketCtrl.ins.removeDisconnect(onSocketDisconnect);
   }
@@ -386,6 +436,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     roomInfo["pk_status"] = 1;
     roomInfo["neeJoinRoom"] = false;
     roomInfo["pkRoomId"] = pkRoomId;
+  }
+
+  ///
+  /// 构建pk房的进房信息
+  ///
+  void putRoomInfo(Map<dynamic, dynamic> roomInfo) {
+    roomInfo["neeJoinRoom"] = false;
   }
 
   Future<void> doCloseState() async {

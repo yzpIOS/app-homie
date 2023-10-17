@@ -201,22 +201,20 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
       // 监听unity发过来的信息
       logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
-      unity.ready.asStream().listen((event) async{
-        // 判断是否关闭界面
-        isNotClose();
-        await loadSceneInfo();
+      // 判断是否关闭界面
+      isNotClose();
+      await loadSceneInfo();
 
-        /// 请求房间系统公告消息数组
-        isNotClose();
-        var data = await Api.Common.systemQuery();
-        List systemNoticeList = data['system_notice_list'];
-        SystemMsgEvent(systemNoticeList).fire();
+      /// 请求房间系统公告消息数组
+      isNotClose();
+      var data = await Api.Common.systemQuery();
+      List systemNoticeList = data['system_notice_list'];
+      SystemMsgEvent(systemNoticeList).fire();
 
-        sceneHudRx(RoomHudState.Normal);
-        logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data = ${systemNoticeList.toString()}");
-      }, onError: (error) {
-        debugPrint(error);
-      });
+      /// 请求房间系统公告消息数组
+      isNotClose();
+      sceneHudRx(RoomHudState.Normal);
+      logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data = ${systemNoticeList.toString()}");
     });
 
     // unity初始化与加入房间同时进行
