@@ -144,8 +144,8 @@ class FiltrationChatText {
   FiltrationChatText._();
 
   // 滚动过滤
-  static void pollString(String s, Function(String) handler) {
-    var i = 0;
+  static void pollString(String s, Function(String) handler, int startIndex) {
+    var i = startIndex < 0 ? 0 : startIndex;
     var v = '';
     while (true) {
       var c = s[i];
@@ -163,7 +163,7 @@ class FiltrationChatText {
   }
 
   // 过滤聊天输入框中发送的内容,以及后台返回到app输出到面板的聊天内容
-  static String filterChat(String content) {
+  static String filterChat(String content, {String? atText}) {
     const chatFilter1 = ['新App','新app','新 App','新 app','更好的app','新平台','新软件','新应用','新游戏','wan','WAN','玩手游',
       '折扣','福利','半价','后台','.务','。务','服。','充值送','紫钻','紫。钻','紫.钻','紫鉆','紫。鉆','人民币','RMB','刷',
       'WV','微信','微+信','微-信','微 信','微.信','徽.信','徽信','徽 信','威 信','威信','威.信','威+信','wx','wX','Wx',
@@ -172,11 +172,22 @@ class FiltrationChatText {
       '@126','.com','.net','.org'];
     const chatFilter2 = '345678⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥\$';
 
+    var startIndex = 0;//滚动过滤开始的下标
+    var result = '';//过滤后的结果
+    if (atText != null) {
+      if (atText.isNotEmpty) {
+        startIndex = atText.length;
+        result = atText;
+      }
+    }
+    if (startIndex < 0) {
+      startIndex = 0;
+    }
+
     for (var i = 0; i < chatFilter1.length; i++) {
       content = content.replaceAll(chatFilter1[i], '*');
     }
 
-    var result = '';
     void handler(String v) {
       if (chatFilter2.contains(v)) {
         result += '*';
@@ -185,12 +196,16 @@ class FiltrationChatText {
       }
     }
 
-    pollString(content, handler);
+    pollString(content, handler, startIndex);
     return result;
   }
 }
 
 class ChatTextInputFormatter extends TextInputFormatter {
+  final String? atText;
+
+  ChatTextInputFormatter.atText({this.atText,});
+
   static const int chatTextMaxLength = 127;
 
   @override
@@ -213,7 +228,7 @@ class ChatTextInputFormatter extends TextInputFormatter {
 
     if (newLength > oldLength) {
       //输入限制范围外字符
-      newContent = FiltrationChatText.filterChat(newContent);
+      newContent = FiltrationChatText.filterChat(newContent, atText: atText);
       offset = newContent.length;
     }
     return TextEditingValue(

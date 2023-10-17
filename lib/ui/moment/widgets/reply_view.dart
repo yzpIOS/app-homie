@@ -10,8 +10,9 @@ class ReplySheet extends StatefulWidget {
   final String? hintText;
   final TextEditingController controller;
   final int? maxLength;
+  final String? atText;
 
-  const ReplySheet._({required this.controller, required this.autofocus, this.hintText, this.maxLength});
+  const ReplySheet._({required this.controller, required this.autofocus, this.hintText, this.maxLength, this.atText});
 
   static Future<String?> show(
     TextEditingController controller, {
@@ -19,9 +20,10 @@ class ReplySheet extends StatefulWidget {
     String? hintText = '请输入…',
     Color? barrierColor,
     int? maxLength,
-  }) {
+    String? atText,
+    }) {
     return Get.dialog(
-      ReplySheet._(controller: controller, autofocus: autofocus, hintText: hintText, maxLength: maxLength,),
+      ReplySheet._(controller: controller, autofocus: autofocus, hintText: hintText, maxLength: maxLength, atText: atText),
       name: '$ReplySheet',
       barrierColor: barrierColor,
       useSafeArea: false,
@@ -37,6 +39,7 @@ class _ReplySheetState extends State<ReplySheet> {
   late var autofocus = widget.autofocus;
   late final hintText = widget.hintText;
   late final maxLength = widget.maxLength;
+  late String atText = controller.text;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +55,7 @@ class _ReplySheetState extends State<ReplySheet> {
             onSubmitted: _doSub,
             inputFormatters: [//输入文本过滤器
               //自定义的输入过滤器
-              ChatTextInputFormatter(),
+              ChatTextInputFormatter.atText(atText: atText.isNotEmpty ? atText : null),
               if(maxLength != null)
               //只允许输入最大文本数
                 LengthLimitingTextInputFormatter(maxLength),
