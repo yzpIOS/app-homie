@@ -197,6 +197,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       } else {
         logForDebug("[SceneCtrl:loadScene]:pk状态，不需要调用加入房间接口");
       }
+      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+      logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
       RoomManagerCtrl.ins.doNormalState();
 
       // 监听unity发过来的信息
@@ -207,14 +209,16 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
       /// 请求房间系统公告消息数组
       isNotClose();
-      var data = await Api.Common.systemQuery();
-      List systemNoticeList = data['system_notice_list'];
-      SystemMsgEvent(systemNoticeList).fire();
+      Api.Common.systemQuery().then((data) {
+        isNotClose();
+        List systemNoticeList = data['system_notice_list'];
+        SystemMsgEvent(systemNoticeList).fire();
+      });
 
       /// 请求房间系统公告消息数组
       isNotClose();
       sceneHudRx(RoomHudState.Normal);
-      logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data = ${systemNoticeList.toString()}");
+      logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data =");
     });
 
     // unity初始化与加入房间同时进行
@@ -243,8 +247,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             await doJoinGame();
           } else {
             logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
-            roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
-            logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
             // 加载unity
             isNotClose();
