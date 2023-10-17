@@ -139,3 +139,87 @@ class PrefKey {
   static const OpenInstallBlindDataFlag2 = 'OpenInstallBlindDataFlag2';
 
 }
+
+class FiltrationChatText {
+  FiltrationChatText._();
+
+  // 滚动过滤
+  static void pollString(String s, Function(String) handler) {
+    var i = 0;
+    var v = '';
+    while (true) {
+      var c = s[i];
+      var b = c.codeUnitAt(0);
+      // if (b > 128) {
+      //   v = s.substring(i, i + 3);
+      //   i += 3;
+      // } else {
+        v = c;
+        i += 1;
+      // }
+      handler(v);
+      if (i >= s.length) break;
+    }
+  }
+
+  // 过滤聊天输入框中发送的内容,以及后台返回到app输出到面板的聊天内容
+  static String filterChat(String content) {
+    const chatFilter1 = ['新App','新app','新 App','新 app','更好的app','新平台','新软件','新应用','新游戏','wan','WAN','玩手游',
+      '折扣','福利','半价','后台','.务','。务','服。','充值送','紫钻','紫。钻','紫.钻','紫鉆','紫。鉆','人民币','RMB','刷',
+      'WV','微信','微+信','微-信','微 信','微.信','徽.信','徽信','徽 信','威 信','威信','威.信','威+信','wx','wX','Wx',
+      'QQ','qQ','Qq','qq','q.','Q。','q ','Q ','Q.','q。','扣扣','扣 扣','扣。扣','秋秋','秋 秋','秋.秋','秋。秋',
+      '充值','充 值','充.值','@163','tel','call','电话','电.话','电。话','手机','手.机','手。机','联系','联 系','联。系',
+      '@126','.com','.net','.org'];
+    const chatFilter2 = '345678⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥\$';
+
+    for (var i = 0; i < chatFilter1.length; i++) {
+      content = content.replaceAll(chatFilter1[i], '*');
+    }
+
+    var result = '';
+    void handler(String v) {
+      if (chatFilter2.contains(v)) {
+        result += '*';
+      } else {
+        result += v;
+      }
+    }
+
+    pollString(content, handler);
+    return result;
+  }
+}
+
+class ChatTextInputFormatter extends TextInputFormatter {
+  static const int chatTextMaxLength = 127;
+
+  @override
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+
+    //上次文本
+    String oldContent = oldValue.text;
+    //最新文本
+    String newContent = newValue.text;
+    //上次文本长度
+    int oldLength = oldContent.length;
+    //最新文本长度
+    int newLength = newContent.length;
+    //上次文本光标位置
+    int oldBaseOffset = oldValue.selection.baseOffset;
+    //最新文本光标位置
+    int newBaseOffset = newValue.selection.baseOffset;
+    //光标位置
+    int offset = newBaseOffset;
+
+    if (newLength > oldLength) {
+      //输入限制范围外字符
+      newContent = FiltrationChatText.filterChat(newContent);
+      offset = newContent.length;
+    }
+    return TextEditingValue(
+      text: newContent,
+      selection: TextSelection.collapsed(offset: offset),
+    );
+  }
+}
+
