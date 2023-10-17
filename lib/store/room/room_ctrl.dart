@@ -99,6 +99,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     Get.find<RoomManagerCtrl>().sceneCtrl = this;
   }
 
+  ///
+  /// 渲染数据
+  ///
   void onRender(S_SyncRoomInfo? s_syncRoomInfo) {}
 
   @override
@@ -201,26 +204,13 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       unity.ready.asStream().listen((event) async{
         // 判断是否关闭界面
         isNotClose();
-        logForDebug("[SceneCtrl:loadScene]:unity返回信息，开始发送进入房间信息，让服务端同步相关信息");
-        // unity初始化完成后，发送同步信息指令
-        C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
-        c_roomEnterComplete.roomId = Int64(roomId);
-        S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-            CMD.C_RoomEnterComplete,
-            datas: c_roomEnterComplete.writeToBuffer(),
-            resCmd: CMD.S_SyncRoomInfo
-        );
-
-        // 判断是否关闭界面
-        isNotClose();
-        onRender(s_syncRoomInfo);
-        logForDebug("[SceneCtrl:loadScene]:开始发送进入房间信息，让服务端同步相关信息, s_syncRoomInfo = ${s_syncRoomInfo.toString()}");
+        await loadSceneInfo();
 
         /// 请求房间系统公告消息数组
+        isNotClose();
         var data = await Api.Common.systemQuery();
         List systemNoticeList = data['system_notice_list'];
         SystemMsgEvent(systemNoticeList).fire();
-
 
         sceneHudRx(RoomHudState.Normal);
         logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data = ${systemNoticeList.toString()}");
@@ -273,6 +263,29 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         sceneHudRx(RoomHudState.Normal);
       },
     );
+  }
+
+  ///
+  /// socket断开或者是首次进房时调用的接口
+  ///
+  Future<void> loadSceneInfo() async {
+    void isNotClose() {
+      if (isClosed) throw 'isClosed';
+    }
+    logForDebug("[SceneCtrl:loadScene]:unity返回信息，开始发送进入房间信息，让服务端同步相关信息");
+    // unity初始化完成后，发送同步信息指令
+    C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
+    c_roomEnterComplete.roomId = Int64(roomId);
+    S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+        CMD.C_RoomEnterComplete,
+        datas: c_roomEnterComplete.writeToBuffer(),
+        resCmd: CMD.S_SyncRoomInfo
+    );
+
+    // 判断是否关闭界面
+    isNotClose();
+    onRender(s_syncRoomInfo);
+    logForDebug("[SceneCtrl:loadScene]:开始发送进入房间信息，让服务端同步相关信息, s_syncRoomInfo = ${s_syncRoomInfo.toString()}");
   }
 
   Future doClose() {

@@ -371,6 +371,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     local.dispose();
     lastSendTime.clear();
 
+    _streamSubscription?.cancel();
     _netStateSubscription?.cancel();
 
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
@@ -495,4 +496,35 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       local.beatHeartCheck();
     });
   }
+
+
+  // 是否需要关闭socket
+  bool needSendCloseEvent = true;
+  // 重置socket的定时器
+  StreamSubscription? _streamSubscription;
+
+  ///
+  /// App从后台到前台时，判断socket是否还在连接
+  ///
+  void onAppResume() {
+    // 设置进房需要等待服务端返回数据，才能进房
+    _streamSubscription?.cancel();
+    SocketCtrl.ins.share.forceWaitTimes = CLIENT_BEAT_RATE * CLIENT_MAX_BEAT_TIME + 2;
+    _streamSubscription = Future.delayed(Duration(seconds: SocketCtrl.ins.share.forceWaitTimes)).asStream().listen((event) {
+      needSendCloseEvent = true;
+      // 长时间连不上, 做兜底连接
+      if(SocketCtrl.ins.share.forceWaitTimes > 0) {
+        SocketCtrl.ins.share.reConnect(foreceConnect: true);
+      }
+    });
+  }
+
+  ///
+  /// app退后台时调用此方法，重置数据
+  ///
+  void onAppPause() {
+    needSendCloseEvent = false;
+    _streamSubscription?.cancel();
+  }
+
 }

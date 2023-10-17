@@ -285,17 +285,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if(loadSceneComplete) {
       return;
     }
-    if(RoomManagerCtrl.ins.stateRx.value == RoomState.Mini) {
-      // 房间最小化中
-      RoomManagerCtrl.ins.closeRoom2();
-    } else if(RoomManagerCtrl.ins.stateRx.value == RoomState.Normal) {
-      // 现在在房间中
-      RoomExitEvent("房间数据加载失败，请重试").fire();
-      // 房间最小化中
-      RoomManagerCtrl.ins.closeRoom2();
-    } else {
-      RoomExitEvent("房间数据加载失败，请重试").fire();
-    }
+    SocketCtrl.ins.needSendCloseEvent = true;
+    RoomManagerCtrl.ins.onSocketDisconnect();
   }
 
   @override

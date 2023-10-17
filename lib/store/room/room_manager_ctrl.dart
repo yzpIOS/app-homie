@@ -1,4 +1,5 @@
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/config/socket_config.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
@@ -84,18 +85,38 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       },
       (_) => _doClose('你被封禁了'),
     );
-
     // 注册被邀请的F端，邀请对战信息监听回调
     SocketCtrl.ins.onDataCmd(CMD.S_PKInvite, onPKInvite);
-
     // 注册S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
     SocketCtrl.ins.onDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
-
     // 注册一轮游戏结束后，两个C端选择是否继续下一轮的结果  isContinue=2就是不继续了，需要退出当前场景
     SocketCtrl.ins.onDataCmd(CMD.S_PKContinue, onPKContinue);
-
     // 注册Unity控制AppUI开关
     SocketCtrl.ins.onDataCmd(CMD.C_ControlAppUI, onControlAppUI);
+
+    // socket断开
+    SocketCtrl.ins.addDisconnect(onSocketDisconnect);
+  }
+
+  ///
+  /// socket断开连接时的回调
+  ///
+  void onSocketDisconnect() {
+    if(stateRx.value == RoomState.Mini) {
+      // 房间最小化中
+      closeRoom2();
+    } else if(stateRx.value == RoomState.Normal) {
+      // 现在在房间中
+      RoomExitEvent("房间数据加载失败，请重试").fire();
+      // 房间最小化中
+      closeRoom2();
+    } else {
+      // 现在在房间中
+      if(SocketCtrl.ins.needSendCloseEvent) {
+        RoomExitEvent("房间数据加载失败，请重试").fire();
+      }
+      SocketCtrl.ins.needSendCloseEvent = true;
+    }
   }
 
   // 被邀请的F端，邀请对战信息监听回调
@@ -153,7 +174,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     if (data == null) {
       return;
     }
-
     data.parts.forEach((element) {
       //part 约定id[1: 麦位面板节点, 20:左侧消息UI节点, 30:底部栏面板节点]
       //close 1打开, 2关闭
@@ -170,20 +190,17 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   @override
   void onClose() {
     super.onClose();
-
     doCloseState();
-
     // 移除被邀请的F端，邀请对战信息监听回调
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInvite, onPKInvite);
-
     // 移除S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKInviteResult, onPKInviteResult);
-
     // 移除一轮游戏结束后，两个C端选择是否继续下一轮的结果
     SocketCtrl.ins.removeOnDataCmd(CMD.S_PKContinue, onPKContinue);
-
     // 移除Unity控制AppUI开关
     SocketCtrl.ins.removeOnDataCmd(CMD.C_ControlAppUI, onControlAppUI);
+    // 移除监听
+    SocketCtrl.ins.removeDisconnect(onSocketDisconnect);
   }
 
   void _show({
