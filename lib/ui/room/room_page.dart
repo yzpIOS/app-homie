@@ -222,7 +222,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
           TextEditingController(text: '@${event.nickName} '),
           autofocus: true,
           barrierColor: Colors.transparent,
-          maxLength: 127,
+          maxLength: ChatTextInputFormatter.chatTextMaxLength,
         );
 
         sheet.onType<String>((it) {

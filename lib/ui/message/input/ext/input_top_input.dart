@@ -2,6 +2,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/message/input/ext/input_ext.dart';
 import 'package:app/ui/message/input/input_ctrl.dart';
 import 'package:app/widgets.dart';
+import 'package:flutter/services.dart';
 
 mixin TxtSender implements MsgSender {
   void sendTxt(String data);
@@ -47,6 +48,12 @@ class InputTop$Input extends InputExt<TxtSender> with InputExt$Input, TopMixin {
       autofocus: autofocus,
       focusNode: focusNode,
       onSubmitted: (_) => doSend(),
+      inputFormatters: [//输入文本过滤器
+        //自定义的输入过滤器
+        ChatTextInputFormatter(),
+        //只允许输入最大文本数
+        LengthLimitingTextInputFormatter(ChatTextInputFormatter.chatTextMaxLength),
+      ],
     );
   }
 }

@@ -61,7 +61,7 @@ extension XRxMomentDto on Rx<MomentDto> {
       );
     }
 
-    ReplySheet.show(TextEditingController()).onType(doSub);
+    ReplySheet.show(TextEditingController(), maxLength: ChatTextInputFormatter.chatTextMaxLength,).onType(doSub);
   }
 
   void sendGift() {

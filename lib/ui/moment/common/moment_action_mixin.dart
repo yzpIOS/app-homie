@@ -11,7 +11,7 @@ mixin MomentActionMixin<T extends StatefulWidget> on State<T> {
       );
     }
 
-    ReplySheet.show(TextEditingController()).onType(doSub);
+    ReplySheet.show(TextEditingController(), maxLength: ChatTextInputFormatter.chatTextMaxLength,).onType(doSub);
   }
 
   void doCommentLike(Map data) {

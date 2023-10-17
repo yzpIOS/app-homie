@@ -82,7 +82,9 @@ class MsgAdapter<T> extends _Adapter<T> {
 class TxtMsgAdapter extends MsgAdapter<V2TimTextElem> {
   TxtMsgAdapter(super.msg);
 
-  String get txt => body.text!;
+  String get txt {
+    return FiltrationChatText.filterChat(body.text!);
+  }
 
   @override
   V2TimTextElem get body => msg.textElem!;
