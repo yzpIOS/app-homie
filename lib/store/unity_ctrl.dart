@@ -271,9 +271,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   void socketCtrlStatus() {
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
     SocketCtrl.ins.addServerStatusCallBacks(onServerStatusCallBacks);
-
-    SocketCtrl.ins.removeLocalDisconnect(localServerStatusChange);
-    SocketCtrl.ins.addLocalDisconnect(localServerStatusChange);
   }
 
   ///
@@ -283,14 +280,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     sendFlutterSocketInfo();
   }
 
-  void localServerStatusChange() {
-    if(loadSceneComplete) {
-      return;
-    }
-    SocketCtrl.ins.needSendCloseEvent = true;
-    RoomManagerCtrl.ins.onSocketDisconnect();
-  }
-
   @override
   void onClose() {
     super.onClose();
@@ -298,7 +287,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     _netStatusChange?.cancel();
     _netStatusMessageTick?.cancel();
     SocketCtrl.ins.removeServerStatusCallBacks(onServerStatusCallBacks);
-    SocketCtrl.ins.removeLocalDisconnect(localServerStatusChange);
   }
 
   Future<T> sendMessage<T>(App2UnityEnum action, {data, Duration timeout = const Duration(seconds: unity_time_out)}) async {
