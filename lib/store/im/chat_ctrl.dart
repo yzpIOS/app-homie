@@ -264,6 +264,27 @@ abstract class ChatCtrl extends GetxController
   Iterable<V2TimMessage>? addNewMsg(data) {
     if (data is V2TimMessage) {
       if (_msgFilter(data)) {
+
+        // if (data.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT) {
+        //   int msgLength = newMsgRx().length;
+        //   if (msgLength > 0) {
+        //     V2TimMessage? lastMsg;
+        //     newMsgRx().reversed.forEach((a) {
+        //       if (a.isSelf == false) {
+        //         lastMsg ??= a;
+        //         return;
+        //       }
+        //     });
+        //     if (lastMsg != null) {
+        //       bool hasMatch = FiltrationChatText.receivedNewMessageMatches(lastMsg!, data);
+        //       if (hasMatch) {
+        //         data.textElem!.text = '*';
+        //         // newMsgRx.refresh();
+        //       }
+        //     }
+        //   }
+        // }
+
         newMsgRx.add(data);
 
         return [data];
