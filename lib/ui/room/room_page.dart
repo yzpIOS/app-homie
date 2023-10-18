@@ -42,6 +42,8 @@ class RoomPage extends StatefulWidget {
       });
       // 待主待
       await SocketCtrl.ins.isCConnect();
+      // 隐藏loading
+      WaitingCtrl.obj.hidden();
       if(mgr.sceneCtrl2 == null) {
         showToast("网络异常，请重试");
         logForDebug("进房过程中发现网络断掉，房间己关闭，直接退出");
