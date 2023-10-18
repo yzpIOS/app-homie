@@ -143,7 +143,72 @@ class PrefKey {
 class FiltrationChatText {
   FiltrationChatText._();
 
-  // 滚动过滤
+  // static String filterChat(String content, {String? atText}) {
+  //   const List<String> chatFilter1 = ['新App','新app','新 App','新 app','更好的app','新平台','新软件','新应用','新游戏','wan','WAN','玩手游',
+  //       '折扣','福利','半价','后台','.务','。务','服。','充值送','紫钻','紫。钻','紫.钻','紫鉆','紫。鉆','人民币','RMB','刷',
+  //       'WV','微信','微+信','微-信','微 信','微.信','徽.信','徽信','徽 信','威 信','威信','威.信','威+信','wx','wX','Wx',
+  //       'QQ','qQ','Qq','qq','q.','Q。','q ','Q ','Q.','q。','扣扣','扣 扣','扣。扣','秋秋','秋 秋','秋.秋','秋。秋',
+  //       '充值','充 值','充.值','@163','tel','call','电话','电.话','电。话','手机','手.机','手。机','联系','联 系','联。系',
+  //       '@126','.com','.net','.org'];
+  //   const String chatFilter2 = "345678⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥\$";
+  //   int count = 0;
+  //   var startIndex = 0;//滚动过滤开始的下标
+  //   var result = '';//过滤后的结果
+  //   if (atText != null) {
+  //     if (atText.isNotEmpty) {
+  //       startIndex = atText.length;
+  //       result = atText;
+  //     }
+  //   }
+  //   if (startIndex < 0) {
+  //     startIndex = 0;
+  //   }
+  //
+  //   void pollString(String s, Function(String) handler, int startIndex) {
+  //     int i = startIndex < 0 ? 0 : startIndex;
+  //     while (true) {
+  //       if (i >= s.length) {
+  //         break;
+  //       }
+  //       String c = s[i];
+  //       // int b = c.codeUnitAt(0);
+  //       String v = "";
+  //
+  //       // if (b > 128) {
+  //       //   v = s.substring(i, i + 3);
+  //       //   i += 3;
+  //       // } else {
+  //         v = c;
+  //         i += 1;
+  //       // }
+  //
+  //       handler(v);
+  //     }
+  //   }
+  //
+  //   void handler(String v) {
+  //     if (chatFilter1.any((filter) => v.contains(filter))) {
+  //       result += "*";
+  //     } else if (int.tryParse(v) != null) {
+  //       count++;
+  //       if (count > 4) {
+  //         result += "*";
+  //       } else {
+  //         result += v;
+  //       }
+  //     } else if (chatFilter2.contains(v)) {
+  //       result += "*";
+  //     } else {
+  //       count = 0;
+  //       result += v;
+  //     }
+  //   }
+  //
+  //   pollString(content, handler, startIndex);
+  //   return result;
+  // }
+
+    // 滚动过滤
   static void pollString(String s, Function(String) handler, int startIndex) {
     var i = startIndex < 0 ? 0 : startIndex;
     var v = '';
@@ -174,6 +239,7 @@ class FiltrationChatText {
 
     var startIndex = 0;//滚动过滤开始的下标
     var result = '';//过滤后的结果
+    int count = 0;
     if (atText != null) {
       if (atText.isNotEmpty) {
         startIndex = atText.length;
@@ -189,7 +255,16 @@ class FiltrationChatText {
     }
 
     void handler(String v) {
-      if (chatFilter2.contains(v)) {
+      if (int.tryParse(v) != null) {
+        count++;
+        if (count == 4) {
+          result = result.replaceRange(result.length-3, result.length, "****");
+        } else if (count > 4) {
+          result += "*";
+        } else {
+          result += v;
+        }
+      } else if (chatFilter2.contains(v)) {
         result += '*';
       } else {
         result += v;
