@@ -14,6 +14,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '3rd/tencent/im.dart';
+
 export 'dart:async';
 
 export 'package:collection/collection.dart';
@@ -257,9 +259,9 @@ class FiltrationChatText {
     void handler(String v) {
       if (int.tryParse(v) != null) {
         count++;
-        if (count == 4) {
-          result = result.replaceRange(result.length-3, result.length, "****");
-        } else if (count > 4) {
+        if (count == 5) {
+          result = result.replaceRange(result.length-4, result.length, "*****");
+        } else if (count > 5) {
           result += "*";
         } else {
           result += v;
@@ -273,6 +275,22 @@ class FiltrationChatText {
 
     pollString(content, handler, startIndex);
     return result;
+  }
+
+  //收到的新消息匹配规则
+  static bool receivedNewMessageMatches(V2TimMessage lastMsg, V2TimMessage newMsg) {
+    //最新一条消息和上一条消息都是文本消息
+    if (lastMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT && newMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT) {
+      String text = lastMsg.textElem!.text! + newMsg.textElem!.text!;
+      RegExp regex = RegExp(r'((\d{5,}))|(q.{1,}?\d{1,})|(\d.?\d.?\d.?\d.?\d)|(加.*?q)/gism');
+      if (regex.hasMatch(text)) {
+        debugPrint('Match!');
+        return true;
+      } else {
+        debugPrint('No match.');
+      }
+    }
+    return false;
   }
 }
 
