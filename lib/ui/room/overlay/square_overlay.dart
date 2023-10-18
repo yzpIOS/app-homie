@@ -22,13 +22,13 @@ class SquareOverlay extends SceneOverlay<SquareCtrl> {
       return Stack(
         alignment: Alignment.center,
         children: [
-          Positioned(
-            top: AppSize.safeTop,
-            left: 5,
-            right: 5,
-            height: 44,
-            child: _RoomHeader(onItemClick: onItemClick),
-          ),
+          // Positioned(
+          //   top: AppSize.safeTop,
+          //   left: 5,
+          //   right: 5,
+          //   height: 44,
+          //   child: SqureRoomHeader(onItemClick: onItemClick),
+          // ),
           Positioned.fill(
             top: isLandscape ? 80 : 110,
             child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
@@ -115,17 +115,25 @@ class _IconBtn extends StatelessWidget {
 //   }
 // }
 
-class _RoomHeader extends RoomGetView<SquareCtrl> {
-  final ValueChanged<String> onItemClick;
+class SqureRoomHeader extends RoomGetView<SquareCtrl> {
 
-  const _RoomHeader({required this.onItemClick});
+  const SqureRoomHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Spacing.exp,
-        _IconBtn(icon: '更多', onTap: onItemClick),
+        _IconBtn(icon: '更多', onTap: (value) {
+          Get.showActionSheet(['退出']).onNotNull((val) {
+            switch(val) {
+              case '退出':
+                controller.keepState = false;
+                Get.back();
+                break;
+            }
+          });
+        }),
       ],
     );
   }

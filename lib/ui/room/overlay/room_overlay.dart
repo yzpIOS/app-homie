@@ -89,17 +89,17 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                   ),
                 ),
               ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _RoomHeader(
-                showMicPanel: showMicPanel && topMicMode,
-                showMic: showMic,
-                isLandscape: isLandscape,
-                onItemClick: onItemClick,
-              ),
-            ),
+            // Positioned(
+            //   top: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child: CommonRoomHeader(
+            //     showMicPanel: showMicPanel && topMicMode,
+            //     showMic: showMic,
+            //     isLandscape: isLandscape,
+            //     onItemClick: onItemClick,
+            //   ),
+            // ),
             // if (!isLandscape)
             //   ValueListenableBuilder(
             //     valueListenable: _changedValue,
@@ -265,13 +265,13 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
   }
 }
 
-class _RoomHeader extends RoomGetView<RoomCtrl> {
+class CommonRoomHeader extends RoomGetView<RoomCtrl> {
   final bool showMic;
   final bool showMicPanel;
   final bool isLandscape;
   final ValueChanged<String> onItemClick;
 
-  _RoomHeader({required this.showMicPanel, required this.showMic, required this.isLandscape, required this.onItemClick})
+  CommonRoomHeader({required this.showMicPanel, required this.showMic, required this.isLandscape, required this.onItemClick})
       : super(key: ValueKey(Tuple3(showMicPanel, showMic, isLandscape)));
 
   @override

@@ -246,13 +246,21 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       fromRoom: true,
     );
 
+    // 返回按钮
+
     child = Scaffold(
       backgroundColor: Colors.grey,
       resizeToAvoidBottomInset: false,
-      body: child,
-      appBar: Env.isDebug ? AppBar(leading: GestureDetector(child: Text("返回"), onTap: () {
-        Get.back();
-      },),) : null
+      body: Stack(
+        children: [
+          // unity界面
+          Positioned.fill(
+            child: child,
+          ),
+          // 返回按钮
+          controller.createHeader(),
+        ],
+      ),
     );
 
     child = UiOverlayRegion.light(child: child);

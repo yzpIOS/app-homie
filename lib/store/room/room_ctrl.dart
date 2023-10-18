@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
+import 'package:app/ui/common/orientation_sheet.dart';
+import 'package:app/ui/room/overlay/room_overlay.dart';
+import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/api_switch.dart';
@@ -33,6 +38,7 @@ import 'package:app/widgets.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:provider/provider.dart';
 
 
 export 'package:app/model/enum/room_role_type.dart';
@@ -303,6 +309,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     return info.containsKey("neeJoinRoom") == false ||
         (info.containsKey('neeJoinRoom') && info['neeJoinRoom'] == true);
   }
+
+  Widget createHeader();
 }
 
 class RoomCtrl extends SceneCtrl {
@@ -437,6 +445,57 @@ class RoomCtrl extends SceneCtrl {
   void setManager({required UID uid, required bool isAdd}) {
     Api.Room.setManager(roomId: roomId, uid: uid, isAdd: isAdd);
   }
+
+  @override
+  Widget createHeader() {
+    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
+
+    return Obx(() {
+      final showMic = micPanelRx();
+      final freeMic = freeMicRx();
+
+      //公会房且不在pk中，才显示麦位
+      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
+
+      final showMicPanel = maxMic > 0 && !freeMic;
+      return Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: CommonRoomHeader(
+          showMicPanel: showMicPanel && topMicMode,
+          showMic: showMic,
+          isLandscape: isLandscape,
+          onItemClick: (action) {
+            switch (action) {
+              case '最小化':
+                try {
+                  keepState = true;
+                  // 公会房通知下线
+                  if(roomType == RoomType.guild || roomType == RoomType.customize) {
+                    C_GoBack c_goBack = C_GoBack.create();
+                    c_goBack.roomId = Int64(roomId);
+                    SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
+                  }
+                } catch(e, s) {
+                }
+                Get.back();
+                break;
+              case '公告':
+                noticePanelRx.toggle();
+                break;
+              case '用户':
+                OrientationSheet.show(
+                  child: OnlineUserPage(roomId: roomId),
+                  direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+                );
+                break;
+            }
+          },
+        ),
+      );
+    });
+  }
 }
 
 class SquareCtrl extends SceneCtrl {
@@ -454,5 +513,16 @@ class SquareCtrl extends SceneCtrl {
     super._bindGet();
 
     bindGet<SceneMicCtrl>(SquareMicCtrl());
+  }
+
+  @override
+  Widget createHeader() {
+    return Positioned(
+        top: AppSize.safeTop,
+        left: 5,
+        right: 5,
+        height: 44,
+        child: const SqureRoomHeader(),
+    );
   }
 }
