@@ -7,6 +7,11 @@ class ApiRoomMsg extends ApiBase {
   /// 房间信息发送
   ///
   Future sendMessage({required int roomId, required String message}) {
+    // 打开调试界面
+    if(openDebugView(message)) {
+      return Future.value(1);
+    }
+
     // 创建信息
     C_ChatMessage c_chatMessage = C_ChatMessage.create();
     c_chatMessage.message = message;

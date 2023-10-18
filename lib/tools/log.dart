@@ -215,7 +215,7 @@ bool isDebugOpen(LogType type) {
 /// 开启debugView
 ///
 bool openDebugView(String text) {
-  if(text == "hello homie, please open the room debug view for me and the password is cqeY2ZR4JcCZ7giJvMU7") {
+  if(text == "hello homie, please open the room debug view for me and the password is cqeY2ZR4JcCZ7giJ") {
     openDebug(LogType.SOCKET);
     return true;
   }

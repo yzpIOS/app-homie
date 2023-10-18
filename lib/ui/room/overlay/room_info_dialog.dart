@@ -5,6 +5,7 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
+import 'package:app/ui/debug/room_debug_view.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,14 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   const RoomInfoDialog._();
 
   static void show() {
+    // 打开调试面版
+    if(isDebugOpen(LogType.SOCKET)) {
+      Future.delayed(const Duration(seconds: 3)).whenComplete(() {
+        Get.to(() => RoomDebugView());
+      });
+      return;
+    }
+
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
       color: Color(0xCC333333),

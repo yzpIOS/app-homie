@@ -43,6 +43,8 @@ void main() async {
       );
     },
   );
+
+  loadDebugConfig();
 }
 
 Future<List<SingleChildWidget>> get _providers async {

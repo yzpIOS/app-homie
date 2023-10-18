@@ -229,7 +229,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       );
 
       // 发送完成消息
-      _sendSockComplete.complete();
+      if(!_sendSockComplete.isCompleted) {
+        _sendSockComplete.complete();
+      }
 
       // 如果用户己登录，那么发送用户信息给unity
       await sendUserInfo2Unity();
