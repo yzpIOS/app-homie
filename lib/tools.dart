@@ -318,16 +318,26 @@ class ChatTextInputFormatter extends TextInputFormatter {
     int newBaseOffset = newValue.selection.baseOffset;
     //光标位置
     int offset = newBaseOffset;
+    //输入的文本
+    String inputContent = newContent.substring(oldBaseOffset, newBaseOffset);
+
+    if (inputContent == '') {
+      return newValue;
+    }
 
     if (newLength > oldLength) {
-      //输入限制范围外字符
       newContent = FiltrationChatText.filterChat(newContent, atText: atText);
       offset = newContent.length;
+    } else {
+      offset = oldContent.length;
     }
-    return TextEditingValue(
-      text: newContent,
-      selection: TextSelection.collapsed(offset: offset),
-    );
+
+    return newValue.copyWith(text: newContent, selection: TextSelection.collapsed(offset: offset));
+
+    // return TextEditingValue(
+    //   text: newContent,
+    //   selection: TextSelection.collapsed(offset: offset),
+    // );
   }
 }
 
