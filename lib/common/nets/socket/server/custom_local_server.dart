@@ -51,7 +51,7 @@ class CustomLocalServer with BaseClient {
 
   // 当前的端口
   int _currentPort = 0;
-  Completer<int>? _portCompleter;
+  Completer<int> _portCompleter = Completer();
 
   bool _isBindingServer = false;
 
@@ -78,22 +78,21 @@ class CustomLocalServer with BaseClient {
     }
     // 超过1000次
     if(connectTimes >= 1000) {
-      _portCompleter?.complete(_currentPort);
-      _portCompleter = null;
+      completeErrorShareSocketStatus();
       return;
     }
     _currentPort = 0;
     _isBindingServer = true;
+    resetShareSocketStatus();
     logForDebug("[CustomLocalServer:bindServer]:开启与Unity通信的本地SocketServer, port = $port");
 
     // 开启ServerSocket
     ServerSocket.bind("127.0.0.1", port).asStream().listen((event) {
       _isBindingServer = false;
       _currentPort = port;
-      _portCompleter?.complete(_currentPort);
-      _portCompleter = null;
       // socket连接上
       serverSocket = event;
+      completeShareSocketStatus();
       // 绑定server
       _handleServer();
       logForDebug("[CustomLocalServer:_handleServer]:SocketServer开启成功，通知Unity进行连接");
@@ -117,9 +116,7 @@ class CustomLocalServer with BaseClient {
     _isBindingServer = false;
     _currentPort = 0;
     _beatHeartCheckStream?.cancel();
-    if(_portCompleter?.isCompleted == true) {
-      _portCompleter = Completer();
-    }
+    resetShareSocketStatus();
     serverSocket?.close();
   }
 
@@ -128,11 +125,36 @@ class CustomLocalServer with BaseClient {
   ///
   void reStartBindServer() {
     _canBindServer = true;
-    if(_portCompleter?.isCompleted == true) {
-      _portCompleter = Completer();
-    }
+    resetShareSocketStatus();
     bindServer();
     beatHeartCheck();
+  }
+
+  ///
+  /// 连接成功状态设置
+  ///
+  void completeShareSocketStatus() {
+    if(!_portCompleter.isCompleted) {
+      _portCompleter.complete(_currentPort);
+    }
+  }
+
+  ///
+  /// 设置连接成时错误
+  ///
+  void completeErrorShareSocketStatus() {
+    if(!_portCompleter.isCompleted) {
+      _portCompleter.completeError(TimeoutException("time out"));
+    }
+  }
+
+  ///
+  /// 重置_shareSocketStatus状态
+  ///
+  void resetShareSocketStatus() {
+    if(_portCompleter.isCompleted) {
+      _portCompleter = Completer();
+    }
   }
 
   ///
@@ -205,10 +227,7 @@ class CustomLocalServer with BaseClient {
     if(_currentPort != 0) {
       return Future.value(_currentPort);
     }
-    _portCompleter?.completeError("error");
-    _portCompleter = Completer();
-
-    return _portCompleter!.future;
+    return _portCompleter.future;
   }
 
   ///
@@ -404,7 +423,6 @@ class CustomLocalServer with BaseClient {
     _onReceiveRawFromU.clear();
     _socketSubscription?.cancel();
     _beatHeartCheckStream?.cancel();
-    _portCompleter = null;
     _serverStatusCallBacks.clear();
     _netStateSubscription?.cancel();
   }
