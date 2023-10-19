@@ -127,23 +127,35 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         putPkInfo(roomInfo, pkRoomId);
         toMiddleRoom(roomId: roomId, data: roomInfo, off: true, callCloseRoom: false);
       });
-    } else if(roomId > 0) {
-      // 在普通房间中
-      if(sceneCtrl2 != null) {
-        // 加载房间数据
-        sceneCtrl2?.loadSceneInfo();
-      } else {
-        // 房间己关闭, 从新打开房间
-        Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
-          var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
-          putRoomInfo(roomInfo);
-          toRoom(roomId: roomId, data: roomInfo, off: true);
-        });
-      }
-    } else {
-      // 没有在房间中
-      onSocketDisconnect();
     }
+
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // else if(roomId > 0) {
+    //   // 在普通房间中
+    //   if(sceneCtrl2 != null) {
+    //     // 加载房间数据
+    //     sceneCtrl2?.loadSceneInfo();
+    //   } else {
+    //     // 房间己关闭, 从新打开房间
+    //     Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+    //       var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
+    //       putRoomInfo(roomInfo);
+    //       toRoom(roomId: roomId, data: roomInfo, off: true);
+    //     });
+    //   }
+    // } else {
+    //   // 没有在房间中
+    //   onSocketDisconnect();
+    // }
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
+    // todo socket连接成功，判断用户是否还在房间
   }
 
   ///
