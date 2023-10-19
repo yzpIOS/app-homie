@@ -253,7 +253,15 @@ class FiltrationChatText {
     }
 
     for (var i = 0; i < chatFilter1.length; i++) {
-      content = content.replaceAll(chatFilter1[i], '*');
+      String tem = chatFilter1[i];
+      String rep = '';
+      int j = 0;
+      while (true) {
+        rep = '$rep*';
+        j += 1;
+        if (j >= tem.length) break;
+      }
+      content = content.replaceAll(chatFilter1[i], rep);
     }
 
     void handler(String v) {
@@ -325,8 +333,8 @@ class ChatTextInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
+    newContent = FiltrationChatText.filterChat(newContent, atText: atText);
     if (newLength > oldLength) {
-      newContent = FiltrationChatText.filterChat(newContent, atText: atText);
       offset = newContent.length;
     } else {
       offset = oldContent.length;
