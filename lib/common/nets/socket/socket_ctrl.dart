@@ -239,7 +239,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     onDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
 
     // 公告广播(公告板)
-    onDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
+    //onDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
 
     // 连接状态
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
@@ -356,7 +356,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);
     removeOnDataCmd(CMD.S_MoreGiftFloatingScreen, onMoreGiftFloatingScreen);
-    removeOnDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
+    //removeOnDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
     removeOnDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     removeOnDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
@@ -430,12 +430,12 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   ///
   /// 公告广播(公告板)
   ///
-  void onBulletinBroadcast(int cmd, S_BulletinBroadcast? sBulletinBroadcast) {
-    if(sBulletinBroadcast == null) {
-      return;
-    }
-    Get.dialog(AnnouncementMessageDialog(bulletinId: sBulletinBroadcast.bulletinId.toInt(), message: sBulletinBroadcast.message,));
-  }
+  // void onBulletinBroadcast(int cmd, S_BulletinBroadcast? sBulletinBroadcast) {
+  //   if(sBulletinBroadcast == null) {
+  //     return;
+  //   }
+  //   Get.dialog(AnnouncementMessageDialog(bulletinId: sBulletinBroadcast.bulletinId.toInt(), message: sBulletinBroadcast.message,));
+  // }
 
   ConnectivityResult? preState;
 
