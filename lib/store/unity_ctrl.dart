@@ -41,6 +41,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   int curFluttyVersion = DateTime.now().millisecondsSinceEpoch;
 
   Completer _sendSockComplete = Completer();
+  bool canSendMessage = true;
 
   final _sceneLock = Lock(reentrant: true);
 
@@ -194,8 +195,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   ///
   /// 发送flutter相关的socket信息
   ///
-  void sendFlutterSocketInfo({int tryTimes = 0}) async {
-    if(isClosed || _isUnityInitSuccess == false || tryTimes >= 100) {
+  void sendFlutterSocketInfo() async {
+    if(!canSendMessage) {
+      return;
+    }
+    if(isClosed || _isUnityInitSuccess == false) {
       return;
     }
     // 重新进入等待
@@ -213,8 +217,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       // 服务还没有连上
       if(event == 0) {
         logForDebug("[UnityCtrl:sendFlutterSocketInfo]:服务没有启动...");
-        await Future.delayed(Duration(seconds: delayTryTIme));
-        sendFlutterSocketInfo(tryTimes: tryTimes + 1);
         return;
       }
 
@@ -239,9 +241,6 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       logForDebug("[UnityCtrl:sendFlutterSocketInfo]:连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
       logForDebug("[UnityCtrl:sendFlutterSocketInfo]:连接失败, error = ${error.toString()}");
-      // 连接错误
-      await Future.delayed(Duration(seconds: delayTryTIme));
-      sendFlutterSocketInfo(tryTimes: tryTimes + 1);
     });
   }
 

@@ -153,10 +153,14 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
+        UnityCtrl.ins.canSendMessage = true;
+        SocketCtrl.ins.local.reStartBindServer();
         SocketCtrl.ins.onAppResume();
         break;
       case AppLifecycleState.paused:
+        UnityCtrl.ins.canSendMessage = false;
         SocketCtrl.ins.onAppPause();
+        SocketCtrl.ins.local.stopServer();
         break;
       case AppLifecycleState.detached:
         // app 结束时调用

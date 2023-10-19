@@ -54,6 +54,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       App.toApp();
       // 己登录
       initPrivacy();
+      // 登录时间记录
+      loginUpdate();
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
@@ -150,6 +152,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         }
 
         await useAuth(resp['session']);
+
+        // 登录时间记录
+        loginUpdate();
       },
       callback: () {
         App.toApp();
@@ -171,6 +176,13 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     } else {
       return data;
     }
+  }
+
+  ///
+  /// 打开app时请求
+  ///
+  void loginUpdate() {
+    Api.UserInfo.loginUpdate();
   }
 
   Future<void> useAuth(String token) async {

@@ -54,7 +54,6 @@ class CustomLocalServer with BaseClient {
   Completer<int>? _portCompleter;
 
   bool _isBindingServer = false;
-  bool previouseHasNet = true;
 
   // 网络状态订阅
   StreamSubscription? _netStateSubscription;
@@ -65,6 +64,8 @@ class CustomLocalServer with BaseClient {
   int _preRiseTime = 0;
   final List<Disconnect> _disconnects = <Disconnect>[];
 
+  bool _canBindServer = true;
+
   CustomLocalServer() {
   }
 
@@ -72,7 +73,7 @@ class CustomLocalServer with BaseClient {
   /// 绑定server
   ///
   void bindServer({int port = 7678, int connectTimes = 0}) {
-    if(_isBindingServer) {
+    if(_isBindingServer || !_canBindServer) {
       return;
     }
     // 超过1000次
@@ -106,6 +107,32 @@ class CustomLocalServer with BaseClient {
       // 绑定失败，尝试期它端口
       bindServer(port: port - 1, connectTimes: connectTimes + 1);
     });
+  }
+
+  ///
+  /// 停止server
+  ///
+  void stopServer() {
+    _canBindServer = false;
+    _isBindingServer = false;
+    _currentPort = 0;
+    _beatHeartCheckStream?.cancel();
+    if(_portCompleter?.isCompleted == true) {
+      _portCompleter = Completer();
+    }
+    serverSocket?.close();
+  }
+
+  ///
+  /// 重启server
+  ///
+  void reStartBindServer() {
+    _canBindServer = true;
+    if(_portCompleter?.isCompleted == true) {
+      _portCompleter = Completer();
+    }
+    bindServer();
+    beatHeartCheck();
   }
 
   ///
@@ -188,6 +215,9 @@ class CustomLocalServer with BaseClient {
   /// 心跳，检查无用连接
   ///
   void beatHeartCheck({int interval = 3}) {
+    if(!_canBindServer) {
+      return;
+    }
     _beatHeartCheckStream?.cancel();
     _beatHeartCheckStream = Future.delayed(Duration(seconds: interval)).asStream().listen((event) {
       int nowSeconds = DateTime.now().millisecondsSinceEpoch;

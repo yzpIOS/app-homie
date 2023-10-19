@@ -241,4 +241,11 @@ class ApiUserInfo extends ApiBase {
     };
     return _doPost('gift_wall', data: data);
   }
+
+  ///
+  /// 登录处理
+  ///
+  Future loginUpdate() {
+    return _doPost("login/update");
+  }
 }

@@ -226,7 +226,7 @@ bool openDebugView(String text) {
 /// 关闭debugView
 ///
 bool closeDebugView(String text) {
-  if(text == "hello homie, please close the room debug view for me and the password is cqeY2ZR4JcCZ7giJvMU7") {
+  if(text == "hello homie, please close the room debug view for me and the password is cqeY2ZR4JcCZ7giJ") {
     closeDebug(LogType.SOCKET);
     return true;
   }

@@ -278,13 +278,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   }
 
   ///
-  /// 开始与unity的心跳
-  ///
-  void startUnityHeartBeat() {
-    local.beatHeartCheck();
-  }
-
-  ///
   /// 用户信息返回
   ///
   void onRoleResponse(int cmd, S_Role? role) {
