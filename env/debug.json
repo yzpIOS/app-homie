@@ -3,13 +3,13 @@
   "app_name": "Homie.Debug",
   "wx_app_id": "wxed5f4b391e3356ed",
   "im_app_id": 1400792766,
-  "api_url": "http://dev.gz.internal.jumaiyx.cn:80/",
-  "api_img_url": "http://dev.gz.internal.jumaiyx.cn:80/",
+  "api_url": "http://api.release.homieyy.com/",
+  "api_img_url": "http://api.release.homieyy.com/",
   "mq_acc": "app",
   "mq_pwd": "app",
   "mq_url": "ws://192.168.1.156:15674/ws",
   "sentry_dsn": "https://52fff051ed924b838b3e04d3e0909caa@o4504445347037184.ingest.sentry.io/4504445494165504",
   "is_debug": true,
-  "server_ip": "192.168.1.156",
+  "server_ip": "43.136.74.73",
   "server_port": 31391
 }
