@@ -237,7 +237,7 @@ class FiltrationChatText {
       'QQ','qQ','Qq','qq','q.','Q。','q ','Q ','Q.','q。','扣扣','扣 扣','扣。扣','秋秋','秋 秋','秋.秋','秋。秋',
       '充值','充 值','充.值','@163','tel','call','电话','电.话','电。话','手机','手.机','手。机','联系','联 系','联。系',
       '@126','.com','.net','.org'];
-    const chatFilter2 = '345678⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥\$';
+    const chatFilter2 = '1234567890⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥¥';
 
     var startIndex = 0;//滚动过滤开始的下标
     var result = '';//过滤后的结果
@@ -252,54 +252,52 @@ class FiltrationChatText {
       startIndex = 0;
     }
 
-    for (var i = 0; i < chatFilter1.length; i++) {
-      String tem = chatFilter1[i];
-      String rep = '';
-      int j = 0;
-      while (true) {
-        rep = '$rep*';
-        j += 1;
-        if (j >= tem.length) break;
-      }
-      content = content.replaceAll(chatFilter1[i], rep);
+    // 对输入的字符串进行过滤和替换操作
+    // for (var i = 0; i < chatFilter1.length; i++) {
+    //   String tem = chatFilter1[i];
+    //   String rep = '*' * tem.length;
+    //   content = content.replaceAll(tem, rep);
+    // }
+
+    // 对输入的字符串进行过滤和替换操作
+    for (String filterString in chatFilter1) {
+      RegExp regex = RegExp(filterString, caseSensitive: false);
+      content = content.replaceAllMapped(regex, (match) => '*' * match.group(0)!.length);
     }
 
+    // 连续五个是过滤词则转换成*
     void handler(String v) {
-      if (int.tryParse(v) != null) {
+      result += v;
+      if (int.tryParse(v) != null || chatFilter2.contains(v)) {
         count++;
-        if (count == 5) {
-          result = result.replaceRange(result.length-4, result.length, "*****");
-        } else if (count > 5) {
-          result += "*";
-        } else {
-          result += v;
+        if (count >= 5) {
+          result = result.replaceRange(result.length-count, result.length, '*' * count);
         }
-      } else if (chatFilter2.contains(v)) {
-        result += '*';
       } else {
-        result += v;
+        count = 0;
       }
     }
 
     pollString(content, handler, startIndex);
+
     return result;
   }
 
   //收到的新消息匹配规则
-  static bool receivedNewMessageMatches(V2TimMessage lastMsg, V2TimMessage newMsg) {
-    //最新一条消息和上一条消息都是文本消息
-    if (lastMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT && newMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT) {
-      String text = lastMsg.textElem!.text! + newMsg.textElem!.text!;
-      RegExp regex = RegExp(r'((\d{5,}))|(q.{1,}?\d{1,})|(\d.?\d.?\d.?\d.?\d)|(加.*?q)/gism');
-      if (regex.hasMatch(text)) {
-        debugPrint('Match!');
-        return true;
-      } else {
-        debugPrint('No match.');
-      }
-    }
-    return false;
-  }
+  // static bool receivedNewMessageMatches(V2TimMessage lastMsg, V2TimMessage newMsg) {
+  //   //最新一条消息和上一条消息都是文本消息
+  //   if (lastMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT && newMsg.elemType == MessageElemType.V2TIM_ELEM_TYPE_TEXT) {
+  //     String text = lastMsg.textElem!.text! + newMsg.textElem!.text!;
+  //     RegExp regex = RegExp(r'((\d{5,}))|(q.{1,}?\d{1,})|(\d.?\d.?\d.?\d.?\d)|(加.*?q)/gism');
+  //     if (regex.hasMatch(text)) {
+  //       debugPrint('Match!');
+  //       return true;
+  //     } else {
+  //       debugPrint('No match.');
+  //     }
+  //   }
+  //   return false;
+  // }
 }
 
 class ChatTextInputFormatter extends TextInputFormatter {
@@ -311,36 +309,46 @@ class ChatTextInputFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+    String filteredText = newValue.text;
 
-    //上次文本
-    String oldContent = oldValue.text;
-    //最新文本
-    String newContent = newValue.text;
-    //上次文本长度
-    int oldLength = oldContent.length;
-    //最新文本长度
-    int newLength = newContent.length;
-    //上次文本光标位置
-    int oldBaseOffset = oldValue.selection.baseOffset;
-    //最新文本光标位置
-    int newBaseOffset = newValue.selection.baseOffset;
-    //光标位置
-    int offset = newBaseOffset;
-    //输入的文本
-    String inputContent = newContent.substring(oldBaseOffset, newBaseOffset);
-
-    if (inputContent == '') {
+    if (filteredText == '') {
       return newValue;
     }
 
-    newContent = FiltrationChatText.filterChat(newContent, atText: atText);
-    if (newLength > oldLength) {
-      offset = newContent.length;
-    } else {
-      offset = oldContent.length;
-    }
+    // 进行过滤和替换操作的逻辑
+    filteredText = FiltrationChatText.filterChat(filteredText, atText: atText);
+    // 创建新的TextEditingValue对象并返回
+    return newValue.copyWith(text: filteredText);
 
-    return newValue.copyWith(text: newContent, selection: TextSelection.collapsed(offset: offset));
+    // //上次文本
+    // String oldContent = oldValue.text;
+    // //最新文本
+    // String newContent = newValue.text;
+    // //上次文本长度
+    // int oldLength = oldContent.length;
+    // //最新文本长度
+    // int newLength = newContent.length;
+    // //上次文本光标位置
+    // int oldBaseOffset = oldValue.selection.baseOffset;
+    // //最新文本光标位置
+    // int newBaseOffset = newValue.selection.baseOffset;
+    // //光标位置
+    // int offset = newBaseOffset;
+    // //输入的文本
+    // String inputContent = newContent.substring(oldBaseOffset, newBaseOffset);
+    //
+    // if (inputContent == '') {
+    //   return newValue;
+    // }
+    //
+    // newContent = FiltrationChatText.filterChat(newContent, atText: atText);
+    // if (newLength > oldLength) {
+    //   offset = newContent.length;
+    // } else {
+    //   offset = oldContent.length;
+    // }
+    //
+    // return newValue.copyWith(text: newContent, selection: TextSelection.collapsed(offset: offset));
 
     // return TextEditingValue(
     //   text: newContent,
