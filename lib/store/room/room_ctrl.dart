@@ -205,7 +205,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       }
       roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
       logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
-      RoomManagerCtrl.ins.doNormalState();
+      // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
+      if(keepState) {
+        RoomManagerCtrl.ins.doMiniState();
+      } else {
+        RoomManagerCtrl.ins.doNormalState();
+      }
 
       // 监听unity发过来的信息
       logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
@@ -261,6 +266,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             isNotClose();
             markReady();
           }
+          // unity加载完成，设置成normal状态，如果返回的时候
+          RoomManagerCtrl.ins.doNormalState();
         } catch (e, s) {
           markFail(e, s);
           // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
