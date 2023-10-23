@@ -7,6 +7,7 @@ import 'package:tencent_cloud_chat_sdk/enum/message_elem_type.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_callback.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_conversation.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_message.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_user_status.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_value_callback.dart';
 import 'package:tencent_cloud_chat_sdk/tencent_im_sdk_plugin.dart';
 
@@ -55,6 +56,18 @@ class IM {
       ),
     );
   }
+
+  /// 查询用户在线状态
+  static Future<List<V2TimUserStatus>> getUserStatus({
+    required List<String> userIDList,
+  }) async {
+    final res = await $.getUserStatus(userIDList: userIDList);
+    if (res.code == 0) {
+      return res.data ?? [];
+    } else {
+      return [];
+    }
+  }
 }
 
 extension XMessage on V2TimMessage {
@@ -63,7 +76,9 @@ extension XMessage on V2TimMessage {
       case MessageElemType.V2TIM_ELEM_TYPE_NONE:
         break;
       case MessageElemType.V2TIM_ELEM_TYPE_TEXT:
-        return textElem?.text ?? (Env.isDebug ? 'Err' : '');
+        String text = textElem?.text ?? (Env.isDebug ? 'Err' : '');
+        return userID != null && userID!.startsWith('service_') ? text : FiltrationChatText.filterChat(text);
+        // return textElem?.text ?? (Env.isDebug ? 'Err' : '');
       case MessageElemType.V2TIM_ELEM_TYPE_IMAGE:
         return '[图片]';
       case MessageElemType.V2TIM_ELEM_TYPE_SOUND:
