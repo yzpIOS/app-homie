@@ -273,9 +273,10 @@ class FiltrationChatText {
         if (count >= 5) {
           result = result.replaceRange(result.length-count, result.length, '*' * count);
         }
-      } else {
-        count = 0;
       }
+      // else {
+      //   count = 0;
+      // }
     }
 
     pollString(content, handler, startIndex);
