@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/3rd/tencent/im.dart';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/cmds.dart';
@@ -153,14 +154,22 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
         //??
         break;
       case AppLifecycleState.resumed:
+        // socket相关的处理
         UnityCtrl.ins.canSendMessage = true;
         SocketCtrl.ins.local.reStartBindServer();
         SocketCtrl.ins.onAppResume();
+
+        // 回到前台，通知im
+        IM.$.v2TIMOfflinePushManager.doForeground();
         break;
       case AppLifecycleState.paused:
+        // socket相关的处理
         UnityCtrl.ins.canSendMessage = false;
         SocketCtrl.ins.onAppPause();
         SocketCtrl.ins.local.stopServer();
+
+        // 退到后台，通知im
+        IM.$.v2TIMOfflinePushManager.doBackground(unreadCount: 0);
         break;
       case AppLifecycleState.detached:
         // app 结束时调用
