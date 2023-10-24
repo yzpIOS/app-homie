@@ -78,7 +78,7 @@ class RoomPage extends StatefulWidget {
     try {
       await _show();
 
-      if (mgr.sceneCtrl.isReady && mgr.sceneCtrl.keepState) {
+      if (mgr.sceneCtrl.isRequestBack && mgr.sceneCtrl.keepState) {
         mgr.doMiniState();
       } else {
         await mgr.doCloseState();
@@ -160,6 +160,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
       // Future.delayed(const Duration(seconds: 2)).whenComplete(() => Get.back());
 
+      if(controller.isClosed) {
+        return;
+      }
 
       safePop().whenComplete(() => Get.alertDialog(msg));
     }

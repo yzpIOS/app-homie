@@ -79,6 +79,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   abstract bool keepState;
 
+  // 是否加载房间成功
+  bool isRequestBack = false;
+
   @override
   void onInit() {
     debugPrint("开始监听麦位信息");
@@ -179,6 +182,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
     sceneHudRx(RoomHudState.None);
+    isRequestBack = false;
 
     void isNotClose() {
       if (isClosed) throw 'isClosed';
@@ -205,6 +209,13 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       }
       roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
       logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+
+      // 监听unity发过来的信息
+      logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
+      // 判断是否关闭界面
+      isNotClose();
+      await loadSceneInfo();
+
       // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
       if(keepState) {
         RoomManagerCtrl.ins.doMiniState();
@@ -212,11 +223,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         RoomManagerCtrl.ins.doNormalState();
       }
 
-      // 监听unity发过来的信息
-      logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
-      // 判断是否关闭界面
-      isNotClose();
-      await loadSceneInfo();
+      // 服务端数据返回
+      isRequestBack = true;
 
       /// 请求房间系统公告消息数组
       isNotClose();
