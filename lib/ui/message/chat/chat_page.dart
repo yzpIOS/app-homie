@@ -8,6 +8,7 @@ import 'package:app/ui/message/input/input_view.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -159,42 +160,53 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
   }
 
   Widget $Online() {
-    return Container(
-      decoration: const ShapeDecoration(color: Color(0xCCF5F1FF), shape: AppShape.a6),
-      padding: const Pad(horizontal: 10),
-      margin: const Pad(horizontal: 20, top: 10),
-      height: 40,
-      child: Row(
-        children: [
-          Container(
-            decoration: const ShapeDecoration(shape: AppShape.a4),
-            clipBehavior: Clip.antiAlias,
-            width: 26,
-            height: 26,
-            child: NetImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F89e0676b-c0c3-4959-bbed-bc1cf0470250%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1700646496&t=2e25b271b55d8dc7d6e76dce6e8e4f05', fit: BoxFit.cover),
-          ),
-          SvgView(SVG.$('chat/语音')),
-          const Text.rich(
-            TextSpan(
-              style: TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
-              children: [
-                TextSpan(text: 'TA正在',),
-                TextSpan(text: '【柔情谜语】', style: TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
-                TextSpan(text: '嗨聊',),
-              ],
+    return Obx(() {
+      final onlineData = _ctrl.onlineRx();
+
+      if (_ctrl.conv.isSycConv || onlineData.isEmpty) {
+        return Spacing.blank;
+      }
+
+      return Container(
+        decoration: const ShapeDecoration(color: Color(0xCCF5F1FF), shape: AppShape.a6),
+        padding: const Pad(horizontal: 10),
+        margin: const Pad(horizontal: 20, top: 10),
+        height: 40,
+        child: Row(
+          children: [
+            Container(
+              decoration: const ShapeDecoration(shape: AppShape.a4),
+              clipBehavior: Clip.antiAlias,
+              width: 26,
+              height: 26,
+              child: NetImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F89e0676b-c0c3-4959-bbed-bc1cf0470250%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1700646496&t=2e25b271b55d8dc7d6e76dce6e8e4f05', fit: BoxFit.cover),
             ),
-          ),
-          Spacing.exp,
-          XTextBtn(
-            label: '去找TA',
-            width: 52,
-            height: 20,
-            textStyle: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: fw$Regular),
-            onTap: toRoom,
-          ),
-        ],
-      ),
-    );
+            Padding(
+              padding: const Pad(left: 5, right: 2),
+              child: Image.asset(IMG.format('chat/直播跟随'), width: 18, height: 18, scale: 3, fit: BoxFit.contain),
+            ),
+            Text.rich(
+              TextSpan(
+                style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
+                children: [
+                  const TextSpan(text: 'TA正在',),
+                  TextSpan(text: '【${onlineData['room_name']}】', style: const TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
+                  const TextSpan(text: '嗨聊',),
+                ],
+              ),
+            ),
+            Spacing.exp,
+            XTextBtn(
+              label: '去找TA',
+              width: 52,
+              height: 20,
+              textStyle: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: fw$Regular),
+              onTap: toRoom,
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   /// 跳转直播间

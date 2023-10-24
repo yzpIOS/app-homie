@@ -1,3 +1,4 @@
+import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -11,8 +12,9 @@ class AsyncAvatar extends StatelessWidget {
   final double size;
   final BorderSide side;
   final Option<VoidCallback>? onTap;
+  final bool isShowOnline;
 
-  const AsyncAvatar({super.key, required this.uid, this.size = 82, this.side = BorderSide.none, this.onTap});
+  const AsyncAvatar({super.key, required this.uid, this.size = 82, this.side = BorderSide.none, this.onTap, this.isShowOnline = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class AsyncAvatar extends StatelessWidget {
       onTap: onTap,
       child: UserInfoCtrl.use(
         uid,
-        builder: (it) => AvatarView(it?.avatar, blur: it?.avatarEx, size: size, side: side),
+        builder: (it) => AvatarView(it?.avatar, blur: it?.avatarEx, size: size, side: side, isShowOnline: isShowOnline,),
       ),
     );
   }
@@ -34,8 +36,9 @@ class AvatarView extends StatelessWidget {
   final String? blur;
   final double size;
   final BorderSide side;
+  final bool isShowOnline;
 
-  const AvatarView(this.url, {super.key, this.blur, this.size = 82, this.side = BorderSide.none});
+  const AvatarView(this.url, {super.key, this.blur, this.size = 82, this.side = BorderSide.none, this.isShowOnline = false});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,33 @@ class AvatarView extends StatelessWidget {
       shape: CircleBorder(side: side),
     );
 
-    return child;
+    // return child;
+
+    if (isShowOnline) {
+      return Container(
+        clipBehavior: Clip.none,
+        width: size + 6,
+        height: size + 6,
+        padding: const Pad(all: 3.0),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(color: AppPalette.primary, width: 3.0,),
+        ),
+        child: Stack(
+          clipBehavior: Clip.none,
+          alignment: AlignmentDirectional.center,
+          children: [
+            Positioned.fill(child: child,),
+            Positioned(
+              bottom: -10,
+              child: Image.asset(IMG.format('直播中'), width: 48, height: 15.5, scale: 3, fit: BoxFit.contain),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return child;
+    }
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:app/store/moment/moment_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/message/chat/chat_page.dart';
 import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/moment/view_item/data_adapter.dart';
@@ -14,13 +15,25 @@ import 'package:app/ui/my/report_page.dart';
 
 mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
   double get avatarSize => 50;
+  double get boxSize => 56;
 
   @override
   Widget $header() {
     Widget child = Row(
       children: [
         Spacing.w10,
-        AsyncAvatar(uid: vm.author, size: avatarSize),
+        // Container(
+        //   clipBehavior: Clip.none,
+        //   width: boxSize,
+        //   height: boxSize,
+        //   padding: const Pad(all: 3.0),
+        //   decoration: BoxDecoration(
+        //     shape: BoxShape.circle,
+        //     border: Border.all(color: AppPalette.primary, width: 3.0,),
+        //   ),
+        //   child: AsyncAvatar(uid: vm.author, size: avatarSize),
+        // ),
+        AsyncAvatar(uid: vm.author, size: avatarSize, isShowOnline: true,),
         Spacing.w10,
         Expanded(
           child: Column(
@@ -50,7 +63,7 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
       ],
     );
 
-    child = Box(height: 50, child: child);
+    child = Box(height: boxSize, child: child);
 
     return child;
   }

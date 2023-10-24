@@ -2,6 +2,7 @@ import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/model/conv.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -13,8 +14,9 @@ import 'package:tencent_cloud_chat_sdk/models/v2_tim_user_status.dart';
 
 abstract class ChatAppBar extends StatelessWidget {
   final ChatConv conv;
+  final RxMap onlineRx;
 
-  const ChatAppBar(this.conv, {super.key});
+  const ChatAppBar(this.conv, this.onlineRx, {super.key});
 }
 
 mixin _ActionMixin implements ChatAppBar {
@@ -22,25 +24,32 @@ mixin _ActionMixin implements ChatAppBar {
 
   Widget? get iconSetting {
     final uid = conv.userId ?? '';
+
     if (uid.startsWith('service_')) {
       return null;
     }
-    /// wyxtodo
-    return false
-        ? XOutlinedBtn(
-      label: '已关注',
-      width: 60,
-      height: 24,
-      textStyle: const TextStyle(fontSize: 12, color: AppPalette.primary),
-      // onTap: () => doFollow(false, () => setState(() => data['is_follow'] = false)),
-    )
-        : XTextBtn(
-      label: '关注',
-      width: 60,
-      height: 24,
-      textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-      // onTap: () => doFollow(true, () => setState(() => data['is_follow'] = true)),
-    );
+
+    return Obx(() {
+      final onlineData = onlineRx();
+      if (onlineData.isEmpty) {
+        return Spacing.blank;
+      }
+      return onlineData['follow'] == 1
+          ? XOutlinedBtn(
+        label: '已关注',
+        width: 60,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 12, color: AppPalette.primary),
+        // onTap: () => doFollow(false, () => setState(() => data['is_follow'] = false)),
+      )
+          : XTextBtn(
+        label: '关注',
+        width: 60,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        // onTap: () => doFollow(true, () => setState(() => data['is_follow'] = true)),
+      );
+    });
     // return null;
 
     return conv.onlyViewRx() || toSetting == null //
@@ -76,11 +85,12 @@ mixin _MuteMixin {
   }
 }
 
-abstract class _AppBar extends ChatAppBar with _TitleMixin, _ActionMixin, _MuteMixin {
+abstract class _AppBar extends ChatAppBar
+    with _TitleMixin, _ActionMixin, _MuteMixin {
   @override
   final RxBool isMuteRx;
 
-  _AppBar(super.conv, this.isMuteRx, {super.key});
+  _AppBar(super.conv, super.onlineRx, this.isMuteRx, {super.key});
 
   @override
   PreferredSizeWidget build(BuildContext context) {
@@ -94,82 +104,80 @@ abstract class _AppBar extends ChatAppBar with _TitleMixin, _ActionMixin, _MuteM
 class ChatAppBar$User extends _AppBar {
   final UID uid;
 
-  ChatAppBar$User(super.conv, super.isMuteRx, {super.key}) : uid = conv.userId ?? '';
+  ChatAppBar$User(super.conv, super.onlineRx, super.isMuteRx, {super.key})
+      : uid = conv.userId ?? '';
 
   @override
   Widget _titleBuilder(BuildContext context) {
     // 系统消息只显示标题
     if (uid.startsWith('service_')) {
       return $MuteView(child:
-        FutureBuilder(
-          future: Future.value(conv.conv),
-          builder: (_, snapshot) => XText(snapshot.data?.showName ?? ''),
-        )
+      FutureBuilder(
+        future: Future.value(conv.conv),
+        builder: (_, snapshot) => XText(snapshot.data?.showName ?? ''),
+      )
       );
     }
 
     // 单聊消息显示 在线状态、昵称、修改备注按钮
-    return $MuteView(
-      child: FutureBuilder<List<V2TimUserStatus>>(
-        future: IM.getUserStatus(userIDList: [uid]),
-        builder: (_, snapshot) {
-          bool isOnline = true;//是否在线
-          // if (snapshot.hasData) {
-          //   if (snapshot.data!.isNotEmpty) {
-          //     V2TimUserStatus? userStatus = snapshot.data?.first;
-          //     isOnline = (userStatus?.statusType == UserStatusType.V2TIM_USER_STATUS_ONLINE);
-          //   }
-          // }
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (isOnline) Image.asset(IMG.format('chat/在线'), width: 34, height: 16, scale: 3, fit: BoxFit.contain),
-              if (isOnline) Spacing.w4,
-              OpacityButton(
-                onTap: () {
-                  var config = InputCfg(title: '修改备注', emptyCallBack: true);
-                  XInputPage.go(config).onType<String?>((name) async {
-                    if(config.flag == false) {
-                      return;
-                    }
-                    if(name == null || name.isEmpty == true) {
-                      var userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
-                      name = userInfo?.nickName;
-                    }
-                    simpleSub(
-                      Api.UserInfo.remarkName(uid: uid, name: name ?? ""),
-                      callback: () {
-                        UserInfoCtrl.doUpdate(
-                          uid,
-                          rebuild: (val) => val.copyWith(remarkName: name ?? ""),
-                        );
-                      },
-                    );
-                  });
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: UserInfoCtrl.use(
+    return Obx(() {
+      final onlineData = onlineRx();
+
+      return $MuteView(
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (onlineData['isOnline'] == 1) Image.asset(IMG.format('chat/在线'), width: 34,
+                height: 16,
+                scale: 3,
+                fit: BoxFit.contain),
+            if (onlineData['isOnline'] == 1) Spacing.w4,
+            OpacityButton(
+              onTap: () {
+                var config = InputCfg(title: '修改备注', emptyCallBack: true);
+                XInputPage.go(config).onType<String?>((name) async {
+                  if (config.flag == false) {
+                    return;
+                  }
+                  if (name == null || name.isEmpty == true) {
+                    var userInfo = await UserInfoCtrl.ins.findByUidOrNull(
+                        uid, useNet: true);
+                    name = userInfo?.nickName;
+                  }
+                  simpleSub(
+                    Api.UserInfo.remarkName(uid: uid, name: name ?? ""),
+                    callback: () {
+                      UserInfoCtrl.doUpdate(
                         uid,
-                        builder: (it) => XText(it?.showName() ?? ''),
-                      ),
+                        rebuild: (val) => val.copyWith(remarkName: name ?? ""),
+                      );
+                    },
+                  );
+                });
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Flexible(
+                    child: UserInfoCtrl.use(
+                      uid,
+                      builder: (it) => XText(it?.showName() ?? ''),
                     ),
-                    SvgView(SVG.$('chat/备注'), width: 24, height: 24),
-                  ],
-                ),
+                  ),
+                  SvgView(SVG.$('chat/备注'), width: 24, height: 24),
+                ],
               ),
-              Spacing.blank,
-            ],
-          );
-        },
-      )
-    );
+            ),
+            Spacing.blank,
+          ],
+        ),
+      );
+    });
   }
 
   @override
-  VoidCallback? get toSetting => () {
+  VoidCallback? get toSetting =>
+          () {
         //TODO
       };
 }

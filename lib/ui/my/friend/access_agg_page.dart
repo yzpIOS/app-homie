@@ -44,9 +44,9 @@ class _DtaView extends SimplePageView<Map> {
 
     return UserInfoCtrl.use(uid, builder: (it) {
       return ListTile(
-        dense: true,
+        dense: false,
         onTap: toUserPage(uid),
-        leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50),
+        leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: true,),
         title: Text(
           it?.showName() ?? '',
           style: const TextStyle(fontSize: 14, color: Colors.black),
