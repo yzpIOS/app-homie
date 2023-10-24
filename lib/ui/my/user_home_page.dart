@@ -4,6 +4,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -207,6 +208,11 @@ class _InfoView extends StatelessWidget {
   }
 
   Widget $UserView() {
+    /// 跳转直播间
+    void toRoom() {
+      Get.find<RoomManagerCtrl>().toRoom(roomId: 82);
+    }
+
     Widget builder(UserInfoDto? data) {
       final avatar = data?.avatar;
 
@@ -222,6 +228,7 @@ class _InfoView extends StatelessWidget {
             };
 
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           OpacityButton(
             onTap: onTap,
@@ -246,6 +253,10 @@ class _InfoView extends StatelessWidget {
               ],
             ),
           ),
+          InkWell(
+            onTap: toRoom,
+            child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
+          )
         ],
       );
     }
