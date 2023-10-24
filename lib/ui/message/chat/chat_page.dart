@@ -1,6 +1,8 @@
 import 'package:app/3rd/tencent/im.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/im/chat_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/input/input_view.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
@@ -120,6 +122,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
             child = Column(
               children: [
                 IntrinsicHeight(child: _ctrl.appBar),
+                $Online(),
                 Expanded(child: child),
               ],
             );
@@ -153,6 +156,50 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
     );
 
     return Material(elevation: 4, color: Colors.white, child: child);
+  }
+
+  Widget $Online() {
+    return Container(
+      decoration: const ShapeDecoration(color: Color(0xCCF5F1FF), shape: AppShape.a6),
+      padding: const Pad(horizontal: 10),
+      margin: const Pad(horizontal: 20, top: 10),
+      height: 40,
+      child: Row(
+        children: [
+          Container(
+            decoration: const ShapeDecoration(shape: AppShape.a4),
+            clipBehavior: Clip.antiAlias,
+            width: 26,
+            height: 26,
+            child: NetImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F89e0676b-c0c3-4959-bbed-bc1cf0470250%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1700646496&t=2e25b271b55d8dc7d6e76dce6e8e4f05', fit: BoxFit.cover),
+          ),
+          SvgView(SVG.$('chat/语音')),
+          const Text.rich(
+            TextSpan(
+              style: TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
+              children: [
+                TextSpan(text: 'TA正在',),
+                TextSpan(text: '【柔情谜语】', style: TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
+                TextSpan(text: '嗨聊',),
+              ],
+            ),
+          ),
+          Spacing.exp,
+          XTextBtn(
+            label: '去找TA',
+            width: 52,
+            height: 20,
+            textStyle: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: fw$Regular),
+            onTap: toRoom,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 跳转直播间
+  void toRoom() {
+    Get.find<RoomManagerCtrl>().toRoom(roomId: 82);
   }
 }
 

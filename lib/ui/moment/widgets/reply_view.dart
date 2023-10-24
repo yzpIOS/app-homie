@@ -86,7 +86,7 @@ class _ReplySheetState extends State<ReplySheet> {
         children: [
           child,
           $KeyboardHolder(
-            child: autofocus ? Spacing.blank : EmojiView(
+            child: autofocus ? const Box() : EmojiView(
               onSelect: (value) {
                 if (maxLength != null) {
                   if (controller.text.length >= maxLength!) {

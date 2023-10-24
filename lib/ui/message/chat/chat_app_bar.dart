@@ -1,3 +1,5 @@
+import 'package:app/3rd/tencent/im.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/model/conv.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -5,6 +7,9 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/x_input_page.dart';
 import 'package:app/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:tencent_cloud_chat_sdk/models/user_status_type.dart';
+import 'package:tencent_cloud_chat_sdk/models/v2_tim_user_status.dart';
 
 abstract class ChatAppBar extends StatelessWidget {
   final ChatConv conv;
@@ -16,11 +21,31 @@ mixin _ActionMixin implements ChatAppBar {
   final VoidCallback? toSetting = null;
 
   Widget? get iconSetting {
-    return null;
+    final uid = conv.userId ?? '';
+    if (uid.startsWith('service_')) {
+      return null;
+    }
+    /// wyxtodo
+    return false
+        ? XOutlinedBtn(
+      label: '已关注',
+      width: 60,
+      height: 24,
+      textStyle: const TextStyle(fontSize: 12, color: AppPalette.primary),
+      // onTap: () => doFollow(false, () => setState(() => data['is_follow'] = false)),
+    )
+        : XTextBtn(
+      label: '关注',
+      width: 60,
+      height: 24,
+      textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+      // onTap: () => doFollow(true, () => setState(() => data['is_follow'] = true)),
+    );
+    // return null;
 
-    // return conv.onlyViewRx() || toSetting == null //
-    //     ? null
-    //     : 'ic_menu_2'.toSvgAction(onPressed: toSetting);
+    return conv.onlyViewRx() || toSetting == null //
+        ? null
+        : 'ic_menu_2'.toSvgAction(onPressed: toSetting);
   }
 
   dynamic _actions() => iconSetting;
@@ -73,47 +98,73 @@ class ChatAppBar$User extends _AppBar {
 
   @override
   Widget _titleBuilder(BuildContext context) {
+    // 系统消息只显示标题
+    if (uid.startsWith('service_')) {
+      return $MuteView(child:
+        FutureBuilder(
+          future: Future.value(conv.conv),
+          builder: (_, snapshot) => XText(snapshot.data?.showName ?? ''),
+        )
+      );
+    }
+
+    // 单聊消息显示 在线状态、昵称、修改备注按钮
     return $MuteView(
-      child: uid.startsWith('service_')
-          ? FutureBuilder(
-              future: Future.value(conv.conv),
-              builder: (_, snapshot) => XText(snapshot.data?.showName ?? ''),
-            )
-          : OpacityButton(
-              onTap: () {
-                var config = InputCfg(title: '修改备注', emptyCallBack: true);
-                XInputPage.go(config).onType<String?>((name) async {
-                  if(config.flag == false) {
-                    return;
-                  }
-                  if(name == null || name.isEmpty == true) {
-                    var userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
-                    name = userInfo?.nickName;
-                  }
-                  simpleSub(
-                    Api.UserInfo.remarkName(uid: uid, name: name ?? ""),
-                    callback: () {
-                      UserInfoCtrl.doUpdate(
+      child: FutureBuilder<List<V2TimUserStatus>>(
+        future: IM.getUserStatus(userIDList: [uid]),
+        builder: (_, snapshot) {
+          bool isOnline = true;//是否在线
+          // if (snapshot.hasData) {
+          //   if (snapshot.data!.isNotEmpty) {
+          //     V2TimUserStatus? userStatus = snapshot.data?.first;
+          //     isOnline = (userStatus?.statusType == UserStatusType.V2TIM_USER_STATUS_ONLINE);
+          //   }
+          // }
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isOnline) Image.asset(IMG.format('chat/在线'), width: 34, height: 16, scale: 3, fit: BoxFit.contain),
+              if (isOnline) Spacing.w4,
+              OpacityButton(
+                onTap: () {
+                  var config = InputCfg(title: '修改备注', emptyCallBack: true);
+                  XInputPage.go(config).onType<String?>((name) async {
+                    if(config.flag == false) {
+                      return;
+                    }
+                    if(name == null || name.isEmpty == true) {
+                      var userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
+                      name = userInfo?.nickName;
+                    }
+                    simpleSub(
+                      Api.UserInfo.remarkName(uid: uid, name: name ?? ""),
+                      callback: () {
+                        UserInfoCtrl.doUpdate(
+                          uid,
+                          rebuild: (val) => val.copyWith(remarkName: name ?? ""),
+                        );
+                      },
+                    );
+                  });
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: UserInfoCtrl.use(
                         uid,
-                        rebuild: (val) => val.copyWith(remarkName: name ?? ""),
-                      );
-                    },
-                  );
-                });
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Flexible(
-                    child: UserInfoCtrl.use(
-                      uid,
-                      builder: (it) => XText(it?.showName() ?? ''),
+                        builder: (it) => XText(it?.showName() ?? ''),
+                      ),
                     ),
-                  ),
-                  SvgView(SVG.$('chat/备注'), width: 24, height: 24),
-                ],
+                    SvgView(SVG.$('chat/备注'), width: 24, height: 24),
+                  ],
+                ),
               ),
-            ),
+              Spacing.blank,
+            ],
+          );
+        },
+      )
     );
   }
 
