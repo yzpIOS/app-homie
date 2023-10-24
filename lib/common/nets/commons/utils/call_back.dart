@@ -50,8 +50,7 @@ class CallBack<T extends GeneratedMessage> {
   /// 获取到future
   ///
   Future<T?>? getFuture() {
-    complete?.future.timeout(const Duration(seconds: 7));
-    return complete?.future;
+    return complete?.future.timeout(const Duration(seconds: 6));
   }
 
   ///
