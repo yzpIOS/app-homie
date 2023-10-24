@@ -277,6 +277,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           // unity加载完成，设置成normal状态，如果返回的时候
           RoomManagerCtrl.ins.doNormalState();
         } catch (e, s) {
+          if(isDisposed) {
+            return;
+          }
           markFail(e, s);
           // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
           return;

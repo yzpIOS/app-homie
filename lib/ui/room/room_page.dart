@@ -78,6 +78,7 @@ class RoomPage extends StatefulWidget {
     try {
       await _show();
 
+      mgr.sceneCtrl.isDisposed = true;
       if (mgr.sceneCtrl.isRequestBack && mgr.sceneCtrl.keepState) {
         mgr.doMiniState();
       } else {
@@ -164,7 +165,12 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
         return;
       }
 
-      safePop().whenComplete(() => Get.alertDialog(msg));
+      safePop().whenComplete(() {
+        if(controller.isDisposed) {
+          return;
+        }
+        Get.alertDialog(msg);
+      });
     }
   }
 
