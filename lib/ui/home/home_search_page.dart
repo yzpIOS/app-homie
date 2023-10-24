@@ -30,6 +30,9 @@ class _HomeSearchPageState extends State<HomeSearchPage> {
       body: Obx(() {
         final keyword = keywordRx();
 
+        // 语法糖, 用于调试
+        openDebugView(keyword.toString());
+
         return keyword == null || keyword.isEmpty ? SearchBlankView(doSearch: _doSearch) : _DataView(keyword);
       }),
     );

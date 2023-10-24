@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,45 +15,34 @@ class RoomDebugView extends StatefulWidget {
 
 class _RoomDebugViewState extends State<RoomDebugView> {
 
-  RoomDebugCtrl? roomDebugCtrl;
-
-  @override
-  void initState() {
-    super.initState();
-    roomDebugCtrl = Get.put<RoomDebugCtrl>(RoomDebugCtrl(), tag: hashCode.toString(), permanent: true);
-    setState(() { });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("mxlogger")),
-      body: Obx(() {
-        Widget body;
-        if(roomDebugCtrl == null || roomDebugCtrl?.rxList == null) {
-          body = const SizedBox();
-        } else {
-          body = ListView.separated(
+      body: GetBuilder(
+        init: RoomDebugCtrl(),
+        builder: (roomDebugCtrl) {
+          RxList<String>? rxList = roomDebugCtrl.rxList;
+          if(rxList == null) {
+            return Spacing.blank;
+          }
+          return ListView.separated(
             itemBuilder: (context, index) {
-              return _itemBuilder(context, index);
+              return Text(
+                "${index}: ${rxList[index] ?? ""}",
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppPalette.primary,
+                ),
+              );
             },
             separatorBuilder: (context, index) {
               return const SizedBox(height: 15,);
             },
-            itemCount: roomDebugCtrl?.rxList?.length ?? 0,
+            itemCount: rxList.length,
           );
-        }
-        return body;
-      }),
-    );
-  }
-
-  Widget _itemBuilder(BuildContext context, int index) {
-    return Text(
-      "${index}: ${roomDebugCtrl?.rxList?[index] ?? ""}",
-      style: TextStyle(
-        fontSize: 14,
-        color: AppPalette.primary,
+        },
       ),
     );
   }

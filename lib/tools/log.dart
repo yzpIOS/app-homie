@@ -149,7 +149,8 @@ void logForDebug(String? msg, {LogType type = LogType.SOCKET}) {
   if(!cachesLogs.containsKey(type)) {
     cachesLogs[type] = RxList();
   }
-  cachesLogs[type]?.add(msg);
+  cachesLogs[type]?.insert(0, msg);
+  cachesLogs[type]?.refresh();
   // 最多只能存1万条数据
   if((cachesLogs[type]?.length ?? 0) < 300) {
     return;
@@ -195,7 +196,7 @@ void loadDebugConfig() {
 /// 获取日志
 ///
 RxList<String>? getDebugLogs(LogType type) {
-  if(openers.containsKey(type)) {
+  if(!openers.containsKey(type)) {
     return null;
   }
   return cachesLogs[type];

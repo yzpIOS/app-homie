@@ -17,12 +17,6 @@ mixin InputExt$Input<Send extends TxtSender> on InputExt<Send> {
   void doSend() {
     final text = editCtrl.text;
 
-    // 语法糖, 用于调试
-    if(openDebugView(text)) {
-      editCtrl.clear();
-      return;
-    }
-
     if (isNotEmpty(text)) {
       $handle.sendTxt(text);
       editCtrl.clear();

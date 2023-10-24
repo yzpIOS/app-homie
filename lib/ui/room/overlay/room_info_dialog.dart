@@ -15,13 +15,11 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   const RoomInfoDialog._();
 
   static void show() {
-    // // 打开调试面版
-    // if(isDebugOpen(LogType.SOCKET)) {
-    //   Future.delayed(const Duration(seconds: 3)).whenComplete(() {
-    //     Get.to(() => RoomDebugView());
-    //   });
-    //   return;
-    // }
+    // 打开调试面版
+    if(isDebugOpen(LogType.SOCKET)) {
+      Get.to(() => RoomDebugView());
+      return;
+    }
 
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
