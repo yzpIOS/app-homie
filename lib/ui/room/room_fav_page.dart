@@ -162,7 +162,7 @@ class _ItemView extends StatelessWidget {
           textBaseline: TextBaseline.alphabetic,
           crossAxisAlignment: CrossAxisAlignment.baseline,
           children: [
-            XText('ID:${data['room_id']}'),
+            XText('ID:${data['room_no'] ?? data['room_id']}'),
             Spacing.w6,
             UserInfoCtrl.use(
               data['uid'],
