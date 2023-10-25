@@ -474,6 +474,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       local.riseServerStatusCallBacks();
       local.beatHeartCheck();
     });
+
+    // 检测刚刚开始的网络
+    Connectivity().checkConnectivity().then((value) {
+      preState = value;
+    });
   }
 
 
