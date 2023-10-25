@@ -86,17 +86,21 @@ class _ReplySheetState extends State<ReplySheet> {
         children: [
           child,
           $KeyboardHolder(
-            child: autofocus ? const Box() : EmojiView(
-              onSelect: (value) {
-                if (maxLength != null) {
-                  if (controller.text.length >= maxLength!) {
-                    return;
+            //autofocus ? const Box() :
+            child: Opacity(
+              opacity: autofocus ? 0 : 1, // 设置透明度
+              child: EmojiView(
+                onSelect: (value) {
+                  if (maxLength != null) {
+                    if (controller.text.length >= maxLength!) {
+                      return;
+                    }
                   }
-                }
-                controller.join(value);
-              },
-              // doBackspace: controller.backspace,
-              doSend: () => _doSub(controller.text),
+                  controller.join(value);
+                },
+                // doBackspace: controller.backspace,
+                doSend: () => _doSub(controller.text),
+              ),
             ),
           ),
         ],
