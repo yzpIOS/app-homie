@@ -255,14 +255,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     share.setHostAndPort(host, port);
     // 连接socket
     post(() async {
-      WaitingCtrl.obj.show();
       // 重置状态
       share.onCanConnected(true);
       // 连接服务器
       share.connect();
-      // 待待链接
-      await share.isConnect().timeout(const Duration(seconds: 10));
-      WaitingCtrl.obj.hidden();
     });
   }
 

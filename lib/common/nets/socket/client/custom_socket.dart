@@ -77,6 +77,10 @@ class CustomSocket {
   // 开始连接时的回调
   StartConnect? startConnect;
 
+
+  // socket状态
+  Completer<bool> socketStatus = Completer();
+
   void setHostAndPort(String host, int port) {
     // 记录当前的host
     _host = host;
@@ -127,6 +131,8 @@ class CustomSocket {
     logForDebug("[CustomSocket:connect]:发起连接, host=$_host, port=$_port");
     // 正在连接中
     _isConnecting = true;
+    // 重置连接状态
+    resetShareSocketStatus();
     // 链接新的socket
     Socket.connect(_host, _port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
       logForDebug("[CustomSocket:connect]:连接成功, host=$_host, port=$_port");
@@ -149,6 +155,7 @@ class CustomSocket {
       }
       // 连接成功回调
       _riseCallBack2(BaseClient.CONNECT_SUC);
+      completeShareSocketStatus();
     }, onError: (error) async {
       // 关闭之前的socket链接
       _socket?.close();
@@ -172,6 +179,7 @@ class CustomSocket {
       _riseCallBack2(BaseClient.CONNECT_FAIL);
       // 断开连接
       riseDisconnect();
+      completeErrorShareSocketStatus();
     });
     return this;
   }
@@ -213,6 +221,7 @@ class CustomSocket {
       _socket = null;
       _socketSubscription?.cancel();
       _riseCallBack2(BaseClient.CONNECT_CLOSE);
+      completeErrorShareSocketStatus();
     });
   }
 
@@ -354,7 +363,43 @@ class CustomSocket {
     }
   }
 
+  ///
+  /// 连接成功状态设置
+  ///
+  void completeShareSocketStatus() {
+    if(!socketStatus.isCompleted) {
+      socketStatus.complete(true);
+    }
+  }
+
+  ///
+  /// 设置连接成时错误
+  ///
+  void completeErrorShareSocketStatus() {
+    if(!socketStatus.isCompleted) {
+      socketStatus.completeError(TimeoutException("time out"));
+    }
+  }
+
+  ///
+  /// 重置_shareSocketStatus状态
+  ///
+  void resetShareSocketStatus() {
+    if(socketStatus.isCompleted) {
+      socketStatus = Completer();
+    }
+  }
+
+  ///
+  /// 是否连接成功
+  ///
+  Future<bool> isConnect() async {
+    logForDebug("[CustomSocket:isConnect]:当前socket状态 connected = ${socketStatus.isCompleted}");
+    return socketStatus.future;
+  }
+
   void dispose() {
+    completeErrorShareSocketStatus();
     _isDisposed = true;
     _socket?.close();
     _connectError.clear();

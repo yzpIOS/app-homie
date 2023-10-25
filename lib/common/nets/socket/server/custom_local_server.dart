@@ -414,6 +414,9 @@ class CustomLocalServer with BaseClient {
   @override
   void dispose() {
     super.dispose();
+    if(!statusCompleter.isCompleted) {
+      statusCompleter.completeError(TimeoutException("time out"));
+    }
     _sessions.values.forEach((element) {
       element.dispose();
     });
