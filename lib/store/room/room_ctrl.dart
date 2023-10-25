@@ -82,6 +82,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   // 是否加载房间成功
   bool isRequestBack = false;
 
+  /// 记录是否己经加入房间
+  bool _hasJoinRoom = false;
+
   @override
   void onInit() {
     debugPrint("开始监听麦位信息");
@@ -179,9 +182,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       (_) => ActMainDialog.show(),
     );
   }
-
-  /// 记录是否己经加入房间
-  bool _hasJoinRoom = false;
 
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
     sceneHudRx(RoomHudState.None);
