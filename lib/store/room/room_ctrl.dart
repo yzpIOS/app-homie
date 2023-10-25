@@ -180,6 +180,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     );
   }
 
+  /// 记录是否己经加入房间
+  bool _hasJoinRoom = false;
+
   Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
     sceneHudRx(RoomHudState.None);
     isRequestBack = false;
@@ -190,23 +193,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     // unity初始化与加入房间同时进行
     post(() async {
-      //pk的状态；1.房间pk中
-      if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
-        logForDebug("[SceneCtrl:loadScene]:非pk状态，调用加入房间接口");
-        final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
-        logForDebug("[SceneCtrl:loadScene]:房间接口返回数据, joinResult = ${joinResult.toString()}");
-        if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-          if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-            throw const LogicException(-1, "你被封禁了");
-          } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-            throw const LogicException(-1, "输入的房间密码错误");
-          } else {
-            throw const LogicException(-1, "房间数据加载失败");
-          }
-        }
-      } else {
-        logForDebug("[SceneCtrl:loadScene]:pk状态，不需要调用加入房间接口");
-      }
       roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
       logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
@@ -296,6 +282,30 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     void isNotClose() {
       if (isClosed) throw 'isClosed';
     }
+
+    //没有加房的时候，先进房pk的状态；1.房间pk中
+    if(!_hasJoinRoom) {
+      if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
+        logForDebug("[SceneCtrl:loadScene]:非pk状态，调用加入房间接口");
+        final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+        logForDebug("[SceneCtrl:loadScene]:房间接口返回数据, joinResult = ${joinResult.toString()}");
+        if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+          if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+            throw const LogicException(-1, "你被封禁了");
+          } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+            throw const LogicException(-1, "输入的房间密码错误");
+          } else {
+            throw const LogicException(-1, "房间数据加载失败");
+          }
+        }
+
+      } else {
+        logForDebug("[SceneCtrl:loadScene]:pk状态，不需要调用加入房间接口");
+      }
+      _hasJoinRoom = true;
+    }
+
+    isNotClose();
     logForDebug("[SceneCtrl:loadScene]:unity返回信息，开始发送进入房间信息，让服务端同步相关信息");
     // unity初始化完成后，发送同步信息指令
     C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
