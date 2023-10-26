@@ -220,59 +220,56 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         SystemMsgEvent(systemNoticeList).fire();
       });
 
-      /// 请求房间系统公告消息数组
+      // unity初始化与加入房间同时进行
+      logForDebug("[SceneCtrl:loadScene]:开始加载unity");
       isNotClose();
-      sceneHudRx(RoomHudState.Normal);
-      logForDebug("[SceneCtrl:loadScene]:请求房间系统公告消息数组, data =");
-    });
-
-    // unity初始化与加入房间同时进行
-    await loader(
-      'Room',
-      doOnBefore: () => {
-        'scene': {
-          'scene_id': info['scene_id'],
+      await loader(
+        'Room',
+        doOnBefore: () => {
+          'scene': {
+            'scene_id': info['scene_id'],
+          },
         },
-      },
-      doOnAfter: () async {
-        onProcess(0.8);
-        try {
-          isNotClose();
-          Future<void> doJoinGame() {
-            const dur = Duration(seconds: unity_time_out);
-            final data = {'token': OAuthCtrl.token, 'scene': info};
-            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity, type = ${App2UnityEnum.FTU_JOIN_GAME}, data = ${data.toString()}");
-            var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
-            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity返回");
-            return result;
-          }
-
-          if (isReady) {
-            // assert(false, '产品需求改了，这个逻辑应该不会走');
-            await doJoinGame();
-          } else {
-            logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
-
-            // 加载unity
+        doOnAfter: () async {
+          onProcess(0.8);
+          try {
             isNotClose();
-            await doJoinGame();
+            Future<void> doJoinGame() {
+              const dur = Duration(seconds: unity_time_out);
+              final data = {'token': OAuthCtrl.token, 'scene': info};
+              logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity, type = ${App2UnityEnum.FTU_JOIN_GAME}, data = ${data.toString()}");
+              var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
+              logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity返回");
+              return result;
+            }
 
-            isNotClose();
-            markReady();
-          }
-          // unity加载完成，设置成normal状态，如果返回的时候
-          RoomManagerCtrl.ins.doNormalState();
-        } catch (e, s) {
-          if(isDisposed) {
+            if (isReady) {
+              // assert(false, '产品需求改了，这个逻辑应该不会走');
+              await doJoinGame();
+            } else {
+              logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
+
+              // 加载unity
+              isNotClose();
+              await doJoinGame();
+
+              isNotClose();
+              markReady();
+            }
+            // unity加载完成，设置成normal状态，如果返回的时候
+            RoomManagerCtrl.ins.doNormalState();
+          } catch (e, s) {
+            if(isDisposed) {
+              return;
+            }
+            markFail(e, s);
+            // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
             return;
           }
-          markFail(e, s);
-          // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
-          return;
-        }
-        sceneHudRx(RoomHudState.Normal);
-      },
-    );
+          sceneHudRx(RoomHudState.Normal);
+        },
+      );
+    });
   }
 
   ///

@@ -324,7 +324,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           RoomPage.show(off);
           return;
         }
-        assert(false, '数据错误');
+        closeRoom2();
         return;
       case RoomState.Mini:
         WaitingCtrl.obj.hidden();
