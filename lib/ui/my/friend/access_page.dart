@@ -51,7 +51,7 @@ class _DtaView extends SimplePageView<Map> {
       uid: uid,
       child: UserInfoCtrl.use(uid, builder: (it) {
         return _ItemView(
-          data: TileDataAdapter4(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time, isOnline: true),
+          data: TileDataAdapter4(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time, isShowOnline: false),
         );
       }),
     );

@@ -10,7 +10,7 @@ mixin TileNetAvatar<T extends TileDataAdapter> implements LeadingView<T> {
   Widget $leading() {
     return InkWell(
       onTap: onAvatarClick,
-      child: AvatarView(vm.leading, size: 50, isShowOnline: vm.isOnline),
+      child: AvatarView(vm.leading, size: 50, isShowOnline: vm.isShowOnline),
     );
   }
 }
@@ -100,7 +100,7 @@ abstract class TileDataAdapter<T> extends DataAdapter<T> {
 
   dynamic get trailing => throw UnimplementedError();
 
-  bool get isOnline => throw UnimplementedError();
+  bool get isShowOnline => throw UnimplementedError();
 }
 
 class TileDataAdapter2 extends TileDataAdapter<Tuple2<String?, String>> {
@@ -114,8 +114,8 @@ class TileDataAdapter2 extends TileDataAdapter<Tuple2<String?, String>> {
 }
 
 class TileDataAdapter4 extends TileDataAdapter<Tuple4<String?, String, String, bool>> {
-  TileDataAdapter4({String? leading, required String title, required String subtitle, bool isOnline = false})
-      : super(Tuple4(leading, title, subtitle, isOnline));
+  TileDataAdapter4({String? leading, required String title, required String subtitle, bool isShowOnline = false})
+      : super(Tuple4(leading, title, subtitle, isShowOnline));
 
   @override
   String? get leading => data.value1;
@@ -127,7 +127,7 @@ class TileDataAdapter4 extends TileDataAdapter<Tuple4<String?, String, String, b
   String get subtitle => data.value3;
 
   @override
-  bool get isOnline => data.value4;
+  bool get isShowOnline => data.value4;
 }
 
 class TileView<T extends TileDataAdapter> extends BaseTile<T> with TileNetAvatar<T>, TileTitle<T> {

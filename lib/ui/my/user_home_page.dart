@@ -253,10 +253,10 @@ class _InfoView extends StatelessWidget {
               ],
             ),
           ),
-          InkWell(
-            onTap: toRoom,
-            child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
-          )
+          // InkWell(
+          //   onTap: toRoom,
+          //   child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
+          // )
         ],
       );
     }
