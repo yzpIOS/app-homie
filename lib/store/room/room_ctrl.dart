@@ -192,85 +192,83 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     }
 
     // unity初始化与加入房间同时进行
-    post(() async {
-      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
-      logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+    roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+    logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
-      // 监听unity发过来的信息
-      logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
-      // 判断是否关闭界面
+    // 监听unity发过来的信息
+    logForDebug("[SceneCtrl:loadScene]:获听unity初始化完成消息");
+    // 判断是否关闭界面
+    isNotClose();
+    await loadSceneInfo();
+
+    // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
+    if(keepState) {
+      RoomManagerCtrl.ins.doMiniState();
+    } else {
+      RoomManagerCtrl.ins.doNormalState();
+    }
+
+    // 服务端数据返回
+    isRequestBack = true;
+
+    /// 请求房间系统公告消息数组
+    isNotClose();
+    Api.Common.systemQuery().then((data) {
       isNotClose();
-      await loadSceneInfo();
-
-      // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
-      if(keepState) {
-        RoomManagerCtrl.ins.doMiniState();
-      } else {
-        RoomManagerCtrl.ins.doNormalState();
-      }
-
-      // 服务端数据返回
-      isRequestBack = true;
-
-      /// 请求房间系统公告消息数组
-      isNotClose();
-      Api.Common.systemQuery().then((data) {
-        isNotClose();
-        List systemNoticeList = data['system_notice_list'];
-        SystemMsgEvent(systemNoticeList).fire();
-      });
-      sceneHudRx(RoomHudState.Normal);
+      List systemNoticeList = data['system_notice_list'];
+      SystemMsgEvent(systemNoticeList).fire();
+    });
+    sceneHudRx(RoomHudState.Normal);
 
 
-      // unity初始化与加入房间同时进行
-      logForDebug("[SceneCtrl:loadScene]:开始加载unity");
-      isNotClose();
-      await loader(
-        'Room',
-        doOnBefore: () => {
-          'scene': {
-            'scene_id': info['scene_id'],
-          },
+    // unity初始化与加入房间同时进行
+    logForDebug("[SceneCtrl:loadScene]:开始加载unity");
+    isNotClose();
+    await loader(
+      'Room',
+      doOnBefore: () => {
+        'scene': {
+          'scene_id': info['scene_id'],
         },
-        doOnAfter: () async {
-          onProcess(0.8);
-          try {
+      },
+      doOnAfter: () async {
+        onProcess(0.8);
+        try {
+          isNotClose();
+          Future<void> doJoinGame() {
+            const dur = Duration(seconds: unity_time_out);
+            final data = {'token': OAuthCtrl.token, 'scene': info};
+            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity, type = ${App2UnityEnum.FTU_JOIN_GAME}, data = ${data.toString()}");
+            var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
+            logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity返回");
+            return result;
+          }
+
+          if (isReady) {
+            // assert(false, '产品需求改了，这个逻辑应该不会走');
+            await doJoinGame();
+          } else {
+            logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
+
+            // 加载unity
             isNotClose();
-            Future<void> doJoinGame() {
-              const dur = Duration(seconds: unity_time_out);
-              final data = {'token': OAuthCtrl.token, 'scene': info};
-              logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity, type = ${App2UnityEnum.FTU_JOIN_GAME}, data = ${data.toString()}");
-              var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
-              logForDebug("[SceneCtrl:loadScene]:发送加入房间信息给Unity返回");
-              return result;
-            }
+            await doJoinGame();
 
-            if (isReady) {
-              // assert(false, '产品需求改了，这个逻辑应该不会走');
-              await doJoinGame();
-            } else {
-              logForDebug("[SceneCtrl:loadScene]:获取房间信息开始");
-
-              // 加载unity
-              isNotClose();
-              await doJoinGame();
-
-              isNotClose();
-              markReady();
-            }
-            // unity加载完成，设置成normal状态，如果返回的时候
-            RoomManagerCtrl.ins.doNormalState();
-          } catch (e, s) {
-            if(isDisposed) {
-              return;
-            }
-            markFail(e, s);
-            // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
+            isNotClose();
+            markReady();
+          }
+          // unity加载完成，设置成normal状态，如果返回的时候
+          RoomManagerCtrl.ins.doNormalState();
+        } catch (e, s) {
+          if(isDisposed) {
             return;
           }
-        },
-      );
-    });
+          markFail(e, s);
+          // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
+          return;
+        }
+      },
+    );
   }
 
   ///
