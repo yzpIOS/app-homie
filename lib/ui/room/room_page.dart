@@ -84,8 +84,8 @@ class RoomPage extends StatefulWidget {
     try {
       await _show();
 
-      mgr.sceneCtrl.isDisposed = true;
-      if (mgr.sceneCtrl.isRequestBack && mgr.sceneCtrl.keepState) {
+      mgr.sceneCtrl2?.isDisposed = true;
+      if (mgr.sceneCtrl2?.isRequestBack == true && mgr.sceneCtrl.keepState) {
         mgr.doMiniState();
       } else {
         await mgr.doCloseState();
