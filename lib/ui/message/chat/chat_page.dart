@@ -123,7 +123,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
             child = Column(
               children: [
                 IntrinsicHeight(child: _ctrl.appBar),
-                //$Online(),
+                $Online(),
                 Expanded(child: child),
               ],
             );
@@ -161,9 +161,9 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
 
   Widget $Online() {
     return Obx(() {
-      final onlineData = _ctrl.onlineRx();
+      final followOnlineData = _ctrl.followOnlineRx;
 
-      if (_ctrl.conv.isSycConv || onlineData.isEmpty) {
+      if (_ctrl.conv.isSycConv || followOnlineData.isEmpty || followOnlineData['room_id'] == null || followOnlineData['room_id'] == 0) {
         return Spacing.blank;
       }
 
@@ -179,23 +179,23 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
               clipBehavior: Clip.antiAlias,
               width: 26,
               height: 26,
-              child: NetImage('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F89e0676b-c0c3-4959-bbed-bc1cf0470250%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1700646496&t=2e25b271b55d8dc7d6e76dce6e8e4f05', fit: BoxFit.cover),
+              child: NetImage(followOnlineData['image'] ?? '', fit: BoxFit.cover),
             ),
             Padding(
               padding: const Pad(left: 5, right: 2),
               child: Image.asset(IMG.format('chat/直播跟随'), width: 18, height: 18, scale: 3, fit: BoxFit.contain),
             ),
-            Text.rich(
+            Expanded(child: Text.rich(
               TextSpan(
                 style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
                 children: [
                   const TextSpan(text: 'TA正在',),
-                  TextSpan(text: '【${onlineData['room_name']}】', style: const TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
+                  TextSpan(text: '【${followOnlineData['room_name']}】', style: const TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
                   const TextSpan(text: '嗨聊',),
                 ],
               ),
-            ),
-            Spacing.exp,
+              maxLines: 1,
+            ),),
             XTextBtn(
               label: '去找TA',
               width: 52,
@@ -211,7 +211,8 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
 
   /// 跳转直播间
   void toRoom() {
-    Get.find<RoomManagerCtrl>().toRoom(roomId: 82);
+    final followOnlineData = _ctrl.followOnlineRx();
+    Get.find<RoomManagerCtrl>().toRoom(roomId: followOnlineData['room_id'] ?? followOnlineData['id']);
   }
 }
 

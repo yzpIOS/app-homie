@@ -248,4 +248,13 @@ class ApiUserInfo extends ApiBase {
   Future loginUpdate() {
     return _doPost("login/update");
   }
+
+  /// 获取用户跟随关注信息
+  Future followOnline({NUID? nuid}) {
+    final data = {
+      if(nuid != null)
+        'role_id': nuid.toInt(),//角色用户id
+    };
+    return _doPost('follow/online', data: data);
+  }
 }

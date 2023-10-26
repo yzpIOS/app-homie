@@ -14,13 +14,21 @@ import 'package:tencent_cloud_chat_sdk/models/v2_tim_user_status.dart';
 
 abstract class ChatAppBar extends StatelessWidget {
   final ChatConv conv;
-  final RxMap onlineRx;
+  final RxMap followOnlineRx;
 
-  const ChatAppBar(this.conv, this.onlineRx, {super.key});
+  const ChatAppBar(this.conv, this.followOnlineRx, {super.key});
 }
 
 mixin _ActionMixin implements ChatAppBar {
   final VoidCallback? toSetting = null;
+
+  void doFollow(bool b, VoidCallback callback) {
+    final uid = conv.userId ?? '';
+    simpleSub(
+      Api.UserInfo.follow(uid: uid, doFollow: b),
+      callback: callback,
+    );
+  }
 
   Widget? get iconSetting {
     final uid = conv.userId ?? '';
@@ -30,24 +38,27 @@ mixin _ActionMixin implements ChatAppBar {
     }
 
     return Obx(() {
-      final onlineData = onlineRx();
-      if (onlineData.isEmpty) {
+      if (conv.isSycConv || followOnlineRx.isEmpty) {
         return Spacing.blank;
       }
-      return onlineData['follow'] == 1
+      return followOnlineRx['follow_status'] == 1
           ? XOutlinedBtn(
         label: '已关注',
         width: 60,
         height: 24,
         textStyle: const TextStyle(fontSize: 12, color: AppPalette.primary),
-        // onTap: () => doFollow(false, () => setState(() => data['is_follow'] = false)),
+        onTap: () => doFollow(false, () {
+          followOnlineRx['follow_status'] = 0;
+        }),
       )
           : XTextBtn(
         label: '关注',
         width: 60,
         height: 24,
         textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-        // onTap: () => doFollow(true, () => setState(() => data['is_follow'] = true)),
+        onTap: () => doFollow(true, ()  {
+          followOnlineRx['follow_status'] = 1;
+        }),
       );
     });
     // return null;
@@ -121,7 +132,7 @@ class ChatAppBar$User extends _AppBar {
 
     // 单聊消息显示 在线状态、昵称、修改备注按钮
     return Obx(() {
-      final onlineData = onlineRx();
+      final onlineData = followOnlineRx();
 
       return $MuteView(
         child: Row(
