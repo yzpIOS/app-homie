@@ -390,6 +390,9 @@ class CustomSocket {
   /// 是否连接成功
   ///
   Future<bool> isConnect() async {
+    if(socketStatus.isCompleted) {
+      return Future.value(true);
+    }
     logForDebug("[CustomSocket:isConnect]:当前socket状态 connected = ${socketStatus.isCompleted}");
     return socketStatus.future;
   }

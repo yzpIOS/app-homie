@@ -93,8 +93,6 @@ class CustomClient with BaseClient {
     if(forceWaitTimes > 0) {
       resetShareSocketStatus();
     }
-    // socket是否连接成功
-    await _customSocket.isConnect();
 
     // 等待socket连接成功
     if(!_shareSocketStatus.isCompleted) {
