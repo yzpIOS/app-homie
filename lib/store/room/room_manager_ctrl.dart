@@ -124,7 +124,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         // 房间己关闭, 从新打开房间
         Future.delayed(const Duration(milliseconds: 2000)).whenComplete(() async {
           // 己经加入到其它的房间，此时不处理
-          if(sceneCtrl2 != null && sceneCtrl2?.roomId == roomId) {
+          if(sceneCtrl2 != null) {
             return;
           }
           // 跳到房间中
