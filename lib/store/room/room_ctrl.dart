@@ -219,6 +219,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         List systemNoticeList = data['system_notice_list'];
         SystemMsgEvent(systemNoticeList).fire();
       });
+      sceneHudRx(RoomHudState.Normal);
+
 
       // unity初始化与加入房间同时进行
       logForDebug("[SceneCtrl:loadScene]:开始加载unity");
@@ -266,7 +268,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             // if (!isClosed) unity.loadSceneCombo(unity.loadSceneBlank);
             return;
           }
-          sceneHudRx(RoomHudState.Normal);
         },
       );
     });
