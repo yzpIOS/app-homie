@@ -203,10 +203,10 @@ class _ItemView$Like extends _ItemView {
     String type = '';
 
     switch (data['category']) {
-      case 1:
+      case '1':
         type = '的动态';
         break;
-      case 2:
+      case '2':
         type = '的评论';
         break;
     }
