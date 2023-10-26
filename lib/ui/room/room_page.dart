@@ -55,7 +55,11 @@ class RoomPage extends StatefulWidget {
 
     Future _show() {
       logForDebug("打开房间，请稍后");
-      Widget builder() => RoomPage._(mgr.sceneCtrl).toOverlay();
+      SceneCtrl? sceneCtrl = mgr.sceneCtrl2;
+      if(sceneCtrl == null) {
+        return Future.value();
+      }
+      Widget builder() => RoomPage._(sceneCtrl).toOverlay();
 
       // mgr.doNormalState();
       if(off) {
