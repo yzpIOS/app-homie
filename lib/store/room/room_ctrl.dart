@@ -192,7 +192,13 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     }
 
     // unity初始化与加入房间同时进行
-    roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+    try {
+      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd).timeout(const Duration(seconds: 10));
+    } catch(e) {
+      RoomManagerCtrl.ins.doNormalState();
+      RoomManagerCtrl.ins.onSocketDisconnect();
+      return;
+    }
     logForDebug("[SceneCtrl:loadScene]:房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
     // 监听unity发过来的信息
@@ -283,16 +289,21 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     if(!_hasJoinRoom) {
       if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
         logForDebug("[SceneCtrl:loadScene]:非pk状态，调用加入房间接口");
-        final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
-        logForDebug("[SceneCtrl:loadScene]:房间接口返回数据, joinResult = ${joinResult.toString()}");
-        if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-          if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-            throw const LogicException(-1, "你被封禁了");
-          } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-            throw const LogicException(-1, "输入的房间密码错误");
-          } else {
-            throw const LogicException(-1, "房间数据加载失败");
+        try {
+          final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+          logForDebug("[SceneCtrl:loadScene]:房间接口返回数据, joinResult = ${joinResult.toString()}");
+          if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+            if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+              throw const LogicException(-1, "你被封禁了");
+            } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+              throw const LogicException(-1, "输入的房间密码错误");
+            } else {
+              throw const LogicException(-1, "房间数据加载失败");
+            }
           }
+        } catch(e) {
+          RoomManagerCtrl.ins.doNormalState();
+          RoomManagerCtrl.ins.onSocketDisconnect();
         }
 
       } else {
@@ -304,18 +315,23 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     isNotClose();
     logForDebug("[SceneCtrl:loadScene]:unity返回信息，开始发送进入房间信息，让服务端同步相关信息");
     // unity初始化完成后，发送同步信息指令
-    C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
-    c_roomEnterComplete.roomId = Int64(roomId);
-    S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_RoomEnterComplete,
-        datas: c_roomEnterComplete.writeToBuffer(),
-        resCmd: CMD.S_SyncRoomInfo
-    );
+    try {
+      C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
+      c_roomEnterComplete.roomId = Int64(roomId);
+      S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+          CMD.C_RoomEnterComplete,
+          datas: c_roomEnterComplete.writeToBuffer(),
+          resCmd: CMD.S_SyncRoomInfo
+      );
+      // 判断是否关闭界面
+      isNotClose();
+      onRender(s_syncRoomInfo);
+      logForDebug("[SceneCtrl:loadScene]:开始发送进入房间信息，让服务端同步相关信息, s_syncRoomInfo = ${s_syncRoomInfo.toString()}");
+    } catch(e) {
+      RoomManagerCtrl.ins.doNormalState();
+      RoomManagerCtrl.ins.onSocketDisconnect();
+    }
 
-    // 判断是否关闭界面
-    isNotClose();
-    onRender(s_syncRoomInfo);
-    logForDebug("[SceneCtrl:loadScene]:开始发送进入房间信息，让服务端同步相关信息, s_syncRoomInfo = ${s_syncRoomInfo.toString()}");
   }
 
   Future doClose() {
