@@ -77,7 +77,7 @@ abstract class BaseTile<T extends DataAdapter> extends ViewAdapter<T>
     return $TapWrap(
       child: Container(
         padding: const Pad(horizontal: 16),
-        constraints: const BoxConstraints(minHeight: 60),
+        constraints: const BoxConstraints(minHeight: 70),
         child: Row(
           children: [
             $leading() ?? Spacing.blank,

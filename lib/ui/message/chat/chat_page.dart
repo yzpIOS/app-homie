@@ -123,7 +123,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
             child = Column(
               children: [
                 IntrinsicHeight(child: _ctrl.appBar),
-                $Online(),
+                //$Online(),
                 Expanded(child: child),
               ],
             );

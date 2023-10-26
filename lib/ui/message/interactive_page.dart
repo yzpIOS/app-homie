@@ -32,6 +32,13 @@ class _InteractivePageState extends State<InteractivePage> {
   late final badgeRx = Get.find<ConvManagerCtrl>().sysBadgeRx;
 
   @override
+  void initState() {
+    super.initState();
+
+    Get.find<ConvManagerCtrl>().markConvAsRead(type);
+  }
+
+  @override
   void dispose() {
     super.dispose();
 

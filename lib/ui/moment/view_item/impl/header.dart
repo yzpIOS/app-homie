@@ -33,7 +33,7 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
         //   ),
         //   child: AsyncAvatar(uid: vm.author, size: avatarSize),
         // ),
-        AsyncAvatar(uid: vm.author, size: avatarSize, isShowOnline: true,),
+        AsyncAvatar(uid: vm.author, size: avatarSize, isShowOnline: false,),
         Spacing.w10,
         Expanded(
           child: Column(

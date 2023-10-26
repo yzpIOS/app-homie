@@ -87,12 +87,12 @@ abstract class ChatCtrl extends GetxController
     await _init();
 
     /// 非系统消息，请求房间跟随数据
-    if (!conv.isSycConv) {
-      await Future.delayed(const Duration(seconds: 2),  () async {
-        //Api.UserInfo.access(uid);
-        onlineRx.value = {'isOnline' : 1, 'room_name' : '哇哇哇哇哇哇', 'follow' : 1};
-      });
-    }
+    // if (!conv.isSycConv) {
+    //   await Future.delayed(const Duration(seconds: 2),  () async {
+    //     //Api.UserInfo.access(uid);
+    //     onlineRx.value = {'isOnline' : 1, 'room_name' : '哇哇哇哇哇哇', 'follow' : 1};
+    //   });
+    // }
 
     final convCtrl = Get.find<ConvManagerCtrl>();
     final convId = conv.convId;

@@ -16,6 +16,13 @@ class AccessPage extends StatefulWidget {
 
 class _AccessPageState extends State<AccessPage> {
   @override
+  void initState() {
+    super.initState();
+
+    Get.find<ConvManagerCtrl>().markConvAsRead(SysConvEnum.guest);
+  }
+
+  @override
   void dispose() {
     super.dispose();
 
@@ -44,13 +51,13 @@ class _DtaView extends SimplePageView<Map> {
       uid: uid,
       child: UserInfoCtrl.use(uid, builder: (it) {
         return _ItemView(
-          data: TileDataAdapter3(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time),
+          data: TileDataAdapter4(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time, isShowOnline: false),
         );
       }),
     );
   }
 }
 
-class _ItemView extends TileView<TileDataAdapter3> with TileSubtitle<TileDataAdapter3> {
+class _ItemView extends TileView<TileDataAdapter4> with TileSubtitle<TileDataAdapter4> {
   _ItemView({required super.data});
 }

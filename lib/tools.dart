@@ -237,7 +237,7 @@ class FiltrationChatText {
       'QQ','qQ','Qq','qq','q.','Q。','q ','Q ','Q.','q。','扣扣','扣 扣','扣。扣','秋秋','秋 秋','秋.秋','秋。秋',
       '充值','充 值','充.值','@163','tel','call','电话','电.话','电。话','手机','手.机','手。机','联系','联 系','联。系',
       '@126','.com','.net','.org'];
-    const chatFilter2 = '1234567890⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥¥';
+    const chatFilter2 = '345678⒈⒉⒊⒌⒍⒎⒏⒐⑴⑵⑶⑷⑹⑺⑻⑸⑼⑥③⑦⑨④㈠㈡㈢㈣㈤㈣㈤㈦㈨叁肆伍玖柒捌五六七八九零①②❺❻❼❽❾￥¥';
 
     var startIndex = 0;//滚动过滤开始的下标
     var result = '';//过滤后的结果
@@ -273,10 +273,9 @@ class FiltrationChatText {
         if (count >= 5) {
           result = result.replaceRange(result.length-count, result.length, '*' * count);
         }
+      } else {
+        count = 0;
       }
-      // else {
-      //   count = 0;
-      // }
     }
 
     pollString(content, handler, startIndex);
