@@ -24,6 +24,8 @@ import 'package:slugid/slugid.dart';
 import 'package:wakelock/wakelock.dart';
 
 class RoomPage extends StatefulWidget {
+  static final String room_name = '$RoomPage';
+
   final SceneCtrl controller;
 
   const RoomPage._(this.controller);
@@ -59,7 +61,7 @@ class RoomPage extends StatefulWidget {
       if(off) {
         return Get.off(
           builder,
-          routeName: '$RoomPage',
+          routeName: room_name,
             popGesture: false,
             transition: Transition.noTransition,
             preventDuplicates: false
@@ -67,7 +69,7 @@ class RoomPage extends StatefulWidget {
       } else {
         return Get.to(
             builder,
-            routeName: '$RoomPage',
+            routeName: room_name,
             popGesture: false,
             transition: Transition.noTransition,
             preventDuplicates: false
