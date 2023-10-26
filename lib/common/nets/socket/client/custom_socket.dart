@@ -121,10 +121,6 @@ class CustomSocket {
       return this;
     }
 
-    if(SocketCtrl.ins.share.forceWaitTimes > 0) {
-      logForDebug("[CustomSocket:connect]:发起连接, 此时要把房间关闭");
-      RoomManagerCtrl.ins.closeRoom2();
-    }
 
     startConnect?.call();
 
