@@ -144,7 +144,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
             ...inputs.keys.take(1).expand((it) => $InputView(title: it)),
             ...$InputView(title: '房间公告', multiline: true),
             Spacing.h8,
-            $MoreView(),
+            // $MoreView(), 2023.10.26屏蔽私密+房间密码
             Spacing.h32,
             FractionallySizedBox(
               widthFactor: 250 / 375,
