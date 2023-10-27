@@ -448,14 +448,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
       // 如果网络变化的值一样，就不处理
       if(preState == state) {
-        logForDebug("[CustomSocket:closeAutoConnect]:网络状态与之前状态一致, state = $state");
+        logForDebug("网络状态与之前状态一致, state = $state");
         return;
       }
       preState = state;
       // 没有网络直接返回
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       if(!hasNet) {
-        logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；无网络000, state = $state");
+        logForDebug("网络发生变化；无网络000, state = $state");
         // 重置所有与unity相关的socket连接
         local.resetConnect();
         local.cancelHeartBeat();
@@ -465,7 +465,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         share.onCanConnected(false);
         return;
       }
-      logForDebug("[CustomSocket:closeAutoConnect]:网络发生变化；有网络111, state = $state");
+      logForDebug("网络发生变化；有网络111, state = $state");
       // 设置自动重连
       share.onCanConnected(true);
       // 连接server

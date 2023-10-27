@@ -103,7 +103,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     int maxTimes = 50;
     while(true) {
       if(curFluttyVersion != version || maxTimes <= 0) {
-        logForDebug("[UnityCtrl:tellUnityNetStatus]:curFluttyVersion != version || maxTimes <= 0");
+        logForDebug("curFluttyVersion != version || maxTimes <= 0");
         break;
       }
       // unity己经初始初始化成功了
@@ -119,11 +119,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
             const Duration(seconds: 5)
         );
         // 成功返回
-        logForDebug("[UnityCtrl:tellUnityNetStatus]:告诉unity网络状态成功");
+        logForDebug("告诉unity网络状态成功");
         break;
       } catch(e, s) {
         await Future.delayed(const Duration(seconds: 2));
-        logForDebug("[UnityCtrl:tellUnityNetStatus]:告诉unity网络状态成功异常");
+        logForDebug("告诉unity网络状态成功异常");
       }
     }
   }
@@ -178,7 +178,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   void _onUnityInit() {
-    logForDebug('[UnityCtrl:sendFlutterSocketInfo]:Unity准备好了！！！');
+    logForDebug('Unity准备好了！！！');
     try {
       markReady();
     } catch(e, s) {
@@ -206,7 +206,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if(_sendSockComplete.isCompleted) {
       _sendSockComplete = Completer();
     }
-    logForDebug("[UnityCtrl:sendFlutterSocketInfo]:发送socket相关信息给unity");
+    logForDebug("发送socket相关信息给unity");
     // 更新唯一id
     SocketCtrl.ins.updateUniqueId();
     // 延迟时间
@@ -216,11 +216,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     subscription = SocketCtrl.ins.getLocalServerPort().asStream().listen((event) async {
       // 服务还没有连上
       if(event == 0) {
-        logForDebug("[UnityCtrl:sendFlutterSocketInfo]:服务没有启动...");
+        logForDebug("服务没有启动...");
         return;
       }
 
-      logForDebug("[UnityCtrl:sendFlutterSocketInfo]:发送信息给unity, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}...");
+      logForDebug("发送信息给unity, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}...");
       // 获取到端口
       dynamic resultString = await sendMessage(
         App2UnityEnum.FTU_NEW_SOCKET_INFO,
@@ -238,9 +238,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       // 如果用户己登录，那么发送用户信息给unity
       await sendUserInfo2Unity();
 
-      logForDebug("[UnityCtrl:sendFlutterSocketInfo]:连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
+      logForDebug("连接成功, port = ${event}, uniqueId = ${SocketCtrl.ins.uniqueId}, info = ${resultString}...");
     }, onError: (error) async {
-      logForDebug("[UnityCtrl:sendFlutterSocketInfo]:连接失败, error = ${error.toString()}");
+      logForDebug("连接失败, error = ${error.toString()}");
     });
   }
 
@@ -358,24 +358,24 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     // }
     loadSceneComplete = false;
     if(!_sendSockComplete.isCompleted) {
-      logForDebug("[UnityCtrl:loadScene]:与unity通信未成功，unity返回再加载场景");
+      logForDebug("与unity通信未成功，unity返回再加载场景");
       await _sendSockComplete.future;
     }
-    logForDebug("[UnityCtrl:loadScene]:unity通信成功，开始加载场景");
+    logForDebug("unity通信成功，开始加载场景");
     // 通知加载场景
     Bus.fire(LoadScene(sceneName: loader.scene));
     return asyncTrack(
       '加载场景 -> ${loader.scene}',
       type: LogType.UNITY,
       action: () async {
-        logForDebug("[UnityCtrl:loadScene]:加载场景前的初始化....");
+        logForDebug("加载场景前的初始化....");
         final doOnBefore = loader.doOnBefore;
 
         final data = {
           if (doOnBefore != null) ...await doOnBefore(),
           'sceneName': loader.scene,
         };
-        logForDebug("[UnityCtrl:loadScene]:通知unity加载场景, unityReady = ${isCompleted}, ${data}, timeout = $unity_time_out");
+        logForDebug("通知unity加载场景, unityReady = ${isCompleted}, ${data}, timeout = $unity_time_out");
 
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
@@ -383,7 +383,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           timeout: const Duration(minutes: unity_time_out),
         );
         loadSceneComplete = true;
-        logForDebug("[UnityCtrl:loadScene]:场景加载成功, ${data}, timeout = $unity_time_out");
+        logForDebug("场景加载成功, ${data}, timeout = $unity_time_out");
 
         await loader.doOnAfter?.call();
       },
@@ -398,9 +398,9 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     unityStartLoadTime = DateTime.now().millisecondsSinceEpoch;
     // 登录成功后才会连接上socket, 等待socket连接成功才加载场景
     if(OAuthCtrl.isLogin) {
-      logForDebug("[UnityCtrl:loadScene]:开始加载场景, 等待网络状态返回, scene = $scene");
+      logForDebug("开始加载场景, 等待网络状态返回, scene = $scene");
       await SocketCtrl.ins.isCConnect();
-      logForDebug("[UnityCtrl:loadScene]:开始加载场景, 网络状态己返回, scene = $scene");
+      logForDebug("开始加载场景, 网络状态己返回, scene = $scene");
     }
     // 加载场景
     return _loadScene(

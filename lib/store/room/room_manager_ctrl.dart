@@ -253,22 +253,22 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     Future doJoin() async {
       Future<Tuple2<RoomBaseInfo, String?>> api() async {
 
-        logForDebug("[RoomManagerCtrl:_show]:获取房间信息 roomId= ${roomId}");
+        logForDebug("获取房间信息 roomId= ${roomId}");
 
         final info = await infoApi(roomId);
 
         if (OAuthCtrl.isSelf(info['uid'])) {
-          logForDebug("[RoomManagerCtrl:_show]:用户自入自己的房间 info= ${info}");
+          logForDebug("用户自入自己的房间 info= ${info}");
           return Tuple2(info, null);
         }
 
         final status = info['private_status'];
 
         if (status == ApiSwitch.open.code) {
-          logForDebug("[RoomManagerCtrl:_show]:用户进入其它房间，房间信息 info= ${info}");
+          logForDebug("用户进入其它房间，房间信息 info= ${info}");
           return Tuple2(info, null);
         } else if (status == ApiSwitch.close.code) {
-          logForDebug("[RoomManagerCtrl:_show]:用户进入密码房，房间信息 info= ${info}");
+          logForDebug("用户进入密码房，房间信息 info= ${info}");
           return holderProgress(
             Get.showInputDialog(title: '请输入密码').then((val) {
               if (val == null) throw const LogicException(-1, '已取消');
@@ -302,7 +302,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     }
 
     if(SocketCtrl.ins.share.forceWaitTimes > 0) {
-      logForDebug("[RoomManagerCtrl:_show]:从后台到前台时，进房时等待心跳返回");
+      logForDebug("从后台到前台时，进房时等待心跳返回");
       // 显示loading
       WaitingCtrl.obj.show();
       // 添加超时时间
@@ -315,7 +315,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       WaitingCtrl.obj.hidden();
     }
 
-    logForDebug("[RoomManagerCtrl:_show]:开始进房流程, 此时stateRx= ${stateRx.value}");
+    logForDebug("开始进房流程, 此时stateRx= ${stateRx.value}");
 
     switch (stateRx()) {
       case RoomState.Normal:

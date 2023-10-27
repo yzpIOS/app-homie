@@ -111,27 +111,27 @@ class CustomSocket {
     }
 
     if(_isConnecting) {
-      logForDebug("[CustomSocket:connect]:正在连接中，不需要重连, _isConnecting=$_isConnecting");
+      logForDebug("正在连接中，不需要重连, _isConnecting=$_isConnecting");
       return this;
     }
 
     // 是否可以连接
     if(!_canConnected) {
-      logForDebug("[CustomSocket:connect]:发起连接, 不能自动连接 _canConnected = $_canConnected");
+      logForDebug("发起连接, 不能自动连接 _canConnected = $_canConnected");
       return this;
     }
 
 
     startConnect?.call();
 
-    logForDebug("[CustomSocket:connect]:发起连接, host=$_host, port=$_port");
+    logForDebug("发起连接, host=$_host, port=$_port");
     // 正在连接中
     _isConnecting = true;
     // 重置连接状态
     resetShareSocketStatus();
     // 链接新的socket
     Socket.connect(_host, _port, timeout: Duration(milliseconds: timeout)).then((Socket event) {
-      logForDebug("[CustomSocket:connect]:连接成功, host=$_host, port=$_port");
+      logForDebug("连接成功, host=$_host, port=$_port");
       // 清理之前的链接
       _socket?.close();
       _socket = null;
@@ -141,12 +141,12 @@ class CustomSocket {
       // 处理连接
       _handleConnect();
       // 连接成功
-      logForDebug("[CustomSocket:connect]:连接成功，唤起成功回调，_connected.length = ${_connected.length}");
+      logForDebug("连接成功，唤起成功回调，_connected.length = ${_connected.length}");
       for(int index = 0; index < _connected.length; index ++) {
         try {
           _connected[index].call();
         } catch(e) {
-          logForDebug("[CustomSocket:connect]:_connected热行失败");
+          logForDebug("_connected热行失败");
         }
       }
       // 连接成功回调
@@ -158,12 +158,12 @@ class CustomSocket {
       _socket = null;
       // 取消回调监听
       _socketSubscription?.cancel();
-      logForDebug("[CustomSocket:connect]:连接失败, host=$_host, port=$_port, 唤起回调_connectError.length = ${_connectError.length}");
+      logForDebug("连接失败, host=$_host, port=$_port, 唤起回调_connectError.length = ${_connectError.length}");
       for(int index = 0; index < _connectError.length; index ++) {
         try {
           _connectError[index].call();
         } catch(e) {
-          logForDebug("[CustomSocket:connect]:onError热行失败");
+          logForDebug("onError热行失败");
         }
       }
       // 延迟去重新连接
@@ -200,7 +200,7 @@ class CustomSocket {
   void _handleConnect() {
     // 把前一个订阅取消掉
     _socketSubscription?.cancel();
-    logForDebug("[CustomSocket:_handleConnect]:网络连接成功，开始监听网络数据, ${_socket?.address}");
+    logForDebug("网络连接成功，开始监听网络数据, ${_socket?.address}");
 
     _socket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
@@ -210,7 +210,7 @@ class CustomSocket {
       // 接收到数据
       _riseCallBack(data);
     }, onError: (error) {
-      logForDebug("[CustomSocket:_handleConnect]:网络连接错误, ${error.toString()}");
+      logForDebug("网络连接错误, ${error.toString()}");
       // 接收到数据报错，需要断开重接吗？
       // 关闭之前的socket链接
       _socket?.close();
@@ -230,7 +230,7 @@ class CustomSocket {
     if(foreceConnect) {
       _canConnected = true;
     }
-    logForDebug("[CustomSocket:reconnect]:重置网络状态 foreceConnect = ${foreceConnect}");
+    logForDebug("重置网络状态 foreceConnect = ${foreceConnect}");
     // 重置网络状态
     resetConnect(clearHost: foreceConnect);
     // 发起重联
@@ -330,7 +330,7 @@ class CustomSocket {
   /// 重置连接数据
   ///
   void resetConnect({bool clearHost = true}) {
-    logForDebug("[CustomSocket:resetConnect]:resetConnect, 重置网络状态 clearHost = ${clearHost}");
+    logForDebug("resetConnect, 重置网络状态 clearHost = ${clearHost}");
 
     _socket?.close();
     _socket = null;
@@ -348,7 +348,7 @@ class CustomSocket {
     if(_preRiseTime != 0 && DateTime.now().millisecondsSinceEpoch - _preRiseTime < 1000) {
       return;
     }
-    logForDebug("[CustomSocket:riseDisconnect]:riseDisconnect, 回调socket关闭回调方法");
+    logForDebug("riseDisconnect, 回调socket关闭回调方法");
     _preRiseTime = DateTime.now().millisecondsSinceEpoch;
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
@@ -393,7 +393,7 @@ class CustomSocket {
     if(socketStatus.isCompleted) {
       return Future.value(true);
     }
-    logForDebug("[CustomSocket:isConnect]:当前socket状态 connected = ${socketStatus.isCompleted}");
+    logForDebug("当前socket状态 connected = ${socketStatus.isCompleted}");
     return socketStatus.future;
   }
 

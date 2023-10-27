@@ -139,7 +139,7 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
-        logForDebug("[CustomClient:sendBytes]:多次网络请求发送异常，sendFailTime = ${sendFailTime}");
+        logForDebug("多次网络请求发送异常，sendFailTime = ${sendFailTime}");
         _customSocket.reconnect();
         sendFailTime = 0;
       }
@@ -209,7 +209,7 @@ class CustomClient with BaseClient {
   CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
     // 心跳没有响应的次数
     if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
-      logForDebug("[CustomClient:resetConnect]:长时间没有接收服务端的心跳， heartBeatNumber = ${heartBeatNumber}");
+      logForDebug("长时间没有接收服务端的心跳， heartBeatNumber = ${heartBeatNumber}");
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }
@@ -257,7 +257,7 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void resetConnect({bool clearHost = true}) {
-    logForDebug("[CustomClient:resetConnect]: 重置网络状态 ${heartBeatNumber}");
+    logForDebug("重置网络状态 ${heartBeatNumber}");
     _customSocket.resetConnect(clearHost: clearHost);
   }
 
@@ -268,7 +268,7 @@ class CustomClient with BaseClient {
     if(_shareSocketStatus.isCompleted) {
       _shareSocketStatus = Completer();
     }
-    logForDebug("[CustomClient:reConnect]: socket重新连接 ${heartBeatNumber}");
+    logForDebug("socket重新连接 ${heartBeatNumber}");
     _customSocket.reconnect(foreceConnect: foreceConnect);
   }
 
