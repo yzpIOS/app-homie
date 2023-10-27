@@ -379,10 +379,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   void onConnectSuccess(int cmd, GeneratedMessage? data) {
     errorTimes = 0;
-    // 弹窗在调起时, 直接返回
-    if(popUp) {
-      Get.back();
-    }
     if(hasShowPopUp) {
       showToast("连接成功");
       hasShowPopUp = false;
@@ -405,7 +401,6 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     Get.alertDialog2("网络连接失败", button: "重连", callBack: () {
       popUp = false;
       errorTimes = 0;
-      Get.back();
     });
   }
 
