@@ -368,12 +368,14 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
       '加载场景 -> ${loader.scene}',
       type: LogType.UNITY,
       action: () async {
+        logForDebug("[UnityCtrl:loadScene]:加载场景前的初始化....");
         final doOnBefore = loader.doOnBefore;
 
         final data = {
           if (doOnBefore != null) ...await doOnBefore(),
           'sceneName': loader.scene,
         };
+        logForDebug("[UnityCtrl:loadScene]:通知unity加载场景, unityReady = ${isCompleted}, ${data}, timeout = $unity_time_out");
 
         await sendMessage(
           App2UnityEnum.FTU_LOAD_SCENE,
@@ -381,7 +383,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
           timeout: const Duration(minutes: unity_time_out),
         );
         loadSceneComplete = true;
-
+        logForDebug("[UnityCtrl:loadScene]:场景加载成功, ${data}, timeout = $unity_time_out");
 
         await loader.doOnAfter?.call();
       },

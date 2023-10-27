@@ -141,7 +141,7 @@ const String CACHE_PREFIX = "homie_app_debug_view_key_";
 ///
 /// 记录日志
 ///
-void logForDebug(String? msg, {LogType type = LogType.SOCKET}) {
+void logForDebug(String? msg, {LogType type = LogType.SOCKET, String? enMsg}) {
   if(msg == null) {
     return;
   }
