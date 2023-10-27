@@ -372,13 +372,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
   // 连接错误次数
   int errorTimes = 0;
 
+  var hasShowPopUp = false;
   // 记录无网络的弹窗是否弹起
   var popUp = false;
 
-  var hasShowPopUp = false;
-
   void onConnectSuccess(int cmd, GeneratedMessage? data) {
     errorTimes = 0;
+    // 弹窗在调起时, 直接返回
+    if(popUp) {
+      Get.back();
+    }
     if(hasShowPopUp) {
       showToast("连接成功");
       hasShowPopUp = false;
