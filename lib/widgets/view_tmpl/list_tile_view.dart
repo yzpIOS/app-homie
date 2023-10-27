@@ -100,7 +100,7 @@ abstract class TileDataAdapter<T> extends DataAdapter<T> {
 
   dynamic get trailing => throw UnimplementedError();
 
-  bool get isShowOnline => throw UnimplementedError();
+  bool get isShowOnline => false;
 }
 
 class TileDataAdapter2 extends TileDataAdapter<Tuple2<String?, String>> {
