@@ -401,6 +401,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     Get.alertDialog2("网络连接失败", button: "重连", callBack: () {
       popUp = false;
       errorTimes = 0;
+      Get.back();
     });
   }
 
