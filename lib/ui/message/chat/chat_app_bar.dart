@@ -142,7 +142,7 @@ class ChatAppBar$User extends _AppBar {
                 height: 16,
                 scale: 3,
                 fit: BoxFit.contain),
-            if (onlineData['isOnline'] == 1) Spacing.w4,
+            if (onlineData['userIsOnline'] == true) Spacing.w4,
             OpacityButton(
               onTap: () {
                 var config = InputCfg(title: '修改备注', emptyCallBack: true);
