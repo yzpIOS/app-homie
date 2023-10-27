@@ -45,8 +45,11 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingObserverMixin {
+  ConfigCtrl? _configCtrl;
   @override
   void initState() {
+    _configCtrl = Get.put(ConfigCtrl());
+    _configCtrl?.doRefresh();
     super.initState();
     // 网络变化
     Connectivity().onConnectivityChanged.listen(ConnState.onChanged);
@@ -89,7 +92,16 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
-      child: child,
+      child: Obx(() {
+        if(_configCtrl?.dataRx != null && _configCtrl?.dataRx["is_black_white"] == true) {
+          return ColorFiltered(
+            colorFilter:const ColorFilter.mode(Colors.grey, BlendMode.color),
+            child: child,
+          );
+        } else {
+          return child;
+        }
+      }),
     );
   }
 
@@ -147,7 +159,15 @@ class _AppBindings extends Bindings {
     Get.put(ImCtrl());
     // Get.put(LocationCtrl());
     Get.put(IntroCtrl());
-    Get.put(ConfigCtrl());
+
+    try {
+      ConfigCtrl? config = Get.find();
+      if(config == null) {
+        Get.put(ConfigCtrl());
+      }
+    } catch(e) {
+      Get.put(ConfigCtrl());
+    }
     Get.put(LinkCtrl());
     Get.put(LocalNotifyCtrl());
 
