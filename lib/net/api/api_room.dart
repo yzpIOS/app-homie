@@ -90,7 +90,7 @@ class ApiRoom extends ApiBase {
       'password': pwd,
     };
     // 数据回来后
-    return _doPost('join/init', data: data,);
+    return _doPost('join/init', data: data, tryTimes: 2);
   }
 
   ///

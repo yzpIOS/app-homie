@@ -193,7 +193,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     // unity初始化与加入房间同时进行
     try {
-      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd).timeout(const Duration(seconds: 10));
+      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
     } catch(e) {
       RoomManagerCtrl.ins.doNormalState();
       RoomManagerCtrl.ins.onSocketDisconnect();

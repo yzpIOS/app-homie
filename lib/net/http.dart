@@ -23,6 +23,7 @@ class Http {
       baseUrl: baseUrl,
       receiveTimeout: const Duration(seconds: 8),
       sendTimeout: const Duration(seconds: 2),
+      connectTimeout: const Duration(seconds: 8),
       // connectTimeout: const Duration(seconds: 2),
       contentType: Headers.jsonContentType,
     );
@@ -85,7 +86,10 @@ class Http {
           path,
           data: data,
           queryParameters: query,
-          options: Options(method: method, extra: ext),
+          options: Options(
+            method: method,
+            extra: ext,
+          ),
           cancelToken: token,
         );
       }
@@ -106,6 +110,7 @@ class Http {
       }
 
       if(tryTimes > 0) {
+        debugPrint("失败重试: message = ${e}, tryTimes = ${tryTimes}");
         return request(method, path, ext: ext, query: query, data: data, tryTimes: tryTimes - 1);
       }
 

@@ -57,8 +57,8 @@ enum LogType {
 const _visible = <LogType>{
   // LogType.App,
   // LogType.BUS,
-  // LogType.HTTP,
-  // LogType.TRACK,
+  LogType.HTTP,
+  LogType.TRACK,
   // LogType.BOX,
   // LogType.IMG,
   // LogType.API,
