@@ -4,6 +4,7 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/im/im_ctrl.dart';
 import 'package:app/store/intro_ctrl.dart';
@@ -45,15 +46,17 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingObserverMixin {
-  ConfigCtrl? _configCtrl;
+  RxMap<String, dynamic> datas = RxMap();
   @override
   void initState() {
-    _configCtrl = Get.put(ConfigCtrl());
-    _configCtrl?.doRefresh();
     super.initState();
     // 网络变化
     Connectivity().onConnectivityChanged.listen(ConnState.onChanged);
     TimeFormat.initLocale('zh_cn');
+
+    Api.Common.config().then((value) {
+      datas.value = value;
+    });
   }
 
 
@@ -93,7 +96,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Obx(() {
-        if(_configCtrl?.dataRx != null && _configCtrl?.dataRx["is_black_white"] == true) {
+        if(datas.containsKey("is_black_white") && datas["is_black_white"] == true) {
           return ColorFiltered(
             colorFilter:const ColorFilter.mode(Colors.grey, BlendMode.color),
             child: child,
@@ -159,15 +162,7 @@ class _AppBindings extends Bindings {
     Get.put(ImCtrl());
     // Get.put(LocationCtrl());
     Get.put(IntroCtrl());
-
-    try {
-      ConfigCtrl? config = Get.find();
-      if(config == null) {
-        Get.put(ConfigCtrl());
-      }
-    } catch(e) {
-      Get.put(ConfigCtrl());
-    }
+    Get.put(ConfigCtrl());
     Get.put(LinkCtrl());
     Get.put(LocalNotifyCtrl());
 
