@@ -161,7 +161,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
 
   Widget $Online() {
     return Obx(() {
-      final followOnlineData = _ctrl.followOnlineRx;
+      final followOnlineData = _ctrl.followOnlineRx();
 
       if (_ctrl.conv.isSycConv || followOnlineData.isEmpty || followOnlineData['room_id'] == null || followOnlineData['room_id'] == 0) {
         return Spacing.blank;
