@@ -550,7 +550,6 @@ class RoleInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'mark', $pb.PbFieldType.O3)
     ..aOM<AttrInfo>(4, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
     ..aOM<SuitInfo>(5, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..e<State>(6, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
     ..hasRequiredFields = false
   ;
 
@@ -623,15 +622,6 @@ class RoleInfo extends $pb.GeneratedMessage {
   void clearSuitInfo() => clearField(5);
   @$pb.TagNumber(5)
   SuitInfo ensureSuitInfo() => $_ensure(4);
-
-  @$pb.TagNumber(6)
-  State get state => $_getN(5);
-  @$pb.TagNumber(6)
-  set state(State v) { setField(6, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasState() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearState() => clearField(6);
 }
 
 class RoleDetailInfo extends $pb.GeneratedMessage {
@@ -2244,6 +2234,58 @@ class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
   $core.bool hasMaxSpeed() => $_has(11);
   @$pb.TagNumber(12)
   void clearMaxSpeed() => clearField(12);
+}
+
+class RoleOnline extends $pb.GeneratedMessage {
+  factory RoleOnline() => create();
+  RoleOnline._() : super();
+  factory RoleOnline.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoleOnline.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleOnline', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roleId')
+    ..e<RoleOnlineState>(2, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: RoleOnlineState.RoleOnlineStateNil, valueOf: RoleOnlineState.valueOf, enumValues: RoleOnlineState.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RoleOnline clone() => RoleOnline()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RoleOnline copyWith(void Function(RoleOnline) updates) => super.copyWith((message) => updates(message as RoleOnline)) as RoleOnline;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static RoleOnline create() => RoleOnline._();
+  RoleOnline createEmptyInstance() => create();
+  static $pb.PbList<RoleOnline> createRepeated() => $pb.PbList<RoleOnline>();
+  @$core.pragma('dart2js:noInline')
+  static RoleOnline getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoleOnline>(create);
+  static RoleOnline? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RoleOnlineState get state => $_getN(1);
+  @$pb.TagNumber(2)
+  set state(RoleOnlineState v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasState() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearState() => clearField(2);
 }
 
 

@@ -45,6 +45,7 @@ class ByteConverter {
     register(CMD.S_GiveGiftByDynamic, S_GiveGiftByDynamic.fromBuffer);
     register(CMD.S_SaveUserCurrentDressUp, S_SaveUserCurrentDressUp.fromBuffer);
     register(CMD.S_UpdateRole, S_UpdateRole.fromBuffer);
+    register(CMD.S_RoleOnline, S_RoleOnline.fromBuffer);
     register(CMD.S_SyncRoomInfo, S_SyncRoomInfo.fromBuffer);
     register(CMD.S_UseProductAndSaveUserCurrentDressUp, S_UseProductAndSaveUserCurrentDressUp.fromBuffer);
     register(CMD.S_CameraSwitch, S_CameraSwitch.fromBuffer);

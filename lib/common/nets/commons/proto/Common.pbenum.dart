@@ -96,5 +96,24 @@ class PKGiftState extends $pb.ProtobufEnum {
   const PKGiftState._($core.int v, $core.String n) : super(v, n);
 }
 
+class RoleOnlineState extends $pb.ProtobufEnum {
+  static const RoleOnlineState RoleOnlineStateNil = RoleOnlineState._(0, _omitEnumNames ? '' : 'RoleOnlineStateNil');
+  static const RoleOnlineState RoleOnlineStateOn = RoleOnlineState._(1, _omitEnumNames ? '' : 'RoleOnlineStateOn');
+  static const RoleOnlineState RoleOnlineStateStealth = RoleOnlineState._(2, _omitEnumNames ? '' : 'RoleOnlineStateStealth');
+  static const RoleOnlineState RoleOnlineStateOff = RoleOnlineState._(3, _omitEnumNames ? '' : 'RoleOnlineStateOff');
+
+  static const $core.List<RoleOnlineState> values = <RoleOnlineState> [
+    RoleOnlineStateNil,
+    RoleOnlineStateOn,
+    RoleOnlineStateStealth,
+    RoleOnlineStateOff,
+  ];
+
+  static final $core.Map<$core.int, RoleOnlineState> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static RoleOnlineState? valueOf($core.int value) => _byValue[value];
+
+  const RoleOnlineState._($core.int v, $core.String n) : super(v, n);
+}
+
 
 const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

@@ -41,12 +41,13 @@ class _DtaView extends SimplePageView<Map> {
     final UID uid = item['access_uid'];
     final count = '${item['access_count']}次';
     final time = TimeFormat.yyyyMMdd.formatEpoch(item['last_access_at']);
+    final bool onlineStatus = (item['status'] == 1);//是否直播中
 
     return UserInfoCtrl.use(uid, builder: (it) {
       return ListTile(
         dense: false,
         onTap: toUserPage(uid),
-        leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: false,),
+        leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: onlineStatus,),
         title: Text(
           it?.showName() ?? '',
           style: const TextStyle(fontSize: 14, color: Colors.black),

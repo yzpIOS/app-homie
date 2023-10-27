@@ -22,7 +22,7 @@ class MyFriendPage extends StatefulWidget {
 class _MyFriendPageState extends State<MyFriendPage> {
   final tabs = {
     '朋友': _DtaView(
-      (page) => Api.UserInfo.friendUserList(page: page),
+      (page) => Api.UserInfo.friendUserList(page: page, requestLiveState: true),
       action: _ActionView$Friend.new,
     ),
     '关注': _DtaView(
@@ -87,6 +87,7 @@ class _ItemBuilderState extends State<_ItemBuilder> {
   late final data = widget.data;
 
   late final UID uid = data['uid'];
+  late final bool onlineStatus = (data['status'] == 1);//是否直播中
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +98,7 @@ class _ItemBuilderState extends State<_ItemBuilder> {
           return ListTile(
             dense: false,
             onTap: toUserPage(uid),
-            leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: false,),
+            leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: onlineStatus,),
             title: Text(
               it?.showName() ?? '',
               style: const TextStyle(fontSize: 14, color: Colors.black),

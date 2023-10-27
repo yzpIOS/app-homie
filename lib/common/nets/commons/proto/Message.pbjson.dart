@@ -110,7 +110,6 @@ const S_Role$json = {
     {'1': 'role', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.RoleInfo', '10': 'role'},
     {'1': 'retryToken', '3': 2, '4': 1, '5': 9, '10': 'retryToken'},
     {'1': 'time', '3': 3, '4': 1, '5': 3, '10': 'time'},
-    {'1': 'pk_room_id', '3': 4, '4': 1, '5': 3, '10': 'pkRoomId'},
     {'1': 'room_id', '3': 5, '4': 1, '5': 3, '10': 'roomId'},
   ],
 };
@@ -118,8 +117,8 @@ const S_Role$json = {
 /// Descriptor for `S_Role`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_RoleDescriptor = $convert.base64Decode(
     'CgZTX1JvbGUSLQoEcm9sZRgBIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5Sb2xlSW5mb1IEcm9sZR'
-    'IeCgpyZXRyeVRva2VuGAIgASgJUgpyZXRyeVRva2VuEhIKBHRpbWUYAyABKANSBHRpbWUSHAoK'
-    'cGtfcm9vbV9pZBgEIAEoA1IIcGtSb29tSWQSFwoHcm9vbV9pZBgFIAEoA1IGcm9vbUlk');
+    'IeCgpyZXRyeVRva2VuGAIgASgJUgpyZXRyeVRva2VuEhIKBHRpbWUYAyABKANSBHRpbWUSFwoH'
+    'cm9vbV9pZBgFIAEoA1IGcm9vbUlk');
 
 @$core.Deprecated('Use c_UploadURLDescriptor instead')
 const C_UploadURL$json = {
@@ -223,13 +222,14 @@ const C_ReLink$json = {
     {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'time', '3': 2, '4': 1, '5': 3, '10': 'time'},
     {'1': 'token', '3': 3, '4': 1, '5': 9, '10': 'token'},
+    {'1': 'room_id', '3': 4, '4': 1, '5': 3, '10': 'roomId'},
   ],
 };
 
 /// Descriptor for `C_ReLink`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_ReLinkDescriptor = $convert.base64Decode(
     'CghDX1JlTGluaxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgR0aW1lGAIgASgDUgR0aW1lEh'
-    'QKBXRva2VuGAMgASgJUgV0b2tlbg==');
+    'QKBXRva2VuGAMgASgJUgV0b2tlbhIXCgdyb29tX2lkGAQgASgDUgZyb29tSWQ=');
 
 @$core.Deprecated('Use c_RoomEnterCompleteDescriptor instead')
 const C_RoomEnterComplete$json = {
@@ -1749,6 +1749,31 @@ final $typed_data.Uint8List s_UpdateRoleBroadcastDescriptor = $convert.base64Dec
     'HQoKZGF0YV9iaXJ0aBgEIAEoA1IJZGF0YUJpcnRoEh0KCmF2YXRhcl91cmwYCCABKAlSCWF2YX'
     'RhclVybBIhCgxhdmF0YXJfZXh0cmEYCSABKAlSC2F2YXRhckV4dHJhEhAKA3VpZBgKIAEoCVID'
     'dWlk');
+
+@$core.Deprecated('Use c_RoleOnlineDescriptor instead')
+const C_RoleOnline$json = {
+  '1': 'C_RoleOnline',
+  '2': [
+    {'1': 'role_id_list', '3': 1, '4': 3, '5': 3, '10': 'roleIdList'},
+  ],
+};
+
+/// Descriptor for `C_RoleOnline`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_RoleOnlineDescriptor = $convert.base64Decode(
+    'CgxDX1JvbGVPbmxpbmUSIAoMcm9sZV9pZF9saXN0GAEgAygDUgpyb2xlSWRMaXN0');
+
+@$core.Deprecated('Use s_RoleOnlineDescriptor instead')
+const S_RoleOnline$json = {
+  '1': 'S_RoleOnline',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.RoleOnline', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_RoleOnline`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_RoleOnlineDescriptor = $convert.base64Decode(
+    'CgxTX1JvbGVPbmxpbmUSMQoFaXRlbXMYASADKAsyGy5jb20uc2F2dnkucHJvdG8uUm9sZU9ubG'
+    'luZVIFaXRlbXM=');
 
 @$core.Deprecated('Use c_SaveUserCurrentDressUpDescriptor instead')
 const C_SaveUserCurrentDressUp$json = {

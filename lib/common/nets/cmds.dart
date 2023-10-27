@@ -6,6 +6,9 @@ class CMD {
   static const C_UpdateRole = 124; // 更新角色数据
   static const S_UpdateRole = 125; // 更新角色数据响应
 
+  static const C_RoleOnline = 127; // 获取角色在线状态
+  static const S_RoleOnline = 128; // 返回角色在线状态信息
+
   // ==== 大厅相关 ====
   static const C_GoToRoom = 300; //靠近建筑后，请求播放直播间语音
   static const S_GoToRoom = 301; //下发直播间相关信息
