@@ -281,7 +281,6 @@ class S_Role extends $pb.GeneratedMessage {
     ..aOM<$0.RoleInfo>(1, _omitFieldNames ? '' : 'role', subBuilder: $0.RoleInfo.create)
     ..aOS(2, _omitFieldNames ? '' : 'retryToken', protoName: 'retryToken')
     ..aInt64(3, _omitFieldNames ? '' : 'time')
-    ..aInt64(4, _omitFieldNames ? '' : 'pkRoomId')
     ..aInt64(5, _omitFieldNames ? '' : 'roomId')
     ..hasRequiredFields = false
   ;
@@ -336,21 +335,12 @@ class S_Role extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearTime() => clearField(3);
 
-  @$pb.TagNumber(4)
-  $fixnum.Int64 get pkRoomId => $_getI64(3);
-  @$pb.TagNumber(4)
-  set pkRoomId($fixnum.Int64 v) { $_setInt64(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasPkRoomId() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearPkRoomId() => clearField(4);
-
   @$pb.TagNumber(5)
-  $fixnum.Int64 get roomId => $_getI64(4);
+  $fixnum.Int64 get roomId => $_getI64(3);
   @$pb.TagNumber(5)
-  set roomId($fixnum.Int64 v) { $_setInt64(4, v); }
+  set roomId($fixnum.Int64 v) { $_setInt64(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasRoomId() => $_has(4);
+  $core.bool hasRoomId() => $_has(3);
   @$pb.TagNumber(5)
   void clearRoomId() => clearField(5);
 }
@@ -729,6 +719,7 @@ class C_ReLink extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
     ..aInt64(2, _omitFieldNames ? '' : 'time')
     ..aOS(3, _omitFieldNames ? '' : 'token')
+    ..aInt64(4, _omitFieldNames ? '' : 'roomId')
     ..hasRequiredFields = false
   ;
 
@@ -779,6 +770,15 @@ class C_ReLink extends $pb.GeneratedMessage {
   $core.bool hasToken() => $_has(2);
   @$pb.TagNumber(3)
   void clearToken() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $fixnum.Int64 get roomId => $_getI64(3);
+  @$pb.TagNumber(4)
+  set roomId($fixnum.Int64 v) { $_setInt64(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasRoomId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRoomId() => clearField(4);
 }
 
 class C_RoomEnterComplete extends $pb.GeneratedMessage {
@@ -6653,6 +6653,78 @@ class S_UpdateRoleBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(6);
   @$pb.TagNumber(10)
   void clearUid() => clearField(10);
+}
+
+class C_RoleOnline extends $pb.GeneratedMessage {
+  factory C_RoleOnline() => create();
+  C_RoleOnline._() : super();
+  factory C_RoleOnline.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_RoleOnline.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_RoleOnline', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..p<$fixnum.Int64>(1, _omitFieldNames ? '' : 'roleIdList', $pb.PbFieldType.K6)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_RoleOnline clone() => C_RoleOnline()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_RoleOnline copyWith(void Function(C_RoleOnline) updates) => super.copyWith((message) => updates(message as C_RoleOnline)) as C_RoleOnline;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_RoleOnline create() => C_RoleOnline._();
+  C_RoleOnline createEmptyInstance() => create();
+  static $pb.PbList<C_RoleOnline> createRepeated() => $pb.PbList<C_RoleOnline>();
+  @$core.pragma('dart2js:noInline')
+  static C_RoleOnline getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_RoleOnline>(create);
+  static C_RoleOnline? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$fixnum.Int64> get roleIdList => $_getList(0);
+}
+
+class S_RoleOnline extends $pb.GeneratedMessage {
+  factory S_RoleOnline() => create();
+  S_RoleOnline._() : super();
+  factory S_RoleOnline.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_RoleOnline.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_RoleOnline', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<$0.RoleOnline>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: $0.RoleOnline.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_RoleOnline clone() => S_RoleOnline()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_RoleOnline copyWith(void Function(S_RoleOnline) updates) => super.copyWith((message) => updates(message as S_RoleOnline)) as S_RoleOnline;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_RoleOnline create() => S_RoleOnline._();
+  S_RoleOnline createEmptyInstance() => create();
+  static $pb.PbList<S_RoleOnline> createRepeated() => $pb.PbList<S_RoleOnline>();
+  @$core.pragma('dart2js:noInline')
+  static S_RoleOnline getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_RoleOnline>(create);
+  static S_RoleOnline? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$0.RoleOnline> get items => $_getList(0);
 }
 
 class C_SaveUserCurrentDressUp extends $pb.GeneratedMessage {

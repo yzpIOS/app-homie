@@ -34,6 +34,8 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD C_UpdateRole = CMD._(124, _omitEnumNames ? '' : 'C_UpdateRole');
   static const CMD S_UpdateRole = CMD._(125, _omitEnumNames ? '' : 'S_UpdateRole');
   static const CMD S_UpdateRoleBroadcast = CMD._(126, _omitEnumNames ? '' : 'S_UpdateRoleBroadcast');
+  static const CMD C_RoleOnline = CMD._(127, _omitEnumNames ? '' : 'C_RoleOnline');
+  static const CMD S_RoleOnline = CMD._(128, _omitEnumNames ? '' : 'S_RoleOnline');
   static const CMD C_ReLink = CMD._(131, _omitEnumNames ? '' : 'C_ReLink');
   static const CMD C_ExitGame = CMD._(132, _omitEnumNames ? '' : 'C_ExitGame');
   static const CMD G_SwitchScene = CMD._(200, _omitEnumNames ? '' : 'G_SwitchScene');
@@ -199,6 +201,8 @@ class CMD extends $pb.ProtobufEnum {
     C_UpdateRole,
     S_UpdateRole,
     S_UpdateRoleBroadcast,
+    C_RoleOnline,
+    S_RoleOnline,
     C_ReLink,
     C_ExitGame,
     G_SwitchScene,

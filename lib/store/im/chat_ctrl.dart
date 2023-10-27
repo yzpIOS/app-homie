@@ -1,6 +1,10 @@
 import 'dart:io';
 
 import 'package:app/3rd/tencent/im.dart';
+import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/conv.dart';
@@ -97,6 +101,23 @@ abstract class ChatCtrl extends GetxController
         if (followOnlineData != null) {
           followOnlineRx.value = followOnlineData;
         }
+
+        /// 是否在线
+        C_RoleOnline c_roleOnline = C_RoleOnline();
+        c_roleOnline.roleIdList.add(userInfo!.nuid!);
+        S_RoleOnline? result = await SocketCtrl.ins.sendByteAsyncServer(
+            CMD.C_RoleOnline,
+            datas: c_roleOnline.writeToBuffer(),
+            resCmd: CMD.S_RoleOnline
+        );
+        List<RoleOnline>? items = result?.items;
+        if(result?.items.isEmpty == true) {
+          return;
+        }
+        var roomOwnerInfo = result?.items.first;
+        if(roomOwnerInfo != null) {
+          followOnlineRx['userIsOnline'] = (roomOwnerInfo.state == RoleOnlineState.RoleOnlineStateOn);
+        }
       }
     }
 
@@ -114,6 +135,11 @@ abstract class ChatCtrl extends GetxController
     );
 
     convCtrl.markConvIn(convId);
+  }
+
+  //
+  void changeCameraSwitch() async {
+
   }
 
   @override

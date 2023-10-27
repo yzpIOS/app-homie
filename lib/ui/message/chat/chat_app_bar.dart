@@ -138,7 +138,7 @@ class ChatAppBar$User extends _AppBar {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (onlineData['isOnline'] == 1) Image.asset(IMG.format('chat/在线'), width: 34,
+            if (onlineData['userIsOnline'] == true) Image.asset(IMG.format('chat/在线'), width: 34,
                 height: 16,
                 scale: 3,
                 fit: BoxFit.contain),

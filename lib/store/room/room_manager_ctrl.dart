@@ -105,7 +105,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
     // PkRoomID不为空时，证明用户此时还在PK房中，那么强制拉进房间里
-    var pkRoomId = role.pkRoomId.toInt();
+    var pkRoomId = 0;//role.pkRoomId.toInt();
     var roomId = role.roomId.toInt();
     // 数据异常
     if(pkRoomId > 0 && roomId > 0) {

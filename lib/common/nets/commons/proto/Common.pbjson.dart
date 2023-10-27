@@ -75,6 +75,23 @@ const PKGiftState$json = {
 final $typed_data.Uint8List pKGiftStateDescriptor = $convert.base64Decode(
     'CgtQS0dpZnRTdGF0ZRINCglBdmFpbGFibGUQABIPCgtEaXNhcHBlYXJlZBAB');
 
+@$core.Deprecated('Use roleOnlineStateDescriptor instead')
+const RoleOnlineState$json = {
+  '1': 'RoleOnlineState',
+  '2': [
+    {'1': 'RoleOnlineStateNil', '2': 0},
+    {'1': 'RoleOnlineStateOn', '2': 1},
+    {'1': 'RoleOnlineStateStealth', '2': 2},
+    {'1': 'RoleOnlineStateOff', '2': 3},
+  ],
+};
+
+/// Descriptor for `RoleOnlineState`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List roleOnlineStateDescriptor = $convert.base64Decode(
+    'Cg9Sb2xlT25saW5lU3RhdGUSFgoSUm9sZU9ubGluZVN0YXRlTmlsEAASFQoRUm9sZU9ubGluZV'
+    'N0YXRlT24QARIaChZSb2xlT25saW5lU3RhdGVTdGVhbHRoEAISFgoSUm9sZU9ubGluZVN0YXRl'
+    'T2ZmEAM=');
+
 @$core.Deprecated('Use attrVODescriptor instead')
 const AttrVO$json = {
   '1': 'AttrVO',
@@ -222,7 +239,6 @@ const RoleInfo$json = {
     {'1': 'mark', '3': 3, '4': 1, '5': 5, '10': 'mark'},
     {'1': 'attrInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
     {'1': 'suitInfo', '3': 5, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
-    {'1': 'state', '3': 6, '4': 1, '5': 14, '6': '.com.savvy.proto.State', '10': 'state'},
   ],
 };
 
@@ -231,8 +247,7 @@ final $typed_data.Uint8List roleInfoDescriptor = $convert.base64Decode(
     'CghSb2xlSW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgRuYW1lGAIgASgJUgRuYW1lEh'
     'IKBG1hcmsYAyABKAVSBG1hcmsSNQoIYXR0ckluZm8YBCABKAsyGS5jb20uc2F2dnkucHJvdG8u'
     'QXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAUgASgLMhkuY29tLnNhdnZ5LnByb3RvLl'
-    'N1aXRJbmZvUghzdWl0SW5mbxIsCgVzdGF0ZRgGIAEoDjIWLmNvbS5zYXZ2eS5wcm90by5TdGF0'
-    'ZVIFc3RhdGU=');
+    'N1aXRJbmZvUghzdWl0SW5mbw==');
 
 @$core.Deprecated('Use roleDetailInfoDescriptor instead')
 const RoleDetailInfo$json = {
@@ -585,4 +600,18 @@ final $typed_data.Uint8List pkRoleDefaultConfigurationDescriptor = $convert.base
     'YWxCbG9vZBgHIAEoBVIKVG90YWxCbG9vZBIWCgZTaGllbGQYCCABKAVSBlNoaWVsZBIWCgZBdH'
     'RhY2sYCSABKAVSBkF0dGFjaxIcCgljb3VudGRvd24YCiABKANSCWNvdW50ZG93bhIfCgtzd29y'
     'ZF9jb3VudBgLIAEoBVIKc3dvcmRDb3VudBIbCgltYXhfc3BlZWQYDCABKAVSCG1heFNwZWVk');
+
+@$core.Deprecated('Use roleOnlineDescriptor instead')
+const RoleOnline$json = {
+  '1': 'RoleOnline',
+  '2': [
+    {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'state', '3': 2, '4': 1, '5': 14, '6': '.com.savvy.proto.RoleOnlineState', '10': 'state'},
+  ],
+};
+
+/// Descriptor for `RoleOnline`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List roleOnlineDescriptor = $convert.base64Decode(
+    'CgpSb2xlT25saW5lEhcKB3JvbGVfaWQYASABKANSBnJvbGVJZBI2CgVzdGF0ZRgCIAEoDjIgLm'
+    'NvbS5zYXZ2eS5wcm90by5Sb2xlT25saW5lU3RhdGVSBXN0YXRl');
 

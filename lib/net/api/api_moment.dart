@@ -88,12 +88,45 @@ class ApiMoment extends ApiBase {
     return _doPost('nearby/query', data: page + data);
   }
 
-  Future recommendList({required PageNum page}) {
+  Future recommendList({required PageNum page}) async {
     final data = <String, dynamic>{
       //
     };
 
-    return _doPost('recommend/query', data: page + data);
+    final result = await _doPost('recommend/query', data: page + data);
+
+    /// 获取主播直播状态
+    // if (result is Map) {
+    //   List<dynamic> temp = [];
+    //   if (result.containsKey('items')) {
+    //     temp = result['items'];
+    //   } else if (result.containsKey('list')) {
+    //     temp = result['list'];
+    //   }
+    //
+    //   // 拿到用户的 nuid
+    //   final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
+    //   final users = await findByUidX(temp.map((e) {
+    //     Map dynamicMap = e['dynamic'];
+    //     return dynamicMap['author_id'];
+    //   }), useNet: true);
+    //   List<int?> roleIdList = [];
+    //   users.forEach((key, value) {
+    //     roleIdList.add(value.nuid?.toInt());
+    //   });
+    //
+    //   // 请求直播状态
+    //   final liveStateList = await Api.Room.anchorLiveState(roleIdList: roleIdList);
+    //   for (int i = 0; i < temp.length; i++) {
+    //     Map item = temp[i];
+    //     Map dynamicMap = item['dynamic'];
+    //     dynamicMap.addAll(liveStateList[i]);
+    //   }
+    //
+    //   result['items'] = temp;
+    // }
+
+    return result;
   }
 
   ///测试-推荐接口

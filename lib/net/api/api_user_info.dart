@@ -94,28 +94,111 @@ class ApiUserInfo extends ApiBase {
     return _doPost('follow/remarks_name/update', data: data);
   }
 
-  Future fansUserList({required PageNum page}) {
+  Future fansUserList({required PageNum page}) async {
     final data = <String, dynamic>{
       'created_at_order_by': 2,
     };
 
-    return _doPost('fans/query', data: page + data);
+    final result = await _doPost('fans/query', data: page + data);
+
+    /// 获取主播直播状态
+    // if (result is Map) {
+    //   List<dynamic> temp = [];
+    //   if (result.containsKey('items')) {
+    //     temp = result['items'];
+    //   } else if (result.containsKey('list')) {
+    //     temp = result['list'];
+    //   }
+    //
+    //   // 拿到用户的 nuid
+    //   List<int?> roleIdList = [];
+    //   temp.forEach((element) {
+    //     roleIdList.add(element['role_id'].toInt());
+    //   });
+    //
+    //   // 请求直播状态
+    //   final liveStateList = await Api.Room.anchorLiveState(roleIdList: roleIdList);
+    //   for (int i = 0; i < temp.length; i++) {
+    //     Map item = temp[i];
+    //     item.addAll(liveStateList[i]);
+    //   }
+    //
+    //   result['items'] = temp;
+    // }
+
+    return result;
   }
 
-  Future friendUserList({required PageNum page}) {
+  Future friendUserList({required PageNum page, bool requestLiveState = false}) async {
     final data = <String, dynamic>{
       'created_at_order_by': 2,
     };
 
-    return _doPost('friend/query', data: page + data);
+    final result = await _doPost('friend/query', data: page + data);
+
+    /// 获取主播直播状态
+    // if (requestLiveState) {
+    //   if (result is Map) {
+    //     List<dynamic> temp = [];
+    //     if (result.containsKey('items')) {
+    //       temp = result['items'];
+    //     } else if (result.containsKey('list')) {
+    //       temp = result['list'];
+    //     }
+    //
+    //     // 拿到用户的 nuid
+    //     List<int?> roleIdList = [];
+    //     temp.forEach((element) {
+    //       roleIdList.add(element['role_id'].toInt());
+    //     });
+    //
+    //     // 请求直播状态
+    //     final liveStateList = await Api.Room.anchorLiveState(roleIdList: roleIdList);
+    //     for (int i = 0; i < temp.length; i++) {
+    //       Map item = temp[i];
+    //       item.addAll(liveStateList[i]);
+    //     }
+    //
+    //     result['items'] = temp;
+    //   }
+    // }
+
+    return result;
   }
 
-  Future followUserList({required PageNum page}) {
+  Future followUserList({required PageNum page}) async {
     final data = <String, dynamic>{
       'created_at_order_by': 2,
     };
 
-    return _doPost('follow/query', data: page + data);
+    final result = await _doPost('follow/query', data: page + data);
+
+    /// 获取主播直播状态
+    // if (result is Map) {
+    //   List<dynamic> temp = [];
+    //   if (result.containsKey('items')) {
+    //     temp = result['items'];
+    //   } else if (result.containsKey('list')) {
+    //     temp = result['list'];
+    //   }
+    //
+    //   // 拿到用户的 nuid
+    //   List<int?> roleIdList = [];
+    //   temp.forEach((element) {
+    //     roleIdList.add(element['role_id'].toInt());
+    //   });
+    //
+    //   // 请求直播状态
+    //   final liveStateList = await Api.Room.anchorLiveState(roleIdList: roleIdList);
+    //   for (int i = 0; i < temp.length; i++) {
+    //     Map item = temp[i];
+    //     item.addAll(liveStateList[i]);
+    //   }
+    //
+    //   result['items'] = temp;
+    // }
+
+    return result;
   }
 
   Future access(UID uid) {
@@ -134,12 +217,42 @@ class ApiUserInfo extends ApiBase {
     return _doPost('access/query', data: page + data);
   }
 
-  Future accessAgg({required PageNum page}) {
+  /// 我的访客
+  Future accessAgg({required PageNum page}) async {
     final data = <String, dynamic>{
       'created_at_order_by': 2,
     };
 
-    return _doPost('access/statistics', data: page + data);
+    final result = await _doPost('access/statistics', data: page + data);
+
+    // /// 获取主播直播状态
+    // if (result is Map) {
+    //   List<dynamic> temp = [];
+    //   if (result.containsKey('items')) {
+    //     temp = result['items'];
+    //   } else if (result.containsKey('list')) {
+    //     temp = result['list'];
+    //   }
+    //
+    //   // 拿到用户的 nuid
+    //   final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
+    //   final users = await findByUidX(temp.map((e) => e['access_uid']), useNet: true);
+    //   List<int?> roleIdList = [];
+    //   users.forEach((key, value) {
+    //     roleIdList.add(value.nuid?.toInt());
+    //   });
+    //
+    //   // 请求直播状态
+    //   final liveStateList = await Api.Room.anchorLiveState(roleIdList: roleIdList);
+    //   for (int i = 0; i < temp.length; i++) {
+    //     Map item = temp[i];
+    //     item.addAll(liveStateList[i]);
+    //   }
+    //
+    //   result['items'] = temp;
+    // }
+
+    return result;
   }
 
   Future realName({required String name, required String number}) {

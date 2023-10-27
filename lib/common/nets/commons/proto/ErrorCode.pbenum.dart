@@ -136,6 +136,7 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_COLLECT_IS_EXIST = ErrorCode._(16400, _omitEnumNames ? '' : 'ROOM_COLLECT_IS_EXIST');
   static const ErrorCode FEEDBACK_ERROR = ErrorCode._(17000, _omitEnumNames ? '' : 'FEEDBACK_ERROR');
   static const ErrorCode REPORT_TYPE_NOT_EXIST = ErrorCode._(17001, _omitEnumNames ? '' : 'REPORT_TYPE_NOT_EXIST');
+  static const ErrorCode CONTENT_EXCEEDS_LIMIT = ErrorCode._(17002, _omitEnumNames ? '' : 'CONTENT_EXCEEDS_LIMIT');
   static const ErrorCode USER_NAME_OR_PASSWORD_ERROR = ErrorCode._(18001, _omitEnumNames ? '' : 'USER_NAME_OR_PASSWORD_ERROR');
   static const ErrorCode USER_NOT_AUTH = ErrorCode._(18002, _omitEnumNames ? '' : 'USER_NOT_AUTH');
   static const ErrorCode ADVERT_BANNER_ERROR = ErrorCode._(19000, _omitEnumNames ? '' : 'ADVERT_BANNER_ERROR');
@@ -291,6 +292,7 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_COLLECT_IS_EXIST,
     FEEDBACK_ERROR,
     REPORT_TYPE_NOT_EXIST,
+    CONTENT_EXCEEDS_LIMIT,
     USER_NAME_OR_PASSWORD_ERROR,
     USER_NOT_AUTH,
     ADVERT_BANNER_ERROR,
