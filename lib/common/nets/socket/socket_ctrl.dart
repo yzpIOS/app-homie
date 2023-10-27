@@ -309,7 +309,11 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 网络连接非法
     if(role?.code == ErrorCode.NETWORK_ANOMALY) {
       share.completeErrorShareSocketStatus();
-      share.reConnect(foreceConnect: true);
+      // 立即连接会有问题，延迟去连接
+      share.resetConnect();
+      delay(300, () {
+        share.reConnect(foreceConnect: true);
+      });
     }
 
     logForDebug("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
