@@ -4,6 +4,7 @@ import 'package:app/3rd/tencent/im.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/conv.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/im/message_manager_ctrl.dart';
@@ -73,7 +74,7 @@ abstract class ChatCtrl extends GetxController
 
   final fullRx = Rx(true);
 
-  final onlineRx = RxMap();//房间跟随数据
+  final followOnlineRx = RxMap();//用户跟随关注信息数据
 
   late final List<V2TimMessage> msgList = CombinedListView([oldMsgRx, newMsgRx]);
 
@@ -86,13 +87,18 @@ abstract class ChatCtrl extends GetxController
 
     await _init();
 
-    /// 非系统消息，请求房间跟随数据
-    // if (!conv.isSycConv) {
-    //   await Future.delayed(const Duration(seconds: 2),  () async {
-    //     //Api.UserInfo.access(uid);
-    //     onlineRx.value = {'isOnline' : 1, 'room_name' : '哇哇哇哇哇哇', 'follow' : 1};
-    //   });
-    // }
+    /// 非系统消息，请求用户跟随关注信息数据
+    if (!conv.isSycConv) {
+      var userInfo = await UserInfoCtrl.ins.findByUidOrNull(conv.userId!, useNet: true);
+      if (userInfo?.nuid != null) {
+        /// 获取用户跟随关注信息
+        /// follow_status	integer 是否有关注用户 1.是，0.否
+        final followOnlineData = await Api.UserInfo.followOnline(nuid: userInfo?.nuid);
+        if (followOnlineData != null) {
+          followOnlineRx.value = followOnlineData;
+        }
+      }
+    }
 
     final convCtrl = Get.find<ConvManagerCtrl>();
     final convId = conv.convId;
@@ -452,7 +458,7 @@ class SingleChatCtrl extends ChatCtrl {
   }
 
   @override
-  ChatAppBar get appBar => ChatAppBar$User(conv, onlineRx, isMuteRx);
+  ChatAppBar get appBar => ChatAppBar$User(conv, followOnlineRx, isMuteRx);
 }
 
 extension<T> on Future<T> {

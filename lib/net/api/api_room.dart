@@ -382,4 +382,13 @@ class ApiRoom extends ApiBase {
       message: c_pkAccept,
     );
   }
+
+  /// 获取主播直播状态
+  Future anchorLiveState({required List<int?> roleIdList}) {
+    final data = {
+      'role_id_list': roleIdList,//角色用户id集
+    };
+
+    return _doPost('anchor/live/state', data: data);
+  }
 }
