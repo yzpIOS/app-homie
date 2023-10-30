@@ -153,7 +153,6 @@ class _AppBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(SocketCtrl());
-    Get.put(UnityCtrl());
 
     Get.put(AppWaiting());
     Get.put(WaitingCtrl());
@@ -167,5 +166,6 @@ class _AppBindings extends Bindings {
     Get.put(LocalNotifyCtrl());
 
     Get.put(SoundCtrl());
+    Get.put(UnityCtrl());
   }
 }

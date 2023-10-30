@@ -56,6 +56,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       initPrivacy();
       // 登录时间记录
       loginUpdate();
+      // 需要等待unity加载完成
+      UnityCtrl.ins.needWaitForUnityReady = true;
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();

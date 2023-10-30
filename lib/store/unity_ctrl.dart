@@ -43,6 +43,11 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   Completer _sendSockComplete = Completer();
   bool canSendMessage = true;
 
+  ///
+  /// 选角场景不进新资源热更，在进入到app首页前，不进行游戏
+  ///
+  bool needWaitForUnityReady = false;
+
   final _sceneLock = Lock(reentrant: true);
 
   static UnityCtrl get ins {
@@ -350,16 +355,18 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   bool loadSceneComplete = false;
 
-  Future<void> _loadScene(SceneInfo loader) async {
+  Future<void> _loadScene(SceneInfo loader, {bool forceLoad = false}) async {
     await _sceneLock.synchronized(() {});
     // 没有完成，需要等待
     // if(!sendSocketComplete.isCompleted) {
     //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
     // }
     loadSceneComplete = false;
-    if(!_sendSockComplete.isCompleted) {
-      logForDebug("与unity通信未成功，unity返回再加载场景");
-      await _sendSockComplete.future;
+    if(!forceLoad) {
+      if(!_sendSockComplete.isCompleted) {
+        logForDebug("与unity通信未成功，unity返回再加载场景");
+        await _sendSockComplete.future;
+      }
     }
     logForDebug("unity通信成功，开始加载场景");
     // 通知加载场景
@@ -416,6 +423,45 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
   }
 
   Future<void> loadSceneCombo(FutureOr<void> Function() action) => _sceneLock.synchronized(action);
+
+  ///
+  /// 开始热更, 不需要等unity ready
+  ///
+  Future<void> startHotFix() async {
+    // 没有加载过场景时，需要把场景加载进来？然后再发消息给unity
+    if(!loadSceneComplete) {
+      await _loadScene(const SceneInfo('Transition'), forceLoad: true);
+    }
+    // 发送消息给unity去动态更新
+    await _sendMessage(App2UnityEnum.FTU_HOTFIX_START, "", const Duration(seconds: unity_time_out));
+    // 通知unity热更
+    needWaitForUnityReady = true;
+  }
+
+
+  @override
+  Future<void> get ready {
+    if(needWaitForUnityReady) {
+      return super.ready;
+    }
+    return Future.value();
+  }
+
+  @override
+  bool get isCompleted {
+    if(needWaitForUnityReady) {
+      return super.isCompleted;
+    }
+    return true;
+  }
+
+  @override
+  bool get isReady {
+    if(needWaitForUnityReady) {
+      return super.isReady;
+    }
+    return true;
+  }
 }
 
 class _Callback {

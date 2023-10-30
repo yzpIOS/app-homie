@@ -85,6 +85,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       showToastQueue("开始补单111");
       applePurchase = ApplePurchase(compensate: true);
     });
+    // 开始热更
+    UnityCtrl.ins.startHotFix();
   }
 
   @override
