@@ -21,6 +21,14 @@ allprojects {
     }
 }
 
+rootProject.allprojects {
+    repositories {
+        flatDir {
+            dirs project(":oaid").file("libs")
+        }
+    }
+}
+
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -75,9 +83,12 @@ android {
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        compileOnly("androidx.annotation:annotation:1.7.0")
+        compileOnly("androidx.annotation:annotation:1.1.0")
         compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
-        implementation files("libs/oaid_sdk_1.0.25.aar")
+//        implementation files("libs/oaid_sdk_1.0.25.aar")
+//        implementation(":oaid_libs")
+        implementation(name:"oaid_sdk_1.0.25", ext:'aar')
+
     }
 
     testOptions {

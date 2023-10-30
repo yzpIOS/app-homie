@@ -123,6 +123,8 @@ dependencies:
   # https://pub.dev/packages/openinstall_flutter_plugin/install
   openinstall_flutter_plugin: ^2.4.0
 
+  oaid:
+    path: ./plugin/oaid
 
 link_kit:
   deep_link: homie:///

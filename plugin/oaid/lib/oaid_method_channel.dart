@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +14,17 @@ class MethodChannelOaid extends OaidPlatform {
   @override
   Future<String?> getPlatformVersion() async {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
+    return version;
+  }
+
+  @override
+  Future<Map<String, String>?> getOAID() async {
+    // 只支持android平台
+    if(!Platform.isAndroid) {
+      return {};
+    }
+    // android平台获取oaid
+    final version = await methodChannel.invokeMethod<Map<String, String>?>('getOaid');
     return version;
   }
 }

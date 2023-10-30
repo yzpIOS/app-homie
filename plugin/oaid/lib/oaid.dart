@@ -5,4 +5,9 @@ class Oaid {
   Future<String?> getPlatformVersion() {
     return OaidPlatform.instance.getPlatformVersion();
   }
+
+  Future<Map<String, String>?> getOAID() {
+    return OaidPlatform.instance.getOAID();
+  }
+
 }

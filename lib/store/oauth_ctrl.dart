@@ -22,6 +22,7 @@ import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
 
 import 'package:fixnum/fixnum.dart';
+import 'package:oaid/oaid.dart';
 import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
@@ -68,9 +69,11 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   ///
   /// 同意隐私协议后，才进行初始化
   ///
-  void initPrivacy() {
+  Future<void> initPrivacy() async {
     // 未登录时，初始化OpeninstallFlutterPlugin
     if(_openinstallFlutterPlugin == null) {
+      // 获取广告平台的oaid
+      Map<String, String>? datas = await Oaid().getOAID();
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
       _openinstallFlutterPlugin?.init(wakeupHandler);

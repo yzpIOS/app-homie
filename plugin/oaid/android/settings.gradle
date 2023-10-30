@@ -1,1 +1,3 @@
 rootProject.name = 'oaid'
+//include(":oaid_libs")
+//project(":oaid_libs").projectDir = file("./oaid_libs")

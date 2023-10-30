@@ -10,6 +10,11 @@ class MockOaidPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<Map<String, String>?> getOAID() {
+    return Future.value({});
+  }
 }
 
 void main() {
