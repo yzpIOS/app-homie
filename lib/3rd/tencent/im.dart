@@ -76,9 +76,9 @@ extension XMessage on V2TimMessage {
       case MessageElemType.V2TIM_ELEM_TYPE_NONE:
         break;
       case MessageElemType.V2TIM_ELEM_TYPE_TEXT:
-        String text = textElem?.text ?? (Env.isDebug ? 'Err' : '');
-        return userID != null && userID!.startsWith('service_') ? text : FiltrationChatText.filterChat(text);
-        // return textElem?.text ?? (Env.isDebug ? 'Err' : '');
+        // String text = textElem?.text ?? (Env.isDebug ? 'Err' : '');
+        // return userID != null && userID!.startsWith('service_') ? text : FiltrationChatText.filterChat(text);
+        return textElem?.text ?? (Env.isDebug ? 'Err' : '');
       case MessageElemType.V2TIM_ELEM_TYPE_IMAGE:
         return '[图片]';
       case MessageElemType.V2TIM_ELEM_TYPE_SOUND:
