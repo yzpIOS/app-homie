@@ -103,12 +103,12 @@ android {
         }
     }
 
-    libraryVariants.all { variant ->
-        variant.mergeAssetsProvider.get().doLast{ task ->
-            println("try to delete 'supplierconfig.json' from library")
-            delete(fileTree(task.outputDir) { config ->
-                config.include("supplierconfig.json")
-            })
-        }
-    }
+//    libraryVariants.all { variant ->
+//        variant.mergeAssetsProvider.get().doLast{ task ->
+//            println("try to delete 'supplierconfig.json' from library")
+//            delete(fileTree(task.outputDir) { config ->
+//                config.include("supplierconfig.json")
+//            })
+//        }
+//    }
 }

@@ -24,7 +24,7 @@ class MethodChannelOaid extends OaidPlatform {
       return {};
     }
     // android平台获取oaid
-    final version = await methodChannel.invokeMethod<Map<String, String>?>('getOaid');
-    return version;
+    final version = await methodChannel.invokeMethod<Map<Object?, Object?>?>('getOaid');
+    return {};
   }
 }

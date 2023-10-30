@@ -31,7 +31,7 @@ class OaidPlugin: FlutterPlugin, MethodCallHandler {
 
   // --- FlutterPlugin
   override fun onAttachedToEngine(binding: FlutterPluginBinding) {
-    channel = MethodChannel(binding.binaryMessenger, "v7lin.github.io/oaid_kit")
+    channel = MethodChannel(binding.binaryMessenger, "oaid")
     channel?.setMethodCallHandler(this)
     applicationContext = binding.applicationContext
     mainHandler = Handler(Looper.getMainLooper())
@@ -49,6 +49,7 @@ class OaidPlugin: FlutterPlugin, MethodCallHandler {
 
   // --- MethodCallHandler
   override fun onMethodCall(call: MethodCall, result: Result) {
+    System.out.println("flutter调用代码: ${call.method}")
     if ("getOaid" == call.method) {
       val completed = AtomicBoolean(false)
       try {

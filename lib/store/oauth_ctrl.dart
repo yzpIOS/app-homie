@@ -70,10 +70,10 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   /// 同意隐私协议后，才进行初始化
   ///
   Future<void> initPrivacy() async {
+    // 获取广告平台的oaid
+    Map<String, String>? datas = await Oaid().getOAID();
     // 未登录时，初始化OpeninstallFlutterPlugin
     if(_openinstallFlutterPlugin == null) {
-      // 获取广告平台的oaid
-      Map<String, String>? datas = await Oaid().getOAID();
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
       _openinstallFlutterPlugin?.init(wakeupHandler);
