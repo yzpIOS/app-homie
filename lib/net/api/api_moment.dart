@@ -72,6 +72,7 @@ class ApiMoment extends ApiBase {
     return _doPost('comment/delete', data: data);
   }
 
+  /// 动态列表 - 朋友
   Future followList({required PageNum page}) {
     final data = <String, dynamic>{
       //
@@ -80,6 +81,7 @@ class ApiMoment extends ApiBase {
     return _doPost('follow/query', data: page + data);
   }
 
+  /// 动态列表 - 附近
   Future nearbyList({required PageNum page}) {
     final data = <String, dynamic>{
       //
@@ -88,6 +90,7 @@ class ApiMoment extends ApiBase {
     return _doPost('nearby/query', data: page + data);
   }
 
+  /// 动态列表 - 推荐
   Future recommendList({required PageNum page}) async {
     final data = <String, dynamic>{
       //
@@ -127,20 +130,6 @@ class ApiMoment extends ApiBase {
     // }
 
     return result;
-  }
-
-  ///测试-推荐接口
-  Future recommend(List ids) {
-    final data = {
-      'items': ids.map((it) {
-        return {
-          'dynamic_id': it,
-          'weight': 0,
-        };
-      }).toList(growable: false)
-    };
-
-    return _doPost('recommend/update', data: data);
   }
 
   Future like({required int id, required bool doLike}) {

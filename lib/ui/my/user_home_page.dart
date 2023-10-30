@@ -210,7 +210,10 @@ class _InfoView extends StatelessWidget {
   Widget $UserView() {
     /// 跳转直播间
     void toRoom() {
-      Get.find<RoomManagerCtrl>().toRoom(roomId: 82);
+      final liveState = moreRx['liveState'];
+      if (liveState.containsKey("room_id") && liveState['room_id'] != null) {
+        Get.find<RoomManagerCtrl>().toRoom(roomId: liveState['room_id']);
+      }
     }
 
     Widget builder(UserInfoDto? data) {
@@ -253,10 +256,18 @@ class _InfoView extends StatelessWidget {
               ],
             ),
           ),
-          // InkWell(
-          //   onTap: toRoom,
-          //   child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
-          // )
+          Obx(() {
+            if (moreRx.containsKey("liveState") && (moreRx["liveState"] as Map).isNotEmpty) {
+              final liveState = moreRx['liveState'];
+              if (liveState.containsKey("status") && liveState['status'] == 1) {
+                return InkWell(
+                  onTap: toRoom,
+                  child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
+                );
+              }
+            }
+            return Spacing.blank;
+          }),
         ],
       );
     }
