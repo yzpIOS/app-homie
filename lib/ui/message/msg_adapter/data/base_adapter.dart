@@ -83,7 +83,8 @@ class TxtMsgAdapter extends MsgAdapter<V2TimTextElem> {
   TxtMsgAdapter(super.msg);
 
   String get txt {
-    return msg.userID != null && msg.userID!.startsWith('service_') ? body.text! : FiltrationChatText.filterChat(body.text!);
+    return body.text!;
+    // return msg.userID != null && msg.userID!.startsWith('service_') ? body.text! : FiltrationChatText.filterChat(body.text!);
   }
 
   @override

@@ -55,7 +55,7 @@ class _ReplySheetState extends State<ReplySheet> {
             onSubmitted: _doSub,
             inputFormatters: [//输入文本过滤器
               //自定义的输入过滤器
-              ChatTextInputFormatter.atText(atText: atText.isNotEmpty ? atText : null),
+              // ChatTextInputFormatter.atText(atText: atText.isNotEmpty ? atText : null),
               if(maxLength != null)
               //只允许输入最大文本数
                 LengthLimitingTextInputFormatter(maxLength),

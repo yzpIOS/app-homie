@@ -44,7 +44,7 @@ class InputTop$Input extends InputExt<TxtSender> with InputExt$Input, TopMixin {
       onSubmitted: (_) => doSend(),
       inputFormatters: [//输入文本过滤器
         //自定义的输入过滤器
-        ChatTextInputFormatter.atText(),
+        // ChatTextInputFormatter.atText(),
         //只允许输入最大文本数
         LengthLimitingTextInputFormatter(ChatTextInputFormatter.chatTextMaxLength),
       ],
