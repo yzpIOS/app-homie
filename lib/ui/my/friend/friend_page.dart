@@ -97,6 +97,7 @@ class _ItemBuilderState extends State<_ItemBuilder> {
         builder: (it) {
           return ListTile(
             dense: false,
+            contentPadding: Pad(left: onlineStatus ? 10 : 16, right: 16),
             onTap: toUserPage(uid),
             leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: onlineStatus,),
             title: Text(

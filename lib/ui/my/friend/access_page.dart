@@ -46,12 +46,13 @@ class _DtaView extends SimplePageView<Map> {
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final UID uid = item['access_uid'];
     final time = TimeUtils.fromNow(item['create_at']);
+    final bool onlineStatus = (item['status'] == 1);//是否直播中
 
     return UserHomeWrap(
       uid: uid,
       child: UserInfoCtrl.use(uid, builder: (it) {
         return _ItemView(
-          data: TileDataAdapter4(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time, isShowOnline: false),
+          data: TileDataAdapter4(title: it?.showName() ?? '', leading: it?.avatar ?? '', subtitle: time, isShowOnline: onlineStatus),
         );
       }),
     );

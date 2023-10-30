@@ -99,8 +99,6 @@ abstract class TileDataAdapter<T> extends DataAdapter<T> {
   String get subtitle => throw UnimplementedError();
 
   dynamic get trailing => throw UnimplementedError();
-
-  bool get isShowOnline => false;
 }
 
 class TileDataAdapter2 extends TileDataAdapter<Tuple2<String?, String>> {
