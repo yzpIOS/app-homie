@@ -76,7 +76,7 @@ abstract class BaseTile<T extends DataAdapter> extends ViewAdapter<T>
 
     return $TapWrap(
       child: Container(
-        padding: const Pad(horizontal: 16),
+        padding: Pad(left: (vm.isShowOnline == true) ? 10 : 16, right: 16),
         constraints: const BoxConstraints(minHeight: 70),
         child: Row(
           children: [
