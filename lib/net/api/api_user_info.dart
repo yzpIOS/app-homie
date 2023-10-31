@@ -205,6 +205,10 @@ class ApiUserInfo extends ApiBase {
            result.addIf(true, 'liveState', liveState);
          }
       }
+    } else if (result.containsKey('roleIdList')) {
+      // 请求接口获取直播状态
+      final liveStateList = await Api.Room.anchorLiveState(roleIdList: result['roleIdList']);
+      return liveStateList;
     }
 
     return result;
