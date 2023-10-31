@@ -15,6 +15,11 @@ class MockOaidPlatform
   Future<Map<String, String>?> getOAID() {
     return Future.value({});
   }
+
+  @override
+  Future<Map<String, String>?> getIDFA() {
+    return Future.value({});
+  }
 }
 
 void main() {

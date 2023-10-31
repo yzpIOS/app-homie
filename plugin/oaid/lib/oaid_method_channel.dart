@@ -31,4 +31,19 @@ class MethodChannelOaid extends OaidPlatform {
     });
     return results;
   }
+
+  @override
+  Future<Map<String, String>?> getIDFA() async {
+    // 只支持android平台
+    if(!Platform.isIOS) {
+      return {};
+    }
+    // android平台获取oaid
+    final version = await methodChannel.invokeMethod<Map<Object?, Object?>?>('getIDFA');
+    Map<String, String> results = {};
+    version?.forEach((key, value) {
+      results[key.toString()] = value.toString();
+    });
+    return results;
+  }
 }

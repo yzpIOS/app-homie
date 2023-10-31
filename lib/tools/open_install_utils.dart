@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:app/tools.dart';
 import 'package:app/tools/local_storage.dart';
@@ -8,7 +9,7 @@ import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
 class OpenInstallUtils {
 
-  static late OpenInstallUtils? _ins;
+  static OpenInstallUtils? _ins;
   OpenInstallUtils._();
   static OpenInstallUtils get ins {
     _ins ??= OpenInstallUtils._();
@@ -28,11 +29,25 @@ class OpenInstallUtils {
     // https://www.tapd.cn/68741847/prong/stories/view/1168741847001000682
     // https://developer.openinstall.io/2022961229/app-promotion-activity-ad-detail?channelId=653f973618c85caf7b795514
     // https://developer.openinstall.io/2022961229/app-platform-config-detail?adPlatform=oppo
-    Map<String, String>? datas = await Oaid().getOAID();
+
     // 未登录时，初始化OpeninstallFlutterPlugin
     if(_openinstallFlutterPlugin == null) {
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
+      if(Platform.isAndroid) {
+        // 获取android OAID
+        Map<String, String>? datas = await Oaid().getOAID();
+        _openinstallFlutterPlugin?.configAndroid({
+          "oaid": datas?["iaid"] ?? ""
+        });
+      } else if(Platform.isIOS) {
+        // 获取ios的IDFA
+        Map<String, String>? datas = await Oaid().getOAID();
+        // ios配置
+        _openinstallFlutterPlugin?.configIos({
+          "idfaStr": datas?["idfaStr"] ?? ""
+        });
+      }
       _openinstallFlutterPlugin?.init(wakeupHandler);
       _openinstallFlutterPlugin?.install(onInstall);
     }

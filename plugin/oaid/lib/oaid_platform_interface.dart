@@ -30,4 +30,8 @@ abstract class OaidPlatform extends PlatformInterface {
   Future<Map<String, String>?> getOAID() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<Map<String, String>?> getIDFA() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }

@@ -10,4 +10,7 @@ class Oaid {
     return OaidPlatform.instance.getOAID();
   }
 
+  Future<Map<String, String>?> getIDFA() {
+    return OaidPlatform.instance.getIDFA();
+  }
 }
