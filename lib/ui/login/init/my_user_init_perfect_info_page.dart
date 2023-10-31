@@ -214,31 +214,49 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     if (inputs.validate()) {
       hideKeyboard();
 
-      final avatar = avatarRx()?.value1;
-
-      if (avatar == null) {
-        final resp = await Get.simpleDialog(msg: '上传头像', okLabel: '确定', cancelLabel: '跳过');
-
-        switch (resp) {
-          case '跳过':
-            break;
-          case '确定':
-            doSelectImage();
-            return;
-          default:
-            return;
-        }
-      }
-
-      final result = await holderProgress(
-        Get.to(
-          () => MyUserInitViewGenderModelPage(token: widget.token, nickName: inputs.by('昵称'), gender: selectedGender.value!, avatar: avatar),
-          transition: Transition.noTransition,
-        )!,
+      // 检查昵称是否合规
+      simpleSub(
+        () async {
+          return await Api.UserInfo.userNameCheck(user_name: inputs.by('昵称'), token: widget.token);
+        },
+        callback1: (resp) async {
+          if (resp.containsKey('check_ok')) {
+            if (resp['check_ok'] == false) {
+              showToast('用户名称已存在');
+            } else {
+              skipToNext();
+            }
+          }
+        },
       );
-      if (result != null) {
-        Get.back(result: result);
+    }
+  }
+
+  void skipToNext() async {
+    final avatar = avatarRx()?.value1;
+
+    if (avatar == null) {
+      final resp = await Get.simpleDialog(msg: '上传头像', okLabel: '确定', cancelLabel: '跳过');
+
+      switch (resp) {
+        case '跳过':
+          break;
+        case '确定':
+          doSelectImage();
+          return;
+        default:
+          return;
       }
+    }
+
+    final result = await holderProgress(
+      Get.to(
+            () => MyUserInitViewGenderModelPage(token: widget.token, nickName: inputs.by('昵称'), gender: selectedGender.value!, avatar: avatar),
+        transition: Transition.noTransition,
+      )!,
+    );
+    if (result != null) {
+      Get.back(result: result);
     }
   }
 }

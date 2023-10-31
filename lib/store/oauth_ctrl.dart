@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:ui';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/auth_info.dart';
-import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
@@ -17,8 +15,6 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'package:app/ui/login/init/user_init_1_page.dart';
-import 'package:app/ui/login/init/user_init_2_page.dart';
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
 

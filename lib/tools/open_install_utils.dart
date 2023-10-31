@@ -71,14 +71,22 @@ class OpenInstallUtils {
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }
+    // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
-    if (bindData != null) {
-      final bindDataStr = bindData.toString();
-      final Map<String, dynamic> result = jsonDecode(bindDataStr);
-      KvBox.write(PrefKey.OpenInstallBlindData, result);
-      // 记录己经上传过
-      KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+    // 渠道编号
+    final channelCode = data['channelCode'];
+    if(bindData == null) {
+      return;
     }
+    final bindDataStr = bindData.toString();
+    // json数据解析
+    final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    if(channelCode != null) {
+      result['channel_code'] = channelCode;// 渠道码
+    }
+    KvBox.write(PrefKey.OpenInstallBlindData, result);
+    // 记录己经上传过
+    KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
   }
 
   ///
@@ -89,5 +97,4 @@ class OpenInstallUtils {
     // 记录己经上传过
     KvBox.write(PrefKey.OpenInstallBlindDataFlag2, PrefKey.OpenInstallBlindDataFlag2);
   }
-
 }

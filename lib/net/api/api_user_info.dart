@@ -42,6 +42,15 @@ class ApiUserInfo extends ApiBase {
     return _doPost('list', data: page + data);
   }
 
+  /// 检查用户昵称是否合规
+  Future userNameCheck({required String user_name, String? token}) async {
+    final data = <String, dynamic>{
+      'user_name': user_name,
+    };
+
+    return _doPost('user_name/check', data: data, ext: {HttpHeaders.authorizationHeader: token});
+  }
+
   Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) async {
     final data = <dynamic, dynamic>{
       if (nickName != null) //
