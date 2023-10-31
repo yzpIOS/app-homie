@@ -156,8 +156,7 @@ class _RechargePageState extends State<RechargePage> {
               text: '我已阅读并同意<c>《<a1>充值及购买协议</a1>》</c>',
               tags: {
                 'c': StyledTextTag(style: const TextStyle(color: AppPalette.primary)),
-                // wyxtodo
-                'a1': StyledTextActionTag((val, __) => ctrl.onTapLink(val!, 'user_protocol')),
+                'a1': StyledTextActionTag((val, __) => ctrl.onTapLink(val!, 'recharge_agreement')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.c9),
             ),
