@@ -1,19 +1,42 @@
 import Flutter
 import UIKit
+import AdSupport
+import AppTrackingTransparency//适配iOS14
 
 public class OaidPlugin: NSObject, FlutterPlugin {
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "oaid", binaryMessenger: registrar.messenger())
-    let instance = OaidPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    switch call.method {
-    case "getPlatformVersion":
-      result("iOS " + UIDevice.current.systemVersion)
-    default:
-      result(FlutterMethodNotImplemented)
+    
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let channel = FlutterMethodChannel(name: "oaid", binaryMessenger: registrar.messenger())
+        let instance = OaidPlugin()
+        registrar.addMethodCallDelegate(instance, channel: channel)
     }
-  }
+
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        debugPrint("ios获取IDFA开始...")
+        switch call.method {
+        case "getPlatformVersion":
+          result("iOS " + UIDevice.current.systemVersion)
+        case "getIDFA":
+            //权限申请
+            if #available(iOS 14.0, *) {
+                debugPrint("ios获取IDFA开始11111.22...")
+                ATTrackingManager.requestTrackingAuthorization(completionHandler: {status in
+                    self.opInit(result: result);//不管用户是否授权，都要初始化
+                })
+            }else{
+                debugPrint("ios获取IDFA开始22222...")
+                opInit(result: result);
+            }
+            break
+        default:
+          result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    func opInit(result: @escaping FlutterResult){
+        let idfaStr = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        var dictionary = Dictionary<String, Any>()
+        dictionary["IDFA"] = idfaStr
+        result(dictionary)
+    }
 }

@@ -87,6 +87,8 @@ PODS:
   - MXLogger (1.2.5):
     - MXLoggerCore (= 1.2.5)
   - MXLoggerCore (1.2.5)
+  - oaid (0.0.1):
+    - Flutter
   - openinstall_flutter_plugin (0.0.1):
     - Flutter
     - libOpenInstallSDK
@@ -167,6 +169,7 @@ DEPENDENCIES:
   - media_kit_libs_ios_video (from `.symlinks/plugins/media_kit_libs_ios_video/ios`)
   - media_kit_native_event_loop (from `.symlinks/plugins/media_kit_native_event_loop/ios`)
   - media_kit_video (from `.symlinks/plugins/media_kit_video/ios`)
+  - oaid (from `.symlinks/plugins/oaid/ios`)
   - openinstall_flutter_plugin (from `.symlinks/plugins/openinstall_flutter_plugin/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -243,6 +246,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/media_kit_native_event_loop/ios"
   media_kit_video:
     :path: ".symlinks/plugins/media_kit_video/ios"
+  oaid:
+    :path: ".symlinks/plugins/oaid/ios"
   openinstall_flutter_plugin:
     :path: ".symlinks/plugins/openinstall_flutter_plugin/ios"
   package_info_plus:
@@ -310,6 +315,7 @@ SPEC CHECKSUMS:
   media_kit_video: 5da63f157170e5bf303bf85453b7ef6971218a2e
   MXLogger: dfb2200493abbad1bab08e200bed73f4a30f2fa6
   MXLoggerCore: 31d90b8f080d5769f982b9a4fc8c21267fb07a97
+  oaid: a606cb40fed91907145c520c5b467b7ab7980785
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
   path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8

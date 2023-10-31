@@ -3,6 +3,8 @@ import Flutter
 import f_unity
 import UnityFramework
 import openinstall_flutter_plugin
+import AdSupport
+import AppTrackingTransparency//适配iOS14
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate  {
@@ -23,6 +25,13 @@ import openinstall_flutter_plugin
     
     override func applicationDidBecomeActive(_ application: UIApplication) {
         UnityFramework.getInstance().pause(false);
+        //权限申请
+        if #available(iOS 14.0, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: {status in
+                let idfaStr = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                debugPrint(" = " + idfaStr)
+            })
+        }
     }
 
     //2）首次集成插件的用户，如果拉起无法获取到参数，是因为方法被其它插件覆盖导致（openinstall插件不会覆盖其它插件），可以有两种方法解决：

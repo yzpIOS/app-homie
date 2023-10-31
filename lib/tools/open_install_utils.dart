@@ -42,7 +42,7 @@ class OpenInstallUtils {
         });
       } else if(Platform.isIOS) {
         // 获取ios的IDFA
-        Map<String, String>? datas = await Oaid().getOAID();
+        Map<String, String>? datas = await Oaid().getIDFA();
         // ios配置
         _openinstallFlutterPlugin?.configIos({
           "idfaStr": datas?["idfaStr"] ?? ""

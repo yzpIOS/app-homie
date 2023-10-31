@@ -42,6 +42,7 @@ class MethodChannelOaid extends OaidPlatform {
     final version = await methodChannel.invokeMethod<Map<Object?, Object?>?>('getIDFA');
     Map<String, String> results = {};
     version?.forEach((key, value) {
+      debugPrint("key = ${key}, value = ${value}");
       results[key.toString()] = value.toString();
     });
     return results;

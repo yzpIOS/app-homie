@@ -75,6 +75,8 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>为了您可以精准获取到优质推荐内容，Homie需要您允许使用该权限</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Homie想访问您的媒体资料库，用于播放音乐等功能</string>
 	<key>NSCameraUsageDescription</key>
