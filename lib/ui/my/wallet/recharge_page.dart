@@ -4,6 +4,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -32,6 +33,7 @@ class _RechargePageState extends State<RechargePage> {
   final type = MoneyType.diamond;
 
   late final api = Api.Wallet.rechargeCombo();
+  late final RxBool pactRx = RxBool(true);//是否选中充值及购买协议
 
   ApplePurchase applePurchase = ApplePurchase();
 
@@ -109,8 +111,15 @@ class _RechargePageState extends State<RechargePage> {
             $PayTypeView(types),
           Spacing.exp,
           Padding(
-            padding: Pad(horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
-            child: $Btn(),
+            padding: Pad(
+                horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
+            child: Column(
+              children: [
+                $PactTxt(),
+                Spacing.h10,
+                $Btn(),
+              ],
+            ),
           ),
         ],
       ),
@@ -122,6 +131,39 @@ class _RechargePageState extends State<RechargePage> {
       label: '立即充值',
       textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
       onTap: doSub,
+    );
+  }
+
+  Widget $PactTxt() {
+    return GetBuilder<ConfigCtrl>(
+      initState: (state) => state.controller?.doRefresh(),
+      builder: (ctrl) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(() {
+              return OpacityButton(
+                child: Image.asset(IMG.format(
+                    pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
+                    width: 13, height: 13, scale: 3, fit: BoxFit.contain),
+                onTap: () {
+                  pactRx.toggle();
+                },
+              );
+            }),
+            Spacing.w4,
+            StyledText(
+              text: '我已阅读并同意<c>《<a1>充值及购买协议</a1>》</c>',
+              tags: {
+                'c': StyledTextTag(style: const TextStyle(color: AppPalette.primary)),
+                // wyxtodo
+                'a1': StyledTextActionTag((val, __) => ctrl.onTapLink(val!, 'user_protocol')),
+              },
+              style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -257,6 +299,11 @@ class _RechargePageState extends State<RechargePage> {
 
     if(payType == null) {
       showToast('请选择支付方式');
+      return;
+    }
+
+    if (pactRx.value == false) {
+      showToast('请先阅读并同意《充值及购买协议》');
       return;
     }
 
