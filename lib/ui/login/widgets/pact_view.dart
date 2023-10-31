@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/open_install_utils.dart';
 import 'package:app/ui/common/app_dialog.dart';
 import 'package:app/widgets.dart';
 
@@ -56,7 +57,7 @@ abstract class IPact {
 
           // 来自登录, 同意后才进行初始化
           if(fromLogin) {
-            OAuthCtrl.ins.initPrivacy();
+            OpenInstallUtils.ins.initPrivacy();
           }
 
           doSub?.call();

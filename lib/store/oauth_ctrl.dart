@@ -8,6 +8,7 @@ import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/open_install_utils.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
@@ -22,8 +23,6 @@ import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
 
 import 'package:fixnum/fixnum.dart';
-import 'package:oaid/oaid.dart';
-import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static AuthInfo? _auth;
@@ -31,8 +30,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static OAuthCtrl get ins {
     return Get.find<OAuthCtrl>();
   }
-
-  OpeninstallFlutterPlugin? _openinstallFlutterPlugin;
 
   @override
   void onInit() async {
@@ -54,7 +51,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       // 己登录，并且资料己经填完
       App.toApp();
       // 己登录
-      initPrivacy();
+      OpenInstallUtils.ins.initPrivacy();
       // 登录时间记录
       loginUpdate();
       // 需要等待unity加载完成
@@ -64,58 +61,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       App.toLogin();
     }
     FlutterNativeSplash.remove();
-  }
-
-  ///
-  /// 同意隐私协议后，才进行初始化
-  ///
-  Future<void> initPrivacy() async {
-    // 获取广告平台的oaid
-    Map<String, String>? datas = await Oaid().getOAID();
-    // 未登录时，初始化OpeninstallFlutterPlugin
-    if(_openinstallFlutterPlugin == null) {
-      // 未登录时，初始化OpeninstallFlutterPlugin
-      _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
-      _openinstallFlutterPlugin?.init(wakeupHandler);
-      _openinstallFlutterPlugin?.install(onInstall);
-    }
-  }
-
-  Future wakeupHandler(Map<String, Object> data) async {
-    // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-    //   return;
-    // }
-    // final bindData = data['bindData'];
-    // if (bindData != null) {
-    //   final bindDataStr = bindData.toString();
-    //   final Map<String, dynamic> result = jsonDecode(bindDataStr);
-    //   KvBox.write(PrefKey.OpenInstallBlindData, result);
-    //   // 记录己经上传过
-    //   KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
-    // }
-  }
-
-  Future onInstall(Map<String, Object> data) async {
-    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-      return;
-    }
-    final bindData = data['bindData'];
-    if (bindData != null) {
-      final bindDataStr = bindData.toString();
-      final Map<String, dynamic> result = jsonDecode(bindDataStr);
-      KvBox.write(PrefKey.OpenInstallBlindData, result);
-      // 记录己经上传过
-      KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
-    }
-  }
-
-  ///
-  /// 上传注册信息
-  ///
-  Future<void> reportRegister() async {
-    _openinstallFlutterPlugin?.reportRegister();
-    // 记录己经上传过
-    KvBox.write(PrefKey.OpenInstallBlindDataFlag2, PrefKey.OpenInstallBlindDataFlag2);
   }
 
   //<editor-fold desc="登录">
@@ -215,7 +160,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         }
 
         // 上传注册信息
-        await reportRegister();
+        await OpenInstallUtils.ins.reportRegister();
+
       } else {
         await updateUserInfo(myInfo, token);
         _setup(_auth!, true, info: myInfo);
