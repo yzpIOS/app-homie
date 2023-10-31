@@ -26,6 +26,7 @@ mixin _$MomentDto {
   MomentCount get count => throw _privateConstructorUsedError;
   @JsonKey(name: 'topic_list')
   List<Map>? get topic => throw _privateConstructorUsedError;
+  Map<dynamic, dynamic>? get liveState => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,7 +43,8 @@ abstract class $MomentDtoCopyWith<$Res> {
       {@JsonKey(name: 'dynamic') MomentContent content,
       MomentMore more,
       MomentCount count,
-      @JsonKey(name: 'topic_list') List<Map>? topic});
+      @JsonKey(name: 'topic_list') List<Map>? topic,
+      Map<dynamic, dynamic>? liveState});
 
   $MomentContentCopyWith<$Res> get content;
   $MomentMoreCopyWith<$Res> get more;
@@ -66,6 +68,7 @@ class _$MomentDtoCopyWithImpl<$Res, $Val extends MomentDto>
     Object? more = null,
     Object? count = null,
     Object? topic = freezed,
+    Object? liveState = freezed,
   }) {
     return _then(_value.copyWith(
       content: null == content
@@ -84,6 +87,10 @@ class _$MomentDtoCopyWithImpl<$Res, $Val extends MomentDto>
           ? _value.topic
           : topic // ignore: cast_nullable_to_non_nullable
               as List<Map>?,
+      liveState: freezed == liveState
+          ? _value.liveState
+          : liveState // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
     ) as $Val);
   }
 
@@ -113,17 +120,19 @@ class _$MomentDtoCopyWithImpl<$Res, $Val extends MomentDto>
 }
 
 /// @nodoc
-abstract class _$$_MomentDtoCopyWith<$Res> implements $MomentDtoCopyWith<$Res> {
-  factory _$$_MomentDtoCopyWith(
-          _$_MomentDto value, $Res Function(_$_MomentDto) then) =
-      __$$_MomentDtoCopyWithImpl<$Res>;
+abstract class _$$MomentDtoImplCopyWith<$Res>
+    implements $MomentDtoCopyWith<$Res> {
+  factory _$$MomentDtoImplCopyWith(
+          _$MomentDtoImpl value, $Res Function(_$MomentDtoImpl) then) =
+      __$$MomentDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'dynamic') MomentContent content,
       MomentMore more,
       MomentCount count,
-      @JsonKey(name: 'topic_list') List<Map>? topic});
+      @JsonKey(name: 'topic_list') List<Map>? topic,
+      Map<dynamic, dynamic>? liveState});
 
   @override
   $MomentContentCopyWith<$Res> get content;
@@ -134,11 +143,11 @@ abstract class _$$_MomentDtoCopyWith<$Res> implements $MomentDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_MomentDtoCopyWithImpl<$Res>
-    extends _$MomentDtoCopyWithImpl<$Res, _$_MomentDto>
-    implements _$$_MomentDtoCopyWith<$Res> {
-  __$$_MomentDtoCopyWithImpl(
-      _$_MomentDto _value, $Res Function(_$_MomentDto) _then)
+class __$$MomentDtoImplCopyWithImpl<$Res>
+    extends _$MomentDtoCopyWithImpl<$Res, _$MomentDtoImpl>
+    implements _$$MomentDtoImplCopyWith<$Res> {
+  __$$MomentDtoImplCopyWithImpl(
+      _$MomentDtoImpl _value, $Res Function(_$MomentDtoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -148,8 +157,9 @@ class __$$_MomentDtoCopyWithImpl<$Res>
     Object? more = null,
     Object? count = null,
     Object? topic = freezed,
+    Object? liveState = freezed,
   }) {
-    return _then(_$_MomentDto(
+    return _then(_$MomentDtoImpl(
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -166,22 +176,28 @@ class __$$_MomentDtoCopyWithImpl<$Res>
           ? _value._topic
           : topic // ignore: cast_nullable_to_non_nullable
               as List<Map>?,
+      liveState: freezed == liveState
+          ? _value._liveState
+          : liveState // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_MomentDto implements _MomentDto {
-  _$_MomentDto(
+class _$MomentDtoImpl implements _MomentDto {
+  _$MomentDtoImpl(
       {@JsonKey(name: 'dynamic') required this.content,
       required this.more,
       required this.count,
-      @JsonKey(name: 'topic_list') final List<Map>? topic})
-      : _topic = topic;
+      @JsonKey(name: 'topic_list') final List<Map>? topic,
+      required final Map<dynamic, dynamic>? liveState})
+      : _topic = topic,
+        _liveState = liveState;
 
-  factory _$_MomentDto.fromJson(Map<String, dynamic> json) =>
-      _$$_MomentDtoFromJson(json);
+  factory _$MomentDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MomentDtoImplFromJson(json);
 
   @override
   @JsonKey(name: 'dynamic')
@@ -201,36 +217,53 @@ class _$_MomentDto implements _MomentDto {
     return EqualUnmodifiableListView(value);
   }
 
+  final Map<dynamic, dynamic>? _liveState;
+  @override
+  Map<dynamic, dynamic>? get liveState {
+    final value = _liveState;
+    if (value == null) return null;
+    if (_liveState is EqualUnmodifiableMapView) return _liveState;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   String toString() {
-    return 'MomentDto(content: $content, more: $more, count: $count, topic: $topic)';
+    return 'MomentDto(content: $content, more: $more, count: $count, topic: $topic, liveState: $liveState)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MomentDto &&
+            other is _$MomentDtoImpl &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.more, more) || other.more == more) &&
             (identical(other.count, count) || other.count == count) &&
-            const DeepCollectionEquality().equals(other._topic, _topic));
+            const DeepCollectionEquality().equals(other._topic, _topic) &&
+            const DeepCollectionEquality()
+                .equals(other._liveState, _liveState));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, content, more, count,
-      const DeepCollectionEquality().hash(_topic));
+  int get hashCode => Object.hash(
+      runtimeType,
+      content,
+      more,
+      count,
+      const DeepCollectionEquality().hash(_topic),
+      const DeepCollectionEquality().hash(_liveState));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MomentDtoCopyWith<_$_MomentDto> get copyWith =>
-      __$$_MomentDtoCopyWithImpl<_$_MomentDto>(this, _$identity);
+  _$$MomentDtoImplCopyWith<_$MomentDtoImpl> get copyWith =>
+      __$$MomentDtoImplCopyWithImpl<_$MomentDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MomentDtoToJson(
+    return _$$MomentDtoImplToJson(
       this,
     );
   }
@@ -241,10 +274,11 @@ abstract class _MomentDto implements MomentDto {
       {@JsonKey(name: 'dynamic') required final MomentContent content,
       required final MomentMore more,
       required final MomentCount count,
-      @JsonKey(name: 'topic_list') final List<Map>? topic}) = _$_MomentDto;
+      @JsonKey(name: 'topic_list') final List<Map>? topic,
+      required final Map<dynamic, dynamic>? liveState}) = _$MomentDtoImpl;
 
   factory _MomentDto.fromJson(Map<String, dynamic> json) =
-      _$_MomentDto.fromJson;
+      _$MomentDtoImpl.fromJson;
 
   @override
   @JsonKey(name: 'dynamic')
@@ -257,8 +291,10 @@ abstract class _MomentDto implements MomentDto {
   @JsonKey(name: 'topic_list')
   List<Map>? get topic;
   @override
+  Map<dynamic, dynamic>? get liveState;
+  @override
   @JsonKey(ignore: true)
-  _$$_MomentDtoCopyWith<_$_MomentDto> get copyWith =>
+  _$$MomentDtoImplCopyWith<_$MomentDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -361,11 +397,11 @@ class _$MomentContentCopyWithImpl<$Res, $Val extends MomentContent>
 }
 
 /// @nodoc
-abstract class _$$_MomentContentCopyWith<$Res>
+abstract class _$$MomentContentImplCopyWith<$Res>
     implements $MomentContentCopyWith<$Res> {
-  factory _$$_MomentContentCopyWith(
-          _$_MomentContent value, $Res Function(_$_MomentContent) then) =
-      __$$_MomentContentCopyWithImpl<$Res>;
+  factory _$$MomentContentImplCopyWith(
+          _$MomentContentImpl value, $Res Function(_$MomentContentImpl) then) =
+      __$$MomentContentImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -379,11 +415,11 @@ abstract class _$$_MomentContentCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MomentContentCopyWithImpl<$Res>
-    extends _$MomentContentCopyWithImpl<$Res, _$_MomentContent>
-    implements _$$_MomentContentCopyWith<$Res> {
-  __$$_MomentContentCopyWithImpl(
-      _$_MomentContent _value, $Res Function(_$_MomentContent) _then)
+class __$$MomentContentImplCopyWithImpl<$Res>
+    extends _$MomentContentCopyWithImpl<$Res, _$MomentContentImpl>
+    implements _$$MomentContentImplCopyWith<$Res> {
+  __$$MomentContentImplCopyWithImpl(
+      _$MomentContentImpl _value, $Res Function(_$MomentContentImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -397,7 +433,7 @@ class __$$_MomentContentCopyWithImpl<$Res>
     Object? scope = null,
     Object? status = null,
   }) {
-    return _then(_$_MomentContent(
+    return _then(_$MomentContentImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -432,27 +468,23 @@ class __$$_MomentContentCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MomentContent implements _MomentContent {
-  _$_MomentContent(
-      {@JsonKey(name: 'dynamic_id')
-          required this.id,
-      @JsonKey(name: 'author_id')
-          required this.author,
+class _$MomentContentImpl implements _MomentContent {
+  _$MomentContentImpl(
+      {@JsonKey(name: 'dynamic_id') required this.id,
+      @JsonKey(name: 'author_id') required this.author,
       required this.text,
       @JsonKey(name: 'dynamic_media')
       @MediaConverter()
-          final List<dynamic>? media,
+      final List<dynamic>? media,
       @JsonKey(name: 'created_at')
       @EpochDateTimeConverter()
-          required this.dateTime,
-      @JsonKey(name: 'auth')
-          required this.scope,
-      @JsonKey(name: 'release_status')
-          required this.status})
+      required this.dateTime,
+      @JsonKey(name: 'auth') required this.scope,
+      @JsonKey(name: 'release_status') required this.status})
       : _media = media;
 
-  factory _$_MomentContent.fromJson(Map<String, dynamic> json) =>
-      _$$_MomentContentFromJson(json);
+  factory _$MomentContentImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MomentContentImplFromJson(json);
 
   @override
   @JsonKey(name: 'dynamic_id')
@@ -494,7 +526,7 @@ class _$_MomentContent implements _MomentContent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MomentContent &&
+            other is _$MomentContentImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.author, author) || other.author == author) &&
             (identical(other.text, text) || other.text == text) &&
@@ -513,12 +545,12 @@ class _$_MomentContent implements _MomentContent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MomentContentCopyWith<_$_MomentContent> get copyWith =>
-      __$$_MomentContentCopyWithImpl<_$_MomentContent>(this, _$identity);
+  _$$MomentContentImplCopyWith<_$MomentContentImpl> get copyWith =>
+      __$$MomentContentImplCopyWithImpl<_$MomentContentImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MomentContentToJson(
+    return _$$MomentContentImplToJson(
       this,
     );
   }
@@ -526,24 +558,21 @@ class _$_MomentContent implements _MomentContent {
 
 abstract class _MomentContent implements MomentContent {
   factory _MomentContent(
-      {@JsonKey(name: 'dynamic_id')
-          required final int id,
-      @JsonKey(name: 'author_id')
-          required final String author,
-      required final String text,
-      @JsonKey(name: 'dynamic_media')
-      @MediaConverter()
+          {@JsonKey(name: 'dynamic_id') required final int id,
+          @JsonKey(name: 'author_id') required final String author,
+          required final String text,
+          @JsonKey(name: 'dynamic_media')
+          @MediaConverter()
           final List<dynamic>? media,
-      @JsonKey(name: 'created_at')
-      @EpochDateTimeConverter()
+          @JsonKey(name: 'created_at')
+          @EpochDateTimeConverter()
           required final DateTime? dateTime,
-      @JsonKey(name: 'auth')
-          required final int scope,
-      @JsonKey(name: 'release_status')
-          required final int status}) = _$_MomentContent;
+          @JsonKey(name: 'auth') required final int scope,
+          @JsonKey(name: 'release_status') required final int status}) =
+      _$MomentContentImpl;
 
   factory _MomentContent.fromJson(Map<String, dynamic> json) =
-      _$_MomentContent.fromJson;
+      _$MomentContentImpl.fromJson;
 
   @override
   @JsonKey(name: 'dynamic_id')
@@ -569,7 +598,7 @@ abstract class _MomentContent implements MomentContent {
   int get status;
   @override
   @JsonKey(ignore: true)
-  _$$_MomentContentCopyWith<_$_MomentContent> get copyWith =>
+  _$$MomentContentImplCopyWith<_$MomentContentImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -647,11 +676,11 @@ class _$MomentCountCopyWithImpl<$Res, $Val extends MomentCount>
 }
 
 /// @nodoc
-abstract class _$$_MomentCountCopyWith<$Res>
+abstract class _$$MomentCountImplCopyWith<$Res>
     implements $MomentCountCopyWith<$Res> {
-  factory _$$_MomentCountCopyWith(
-          _$_MomentCount value, $Res Function(_$_MomentCount) then) =
-      __$$_MomentCountCopyWithImpl<$Res>;
+  factory _$$MomentCountImplCopyWith(
+          _$MomentCountImpl value, $Res Function(_$MomentCountImpl) then) =
+      __$$MomentCountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -662,11 +691,11 @@ abstract class _$$_MomentCountCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MomentCountCopyWithImpl<$Res>
-    extends _$MomentCountCopyWithImpl<$Res, _$_MomentCount>
-    implements _$$_MomentCountCopyWith<$Res> {
-  __$$_MomentCountCopyWithImpl(
-      _$_MomentCount _value, $Res Function(_$_MomentCount) _then)
+class __$$MomentCountImplCopyWithImpl<$Res>
+    extends _$MomentCountCopyWithImpl<$Res, _$MomentCountImpl>
+    implements _$$MomentCountImplCopyWith<$Res> {
+  __$$MomentCountImplCopyWithImpl(
+      _$MomentCountImpl _value, $Res Function(_$MomentCountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -677,7 +706,7 @@ class __$$_MomentCountCopyWithImpl<$Res>
     Object? likeCount = null,
     Object? collectCount = null,
   }) {
-    return _then(_$_MomentCount(
+    return _then(_$MomentCountImpl(
       giftCount: null == giftCount
           ? _value.giftCount
           : giftCount // ignore: cast_nullable_to_non_nullable
@@ -700,15 +729,15 @@ class __$$_MomentCountCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MomentCount implements _MomentCount {
-  _$_MomentCount(
+class _$MomentCountImpl implements _MomentCount {
+  _$MomentCountImpl(
       {@JsonKey(name: 'gift_count') required this.giftCount,
       @JsonKey(name: 'comment_count') required this.commentCount,
       @JsonKey(name: 'like_count') required this.likeCount,
       @JsonKey(name: 'collect_count') required this.collectCount});
 
-  factory _$_MomentCount.fromJson(Map<String, dynamic> json) =>
-      _$$_MomentCountFromJson(json);
+  factory _$MomentCountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MomentCountImplFromJson(json);
 
   @override
   @JsonKey(name: 'gift_count')
@@ -732,7 +761,7 @@ class _$_MomentCount implements _MomentCount {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MomentCount &&
+            other is _$MomentCountImpl &&
             (identical(other.giftCount, giftCount) ||
                 other.giftCount == giftCount) &&
             (identical(other.commentCount, commentCount) ||
@@ -751,12 +780,12 @@ class _$_MomentCount implements _MomentCount {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MomentCountCopyWith<_$_MomentCount> get copyWith =>
-      __$$_MomentCountCopyWithImpl<_$_MomentCount>(this, _$identity);
+  _$$MomentCountImplCopyWith<_$MomentCountImpl> get copyWith =>
+      __$$MomentCountImplCopyWithImpl<_$MomentCountImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MomentCountToJson(
+    return _$$MomentCountImplToJson(
       this,
     );
   }
@@ -768,10 +797,10 @@ abstract class _MomentCount implements MomentCount {
           @JsonKey(name: 'comment_count') required final int commentCount,
           @JsonKey(name: 'like_count') required final int likeCount,
           @JsonKey(name: 'collect_count') required final int collectCount}) =
-      _$_MomentCount;
+      _$MomentCountImpl;
 
   factory _MomentCount.fromJson(Map<String, dynamic> json) =
-      _$_MomentCount.fromJson;
+      _$MomentCountImpl.fromJson;
 
   @override
   @JsonKey(name: 'gift_count')
@@ -787,7 +816,7 @@ abstract class _MomentCount implements MomentCount {
   int get collectCount;
   @override
   @JsonKey(ignore: true)
-  _$$_MomentCountCopyWith<_$_MomentCount> get copyWith =>
+  _$$MomentCountImplCopyWith<_$MomentCountImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -857,11 +886,11 @@ class _$MomentMoreCopyWithImpl<$Res, $Val extends MomentMore>
 }
 
 /// @nodoc
-abstract class _$$_MomentMoreCopyWith<$Res>
+abstract class _$$MomentMoreImplCopyWith<$Res>
     implements $MomentMoreCopyWith<$Res> {
-  factory _$$_MomentMoreCopyWith(
-          _$_MomentMore value, $Res Function(_$_MomentMore) then) =
-      __$$_MomentMoreCopyWithImpl<$Res>;
+  factory _$$MomentMoreImplCopyWith(
+          _$MomentMoreImpl value, $Res Function(_$MomentMoreImpl) then) =
+      __$$MomentMoreImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -871,11 +900,11 @@ abstract class _$$_MomentMoreCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_MomentMoreCopyWithImpl<$Res>
-    extends _$MomentMoreCopyWithImpl<$Res, _$_MomentMore>
-    implements _$$_MomentMoreCopyWith<$Res> {
-  __$$_MomentMoreCopyWithImpl(
-      _$_MomentMore _value, $Res Function(_$_MomentMore) _then)
+class __$$MomentMoreImplCopyWithImpl<$Res>
+    extends _$MomentMoreCopyWithImpl<$Res, _$MomentMoreImpl>
+    implements _$$MomentMoreImplCopyWith<$Res> {
+  __$$MomentMoreImplCopyWithImpl(
+      _$MomentMoreImpl _value, $Res Function(_$MomentMoreImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -885,7 +914,7 @@ class __$$_MomentMoreCopyWithImpl<$Res>
     Object? isLike = null,
     Object? isCollect = null,
   }) {
-    return _then(_$_MomentMore(
+    return _then(_$MomentMoreImpl(
       isFollow: null == isFollow
           ? _value.isFollow
           : isFollow // ignore: cast_nullable_to_non_nullable
@@ -904,14 +933,14 @@ class __$$_MomentMoreCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MomentMore implements _MomentMore {
-  _$_MomentMore(
+class _$MomentMoreImpl implements _MomentMore {
+  _$MomentMoreImpl(
       {@JsonKey(name: 'is_follow') required this.isFollow,
       @JsonKey(name: 'is_like') required this.isLike,
       @JsonKey(name: 'is_collect') required this.isCollect});
 
-  factory _$_MomentMore.fromJson(Map<String, dynamic> json) =>
-      _$$_MomentMoreFromJson(json);
+  factory _$MomentMoreImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MomentMoreImplFromJson(json);
 
   @override
   @JsonKey(name: 'is_follow')
@@ -932,7 +961,7 @@ class _$_MomentMore implements _MomentMore {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_MomentMore &&
+            other is _$MomentMoreImpl &&
             (identical(other.isFollow, isFollow) ||
                 other.isFollow == isFollow) &&
             (identical(other.isLike, isLike) || other.isLike == isLike) &&
@@ -947,12 +976,12 @@ class _$_MomentMore implements _MomentMore {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_MomentMoreCopyWith<_$_MomentMore> get copyWith =>
-      __$$_MomentMoreCopyWithImpl<_$_MomentMore>(this, _$identity);
+  _$$MomentMoreImplCopyWith<_$MomentMoreImpl> get copyWith =>
+      __$$MomentMoreImplCopyWithImpl<_$MomentMoreImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MomentMoreToJson(
+    return _$$MomentMoreImplToJson(
       this,
     );
   }
@@ -963,10 +992,10 @@ abstract class _MomentMore implements MomentMore {
           {@JsonKey(name: 'is_follow') required final bool isFollow,
           @JsonKey(name: 'is_like') required final bool isLike,
           @JsonKey(name: 'is_collect') required final bool isCollect}) =
-      _$_MomentMore;
+      _$MomentMoreImpl;
 
   factory _MomentMore.fromJson(Map<String, dynamic> json) =
-      _$_MomentMore.fromJson;
+      _$MomentMoreImpl.fromJson;
 
   @override
   @JsonKey(name: 'is_follow')
@@ -979,6 +1008,6 @@ abstract class _MomentMore implements MomentMore {
   bool get isCollect;
   @override
   @JsonKey(ignore: true)
-  _$$_MomentMoreCopyWith<_$_MomentMore> get copyWith =>
+  _$$MomentMoreImplCopyWith<_$MomentMoreImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

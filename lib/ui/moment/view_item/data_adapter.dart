@@ -2,6 +2,7 @@ import 'package:app/model/api/moment_dto.dart';
 import 'package:app/model/enum/moment_attach_enum.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+import 'package:media_kit/media_kit.dart';
 
 abstract class IMomentDataAdapter<T> extends DataAdapter<T> {
   IMomentDataAdapter(super.data);
@@ -23,6 +24,8 @@ abstract class IMomentDataAdapter<T> extends DataAdapter<T> {
   dynamic get video;
 
   DateTime? get time;
+
+  Map? get liveState;
 }
 
 class MomentDtoAdapter extends IMomentDataAdapter<Rx<MomentDto>> {
@@ -44,6 +47,9 @@ class MomentDtoAdapter extends IMomentDataAdapter<Rx<MomentDto>> {
 
   @override
   MomentContent get content => _data.content;
+
+  @override
+  Map? get liveState => _data.liveState;
 
   @override
   List<Map>? get images {

@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/gender_enum.dart';
+import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/unity_view.dart';
@@ -41,11 +42,24 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
           gestureRecognizers: {
             Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
           },
-          onInit: (_, loader, __) => loader('SelectScene', doOnAfter: () {
-            unityLoadComplete = true;
-            setState(() { });
-          }),
-        ),
+          onInit: (unity, loader, onProcess) => loader(
+              'SelectScene',
+              doOnAfter: () async {
+                unityLoadComplete = true;
+                setState(() { });
+
+                try {
+                  await unity.sendMessage(
+                    App2UnityEnum.FTU_SELECTED_GENDER,
+                    data: {
+                      'gender' : widget.gender.code,
+                    },
+                  );
+                } catch (e, s) {
+                  errLog(e, s);
+                }
+              },
+          ),),
         if (unityLoadComplete)
           Positioned(
             left: 48,

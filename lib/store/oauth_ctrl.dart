@@ -201,8 +201,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
         final info = await holderProgress(
           Get.to(
-                () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
-            // () => MyUserInitPerfectInfoPage(token: token),
+                // () => Env.useUnity ? UserInit1Page(token: token) : UserInit2Page(token: token, gender: GenderEnum.male),
+            () => MyUserInitPerfectInfoPage(token: token),
             transition: Transition.noTransition,
           )!,
         );
