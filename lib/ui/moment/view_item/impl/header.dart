@@ -19,21 +19,12 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
 
   @override
   Widget $header() {
+    final bool onlineStatus = (vm.liveState?['status'] == 1);//是否直播中
+
     Widget child = Row(
       children: [
         Spacing.w10,
-        // Container(
-        //   clipBehavior: Clip.none,
-        //   width: boxSize,
-        //   height: boxSize,
-        //   padding: const Pad(all: 3.0),
-        //   decoration: BoxDecoration(
-        //     shape: BoxShape.circle,
-        //     border: Border.all(color: AppPalette.primary, width: 3.0,),
-        //   ),
-        //   child: AsyncAvatar(uid: vm.author, size: avatarSize),
-        // ),
-        AsyncAvatar(uid: vm.author, size: avatarSize, isShowOnline: false,),
+        AsyncAvatar(uid: vm.author, size: avatarSize, isShowOnline: onlineStatus,),
         Spacing.w10,
         Expanded(
           child: Column(

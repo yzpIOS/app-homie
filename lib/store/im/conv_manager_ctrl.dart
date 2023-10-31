@@ -4,6 +4,7 @@ import 'package:app/3rd/tencent/im.dart';
 import 'package:app/model/enum/sys_conv_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/im_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
@@ -23,6 +24,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
   Future? _cache;
   late final _ready = Get.find<ImAuth>().ready;
   late final _sysExt = <String, Map<String, String>>{};
+  late final _liveStateList = [];// 主播直播状态数组
 
   late final _convMark = <String>[];
 
@@ -41,6 +43,18 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
     _initEventListener();
   }
 
+  /// 是否直播中
+  bool isOnlineState(UID uid) {
+    for (var liveState in _liveStateList) {
+      if (liveState.containsKey('uid')) {
+        if (uid == liveState['uid']) {
+          return (liveState['status'] == 1);// 1直播中 0未直播
+        }
+      }
+    }
+    return false;
+  }
+
   void _initEventListener() {
     void updateBadge(V2TimConversation conv, SysConvEnum type) {
       sysBadgeRx[type] = Tuple2(conv, conv.unreadCount!);
@@ -56,6 +70,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
           final showData = <V2TimConversation>[];
 
           await _fetchSysExt(items);
+          await _liveState(items);
 
           int otherTotal = 0;
           int unUserReadMessageCount = 0;
@@ -87,6 +102,8 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
                 }
               }
             } else {
+
+
               showData.add(item);
               if((item.unreadCount ?? 0) > 0) {
                 unUserReadMessageCount += (item.unreadCount ?? 0);
@@ -169,6 +186,44 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
     );
   }
 
+  /// 获取用户的直播状态
+  Future<void> _liveState(List<V2TimConversation> data) async {
+    final ids = //
+    data
+        .where((it) => it.type == ConversationType.V2TIM_C2C && !it.isSysConv)
+        .map((it) => it.userID!)
+        .toList(growable: false);
+
+    if (ids.isNotEmpty) {
+      try {
+        // 拿到用户的 nuid
+        final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
+        final users = await findByUidX(ids, useNet: true);
+        List<int?> roleIdList = [];
+        users.forEach((key, value) {
+          roleIdList.add(value.nuid?.toInt());
+        });
+
+        final liveStateList = await Api.UserInfo.requestAnchorLiveState(result: {'roleIdList' : roleIdList});
+        for (var liveState in liveStateList) {
+          if (liveState.containsKey('role_id')) {
+            int roleId = liveState['role_id'];
+            for (var userInfo in users.values) {
+              if (userInfo.nuid?.toInt() == roleId) {
+                // 将uid添加到liveState中
+                liveState['uid'] = userInfo.uid;
+              }
+            }
+          }
+        }
+        _liveStateList.clear();
+        _liveStateList.addAll(liveStateList);
+      } catch (e, s) {
+        errLog(e, s);
+      }
+    }
+  }
+
   Future<void> _fetchSysExt(List<V2TimConversation> data) async {
     final ids = //
         data
@@ -202,6 +257,7 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
             _sysExt[info.userID!] = <String, String>{
               'nickName': info.nickName ?? '',
               'avatarUrl': info.faceUrl ?? '',
+              'roleId': info.role == null ? '' : info.role.toString(),
               if (data != null) ...data,
             };
           }

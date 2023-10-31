@@ -54,6 +54,7 @@ class _ItemView extends StatelessWidget {
     final unRead = data.unreadCount ?? 0;
     final message = data.lastMessage;
     final msgTime = message?.msgTime;
+    final isOnlineState = convManagerCtrl.isOnlineState(data.userID!);//是否直播中
 
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +97,7 @@ class _ItemView extends StatelessWidget {
     child = Row(
       children: [
         Spacing.w10,
-        $AvatarView(),
+        $AvatarView(isOnlineState),
         Spacing.w10,
         Expanded(child: child),
         Spacing.w10,
@@ -131,7 +132,7 @@ class _ItemView extends StatelessWidget {
     return child;
   }
 
-  Widget $AvatarView() {
+  Widget $AvatarView(bool isOnlineState) {
     const double size = 40;
 
     Widget? child;
@@ -141,14 +142,14 @@ class _ItemView extends StatelessWidget {
     } else {
       switch (data.type) {
         case ConversationType.V2TIM_C2C:
-          child = AsyncAvatar(uid: data.userID!, size: size);
+          child = AsyncAvatar(uid: data.userID!, size: size, isShowOnline: isOnlineState,);
           break;
         case ConversationType.V2TIM_GROUP:
           break;
       }
     }
 
-    return Box(width: size, height: size, child: child);
+    return Box(width: isOnlineState ? size + 6 : size, height: isOnlineState ? size + 6 : size, child: child);
   }
 
   Widget $TitleView() {

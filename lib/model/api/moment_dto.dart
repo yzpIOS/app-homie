@@ -12,6 +12,7 @@ class MomentDto with _$MomentDto {
     required MomentMore more,
     required MomentCount count,
     @JsonKey(name: 'topic_list') List<Map>? topic,
+    required Map? liveState,
   }) = _MomentDto;
 
   factory MomentDto.fromJson(Map<String, dynamic> json) => _$MomentDtoFromJson(json);
