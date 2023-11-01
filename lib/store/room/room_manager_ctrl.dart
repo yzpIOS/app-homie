@@ -113,7 +113,12 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
         var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
         putPkInfo(roomInfo, pkRoomId);
-        toMiddleRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name), callCloseRoom: false);
+
+        if(roomInfo["scene_id"] != 0) {
+          toMiddleRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name), callCloseRoom: false);
+        } else {
+          toSquare(data: roomInfo);
+        }
       });
     } else if(roomId > 0) {
       // 在普通房间中
@@ -130,7 +135,11 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           // 跳到房间中
           var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
           putRoomInfo(roomInfo);
-          toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+          if(roomInfo["scene_id"] != 0) {
+            toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+          } else {
+            toSquare(data: roomInfo);
+          }
         });
       }
     } else {
