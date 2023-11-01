@@ -185,7 +185,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
           label: '下一步',
           textStyle: TextStyle(
               fontSize: 16, color: isEnable ? AppPalette.txtWhite : AppPalette.background2, fontWeight: fw$SemiBold),
-          onTap: doSub,
+          onTap: isEnable ? doSub : null,
         );
       }),
     );
