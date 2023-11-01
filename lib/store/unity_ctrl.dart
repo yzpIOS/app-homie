@@ -204,6 +204,10 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     if(!canSendMessage) {
       return;
     }
+    // 不需要与unity进行通信
+    if(!needWaitForUnityReady) {
+      return;
+    }
     if(isClosed || _isUnityInitSuccess == false) {
       return;
     }
@@ -362,7 +366,7 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     //   await sendSocketComplete.future.timeout(const Duration(seconds: unity_time_out));
     // }
     loadSceneComplete = false;
-    if(!forceLoad) {
+    if(needWaitForUnityReady) {
       if(!_sendSockComplete.isCompleted) {
         logForDebug("与unity通信未成功，unity返回再加载场景");
         await _sendSockComplete.future;
