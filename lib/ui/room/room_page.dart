@@ -164,19 +164,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       } else {
         msg = '加载失败';
       }
-
-      // Future.delayed(const Duration(seconds: 2)).whenComplete(() => Get.back());
-
-      if(controller.isClosed) {
-        return;
-      }
-
-      safePop().whenComplete(() {
-        if(controller.isDisposed) {
-          return;
-        }
-        Get.alertDialog(msg);
-      });
     }
   }
 
