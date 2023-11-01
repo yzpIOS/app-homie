@@ -428,10 +428,14 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
 
   Future<void> loadSceneCombo(FutureOr<void> Function() action) => _sceneLock.synchronized(action);
 
+  bool _hasSendHotFix = false;
   ///
   /// 开始热更, 不需要等unity ready
   ///
   Future<void> startHotFix() async {
+    if(_hasSendHotFix) {
+      return;
+    }
     // 没有加载过场景时，需要把场景加载进来？然后再发消息给unity
     // if(!loadSceneComplete) {
     //   await _loadScene(const SceneInfo('Transition'), forceLoad: true);
@@ -440,6 +444,8 @@ class UnityCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin, GetDisposab
     await _sendMessage(App2UnityEnum.FTU_HOTFIX_START, "", const Duration(seconds: unity_time_out));
     // 通知unity热更
     needWaitForUnityReady = true;
+    // 是否己经发送事件
+    _hasSendHotFix = true;
   }
 
 
