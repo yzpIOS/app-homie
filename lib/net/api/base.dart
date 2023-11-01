@@ -39,6 +39,10 @@ mixin _HttpMixin on _IApi {
         // case 1:
         //   throw const NetException('服务异常');
         case 17:
+          // 如果有正在显示的弹窗，关闭它
+          if (Get.isDialogOpen != null && Get.isDialogOpen!) {
+            Get.back();
+          }
           Get.alertDialog(data['msg'] ?? '服务异常');
           throw NetException(data['msg'] ?? '服务异常');
         default:

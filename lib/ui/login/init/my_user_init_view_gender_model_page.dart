@@ -35,48 +35,64 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
   }
 
   Widget $BodyView() {
-    return Stack(
-      children: [
-        UnityView(
-          uniqueKey: 'SelectScene',
-          gestureRecognizers: {
-            Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
-          },
-          onInit: (unity, loader, onProcess) => loader(
-              'SelectScene',
-              doOnAfter: () async {
-                unityLoadComplete = true;
-                setState(() { });
+    Widget child = UnityView(
+      uniqueKey: 'SelectScene',
+      gestureRecognizers: {
+        Factory<HorizontalDragGestureRecognizer>(() => HorizontalDragGestureRecognizer()),
+      },
+      onInit: (unity, loader, onProcess) => loader(
+        'SelectScene',
+        doOnAfter: () async {
+          unityLoadComplete = true;
+          setState(() { });
 
-                try {
-                  await unity.sendMessage(
-                    App2UnityEnum.FTU_SELECTED_GENDER,
-                    data: {
-                      'gender' : widget.gender.code,
-                    },
-                  );
-                } catch (e, s) {
-                  errLog(e, s);
-                }
+          try {
+            await unity.sendMessage(
+              App2UnityEnum.FTU_SELECTED_GENDER,
+              data: {
+                'gender' : widget.gender.code,
               },
-          ),),
+            );
+          } catch (e, s) {
+            errLog(e, s);
+          }
+        },
+      ),
+    );
+
+    return Column(
+      children: [
+        Expanded(child: child),
         if (unityLoadComplete)
-          Positioned(
-            left: 48,
-            right: 48,
-            bottom: AppSize.safeBottom + 36,
-            child: Column(
-              children: [
-                const XText('性别选择后不能修改',style: TextStyle(fontSize: 12, color: AppPalette.primary, fontWeight: fw$Regular),),
-                const Spacing(height: 10, flex: null,),
-                XTextBtn(
-                  label: '进入Homie',
-                  textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
-                  onTap: doSub,
-                ),
-              ],
+          ...[
+            const Spacing(height: 20, flex: null,),
+            const XText('性别选择后不能修改',style: TextStyle(fontSize: 12, color: AppPalette.primary, fontWeight: fw$Regular),),
+            const Spacing(height: 10, flex: null,),
+            Padding(
+              padding: Pad(horizontal: 48, bottom: AppSize.safeBottom + 36),
+              child: XTextBtn(
+                label: '进入Homie',
+                textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
+                onTap: doSub,
+              ),
             ),
-          ),
+          ],
+          // Positioned(
+          //   left: 48,
+          //   right: 48,
+          //   bottom: AppSize.safeBottom + 36,
+          //   child: Column(
+          //     children: [
+          //       const XText('性别选择后不能修改',style: TextStyle(fontSize: 12, color: AppPalette.primary, fontWeight: fw$Regular),),
+          //       const Spacing(height: 10, flex: null,),
+          //       XTextBtn(
+          //         label: '进入Homie',
+          //         textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
+          //         onTap: doSub,
+          //       ),
+          //     ],
+          //   ),
+          // ),
       ],
     );
   }
