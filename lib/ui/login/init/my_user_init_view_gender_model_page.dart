@@ -3,6 +3,7 @@ import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/enum/unity_event_enum.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/foundation.dart';
@@ -65,39 +66,41 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
         Positioned.fill(child: child),
 
         if(unityLoadComplete)
-          Positioned.fill(
-            top: AppSize.height - 126.5,
-            left: 6.5,
-            right: 6.5,
-            bottom: 15.5,
+          Positioned(
+            left: 8.5,
+            right: 8.5,
+            bottom: AppSize.safeBottom,
             child: Container(
-              height: 118.5,
               decoration: BoxDecoration(
-                color: Color(0xFFF1F3FF),
+                color: const Color(0xFFF1F3FF),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(4.0, 0),
+                    offset: const Offset(4.0, 0),
                     spreadRadius: 5,
                     blurRadius: 10,
-                    color: Color(0xFFADB5C3).withAlpha(200),
+                    color: const Color(0xFFADB5C3).withAlpha(200),
                   )
                 ]
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 18,),
-                  const XText('性别选择后不能修改',style: TextStyle(fontSize: 12, color: AppPalette.primary, fontWeight: fw$Regular),),
+                  const SizedBox(height: 15,),
+                  const XText('性别选择后不能修改哦~',style: TextStyle(fontSize: 13, color: AppPalette.primary, fontWeight: fw$Regular),),
                   const Spacing(height: 15, flex: null,),
                   Padding(
-                    padding: Pad(horizontal: 18),
+                    padding: const Pad(horizontal: 18),
                     child: XTextBtn(
+                      height: 48,
                       label: '进入Homie',
-                      textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
+                      textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$SemiBold),
+                      shape: const XRectangleBorder(
+                        borderRadius: AppBorderRadius.a8,
+                      ),
                       onTap: doSub,
                     ),
                   ),
-                  const SizedBox(height: 18,),
+                  const SizedBox(height: 20,),
                 ],
               ),
             ),
