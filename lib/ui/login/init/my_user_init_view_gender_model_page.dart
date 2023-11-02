@@ -66,6 +66,10 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
 
         if(unityLoadComplete)
           Positioned.fill(
+            top: AppSize.height - 126.5,
+            left: 6.5,
+            right: 6.5,
+            bottom: 15.5,
             child: Container(
               height: 118.5,
               decoration: BoxDecoration(
@@ -97,10 +101,6 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
                 ],
               ),
             ),
-            top: AppSize.height - 126.5,
-            left: 6.5,
-            right: 6.5,
-            bottom: 15.5,
           )
       ],
     );
