@@ -51,7 +51,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
         '黑名单',
         '清零',
       ],
-      if (Env.isDebug) '切换横竖屏',
+      // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',
     ];

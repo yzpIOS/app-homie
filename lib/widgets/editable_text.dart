@@ -21,6 +21,7 @@ class XInputView extends StatelessWidget {
   final TextInputAction? textInputAction;
   final Color bgColor;
   final List<TextInputFormatter>? inputFormatters;
+  final TextAlign textAlign;
 
   const XInputView({
     super.key,
@@ -38,6 +39,7 @@ class XInputView extends StatelessWidget {
     this.autofocus = false,
     this.bgColor = const Color(0xFFF5F5F5),
     this.inputFormatters,
+    this.textAlign = TextAlign.start,
   });
 
   @override
@@ -49,6 +51,7 @@ class XInputView extends StatelessWidget {
     );
 
     return ExtendedTextField(
+      textAlign: textAlign,
       specialTextSpanBuilder: context.watch<SpecialTextSpanBuilder?>(),
       controller: controller,
       autofocus: autofocus,
