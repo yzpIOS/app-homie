@@ -101,7 +101,7 @@ class ApiMoment extends ApiBase {
 
   /// 获取主播直播状态
   Future requestAnchorLiveState({required Map result}) async {
-    if (result.containsKey('items')) {
+    if (result.containsKey('items') && result['items'] != null) {
       List items = result['items'];
 
       // 提取role_id列表

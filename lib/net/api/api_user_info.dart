@@ -172,7 +172,7 @@ class ApiUserInfo extends ApiBase {
 
   /// 获取主播直播状态
   Future requestAnchorLiveState({required Map result}) async {
-    if (result.containsKey('items')) {
+    if (result.containsKey('items') && result['items'] != null) {
       List items = result['items'];
 
       // 提取role_id列表
@@ -203,7 +203,7 @@ class ApiUserInfo extends ApiBase {
         // 更新items
         result['items'] = items;
       }
-    } else if (result.containsKey('role_id')) {
+    } else if (result.containsKey('role_id') && result['role_id'] != null) {
       // 提取role_id列表
       List<int> roleIdList = [result['role_id']];
       // 请求接口获取直播状态
@@ -214,7 +214,7 @@ class ApiUserInfo extends ApiBase {
            result.addIf(true, 'liveState', liveState);
          }
       }
-    } else if (result.containsKey('roleIdList')) {
+    } else if (result.containsKey('roleIdList') && result['roleIdList'] != null) {
       // 请求接口获取直播状态
       final liveStateList = await Api.Room.anchorLiveState(roleIdList: result['roleIdList']);
       return liveStateList;
