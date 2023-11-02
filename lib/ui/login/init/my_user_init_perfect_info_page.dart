@@ -42,7 +42,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     return WillPopScope(
       onWillPop: () => Future.value(true),
       child: Scaffold(
-        appBar: AppBar(backgroundColor: AppPalette.transparent),
+        appBar: xAppBar(bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,//是否调整大小以避免底部嵌入(防止下一步按钮上移)
         body: Stack(
