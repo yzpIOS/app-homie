@@ -201,7 +201,7 @@ class _CreateRoomPageState extends State<CreateRoomPage> with ReadyMixin {
                   attach: FileImageAttach(asset: upFile),
                 );
               },
-              callback1: (resp) => imageRx((resp as Tuple3).value2),
+              callback1: (resp) => imageRx((resp as Tuple4).value2),
             );
           },
         );

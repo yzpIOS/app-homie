@@ -131,7 +131,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
         return data;
       },
       callback1: (resp) {
-        final it = (resp as Tuple3);
+        final it = (resp as Tuple4);
 
         dataRx.rebuild((val) => val.copyWith(avatar: it.value2, avatarEx: it.value3));
 

@@ -153,7 +153,7 @@ class _UserInit2PageState extends State<UserInit2Page> {
           Api.Common.upImage(attach: AssetImageAttach(asset: asset)),
           callback1: (resp) {
             avatarRx(
-              Tuple2((resp as Tuple3).value1, asset),
+              Tuple2((resp as Tuple4).value1, asset),
             );
           },
         );

@@ -199,11 +199,17 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
         final asset = it.first;
 
         simpleSub(
-          Api.Common.upImage(attach: AssetImageAttach(asset: asset)),
+          Api.Common.upImage(attach: AssetImageAttach(asset: asset), need_audit: true),
           callback1: (resp) {
-            avatarRx(
-              Tuple2((resp as Tuple3).value1, asset),
-            );
+            Tuple4 data = (resp as Tuple4);
+            //头像是否通过审核
+            if (data.value4['pass_audit'] != null && data.value4['pass_audit'] == false) {
+              showToast('头像涉嫌违规');
+            } else {
+              avatarRx(
+                Tuple2(data.value1, asset),
+              );
+            }
           },
         );
       },

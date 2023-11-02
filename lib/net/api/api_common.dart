@@ -4,6 +4,12 @@ class ApiCommon extends ApiBase {
   const ApiCommon(super.path);
 
   Future<Tuple3<int, String, String?>> addMedia({required UploadMediaAttach attach, bool blurHash = true}) async {
+    var result2 = await upImageAddMedia(attach: attach, blurHash: blurHash);
+
+    return Tuple3(result2.value1, result2.value2, result2.value3);
+  }
+
+  Future<Tuple4<int, String, String?, Map>> upImageAddMedia({required UploadMediaAttach attach, bool blurHash = true, bool? need_audit}) async {
     final result = await attach.upLoad({'blurHash': blurHash});
 
     final extra = result.value2;
@@ -12,6 +18,7 @@ class ApiCommon extends ApiBase {
       'type': attach.upType,
       'media_file_name': result.value1,
       if (extra != null) 'extra': extra,
+      if (need_audit != null) 'need_audit' : need_audit,
     };
 
     final uri = Env.apiImgUrl.replace(
@@ -20,11 +27,11 @@ class ApiCommon extends ApiBase {
 
     final resp = await _doPost2(uri.toString(), data: data);
 
-    return Tuple3(resp['id'], resp['media_url'], extra);
+    return Tuple4(resp['id'], resp['media_url'], extra, resp);
   }
 
-  Future<Tuple3<int, String, String?>> upImage({required ImageAttach attach, bool blurHash = true}) {
-    return addMedia(attach: attach, blurHash: blurHash);
+  Future<Tuple4<int, String, String?, Map>> upImage({required ImageAttach attach, bool blurHash = true, bool? need_audit}) {
+    return upImageAddMedia(attach: attach, blurHash: blurHash, need_audit: need_audit);
   }
 
   ///type 媒体类型，0：图片， 1：视频
