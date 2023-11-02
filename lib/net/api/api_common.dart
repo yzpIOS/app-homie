@@ -52,6 +52,16 @@ class ApiCommon extends ApiBase {
     return _doPost('im/token/get').then((val) => val['token']);
   }
 
+  ///加载单聊记录
+  Future imSingleChatLoad({required String? accept_uid, required int? send_at}) {
+    final data = {
+      if (accept_uid != null) 'accept_uid': accept_uid,
+      if (send_at != null) 'send_at': send_at,
+    };
+
+    return _doPost('im/single_chat/load', data: data);
+  }
+
   ///type 类型：1.房间 2.用户 3.动态
   ///report_type 举报类型 1.语音 2.个人信息 3.私信 4.公聊&留言板
   ///report_reason 举报原因 1.低俗色情 2.侮辱谩骂 3.谣言政治 4.漫骂攻击 5.虚假消息 6.推销广告 7.抄袭内容 8.危害未成年人 9.侵犯权益 10.其他

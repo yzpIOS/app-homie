@@ -402,6 +402,10 @@ class ChatMsgSender extends MsgSender with TxtSender, ImageSender, GiftSender, C
         _msgAdd(msgOut);
 
         _toEnd();
+
+        //加载单聊记录
+        int send_at = DateTime.now().millisecondsSinceEpoch;
+        await Api.Common.imSingleChatLoad(accept_uid: _conv.userId, send_at: send_at);
       }
     } on LogicException catch (e) {
       showToast(e.msg);

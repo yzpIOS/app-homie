@@ -54,7 +54,8 @@ abstract class ViewState<T> {
       child: OpacityButton(
         onTap: doRefresh,
         child: XText(
-          Env.isRelease ? 'Error' : '$e',
+          // Env.isRelease ? 'Error' : '$e',
+          '$e',
           style: const TextStyle(color: Colors.black54),
         ),
       ),
