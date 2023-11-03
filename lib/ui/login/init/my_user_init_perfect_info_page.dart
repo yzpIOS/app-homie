@@ -116,6 +116,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
         child: XInputView(
           controller: inputs['昵称'],
           hintText: '请输入您的昵称',
+          fontSize: 15,
           bgColor: AppPalette.transparent,
           inputFormatters: [
             //只允许输入最大文本数
@@ -151,7 +152,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
             width: width / 2,
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFFEBCFFF),
+                color: const Color(0xFFEBEBFF),
                 borderRadius: selectedGender.value?.code == 1
                     ? const BorderRadius.only(
                   topLeft: Radius.circular(100.0),
@@ -198,6 +199,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
   Widget $OneGenderItemView(double size, GenderEnum gender) {
     return InkWell(
       onTap: () => selectedGender.value = gender,
+      splashColor: AppPalette.transparent,
       child: Obx(() {
         bool isSelected = (selectedGender.value == gender);
 
@@ -205,7 +207,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(IMG.format('login/login_gender_${gender.code}'), scale: 3, color: isSelected ? null : const Color(0xFFB3B3B7), fit: BoxFit.contain),
-            const Spacing(width: 5, flex: null,),
+            const Spacing(width: 4, flex: null,),
             XText(
               '${gender.label}生',
               style: TextStyle(
