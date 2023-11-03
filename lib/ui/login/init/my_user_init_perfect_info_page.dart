@@ -7,6 +7,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/login/init/my_user_init_view_gender_model_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 /// 注册成功后完善资料（头像、昵称、性别）
@@ -116,8 +117,10 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
           controller: inputs['昵称'],
           hintText: '请输入您的昵称',
           bgColor: AppPalette.transparent,
-          // borderRadius: AppBorderRadius.a4,
-          // maxLength: 8,
+          inputFormatters: [
+            //只允许输入最大文本数
+            LengthLimitingTextInputFormatter(8),
+          ],
           textAlign: TextAlign.center,
           onChanged: (text) {
             nickNameCountRx.value = text.length;
@@ -195,31 +198,25 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
   Widget $OneGenderItemView(double size, GenderEnum gender) {
     return InkWell(
       onTap: () => selectedGender.value = gender,
-      child:  Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Obx(() {
-            if (selectedGender.value == gender) {
-              return SvgView(SVG.$('common/性别_${gender.code}'), width: 24, height: 24);
-            } else {
-              return SvgView(SVG.$('common/性别_${gender.code}'), color: const Color(0xFFB3B3B7), width: 24, height: 24);
-            }
-          }),
-          const Spacing(height: 5, flex: null,),
-          Obx(() {
-            Color color;
-            if (selectedGender.value == gender) {
-              color = AppPalette.txtDark;
-            } else {
-              color = const Color(0xFFB3B3B7);
-            }
-            return XText(
+      child: Obx(() {
+        bool isSelected = (selectedGender.value == gender);
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(IMG.format('login/login_gender_${gender.code}'), scale: 3, color: isSelected ? null : const Color(0xFFB3B3B7), fit: BoxFit.contain),
+            const Spacing(width: 5, flex: null,),
+            XText(
               '${gender.label}生',
-              style: TextStyle(fontSize: 18, color: color, fontWeight: fw$Bold),
-            );
-          }),
-        ],
-      ),
+              style: TextStyle(
+                fontSize: 18,
+                color: isSelected ? AppPalette.txtDark : const Color(0xFFB3B3B7),
+                fontWeight: fw$Bold
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 
