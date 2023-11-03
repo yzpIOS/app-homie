@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class XInputView extends StatelessWidget {
   final double height;
   final double fontSize;
+  final FontWeight fontWeight;
   final bool autofocus;
   final String? hintText;
   final FocusNode? focusNode;
@@ -36,6 +37,7 @@ class XInputView extends StatelessWidget {
     this.onTap,
     this.height = 40,
     this.fontSize = 14,
+    this.fontWeight = fw$Regular,
     this.autofocus = false,
     this.bgColor = const Color(0xFFF5F5F5),
     this.inputFormatters,
@@ -56,7 +58,7 @@ class XInputView extends StatelessWidget {
       controller: controller,
       autofocus: autofocus,
       focusNode: focusNode,
-      style: TextStyle(fontSize: fontSize, color: Colors.black),
+      style: TextStyle(fontSize: fontSize, color: Colors.black, fontWeight: fontWeight),
       decoration: InputDecoration(
         constraints: BoxConstraints.tightFor(height: height),
         prefixIcon: prefixIcon,
@@ -64,6 +66,7 @@ class XInputView extends StatelessWidget {
         suffixIcon: suffixIcon,
         suffixIconConstraints: BoxConstraints(minWidth: height),
         hintText: hintText,
+        hintStyle: TextStyle(fontSize: fontSize, color: AppPalette.c9, fontWeight: fw$Regular),
         filled: true,
         fillColor: bgColor,
         contentPadding: const Pad(horizontal: 12),

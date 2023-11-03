@@ -63,7 +63,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
                 children: [
                   const Text('嗨，欢迎来到HOMIE世界~', style: TextStyle(fontSize: 22, color: AppPalette.primary, fontWeight: fw$SemiBold),),
                   const Spacing(height: 10, flex: null,),
-                  const Text('有头像的小伙伴容易获得关注哦~', style: TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$SemiBold),),
+                  const Text('有头像的小伙伴容易获得关注哦~', style: TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$Regular),),
                   const Spacing(height: 50, flex: null,),
                   $Avatar(103),
                   const Spacing(height: 30, flex: null,),
@@ -117,6 +117,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
           controller: inputs['昵称'],
           hintText: '请输入您的昵称',
           fontSize: 15,
+          fontWeight: fw$Bold,
           bgColor: AppPalette.transparent,
           inputFormatters: [
             //只允许输入最大文本数

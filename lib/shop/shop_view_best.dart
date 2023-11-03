@@ -110,13 +110,13 @@ class ShopViewBest extends StatelessWidget {
       return ListView(
         padding: const Pad(bottom: 90),
         children: [
-          itemWrap(
-            child: const Box(
-              height: 32,
-              alignment: Alignment.center,
-              child: XText('全部', style: TextStyle(fontSize: 14)),
-            ),
-          ),
+          // itemWrap(
+          //   child: const Box(
+          //     height: 32,
+          //     alignment: Alignment.center,
+          //     child: XText('全部', style: TextStyle(fontSize: 14)),
+          //   ),
+          // ),
           ...data.mapIndexed(itemBuilder),
         ],
       );
@@ -128,6 +128,11 @@ class ShopViewBest extends StatelessWidget {
       child: GetX<ShopCategoryCtrl>(
         builder: (it) {
           final _data = it.allCategoryList ?? [];
+          if (selectRx.value == null && _data.isNotEmpty) {
+            final temp = _data.first;
+            final categoryId = temp['id'];
+            selectRx.value = categoryId;
+          }
           return $DataView(_data);
         },
         initState: (value) {
