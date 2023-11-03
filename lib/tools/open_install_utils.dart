@@ -38,7 +38,7 @@ class OpenInstallUtils {
         // 获取android OAID
         Map<String, String>? datas = await Oaid().getOAID();
         _openinstallFlutterPlugin?.configAndroid({
-          "oaid": datas?["iaid"] ?? "",
+          "oaid": datas?["oaid"] ?? "",
         });
       } else if(Platform.isIOS) {
         // 获取ios的IDFA
