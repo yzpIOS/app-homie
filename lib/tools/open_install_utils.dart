@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:app/tools.dart';
 import 'package:app/tools/local_storage.dart';
+import 'package:app/widgets.dart';
 import 'package:oaid/oaid.dart';
 import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
@@ -37,15 +38,18 @@ class OpenInstallUtils {
       if(Platform.isAndroid) {
         // 获取android OAID
         Map<String, String>? datas = await Oaid().getOAID();
+        debugPrint("获取android OAID" + datas.toString());
         _openinstallFlutterPlugin?.configAndroid({
           "oaid": datas?["oaid"] ?? "",
+          "adEnabled": true,
         });
       } else if(Platform.isIOS) {
         // 获取ios的IDFA
         Map<String, String>? datas = await Oaid().getIDFA();
         // ios配置
         _openinstallFlutterPlugin?.configIos({
-          "idfaStr": datas?["idfaStr"] ?? ""
+          "idfaStr": datas?["idfaStr"] ?? "",
+          "adEnabled": true
         });
       }
       _openinstallFlutterPlugin?.init(wakeupHandler);
