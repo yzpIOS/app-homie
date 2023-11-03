@@ -69,7 +69,7 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
           Positioned(
             left: 8.5,
             right: 8.5,
-            bottom: AppSize.safeBottom,
+            bottom: AppSize.safeBottom > 0 ? AppSize.safeBottom : 15,
             child: Container(
               decoration: BoxDecoration(
                 color: const Color(0xFFF1F3FF),
