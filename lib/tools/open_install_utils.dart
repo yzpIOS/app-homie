@@ -52,32 +52,32 @@ class OpenInstallUtils {
           "adEnabled": true
         });
       }
-      _openinstallFlutterPlugin?.init(onInstall);
+      _openinstallFlutterPlugin?.init(wakeupHandler);
       _openinstallFlutterPlugin?.install(onInstall);
     }
   }
 
-  // Future wakeupHandler(Map<String, Object> data) async {
-  //   if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-  //     return;
-  //   }
-  //   // 获取json数据（动态拉起参数）
-  //   final bindData = data['bindData'];
-  //   // 渠道编号
-  //   final channelCode = data['channelCode'];
-  //   if(bindData == null) {
-  //     return;
-  //   }
-  //   final bindDataStr = bindData.toString();
-  //   // json数据解析
-  //   final Map<String, dynamic> result = jsonDecode(bindDataStr);
-  //   if(channelCode != null && !result.containsKey('channel_code')) {
-  //     result['channel_code'] = channelCode;// 渠道码
-  //   }
-  //   KvBox.write(PrefKey.OpenInstallBlindData, result);
-  //   // 记录己经上传过
-  //   KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
-  // }
+  Future wakeupHandler(Map<String, Object> data) async {
+    // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
+    //   return;
+    // }
+    // // 获取json数据（动态拉起参数）
+    // final bindData = data['bindData'];
+    // // 渠道编号
+    // final channelCode = data['channelCode'];
+    // if(bindData == null) {
+    //   return;
+    // }
+    // final bindDataStr = bindData.toString();
+    // // json数据解析
+    // final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    // if(channelCode != null && !result.containsKey('channel_code')) {
+    //   result['channel_code'] = channelCode;// 渠道码
+    // }
+    // KvBox.write(PrefKey.OpenInstallBlindData, result);
+    // // 记录己经上传过
+    // KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+  }
 
   Future onInstall(Map<String, Object> data) async {
     print("动态拉起参数：${data.toString()}");
