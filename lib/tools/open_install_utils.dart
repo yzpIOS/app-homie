@@ -80,6 +80,7 @@ class OpenInstallUtils {
   // }
 
   Future onInstall(Map<String, Object> data) async {
+    print("动态拉起参数：${data.toString()}");
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }

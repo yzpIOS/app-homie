@@ -69,6 +69,7 @@ class ApiUserInfo extends ApiBase {
     await KvBox.read<Map>(PrefKey.OpenInstallBlindData).onNotNull((val) {
       data.addAll(val);
     });
+    print("拉新数据: ${data.toString()}");
 
     return _doPost('update', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }
