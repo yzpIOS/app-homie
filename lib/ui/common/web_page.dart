@@ -54,6 +54,9 @@ class _WebPageState extends State<WebPage> {
 
                 xlog('onPageFinished -> $url', type: LogType.WEB_VIEW);
               },
+              onUrlChange: (url) {
+                xlog('onPageFinished -> $url', type: LogType.WEB_VIEW);
+              }
             ),
           );
 

@@ -85,7 +85,7 @@ class OpenInstallUtils {
     final bindDataStr = bindData.toString();
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
-    if(channelCode != null) {
+    if(channelCode != null && !result.containsKey('channel_code')) {
       result['channel_code'] = channelCode;// 渠道码
     }
     KvBox.write(PrefKey.OpenInstallBlindData, result);

@@ -60,7 +60,7 @@ class _SettingAccountPageState extends State<SettingAccountPage> {
       //   onTap: () => Get.to(() => RealIdentityPage(data: data)),
       // ),
       TableItem(
-        title: '完成人脸实名认证',
+        title: '主播认证',
         tips: OAuthCtrl.isFaceValidate ? '已认证' : '未认证',
         onTap: () async {
           // 己认证
