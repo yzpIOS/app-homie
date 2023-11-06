@@ -18,6 +18,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 /** OaidPlugin */
 class OaidPlugin: FlutterPlugin, MethodCallHandler {
 
+//  companion object {
+//    init {
+//      System.loadLibrary("msaoaidsec");
+//    }
+//  }
+
+
   /// The MethodChannel that will the communication between Flutter and native Android
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -52,6 +59,9 @@ class OaidPlugin: FlutterPlugin, MethodCallHandler {
     if ("getOaid" == call.method) {
       val completed = AtomicBoolean(false)
       try {
+        // 设置证书
+        // MdidSdkHelper.InitCert(applicationContext, call.argument("initCert"))
+        // 初始化sdk
         val code = MdidSdkHelper.InitSdk(applicationContext, true) { _, supplier ->
           val action = Runnable {
             if (completed.compareAndSet(false, true)) {

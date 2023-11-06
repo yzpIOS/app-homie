@@ -87,8 +87,8 @@ android {
         compileOnly files("$flutterRoot/bin/cache/artifacts/engine/android-arm/flutter.jar")
 //        implementation files("libs/oaid_sdk_1.0.25.aar")
 //        implementation(":oaid_libs")
+//        implementation(name:"oaid_sdk_2.2.0", ext:'aar')
         implementation(name:"oaid_sdk_1.0.25", ext:'aar')
-
     }
 
     testOptions {

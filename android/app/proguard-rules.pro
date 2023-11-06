@@ -1,2 +1,3 @@
 -keep class com.hyphenate.** {*;}
--dontwarn  com.hyphenate.**
+-dontwarn com.hyphenate.**
+-keep class com.netease.nis.sdkwrapper.** {*;}
