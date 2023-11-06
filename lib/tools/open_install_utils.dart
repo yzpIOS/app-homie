@@ -86,14 +86,14 @@ class OpenInstallUtils {
     }
     // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
-    // 渠道编号
-    final channelCode = data['channelCode'];
     if(bindData == null) {
       return;
     }
     final bindDataStr = bindData.toString();
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    // 渠道编号
+    final channelCode = data['channelCode'];
     if(channelCode != null && !result.containsKey('channel_code')) {
       result['channel_code'] = channelCode;// 渠道码
     }
