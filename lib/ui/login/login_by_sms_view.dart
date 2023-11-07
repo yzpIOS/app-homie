@@ -51,9 +51,9 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
       children: [
         XText(
           '手机验证码登录'.en(),
-          style: TextStyle(fontSize: 18, fontWeight: fw$Medium),
+          style: const TextStyle(fontSize: 18, fontWeight: fw$Bold),
         ),
-        Spacing.h54,
+        Spacing.h50,
         FormInputView(
           controller: inputs['手机号'.en()],
           hint: '手机号'.en(),
@@ -84,11 +84,11 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
         ),
         Spacing.h4,
         Pact.app.$PactView(),
-        Spacing.h54,
+        Spacing.h76,
         XTextBtn(
           label: '登录'.en(),
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
+          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Bold),
           onTap: doLogin,
         ),
         Align(

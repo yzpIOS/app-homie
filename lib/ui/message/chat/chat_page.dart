@@ -212,7 +212,13 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
   /// 跳转直播间
   void toRoom() {
     final followOnlineData = _ctrl.followOnlineRx;
-    Get.find<RoomManagerCtrl>().toRoom(roomId: followOnlineData['room_id'] ?? followOnlineData['id']);
+
+    //scene_id 场景id 0:广场
+    if (followOnlineData['scene_id'] != null && followOnlineData['scene_id'] == 0) {
+      Get.find<RoomManagerCtrl>().toSquare();
+    } else {
+      Get.find<RoomManagerCtrl>().toRoom(roomId: followOnlineData['room_id'] ?? followOnlineData['id']);
+    }
   }
 }
 

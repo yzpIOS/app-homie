@@ -5,6 +5,8 @@ import 'package:app/ui/login/widgets/pact_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'forget_pwd_page.dart';
+
 class LoginByPwdView extends StatefulWidget {
   const LoginByPwdView({super.key});
 
@@ -33,9 +35,9 @@ class _LoginByPwdViewState extends State<LoginByPwdView> {
       children: [
         const XText(
           '账号密码登录',
-          style: TextStyle(fontSize: 18, fontWeight: fw$Medium),
+          style: TextStyle(fontSize: 18, fontWeight: fw$Bold),
         ),
-        Spacing.h54,
+        Spacing.h50,
         FormInputView(
           controller: inputs['手机号'],
           hint: '手机号',
@@ -49,30 +51,39 @@ class _LoginByPwdViewState extends State<LoginByPwdView> {
         ),
         Spacing.h20,
         Pact.app.$PactView(),
-        Spacing.h54,
+        Spacing.h76,
         XTextBtn(
           label: '登录',
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
+          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Bold),
           onTap: doLogin,
         ),
-        // Align(
-        //   alignment: Alignment.topRight,
-        //   child: XTextBtn(
-        //     width: 64,
-        //     label: '忘记密码',
-        //     color: Colors.transparent,
-        //     textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
-        //     onTap: () => Get.to(() => const ForgetPwdPage()),
-        //   ),
-        // ),
+        Row(
+          children: [
+            XTextBtn(
+              width: 64,
+              label: '手机号登录',
+              color: Colors.transparent,
+              textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
+              onTap: () => Get.back(),
+            ),
+            const Expanded(child: Spacing.blank),
+            // XTextBtn(
+            //   width: 64,
+            //   label: '忘记密码',
+            //   color: Colors.transparent,
+            //   textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
+            //   onTap: () => Get.to(() => const ForgetPwdPage()),
+            // ),
+          ],
+        ),
       ],
     );
 
     return DefaultTextStyle.merge(
       style: const TextStyle(fontSize: 14, color: Colors.black),
       child: Padding(
-        padding: const Pad(horizontal: 36, top: 30),
+        padding: Pad(horizontal: 36, top: AppSize.safeTop + AppSize.appBar + 30),
         child: child,
       ),
     );

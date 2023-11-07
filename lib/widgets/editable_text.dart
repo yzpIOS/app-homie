@@ -83,6 +83,7 @@ class XInputView extends StatelessWidget {
 
 class FormInputView extends StatelessWidget {
   final String? hint;
+  final String? fullHint;
   final bool isPwd;
   final bool enabled;
   final bool autofocus;
@@ -100,6 +101,7 @@ class FormInputView extends StatelessWidget {
     super.key,
     this.controller,
     this.hint,
+    this.fullHint,
     this.prefixIcon,
     this.suffixIcon,
     this.onChanged,
@@ -145,7 +147,7 @@ class FormInputView extends StatelessWidget {
       prefixIconConstraints: const BoxConstraints(),
       suffixIcon: $SuffixView(),
       suffixIconConstraints: const BoxConstraints(minWidth: AppSize.editLarge, maxWidth: 90),
-      hintText: '请输入${hint ?? ''}',
+      hintText: fullHint ?? '请输入${hint ?? ''}',
       hintStyle: const TextStyle(fontSize: 12),
       contentPadding: const Pad(horizontal: 16),
       filled: true,

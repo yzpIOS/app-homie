@@ -14,10 +14,11 @@ class LoginPwdPage extends StatefulWidget {
 class _LoginPwdPageState extends State<LoginPwdPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: xAppBar(),
-      body: const LoginBaseView(child: LoginByPwdView()),
+      // appBar: xAppBar(),
+      // body: LoginBaseView(child: LoginByPwdView()),
+      body: LoginByPwdView(),
     );
   }
 }

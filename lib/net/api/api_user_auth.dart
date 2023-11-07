@@ -99,4 +99,22 @@ class ApiUserAuth extends ApiBase {
   Future unbindWechat() {
     return _doPost('unbind/wechat');
   }
+
+  /// 根据手机验证码重置密码
+  /// phone 手机号
+  /// sms_code 接收到的验证码
+  /// sms_token 发送验证码请求返回的token
+  /// new_password 新密码
+  /// again_new_password 再一次新密码
+  Future passwordReset({required String phone, required String smsToken, required String smsCode, required String newPassword, required String againNewPassword}) {
+    final data = {
+      'phone': phone,
+      'sms_code': smsCode,
+      'sms_token': smsToken,
+      'new_password': newPassword,
+      'again_new_password': againNewPassword,
+    };
+
+    return _doPost('password/reset', data: data);
+  }
 }

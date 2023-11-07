@@ -42,25 +42,28 @@ class _SmsVerifyViewState extends State<SmsVerifyView> {
         builder: (_, __, s, isFinished, {required int countdown}) {
           if (isFinished) post(timeRx.nil);
 
-          return XText('${countdown}S');
+          return XText('${countdown}s');
         },
       );
     });
 
-    return OpacityButton(
-      onTap: _doSend,
-      child: DefaultTextStyle.merge(
-        style: const TextStyle(fontSize: 14, color: AppPalette.primary),
-        child: Row(
-          children: [
-            const Box(width: 1, height: 14, color: Color(0xFFCCCCCC)),
-            Expanded(
-              child: Center(child: child),
-            ),
-          ],
+    return Obx(() {
+      return OpacityButton(
+        onTap: _doSend,
+        child: DefaultTextStyle.merge(
+          style: TextStyle(fontSize: 14,
+              color: (timeRx() == null) ? AppPalette.primary : AppPalette.c9),
+          child: Row(
+            children: [
+              const Box(width: 1, height: 12, color: AppPalette.cc),
+              Expanded(
+                child: Center(child: child),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   void _doSend() {
