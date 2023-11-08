@@ -4,7 +4,6 @@ import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -150,7 +149,7 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? theUid = data['uid'];
+    String? homeowner = data['homeowner'];
 
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,11 +166,12 @@ class _ItemView extends StatelessWidget {
           children: [
             XText('ID:${data['room_no'] ?? data['room_id']}'),
             Spacing.w6,
-            if (theUid != null && theUid.isNotEmpty)
-              UserInfoCtrl.use(
-                data['uid'] ?? '',
-                builder: (it) => XText('房主:${it?.showName() ?? ''}'),
-              ),
+            if (homeowner != null && homeowner.isNotEmpty)
+              XText('房主:$homeowner'),
+              // UserInfoCtrl.use(
+              //   data['uid'] ?? '',
+              //   builder: (it) => XText('房主:${it?.showName() ?? ''}'),
+              // ),
           ],
         ),
         Spacing.h2,

@@ -93,7 +93,7 @@ class VersionUpdatingDialog extends StatelessWidget {
   void onItemClick(String action) {
     switch (action) {
       case '立即升级':
-        debugPrint('111111111');
+        toAppMarket();
         break;
       case '下次再说':
         Get.back();

@@ -95,7 +95,7 @@ class _ActionView extends GetView<ConvManagerCtrl> {
       case SysConvEnum.at:
         Get.to(() => InteractivePage(type: action));
         //wyxtodo
-        //Get.dialog(VersionUpdatingDialog(versionData: {}), barrierDismissible: false);
+        // Get.dialog(VersionUpdatingDialog(versionData: {}), barrierDismissible: false);
         break;
       case SysConvEnum.guest:
         Get.to(() => const AccessPage());
