@@ -64,7 +64,7 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
           suffixIcon: SmsVerifyView(
             number: inputs['手机号']!,
             tokenRx: tokenRx,
-            type: VerifyCodeEnum.REGISTER_OR_LOGIN,
+            type: VerifyCodeEnum.FIND_PASSWORD_CHANGE,
           ),
         ),
         Spacing.h20,
