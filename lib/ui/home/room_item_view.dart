@@ -28,7 +28,7 @@ class RoomItemView extends StatelessWidget {
     Widget child = RoomCardView(image: data['image'] ?? data['scene_image']);
 
     child = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         child,
         Spacing.exp,

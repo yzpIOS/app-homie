@@ -1,6 +1,9 @@
+import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/home/home_banner_view.dart';
+import 'package:app/ui/home/home_play_together.dart';
 import 'package:app/ui/home/home_search_page.dart';
 import 'package:app/ui/podcast/city_room_view.dart';
 import 'package:app/ui/podcast/create_room_page.dart';
@@ -58,41 +61,116 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
     );
 
     return Scaffold(
-      appBar: xAppBar(actions: _actions()),
-      body: child,
+      body: Stack(
+        children: [
+          _createLinearGradient(),
+
+          _createBar(),
+
+          Positioned.fill(
+            top: AppSize.appBar + AppSize.safeTop,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: child,
+          ),
+
+          _createRandomRoomEntry(),
+        ],
+      ),
     );
   }
 
-  Widget $SquareView() {
-    return Box(
-      padding: const Pad(horizontal: 10),
-      child: OpacityButton(
-        onTap: () => Get.find<RoomManagerCtrl>().toSquare(),
-        child: AspectRatio(
-          aspectRatio: 355 / 177,
-          child: Image.asset(IMG.format('广场'), fit: BoxFit.cover, scale: 2),
+  Widget _createBar() {
+    return Positioned.fill(
+      left: AppSize.width - 68,
+      right: 0,
+      top: AppSize.safeTop,
+      bottom: AppSize.height - AppSize.appBar * 2 - AppSize.safeTop,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const CreateRoomPage());
+            },
+            child: Image.asset(
+              IMG.format("ic_create"),
+              width: 24,
+              height: 24,
+            ),
+          ),
+          const SizedBox(width: 10,),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => const HomeSearchPage());
+            },
+            child: Image.asset(
+              IMG.format("ic_search"),
+              width: 24,
+              height: 24,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _createLinearGradient() {
+    return Positioned.fill(
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: AppSize.height - 133,
+      child: Container(
+        height: 133,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFE8E4FF),
+              AppPalette.background,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          )
         ),
       ),
     );
   }
 
-  _actions() {
-    return [
-      'ic_create'.toSvgAction(
-        color: null,
-        onPressed: () async {
-          // if(Env.isDebug) {
-          //   MicUserOnlineManagerSheet.show(uid: "a");
-          //   return;
-          // }
-          Get.to(() => const CreateRoomPage());
-        },
+  Widget $SquareView() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // 公约
+        const HomeBannerView(),
+        
+        // 距离
+        const SizedBox(height: 10,),
+        HomePlayTogether(),
+      ],
+    );
+  }
+
+  ///
+  /// 随机房间
+  ///
+  Widget _createRandomRoomEntry() {
+    return Positioned.fill(
+      right: 10,
+      left: AppSize.width - 106,
+      bottom: 99 + AppSize.safeTop,
+      child: Align(
+        alignment: Alignment.bottomRight,
+        child: GestureDetector(
+          onTap: () {
+            // todo 随机进房
+          },
+          child: Image.asset(IMG.format("random_room_entry"), width: 96, height: 42,),
+        ),
       ),
-      'ic_search'.toSvgAction(
-        onPressed: () {
-          Get.to(() => const HomeSearchPage());
-        },
-      ),
-    ];
+    );
   }
 }

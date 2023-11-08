@@ -20,7 +20,7 @@ class _HomeBannerViewState extends State<HomeBannerView> with GetStateMixin {
   final indexRx = RxInt(0);
 
   late final options = CarouselOptions(
-    aspectRatio: 355 / 120,
+    aspectRatio: 355 / 80,
     viewportFraction: 1,
     autoPlay: true,
     autoPlayCurve: Curves.easeOutCubic,
@@ -98,7 +98,7 @@ class _HomeBannerViewState extends State<HomeBannerView> with GetStateMixin {
     );
 
     child = Padding(
-      padding: const Pad(horizontal: 5, vertical: 10),
+      padding: const Pad(horizontal: 5),
       child: child,
     );
 
