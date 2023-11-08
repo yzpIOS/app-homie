@@ -64,7 +64,7 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
           suffixIcon: SmsVerifyView(
             number: inputs['手机号']!,
             tokenRx: tokenRx,
-            type: VerifyCodeEnum.FIND_PASSWORD_CHANGE,
+            type: VerifyCodeEnum.REGISTER_OR_LOGIN,
           ),
         ),
         Spacing.h20,
@@ -136,7 +136,10 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
 
       simpleSub(
         Api.UserAuth.passwordReset(phone: phone, smsToken: token ?? "", smsCode: smsCode, newPassword: newPassword, againNewPassword: againNewPassword),
-        callback: () => Get.back(),
+        callback: () {
+          showToast('密码修改成功');
+          Get.back();
+        },
       );
     }
   }
