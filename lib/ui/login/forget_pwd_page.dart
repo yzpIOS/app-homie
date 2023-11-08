@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ForgetPwdPage extends StatefulWidget {
-  const ForgetPwdPage({super.key});
+  final String phone;
+  const ForgetPwdPage({super.key, required this.phone});
 
   @override
   State<ForgetPwdPage> createState() => _ForgetPwdPageState();
@@ -27,9 +28,9 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
   void initState() {
     super.initState();
 
-    KvBox.read<String>(PrefKey.LastPhone).onNotNull((val) {
-      inputs['手机号']?.text = val;
-    });
+    if (widget.phone.isNotEmpty) {
+      inputs['手机号']?.text = widget.phone;
+    }
   }
 
   @override

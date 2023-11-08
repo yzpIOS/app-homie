@@ -73,7 +73,7 @@ class _LoginByPwdViewState extends State<LoginByPwdView> {
               label: '忘记密码',
               color: Colors.transparent,
               textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
-              onTap: () => Get.to(() => const ForgetPwdPage()),
+              onTap: () => Get.to(() => ForgetPwdPage(phone: inputs.by('手机号'),)),
             ),
           ],
         ),
