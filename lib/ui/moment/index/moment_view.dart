@@ -2,7 +2,6 @@ import 'package:app/event/event.dart';
 import 'package:app/model/api/moment_dto.dart';
 import 'package:app/store/moment/moment_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/upgrade/upgrade_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -99,10 +98,6 @@ class _ItemView extends ViewAdapter<MomentDtoAdapter>
     child = DecorButton(
       child: child,
       onTap: () {
-        if(Env.isDebug) {
-          UpGradePage.showDialog();
-          return;
-        }
         callBack.call(vm);
       },
     );

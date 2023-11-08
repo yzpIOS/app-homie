@@ -428,10 +428,10 @@ packages:
     dependency: "direct main"
     description:
       name: extended_text
-      sha256: "75ddf28ce7d5be33a050ff2179b6567b4b98e6225ad3e61e4c3748f7448c25f7"
+      sha256: dec14c9b36d9bbaaf007da5998f5dc72a2dbd5b877601d7b7970bb42524b3ced
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "11.0.0"
+    version: "11.0.1"
   extended_text_field:
     dependency: "direct main"
     description:
@@ -2092,10 +2092,10 @@ packages:
     dependency: transitive
     description:
       name: xmlstream
-      sha256: "2d10c69a9d5fc46f71798b80ee6db15bc0d5bf560fdbdd264776cbeee0c83631"
+      sha256: cfc14e3f256997897df9481ae630d94c2d85ada5187ebeb868bb1aabc2c977b4
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.1"
   yaml:
     dependency: transitive
     description:
