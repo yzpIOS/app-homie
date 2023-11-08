@@ -25,11 +25,13 @@ void toAppMarket() async {
     // var appName = "com.jm.homie.app";
     // var targetURL = Uri.parse("market://details?id=$appName");
     // await launchUrl(targetURL);
-    const intent = AndroidIntent(
-      action: "android.intent.action.VIEW",
-      data: "market://details?id=com.jm.homie.app",
-    );
-    intent.launch();
+    // const intent = AndroidIntent(
+    //   action: "android.intent.action.VIEW",
+    //   data: "market://details?id=com.jm.homie.app",
+    // );
+    // intent.launch();
+    var targetURL = Uri.parse("http://app.web.homieyy.com");
+    await launchUrl(targetURL);
   } else if (Platform.isIOS) {
     var appID = "6450973472";
     var targetURL = Uri.parse("itms-apps://itunes.apple.com/app/$appID");

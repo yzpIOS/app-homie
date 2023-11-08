@@ -6,6 +6,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/sms_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ForgetPwdPage extends StatefulWidget {
   const ForgetPwdPage({super.key});
@@ -54,7 +55,12 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
         FormInputView(
           controller: inputs['验证码'],
           hint: '验证码',
+          maxLength: 6,
           keyboardType: TextInputType.number,
+          inputFormatters: [
+            // 数字，只能是整数
+            FilteringTextInputFormatter.digitsOnly,
+          ],
           suffixIcon: SmsVerifyView(
             number: inputs['手机号']!,
             tokenRx: tokenRx,
@@ -130,7 +136,10 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
 
       simpleSub(
         Api.UserAuth.passwordReset(phone: phone, smsToken: token ?? "", smsCode: smsCode, newPassword: newPassword, againNewPassword: againNewPassword),
-        callback: () => Get.back(),
+        callback: () {
+          showToast('密码修改成功');
+          Get.back();
+        },
       );
     }
   }

@@ -1,16 +1,14 @@
-import 'package:app/common/nets/commons/proto/Message.pb.dart';
-import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/sys_conv_enum.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
-import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/conv_view.dart';
 import 'package:app/ui/message/interactive_page.dart';
 import 'package:app/ui/my/friend/access_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:app/ui/podcast/version_updating_dialog.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -96,6 +94,8 @@ class _ActionView extends GetView<ConvManagerCtrl> {
       case SysConvEnum.like:
       case SysConvEnum.at:
         Get.to(() => InteractivePage(type: action));
+        //wyxtodo
+        // Get.dialog(VersionUpdatingDialog(versionData: {}), barrierDismissible: false);
         break;
       case SysConvEnum.guest:
         Get.to(() => const AccessPage());

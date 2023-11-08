@@ -75,7 +75,7 @@ class _HistoryView extends SimplePageView<Map> {
   }
 
   String groupBy(Map data) {
-    final tmp = data['created_at'];
+    final tmp = data['created_at'] ?? '';
 
     final now = DateTime.now();
 
@@ -149,6 +149,8 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? homeowner = data['homeowner'];
+
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -164,10 +166,12 @@ class _ItemView extends StatelessWidget {
           children: [
             XText('ID:${data['room_no'] ?? data['room_id']}'),
             Spacing.w6,
-            UserInfoCtrl.use(
-              data['uid'],
-              builder: (it) => XText('房主:${it?.showName() ?? ''}'),
-            ),
+            if (homeowner != null && homeowner.isNotEmpty)
+              XText('房主:$homeowner'),
+              // UserInfoCtrl.use(
+              //   data['uid'] ?? '',
+              //   builder: (it) => XText('房主:${it?.showName() ?? ''}'),
+              // ),
           ],
         ),
         Spacing.h2,
