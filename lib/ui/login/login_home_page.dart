@@ -1,3 +1,4 @@
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/login/login_base_view.dart';
 import 'package:app/ui/login/login_by_sms_view.dart';
@@ -28,8 +29,9 @@ class _LoginHomePageState extends State<LoginHomePage> with GetStateMixin {
   @override
   Widget build(BuildContext context) {
     Widget child = Scaffold(
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      appBar: xAppBar(),
+      appBar: xAppBar(title: '手机验证码登录', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
       body: const LoginBaseView(child: LoginBySmsView()),
     );
 

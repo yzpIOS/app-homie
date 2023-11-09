@@ -31,8 +31,8 @@ class _FreezeAccountPageState extends State<FreezeAccountPage> {
             flex: 550,
             child: $TextView(),
           ),
-          FractionallySizedBox(
-            widthFactor: 290 / 375,
+          Padding(
+            padding: const Pad(horizontal: 40),
             child: Column(
               children: [
                 Pact.freezeAccount.$PactView(),

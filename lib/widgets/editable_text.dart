@@ -96,6 +96,7 @@ class FormInputView extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
   final BorderRadius? borderRadius;
+  final Color bgColor;
 
   FormInputView({
     super.key,
@@ -112,6 +113,7 @@ class FormInputView extends StatelessWidget {
     this.maxLength,
     this.borderRadius,
     this.onSubmitted,
+    this.bgColor = const Color(0xFFF5F5F5),
     TextInputType? keyboardType,
   }) : keyboardType = keyboardType ?? (isPwd ? TextInputType.visiblePassword : TextInputType.text);
 
@@ -119,9 +121,9 @@ class FormInputView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const style = TextStyle(fontSize: 14, color: Colors.black);
+    const style = TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Bold);
     final decor = _decor.copyWith(
-      constraints: const BoxConstraints.tightFor(height: AppSize.editLarge),
+      constraints: const BoxConstraints.tightFor(height: AppSize.btnLarge),
     );
 
     return Obx(() {
@@ -146,12 +148,12 @@ class FormInputView extends StatelessWidget {
       prefixIcon: prefixIcon,
       prefixIconConstraints: const BoxConstraints(),
       suffixIcon: $SuffixView(),
-      suffixIconConstraints: const BoxConstraints(minWidth: AppSize.editLarge, maxWidth: 90),
+      suffixIconConstraints: const BoxConstraints(minWidth: AppSize.editLarge, maxWidth: 103),
       hintText: fullHint ?? '请输入${hint ?? ''}',
-      hintStyle: const TextStyle(fontSize: 12),
+      hintStyle: const TextStyle(fontSize: 12, color: AppPalette.c9, fontWeight: fw$Regular),
       contentPadding: const Pad(horizontal: 16),
       filled: true,
-      fillColor: const Color(0xFFF5F5F5),
+      fillColor: bgColor,
       counterText: "",
       border: OutlineInputBorder(
         gapPadding: 0,
