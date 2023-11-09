@@ -2,6 +2,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/common/async_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/web_page.dart';
+import 'package:app/ui/podcast/version_updating_dialog.dart';
 
 class ConfigCtrl extends AsyncMapCtrl {
   ConfigCtrl() : super(boxName: 'ConfigData', uid: '');
@@ -44,5 +45,17 @@ class ConfigCtrl extends AsyncMapCtrl {
     }
 
     go(uri);
+  }
+
+  /// 版本更新
+  void versionQuery() {
+    simpleTry(
+      () => Api.Common.versionQuery(),
+      callback: (resp) {
+        if (resp != null && resp is Map && resp.isNotEmpty) {
+          Get.dialog(VersionUpdatingDialog(versionData: resp), barrierDismissible: false);
+        }
+      }
+    );
   }
 }

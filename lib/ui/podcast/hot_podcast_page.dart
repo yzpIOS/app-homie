@@ -82,11 +82,9 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   }
 
   Widget _createBar() {
-    return Positioned.fill(
-      left: AppSize.width - 68,
-      right: 0,
+    return Positioned(
+      right: 14,
       top: AppSize.safeTop,
-      bottom: AppSize.height - AppSize.appBar * 2 - AppSize.safeTop,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
@@ -101,7 +99,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
               height: 24,
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(width: 11,),
           GestureDetector(
             onTap: () {
               Get.to(() => const HomeSearchPage());

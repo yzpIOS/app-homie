@@ -100,4 +100,36 @@ class ApiCommon extends ApiBase {
   Future systemQuery() {
     return _doPost('configure/system/query');
   }
+
+  /// 获取app版本信息
+  Future versionQuery() async {
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    var deviceData = <String, dynamic>{'version': appInfo.version};
+
+    Map<String, dynamic> _readAndroidBuildData(AndroidDeviceInfo build) {
+      return <String, dynamic>{
+        'platform': 1, //平台枚举值，1：安卓，2：ios
+        'manufacturer': build.manufacturer, //手机制造商
+        'model': build.model, //手机型号
+      };
+    }
+
+    Map<String, dynamic> _readIosDeviceInfo(IosDeviceInfo data) {
+      return <String, dynamic>{
+        'platform': 2, //平台枚举值，1：安卓，2：ios
+        'manufacturer': 'Apple', //手机制造商
+        'model': data.utsname.machine, //手机型号
+      };
+    }
+
+    if (Platform.isAndroid) {
+      final info = _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+      deviceData.addAll(info);
+    } else if (Platform.isIOS) {
+      final info = _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+      deviceData.addAll(info);
+    }
+
+    return _doPost('configure/version/query', data: deviceData);
+  }
 }

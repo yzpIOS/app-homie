@@ -10,6 +10,7 @@ import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/shop/home_shop_page.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -87,6 +88,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     });
     // 开始热更
     UnityCtrl.ins.startHotFix();
+
+    // 版本更新弹窗
+    Get.find<ConfigCtrl>().versionQuery();
   }
 
   @override
