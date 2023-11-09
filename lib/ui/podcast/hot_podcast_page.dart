@@ -156,6 +156,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
 
   ///
   /// 随机房间
+  /// https://www.openinstall.io/doc/asa.html
   ///
   Widget _createRandomRoomEntry() {
     return Positioned.fill(
@@ -167,6 +168,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         child: GestureDetector(
           onTap: () {
             // todo 随机进房
+            RoomManagerCtrl.ins.toRandomRoom();
           },
           child: Image.asset(IMG.format("random_room_entry"), width: 96, height: 42,),
         ),

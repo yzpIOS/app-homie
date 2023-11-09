@@ -392,6 +392,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
   int _preClickTime = 0;
 
+  ///
+  /// 广场
+  ///
   void toSquare({Map? data}) {
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
@@ -402,6 +405,21 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       infoApi: (_) => data ?? Api.Room.info(type: RoomType.square),
       storeCreate: (it) => SquareCtrl(info: it.value1, pwd: it.value2, overlay: (_) => SquareOverlay()),
     );
+  }
+
+  ///
+  /// 随机房间
+  ///
+  Future<void> toRandomRoom() async {
+    Map? roomInfo = await Api.Room.getRandomRoom();
+    if(roomInfo == null) {
+      return;
+    }
+    if(roomInfo["scene_id"] != 0) {
+      toRoom(roomId: roomInfo["room_id"], data: roomInfo);
+    } else {
+      toSquare(data: roomInfo);
+    }
   }
 
   void doNormalState() {

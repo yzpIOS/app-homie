@@ -391,4 +391,11 @@ class ApiRoom extends ApiBase {
 
     return _doPost('anchor/live/state', data: data);
   }
+
+  ///
+  /// 获取随机在线房间
+  ///
+  Future getRandomRoom() async {
+    return _doPost('random');
+  }
 }
