@@ -36,8 +36,9 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: xAppBar(title: '忘记密码', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      appBar: xAppBar(title: '忘记密码'),
       body: $BodyView(),
     );
   }
@@ -46,18 +47,19 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Spacing.h54,
         FormInputView(
           controller: inputs['手机号'],
           hint: '手机号',
           keyboardType: TextInputType.phone,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h20,
+        Spacing.h22,
         FormInputView(
           controller: inputs['验证码'],
           hint: '验证码',
           maxLength: 6,
           keyboardType: TextInputType.number,
+          bgColor: AppPalette.colorEB,
           inputFormatters: [
             // 数字，只能是整数
             FilteringTextInputFormatter.digitsOnly,
@@ -68,51 +70,56 @@ class _ForgetPwdPageState extends State<ForgetPwdPage> {
             type: VerifyCodeEnum.FIND_PASSWORD_CHANGE,
           ),
         ),
-        Spacing.h20,
+        Spacing.h22,
         FormInputView(
           controller: inputs['新密码'],
           hint: '新密码',
           isPwd: true,
           maxLength: 16,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h20,
+        Spacing.h22,
         FormInputView(
           controller: inputs['再次输入新密码'],
           fullHint: '请再次输入新密码',
           isPwd: true,
           maxLength: 16,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h10,
-        Text.rich(
-          TextSpan(
-            children: [
-              WidgetSpan(child: SvgView(SVG.$('login/login_icon_zy')),),
-              const TextSpan(text: ' 密码由6-16个任意数字或字母组合'),
-            ],
-            style: const TextStyle(fontSize: 12, color: Colors.black),
+        const Padding(
+          padding: Pad(left: 17, top: 20),
+          child: Text(
+            '密码由6-16个任意数字和字母组合',
+            style: TextStyle(fontSize: 10, color: AppPalette.c9, fontWeight: fw$Regular),
           ),
         ),
         Spacing.h76,
         XTextBtn(
+          height: 39,
           label: '确定',
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Bold),
+          textStyle: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: fw$Bold),
           onTap: doSub,
         ),
       ],
     );
 
-    child = Padding(
-      padding: const Pad(horizontal: 36),
-      child: child,
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Image.asset(IMG.format('login/login_pic_bg'), scale: 3, fit: BoxFit.contain),
+        ),
+        Positioned.fill(
+          top: AppSize.safeTop + AppSize.appBar + 60,
+          left: 36,
+          right: 36,
+          child: child,
+        ),
+      ],
     );
-
-    child = DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 14, color: Colors.black),
-      child: child,
-    );
-
-    return child;
   }
 
   void doSub() {

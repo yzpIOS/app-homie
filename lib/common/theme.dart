@@ -103,6 +103,7 @@ abstract class AppPalette {
 
   static const room = Color(0x4D000000);
   static const colorY = Color(0xFFFFDD7A);
+  static const colorEB = Color(0xFFEBEBFF);
 
   static const appBarForegroundColorLight = Colors.black;
   static const appBarForegroundColorDark = Colors.white;

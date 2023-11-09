@@ -49,23 +49,19 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
   Widget build(BuildContext context) {
     final child = Column(
       children: [
-        XText(
-          '手机验证码登录'.en(),
-          style: const TextStyle(fontSize: 18, fontWeight: fw$Bold),
-        ),
-        Spacing.h50,
         FormInputView(
           controller: inputs['手机号'.en()],
           hint: '手机号'.en(),
           keyboardType: TextInputType.phone,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h20,
-
+        Spacing.h22,
         FormInputView(
           controller: inputs['验证码'.en()],
           hint: '验证码'.en(),
           maxLength: 6,
           keyboardType: TextInputType.number,
+          bgColor: AppPalette.colorEB,
           inputFormatters: [
             // 数字，只能是整数
             FilteringTextInputFormatter.digitsOnly,
@@ -74,43 +70,63 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           ],
           suffixIcon: SmsVerifyView(number: inputs['手机号'.en()]!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
         ),
-        Spacing.h20,
-        Align(
-          alignment: Alignment.centerLeft,
-          child: XText(
-            '未注册的手机号码验证后将自动登录'.en(),
-            style: const TextStyle(fontSize: 12, color: AppPalette.c9),
-          ),
-        ),
-        Spacing.h4,
-        Pact.app.$PactView(),
         Spacing.h76,
+        XText(
+          '未注册的手机号验证后将自动登录'.en(),
+          style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+        ),
+        Spacing.h6,
+        Pact.app.$PactView(),
+        Spacing.h16,
         XTextBtn(
+          height: 39,
           label: '登录'.en(),
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Bold),
+          textStyle: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: fw$Bold),
           onTap: doLogin,
         ),
+        Spacing.h12,
         Align(
           alignment: Alignment.topRight,
-          child: XTextBtn(
-            width: 64,
-            label: '密码登录'.en(),
-            color: Colors.transparent,
-            textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
+          child: InkWell(
+            child: Text.rich(
+              TextSpan(
+                style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+                children: [
+                  TextSpan(text: '密码登录'.en(),),
+                  WidgetSpan(child: Image.asset(IMG.format('login/small_arrow'), color: AppPalette.c9, scale: 3), alignment: PlaceholderAlignment.middle),
+                ],
+              ),
+            ),
             onTap: () => Get.to(() => const LoginPwdPage()),
           ),
         ),
       ],
     );
 
-    return DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 14, color: Colors.black),
-      child: Padding(
-        padding: const Pad(horizontal: 36, top: 30),
-        child: child,
-      ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Image.asset(IMG.format('login/login_pic_bg'), scale: 3, fit: BoxFit.contain),
+        ),
+        Positioned.fill(
+          top: AppSize.safeTop + AppSize.appBar + 60,
+          left: 36,
+          right: 36,
+          child: child,
+        ),
+      ],
     );
+    // return DefaultTextStyle.merge(
+    //   style: const TextStyle(fontSize: 14, color: Colors.black),
+    //   child: Padding(
+    //     padding: const Pad(horizontal: 36, top: 30),
+    //     child: child,
+    //   ),
+    // );
   }
 
   void doLogin() {

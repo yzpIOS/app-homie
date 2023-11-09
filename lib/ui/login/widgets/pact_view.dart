@@ -1,10 +1,10 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/config_ctrl.dart';
-import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/open_install_utils.dart';
 import 'package:app/ui/common/app_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:flutter/material.dart';
 
 abstract class IPact {
   late final RxBool pactRx = initRx();
@@ -15,12 +15,31 @@ abstract class IPact {
 
   Widget $PactView() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Obx(
-          () => XRadio(
-            value: pactRx(),
-            onChanged: (_) => pactRx.toggle(),
+          () => InkResponse(
+            onTap: () => pactRx.toggle(),
+            child: Container(
+              width: 13,
+              height: 13,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppPalette.c9,
+                  width: 1,
+                ),
+              ),
+              child: pactRx.value ? Center(
+                child: Image.asset(IMG.format('login/login_icon_xz'), width: 10, height: 10, scale: 3, fit: BoxFit.contain),
+              ) : null,
+            ),
           ),
+          //     XRadio(
+          //   value: pactRx(),
+          //   onChanged: (_) => pactRx.toggle(),
+          // ),
         ),
         Spacing.w6,
         Flexible(

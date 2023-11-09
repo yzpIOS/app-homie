@@ -33,59 +33,63 @@ class _LoginByPwdViewState extends State<LoginByPwdView> {
   Widget build(BuildContext context) {
     final child = Column(
       children: [
-        const XText(
-          '账号密码登录',
-          style: TextStyle(fontSize: 18, fontWeight: fw$Bold),
-        ),
-        Spacing.h50,
         FormInputView(
           controller: inputs['手机号'],
           hint: '手机号',
           keyboardType: TextInputType.phone,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h20,
+        Spacing.h22,
         FormInputView(
           controller: inputs['密码'],
           hint: '密码',
           isPwd: true,
+          bgColor: AppPalette.colorEB,
         ),
-        Spacing.h20,
+        Spacing.h96,
         Pact.app.$PactView(),
-        Spacing.h76,
+        Spacing.h16,
         XTextBtn(
+          height: 39,
           label: '登录',
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Bold),
+          textStyle: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: fw$Bold),
           onTap: doLogin,
         ),
-        Row(
-          children: [
-            XTextBtn(
-              width: 64,
-              label: '手机号登录',
-              color: Colors.transparent,
-              textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
-              onTap: () => Get.back(),
+        Spacing.h12,
+        Align(
+          alignment: Alignment.topRight,
+          child: InkWell(
+            child: Text.rich(
+              TextSpan(
+                style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+                children: [
+                  const TextSpan(text: '忘记密码',),
+                  WidgetSpan(child: Image.asset(IMG.format('login/small_arrow'), color: AppPalette.c9, scale: 3), alignment: PlaceholderAlignment.middle),
+                ],
+              ),
             ),
-            const Expanded(child: Spacing.blank),
-            XTextBtn(
-              width: 64,
-              label: '忘记密码',
-              color: Colors.transparent,
-              textStyle: const TextStyle(fontSize: 12, color: AppPalette.c3),
-              onTap: () => Get.to(() => ForgetPwdPage(phone: inputs.by('手机号'),)),
-            ),
-          ],
+            onTap: () => Get.to(() => ForgetPwdPage(phone: inputs.by('手机号'),)),
+          ),
         ),
       ],
     );
 
-    return DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 14, color: Colors.black),
-      child: Padding(
-        padding: Pad(horizontal: 36, top: AppSize.safeTop + AppSize.appBar + 30),
-        child: child,
-      ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Image.asset(IMG.format('login/login_pic_bg'), scale: 3, fit: BoxFit.contain),
+        ),
+        Positioned.fill(
+          top: AppSize.safeTop + AppSize.appBar + 60,
+          left: 36,
+          right: 36,
+          child: child,
+        ),
+      ],
     );
   }
 

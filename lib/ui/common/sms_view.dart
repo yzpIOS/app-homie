@@ -42,7 +42,7 @@ class _SmsVerifyViewState extends State<SmsVerifyView> {
         builder: (_, __, s, isFinished, {required int countdown}) {
           if (isFinished) post(timeRx.nil);
 
-          return XText('${countdown}s');
+          return XText('${countdown}S');
         },
       );
     });
@@ -51,8 +51,8 @@ class _SmsVerifyViewState extends State<SmsVerifyView> {
       return OpacityButton(
         onTap: _doSend,
         child: DefaultTextStyle.merge(
-          style: TextStyle(fontSize: 14,
-              color: (timeRx() == null) ? AppPalette.primary : AppPalette.c9),
+          style: TextStyle(fontSize: 15,
+              color: (timeRx() == null) ? AppPalette.primary : AppPalette.c9, fontWeight: fw$Bold),
           child: Row(
             children: [
               const Box(width: 1, height: 12, color: AppPalette.cc),

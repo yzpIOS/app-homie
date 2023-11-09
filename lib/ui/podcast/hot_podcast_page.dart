@@ -60,8 +60,8 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
       child: child,
     );
 
-    return Scaffold(
-      body: Stack(
+    return UiOverlayRegion.dark(
+      child: Stack(
         children: [
           _createLinearGradient(),
 
