@@ -121,7 +121,7 @@ dependencies:
 
   # open install
   # https://pub.dev/packages/openinstall_flutter_plugin/install
-  openinstall_flutter_plugin: ^2.4.0
+  openinstall_flutter_plugin: ^2.4.2
 
   oaid:
     path: ./plugin/oaid

@@ -4,37 +4,6 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
-  - DKImagePickerController/Core (4.3.4):
-    - DKImagePickerController/ImageDataManager
-    - DKImagePickerController/Resource
-  - DKImagePickerController/ImageDataManager (4.3.4)
-  - DKImagePickerController/PhotoGallery (4.3.4):
-    - DKImagePickerController/Core
-    - DKPhotoGallery
-  - DKImagePickerController/Resource (4.3.4)
-  - DKPhotoGallery (0.0.17):
-    - DKPhotoGallery/Core (= 0.0.17)
-    - DKPhotoGallery/Model (= 0.0.17)
-    - DKPhotoGallery/Preview (= 0.0.17)
-    - DKPhotoGallery/Resource (= 0.0.17)
-    - SDWebImage
-    - SwiftyGif
-  - DKPhotoGallery/Core (0.0.17):
-    - DKPhotoGallery/Model
-    - DKPhotoGallery/Preview
-    - SDWebImage
-    - SwiftyGif
-  - DKPhotoGallery/Model (0.0.17):
-    - SDWebImage
-    - SwiftyGif
-  - DKPhotoGallery/Preview (0.0.17):
-    - DKPhotoGallery/Model
-    - DKPhotoGallery/Resource
-    - SDWebImage
-    - SwiftyGif
-  - DKPhotoGallery/Resource (0.0.17):
-    - SDWebImage
-    - SwiftyGif
   - f_unity (0.0.1):
     - Flutter
   - ffmpeg-kit-ios-https (5.1)
@@ -43,9 +12,6 @@ PODS:
     - Flutter
   - ffmpeg_kit_flutter/https (5.1.0):
     - ffmpeg-kit-ios-https (= 5.1)
-    - Flutter
-  - file_picker (0.0.1):
-    - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
   - flutter_keyboard_visibility (0.0.1):
@@ -64,8 +30,6 @@ PODS:
     - Flutter
   - HydraAsync (2.0.6)
   - image_editor_common (1.0.0):
-    - Flutter
-  - image_picker_ios (0.0.1):
     - Flutter
   - in_app_purchase_storekit (0.0.1):
     - Flutter
@@ -107,15 +71,11 @@ PODS:
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - SDWebImage (5.17.0):
-    - SDWebImage/Core (= 5.17.0)
-  - SDWebImage/Core (5.17.0)
   - share_plus (0.0.1):
     - Flutter
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftyGif (5.4.4)
   - tencent_cloud_chat_sdk (5.1.2):
     - Flutter
     - HydraAsync
@@ -154,7 +114,6 @@ DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - f_unity (from `.symlinks/plugins/f_unity/ios`)
   - ffmpeg_kit_flutter (from `.symlinks/plugins/ffmpeg_kit_flutter/ios`)
-  - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -162,7 +121,6 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
   - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
-  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - link_kit (from `.symlinks/plugins/link_kit/ios`)
@@ -192,8 +150,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - DKImagePickerController
-    - DKPhotoGallery
     - ffmpeg-kit-ios-https
     - FMDB
     - HydraAsync
@@ -201,8 +157,6 @@ SPEC REPOS:
     - MXLogger
     - MXLoggerCore
     - ReachabilitySwift
-    - SDWebImage
-    - SwiftyGif
     - TXCustomBeautyProcesserPlugin
     - TXIMSDK_Plus_iOS
     - TXLiteAVSDK_Professional
@@ -216,8 +170,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/f_unity/ios"
   ffmpeg_kit_flutter:
     :path: ".symlinks/plugins/ffmpeg_kit_flutter/ios"
-  file_picker:
-    :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
   flutter_keyboard_visibility:
@@ -232,8 +184,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/http_proxy/ios"
   image_editor_common:
     :path: ".symlinks/plugins/image_editor_common/ios"
-  image_picker_ios:
-    :path: ".symlinks/plugins/image_picker_ios/ios"
   in_app_purchase_storekit:
     :path: ".symlinks/plugins/in_app_purchase_storekit/darwin"
   just_audio:
@@ -290,12 +240,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
-  DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
-  DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   f_unity: 725a49c8f926d6739da3715cb853d815a9df9a84
   ffmpeg-kit-ios-https: 8dffbe1623a2f227be98fc314294847a97f818e4
   ffmpeg_kit_flutter: 17e9f35a4ec996ac55051c20be05240f2a0b53e8
-  file_picker: ce3938a0df3cc1ef404671531facef740d03f920
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
@@ -305,7 +252,6 @@ SPEC CHECKSUMS:
   http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
   HydraAsync: 8d589bd725b0224f899afafc9a396327405f8063
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
-  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libOpenInstallSDK: 3c24ebe6cc0eb7856918023f07b2e8d3202c7db8
@@ -324,10 +270,8 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
   share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   tencent_cloud_chat_sdk: 8a2bceccaf81e7f922e7b6509ab93c39c3884dda
   tencent_trtc_cloud: 8e7982c2423cb0187cefedd4a1d913767a778536
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
@@ -342,6 +286,6 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
   wechat_kit: 72ef5bc9da4a5f40a95f6dab060763d6b7071137
 
-PODFILE CHECKSUM: 16bb13b57442a74762b5010ee9fa082d34128898
+PODFILE CHECKSUM: 805e71e24eb677d7be51c9d87531400367660f19
 
 COCOAPODS: 1.13.0

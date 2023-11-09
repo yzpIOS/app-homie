@@ -23,7 +23,7 @@ class HomePlayTogether extends StatelessWidget {
               "一起玩",
               style: TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                   color: AppPalette.txtDark
               ),
             ),

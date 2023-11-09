@@ -1176,10 +1176,10 @@ packages:
     dependency: "direct main"
     description:
       name: openinstall_flutter_plugin
-      sha256: da3f86b783ca778d0f4e73edaff1a84f5eeb7f992cab70b4fd5b964cf2925196
+      sha256: d8e2c513e2f77c728979da4acac3e356893eb295464da7f19c3a68573d869786
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   package_config:
     dependency: transitive
     description:

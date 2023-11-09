@@ -47,9 +47,12 @@ class OpenInstallUtils {
         // 获取ios的IDFA
         Map<String, String>? datas = await Oaid().getIDFA();
         // ios配置
+        // https://www.openinstall.io/doc/asa.html
         _openinstallFlutterPlugin?.configIos({
           "idfaStr": datas?["idfaStr"] ?? "",
-          "adEnabled": true
+          "adEnable": true,
+          "ASAEnable": true,
+          "ASADebug": Env.isDebugCfg
         });
       }
       _openinstallFlutterPlugin?.init(wakeupHandler);
