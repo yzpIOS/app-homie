@@ -65,15 +65,22 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         children: [
           _createLinearGradient(),
 
-          _createBar(),
-
           Positioned.fill(
-            top: AppSize.appBar + AppSize.safeTop,
             left: 0,
             right: 0,
+            top: 0,
             bottom: 0,
-            child: child,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                _createBar(),
+                Expanded(
+                  child: child,
+                ),
+              ],
+            ),
           ),
+
 
           _createRandomRoomEntry(),
         ],
@@ -82,14 +89,13 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   }
 
   Widget _createBar() {
-    return Positioned.fill(
-      left: AppSize.width - 68,
-      right: 0,
-      top: AppSize.safeTop,
-      bottom: AppSize.height - AppSize.appBar * 2 - AppSize.safeTop,
+    return Container(
+      height: AppSize.appBar + AppSize.safeTop,
+      padding: EdgeInsets.only(top: AppSize.safeTop, right: 10),
+      alignment: Alignment.centerRight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: MainAxisSize.min,
         children: [
           GestureDetector(
             onTap: () {
@@ -97,8 +103,8 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
             },
             child: Image.asset(
               IMG.format("ic_create"),
-              width: 24,
-              height: 24,
+              width: 28,
+              height: 28,
             ),
           ),
           const SizedBox(width: 10,),
@@ -108,8 +114,8 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
             },
             child: Image.asset(
               IMG.format("ic_search"),
-              width: 24,
-              height: 24,
+              width: 30,
+              height: 30,
             ),
           ),
         ],
