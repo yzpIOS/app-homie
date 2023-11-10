@@ -17,12 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   if (Platform.isAndroid) {
-    //改变Android端状态栏和NavigationBar颜色
-    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      systemNavigationBarColor: Colors.black,
-    );
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   }
 
   await loggerInit(Slugid.nice().toString());

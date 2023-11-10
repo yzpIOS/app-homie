@@ -31,6 +31,8 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   @override
   Widget build(BuildContext context) {
     Widget child = Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $SquareView(),
         Box(
