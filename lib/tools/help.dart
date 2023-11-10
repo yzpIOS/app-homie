@@ -21,7 +21,7 @@ Future<void> goHome() {
 }
 
 
-void toAppMarket(String update_url) async {
+void toAppMarket(String? update_url) async {
   if (Platform.isAndroid) {
     // var appName = "com.jm.homie.app";
     // var targetURL = Uri.parse("market://details?id=$appName");
@@ -31,6 +31,9 @@ void toAppMarket(String update_url) async {
     //   data: "market://details?id=com.jm.homie.app",
     // );
     // intent.launch();
+    if (update_url == null || update_url.isEmpty) {
+      update_url = 'http://app.web.homieyy.com';
+    }
     await launchUrlString(update_url, mode: LaunchMode.externalApplication);
   } else if (Platform.isIOS) {
     var appID = "6450973472";
