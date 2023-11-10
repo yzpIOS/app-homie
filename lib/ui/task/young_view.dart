@@ -14,21 +14,22 @@ class YoungDialog extends StatelessWidget {
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
-        ...$DecoratedView(),
+        // ...$DecoratedView(),
         Positioned.fill(top: 123, child: $Body()),
       ],
     );
 
-    child = Box(
-      width: 375,
-      padding: const Pad(horizontal: 38),
-      child: AspectRatio(
-        aspectRatio: 300 / 354,
-        child: child,
+    child = Container(
+      width: 298,
+      height: 369,
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage(IMG.format('青少年背景')), scale: 3),
       ),
+      margin: const Pad(horizontal: 37),
+      child: child,
     );
 
-    child = FittedBox(fit: BoxFit.fitWidth, child: child);
+    child = FittedBox(fit: BoxFit.contain, child: child);
 
     return Material(
       type: MaterialType.transparency,
@@ -37,26 +38,32 @@ class YoungDialog extends StatelessWidget {
     );
   }
 
-  List<Widget> $DecoratedView() {
-    return [
-      const Positioned.fill(
-        child: DecoratedBox(
-          decoration: ShapeDecoration(shape: AppShape.a10, color: Colors.white),
-        ),
-      ),
-      Positioned(
-        top: -33,
-        child: Image.asset(IMG.format('青少年'), width: 120, scale: 2),
-      ),
-    ];
-  }
+  // List<Widget> $DecoratedView() {
+  //   return [
+  //     const Positioned.fill(
+  //       child: DecoratedBox(
+  //         decoration: ShapeDecoration(shape: AppShape.a10, color: Colors.white),
+  //       ),
+  //     ),
+  //     Positioned(
+  //       top: -33,
+  //       child: Image.asset(IMG.format('青少年'), width: 120, scale: 2),
+  //     ),
+  //   ];
+  // }
 
   Widget $Body() {
     Widget child = OpacityButton(
       onTap: _doSub,
-      child: const Text(
-        '查看青少年模式',
-        style: TextStyle(fontSize: 12, color: AppPalette.primary),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '查看青少年模式',
+            style: TextStyle(fontSize: 14, color: AppPalette.primary),
+          ),
+          RightArrowIcon(color: AppPalette.primary),
+        ],
       ),
     );
 
@@ -68,20 +75,30 @@ class YoungDialog extends StatelessWidget {
         ),
         const Spacing(flex: 30),
         child,
-        const Spacing(flex: 20),
-        XTextBtn(
-          label: '我知道了',
-          width: 120,
-          height: 34,
-          textStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
-          onTap: Get.back,
+        const Spacing(flex: 25),
+        Container(
+          width: 213,
+          height: 39.5,
+          decoration: const BoxDecoration(
+            borderRadius: AppBorderRadius.max,
+            gradient:
+              LinearGradient(
+                colors: [Color(0xFFBD7CE5), Color(0xFFDDA8FF)],
+              ),
+            ),
+          child: XTextBtn(
+            color: AppPalette.transparent,
+            label: '我知道了',
+            textStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
+            onTap: Get.back,
+          ),
         ),
-        const Spacing(flex: 30),
+        const Spacing(flex: 25),
       ],
     );
 
     child = Box(
-      padding: const Pad(horizontal: 22),
+      padding: const Pad(horizontal: 20),
       child: child,
     );
 
