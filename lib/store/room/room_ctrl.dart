@@ -76,6 +76,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   final micPanelRx = RxBool(false);//麦位是否显示
   final chatMsgViewIsShowRx = RxBool(false);//聊天消息视图是否显示
   final bottomBarIsShowRx = RxBool(false);//底部栏视图是否显示
+  final adLoadingIsFinishRx = RxBool(false);//广告加载图是否完成
 
   abstract bool keepState;
 
@@ -89,6 +90,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     micPanelRx.value = true;
     chatMsgViewIsShowRx.value = true;
     bottomBarIsShowRx.value = true;
+    adLoadingIsFinishRx.value = true;
   }
 
   @override
