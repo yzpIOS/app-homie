@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/white" />
+
+    <item android:width="207dp"
+        android:height="70dp" android:gravity="top|center_horizontal" android:top="203dp"
+        tools:ignore="UnusedAttribute">
         <bitmap
-            android:gravity="fill"
-            android:src="@mipmap/ic_launcher" />
+            android:gravity="center"
+            android:src="@mipmap/homie_launch" />
     </item>
 </layer-list>

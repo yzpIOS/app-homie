@@ -5,7 +5,6 @@ import 'package:app/tools/special_text.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
@@ -19,7 +18,7 @@ void main() async {
   await asyncTrack(
     'App 初始化',
     action: () async {
-      FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
+      // FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
       asyncTrack('Executor 初始化', action: executorInit);
 
       await Future.wait(

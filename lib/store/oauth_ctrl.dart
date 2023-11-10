@@ -13,7 +13,6 @@ import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:app/store/common/ready_ctrl_mixin.dart';
 import 'package:app/store/user/user_ctrl.dart';
@@ -56,7 +55,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       // 未登录，或者资料没有完善
       App.toLogin();
     }
-    FlutterNativeSplash.remove();
+    // FlutterNativeSplash.remove();
   }
 
   //<editor-fold desc="登录">
