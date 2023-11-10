@@ -111,7 +111,7 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
               Positioned.fill(
                 child: AnimatedBuilder(
                   animation: _ctrl,
-                  child: UnityLoading(controller: _ctrl),
+                  child: UnityLoading(controller: _ctrl, fromRoom: widget.fromRoom,),
                   builder: (_, child) {
                     // debugPrint("unity加载进度: ${_ctrl.value}");
                     // 己经加载完成
@@ -218,8 +218,9 @@ class UnityHolder extends StatelessWidget {
 
 class UnityLoading extends StatelessWidget {
   final Animation<double> _animation;
+  final bool fromRoom;
 
-  UnityLoading({super.key, required AnimationController controller}) : _animation = _tweenSequence.animate(controller);
+  UnityLoading({super.key, required AnimationController controller, this.fromRoom = false,}) : _animation = _tweenSequence.animate(controller);
 
   static final _tweenSequence = TweenSequence(
     [
@@ -314,10 +315,10 @@ class UnityLoading extends StatelessWidget {
 
     final decor = BoxDecoration(
       image: DecorationImage(
-        image: AssetImage(IMG.format('loading')),
-        scale: 2,
+        image: AssetImage(IMG.format(fromRoom ? 'login/pic_loading' : 'loading')),
+        scale: 3,
         fit: BoxFit.cover,
-        opacity: Env.isDebug ? 0.618 : 1,
+        // opacity: Env.isDebug ? 0.618 : 1,
       ),
     );
 

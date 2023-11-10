@@ -16,6 +16,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/svga_effect_overlay.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/intro/room_intro_overlay.dart';
+import 'package:app/ui/login/ad_loading_page.dart';
 import 'package:app/ui/moment/widgets/reply_view.dart';
 import 'package:app/ui/room/overlay/photo_mode_overlay.dart';
 import 'package:app/widgets.dart';
@@ -261,6 +262,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
           ),
           // 返回按钮
           controller.createHeader(),
+          const ADLoadingPage(fromType: 2,),
         ],
       ),
     );

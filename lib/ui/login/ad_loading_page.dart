@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class ADLoadingPage extends StatefulWidget {
-  const ADLoadingPage({super.key});
+  final int fromType;//1启动广告页  2直播间+广场
+  const ADLoadingPage({super.key, this.fromType = 1});
 
   @override
   State<ADLoadingPage> createState() => _ADLoadingPageState();
@@ -32,9 +33,13 @@ class _ADLoadingPageState extends State<ADLoadingPage> with TickerProviderStateM
     _animation = Tween(begin: 0.0, end: 1.0).animate(_ctrl);
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {//动画在终点停止
-        delay(200, () {
-          Get.find<OAuthCtrl>().skipToMain();
-        });
+        if (widget.fromType == 1) {
+          delay(200, () {
+            Get.find<OAuthCtrl>().skipToMain();
+          });
+        } else {
+
+        }
       }
     });
     _ctrl.forward();

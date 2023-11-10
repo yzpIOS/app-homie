@@ -26,6 +26,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
 
+import 'login/ad_loading_page.dart';
+
 class App extends StatefulWidget {
   static final directionRx = Rx(ScrollDirection.idle);
 
@@ -43,6 +45,9 @@ class App extends StatefulWidget {
       Get.offAllNamed('/Login', arguments: msg);
     }
   }
+
+  // 跳转广告页
+  static void toADLoading() => Get.offAllNamed('/ADLoading');
 }
 
 class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingObserverMixin {
@@ -139,6 +144,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       GetPage(name: '/Login', page: LoginHomePage.new),
       GetPage(name: '/App', page: MainPage.new),
       GetPage(name: ChatPage.routeName, page: () => const ChatPage()),
+      GetPage(name: '/ADLoading', page: ADLoadingPage.new),
     ];
   }
 
