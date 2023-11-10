@@ -107,7 +107,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
               height: 28,
             ),
           ),
-          const SizedBox(width: 10,),
+          const SizedBox(width: 11,),
           GestureDetector(
             onTap: () {
               Get.to(() => const HomeSearchPage());

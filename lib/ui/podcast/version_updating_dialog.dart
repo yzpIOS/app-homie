@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 
 class VersionUpdatingDialog extends StatelessWidget {
   final Map versionData;
+  // "version": "1.2.2", 版本号
+  // "update_url": "http://www.baidu.com", 更新地址
+  // "update_content": "", 更新内容
+  // "is_force_update": false 是否强制更新
 
   const VersionUpdatingDialog({super.key, required this.versionData});
 
@@ -42,22 +46,22 @@ class VersionUpdatingDialog extends StatelessWidget {
 
   List<Positioned> $Body() {
     return [
-      const Positioned(
+      Positioned(
         top: 139,
         child: Text(
-          '发现新版本！(1.9.0)',
-          style: TextStyle(fontSize: 21, color: Colors.black, fontWeight: fw$Bold),
+          '发现新版本！(${versionData['version'] ?? ''})',
+          style: const TextStyle(fontSize: 21, color: Colors.black, fontWeight: fw$Bold),
         ),
       ),
-      const Positioned(
+      Positioned(
         top: 173,
         left: 41,
         right: 41,
         bottom: 100,
         child: SingleChildScrollView(
           child: Text(
-            '1.修复已知的发热问题\n2.修复加载卡99%的问题',
-            style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
+            versionData['update_content'] ?? '',
+            style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
           ),
         ),
       ),
@@ -72,28 +76,29 @@ class VersionUpdatingDialog extends StatelessWidget {
           onTap: () => onItemClick('立即升级'),
         ),
       ),
-      Positioned(
-        bottom: 7,
-        child: TextButton(
-          child: const Text.rich(
-            TextSpan(
-              style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
-              children: [
-                TextSpan(text: '下次再说',),
-                WidgetSpan(child: RightArrowIcon(color: Colors.black,), alignment: PlaceholderAlignment.middle),
-              ],
+      if (versionData['is_force_update'] == false) //是否强制更新
+        Positioned(
+          bottom: 7,
+          child: TextButton(
+            child: const Text.rich(
+              TextSpan(
+                style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
+                children: [
+                  TextSpan(text: '下次再说',),
+                  WidgetSpan(child: RightArrowIcon(color: Colors.black,), alignment: PlaceholderAlignment.middle),
+                ],
+              ),
             ),
+            onPressed: () => onItemClick('下次再说'),
           ),
-          onPressed: () => onItemClick('下次再说'),
         ),
-      ),
     ];
   }
 
   void onItemClick(String action) {
     switch (action) {
       case '立即升级':
-        toAppMarket();
+        toAppMarket(versionData['update_url']);
         break;
       case '下次再说':
         Get.back();

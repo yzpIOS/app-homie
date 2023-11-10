@@ -18,6 +18,7 @@ import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fixnum/fixnum.dart';
 
 part 'api/api_activity.dart';

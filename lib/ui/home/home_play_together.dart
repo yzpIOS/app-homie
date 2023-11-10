@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 
@@ -14,7 +15,7 @@ class HomePlayTogether extends StatelessWidget {
       padding: const EdgeInsets.only(left: 10),
       child: GestureDetector(
         onTap: () {
-
+          Get.find<RoomManagerCtrl>().toSquare();
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,6 +45,7 @@ class HomePlayTogether extends StatelessWidget {
                   top: 19,
                   left: 10,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "逍遥岛",
@@ -53,7 +55,6 @@ class HomePlayTogether extends StatelessWidget {
                             color: AppPalette.txtWhite
                         ),
                       ),
-
                       Text(
                         "开心交友",
                         style: TextStyle(

@@ -8,7 +8,6 @@ import 'package:app/ui/message/interactive_page.dart';
 import 'package:app/ui/my/friend/access_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:app/ui/podcast/version_updating_dialog.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -94,8 +93,6 @@ class _ActionView extends GetView<ConvManagerCtrl> {
       case SysConvEnum.like:
       case SysConvEnum.at:
         Get.to(() => InteractivePage(type: action));
-        //wyxtodo
-        // Get.dialog(VersionUpdatingDialog(versionData: {}), barrierDismissible: false);
         break;
       case SysConvEnum.guest:
         Get.to(() => const AccessPage());

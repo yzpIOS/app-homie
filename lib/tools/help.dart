@@ -7,6 +7,7 @@ import 'package:app/exception.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 typedef WhenErr = Map<int?, ValueChanged<LogicException>>;
 
@@ -20,7 +21,7 @@ Future<void> goHome() {
 }
 
 
-void toAppMarket() async {
+void toAppMarket(String update_url) async {
   if (Platform.isAndroid) {
     // var appName = "com.jm.homie.app";
     // var targetURL = Uri.parse("market://details?id=$appName");
@@ -30,8 +31,7 @@ void toAppMarket() async {
     //   data: "market://details?id=com.jm.homie.app",
     // );
     // intent.launch();
-    var targetURL = Uri.parse("http://app.web.homieyy.com");
-    await launchUrl(targetURL);
+    await launchUrlString(update_url, mode: LaunchMode.externalApplication);
   } else if (Platform.isIOS) {
     var appID = "6450973472";
     var targetURL = Uri.parse("itms-apps://itunes.apple.com/app/$appID");
