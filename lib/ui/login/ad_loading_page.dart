@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _ADLoadingPageState extends State<ADLoadingPage> with TickerProviderStateM
             Get.find<OAuthCtrl>().skipToMain();
           });
         } else {
-
+          RoomManagerCtrl.ins.sceneCtrl2?.completeProgress();
         }
       }
     });

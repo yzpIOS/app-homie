@@ -262,9 +262,17 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
           ),
           // 返回按钮
           controller.createHeader(),
-          const ADLoadingPage(fromType: 2,),
+          // 加载进度
+          Positioned.fill(
+            child: Obx(() {
+              if(controller.micPanelRx.value == true) {
+                return const SizedBox(width: 1, height:1);
+              }
+              return const ADLoadingPage(fromType: 2,);
+            }),
+          )
         ],
-      ),
+      )
     );
 
     child = UiOverlayRegion.light(child: child);

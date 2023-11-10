@@ -73,9 +73,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         noticeRx = RxString(info['notice_message'] ?? '');
 
   final sceneHudRx = Rx(RoomHudState.None);
-  final micPanelRx = RxBool(true);//麦位是否显示
-  final chatMsgViewIsShowRx = RxBool(true);//聊天消息视图是否显示
-  final bottomBarIsShowRx = RxBool(true);//底部栏视图是否显示
+  final micPanelRx = RxBool(false);//麦位是否显示
+  final chatMsgViewIsShowRx = RxBool(false);//聊天消息视图是否显示
+  final bottomBarIsShowRx = RxBool(false);//底部栏视图是否显示
 
   abstract bool keepState;
 
@@ -84,6 +84,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   /// 记录是否己经加入房间
   bool _hasJoinRoom = false;
+
+  void completeProgress() {
+    micPanelRx.value = true;
+    chatMsgViewIsShowRx.value = true;
+    bottomBarIsShowRx.value = true;
+  }
 
   @override
   void onInit() {
