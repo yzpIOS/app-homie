@@ -8,6 +8,7 @@ import 'package:app/widgets.dart';
 /// 一起玩
 ///
 class HomePlayTogether extends StatelessWidget {
+  const HomePlayTogether({super.key});
 
   @override
   Widget build(BuildContext context) {
