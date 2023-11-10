@@ -312,9 +312,9 @@ class UnityLoading extends StatelessWidget {
 
     child = SafeArea(child: child);
 
-    const decor = BoxDecoration(
+    final decor = BoxDecoration(
       image: DecorationImage(
-        image: AssetImage('loading'),
+        image: AssetImage(IMG.format('loading')),
         scale: 2,
         fit: BoxFit.cover,
         // opacity: Env.isDebug ? 0.618 : 1,
