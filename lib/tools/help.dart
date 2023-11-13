@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:android_intent_plus/android_intent.dart';
 import 'package:app/3rd/sentry/sentry.dart';
 import 'package:app/exception.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -32,9 +33,9 @@ void toAppMarket(String? update_url) async {
     // );
     // intent.launch();
     if (update_url == null || update_url.isEmpty) {
-      update_url = 'http://app.web.homieyy.com';
+      update_url = Get.find<ConfigCtrl>().dataRx['official_url'] ?? 'http://app.web.homieyy.com';
     }
-    await launchUrlString(update_url, mode: LaunchMode.externalApplication);
+    await launchUrlString(update_url!, mode: LaunchMode.externalApplication);
   } else if (Platform.isIOS) {
     var appID = "6450973472";
     var targetURL = Uri.parse("itms-apps://itunes.apple.com/app/$appID");
