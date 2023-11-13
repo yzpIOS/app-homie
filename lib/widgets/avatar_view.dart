@@ -59,7 +59,7 @@ class AvatarView extends StatelessWidget {
         padding: const Pad(all: 3.0),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          border: Border.all(color: AppPalette.primary, width: 3.0,),
+          border: Border.all(color: Color(0xFFB77DE5), width: 1.5,),
         ),
         child: Stack(
           clipBehavior: Clip.none,
@@ -67,8 +67,8 @@ class AvatarView extends StatelessWidget {
           children: [
             Positioned.fill(child: child,),
             Positioned(
-              bottom: -10,
-              child: Image.asset(IMG.format('直播中'), width: 48, height: 15.5, scale: 3, fit: BoxFit.contain),
+              bottom: -13,
+              child: Image.asset(IMG.format('直播中'), width: 46.5, height: 19.5, scale: 3, fit: BoxFit.contain),
             ),
           ],
         ),
