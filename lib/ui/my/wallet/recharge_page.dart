@@ -7,6 +7,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/open_install_utils.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
@@ -317,8 +318,9 @@ class _RechargePageState extends State<RechargePage> {
         }
 
         if (payResult) {
+          // 统计支付成功
+          OpenInstallUtils.ins.reportPaySuccessEvent(data['pay_amount']);
           Get.back(result: true);
-
           MoneyChangeEvent({type: data['diamond_amount']}).fire();
         }
       },

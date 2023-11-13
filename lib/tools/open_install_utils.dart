@@ -52,7 +52,6 @@ class OpenInstallUtils {
           "idfaStr": datas?["idfaStr"] ?? "",
           "adEnable": true,
           "ASAEnable": true,
-          "ASADebug": Env.isDebugCfg
         });
       }
       _openinstallFlutterPlugin?.init(wakeupHandler);
@@ -112,5 +111,13 @@ class OpenInstallUtils {
     _openinstallFlutterPlugin?.reportRegister();
     // 记录己经上传过
     KvBox.write(PrefKey.OpenInstallBlindDataFlag2, PrefKey.OpenInstallBlindDataFlag2);
+  }
+
+  ///
+  /// 统计支付成功事件
+  /// https://open-ad.vivo.com.cn/doc/index?id=504
+  ///
+  Future<void> reportPaySuccessEvent(int amount) async {
+    _openinstallFlutterPlugin?.reportEffectPoint("pay_success_event", amount);
   }
 }
