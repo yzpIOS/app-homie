@@ -169,8 +169,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   Widget _createRandomRoomEntry() {
     return Positioned.fill(
       right: 10,
-      left: AppSize.width - 106,
-      bottom: 99 + AppSize.safeTop,
+      bottom: 50,
       child: Align(
         alignment: Alignment.bottomRight,
         child: GestureDetector(
