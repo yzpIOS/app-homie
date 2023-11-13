@@ -115,6 +115,7 @@ class OpenInstallUtils {
 
   ///
   /// 统计支付成功事件
+  /// [amount]  支付金额
   /// https://open-ad.vivo.com.cn/doc/index?id=504
   ///
   Future<void> reportPaySuccessEvent(int amount) async {

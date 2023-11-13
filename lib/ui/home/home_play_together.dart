@@ -57,7 +57,7 @@ class HomePlayTogether extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "开心交友",
+                        "自由交友",
                         style: TextStyle(
                             fontSize: 9,
                             color: AppPalette.txtWhite
