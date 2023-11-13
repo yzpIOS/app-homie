@@ -265,7 +265,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
           // 加载进度
           Positioned.fill(
             child: Obx(() {
-              if(controller.micPanelRx.value == true) {
+              if(controller.adLoadingIsFinishRx.value == true) {
                 return const SizedBox(width: 1, height:1);
               }
               return const ADLoadingPage(fromType: 2,);
