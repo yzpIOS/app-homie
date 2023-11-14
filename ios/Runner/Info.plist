@@ -2,21 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>Homie世界</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -80,8 +71,11 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSUserTrackingUsageDescription</key>
-	<string>为了您可以精准获取到优质推荐内容，Homie需要您允许使用该权限</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Homie想访问您的媒体资料库，用于播放音乐等功能</string>
 	<key>NSCameraUsageDescription</key>
@@ -94,10 +88,16 @@
 	<string>Homie想访问您的麦克风，用于发送语音等功能</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Homie想访问您的照册，用于分享和更改头像等功能</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>为了您可以精准获取到优质推荐内容，Homie需要您允许使用该权限</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>CustomLaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
