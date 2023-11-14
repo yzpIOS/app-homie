@@ -100,7 +100,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   /// socket连接成功时，服务端返回的用户信息
   ///
-  void onRoleResponse(int cmd, S_Role? role) {
+  void onRoleResponse(int cmd, S_Role? role) async {
     if(role == null) {
       return;
     }
@@ -145,6 +145,25 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     } else {
       // 没有在房间中
       onSocketDisconnect();
+      // 新用户首次打开app时随机进房
+      if(await KvBox.contains(PrefKey.NEW_USER_HAS_JOIN_ROOM) == false) {
+        KvBox.write(PrefKey.NEW_USER_HAS_JOIN_ROOM, PrefKey.NEW_USER_HAS_JOIN_ROOM);
+        simpleTry(() => Api.Common.getEntryPoint(),
+          callback: (t) {
+            if(t is Map) {
+              Map<dynamic, dynamic>? roomData = t["room_data"];
+              // 随机进房
+              if(roomData != null) {
+                if(roomData["scene_id"] != 0) {
+                  toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+                } else {
+                  toSquare(data: roomData);
+                }
+              }
+            }
+          }
+        );
+      }
     }
   }
 

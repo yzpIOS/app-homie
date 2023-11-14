@@ -132,4 +132,12 @@ class ApiCommon extends ApiBase {
 
     return _doPost('configure/version/query', data: deviceData);
   }
+
+
+  ///
+  /// 获取随机入口
+  ///
+  Future getEntryPoint() async {
+    return _doPost('base/point');
+  }
 }
