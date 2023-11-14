@@ -67,7 +67,7 @@ class _ADLoadingPageState extends State<ADLoadingPage> with TickerProviderStateM
           Positioned(
             left: 25,
             right: 25,
-            bottom: 67,
+            bottom: 52,
             child: AnimatedBuilder(
               animation: _ctrl,
               builder: (_, __) {
