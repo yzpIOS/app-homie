@@ -146,21 +146,23 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       // 没有在房间中
       onSocketDisconnect();
       // 新用户首次打开app时随机进房
-      simpleTry(() => Api.Common.getEntryPoint(),
-          callback: (t) {
-            if(t is Map) {
-              Map<dynamic, dynamic>? roomData = t["room_data"];
-              // 随机进房
-              if(roomData != null) {
-                if(roomData["scene_id"] != 0) {
-                  toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
-                } else {
-                  toSquare(data: roomData);
+      Future.delayed(const Duration(milliseconds: 3500)).whenComplete(() async {
+        simpleTry(() => Api.Common.getEntryPoint(),
+            callback: (t) {
+              if(t is Map) {
+                Map<dynamic, dynamic>? roomData = t["room_data"];
+                // 随机进房
+                if(roomData != null) {
+                  if(roomData["scene_id"] != 0) {
+                    toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+                  } else {
+                    toSquare(data: roomData);
+                  }
                 }
               }
             }
-          }
-      );
+        );
+      });
     }
   }
 
