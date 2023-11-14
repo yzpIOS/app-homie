@@ -110,7 +110,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     // 数据异常
     if(pkRoomId > 0 && roomId > 0) {
       // 在pk房中
-      Future.delayed(const Duration(seconds: 2)).whenComplete(() async {
+      Future.delayed(const Duration(milliseconds: 3500)).whenComplete(() async {
         var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
         putPkInfo(roomInfo, pkRoomId);
 
@@ -127,7 +127,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         sceneCtrl2?.loadSceneInfo();
       } else {
         // 房间己关闭, 从新打开房间
-        Future.delayed(const Duration(milliseconds: 2000)).whenComplete(() async {
+        Future.delayed(const Duration(milliseconds: 3500)).whenComplete(() async {
           // 己经加入到其它的房间，此时不处理
           if(sceneCtrl2 != null) {
             return;
