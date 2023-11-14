@@ -77,6 +77,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   final chatMsgViewIsShowRx = RxBool(false);//聊天消息视图是否显示
   final bottomBarIsShowRx = RxBool(false);//底部栏视图是否显示
   final adLoadingIsFinishRx = RxBool(false);//广告加载图是否完成
+  final noticePanelRx = RxBool(false);//房间公告是否显示
 
   abstract bool keepState;
 
@@ -91,6 +92,17 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     chatMsgViewIsShowRx.value = true;
     bottomBarIsShowRx.value = true;
     adLoadingIsFinishRx.value = true;
+
+    if (noticeRx.isNotEmpty) {
+      noticePanelRx(true);
+
+      Future.delayed(
+        3.seconds,
+            () {
+          if (!isClosed) noticePanelRx(false);
+        },
+      );
+    }
   }
 
   @override
@@ -397,25 +409,12 @@ class RoomCtrl extends SceneCtrl {
         examineMicRx = RxBool(info['mike_examine_status'] == ApiSwitch.open.code),
         managerRx = RxSet();
 
-  final noticePanelRx = RxBool(false);
-
   @override
   bool keepState = true;
 
   @override
   FutureOr<void> doOnReady() async {
     await super.doOnReady();
-
-    if (noticeRx.isNotEmpty) {
-      noticePanelRx(true);
-
-      Future.delayed(
-        3.seconds,
-        () {
-          if (!isClosed) noticePanelRx(false);
-        },
-      );
-    }
 
     post(
       () {
