@@ -140,7 +140,7 @@ class PrefKey {
   // 记录是否上传openInstall
   static const OpenInstallBlindDataFlag2 = 'OpenInstallBlindDataFlag2';
   // 第一次加入房间
-  static const NEW_USER_HAS_JOIN_ROOM = "NEW_USER_HAS_JOIN_ROOM";
+  static const NEW_USER_HAS_JOIN_ROOM = "NEW_USER_HAS_JOIN_ROOM2";
 }
 
 class FiltrationChatText {

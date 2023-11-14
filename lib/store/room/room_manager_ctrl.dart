@@ -146,9 +146,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       // 没有在房间中
       onSocketDisconnect();
       // 新用户首次打开app时随机进房
-      if(await KvBox.contains(PrefKey.NEW_USER_HAS_JOIN_ROOM) == false) {
-        KvBox.write(PrefKey.NEW_USER_HAS_JOIN_ROOM, PrefKey.NEW_USER_HAS_JOIN_ROOM);
-        simpleTry(() => Api.Common.getEntryPoint(),
+      simpleTry(() => Api.Common.getEntryPoint(),
           callback: (t) {
             if(t is Map) {
               Map<dynamic, dynamic>? roomData = t["room_data"];
@@ -162,8 +160,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
               }
             }
           }
-        );
-      }
+      );
     }
   }
 
