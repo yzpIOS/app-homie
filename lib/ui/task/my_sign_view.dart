@@ -73,7 +73,7 @@ class SignDialog extends StatelessWidget {
 
     child = Box(
       width: 375,
-      padding: const Pad(bottom: 30, horizontal: 10),
+      padding: const Pad(bottom: 40, horizontal: 10),
       child: AspectRatio(
         aspectRatio: 345 / 546,
         child: child,
@@ -100,8 +100,6 @@ class SignDialog extends StatelessWidget {
 
     const title1View = Positioned(
       top: 117,
-      // width: 133,
-      // height: 30,
       child: XText(
         '每日签到',
         style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: fw$SemiBold),
