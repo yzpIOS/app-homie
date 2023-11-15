@@ -67,15 +67,15 @@ class SignDialog extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         ...$DecoratedView(),
-        Positioned.fill(top: 124, child: $Body()),
+        Positioned.fill(top: 205, child: $Body()),
       ],
     );
 
     child = Box(
       width: 375,
-      padding: const Pad(horizontal: 20),
+      padding: const Pad(bottom: 30, horizontal: 10),
       child: AspectRatio(
-        aspectRatio: 335 / 494,
+        aspectRatio: 345 / 546,
         child: child,
       ),
     );
@@ -90,65 +90,33 @@ class SignDialog extends StatelessWidget {
   }
 
   List<Widget> $DecoratedView() {
-    const bgView = Positioned.fill(
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          shape: AppShape.a20,
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment(0, -0.2),
-            colors: [Color(0xFFD5C3F7), Colors.white],
-          ),
+    Widget bgView = Positioned.fill(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(IMG.format('task/qd_pic_bg')), scale: 3, fit: BoxFit.cover),
         ),
       ),
     );
 
-    final title1View = Positioned(
-      top: 32,
-      width: 93,
-      height: 64,
-      child: Image.asset(IMG.format('task/装饰_2'), scale: 3),
-    );
-
-    final title2View = Positioned(
-      top: 82,
-      width: 133,
-      height: 30,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Image.asset(IMG.format('task/装饰_3'), scale: 3),
-          const Padding(
-            padding: Pad(bottom: 8),
-            child: XText(
-              '每日签到',
-              style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
-            ),
-          ),
-        ],
+    const title1View = Positioned(
+      top: 117,
+      // width: 133,
+      // height: 30,
+      child: XText(
+        '每日签到',
+        style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: fw$SemiBold),
       ),
     );
 
-    final image = Image.asset(IMG.format('task/装饰_1'), width: 44, scale: 3);
-
-    return [
-      bgView,
-      Positioned(top: -20, left: 55, child: image),
-      Positioned(top: -20, right: 55, child: image),
-      title1View,
-      title2View,
-    ];
-  }
-
-  Widget $Body() {
-    Widget child = const XText('签到越多奖励越多~');
-
-    child = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        XRichText(
+    Widget title2View = Positioned(
+      top: 150,
+      child: Container(
+        height: 18,
+        padding: const Pad(horizontal: 10),
+        decoration: const BoxDecoration(color: Color(0xFFEBEBFF), borderRadius: AppBorderRadius.max),
+        child: XRichText(
           TextSpan(
-            text: '已累计签到 ',
+            text: '已累计签到: ',
             children: [
               TextSpan(
                 text: '$total天',
@@ -156,29 +124,34 @@ class SignDialog extends StatelessWidget {
               ),
             ],
           ),
+          style: const TextStyle(fontSize: 12, color: Color(0xFF878585), fontWeight: fw$Regular),
         ),
-        child,
-      ],
+      ),
     );
 
-    child = Box(
+    return [
+      bgView,
+      title1View,
+      title2View,
+    ];
+  }
+
+  Widget $Body() {
+    Widget child = Box(
       padding: const Pad(horizontal: 10),
       child: Column(
         children: [
-          Box(
-            height: 17,
-            alignment: Alignment.centerLeft,
-            child: child,
+          Padding(
+            padding: const Pad(left: 5),
+            child: $TaskView(weekday),
           ),
-          const Spacing(flex: 10),
-          $TaskView(weekday),
           const Spacing(flex: 20),
           if (isEnable)
             XTextBtn(
-              label: '立即签到',
+              label: '签 到',
               width: 235,
               height: 40,
-              textStyle: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
+              textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$SemiBold),
               onTap: _doSign,
             )
           else
@@ -187,7 +160,7 @@ class SignDialog extends StatelessWidget {
               width: 235,
               height: 40,
               color: AppPalette.cc,
-              textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
+              textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$SemiBold),
             ),
           const Spacing(flex: 20),
         ],
@@ -207,8 +180,8 @@ class SignDialog extends StatelessWidget {
 
     return LayoutGrid(
       areas: areas,
-      rowGap: 10,
-      columnGap: 10,
+      rowGap: 12,
+      columnGap: 12,
       rowSizes: [90.px, 90.px, 73.px],
       columnSizes: const [auto, auto, auto, auto],
       children: [
@@ -271,9 +244,8 @@ class _ItemView extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         Positioned(top: 5, left: 5, child: child),
-        ...$AwardView(),
+        ...$AwardView(day),
         if (isFinish) ...[
-          const Positioned.fill(child: Box(color: Color(0x4DCCCCCC))),
           Positioned(
             width: 26,
             height: 26,
@@ -284,20 +256,23 @@ class _ItemView extends StatelessWidget {
     );
 
     child = DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 12, color: Color(0xFFF1A43A), fontWeight: fw$Medium),
+      style: const TextStyle(fontSize: 10, color: AppPalette.primary, fontWeight: fw$Medium),
       child: child,
     );
 
     child = _ItemDecor(
       hasBorder: isToday && !isFinish,
+      isFinish: isFinish,
       child: child,
     );
 
     return child;
   }
 
-  Iterable<Positioned> $AwardView() {
-    const double size = 40;
+  Iterable<Positioned> $AwardView(int day) {
+    double size = (day == 7) ? 50 : 40;
+    double iconTop = (day == 7) ? 18 : 28;
+    double? textRight = (day == 7) ? 10 : null;
 
     late final Map? obj = data['obj'];
 
@@ -305,12 +280,12 @@ class _ItemView extends StatelessWidget {
       //金币
       1 => (
           MoneyType.gold.label,
-          const MoneyIcon(type: MoneyType.gold, size: size),
+          MoneyIcon(type: MoneyType.gold, size: size),
         ),
       //钻石
       2 => (
           MoneyType.diamond.label,
-          const MoneyIcon(type: MoneyType.diamond, size: size),
+          MoneyIcon(type: MoneyType.diamond, size: size),
         ),
       //商品
       3 ||
@@ -326,10 +301,11 @@ class _ItemView extends StatelessWidget {
     };
 
     return [
-      Positioned(top: 28, width: size, height: size, child: icon),
+      Positioned(top: iconTop, width: size, height: size, child: icon),
       Positioned(
-        bottom: 5,
-        child: XText('${title}x${data['number']}'),
+        bottom: 7,
+        right: textRight,
+        child: XText('${title}X${data['number']}'),
       ),
     ];
   }
@@ -338,13 +314,14 @@ class _ItemView extends StatelessWidget {
 class _ItemDecor extends StatelessWidget {
   final Widget child;
   final bool hasBorder;
+  final bool isFinish;
 
-  const _ItemDecor({required this.child, this.hasBorder = false});
+  const _ItemDecor({required this.child, this.hasBorder = false, this.isFinish = false});
 
   @override
   Widget build(BuildContext context) {
     final decor = BoxDecoration(
-      color: Colors.white,
+      color: isFinish ? const Color(0xFFCFBCEB) : const Color(0xFFEBEBFF),
       borderRadius: AppBorderRadius.a10,
       border: hasBorder
           ? Border.all(
@@ -353,12 +330,12 @@ class _ItemDecor extends StatelessWidget {
               strokeAlign: BorderSide.strokeAlignCenter,
             )
           : null,
-      boxShadow: const [
+      boxShadow: [
         BoxShadow(
-          color: Color(0x29000000),
-          blurRadius: 6,
-          spreadRadius: 1,
-          offset: Offset(0, 3),
+          color: AppPalette.primary.withAlpha(80),
+          blurRadius: 5,
+          spreadRadius: 0,
+          offset: const Offset(0, 3),
         ),
       ],
     );
@@ -406,11 +383,20 @@ class _DayTotalView extends StatelessWidget {
         return item is Map
             ? ConstraintLayout(
                 children: [
-                  XText(
-                    '累计签到${item['day_num']}天可领取',
-                    style: const TextStyle(fontSize: 14, color: Color(0xFFF1A43A)),
+                  XRichText(
+                    TextSpan(
+                      children: [
+                        const TextSpan(text: '累计签到'),
+                        TextSpan(
+                          text: '${item['day_num']}天',
+                          style: const TextStyle(color: AppPalette.primary),
+                        ),
+                        const TextSpan(text: '可领取'),
+                      ],
+                    ),
+                    style: const TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
                   ).applyConstraint(
-                    centerLeftTo: parent.leftMargin(16),
+                    centerLeftTo: parent.leftMargin(12),
                   ),
                   $ImageView(
                     60,
@@ -419,11 +405,11 @@ class _DayTotalView extends StatelessWidget {
                     id: ConstraintId('img'),
                     width: 60,
                     height: 60,
-                    centerTo: parent.leftMargin(20),
+                    centerTo: parent.leftMargin(45),
                   ),
                   Text(
-                    'x${item['number']}',
-                    style: const TextStyle(fontSize: 14, color: Color(0xFFF1A43A)),
+                    'X${item['number']}',
+                    style: const TextStyle(fontSize: 15, color: Color(0xFFFF0024)),
                   ).applyConstraint(
                     centerVerticalTo: parent,
                     left: ConstraintId('img').right,
@@ -434,7 +420,7 @@ class _DayTotalView extends StatelessWidget {
                         : $Btn(color: AppPalette.cc),
                   ).applyConstraint(
                     id: ConstraintId('btn'),
-                    centerRightTo: parent.rightMargin(16),
+                    centerRightTo: parent.rightMargin(12),
                   ),
                 ],
               )
@@ -449,11 +435,11 @@ class _DayTotalView extends StatelessWidget {
 
   Widget $Btn({required Color color, VoidCallback? onTap}) {
     return XTextBtn(
-      label: '领取',
-      width: 50,
+      label: '领 取',
+      width: 55.5,
       height: AppSize.btnTiny,
       color: color,
-      textStyle: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: fw$Medium),
+      textStyle: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
       onTap: onTap,
     );
   }
