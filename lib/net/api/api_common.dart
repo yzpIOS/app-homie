@@ -47,6 +47,7 @@ class ApiCommon extends ApiBase {
     return _doPost2(uri.toString(), data: data);
   }
 
+  /// 获取轮播列表（政策、公约）
   Future banner() {
     final data = {
       'status': 1,

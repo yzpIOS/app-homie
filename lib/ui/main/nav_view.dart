@@ -79,11 +79,16 @@ class NavBarItem {
       final _iconView = iconView;
 
       iconView = NotifierView<int>(badge!, onData: (count) {
-        return AppBadge.dot(
-          show: count > 0,
-          position: BadgePosition.topEnd(top: 0, end: -3),
+        return AppBadge.count(
+          count: count,
+          position: BadgePosition.topStart(top: -3, start: 19),
           child: _iconView,
         );
+        // return AppBadge.dot(
+        //   show: count > 0,
+        //   position: BadgePosition.topEnd(top: 0, end: -3),
+        //   child: _iconView,
+        // );
       });
     }
 
