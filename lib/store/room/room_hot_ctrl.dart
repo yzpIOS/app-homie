@@ -11,7 +11,7 @@ class RoomHotCtrl extends PageListCtrl<Map> {
 
   @override
   Future fetchPage(PageNum page) {
-    //刷新banner
+    //刷新banner 获取轮播列表（政策、公约）
     bannerCtrl.doRefresh();
 
     return Api.Room.hotRoomList(page: page);
