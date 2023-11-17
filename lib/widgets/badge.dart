@@ -40,7 +40,7 @@ class AppBadge extends StatelessWidget {
         elevation: 0,
         shape: badges.BadgeShape.square,
         padding: EdgeInsets.zero,
-        badgeColor: Color(0xFFFE3D3D),
+        badgeColor: Color(0xFFFF0049),
         borderRadius: AppBorderRadius.max,
       ),
       child: child,
@@ -60,7 +60,7 @@ class AppBadge extends StatelessWidget {
         elevation: 0,
         shape: badges.BadgeShape.circle,
         padding: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-        badgeColor: Color(0xFFFE3D3D),
+        badgeColor: Color(0xFFFF0049),
       ),
       child: child,
     );

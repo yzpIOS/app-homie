@@ -171,7 +171,7 @@ class _ItemView extends StatelessWidget {
     return Container(
       width: count >= 10 ? 24 : 16,
       height: 16,
-      decoration: const ShapeDecoration(color: Color(0xFFFE3D3D), shape: XStadiumBorder()),
+      decoration: const ShapeDecoration(color: Color(0xFFFF0049), shape: XStadiumBorder()),
       alignment: Alignment.center,
       child: XText(
         count > 99 ? '99+' : '$count',

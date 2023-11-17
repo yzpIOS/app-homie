@@ -15,7 +15,7 @@ class SceneOverlayInput extends StatelessWidget {
     Widget child = Container(
       height: 28,
       decoration: _decor,
-      margin: const Pad(horizontal: 5),
+      margin: const Pad(all: 5),
       padding: const Pad(left: 10),
       alignment: Alignment.centerLeft,
       child: Row(
