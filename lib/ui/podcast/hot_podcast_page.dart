@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/home/home_activity_banner_view.dart';
 import 'package:app/ui/home/home_banner_view.dart';
 import 'package:app/ui/home/home_play_together.dart';
 import 'package:app/ui/home/home_search_page.dart';
@@ -114,7 +115,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           GestureDetector(
             onTap: () {
               if(Env.isDebug) {
-                Get.to(() => WebViewPage(url: "http://192.168.1.126:3002/public/html/deeplink.html",));
+                Get.to(() => WebViewPage(title: "test", url: "http://192.168.1.126:3002/public/html/deeplink.html",));
                 return;
               }
               Get.to(() => const HomeSearchPage());
@@ -158,7 +159,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 公约
-        const HomeBannerView(),
+        const HomeActivityBannerView(),
         
         // 距离
         const SizedBox(height: 10,),

@@ -1,3 +1,4 @@
+import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -10,8 +11,9 @@ import 'package:app/widgets/webview/channels/channel_route.dart';
 
 class WebViewPage extends StatefulWidget {
   String url;
+  String title;
 
-  WebViewPage({super.key, required this.url});
+  WebViewPage({super.key, required this.url, required this.title});
 
   @override
   State<StatefulWidget> createState() => _WebViewPageState();
@@ -97,6 +99,7 @@ class _WebViewPageState extends State<WebViewPage> {
     }
     // 显示webview
     return Scaffold(
+      appBar: xAppBar(title: widget.title),
       body: WebViewWidget(
         controller: webViewController
           ..loadRequest(Uri.parse(url ?? "")),

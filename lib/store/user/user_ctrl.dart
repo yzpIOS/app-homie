@@ -1,5 +1,6 @@
 import 'package:app/3rd/sentry/sentry.dart';
 import 'package:app/model/auth_info.dart';
+import 'package:app/store/activity_banner_ctrl.dart';
 import 'package:app/store/banner_ctrl.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/gift_ctrl.dart';
@@ -51,6 +52,7 @@ class UserCtrl extends GetxController with GetDisposableMixin {
 
     // bindGet(MqCtrl());
     bindGet(BannerCtrl());
+    bindGet(ActivityBannerCtrl());
     bindGet(GiftCtrl(uid: uid));
     bindGet(WalletCtrl(uid: uid));
     bindGet(UserInfoCtrl(uid: uid));
