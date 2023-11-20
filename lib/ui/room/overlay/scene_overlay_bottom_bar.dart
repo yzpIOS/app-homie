@@ -1,3 +1,4 @@
+import 'package:app/3rd/tencent/im.dart';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
@@ -163,6 +164,9 @@ class _ConvViewState extends State<_ConvView> {
                           for (final item in list) {
                             if ((item.unreadCount ?? 0) > 0) {
                               uid = item.userID ?? '';
+                              if (item.isSysConv) {
+                                return AvatarView(item.faceUrl, size: 26);
+                              }
                               break;
                             }
                           }
