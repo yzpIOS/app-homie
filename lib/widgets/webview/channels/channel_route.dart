@@ -9,7 +9,7 @@ import 'base_bridge.dart';
 class ChannelRoute extends BaseJsBridge {
 
   @override
-  Future<bool> callMethod(ComposeModel composeModel) {
+  Future<bool> callMethod(ComposeModel composeModel) async {
     // 返回上一页
     if(composeModel.type == "back") {
       Get.back();
@@ -24,11 +24,11 @@ class ChannelRoute extends BaseJsBridge {
 
     // 去充值
     if(composeModel.type == "toCharge") {
-      Get.to(() => RechargePage(hasShowUnityView: false,));
+      await Get.to(() => RechargePage(hasShowUnityView: false,));
+      callJsMethod(composeModel);
       return Future.value(true);
     }
 
-    callJsMethod(composeModel);
     return Future.value(true);
   }
 
