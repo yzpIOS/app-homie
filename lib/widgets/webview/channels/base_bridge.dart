@@ -3,8 +3,6 @@ import 'dart:convert' as convert;
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'channel_compose.dart';
-
 abstract class BaseJsBridge {
 
   late WebViewController controller;
