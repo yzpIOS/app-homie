@@ -154,16 +154,13 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   }
 
   Widget $SquareView() {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 公约
-        const HomeActivityBannerView(),
-        
-        // 距离
-        const SizedBox(height: 10,),
-        HomePlayTogether(),
+        HomeActivityBannerView(),// 活动banner
+        SizedBox(height: 10,),// 距离
+        HomePlayTogether(),// 一起玩模块
       ],
     );
   }
