@@ -317,7 +317,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
         logForDebug("非pk状态，joinRoom");
         try {
-          final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd);
+          final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
           logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
           if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
             if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
