@@ -321,7 +321,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
           if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
             if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-              throw const LogicException(-1, "你被封禁了");
+              throw const LogicException(-1, "该房间主人拒绝您进入");
             } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
               throw const LogicException(-1, "输入的房间密码错误");
             } else {
