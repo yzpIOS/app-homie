@@ -82,28 +82,28 @@ class OpenInstallUtils {
   }
 
   Future onInstall(Map<String, Object> data) async {
-    showToast("动态拉起参数1：${data.toString()}");
+    // showToast("动态拉起参数1：${data.toString()}");
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-      showToast("动态拉起参数2：${PrefKey.OpenInstallBlindDataFlag}");
+      // showToast("动态拉起参数2：${PrefKey.OpenInstallBlindDataFlag}");
       return;
     }
     // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
     if(bindData == null) {
-      showToast("动态拉起参数3：${data.toString()}");
+      // showToast("动态拉起参数3：${data.toString()}");
       return;
     }
-    showToast("动态拉起参数4：${data.toString()}");
+    // showToast("动态拉起参数4：${data.toString()}");
     final bindDataStr = bindData.toString();
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
     // 渠道编号
     final channelCode = data['channelCode'];
-    showToast("动态拉起参数5：${data.toString()}  -->${channelCode}");
+    // showToast("动态拉起参数5：${data.toString()}  -->${channelCode}");
     if(channelCode != null && !result.containsKey('channel_code')) {
       result['channel_code'] = channelCode;// 渠道码
     }
-    showToast("动态拉起参数6：${data.toString()}  -->${result.toString()}");
+    // showToast("动态拉起参数6：${data.toString()}  -->${result.toString()}");
     KvBox.write(PrefKey.OpenInstallBlindData, result);
     // 记录己经上传过
     KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
