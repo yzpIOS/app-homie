@@ -73,15 +73,17 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
-  Future<S_JoinScene?> joinRoom(int id, {String? pwd}) async {
+  Future<S_JoinScene?> joinRoom(int id, {String? pwd, int timeout = 16}) async {
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene();
     c_joinScene.roomId = Int64(id);
     c_joinScene.roomPassword = pwd ?? "";
     return await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_JoinScene,
-        datas: c_joinScene.writeToBuffer(),
-        resCmd: CMD.S_JoinScene);
+      CMD.C_JoinScene,
+      datas: c_joinScene.writeToBuffer(),
+      resCmd: CMD.S_JoinScene,
+      timeout: timeout
+    );
   }
 
   Future getRoomInfo(int id, {String? pwd}) {
