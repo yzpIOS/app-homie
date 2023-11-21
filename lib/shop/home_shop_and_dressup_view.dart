@@ -184,7 +184,15 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
       builder: (Object? taskId, DoHold doHold, child) {
         return GestureDetector(
           onTap: taskId != null ? null : () {
-            doHold(productId, selector.doSelect(item));
+
+            // 是否能购买
+            var itemBuyAble = true;
+            if (item case {'label_list': List lists}) {
+              if (lists.isNotEmpty) {
+                itemBuyAble = lists.isNotEmpty && lists[0]["is_buy"] == true;
+              }
+            }
+            doHold(productId, selector.doSelect(item, itemBuyAble: itemBuyAble));
 
             //跳转活动页
             final isSelected = selector.isRxSelected(productId);
