@@ -45,4 +45,11 @@ class ComposeModel {
     required this.requestId,
     required this.callBack,
   });
+
+  T? getData<T>(String key) {
+    if(!data.containsKey(key)) {
+      return null;
+    }
+    return data[key];
+  }
 }

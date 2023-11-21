@@ -42,10 +42,14 @@ class JsBridgeChannel {
       var requestId = json["requestId"] ?? "";
       for(var item in _jsbridges) {
         item.controller = controller;
-        var intercept = await item.callMethod(ComposeModel(
-            type: type, data: data, requestId: requestId, callBack: callBack));
-        if(intercept) {
-          break;
+        try {
+          var intercept = await item.callMethod(ComposeModel(
+              type: type, data: data, requestId: requestId, callBack: callBack));
+          if(intercept) {
+            break;
+          }
+        } catch(e) {
+          debugPrint(e.toString());
         }
       }
     } catch(e) {
