@@ -329,6 +329,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             }
           }
         } catch(e) {
+          if(e is LogicException) {
+            rethrow;
+          }
           RoomManagerCtrl.ins.doNormalState();
           RoomManagerCtrl.ins.onSocketDisconnect();
           return false;
