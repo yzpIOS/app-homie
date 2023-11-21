@@ -150,10 +150,10 @@ class CustomClient with BaseClient {
   ///
   /// 发送返回的数据
   ///
-  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd}) async {
+  Future<T?> sendByteAsync<T extends GeneratedMessage>(int cmd, {Uint8List? datas, int? resCmd, int timeout = 16}) async {
     CallBack<T> callBack = createCallBack(cmd, resCmd: resCmd);
     sendBytes(cmd, datas: datas);
-    return callBack.getFuture();
+    return callBack.getFuture(timeout: timeout);
   }
 
   ///

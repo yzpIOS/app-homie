@@ -349,9 +349,10 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
       c_roomEnterComplete.roomId = Int64(roomId);
       S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-          CMD.C_RoomEnterComplete,
-          datas: c_roomEnterComplete.writeToBuffer(),
-          resCmd: CMD.S_SyncRoomInfo
+        CMD.C_RoomEnterComplete,
+        datas: c_roomEnterComplete.writeToBuffer(),
+        resCmd: CMD.S_SyncRoomInfo,
+        timeout: 60 * 2
       );
       // 判断是否关闭界面
       isNotClose();
