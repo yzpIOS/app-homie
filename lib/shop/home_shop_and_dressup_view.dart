@@ -12,6 +12,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/dressup/my_cloth_tab_view.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/webview/webview_page.dart';
 import 'package:flutter/material.dart';
 
 typedef Category = (int? id, String title, (String? icon, String? icon2));
@@ -182,7 +183,18 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
       ),
       builder: (Object? taskId, DoHold doHold, child) {
         return GestureDetector(
-          onTap: taskId != null ? null : () => doHold(productId, selector.doSelect(item)),
+          onTap: taskId != null ? null : () {
+            doHold(productId, selector.doSelect(item));
+
+            //跳转活动页
+            final isSelected = selector.isRxSelected(productId);
+            if (!isSelected) {
+              final String? activityUrl = item['activity_url'];
+              if (activityUrl != null && activityUrl.isNotEmpty) {
+                Get.to(() => WebViewPage(title: "活动", url: activityUrl,));
+              }
+            }
+          },
           child: Obx(
                 () {
               final isSelected = selector.isRxSelected(productId);
