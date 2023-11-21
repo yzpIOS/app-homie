@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 
 /// 盲盒
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
-  const GiftBlindBoxDetailsSheet._({super.key});
+  final int price;
+  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20});
 
-  static Future show() {
-    const sheet = GiftBlindBoxDetailsSheet._();
+  static Future show({required int price}) {
+    final sheet = GiftBlindBoxDetailsSheet._(price: price,);
 
     return OrientationSheet.show(
       child: sheet,
@@ -104,6 +105,8 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
   }
 
   Widget $BlindBoxRulesView() {
+    String explainImageName = (price == 50 || price == 100) ? 'activity/说明$price' : 'activity/说明20';
+
     return SingleChildScrollView(
       padding: Pad(horizontal: 15, vertical: 4, bottom: AppSize.safeBottom),
       child: Column(
@@ -131,7 +134,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
             ),
           ),
           Spacing.h10,
-          Image.asset(IMG.format('activity/说明'), scale: 2, fit: BoxFit.fitWidth),
+          Image.asset(IMG.format(explainImageName), fit: BoxFit.contain,),
         ],
       ),
     );
