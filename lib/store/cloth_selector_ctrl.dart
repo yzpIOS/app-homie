@@ -137,7 +137,7 @@ abstract class ClothSelector {
 
   bool isRxSelected(int id);
 
-  Future<void> doSelect(Map item);
+  Future<void> doSelect(Map item, {bool itemBuyAble = true});
 }
 
 mixin _UnityDressUpMixin {
@@ -246,7 +246,7 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
 
   void _doDel(int id) {}
 
-  Future<void> _doTryUse(int id) {
+  Future<void> _doTryUse(int id, {bool itemBuyAble = true}) {
     FutureOr Function() task;
 
     // 保存原来的数据
@@ -292,6 +292,11 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
     }
 
     return simpleTry(task, callback: (result) {
+      //不可购买的服装不用调用添加或删除购物车
+      if (itemBuyAble == false) {
+        return;
+      }
+
       // unity成功了
       if(addOrDel) {
         // 添加购物车
@@ -330,7 +335,7 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
   Iterable<int> _ids() => _dataRx;
 
   @override
-  Future<void> doSelect(Map item) => _doTryUse(item['id']);
+  Future<void> doSelect(Map item, {bool itemBuyAble = true}) => _doTryUse(item['id'], itemBuyAble: itemBuyAble);
 
   void doReset() {
     _dataRx.clear();
@@ -362,7 +367,7 @@ class _SelectorWardrobe extends ClothSelector with _UnityDressUpMixin, _TryMixin
   bool isRxSelected(int id) => super.isRxSelected(id) || _data2Rx.contains(id);
 
   @override
-  Future<void> doSelect(Map item) {
+  Future<void> doSelect(Map item, {bool itemBuyAble = true}) {
     final int id = item['product_id'];
 
     //gender:3  男女均可使用
@@ -425,7 +430,7 @@ class _SelectorCloth extends ClothSelector with _UnityDressUpMixin, _TryMixin {
   bool isRxSelected(int id) => _dataRx.contains(id);
 
   @override
-  Future<void> doSelect(Map item) {
+  Future<void> doSelect(Map item, {bool itemBuyAble = true}) {
     final int id = item['product_id'];
 
     final isAdd = !isRxSelected(id);
