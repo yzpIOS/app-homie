@@ -316,16 +316,26 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     if(!_hasJoinRoom) {
       if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
         logForDebug("非pk状态，joinRoom");
-        final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
-        logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
-        if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-          if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-            throw const LogicException(-1, "该房间主人拒绝您进入");
-          } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-            throw const LogicException(-1, "输入的房间密码错误");
-          } else {
-            throw const LogicException(-1, "房间数据加载失败");
+        try {
+          final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
+          logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+          if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+            if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+              throw const LogicException(-1, "该房间主人拒绝您进入");
+            } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+              throw const LogicException(-1, "输入的房间密码错误");
+            } else {
+              throw const LogicException(-1, "房间数据加载失败");
+            }
           }
+        } catch(e) {
+          String? message = null;
+          if(e is LogicException) {
+            message = e.msg;
+          }
+          RoomManagerCtrl.ins.doNormalState();
+          RoomManagerCtrl.ins.onSocketDisconnect(message: message);
+          return false;
         }
       } else {
         logForDebug("pk状态，不需要joinRoom", enMsg: "user in pk status, don't need call joinRoom api");

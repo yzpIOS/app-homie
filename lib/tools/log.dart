@@ -26,7 +26,6 @@ Future<void> loggerInit(String session) async {
 
   _logger
     ..setEnable(true)
-    ..setFileLevel(1)
     ..setConsoleEnable(false)
     ..setMaxDiskAge(60 * 60 * 24 * 7)
     ..setMaxDiskSize(1024 * 1024 * 10);

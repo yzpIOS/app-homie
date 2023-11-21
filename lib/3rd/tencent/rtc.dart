@@ -100,7 +100,12 @@ class Rtc {
         case TRTCCloudListener.onDeviceChange:
         case TRTCCloudListener.onTestMicVolume:
         case TRTCCloudListener.onTestSpeakerVolume:
+        case TRTCCloudListener.onStartPublishMediaStream:
+        case TRTCCloudListener.onUpdatePublishMediaStream:
+        case TRTCCloudListener.onStopPublishMediaStream:
           xlog(() => '$type -> $args', type: LogType.RTC);
+          break;
+        default:
           break;
       }
     });
