@@ -21,15 +21,15 @@ class _HomeBannerViewState extends State<HomeActivityBannerView> with GetStateMi
   final showRx = RxBool(true);
   final indexRx = RxInt(0);
 
-  late final options = CarouselOptions(
-    aspectRatio: 355 / 80,
-    viewportFraction: 1,
-    autoPlay: true,
-    autoPlayCurve: Curves.easeOutCubic,
-    enlargeCenterPage: false,
-    autoPlayInterval: const Duration(seconds: 3),
-    onPageChanged: (i, _) => indexRx(i),
-  );
+  // late final options = CarouselOptions(
+  //   aspectRatio: 355 / 80,
+  //   viewportFraction: 1,
+  //   autoPlay: true,
+  //   autoPlayCurve: Curves.easeOutCubic,
+  //   enlargeCenterPage: false,
+  //   autoPlayInterval: const Duration(seconds: 3),
+  //   onPageChanged: (i, _) => indexRx(i),
+  // );
 
   late final dotsEffect = const ExpandingDotsEffect(
     dotColor: AppPalette.divider,
@@ -73,20 +73,30 @@ class _HomeBannerViewState extends State<HomeActivityBannerView> with GetStateMi
                   children: [
                     CarouselSlider.builder(
                       carouselController: ctrl.controller,
-                      options: options,
+                      options: CarouselOptions(
+                        aspectRatio: 355 / 80,
+                        viewportFraction: 1,
+                        autoPlay: data.length > 1 ? true : false,
+                        enableInfiniteScroll: data.length > 1 ? true : false,
+                        autoPlayCurve: Curves.easeOutCubic,
+                        enlargeCenterPage: false,
+                        autoPlayInterval: const Duration(seconds: 3),
+                        onPageChanged: (i, _) => indexRx(i),
+                      ),
                       itemCount: data.length,
                       itemBuilder: (_, i, __) => itemBuilder(data[i]),
                     ),
-                    Positioned(
-                      bottom: 12,
-                      child: Obx(
-                        () => AnimatedSmoothIndicator(
-                          activeIndex: indexRx(),
-                          count: data.length,
-                          effect: dotsEffect,
+                    if (data.length > 1)
+                      Positioned(
+                        bottom: 12,
+                        child: Obx(
+                          () => AnimatedSmoothIndicator(
+                            activeIndex: indexRx(),
+                            count: data.length,
+                            effect: dotsEffect,
+                          ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               );
