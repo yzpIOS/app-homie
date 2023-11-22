@@ -32,11 +32,9 @@ class OpenInstallUtils {
     // https://developer.openinstall.io/2022961229/app-platform-config-detail?adPlatform=oppo
 
     // 未登录时，初始化OpeninstallFlutterPlugin
-    showToast("_openinstallFlutterPlugin==null: ${_openinstallFlutterPlugin}");
     if(_openinstallFlutterPlugin == null) {
       // 未登录时，初始化OpeninstallFlutterPlugin
       _openinstallFlutterPlugin = OpeninstallFlutterPlugin();
-      showToast("Platform.isAndroid : ${Platform.isAndroid}");
       if(Platform.isAndroid) {
         // 获取android OAID
         Map<String, String>? datas = await Oaid().getOAID();
@@ -56,59 +54,52 @@ class OpenInstallUtils {
           "ASAEnable": true,
         });
       }
-      showToast("wakeupHandler1---------!!");
       _openinstallFlutterPlugin?.init(wakeupHandler);
-      showToast("onInstall---------!!");
       _openinstallFlutterPlugin?.install(onInstall);
     }
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    showToast("wakeupHandler2：${data.toString()}");
-    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-      return;
-    }
-    // 获取json数据（动态拉起参数）
-    final bindData = data['bindData'];
-    // 渠道编号
-    final channelCode = data['channelCode'];
-    if(bindData == null) {
-      return;
-    }
-    final bindDataStr = bindData.toString();
-    // json数据解析
-    final Map<String, dynamic> result = jsonDecode(bindDataStr);
-    if(channelCode != null && !result.containsKey('channel_code')) {
-      result['channel_code'] = channelCode;// 渠道码
-    }
-    KvBox.write(PrefKey.OpenInstallBlindData, result);
-    // 记录己经上传过
-    KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+     print("openinstall.wakeupHandler---->：${data.toString()}");
+    // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
+    //   return;
+    // }
+    // // 获取json数据（动态拉起参数）
+    // final bindData = data['bindData'];
+    // // 渠道编号
+    // final channelCode = data['channelCode'];
+    // if(bindData == null) {
+    //   return;
+    // }
+    // final bindDataStr = bindData.toString();
+    // // json数据解析
+    // final Map<String, dynamic> result = jsonDecode(bindDataStr);
+    // if(channelCode != null && !result.containsKey('channel_code')) {
+    //   result['channel_code'] = channelCode;// 渠道码
+    // }
+    // KvBox.write(PrefKey.OpenInstallBlindData, result);
+    // // 记录己经上传过
+    // KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
   }
 
   Future onInstall(Map<String, Object> data) async {
-    showToast("动态拉起参数1：${data.toString()}");
+    print("openinstall.onInstall: ${data.toString()}");
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-      // showToast("动态拉起参数2：${PrefKey.OpenInstallBlindDataFlag}");
       return;
     }
     // 获取json数据（动态拉起参数）
     final bindData = data['bindData'];
     if(bindData == null) {
-      // showToast("动态拉起参数3：${data.toString()}");
       return;
     }
-    // showToast("动态拉起参数4：${data.toString()}");
     final bindDataStr = bindData.toString();
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
     // 渠道编号
     final channelCode = data['channelCode'];
-    // showToast("动态拉起参数5：${data.toString()}  -->${channelCode}");
     if(channelCode != null && !result.containsKey('channel_code')) {
       result['channel_code'] = channelCode;// 渠道码
     }
-    // showToast("动态拉起参数6：${data.toString()}  -->${result.toString()}");
     KvBox.write(PrefKey.OpenInstallBlindData, result);
     // 记录己经上传过
     KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
