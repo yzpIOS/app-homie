@@ -117,7 +117,7 @@ mixin BaseClient {
   /// 唤起原始数据的回调
   ///
   void riseOnRawData(int curCmd, Uint8List? curPkg) {
-    debugPrint("接收数据, cmd = $curCmd, data = ${curPkg?.toString()}");
+    debugPrint("riseOnRawData接收, cmd= $curCmd, data = ${curPkg?.toString()}");
 
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {
@@ -136,7 +136,7 @@ mixin BaseClient {
   /// 唤起回调
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
-    debugPrint("接收数据, cmd = $curCmd, data = ${generatedMessage?.toString()}");
+    debugPrint("riseOnData接收, cmd= $curCmd, data = ${generatedMessage?.toString()}");
 
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {

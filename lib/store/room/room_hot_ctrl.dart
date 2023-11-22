@@ -1,4 +1,5 @@
 import 'package:app/net/api.dart';
+import 'package:app/store/activity_banner_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -8,11 +9,14 @@ import '../banner_ctrl.dart';
 class RoomHotCtrl extends PageListCtrl<Map> {
   final top6Rx = Rxn<List<Map>>();
   final bannerCtrl = Get.find<BannerCtrl>();
+  final activityBannerCtrl = Get.find<ActivityBannerCtrl>();
 
   @override
   Future fetchPage(PageNum page) {
-    //刷新banner
+    //刷新政策公约banner
     bannerCtrl.doRefresh();
+    //刷新活动banner
+    activityBannerCtrl.doRefresh();
 
     return Api.Room.hotRoomList(page: page);
   }

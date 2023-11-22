@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/home/home_activity_banner_view.dart';
 import 'package:app/ui/home/home_banner_view.dart';
 import 'package:app/ui/home/home_play_together.dart';
 import 'package:app/ui/home/home_search_page.dart';
@@ -12,6 +13,7 @@ import 'package:app/ui/podcast/hot_room_view.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/mic_user_online_manager_sheet.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/webview/webview_page.dart';
 import 'package:flutter/material.dart';
 
 class HotPodcastPage extends StatefulWidget {
@@ -112,6 +114,10 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           const SizedBox(width: 11,),
           GestureDetector(
             onTap: () {
+              if(Env.isDebug) {
+                Get.to(() => WebViewPage(title: "test", url: "http://192.168.1.126:3002/public/html/deeplink.html",));
+                return;
+              }
               Get.to(() => const HomeSearchPage());
             },
             child: Image.asset(
@@ -148,16 +154,13 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   }
 
   Widget $SquareView() {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 公约
-        const HomeBannerView(),
-        
-        // 距离
-        const SizedBox(height: 10,),
-        HomePlayTogether(),
+        HomeActivityBannerView(),// 活动banner
+        SizedBox(height: 10,),// 距离
+        HomePlayTogether(),// 一起玩模块
       ],
     );
   }

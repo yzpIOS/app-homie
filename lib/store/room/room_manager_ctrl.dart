@@ -169,19 +169,19 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   /// socket断开连接时的回调
   ///
-  void onSocketDisconnect() {
+  void onSocketDisconnect({String? message = null}) {
     if(stateRx.value == RoomState.Mini) {
       // 房间最小化中
       closeRoom2();
     } else if(stateRx.value == RoomState.Normal) {
       // 现在在房间中
-      RoomExitEvent("房间数据加载失败，请重试").fire();
+      RoomExitEvent(message ?? "房间数据加载失败，请重试").fire();
       // 房间最小化中
       closeRoom2();
     } else {
       // 现在在房间中
       if(SocketCtrl.ins.needSendCloseEvent) {
-        RoomExitEvent("房间数据加载失败，请重试").fire();
+        RoomExitEvent(message ?? "房间数据加载失败，请重试").fire();
       }
       SocketCtrl.ins.needSendCloseEvent = true;
     }

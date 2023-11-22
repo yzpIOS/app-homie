@@ -1,3 +1,4 @@
+import 'package:app/3rd/tencent/im.dart';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
@@ -23,6 +24,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     final isRoom = controller is RoomCtrl;
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         $MicView(isRoom),
         $SpeakView(),
@@ -122,16 +124,82 @@ class _ConvView extends StatefulWidget {
 }
 
 class _ConvViewState extends State<_ConvView> {
+  Widget $UnReadView(int count) {
+    const double height = 15;
+    return Container(
+      constraints: const BoxConstraints(minHeight: height, maxHeight: height, minWidth: height),
+      decoration: const ShapeDecoration(color: Color(0xFFFF0049), shape: XStadiumBorder()),
+      alignment: Alignment.center,
+      child: XText(
+        count > 99 ? '99+' : '$count',
+        style: const TextStyle(fontSize: 10, color: Colors.white),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return NotifierView(
-      Get.find<ConvManagerCtrl>().unReadMessageCount,
-      onData: (data) {
-        return _IconBtn(
-          icon: '消息_${(data > 0).intVal}',
-          onItemClick: widget.onItemClick,
-        );
-      },
+    return InkResponse(
+      onTap: () => widget.onItemClick('消息_0'),
+      child: Column(
+        children: [
+          NotifierView(
+            Get.find<ConvManagerCtrl>().unReadMessageCount,
+            onData: (data) {
+              if (data > 0) {
+                return Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned(
+                      child: Image.asset(IMG.format('room/房间消息提醒框'), width: 31, height: 34, scale: 3, fit: BoxFit.contain),
+                    ),
+                    Positioned(
+                      top: 2.5,
+                      left: 2.5,
+                      child: Obx(() {
+                        String uid = '';
+                        final list = Get.find<ConvManagerCtrl>().convRx;
+                        if (list.isNotEmpty) {
+                          for (final item in list) {
+                            if ((item.unreadCount ?? 0) > 0) {
+                              uid = item.userID ?? '';
+                              if (item.isSysConv) {
+                                return AvatarView(item.faceUrl, size: 26);
+                              }
+                              break;
+                            }
+                          }
+                        }
+                        return AsyncAvatar(uid: uid, size: 26, onTap: Some(() => widget.onItemClick('消息_0')),);
+                      }),
+                    ),
+                    Positioned(
+                      top: -2,
+                      left: 22,
+                      child: $UnReadView(data),
+                    )
+                  ],
+                );
+              }
+              return Spacing.blank;
+            },
+          ),
+          _IconBtn(
+            icon: '消息_0',
+          ),
+        ],
+      ),
     );
+
+    // return NotifierView(
+    //   Get.find<ConvManagerCtrl>().unReadMessageCount,
+    //   onData: (data) {
+    //     return _IconBtn(
+    //       icon: '消息_${(data > 0).intVal}',
+    //       onItemClick: widget.onItemClick,
+    //     );
+    //   },
+    // );
   }
 }
