@@ -13,7 +13,6 @@ class XText extends ExtendedText {
     super.locale,
     super.softWrap = false,
     super.overflow = TextOverflow.ellipsis,
-    super.textScaleFactor,
     super.maxLines = 1,
     super.semanticsLabel,
     super.textWidthBasis,
