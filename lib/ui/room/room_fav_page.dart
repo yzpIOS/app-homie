@@ -43,6 +43,7 @@ class _RoomFavPageState extends State<RoomFavPage> {
 
   Widget $TabBar() {
     Widget child = TabBar(
+      tabAlignment: TabAlignment.center,
       isScrollable: true,
       labelPadding: const Pad(horizontal: 16),
       indicatorPadding: const Pad(horizontal: 32),
