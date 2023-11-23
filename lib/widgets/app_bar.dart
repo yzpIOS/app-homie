@@ -87,6 +87,7 @@ Widget xAppBar$TabBar(
   return Align(
     alignment: alignment,
     child: TabBar(
+      tabAlignment: TabAlignment.center,
       controller: controller,
       labelPadding: const Pad(horizontal: 15),
       //

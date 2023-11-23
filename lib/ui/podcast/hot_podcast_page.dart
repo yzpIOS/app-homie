@@ -41,6 +41,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           padding: const Pad(top: 10),
           alignment: Alignment.centerLeft,
           child: TabBar(
+            tabAlignment: TabAlignment.start,
             labelPadding: const Pad(horizontal: 15),
             isScrollable: true,
             indicatorSize: TabBarIndicatorSize.label,

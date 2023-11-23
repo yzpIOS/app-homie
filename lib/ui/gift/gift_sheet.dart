@@ -125,6 +125,7 @@ class GiftSheet extends StatelessWidget {
       child: Row(
         children: [
           TabBar(
+            tabAlignment: TabAlignment.start,
             isScrollable: true,
             indicator: const BoxDecoration(),
             labelPadding: const Pad(horizontal: 10),

@@ -19,6 +19,7 @@ class ShopTabBar extends StatelessWidget {
 
     return TabBar(
       onTap: onTap,
+      tabAlignment: TabAlignment.start,
       isScrollable: true,
       indicator: const BoxDecoration(),
       //
