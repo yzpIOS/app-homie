@@ -185,23 +185,7 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
         return GestureDetector(
           onTap: taskId != null ? null : () {
 
-            // 是否能购买
-            var itemBuyAble = true;
-            if (item case {'label_list': List lists}) {
-              if (lists.isNotEmpty) {
-                itemBuyAble = lists.isNotEmpty && lists[0]["is_buy"] == true;
-              }
-            }
-            doHold(productId, selector.doSelect(item, itemBuyAble: itemBuyAble));
-
-            //跳转活动页
-            final isSelected = selector.isRxSelected(productId);
-            if (!isSelected) {
-              final String? activityUrl = item['activity_url'];
-              if (activityUrl != null && activityUrl.isNotEmpty) {
-                Get.to(() => WebViewPage(title: "活动", url: activityUrl,));
-              }
-            }
+            doHold(productId, selector.doSelect(item));
           },
           child: Obx(
                 () {

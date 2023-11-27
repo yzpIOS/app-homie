@@ -19,6 +19,7 @@ import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/dressup/model_overlay_cloth.dart';
 import 'package:app/ui/dressup/model_overlay_wardrobe.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/webview/webview_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -336,7 +337,7 @@ class ModelOverlay$Shop extends StatelessWidget {
         Positioned(
           right: 10,
           bottom: 20,
-          width: 60,
+          width: 65,
           height: 30,
           child: buyView(),
         ),
@@ -350,6 +351,22 @@ class ModelOverlay$Shop extends StatelessWidget {
     return GetX<ShoppingCartCtrl>(
       builder: (it) {
         final count = it.count();
+        final activityItem = it.activityItem;
+
+        if (activityItem.isNotEmpty) {
+          return XTextBtn(
+            label: '活动获得',
+            textStyle: ts,
+            color: AppPalette.primary,
+            onTap: () {
+              //跳转活动页
+              final String? activityUrl = activityItem['activity_url'];
+              if (activityUrl != null && activityUrl.isNotEmpty) {
+                Get.to(() => WebViewPage(title: "活动", url: activityUrl,));
+              }
+            },
+          );
+        }
 
         return count == 0
             ? XTextBtn(label: '购买', textStyle: ts, color: AppPalette.hint)
