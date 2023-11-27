@@ -116,6 +116,8 @@ abstract class AppPalette {
   static const c3 = Color(0xFF333333);
   static const c6 = Color(0xFF666666);
   static const c9 = Color(0xFF999999);
+  static const color71 = Color(0xFF717171);
+  static const colorA9 = Color(0xFFA9A9A9);
   static const cc = Color(0xFFCCCCCC);
   static const barrier = Color(0x80000000);
   static const transparent = Color(0x00000001);
