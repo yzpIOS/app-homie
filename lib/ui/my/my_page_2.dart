@@ -20,6 +20,8 @@ import 'package:app/ui/task/my_sign_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+import 'common/other_details_info_view.dart';
+
 class MyPage2 extends StatefulWidget {
   const MyPage2({super.key});
 
@@ -37,7 +39,7 @@ class _MyPage2State extends State<MyPage2> {
 
   @override
   Widget build(BuildContext context) {
-    const divider = Divider(height: 10, thickness: 10, color: AppPalette.background2);
+    const divider = Divider(height: 10, thickness: 10, color: AppPalette.colorEB);
 
     return UiOverlayRegion.light(
       child: Scaffold(
@@ -75,7 +77,7 @@ class _MyPage2State extends State<MyPage2> {
       Widget child = Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Spacing.blank,
+          // Spacing.blank,
           Image.asset(IMG.format('my/$item'), width: 56, height: 56, fit: BoxFit.contain, scale: 3),
           XText(
             item,
@@ -186,10 +188,13 @@ class _HeaderView extends StatelessWidget {
   MyInfoDto? myInfoDto;
   _HeaderView({required this.myInfoDto});
 
+  static double bgHeight = AppSize.width / 375 * 221.5;
+
   @override
   Widget build(BuildContext context) {
+    // return $Body();
     return SizedBox(
-      height: AppSize.safeTop + 236,
+      height: bgHeight + 104,
       child: $Body(),
     );
   }
@@ -197,19 +202,24 @@ class _HeaderView extends StatelessWidget {
   Widget $Body() {
     return Stack(
       children: [
-        Positioned.fill(child: $BgView()),
         Positioned(
-          left: 10,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: bgHeight,
+          child: $BgView(),
+        ),
+        Positioned(
+          left: 15,
           right: 10,
-          bottom: 80 + 15,
-          height: 70,
+          top: bgHeight - 54,
           child: $UserView(),
         ),
         Positioned(
           left: 0,
           right: 0,
           bottom: 0,
-          height: 80,
+          height: 60,
           child: $NumView(),
         ),
       ],
@@ -217,41 +227,88 @@ class _HeaderView extends StatelessWidget {
   }
 
   Widget $BgView() {
-    return const DecoratedBox(
+    return DecoratedBox(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFD89BFE), Color(0xFFE6BFFF), Color(0xFFD898FF)],
+        image: DecorationImage(
+          image: AssetImage(IMG.format('my/my_bg')),
+          scale: 3,
+          fit: BoxFit.cover,
         ),
       ),
     );
+    //
+    // return DecoratedBox(
+    //   decoration: BoxDecoration(
+    //     image: DecorationImage(
+    //       image: AssetImage(IMG.format('my/my_bg')),
+    //       scale: 3,
+    //       fit: BoxFit.cover,
+    //     ),
+    //     // gradient: LinearGradient(
+    //     //   begin: Alignment.topCenter,
+    //     //   end: Alignment.bottomCenter,
+    //     //   colors: [Color(0xFFD89BFE), Color(0xFFE6BFFF), Color(0xFFD898FF)],
+    //     // ),
+    //   ),
+    // );
   }
 
   Widget $UserView() {
     Widget builder(MyInfoDto data) {
+      Widget myNickView() {
+        Widget nickView = XText(
+          data.nickName ?? '',
+          style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: fw$Bold),
+        );
+
+        final gender = data.gender;
+
+        if (gender != null) {
+          nickView = Row(
+            children: [
+              Flexible(child: nickView),
+              Spacing.w4,
+              Image.asset(IMG.format('my/性别_${gender.code}'), width: 20, height: 20, scale: 3,),
+            ],
+          );
+        }
+
+        return nickView;
+      }
+
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OpacityButton(
             onTap: () => Get.to(() => UserHomePage(uid: data.uid ?? "")),
             child: AvatarView(
               data.avatar,
               blur: data.avatarEx,
-              size: 70,
-              side: const BorderSide(width: 1, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),
+              size: 75,
+              side: const BorderSide(width: 2, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),
             ),
           ),
-          Spacing.w10,
+          Spacing.w6,
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NickView(nickName: data.nickName, gender: data.gender),
-                SizedBox(
-                  height: 24,
-                  child: UidView(uid: data.uid, account: data.account, level: data.level),
+                const Spacing(height: 10, flex: null,),
+                myNickView(),
+                const Spacing(height: 10, flex: null,),
+                UidView(uid: data.uid, account: data.account, level: data.level),
+                const Spacing(height: 6, flex: null,),
+                const Text(
+                  '一起开黑，开心交友~',
+                  style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                 ),
+                const Spacing(height: 6, flex: null,),
+                OtherDetailsInfoView(uid: data.uid, account: data.account, level: data.level),
+                // SizedBox(
+                //   height: 20,
+                //   child: UidView(uid: data.uid, account: data.account, level: data.level),
+                // ),
               ],
             ),
           ),
@@ -261,29 +318,34 @@ class _HeaderView extends StatelessWidget {
 
     Widget child = MyInfoCtrl.use(builder: builder);
 
-    child = DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 12, color: Colors.white),
-      child: child,
-    );
+    // child = DefaultTextStyle.merge(
+    //   style: const TextStyle(fontSize: 15, color: Colors.white),
+    //   child: child,
+    // );
 
     return child;
   }
 
   Widget $NumView() {
     Widget itemBuilder(MapEntry<String, String> item) {
+      if (item.value == '分割线') {
+        return const Box(width: 1, height: 10, color: AppPalette.color71);
+      }
       return Expanded(
         child: OpacityButton(
           onTap: () => onItemClick(item.key),
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               XText(
-                item.value,
-                style: const TextStyle(fontSize: 18, fontWeight: fw$SemiBold),
-              ),
-              XText(
                 item.key,
-                style: const TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 11, color: AppPalette.colorA9, fontWeight: fw$SemiBold),
+              ),
+              Spacing.w8,
+              XText(
+                item.value,
+                style: const TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Bold),
               ),
             ],
           ),
@@ -295,7 +357,9 @@ class _HeaderView extends StatelessWidget {
       builder: (it) {
         final data = {
           '关注': $NumFormat(it.followCount),
+          '分割1': '分割线',
           '粉丝': $NumFormat(it.fansCount),
+          '分割2': '分割线',
           '访客': $NumFormat(it.accessCount),
         };
 
@@ -305,12 +369,12 @@ class _HeaderView extends StatelessWidget {
       },
     );
 
-    child = Material(
-      color: Colors.white,
-      borderRadius: AppBorderRadius.t12,
-      textStyle: const TextStyle(fontSize: 12, color: Colors.black),
-      child: child,
-    );
+    // child = Material(
+    //   color: Colors.red,
+    //   borderRadius: const XBorderRadius.vertical(top: AppRadius.r20),
+    //   textStyle: const TextStyle(fontSize: 12, color: Colors.black),
+    //   child: child,
+    // );
 
     return child;
   }

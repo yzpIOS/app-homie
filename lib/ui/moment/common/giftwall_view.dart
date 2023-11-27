@@ -23,24 +23,24 @@ class _GiftWallViewState extends State<GiftWallView> {
   @override
   Widget build(BuildContext context) {
 
-    double gapWidth = 10.0;
-    double itemWidth = (AppSize.width - gapWidth * 5 - 20) / 4.0;
-    double itemHeight = (108.0 / 80.0) * gapWidth;
+    double gapWidth = 6.0;
+    double itemWidth = (AppSize.width - gapWidth * 5 - 10) / 4.0;
+    double itemHeight = (112.0 / 87.0) * gapWidth;
     return GestureDetector(
       onTap: () {
         Get.to(() => UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,));
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
-        color: const Color(0xFFF6FDFF),
+        // color: const Color(0xFFF6FDFF),
         height: 153,
-        margin: const EdgeInsets.only(left: 10, right: 10),
+        margin: const EdgeInsets.only(left: 5, right: 5),
         child: Column(
           children: [
             // 标题
             Container(
               height: 35,
-              margin: const EdgeInsets.only(left: 10, right: 10),
+              margin: const EdgeInsets.only(left: 7),
               child: const Row(
                 children: [
                   Expanded(
@@ -49,38 +49,44 @@ class _GiftWallViewState extends State<GiftWallView> {
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Colors.black),
                       )
                   ),
-                  RightArrowIcon(color: Colors.grey),
+                  RightArrowIcon(color: Colors.black),
                 ],
               ),
             ),
 
             // 礼物信息
             Expanded(
-              child: ColoredBox(
-                color: const Color(0xFFF6FDFF),
-                child: ListView.separated(
-                  itemCount: widget.datas.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      width: itemWidth,
-                      height: itemHeight,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xFF7CCCE5).withAlpha(27), width: 1),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: _createItem(widget.datas[index]),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Container(width: gapWidth,);
-                  },
-                ),
-              ).horizonMargin(left: 10, right: 10),
+              child: ListView.separated(
+                itemCount: widget.datas.length,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: itemWidth,
+                    height: itemHeight,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: const Color(0xFFBDBDBD).withAlpha(50), width: 0.5, strokeAlign: BorderSide.strokeAlignCenter,),
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF727272).withAlpha(50),
+                          blurRadius: 1,
+                          spreadRadius: 0,
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
+                    ),
+                    child: _createItem(widget.datas[index]),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return Container(width: gapWidth,);
+                },
+              ),
             ),
 
-            const SizedBox(height: 10)
+            const SizedBox(height: 5)
           ],
         ),
       ),
@@ -90,7 +96,6 @@ class _GiftWallViewState extends State<GiftWallView> {
   Widget _createItem(Map data) {
     int startCount = data["start_count"];
 
-    String lightText;
     bool isLighten = false;
     // 点亮图标
     Widget giftImage;
@@ -99,7 +104,6 @@ class _GiftWallViewState extends State<GiftWallView> {
         aspectRatio: 1.0 / 1.0,
         child: NetImage(data["cover"], fit: BoxFit.cover),
       );
-      lightText = "已点亮";
       isLighten = true;
     } else {
       const ColorFilter sepia = ColorFilter.matrix(<double>[
@@ -115,7 +119,6 @@ class _GiftWallViewState extends State<GiftWallView> {
           child: NetImage(data["cover"], fit: BoxFit.cover),
         ),
       );
-      lightText = "未点亮";
     }
 
     return Column(
@@ -126,19 +129,9 @@ class _GiftWallViewState extends State<GiftWallView> {
         ),
         Text(
           data["name"],
-          style: TextStyle(
-            color: isLighten ? Colors.black : const Color(0xFF999999),
-            fontSize: 12,
-          ),
+          style: TextStyle(color: isLighten ? Colors.black : AppPalette.colorA9, fontSize: 10,),
         ),
-        Text(
-          lightText,
-          style: TextStyle(
-            color: isLighten ? Colors.black : const Color(0xFF999999),
-            fontSize: 12,
-          ),
-        ),
-        const SizedBox(height: 6,)
+        Image.asset(IMG.format(isLighten ? 'my/已点亮' : 'my/未点亮'), width: 64.5, height: 27.5, scale: 3,),
       ],
     );
   }

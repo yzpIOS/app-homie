@@ -19,6 +19,9 @@ import 'package:app/widgets.dart';
 import 'package:app/widgets/image/image_gallery.dart';
 import 'package:flutter/material.dart';
 
+import 'common/other_details_info_view.dart';
+
+/// 个人主页
 class UserHomePage extends StatefulWidget {
   final UID uid;
 
@@ -54,12 +57,14 @@ class _UserHomePageState extends State<UserHomePage> {
   }
 
   void updateUserInfo() {
+    double bgHeight = AppSize.width / 375 * 221.5;
+
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
-        _expHeight = 434;
+        _expHeight = bgHeight + 112 + 153;//434;
       } else {
-        _expHeight = 404 - 153;
+        _expHeight = bgHeight + 112;//404 - 153;
       }
       moreRx.value = value as Map;
     });
@@ -113,15 +118,16 @@ class _UserHomePageState extends State<UserHomePage> {
 
   List<Widget>? _actions() {
     if (isSelf) {
-      return [
-        GestureDetector(
-          onTap: () {
-            Get.to(() => const PersonalPage());
-          },
-          child: Image.asset(IMG.format("mine_edit"), width: 50, height: 24,),
-        ),
-        const SizedBox(width: 14,),
-      ];
+      return null;
+      // return [
+      //   GestureDetector(
+      //     onTap: () {
+      //       Get.to(() => const PersonalPage());
+      //     },
+      //     child: Image.asset(IMG.format("mine_edit"), width: 50, height: 24,),
+      //   ),
+      //   const SizedBox(width: 14,),
+      // ];
     }
 
     return [
@@ -183,24 +189,32 @@ class _InfoView extends StatelessWidget {
 
   const _InfoView({required this.uid, required this.moreRx});
 
+  static double bgHeight = AppSize.width / 375 * 221.5;
+
   @override
   Widget build(BuildContext context) {
     final _top = AppSize.safeTop + AppSize.appBar;
 
     return Stack(
       children: [
-        $BgView(),
+        // $BgView(),
         Positioned(
-          top: _top + 28,
-          left: 10,
+          top: 0,
+          left: 0,
+          right: 0,
+          height: bgHeight,
+          child: $BgView(),
+        ),
+        Positioned(
+          left: 15,
           right: 10,
+          top: bgHeight - 54,
           child: $UserView(),
         ),
         Positioned(
-          top: _top + 113,
+          top: bgHeight + 60,
           left: 0,
           right: 0,
-          bottom: 0,
           child: $InfoView(),
         ),
       ],
@@ -230,44 +244,86 @@ class _InfoView extends StatelessWidget {
               );
             };
 
+      Widget myNickView() {
+        Widget childView = XText(
+          data?.showName() ?? '',
+          style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: fw$Bold),
+        );
+
+        final gender = data?.gender;
+        final isSelf = OAuthCtrl.isSelf(uid);
+
+        childView = Row(
+          children: [
+            // Flexible(child: childView),
+            childView,
+            if (gender != null)
+             ...[
+               Spacing.w4,
+               Image.asset(IMG.format('my/性别_${gender.code}'), width: 20, height: 20, scale: 3,),
+             ],
+            if (isSelf)
+              ...[
+                Spacing.w4,
+                GestureDetector(
+                  onTap: () => Get.to(() => const PersonalPage()),
+                  child: Image.asset(IMG.format("my/info_edit"), width: 21, height: 21, scale: 3,),
+                ),
+              ],
+            const Expanded(child: SizedBox()),
+            Obx(() {
+              if (moreRx.containsKey("liveState") && (moreRx["liveState"] as Map).isNotEmpty) {
+                final liveState = moreRx['liveState'];
+                if (liveState.containsKey("status") && liveState['status'] == 1) {
+                  return InkWell(
+                    onTap: toRoom,
+                    child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3,),
+                  );
+                }
+              }
+              return Spacing.blank;
+            }),
+          ],
+        );
+
+        return SizedBox(
+          height: 26.8,
+          child: childView,
+        );
+      }
+
       return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           OpacityButton(
             onTap: onTap,
             child: AvatarView(
               avatar,
               blur: data?.avatarEx,
-              size: 70,
-              side: const BorderSide(color: Colors.white, width: 1),
+              size: 75,
+              side: const BorderSide(width: 2, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),
             ),
           ),
-          Spacing.w10,
+          Spacing.w6,
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NickView(nickName: data?.showName(), gender: data?.gender),
-                SizedBox(
-                  height: 24,
-                  child: UidView(uid: uid, account: data?.account, level: data?.level),
+                const Spacing(height: 5, flex: null,),
+                myNickView(),
+                // NickView(nickName: data?.showName(), gender: data?.gender),
+                const Spacing(height: 10, flex: null,),
+                UidView(uid: uid, account: data?.account, level: data?.level),
+                const Spacing(height: 6, flex: null,),
+                const Text(
+                  '一起开黑，开心交友~',
+                  style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                 ),
+                const Spacing(height: 6, flex: null,),
+                OtherDetailsInfoView(uid: uid, account: data?.account, level: data?.level),
               ],
             ),
           ),
-          Obx(() {
-            if (moreRx.containsKey("liveState") && (moreRx["liveState"] as Map).isNotEmpty) {
-              final liveState = moreRx['liveState'];
-              if (liveState.containsKey("status") && liveState['status'] == 1) {
-                return InkWell(
-                  onTap: toRoom,
-                  child: Image.asset(IMG.format('my/进入直播间'), width: 95, height: 26.8, scale: 3, fit: BoxFit.contain),
-                );
-              }
-            }
-            return Spacing.blank;
-          }),
         ],
       );
     }
@@ -288,28 +344,28 @@ class _InfoView extends StatelessWidget {
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
     );
 
-    Widget child = Box(
-      padding: const Pad(top: 2, horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Obx(
-            () => XText(
-              moreRx['description'] ?? '',
-              style: const TextStyle(fontSize: 14, color: Colors.black),
-            ),
-          ),
-          // $TagView(),
-        ],
-      ),
-    );
+    // Widget child = Box(
+    //   padding: const Pad(top: 2, horizontal: 10),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //     children: [
+    //       Obx(
+    //         () => XText(
+    //           moreRx['description'] ?? '',
+    //           style: const TextStyle(fontSize: 14, color: Colors.black),
+    //         ),
+    //       ),
+    //       // $TagView(),
+    //     ],
+    //   ),
+    // );
 
-    child = Column(
+    Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         $NumView(),
-        SizedBox(height: 16,),
+        // const SizedBox(height: 16,),
         Obx(() {
           bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).isNotEmpty;
           return Column(
@@ -317,27 +373,54 @@ class _InfoView extends StatelessWidget {
               // 礼物墙
               if(hasGiftWall)
                 SizedBox(
-                  height: 153,
+                  // height: 153,
                   child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
                 ),
               if(hasGiftWall)
                 Container(color: Colors.white, height: 10,),
               if(hasGiftWall)
-                Container(color: const Color(0xFFF5F5F5), height: 10,),
+                Container(color: const Color(0xFFEBEBFF), height: 5,),
             ],
           );
         }),
+        const Padding(
+          padding: Pad(left: 13, top: 10),
+          child: XText('动态', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$SemiBold),),
+        ),
 
-        Expanded(child: child),
+        // Expanded(child: child),
       ],
     );
 
-    child = DecoratedBox(decoration: _decor, child: child);
+    // child = DecoratedBox(decoration: _decor, child: child);
 
     return child;
   }
 
   Widget $NumView() {
+    Widget itemBuilder(MapEntry<String, String> item) {
+      if (item.value == '分割线') {
+        return const Box(width: 1, height: 10, color: AppPalette.color71);
+      }
+      return Expanded(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            XText(
+              item.key,
+              style: const TextStyle(fontSize: 11, color: AppPalette.colorA9, fontWeight: fw$SemiBold),
+            ),
+            Spacing.w8,
+            XText(
+              item.value,
+              style: const TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Bold),
+            ),
+          ],
+        ),
+      );
+    }
+
     return DefaultTextStyle.merge(
       style: const TextStyle(fontSize: 12, color: Colors.black),
       child: SizedBox(
@@ -346,25 +429,14 @@ class _InfoView extends StatelessWidget {
           () {
             final data = {
               '关注': $NumFormat(moreRx['follow_count']),
+              '分割1': '分割线',
               '粉丝': $NumFormat(moreRx['fans_count']),
+              '分割2': '分割线',
               '动态': $NumFormat(moreRx['dynamic_count']),
             };
 
             return Row(
-              children: data.entries.map((it) {
-                return Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      XText(
-                        it.value,
-                        style: const TextStyle(fontSize: 16, fontWeight: fw$SemiBold),
-                      ),
-                      XText(it.key),
-                    ],
-                  ),
-                );
-              }).toList(growable: false),
+              children: data.entries.map(itemBuilder).toList(growable: false),
             );
           },
         ),
@@ -373,51 +445,50 @@ class _InfoView extends StatelessWidget {
   }
 
   Widget $BgView() {
-    return Container(
-      height: AppSize.safeTop + 232,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFD89BFE), Color(0xFFE6BFFF), Color(0xFFD898FF)],
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(IMG.format('my/my_bg')),
+          scale: 3,
+          fit: BoxFit.cover,
         ),
       ),
     );
   }
 
-  Widget $TagView() {
-    Widget itemBuilder({required Widget child}) {
-      return Container(
-        width: 34,
-        height: 16,
-        decoration: const ShapeDecoration(color: Color(0xFFF5F5F5), shape: AppShape.a2),
-        alignment: Alignment.center,
-        child: child,
-      );
-    }
-
-    final genderView = UserInfoCtrl.use(
-      uid,
-      builder: (it) {
-        return it == null
-            ? Spacing.blank
-            : Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgView(SVG.$('common/性别_${it.gender.code}'), width: 14, height: 14),
-                  XText(it.gender.label),
-                ],
-              );
-      },
-    );
-
-    return DefaultTextStyle.merge(
-      style: const TextStyle(fontSize: 10, color: AppPalette.c9),
-      child: Row(
-        children: [
-          itemBuilder(child: genderView),
-        ],
-      ),
-    );
-  }
+  // Widget $TagView() {
+  //   Widget itemBuilder({required Widget child}) {
+  //     return Container(
+  //       width: 34,
+  //       height: 16,
+  //       decoration: const ShapeDecoration(color: Color(0xFFF5F5F5), shape: AppShape.a2),
+  //       alignment: Alignment.center,
+  //       child: child,
+  //     );
+  //   }
+  //
+  //   final genderView = UserInfoCtrl.use(
+  //     uid,
+  //     builder: (it) {
+  //       return it == null
+  //           ? Spacing.blank
+  //           : Row(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 SvgView(SVG.$('common/性别_${it.gender.code}'), width: 14, height: 14),
+  //                 XText(it.gender.label),
+  //               ],
+  //             );
+  //     },
+  //   );
+  //
+  //   return DefaultTextStyle.merge(
+  //     style: const TextStyle(fontSize: 10, color: AppPalette.c9),
+  //     child: Row(
+  //       children: [
+  //         itemBuilder(child: genderView),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

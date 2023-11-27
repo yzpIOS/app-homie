@@ -1,3 +1,4 @@
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
@@ -13,19 +14,47 @@ class UidView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (account != null) ...[
-          Flexible(
-            child: SelectableText('ID $account'),
-          ),
-          OpacityButton(
-            child: SvgView(SVG.$('common/复制'), color: Colors.white, width: 24, height: 24),
-            onTap: () => copyTxt(account),
-          ),
+    return Container(
+      padding: const Pad(left: 8, right: 11),
+      height: 20,
+      decoration: const BoxDecoration(
+        color: Color(0xFFEBEBFF),
+        borderRadius: AppBorderRadius.max,
+      ),
+      child: Row(
+        children: [
+          if (account != null) ...[
+            Expanded(
+              child: SelectableText(
+                'ID:$account',
+                style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+              ),
+            ),
+            OpacityButton(
+              child: const Text(
+                '点击复制',
+                style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+              ),
+              onTap: () => copyTxt(account),
+            ),
+          ],
         ],
-        if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
-      ].separator(Spacing.w2).toList(growable: false),
+      ),
     );
+
+    // return Row(
+    //   children: [
+    //     if (account != null) ...[
+    //       Flexible(
+    //         child: SelectableText('ID $account'),
+    //       ),
+    //       OpacityButton(
+    //         child: SvgView(SVG.$('common/复制'), color: Colors.white, width: 24, height: 24),
+    //         onTap: () => copyTxt(account),
+    //       ),
+    //     ],
+    //     if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
+    //   ].separator(Spacing.w2).toList(growable: false),
+    // );
   }
 }
