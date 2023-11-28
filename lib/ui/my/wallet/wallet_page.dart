@@ -44,7 +44,7 @@ class _WalletPageState extends State<WalletPage> {
                 Spacing.h10,
                 MoneyCard(
                   type: MoneyType.gold,
-                  tips: '用于购买服装、道具等',
+                  tips: '用于购买服装或道具等',
                   action: '兑换',
                   onItemClick: onItemClick,
                 ),
@@ -84,20 +84,29 @@ class _WalletPageState extends State<WalletPage> {
             builder: (it) {
               return XText(
                 '${it[type] ?? '--'}',
-                style: const TextStyle(fontSize: 22, color: Colors.black, fontWeight: fw$SemiBold),
+                style: const TextStyle(fontSize: 24, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
               );
             },
           ),
-          XText(
-            '${type.label} | $tips',
-            style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+          XRichText(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: type.label,
+                  style: const TextStyle(fontSize: 12, color: AppPalette.txtDark),
+                ),
+                const TextSpan(text: ' | ',),
+                TextSpan(text: tips),
+              ],
+            ),
+            style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
           ),
         ],
       );
 
       child = Row(
         children: [
-          MoneyIcon(type: type, size: 60, variant: 1),
+          MoneyIcon(type: type, size: 51,),
           Expanded(child: child),
           const RightArrowIcon(),
         ].separator(Spacing.w10).toList(growable: false),

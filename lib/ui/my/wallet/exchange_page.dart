@@ -35,7 +35,7 @@ class _ExchangePageState extends State<ExchangePage> {
             padding: Pad(horizontal: 10, top: 28, bottom: 20),
             child: MoneyCard(
               type: MoneyType.gold,
-              tips: '用于购买服装、道具等',
+              tips: '用于购买服装或道具等',
             ),
           ),
           Expanded(

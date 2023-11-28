@@ -40,6 +40,7 @@ class _RechargePageState extends State<RechargePage> {
   ApplePurchase applePurchase = ApplePurchase();
 
   static final _format = NumberFormat('0.##').format;
+  static double bgHeight = AppSize.width / 375 * 374;
 
   @override
   void initState() {
@@ -72,41 +73,67 @@ class _RechargePageState extends State<RechargePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD89BFE),
-      appBar: xAppBar(title: '充值', bgColor: Colors.transparent),
-      body: Column(
+      appBar: xAppBar(title: '充值', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
+      extendBodyBehindAppBar: true,
+      body: Stack(
         children: [
-          Padding(
-            padding: const Pad(horizontal: 8,),
-            child: OpacityButton(
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  XText('紫钻明细', style: TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$Regular),),
-                  RightArrowIcon(color: Color(0xFFFF0000),),
-                ],
-              ),
-              onTap: () => Get.to(const PurpleDiamondDetailsPage()),
-            ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: bgHeight,
+            child: $BgView(),
           ),
-          Box(
-            padding: const Pad(horizontal: 10, top: 8, bottom: 20),
-            child: MoneyCard(
-              type: type,
-              tips: '用于直播间内礼物打赏',
-            ),
-          ),
-          Expanded(
-            child: Material(
-              borderRadius: AppBorderRadius.t12,
-              color: Colors.white,
-              child: XFutureBuilder<dynamic>(
-                api,
-                onData: (data) => $BodyView(data['items'], data['pay_type_items']),
-              ),
+          Positioned.fill(
+            top: AppSize.appBar + AppSize.safeTop,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const Pad(horizontal: 8,),
+                  child: OpacityButton(
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        XText('紫钻明细', style: TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$Regular),),
+                        RightArrowIcon(color: Color(0xFFFF0000),),
+                      ],
+                    ),
+                    onTap: () => Get.to(const PurpleDiamondDetailsPage()),
+                  ),
+                ),
+                Box(
+                  padding: const Pad(horizontal: 10, top: 8, bottom: 20),
+                  child: MoneyCard(
+                    type: type,
+                    tips: '用于直播间内礼物打赏',
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    borderRadius: AppBorderRadius.t12,
+                    color: Colors.white,
+                    child: XFutureBuilder<dynamic>(
+                      api,
+                      onData: (data) => $BodyView(data['items'], data['pay_type_items']),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget $BgView() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(IMG.format('gradient_head_bgimage')),
+          scale: 3,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -144,7 +171,7 @@ class _RechargePageState extends State<RechargePage> {
   Widget $Btn() {
     return XTextBtn(
       label: '立即充值',
-      textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
+      textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
       onTap: doSub,
     );
   }
