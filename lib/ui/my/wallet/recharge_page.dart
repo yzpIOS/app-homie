@@ -12,6 +12,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
 import 'package:app/ui/my/wallet/pay_page.dart';
+import 'package:app/ui/my/wallet/purple_diamond_details_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -75,8 +76,21 @@ class _RechargePageState extends State<RechargePage> {
       appBar: xAppBar(title: '充值', bgColor: Colors.transparent),
       body: Column(
         children: [
+          Padding(
+            padding: const Pad(horizontal: 8,),
+            child: OpacityButton(
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  XText('紫钻明细', style: TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$Regular),),
+                  RightArrowIcon(color: Color(0xFFFF0000),),
+                ],
+              ),
+              onTap: () => Get.to(const PurpleDiamondDetailsPage()),
+            ),
+          ),
           Box(
-            padding: const Pad(horizontal: 10, top: 28, bottom: 20),
+            padding: const Pad(horizontal: 10, top: 8, bottom: 20),
             child: MoneyCard(
               type: type,
               tips: '用于直播间内礼物打赏',
