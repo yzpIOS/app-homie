@@ -17,6 +17,8 @@ class WalletPage extends StatefulWidget {
 }
 
 class _WalletPageState extends State<WalletPage> {
+  static double bgHeight = AppSize.width / 375 * 374;//头部背景图高度
+
   @override
   void initState() {
     super.initState();
@@ -27,38 +29,64 @@ class _WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD89BFE),
-      appBar: xAppBar(title: '我的钱包', bgColor: Colors.transparent),
-      body: Column(
+      appBar: xAppBar(title: '我的钱包', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
+      extendBodyBehindAppBar: true,
+      body: Stack(
         children: [
-          Box(
-            padding: const Pad(horizontal: 10, top: 28, bottom: 20),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: bgHeight,
+            child: $BgView(),
+          ),
+          Positioned.fill(
+            top: AppSize.appBar + AppSize.safeTop,
             child: Column(
               children: [
-                MoneyCard(
-                  type: MoneyType.diamond,
-                  tips: '用于直播间内礼物打赏',
-                  action: '充值',
-                  onItemClick: onItemClick,
+                Box(
+                  padding: const Pad(horizontal: 10, top: 28, bottom: 20),
+                  child: Column(
+                    children: [
+                      MoneyCard(
+                        type: MoneyType.diamond,
+                        tips: '用于直播间内礼物打赏',
+                        action: '充值',
+                        onItemClick: onItemClick,
+                      ),
+                      Spacing.h10,
+                      MoneyCard(
+                        type: MoneyType.gold,
+                        tips: '用于购买服装或道具等',
+                        action: '兑换',
+                        onItemClick: onItemClick,
+                      ),
+                    ],
+                  ),
                 ),
-                Spacing.h10,
-                MoneyCard(
-                  type: MoneyType.gold,
-                  tips: '用于购买服装、道具等',
-                  action: '兑换',
-                  onItemClick: onItemClick,
+                Expanded(
+                  child: Material(
+                    borderRadius: AppBorderRadius.t12,
+                    color: Colors.white,
+                    child: $MoreView(),
+                  ),
                 ),
               ],
             ),
           ),
-          Expanded(
-            child: Material(
-              borderRadius: AppBorderRadius.t12,
-              color: Colors.white,
-              child: $MoreView(),
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget $BgView() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(IMG.format('gradient_head_bgimage')),
+          scale: 3,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -84,20 +112,29 @@ class _WalletPageState extends State<WalletPage> {
             builder: (it) {
               return XText(
                 '${it[type] ?? '--'}',
-                style: const TextStyle(fontSize: 22, color: Colors.black, fontWeight: fw$SemiBold),
+                style: const TextStyle(fontSize: 24, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
               );
             },
           ),
-          XText(
-            '${type.label} | $tips',
-            style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+          XRichText(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: type.label,
+                  style: const TextStyle(fontSize: 12, color: AppPalette.txtDark),
+                ),
+                const TextSpan(text: ' | ',),
+                TextSpan(text: tips),
+              ],
+            ),
+            style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
           ),
         ],
       );
 
       child = Row(
         children: [
-          MoneyIcon(type: type, size: 60, variant: 1),
+          MoneyIcon(type: type, size: 51,),
           Expanded(child: child),
           const RightArrowIcon(),
         ].separator(Spacing.w10).toList(growable: false),
@@ -121,6 +158,7 @@ class _WalletPageState extends State<WalletPage> {
         $TitleView(),
         Expanded(
           child: ListView(
+            padding: Pad(bottom: 10 + AppSize.safeBottom),
             itemExtent: 50 + 2 * 2,
             children: [
               itemBuilder(MoneyType.homie, '用于直播间内结算'),

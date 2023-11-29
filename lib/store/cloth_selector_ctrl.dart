@@ -137,7 +137,7 @@ abstract class ClothSelector {
 
   bool isRxSelected(int id);
 
-  Future<void> doSelect(Map item, {bool itemBuyAble = true});
+  Future<void> doSelect(Map item);
 }
 
 mixin _UnityDressUpMixin {
@@ -246,7 +246,7 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
 
   void _doDel(int id) {}
 
-  Future<void> _doTryUse(int id, {bool itemBuyAble = true}) {
+  Future<void> _doTryUse(int id, {Map? item}) {
     FutureOr Function() task;
 
     // 保存原来的数据
@@ -292,9 +292,27 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
     }
 
     return simpleTry(task, callback: (result) {
-      //不可购买的服装不用调用添加或删除购物车
-      if (itemBuyAble == false) {
-        return;
+
+      // 是否能购买（活动获得'商品不能购买）
+      if (item != null && item.isNotEmpty) {
+        var itemBuyAble = true;
+        if (item case {'label_list': List lists}) {
+          if (lists.isNotEmpty) {
+            itemBuyAble = lists.isNotEmpty && lists[0]["is_buy"] == true;
+          }
+        }
+
+        final cartCtrl = Get.find<ShoppingCartCtrl>();
+        if (itemBuyAble == true) {//不是'活动获得'商品，可以购买，调用添加或删除购物车，显示“购买+数量”
+          cartCtrl.activityItem.value = {};
+        } else {////是'活动获得'商品，不能购买，不用调用添加或删除购物车，显示“活动获得”
+          if(addOrDel) {
+            cartCtrl.activityItem.value = item;
+          } else {
+            cartCtrl.activityItem.value = {};
+          }
+          return;
+        }
       }
 
       // unity成功了
@@ -335,7 +353,7 @@ class _SelectorShop extends ClothSelector with _UnityDressUpMixin, _TryMixin, _M
   Iterable<int> _ids() => _dataRx;
 
   @override
-  Future<void> doSelect(Map item, {bool itemBuyAble = true}) => _doTryUse(item['id'], itemBuyAble: itemBuyAble);
+  Future<void> doSelect(Map item) => _doTryUse(item['id'], item: item);
 
   void doReset() {
     _dataRx.clear();

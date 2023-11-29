@@ -5,7 +5,7 @@ import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// 个人信息“年龄、星座、地区”
+/// 个人信息“等级、年龄、星座、地区”
 class OtherDetailsInfoView extends StatelessWidget {
   final UID uid;
   final String? account;

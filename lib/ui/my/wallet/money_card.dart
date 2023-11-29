@@ -35,6 +35,19 @@ class MoneyCard extends StatelessWidget {
       ],
     );
 
+    late final Color textColor;
+    switch(type.val) {
+      case 0:
+        textColor = const Color(0xFFBD7BE5);
+        break;
+      case 1:
+        textColor = const Color(0xFFFFD143);
+        break;
+      case 2:
+      default:
+        textColor = AppPalette.txtDark;
+        break;
+    }
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +56,7 @@ class MoneyCard extends StatelessWidget {
           builder: (it) {
             return XText(
               '${it[type] ?? '--'}',
-              style: const TextStyle(fontSize: 24, color: AppPalette.primary, fontWeight: fw$SemiBold),
+              style: const TextStyle(fontSize: 24, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
             );
           },
         ),
@@ -51,22 +64,22 @@ class MoneyCard extends StatelessWidget {
         XRichText(
           TextSpan(
             children: [
-              TextSpan(text: type.label),
-              const TextSpan(
-                text: ' | ',
-                style: TextStyle(color: AppPalette.cc),
+              TextSpan(
+                text: type.label,
+                style: TextStyle(fontSize: 12, color: textColor),
               ),
+              const TextSpan(text: ' | ',),
               TextSpan(text: tips),
             ],
           ),
-          style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+          style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
         ),
       ],
     );
 
     child = Row(
       children: [
-        MoneyIcon(type: type, size: 60, variant: 1),
+        MoneyIcon(type: type, size: 51,),
         Expanded(child: child),
         if (action != null)
           OpacityButton(
@@ -93,11 +106,23 @@ class MoneyCard extends StatelessWidget {
       child: child,
     );
 
-    child = Material(
-      elevation: 10,
-      shadowColor: const Color(0x1A000000),
-      borderRadius: AppBorderRadius.a10,
-      child: child,
+    child = DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: AppBorderRadius.a10,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF8D47FF).withAlpha(80),
+            blurRadius: 6,
+            spreadRadius: 0,
+            offset: const Offset(0, 0),
+          ),
+        ],
+      ),
+      child: Material(
+        elevation: 10,
+        borderRadius: AppBorderRadius.a10,
+        child: child,
+      ),
     );
 
     return child;

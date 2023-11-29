@@ -17,6 +17,7 @@ class ShoppingCartCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
   Future get api => Api.ShoppingCart.list().then((val) => val['items']);
 
   final showCarRx = RxBool(false);
+  final activityItem = RxMap();
 
   int count() => dataRx.map<int>((it) => it['count']).sum;
 

@@ -36,7 +36,7 @@ class _MomentCreatePageState extends State<MomentCreatePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(),
+      appBar: xAppBar(title: '发布动态'),
       body: $BodyView(),
       bottomNavigationBar: $Bnb(),
     );
@@ -275,6 +275,17 @@ class _MediaView extends StatelessWidget {
     final onlyImage = items.isNotEmpty;
 
     return () {
+      // Get.showActionSheet(['拍摄', '从手机相册选择']).onNotNull((val) {
+      //   switch(val) {
+      //     case '拍摄':
+      //
+      //       break;
+      //     case '从手机相册选择':
+      //       imagePicker(max: 9);
+      //       break;
+      //   }
+      // });
+
       final selected = //
           onlyImage //
               ? items.map((it) => it.asset).whereType<AssetEntity>().toList(growable: false)

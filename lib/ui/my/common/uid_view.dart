@@ -30,12 +30,15 @@ class UidView extends StatelessWidget {
                 style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
               ),
             ),
-            OpacityButton(
-              child: const Text(
-                '点击复制',
-                style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+            Padding(
+              padding: const Pad(bottom: 3),
+              child: OpacityButton(
+                child: const Text(
+                  '点击复制',
+                  style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+                ),
+                onTap: () => copyTxt(account),
               ),
-              onTap: () => copyTxt(account),
             ),
           ],
         ],

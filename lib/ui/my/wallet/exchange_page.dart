@@ -18,6 +18,7 @@ class ExchangePage extends StatefulWidget {
 
 class _ExchangePageState extends State<ExchangePage> {
   static const combo = [100, 500, 1000];
+  static double bgHeight = AppSize.width / 375 * 374;//头部背景图高度
 
   final inputRx = Rx(false);
   final diamondRx = Rxn<int>(combo.first);
@@ -27,25 +28,51 @@ class _ExchangePageState extends State<ExchangePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD89BFE),
-      appBar: xAppBar(title: '兑换', bgColor: Colors.transparent),
-      body: Column(
+      appBar: xAppBar(title: '兑换', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
+      extendBodyBehindAppBar: true,
+      body: Stack(
         children: [
-          const Box(
-            padding: Pad(horizontal: 10, top: 28, bottom: 20),
-            child: MoneyCard(
-              type: MoneyType.gold,
-              tips: '用于购买服装、道具等',
-            ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: bgHeight,
+            child: $BgView(),
           ),
-          Expanded(
-            child: Material(
-              borderRadius: AppBorderRadius.t12,
-              color: Colors.white,
-              child: $BodyView(),
+          Positioned.fill(
+            top: AppSize.appBar + AppSize.safeTop,
+            child: Column(
+              children: [
+                const Box(
+                  padding: Pad(horizontal: 10, top: 28, bottom: 20),
+                  child: MoneyCard(
+                    type: MoneyType.gold,
+                    tips: '用于购买服装或道具等',
+                  ),
+                ),
+                Expanded(
+                  child: Material(
+                    borderRadius: AppBorderRadius.t12,
+                    color: Colors.white,
+                    child: $BodyView(),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget $BgView() {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(IMG.format('gradient_head_bgimage')),
+          scale: 3,
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
@@ -138,7 +165,7 @@ class _ExchangePageState extends State<ExchangePage> {
           final b = inputRx.isFalse && diamondRx() == item;
 
           return Material(
-            color: b ? const Color(0x4DDCD2FE) : const Color(0xFFF5F5F5),
+            color: const Color(0xFFEBEBFF),
             shape: XRectangleBorder(
               borderRadius: AppBorderRadius.a8,
               side: b //
