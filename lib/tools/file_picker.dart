@@ -36,6 +36,11 @@ Future<List<_Asset>?> assetPicker({
 }) async {
   // android 13下没有存储权限读取不到照片
   await Permission.storage.request();
+  await Permission.photos.request();
+  await Permission.videos.request();
+
+  // 上面己经申请过权限，不用申请
+  PhotoManager.setIgnorePermissionCheck(true);
 
   switch (await PhotoManager.requestPermissionExtend()) {
     case PermissionState.limited:

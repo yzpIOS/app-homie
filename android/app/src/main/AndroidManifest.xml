@@ -9,6 +9,13 @@
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
+    <!-- Required only if your app needs to access videos
+         that other apps created. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <!-- Required only if your app needs to access audio files
+         that other apps created. -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <!-- Permissions options for the `storage` group -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <!--在应用的AndroidManifest.xml添加如下<queries>标签-->
@@ -23,6 +30,7 @@
     </queries>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:label="${app_name}"
