@@ -100,30 +100,48 @@ class MoneyCard extends StatelessWidget {
       ].separator(Spacing.w10).toList(growable: false),
     );
 
-    child = Box(
+    child = Container(
       height: 100,
       padding: const Pad(horizontal: 10),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: AppBorderRadius.a10,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF8D47FF).withAlpha(80),
+              blurRadius: 6,
+              spreadRadius: 0,
+              offset: const Offset(0, 2),
+            )
+          ]
+      ),
       child: child,
     );
 
-    child = DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: AppBorderRadius.a10,
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF8D47FF).withAlpha(80),
-            blurRadius: 6,
-            spreadRadius: 0,
-            offset: const Offset(0, 0),
-          ),
-        ],
-      ),
-      child: Material(
-        elevation: 10,
-        borderRadius: AppBorderRadius.a10,
-        child: child,
-      ),
-    );
+    // child = Box(
+    //   height: 100,
+    //   padding: const Pad(horizontal: 10),
+    //   child: child,
+    // );
+    //
+    // child = DecoratedBox(
+    //   decoration: BoxDecoration(
+    //     borderRadius: AppBorderRadius.a10,
+    //     boxShadow: [
+    //       BoxShadow(
+    //         color: const Color(0xFF8D47FF).withAlpha(80),
+    //         blurRadius: 6,
+    //         spreadRadius: 0,
+    //         offset: const Offset(0, 0),
+    //       ),
+    //     ],
+    //   ),
+    //   child: Material(
+    //     elevation: 10,
+    //     borderRadius: AppBorderRadius.a10,
+    //     child: child,
+    //   ),
+    // );
 
     return child;
   }
