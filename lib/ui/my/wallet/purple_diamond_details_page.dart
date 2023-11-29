@@ -13,9 +13,9 @@ class PurpleDiamondDetailsPage extends StatefulWidget {
 
 class _PurpleDiamondDetailsPageState extends State<PurpleDiamondDetailsPage> {
   final tabs = {
-    '全部': _HistoryView(),
-    '收入': _HistoryView(),
-    '支出': _HistoryView(),
+    '全部': _DetailsListView(),
+    '收入': _DetailsListView(type: 1,),
+    '支出': _DetailsListView(type: 2,),
   };
 
   @override
@@ -83,53 +83,20 @@ class _PurpleDiamondDetailsPageState extends State<PurpleDiamondDetailsPage> {
   }
 }
 
-class _HistoryView extends SimplePageView<Map> {
+class _DetailsListView extends SimplePageView<Map> {
+  final int? type;//1：收入，2：支出(不传，默认是全部)
+  _DetailsListView({this.type});
+
   @override
   BaseConfig get config {
-    return GroupedListConfig<Map>(
+    return ListConfig(
       padding: Pad(horizontal: 15, bottom: 10 + AppSize.safeBottom),
       divider: const Divider(color: Color(0xFFE3E7ED),),
-      groupBuilder: groupBuilder,
-      groupBy: groupBy,
     );
-  }
-
-  String groupBy(Map data) {
-    final tmp = data['created_at'] ?? '';
-
-    final now = DateTime.now();
-
-    try {
-      final time = DateTime.parse(tmp).let((it) => DateTime(it.year, it.month, it.day));
-
-      final today = DateTime(now.year, now.month, now.day);
-
-      if (today == time) return '今天';
-      if (today.subtract(const Duration(days: 1)) == time) return '昨天';
-
-      return '微信充值';
-    } catch (e, s) {
-      errLog(e, s);
-
-      return '$tmp';
-    }
-  }
-
-  Widget groupBuilder(int i, String title) {
-    Widget child = Box(
-      height: 36,
-      alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$SemiBold),
-      ),
-    );
-
-    return child;
   }
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.historyList(page: page);
+  Future fetchPage(PageNum page) => Api.Finance.diamondDetail(type: type, page: page);
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
@@ -144,18 +111,31 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Box(
-      height: 40,
+    return Box(
+      height: 62,
       child: Row(
         children: [
-          XText(
-            '2023-11-24 10:06:27',
-            style: TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                XText(
+                  data['name'] ?? '-',
+                  style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Medium),
+                ),
+                Spacing.h4,
+                XText(
+                  TimeFormat.yyyyMMddHms.formatEpoch(data['created_at']),
+                  style: const TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
+                ),
+              ],
+            ),
           ),
-          Expanded(child: Spacing.blank),
+          // const Expanded(child: Spacing.blank),
           XText(
-            '+6.00',
-            style: TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
+            data['amount'] != null ? data['amount'].toString() : '-',
+            style: const TextStyle(fontSize: 15, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
           ),
         ],
       ),

@@ -36,6 +36,9 @@ class UserCtrl extends GetxController with GetDisposableMixin {
 
   UserCtrl(this._auth, {this.init, this.showTransition = true}) : _box = UserLazyBox(uid: _auth.uid, name: 'UserStore');
 
+  bool roomLoadingHasBeenDisplayed = false;//房间加载图是否已经显示
+  bool squareLoadingHasBeenDisplayed = false;//广场加载图是否已经显示
+
   @override
   void onInit() {
     super.onInit();
