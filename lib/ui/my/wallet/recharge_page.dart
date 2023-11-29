@@ -40,7 +40,7 @@ class _RechargePageState extends State<RechargePage> {
   ApplePurchase applePurchase = ApplePurchase();
 
   static final _format = NumberFormat('0.##').format;
-  static double bgHeight = AppSize.width / 375 * 374;
+  static double bgHeight = AppSize.width / 375 * 374;//头部背景图高度
 
   @override
   void initState() {
@@ -248,7 +248,7 @@ class _RechargePageState extends State<RechargePage> {
           const Expanded(flex: 3, child: Spacing.blank),
           XText(
             '¥${_format(item['pay_amount'] / 100)}',
-            style: const TextStyle(fontSize: 12, color: AppPalette.c9, fontWeight: fw$Medium),
+            style: const TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
           ),
           const Expanded(flex: 13, child: Spacing.blank),
         ],
@@ -259,7 +259,7 @@ class _RechargePageState extends State<RechargePage> {
           final b = selectRx() == item;
 
           return Material(
-            color: b ? const Color(0x4DDCD2FE) : const Color(0xFFF5F5F5),
+            color: const Color(0xFFEBEBFF),
             shape: XRectangleBorder(
               borderRadius: AppBorderRadius.a8,
               side: b //

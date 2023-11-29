@@ -106,11 +106,23 @@ class MoneyCard extends StatelessWidget {
       child: child,
     );
 
-    child = Material(
-      elevation: 10,
-      shadowColor: const Color(0x1A000000),
-      borderRadius: AppBorderRadius.a10,
-      child: child,
+    child = DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: AppBorderRadius.a10,
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF8D47FF).withAlpha(80),
+            blurRadius: 6,
+            spreadRadius: 0,
+            offset: const Offset(0, 0),
+          ),
+        ],
+      ),
+      child: Material(
+        elevation: 10,
+        borderRadius: AppBorderRadius.a10,
+        child: child,
+      ),
     );
 
     return child;
