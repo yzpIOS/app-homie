@@ -8,16 +8,18 @@ import 'package:flutter/material.dart';
 /// 个人信息“等级、年龄、星座、地区”
 class OtherDetailsInfoView extends StatelessWidget {
   final UID uid;
-  final String? account;
   final String? level;
+  final String? ageShow;
+  final String? starSign;
+  final String? location;
 
-  const OtherDetailsInfoView({super.key, required this.uid, this.account, this.level});
+  const OtherDetailsInfoView({super.key, required this.uid, this.level, this.ageShow, this.starSign, this.location});
 
   @override
   Widget build(BuildContext context) {
     Widget $OneItemView(String text) {
       return Container(
-        constraints: const BoxConstraints(minWidth: 42, maxWidth: 90,),
+        constraints: const BoxConstraints(minWidth: 42, maxWidth: 100,),
         padding: const Pad(horizontal: 4, top: 1.5,),
         height: 20,
         decoration: const BoxDecoration(
@@ -33,6 +35,8 @@ class OtherDetailsInfoView extends StatelessWidget {
     }
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         // if (account != null) ...[
         //   Flexible(
@@ -40,9 +44,9 @@ class OtherDetailsInfoView extends StatelessWidget {
         //   ),
         // ],
         if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
-        $OneItemView('20岁'),
-        $OneItemView('摩羯座'),
-        $OneItemView('广东广东广东'),
+        if (ageShow != null) $OneItemView('${ageShow!}岁'),
+        if (starSign != null) $OneItemView(starSign!),
+        if (location != null) $OneItemView(location!),
       ].separator(Spacing.w4).toList(growable: false),
     );
   }
