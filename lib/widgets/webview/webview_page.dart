@@ -1,3 +1,4 @@
+import 'package:app/common/theme.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,8 @@ class WebViewPage extends StatefulWidget {
 class _WebViewPageState extends State<WebViewPage> {
 
   String? url;
+
+  String? title = "";
 
   late WebViewController webViewController;
 
@@ -80,12 +83,14 @@ class _WebViewPageState extends State<WebViewPage> {
       _jsBridgeChannel.call(context, data);
     });
     webViewController.setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (url) {
-          injectUserInfo();
-        },
-        onProgress: (progress) {
-          injectUserInfo();
-        }
+      onPageFinished: (url) async {
+        injectUserInfo();
+        title = await webViewController.getTitle();
+        setState(() { });
+      },
+      onProgress: (progress) {
+        injectUserInfo();
+      },
     ));
   }
 
@@ -99,10 +104,39 @@ class _WebViewPageState extends State<WebViewPage> {
     }
     // 显示webview
     return Scaffold(
-      appBar: xAppBar(title: widget.title),
-      body: WebViewWidget(
-        controller: webViewController
-          ..loadRequest(Uri.parse(url ?? "")),
+      body: Stack(
+        children: [
+
+          WebViewWidget(
+            controller: webViewController
+              ..loadRequest(Uri.parse(url ?? "")),
+          ),
+
+          _createAppBar(),
+        ],
+      ),
+    );
+  }
+
+  Widget _createAppBar() {
+
+    return SizedBox(
+      width: AppSize.width,
+      height: AppSize.appBar + AppSize.appBar,
+      child: Padding(
+        padding: EdgeInsets.only(top: AppSize.appBar),
+        child: Row(
+          children: [
+            const SizedBox(width: 16,),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(Icons.arrow_back_ios, size: 24,),
+            ),
+            const SizedBox(width: 18,),
+          ],
+        ),
       ),
     );
   }
