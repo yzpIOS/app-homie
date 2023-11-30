@@ -361,6 +361,8 @@ class _RechargePageState extends State<RechargePage> {
         if (payResult) {
           // 统计支付成功
           OpenInstallUtils.ins.reportPaySuccessEvent(data['pay_amount']);
+          // 完成充值订单上报
+          await Api.Wallet.rechargeRecordReportFinish(idList: [data['id']]);
           Get.back(result: true);
           MoneyChangeEvent({type: data['diamond_amount']}).fire();
         }

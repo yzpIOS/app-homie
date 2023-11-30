@@ -48,4 +48,22 @@ class ApiWallet extends ApiBase {
   Future checkAppPayStatus(String recordNumber, String transaction_id) {
     return _doPost3("apple_iap/callback", data: {"record_number": recordNumber, "transaction_id": transaction_id});
   }
+
+  ///
+  /// 完成充值订单上报
+  ///
+  Future rechargeRecordReportFinish({required List<int> idList}) {
+    final data = {
+      'id_list': idList,
+    };
+
+    return _doPost('recharge_record/report/finish', data: data);
+  }
+
+  ///
+  /// 查询未上报的充值订单
+  ///
+  Future rechargeRecordNotReportQuery() {
+    return _doPost('recharge_record/not_report/query',);
+  }
 }
