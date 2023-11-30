@@ -19,7 +19,8 @@ dependencies:
   jovial_svg: ^1.1.10
 #  file_picker: ^5.3.0
 #  image_picker: ^0.8.5+3
-  wechat_assets_picker: ^8.8.0
+  wechat_assets_picker:
+    path: ./plugin/wechat_assets_picker-8.8.0
   package_info_plus: ^4.0.2
   connectivity_plus: ^4.0.0
   android_intent_plus: ^4.0.0

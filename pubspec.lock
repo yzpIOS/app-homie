@@ -2057,10 +2057,9 @@ packages:
   wechat_assets_picker:
     dependency: "direct main"
     description:
-      name: wechat_assets_picker
-      sha256: "0856437acd3a013f34cbca4448ad08bd004f387fc2b11b007b4713f00d63fcb7"
-      url: "https://pub.dev"
-    source: hosted
+      path: "plugin/wechat_assets_picker-8.8.0"
+      relative: true
+    source: path
     version: "8.8.0"
   wechat_kit:
     dependency: "direct main"
