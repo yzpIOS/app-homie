@@ -4,6 +4,8 @@ PODS:
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
+  - device_info_plus (0.0.1):
+    - Flutter
   - f_unity (0.0.1):
     - Flutter
   - ffmpeg-kit-ios-https (5.1)
@@ -20,9 +22,7 @@ PODS:
     - Flutter
   - flutter_mxlogger (0.0.1):
     - Flutter
-    - MXLogger (= 1.2.5)
-  - flutter_native_splash (0.0.1):
-    - Flutter
+    - MXLogger (= 1.2.9)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -36,7 +36,7 @@ PODS:
     - FlutterMacOS
   - just_audio (0.0.1):
     - Flutter
-  - libOpenInstallSDK (2.8.0)
+  - libOpenInstallSDK (2.8.1)
   - link_kit (1.0.1):
     - Flutter
     - link_kit/vendor (= 1.0.1)
@@ -48,9 +48,9 @@ PODS:
     - Flutter
   - media_kit_video (0.0.1):
     - Flutter
-  - MXLogger (1.2.5):
-    - MXLoggerCore (= 1.2.5)
-  - MXLoggerCore (1.2.5)
+  - MXLogger (1.2.9):
+    - MXLoggerCore (= 1.2.9)
+  - MXLoggerCore (1.2.9)
   - oaid (0.0.1):
     - Flutter
   - openinstall_flutter_plugin (0.0.1):
@@ -76,25 +76,26 @@ PODS:
   - sqflite (0.0.3):
     - Flutter
     - FMDB (>= 2.7.5)
-  - tencent_cloud_chat_sdk (5.1.2):
+  - tencent_cloud_chat_sdk (5.2.4):
     - Flutter
     - HydraAsync
-    - TXIMSDK_Plus_iOS (>= 7.2.4146)
+    - TXIMSDK_Plus_iOS (>= 7.4.4661)
   - tencent_trtc_cloud (10.7):
     - Flutter
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
-    - TXLiteAVSDK_Professional (= 11.1.14143)
+    - TXLiteAVSDK_Professional (~> 11.4.14445)
   - TXCustomBeautyProcesserPlugin (1.0.2)
-  - TXIMSDK_Plus_iOS (7.3.4358)
-  - TXLiteAVSDK_Professional (11.1.14143):
-    - TXLiteAVSDK_Professional/Professional (= 11.1.14143)
-  - TXLiteAVSDK_Professional/Professional (11.1.14143)
+  - TXIMSDK_Plus_iOS (7.6.5011)
+  - TXLiteAVSDK_Professional (11.4.14546):
+    - TXLiteAVSDK_Professional/Professional (= 11.4.14546)
+  - TXLiteAVSDK_Professional/Professional (11.4.14546)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_compress (0.3.0):
     - Flutter
   - video_player_avfoundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - volume_controller (0.0.1):
     - Flutter
   - wakelock (0.0.1):
@@ -112,13 +113,13 @@ PODS:
 DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - f_unity (from `.symlinks/plugins/f_unity/ios`)
   - ffmpeg_kit_flutter (from `.symlinks/plugins/ffmpeg_kit_flutter/ios`)
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_mxlogger (from `.symlinks/plugins/flutter_mxlogger/ios`)
-  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
   - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
@@ -141,7 +142,7 @@ DEPENDENCIES:
   - tencent_trtc_cloud (from `.symlinks/plugins/tencent_trtc_cloud/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_compress (from `.symlinks/plugins/video_compress/ios`)
-  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
+  - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/darwin`)
   - volume_controller (from `.symlinks/plugins/volume_controller/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
@@ -166,6 +167,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_session/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   f_unity:
     :path: ".symlinks/plugins/f_unity/ios"
   ffmpeg_kit_flutter:
@@ -178,8 +181,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_mxlogger:
     :path: ".symlinks/plugins/flutter_mxlogger/ios"
-  flutter_native_splash:
-    :path: ".symlinks/plugins/flutter_native_splash/ios"
   http_proxy:
     :path: ".symlinks/plugins/http_proxy/ios"
   image_editor_common:
@@ -225,7 +226,7 @@ EXTERNAL SOURCES:
   video_compress:
     :path: ".symlinks/plugins/video_compress/ios"
   video_player_avfoundation:
-    :path: ".symlinks/plugins/video_player_avfoundation/ios"
+    :path: ".symlinks/plugins/video_player_avfoundation/darwin"
   volume_controller:
     :path: ".symlinks/plugins/volume_controller/ios"
   wakelock:
@@ -240,46 +241,46 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
+  device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   f_unity: 725a49c8f926d6739da3715cb853d815a9df9a84
   ffmpeg-kit-ios-https: 8dffbe1623a2f227be98fc314294847a97f818e4
   ffmpeg_kit_flutter: 17e9f35a4ec996ac55051c20be05240f2a0b53e8
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  flutter_mxlogger: 77e81891f0b0cf394aa512b0e3260778f0eb0c79
-  flutter_native_splash: 52501b97d1c0a5f898d687f1646226c1f93c56ef
+  flutter_mxlogger: 782714d101b4554777c471e08eb2d317eb2534bd
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
   HydraAsync: 8d589bd725b0224f899afafc9a396327405f8063
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
-  libOpenInstallSDK: 3c24ebe6cc0eb7856918023f07b2e8d3202c7db8
+  libOpenInstallSDK: 29edb359f1fcf527064ad7daefea480a6965d5f4
   link_kit: d7bfc53a95ba13ef377f4c2dc208015a7902d21e
   media_kit_libs_ios_video: a5fe24bc7875ccd6378a0978c13185e1344651c1
-  media_kit_native_event_loop: 9f9eb778d0d806ab9486eff7513f7f90f07d50f8
+  media_kit_native_event_loop: e6b2ab20cf0746eb1c33be961fcf79667304fa2a
   media_kit_video: 5da63f157170e5bf303bf85453b7ef6971218a2e
-  MXLogger: dfb2200493abbad1bab08e200bed73f4a30f2fa6
-  MXLoggerCore: 31d90b8f080d5769f982b9a4fc8c21267fb07a97
+  MXLogger: d8929e6a585854a78ce68cf798522676626125b3
+  MXLoggerCore: 6bc54753a82039774ea6aa1fc68044c2494497b8
   oaid: a606cb40fed91907145c520c5b467b7ab7980785
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
-  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
-  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
+  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
-  share_plus: 599aa54e4ea31d4b4c0e9c911bcc26c55e791028
+  share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
-  tencent_cloud_chat_sdk: 8a2bceccaf81e7f922e7b6509ab93c39c3884dda
-  tencent_trtc_cloud: 8e7982c2423cb0187cefedd4a1d913767a778536
+  tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
+  tencent_trtc_cloud: 8b55aa23005a77db473cdbc13841a4b13b261946
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
-  TXIMSDK_Plus_iOS: bc72c7cec1b5e975c3cc6629692c849513a932f5
-  TXLiteAVSDK_Professional: a20fdf458f2e9c1c24cc4219310707c74d410d1c
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  TXIMSDK_Plus_iOS: b665f09489e7d1a35c2dd95a495544d0c2a84f37
+  TXLiteAVSDK_Professional: 819f405470d75a7a76d8e267033e705e1979dadd
+  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
-  video_player_avfoundation: 81e49bb3d9fb63dccf9fa0f6d877dc3ddbeac126
+  video_player_avfoundation: e9e6f9cae7d7a6d9b43519b0aab382bca60fcfd1
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47

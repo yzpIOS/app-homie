@@ -15,7 +15,7 @@ import '../types/thumbnail.dart';
 import 'constants.dart';
 import 'enums.dart';
 
-typedef DecoderCallback = Function(typed_data.Uint8List? data);
+typedef DecoderCallback = Function(typed_data.Uint8List data);
 
 final _providerLocks = <AssetEntityImageProvider, Completer<ui.Codec>>{};
 
