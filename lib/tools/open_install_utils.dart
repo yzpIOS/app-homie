@@ -19,6 +19,9 @@ class OpenInstallUtils {
 
   OpeninstallFlutterPlugin? _openinstallFlutterPlugin;
 
+
+  Map<String, Object> lastData = {};
+
   ///
   /// 同意隐私协议后，才进行初始化
   ///
@@ -60,28 +63,16 @@ class OpenInstallUtils {
   }
 
   Future wakeupHandler(Map<String, Object> data) async {
-    // if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
-    //   return;
-    // }
-    // // 获取json数据（动态拉起参数）
-    // final bindData = data['bindData'];
-    // // 渠道编号
-    // final channelCode = data['channelCode'];
-    // if(bindData == null) {
-    //   return;
-    // }
-    // final bindDataStr = bindData.toString();
-    // // json数据解析
-    // final Map<String, dynamic> result = jsonDecode(bindDataStr);
-    // if(channelCode != null && !result.containsKey('channel_code')) {
-    //   result['channel_code'] = channelCode;// 渠道码
-    // }
-    // KvBox.write(PrefKey.OpenInstallBlindData, result);
-    // // 记录己经上传过
-    // KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
+    debugPrint("_openinstallFlutterPlugin --> wakeupHandler.map ==>" + data.toString());
+    if(data != null && data['channelCode'] != null) {
+      lastData = data;
+      debugPrint("wakeupHandler ---> _openinstallFlutterPlugin -->");
+      onInstall(data);
+    }
   }
 
   Future onInstall(Map<String, Object> data) async {
+
     if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
       return;
     }
@@ -90,18 +81,27 @@ class OpenInstallUtils {
     if(bindData == null) {
       return;
     }
-    final bindDataStr = bindData.toString();
+    String bindDataStr = bindData.toString();
+    if(bindDataStr == "") {
+      if(lastData['channelCode'] != null && lastData['channelCode'].toString() != ""){
+        data = lastData;
+      }
+      bindDataStr = "{}";
+    }
     // json数据解析
     final Map<String, dynamic> result = jsonDecode(bindDataStr);
     // 渠道编号
-    final channelCode = data['channelCode'];
+    var channelCode = data['channelCode'];
     if(channelCode != null && !result.containsKey('channel_code')) {
+      result['channel_code'] = channelCode;// 渠道码
+    }else{
       result['channel_code'] = channelCode;// 渠道码
     }
     KvBox.write(PrefKey.OpenInstallBlindData, result);
     // 记录己经上传过
     KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
   }
+
 
   ///
   /// 上传注册信息
