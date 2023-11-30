@@ -13,7 +13,7 @@ mixin TableTips implements ITipsView<ItemDataAdapter> {
     if (tips == null) return null;
 
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: Get.width / 3),
+      constraints: BoxConstraints(maxWidth: Get.width / 2),
       child: XText(
         tips,
         style: const TextStyle(fontSize: 14, color: Color(0xFF979797), fontWeight: fw$Medium),

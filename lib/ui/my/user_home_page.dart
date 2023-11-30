@@ -262,7 +262,7 @@ class _InfoView extends StatelessWidget {
                Spacing.w4,
                Image.asset(IMG.format('my/性别_${gender.code}'), width: 20, height: 20, scale: 3,),
              ],
-            if (isSelf)
+            if (data != null && isSelf)
               ...[
                 Spacing.w4,
                 GestureDetector(
@@ -315,12 +315,12 @@ class _InfoView extends StatelessWidget {
                 const Spacing(height: 10, flex: null,),
                 UidView(uid: uid, account: data?.account, level: data?.level),
                 const Spacing(height: 6, flex: null,),
-                const Text(
-                  '一起开黑，开心交友~',
-                  style: TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+                Text(
+                  data?.desc ?? '介绍一下自己',
+                  style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                 ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: uid, account: data?.account, level: data?.level),
+                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: moreRx['age_show'], starSign: moreRx['star_sign'], location: moreRx['location'],),
               ],
             ),
           ),

@@ -17,8 +17,8 @@ class UidView extends StatelessWidget {
     return Container(
       padding: const Pad(left: 8, right: 11),
       height: 20,
-      decoration: const BoxDecoration(
-        color: Color(0xFFEBEBFF),
+      decoration: BoxDecoration(
+        color: (account != null) ? const Color(0xFFEBEBFF) : AppPalette.transparent,
         borderRadius: AppBorderRadius.max,
       ),
       child: Row(

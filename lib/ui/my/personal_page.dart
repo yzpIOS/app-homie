@@ -25,6 +25,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
     );
   }
 
+  // 获取星座
   String? getConstellation(MyInfoDto data) {
     if (data.birthDay == null) {
       return null;
@@ -76,20 +77,22 @@ class PersonalPage extends GetView<MyInfoCtrl> {
       Tuple4(
         'my/编辑星座',
         '星座',
-        getConstellation(data),
+        // getConstellation(data),
+        data.starSign,
         null,
       ),
       Tuple4(
         'my/编辑地区',
         '地区',
-        '广州',
+        data.location,
         () async {
-          Result resultAttr = new Result();
-
           Result? result = await CityPickers.showCityPicker(
             context: Get.context!,
           );
-          print('result ${result?.toString()}');
+          if (result != null) {
+            String location = (result.provinceName ?? '') + (result.cityName ?? '') + (result.areaName ?? '');
+            controller.updateLocation(location);
+          }
         },
       ),
       // [
