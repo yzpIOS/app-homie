@@ -29,6 +29,14 @@ mixin _$UserInfoDto {
   String? get account => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatar => throw _privateConstructorUsedError;
+  @JsonKey(name: 'desc')
+  String? get desc => throw _privateConstructorUsedError;
+  @JsonKey(name: 'star_sign')
+  String? get starSign => throw _privateConstructorUsedError;
+  @JsonKey(name: 'location')
+  String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'age_show')
+  String? get ageShow => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_extra')
   String? get avatarEx => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
@@ -60,6 +68,10 @@ abstract class $UserInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
+      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'star_sign') String? starSign,
+      @JsonKey(name: 'location') String? location,
+      @JsonKey(name: 'age_show') String? ageShow,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
       @JsonKey(name: 'username') @Deprecated("使用 showName") String? nickName,
       @JsonKey(name: 'sex') GenderEnum gender,
@@ -85,6 +97,10 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
     Object? nuid = freezed,
     Object? account = freezed,
     Object? avatar = freezed,
+    Object? desc = freezed,
+    Object? starSign = freezed,
+    Object? location = freezed,
+    Object? ageShow = freezed,
     Object? avatarEx = freezed,
     Object? nickName = freezed,
     Object? gender = null,
@@ -108,6 +124,22 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
       avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      starSign: freezed == starSign
+          ? _value.starSign
+          : starSign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageShow: freezed == ageShow
+          ? _value.ageShow
+          : ageShow // ignore: cast_nullable_to_non_nullable
               as String?,
       avatarEx: freezed == avatarEx
           ? _value.avatarEx
@@ -150,6 +182,10 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
       @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
+      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'star_sign') String? starSign,
+      @JsonKey(name: 'location') String? location,
+      @JsonKey(name: 'age_show') String? ageShow,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
       @JsonKey(name: 'username') @Deprecated("使用 showName") String? nickName,
       @JsonKey(name: 'sex') GenderEnum gender,
@@ -173,6 +209,10 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
     Object? nuid = freezed,
     Object? account = freezed,
     Object? avatar = freezed,
+    Object? desc = freezed,
+    Object? starSign = freezed,
+    Object? location = freezed,
+    Object? ageShow = freezed,
     Object? avatarEx = freezed,
     Object? nickName = freezed,
     Object? gender = null,
@@ -196,6 +236,22 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
       avatar: freezed == avatar
           ? _value.avatar
           : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      starSign: freezed == starSign
+          ? _value.starSign
+          : starSign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageShow: freezed == ageShow
+          ? _value.ageShow
+          : ageShow // ignore: cast_nullable_to_non_nullable
               as String?,
       avatarEx: freezed == avatarEx
           ? _value.avatarEx
@@ -233,6 +289,10 @@ class _$_UserInfoDto implements _UserInfoDto {
       @JsonKey(name: 'role_id') @MyJsonConverter() this.nuid,
       @JsonKey(name: 'public_id') this.account,
       @JsonKey(name: 'avatar_url') this.avatar,
+      @JsonKey(name: 'desc') this.desc,
+      @JsonKey(name: 'star_sign') this.starSign,
+      @JsonKey(name: 'location') this.location,
+      @JsonKey(name: 'age_show') this.ageShow,
       @JsonKey(name: 'avatar_extra') this.avatarEx,
       @JsonKey(name: 'username') @Deprecated("使用 showName") this.nickName,
       @JsonKey(name: 'sex') required this.gender,
@@ -257,6 +317,18 @@ class _$_UserInfoDto implements _UserInfoDto {
   @JsonKey(name: 'avatar_url')
   final String? avatar;
   @override
+  @JsonKey(name: 'desc')
+  final String? desc;
+  @override
+  @JsonKey(name: 'star_sign')
+  final String? starSign;
+  @override
+  @JsonKey(name: 'location')
+  final String? location;
+  @override
+  @JsonKey(name: 'age_show')
+  final String? ageShow;
+  @override
   @JsonKey(name: 'avatar_extra')
   final String? avatarEx;
   @override
@@ -278,7 +350,7 @@ class _$_UserInfoDto implements _UserInfoDto {
 
   @override
   String toString() {
-    return 'UserInfoDto(uid: $uid, nuid: $nuid, account: $account, avatar: $avatar, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, charmLevel: $charmLevel, remarkName: $remarkName)';
+    return 'UserInfoDto(uid: $uid, nuid: $nuid, account: $account, avatar: $avatar, desc: $desc, starSign: $starSign, location: $location, ageShow: $ageShow, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, charmLevel: $charmLevel, remarkName: $remarkName)';
   }
 
   @override
@@ -290,6 +362,12 @@ class _$_UserInfoDto implements _UserInfoDto {
             (identical(other.nuid, nuid) || other.nuid == nuid) &&
             (identical(other.account, account) || other.account == account) &&
             (identical(other.avatar, avatar) || other.avatar == avatar) &&
+            (identical(other.desc, desc) || other.desc == desc) &&
+            (identical(other.starSign, starSign) ||
+                other.starSign == starSign) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.ageShow, ageShow) || other.ageShow == ageShow) &&
             (identical(other.avatarEx, avatarEx) ||
                 other.avatarEx == avatarEx) &&
             (identical(other.nickName, nickName) ||
@@ -310,6 +388,10 @@ class _$_UserInfoDto implements _UserInfoDto {
       nuid,
       account,
       avatar,
+      desc,
+      starSign,
+      location,
+      ageShow,
       avatarEx,
       nickName,
       gender,
@@ -333,28 +415,23 @@ class _$_UserInfoDto implements _UserInfoDto {
 
 abstract class _UserInfoDto implements UserInfoDto {
   factory _UserInfoDto(
-      {@JsonKey(name: 'uid')
-          required final UID uid,
-      @JsonKey(name: 'role_id')
-      @MyJsonConverter()
-          final Int64? nuid,
-      @JsonKey(name: 'public_id')
-          final String? account,
-      @JsonKey(name: 'avatar_url')
-          final String? avatar,
-      @JsonKey(name: 'avatar_extra')
-          final String? avatarEx,
-      @JsonKey(name: 'username')
-      @Deprecated("使用 showName")
+          {@JsonKey(name: 'uid') required final UID uid,
+          @JsonKey(name: 'role_id') @MyJsonConverter() final Int64? nuid,
+          @JsonKey(name: 'public_id') final String? account,
+          @JsonKey(name: 'avatar_url') final String? avatar,
+          @JsonKey(name: 'desc') final String? desc,
+          @JsonKey(name: 'star_sign') final String? starSign,
+          @JsonKey(name: 'location') final String? location,
+          @JsonKey(name: 'age_show') final String? ageShow,
+          @JsonKey(name: 'avatar_extra') final String? avatarEx,
+          @JsonKey(name: 'username')
+          @Deprecated("使用 showName")
           final String? nickName,
-      @JsonKey(name: 'sex')
-          required final GenderEnum gender,
-      @JsonKey(name: 'level')
-          final String? level,
-      @JsonKey(name: 'charm_level')
-          final String? charmLevel,
-      @JsonKey(name: 'remarks_name')
-          final String? remarkName}) = _$_UserInfoDto;
+          @JsonKey(name: 'sex') required final GenderEnum gender,
+          @JsonKey(name: 'level') final String? level,
+          @JsonKey(name: 'charm_level') final String? charmLevel,
+          @JsonKey(name: 'remarks_name') final String? remarkName}) =
+    _$_UserInfoDto;
 
   factory _UserInfoDto.fromJson(Map<String, dynamic> json) =
       _$_UserInfoDto.fromJson;
@@ -372,6 +449,18 @@ abstract class _UserInfoDto implements UserInfoDto {
   @override
   @JsonKey(name: 'avatar_url')
   String? get avatar;
+  @override
+  @JsonKey(name: 'desc')
+  String? get desc;
+  @override
+  @JsonKey(name: 'star_sign')
+  String? get starSign;
+  @override
+  @JsonKey(name: 'location')
+  String? get location;
+  @override
+  @JsonKey(name: 'age_show')
+  String? get ageShow;
   @override
   @JsonKey(name: 'avatar_extra')
   String? get avatarEx;

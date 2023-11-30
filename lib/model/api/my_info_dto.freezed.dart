@@ -30,8 +30,14 @@ mixin _$MyInfoDto {
   String? get avatarEx => throw _privateConstructorUsedError;
   @JsonKey(name: 'username')
   String? get nickName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   String? get desc => throw _privateConstructorUsedError;
+  @JsonKey(name: 'location')
+  String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'star_sign')
+  String? get starSign => throw _privateConstructorUsedError;
+  @JsonKey(name: 'age_show')
+  String? get ageShow => throw _privateConstructorUsedError;
   @JsonKey(name: 'sex')
   GenderEnum? get gender => throw _privateConstructorUsedError;
   @JsonKey(name: 'level')
@@ -69,7 +75,10 @@ abstract class $MyInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
       @JsonKey(name: 'username') String? nickName,
-      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'location') String? location,
+      @JsonKey(name: 'star_sign') String? starSign,
+      @JsonKey(name: 'age_show') String? ageShow,
       @JsonKey(name: 'sex') GenderEnum? gender,
       @JsonKey(name: 'level') String? level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
@@ -102,6 +111,9 @@ class _$MyInfoDtoCopyWithImpl<$Res, $Val extends MyInfoDto>
     Object? avatarEx = freezed,
     Object? nickName = freezed,
     Object? desc = freezed,
+    Object? location = freezed,
+    Object? starSign = freezed,
+    Object? ageShow = freezed,
     Object? gender = freezed,
     Object? level = freezed,
     Object? birthDay = freezed,
@@ -136,6 +148,18 @@ class _$MyInfoDtoCopyWithImpl<$Res, $Val extends MyInfoDto>
       desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      starSign: freezed == starSign
+          ? _value.starSign
+          : starSign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageShow: freezed == ageShow
+          ? _value.ageShow
+          : ageShow // ignore: cast_nullable_to_non_nullable
               as String?,
       gender: freezed == gender
           ? _value.gender
@@ -202,7 +226,10 @@ abstract class _$$_MyInfoDtoCopyWith<$Res> implements $MyInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'avatar_extra') String? avatarEx,
       @JsonKey(name: 'username') String? nickName,
-      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'description') String? desc,
+      @JsonKey(name: 'location') String? location,
+      @JsonKey(name: 'star_sign') String? starSign,
+      @JsonKey(name: 'age_show') String? ageShow,
       @JsonKey(name: 'sex') GenderEnum? gender,
       @JsonKey(name: 'level') String? level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
@@ -234,6 +261,9 @@ class __$$_MyInfoDtoCopyWithImpl<$Res>
     Object? avatarEx = freezed,
     Object? nickName = freezed,
     Object? desc = freezed,
+    Object? location = freezed,
+    Object? starSign = freezed,
+    Object? ageShow = freezed,
     Object? gender = freezed,
     Object? level = freezed,
     Object? birthDay = freezed,
@@ -268,6 +298,18 @@ class __$$_MyInfoDtoCopyWithImpl<$Res>
       desc: freezed == desc
           ? _value.desc
           : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      starSign: freezed == starSign
+          ? _value.starSign
+          : starSign // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageShow: freezed == ageShow
+          ? _value.ageShow
+          : ageShow // ignore: cast_nullable_to_non_nullable
               as String?,
       gender: freezed == gender
           ? _value.gender
@@ -318,7 +360,10 @@ class _$_MyInfoDto implements _MyInfoDto {
       @JsonKey(name: 'avatar_url') this.avatar,
       @JsonKey(name: 'avatar_extra') this.avatarEx,
       @JsonKey(name: 'username') this.nickName,
-      @JsonKey(name: 'desc') this.desc,
+      @JsonKey(name: 'description') this.desc,
+      @JsonKey(name: 'location') this.location,
+      @JsonKey(name: 'star_sign') this.starSign,
+      @JsonKey(name: 'age_show') this.ageShow,
       @JsonKey(name: 'sex') this.gender,
       @JsonKey(name: 'level') this.level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() this.birthDay,
@@ -348,8 +393,17 @@ class _$_MyInfoDto implements _MyInfoDto {
   @JsonKey(name: 'username')
   final String? nickName;
   @override
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   final String? desc;
+  @override
+  @JsonKey(name: 'location')
+  final String? location;
+  @override
+  @JsonKey(name: 'star_sign')
+  final String? starSign;
+  @override
+  @JsonKey(name: 'age_show')
+  final String? ageShow;
   @override
   @JsonKey(name: 'sex')
   final GenderEnum? gender;
@@ -381,7 +435,7 @@ class _$_MyInfoDto implements _MyInfoDto {
 
   @override
   String toString() {
-    return 'MyInfoDto(uid: $uid, account: $account, avatar: $avatar, avatarEx: $avatarEx, nickName: $nickName, desc: $desc, gender: $gender, level: $level, birthDay: $birthDay, fansCount: $fansCount, followCount: $followCount, accessCount: $accessCount, realNameType: $realNameType, addr: $addr, showWinningLottery: $showWinningLottery)';
+    return 'MyInfoDto(uid: $uid, account: $account, avatar: $avatar, avatarEx: $avatarEx, nickName: $nickName, desc: $desc, location: $location, starSign: $starSign, ageShow: $ageShow, gender: $gender, level: $level, birthDay: $birthDay, fansCount: $fansCount, followCount: $followCount, accessCount: $accessCount, realNameType: $realNameType, addr: $addr, showWinningLottery: $showWinningLottery)';
   }
 
   @override
@@ -397,6 +451,11 @@ class _$_MyInfoDto implements _MyInfoDto {
             (identical(other.nickName, nickName) ||
                 other.nickName == nickName) &&
             (identical(other.desc, desc) || other.desc == desc) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.starSign, starSign) ||
+                other.starSign == starSign) &&
+            (identical(other.ageShow, ageShow) || other.ageShow == ageShow) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.birthDay, birthDay) ||
@@ -424,6 +483,9 @@ class _$_MyInfoDto implements _MyInfoDto {
       avatarEx,
       nickName,
       desc,
+      location,
+      starSign,
+      ageShow,
       gender,
       level,
       birthDay,
@@ -450,35 +512,25 @@ class _$_MyInfoDto implements _MyInfoDto {
 
 abstract class _MyInfoDto implements MyInfoDto {
   factory _MyInfoDto(
-      {@JsonKey(name: 'uid')
-          required final UID uid,
-      @JsonKey(name: 'public_id')
-          final String? account,
-      @JsonKey(name: 'avatar_url')
-          final String? avatar,
-      @JsonKey(name: 'avatar_extra')
-          final String? avatarEx,
-      @JsonKey(name: 'username')
-          final String? nickName,
-      @JsonKey(name: 'desc')
-          final String? desc,
-      @JsonKey(name: 'sex')
-          final GenderEnum? gender,
-      @JsonKey(name: 'level')
-          final String? level,
+      {@JsonKey(name: 'uid') required final UID uid,
+      @JsonKey(name: 'public_id') final String? account,
+      @JsonKey(name: 'avatar_url') final String? avatar,
+      @JsonKey(name: 'avatar_extra') final String? avatarEx,
+      @JsonKey(name: 'username') final String? nickName,
+      @JsonKey(name: 'description') final String? desc,
+      @JsonKey(name: 'location') final String? location,
+      @JsonKey(name: 'star_sign') final String? starSign,
+      @JsonKey(name: 'age_show') final String? ageShow,
+      @JsonKey(name: 'sex') final GenderEnum? gender,
+      @JsonKey(name: 'level') final String? level,
       @JsonKey(name: 'data_birth')
       @EpochDateTimeConverter()
-          final DateTime? birthDay,
-      @JsonKey(name: 'fans_count')
-          final int? fansCount,
-      @JsonKey(name: 'follow_count')
-          final int? followCount,
-      @JsonKey(name: 'access_user_count')
-          final int? accessCount,
-      @JsonKey(name: 'real_name_type')
-          final int? realNameType,
-      @JsonKey(name: 'addr')
-          final MyAddrDto? addr,
+      final DateTime? birthDay,
+      @JsonKey(name: 'fans_count') final int? fansCount,
+      @JsonKey(name: 'follow_count') final int? followCount,
+      @JsonKey(name: 'access_user_count') final int? accessCount,
+      @JsonKey(name: 'real_name_type') final int? realNameType,
+      @JsonKey(name: 'addr') final MyAddrDto? addr,
       @JsonKey(name: 'show_winning_lottery')
           final bool? showWinningLottery}) = _$_MyInfoDto;
 
@@ -501,8 +553,17 @@ abstract class _MyInfoDto implements MyInfoDto {
   @JsonKey(name: 'username')
   String? get nickName;
   @override
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   String? get desc;
+  @override
+  @JsonKey(name: 'location')
+  String? get location;
+  @override
+  @JsonKey(name: 'star_sign')
+  String? get starSign;
+  @override
+  @JsonKey(name: 'age_show')
+  String? get ageShow;
   @override
   @JsonKey(name: 'sex')
   GenderEnum? get gender;

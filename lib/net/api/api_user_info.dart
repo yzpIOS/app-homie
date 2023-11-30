@@ -51,18 +51,22 @@ class ApiUserInfo extends ApiBase {
     return _doPost('user_name/check', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }
 
-  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, GenderEnum? gender, String? token}) async {
+  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, String? starSign, String? location, GenderEnum? gender, String? token}) async {
     final data = <dynamic, dynamic>{
-      if (nickName != null) //
+      if (nickName != null) //昵称
         'username': nickName,
-      if (gender != null) //
+      if (gender != null) //性别
         'sex': gender.code,
-      if (desc != null) //
+      if (desc != null) //简介
         'description': desc,
-      if (avatar != null) //
+      if (avatar != null) //头像
         'media_id': avatar,
-      if (birth != null) //
+      if (birth != null) //生日
         'data_birth': birth.millisecondsSinceEpoch,
+      if (starSign != null) //星座
+        'star_sign': starSign,
+      if (location != null) //地区
+        'location': location,
     };
 
     /// 拉新数据

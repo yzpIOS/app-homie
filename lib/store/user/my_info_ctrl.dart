@@ -65,6 +65,9 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
         avatarEx: result.avatarEx,
         nickName: result.nickName,
         level: result.level,
+        ageShow: result.ageShow,
+        starSign: result.starSign,
+        location: result.location,
       );
     });
     dataRx.value = result;
@@ -193,15 +196,38 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     );
   }
 
+  // 更新生日+星座
   void updateBirthDay(DateTime data) async {
     final _tmp = dataRx().birthDay;
+    final _tmpStarSign = dataRx().starSign;
+    final starSign = getConstellation(data);
 
-    dataRx.rebuild((val) => val.copyWith(birthDay: data));
+    dataRx.rebuild((val) => val.copyWith(birthDay: data, starSign: starSign));
 
     _doUpdate(
-      Api.UserInfo.setInfo(birth: data),
-      restore: (val) => val.copyWith(birthDay: _tmp),
+      Api.UserInfo.setInfo(birth: data, starSign: starSign),
+      restore: (val) => val.copyWith(birthDay: _tmp, starSign: _tmpStarSign),
     );
+  }
+
+  // 更新地区
+  void updateLocation(String data) async {
+    final _tmp = dataRx().location;
+
+    dataRx.rebuild((val) => val.copyWith(location: data));
+
+    _doUpdate(
+      Api.UserInfo.setInfo(location: data),
+      restore: (val) => val.copyWith(location: _tmp),
+    );
+  }
+
+  // 获取星座
+  String? getConstellation(DateTime? data) {
+    if (data == null) {
+      return null;
+    }
+    return TimeUtils.getConstellationWith(data);
   }
 
   void updateLotteryWinning(bool isShow) async {
