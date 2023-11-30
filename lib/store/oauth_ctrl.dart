@@ -53,6 +53,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       OpenInstallUtils.ins.initPrivacy();
       // 登录时间记录
       loginUpdate();
+      // 查询未上报的充值订单
+      rechargeRecordNotReportQuery();
       // 需要等待unity加载完成
       UnityCtrl.ins.needWaitForUnityReady = true;
     } else {
@@ -104,6 +106,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
         // 登录时间记录
         loginUpdate();
+        // 查询未上报的充值订单
+        rechargeRecordNotReportQuery();
       },
       callback: () {
         App.toApp();
@@ -132,6 +136,27 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   ///
   void loginUpdate() {
     Api.UserInfo.loginUpdate();
+  }
+
+  ///
+  /// 打开app时请求
+  /// 查询未上报的充值订单
+  /// 查到后立即请求完成充值订单上报
+  ///
+  void rechargeRecordNotReportQuery() {
+    simpleSub(
+      Api.Wallet.rechargeRecordNotReportQuery(),
+      callback1: (resp) {
+        final items = resp['items'];
+        if (items is List && items.isNotEmpty) {
+          final List<int> idList = items.map((e) {
+            int? recordId = e['id'];
+            return recordId ?? 0;
+          }).toList();
+          Api.Wallet.rechargeRecordReportFinish(idList: idList);
+        }
+      },
+    );
   }
 
   Future<void> useAuth(String token) async {
