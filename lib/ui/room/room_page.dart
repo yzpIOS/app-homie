@@ -12,6 +12,7 @@ import 'package:app/store/room/room_gift_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/super_gift_broadcast_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/svga_effect_overlay.dart';
 import 'package:app/ui/common/unity_view.dart';
@@ -128,6 +129,22 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     });
     // 进房后，关闭所有的loading
     WaitingCtrl.obj.hidden();
+
+    // 是否显示加载进度图
+    // WaitingCtrl.obj.show(text: '加载中...');
+    if (controller.roomType == RoomType.square) {// 广场
+      if (Get.find<UserCtrl>().squareLoadingHasBeenDisplayed == false) {
+        Get.find<UserCtrl>().squareLoadingHasBeenDisplayed = true;
+      } else {
+        RoomManagerCtrl.ins.sceneCtrl2?.completeProgress();
+      }
+    } else {// 其他房间
+      if (Get.find<UserCtrl>().roomLoadingHasBeenDisplayed == false) {
+        Get.find<UserCtrl>().roomLoadingHasBeenDisplayed = true;
+      } else {
+        RoomManagerCtrl.ins.sceneCtrl2?.completeProgress();
+      }
+    }
   }
 
   @override
@@ -248,8 +265,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       onInit: controller.loadScene,
       fromRoom: true,
     );
-
-    // 返回按钮
 
     child = Scaffold(
       backgroundColor: Colors.grey,

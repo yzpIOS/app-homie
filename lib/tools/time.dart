@@ -100,6 +100,7 @@ class TimeFormat {
   static final yMMMMdHms = yMMMMd.add_Hms();
   static final yyMMdd = DateFormat('yyMMdd');
   static final yyyyMMdd = DateFormat('yyyy-MM-dd');
+  static final yyyyMMddHms = yyyyMMdd.add_Hms();
 
   static Future<void> initLocale(String language) async {
     try {
