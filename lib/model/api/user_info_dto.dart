@@ -14,7 +14,7 @@ class UserInfoDto with _$UserInfoDto {
     @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
     @JsonKey(name: 'public_id') String? account,
     @JsonKey(name: 'avatar_url') String? avatar,
-    @JsonKey(name: 'desc') String? desc,
+    @JsonKey(name: 'description') String? desc,
     @JsonKey(name: 'star_sign') String? starSign,
     @JsonKey(name: 'location') String? location,
     @JsonKey(name: 'age_show') String? ageShow,

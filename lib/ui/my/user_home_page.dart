@@ -292,6 +292,7 @@ class _InfoView extends StatelessWidget {
         );
       }
 
+      String? descStr = data?.desc;
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -315,12 +316,14 @@ class _InfoView extends StatelessWidget {
                 const Spacing(height: 10, flex: null,),
                 UidView(uid: uid, account: data?.account, level: data?.level),
                 const Spacing(height: 6, flex: null,),
-                Text(
-                  data?.desc ?? '介绍一下自己',
-                  style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
-                ),
+                if (descStr != null && descStr.isNotEmpty)
+                  XText(
+                    descStr,
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+                  ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: moreRx['age_show'], starSign: moreRx['star_sign'], location: moreRx['location'],),
+                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: data?.ageShow, starSign: data?.starSign, location: data?.location,),
               ],
             ),
           ),
