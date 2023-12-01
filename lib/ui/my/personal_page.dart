@@ -88,9 +88,10 @@ class PersonalPage extends GetView<MyInfoCtrl> {
         () async {
           Result? result = await CityPickers.showCityPicker(
             context: Get.context!,
+            showType: ShowType.p,
           );
           if (result != null) {
-            String location = (result.provinceName ?? '') + (result.cityName ?? '') + (result.areaName ?? '');
+            String location = (result.provinceName ?? '');
             controller.updateLocation(location);
           }
         },

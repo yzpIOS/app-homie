@@ -29,7 +29,7 @@ mixin _$UserInfoDto {
   String? get account => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String? get avatar => throw _privateConstructorUsedError;
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   String? get desc => throw _privateConstructorUsedError;
   @JsonKey(name: 'star_sign')
   String? get starSign => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $UserInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
-      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'description') String? desc,
       @JsonKey(name: 'star_sign') String? starSign,
       @JsonKey(name: 'location') String? location,
       @JsonKey(name: 'age_show') String? ageShow,
@@ -182,7 +182,7 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
       @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
-      @JsonKey(name: 'desc') String? desc,
+      @JsonKey(name: 'description') String? desc,
       @JsonKey(name: 'star_sign') String? starSign,
       @JsonKey(name: 'location') String? location,
       @JsonKey(name: 'age_show') String? ageShow,
@@ -289,7 +289,7 @@ class _$_UserInfoDto implements _UserInfoDto {
       @JsonKey(name: 'role_id') @MyJsonConverter() this.nuid,
       @JsonKey(name: 'public_id') this.account,
       @JsonKey(name: 'avatar_url') this.avatar,
-      @JsonKey(name: 'desc') this.desc,
+      @JsonKey(name: 'description') this.desc,
       @JsonKey(name: 'star_sign') this.starSign,
       @JsonKey(name: 'location') this.location,
       @JsonKey(name: 'age_show') this.ageShow,
@@ -317,7 +317,7 @@ class _$_UserInfoDto implements _UserInfoDto {
   @JsonKey(name: 'avatar_url')
   final String? avatar;
   @override
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   final String? desc;
   @override
   @JsonKey(name: 'star_sign')
@@ -419,7 +419,7 @@ abstract class _UserInfoDto implements UserInfoDto {
           @JsonKey(name: 'role_id') @MyJsonConverter() final Int64? nuid,
           @JsonKey(name: 'public_id') final String? account,
           @JsonKey(name: 'avatar_url') final String? avatar,
-          @JsonKey(name: 'desc') final String? desc,
+          @JsonKey(name: 'description') final String? desc,
           @JsonKey(name: 'star_sign') final String? starSign,
           @JsonKey(name: 'location') final String? location,
           @JsonKey(name: 'age_show') final String? ageShow,
@@ -450,7 +450,7 @@ abstract class _UserInfoDto implements UserInfoDto {
   @JsonKey(name: 'avatar_url')
   String? get avatar;
   @override
-  @JsonKey(name: 'desc')
+  @JsonKey(name: 'description')
   String? get desc;
   @override
   @JsonKey(name: 'star_sign')
