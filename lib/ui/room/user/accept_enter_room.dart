@@ -112,22 +112,23 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
               SizedBox(height: 5,),
               Container(
                 height: 20,
-                width: 90,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(left: 5),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEBFF),
                   borderRadius: BorderRadius.circular(100),
                 ),
-                child: Text(
-                  "ID:${widget.data["room_no"] ?? ""}",
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Color(0xFF717171),
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
+                child: Flexible(
+                  child: Text(
+                    "ID:${widget.data["room_no"] ?? ""}",
+                    textAlign: TextAlign.start,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Color(0xFF717171),
+                      fontSize: 11,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               )
