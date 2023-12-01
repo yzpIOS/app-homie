@@ -208,7 +208,7 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
             Expanded(child: SizedBox()),
             GestureDetector(
               onTap: () {
-                RoomManagerCtrl.ins.toRoom(roomId: widget.roomId, data: widget.data, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+                RoomManagerCtrl.ins.toRoom(roomId: widget.roomId, data: widget.data, off: true);
               },
               child: Center(
                 child: Container(
