@@ -154,6 +154,8 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              width: 24,
+              height: 24,
               margin: EdgeInsets.only(right: 10, top: 10),
               alignment: Alignment.bottomRight,
               child: GestureDetector(
