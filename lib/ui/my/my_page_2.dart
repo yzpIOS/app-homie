@@ -44,7 +44,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    const divider = Divider(height: 10, thickness: 10, color: AppPalette.colorEB);
+    const divider = Divider(height: 5, thickness: 5, color: AppPalette.colorEB);
 
     return UiOverlayRegion.light(
       child: Scaffold(
@@ -83,7 +83,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // Spacing.blank,
-          Image.asset(IMG.format('my/$item'), width: 56, height: 56, fit: BoxFit.contain, scale: 3),
+          Image.asset(IMG.format('my/$item'), width: 70, height: 70, fit: BoxFit.contain, scale: 3),
           XText(
             item,
             style: const TextStyle(fontSize: 14, color: Colors.black),
