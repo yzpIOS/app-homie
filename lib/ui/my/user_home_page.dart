@@ -66,7 +66,7 @@ class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
-        _expHeight = bgHeight + 112 + (153 * (AppSize.width / 375));//434;
+        _expHeight = bgHeight + 112 + 153;//434;
       } else {
         _expHeight = bgHeight + 112;//404 - 153;
       }
