@@ -173,12 +173,12 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
                 } else if(type == 2 && canGoToComment) {
                   const GoComment().fire();
                 }
+                canGoToComment = false;
               }
             }
         );
       });
     }
-    canGoToComment = false;
   }
 
   ///

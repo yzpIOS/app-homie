@@ -1,3 +1,4 @@
+import 'package:app/common/AppNavObserver.dart';
 import 'package:app/event/event.dart';
 import 'package:app/shop/cart_mini_view.dart';
 import 'package:app/shop/home_shop_and_dressup_view.dart';
@@ -6,6 +7,7 @@ import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/intro_ctrl.dart';
 import 'package:app/store/shop_category_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
+import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/intro/shop_intro_overlay.dart';
 import 'package:app/widgets.dart';
@@ -19,7 +21,7 @@ class HomeShopPage extends StatefulWidget {
   State<HomeShopPage> createState() => _HomeShopPageState();
 }
 
-class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, OverlayMixin {
+class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, OverlayMixin, RouteAware {
   StreamSubscription? streamSubscription;
   bool modelSceneUnityLoadComplete = false;//商城模特unity界面是否加载完成
 
@@ -39,6 +41,28 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
   void dispose() {
     super.dispose();
     streamSubscription?.cancel();
+    AppNavObserver.unsubscribe(this);
+  }
+
+  @override
+  void didPush() {
+    super.didPush();
+  }
+
+  @override
+  void didPop() {
+    super.didPop();
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    setState(() { });
+  }
+
+  @override
+  void didPushNext() {
+    super.didPushNext();
   }
 
   @override
@@ -75,6 +99,13 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
     on<GoWardrobeEvent>(
       (_) => pageCtrl.jumpToPage(0),
     );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 添加监听订阅页面的生命周期
+    AppNavObserver.subscribe(this, context);
   }
 
   @override
