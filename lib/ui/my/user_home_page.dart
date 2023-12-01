@@ -254,6 +254,7 @@ class _InfoView extends StatelessWidget {
         final isSelf = OAuthCtrl.isSelf(uid);
 
         childView = Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             // Flexible(child: childView),
             childView,
@@ -310,7 +311,7 @@ class _InfoView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Spacing(height: 5, flex: null,),
+                const Spacing(height: 3, flex: null,),
                 myNickView(),
                 // NickView(nickName: data?.showName(), gender: data?.gender),
                 const Spacing(height: 10, flex: null,),
