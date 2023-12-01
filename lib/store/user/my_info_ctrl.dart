@@ -1,4 +1,5 @@
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
+import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/model/enum/gender_enum.dart';
@@ -174,59 +175,57 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   }
 
   void updateDesc(String data) async {
+    final _tmp = dataRx().nickName;
+
     dataRx.rebuild((val) => val.copyWith(desc: data));
 
     _doUpdate(
       Api.UserInfo.setInfo(desc: data),
-      restore: (val) => val.copyWith(desc: data),
+      restore: (val) => val.copyWith(desc: _tmp),
+      updateCommon: (val) => val.copyWith(desc: data),
     );
-    UserInfoCtrl.doUpdate(
-      uid,
-      rebuild: (val) => val.copyWith(desc: data),
-    );
-    _saveToBox();
   }
 
   void updateGender(GenderEnum data) async {
+    final _tmp = dataRx().gender;
+
     dataRx.rebuild((val) => val.copyWith(gender: data));
 
     _doUpdate(
       Api.UserInfo.setInfo(gender: data),
-      restore: (val) => val.copyWith(gender: data),
+      restore: (val) => val.copyWith(gender: _tmp),
       updateCommon: (val) => val.copyWith(gender: data),
     );
   }
 
   // 更新生日+星座
   void updateBirthDay(DateTime data) async {
+    final _tmp = dataRx().birthDay;
+    final _tmpStarSign = dataRx().starSign;
     final starSign = getConstellation(data);
 
     dataRx.rebuild((val) => val.copyWith(birthDay: data, starSign: starSign));
 
-    _doUpdate(
+    await _doUpdate(
       Api.UserInfo.setInfo(birth: data, starSign: starSign),
-      restore: (val) => val.copyWith(birthDay: data, starSign: starSign),
+      restore: (val) => val.copyWith(birthDay: _tmp, starSign: _tmpStarSign),
+      updateCommon: (val) => val.copyWith(birthDay: data, starSign: starSign),
     );
-    UserInfoCtrl.doUpdate(
-      uid,
-      rebuild: (val) => val.copyWith(birthDay: data, starSign: starSign),
-    );
-    _saveToBox();
+
+    // 请求数据刷新界面(刷新年龄)
+    const UserInfoRefreshEvent().fire();
   }
 
   // 更新地区
   void updateLocation(String data) async {
+    final _tmp = dataRx().location;
     dataRx.rebuild((val) => val.copyWith(location: data));
 
     _doUpdate(
       Api.UserInfo.setInfo(location: data),
-      restore: (val) => val.copyWith(location: data),
+      restore: (val) => val.copyWith(location: _tmp),
+      updateCommon: (val) => val.copyWith(location: data),
     );
-    UserInfoCtrl.doUpdate(
-      uid,
-      rebuild: (val) => val.copyWith(location: data),
-    );
-    _saveToBox();
   }
 
   // 获取星座

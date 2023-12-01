@@ -29,12 +29,17 @@ class MyPage2 extends StatefulWidget {
   State<MyPage2> createState() => _MyPage2State();
 }
 
-class _MyPage2State extends State<MyPage2> {
+class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   @override
   void initState() {
     super.initState();
     Get.find<MyInfoCtrl>().doRefresh();
+
+    // 请求数据刷新界面
+    on<UserInfoRefreshEvent>(
+      (_) => Get.find<MyInfoCtrl>().doRefresh(),
+    );
   }
 
   @override
