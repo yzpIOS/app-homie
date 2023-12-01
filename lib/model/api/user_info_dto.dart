@@ -4,6 +4,8 @@ import 'package:app/types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fixnum/fixnum.dart';
 
+import 'package:app/model/converter/epoch_date_time_converter.dart';
+
 part 'user_info_dto.freezed.dart';
 part 'user_info_dto.g.dart';
 
@@ -22,6 +24,7 @@ class UserInfoDto with _$UserInfoDto {
     @JsonKey(name: 'username') @Deprecated("使用 showName") String? nickName,
     @JsonKey(name: 'sex') required GenderEnum gender,
     @JsonKey(name: 'level') String? level,
+    @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
     @JsonKey(name: 'charm_level') String? charmLevel,
     @JsonKey(name: 'remarks_name') String? remarkName,
   }) = _UserInfoDto;

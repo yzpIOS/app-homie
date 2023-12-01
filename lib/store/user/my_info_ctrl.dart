@@ -209,7 +209,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     );
     UserInfoCtrl.doUpdate(
       uid,
-      rebuild: (val) => val.copyWith(starSign: starSign),
+      rebuild: (val) => val.copyWith(birthDay: data, starSign: starSign),
     );
     _saveToBox();
   }

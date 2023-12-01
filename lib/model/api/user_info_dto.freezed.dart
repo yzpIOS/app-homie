@@ -46,6 +46,9 @@ mixin _$UserInfoDto {
   GenderEnum get gender => throw _privateConstructorUsedError;
   @JsonKey(name: 'level')
   String? get level => throw _privateConstructorUsedError;
+  @JsonKey(name: 'data_birth')
+  @EpochDateTimeConverter()
+  DateTime? get birthDay => throw _privateConstructorUsedError;
   @JsonKey(name: 'charm_level')
   String? get charmLevel => throw _privateConstructorUsedError;
   @JsonKey(name: 'remarks_name')
@@ -76,6 +79,7 @@ abstract class $UserInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'username') @Deprecated("使用 showName") String? nickName,
       @JsonKey(name: 'sex') GenderEnum gender,
       @JsonKey(name: 'level') String? level,
+      @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
       @JsonKey(name: 'remarks_name') String? remarkName});
 }
@@ -105,6 +109,7 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
     Object? nickName = freezed,
     Object? gender = null,
     Object? level = freezed,
+    Object? birthDay = freezed,
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
   }) {
@@ -157,6 +162,10 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as String?,
+      birthDay: freezed == birthDay
+          ? _value.birthDay
+          : birthDay // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       charmLevel: freezed == charmLevel
           ? _value.charmLevel
           : charmLevel // ignore: cast_nullable_to_non_nullable
@@ -190,6 +199,7 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
       @JsonKey(name: 'username') @Deprecated("使用 showName") String? nickName,
       @JsonKey(name: 'sex') GenderEnum gender,
       @JsonKey(name: 'level') String? level,
+      @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
       @JsonKey(name: 'remarks_name') String? remarkName});
 }
@@ -217,6 +227,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
     Object? nickName = freezed,
     Object? gender = null,
     Object? level = freezed,
+    Object? birthDay = freezed,
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
   }) {
@@ -269,6 +280,10 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
           ? _value.level
           : level // ignore: cast_nullable_to_non_nullable
               as String?,
+      birthDay: freezed == birthDay
+          ? _value.birthDay
+          : birthDay // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       charmLevel: freezed == charmLevel
           ? _value.charmLevel
           : charmLevel // ignore: cast_nullable_to_non_nullable
@@ -297,6 +312,7 @@ class _$_UserInfoDto implements _UserInfoDto {
       @JsonKey(name: 'username') @Deprecated("使用 showName") this.nickName,
       @JsonKey(name: 'sex') required this.gender,
       @JsonKey(name: 'level') this.level,
+      @JsonKey(name: 'data_birth') @EpochDateTimeConverter() this.birthDay,
       @JsonKey(name: 'charm_level') this.charmLevel,
       @JsonKey(name: 'remarks_name') this.remarkName});
 
@@ -342,6 +358,10 @@ class _$_UserInfoDto implements _UserInfoDto {
   @JsonKey(name: 'level')
   final String? level;
   @override
+  @JsonKey(name: 'data_birth')
+  @EpochDateTimeConverter()
+  final DateTime? birthDay;
+  @override
   @JsonKey(name: 'charm_level')
   final String? charmLevel;
   @override
@@ -350,7 +370,7 @@ class _$_UserInfoDto implements _UserInfoDto {
 
   @override
   String toString() {
-    return 'UserInfoDto(uid: $uid, nuid: $nuid, account: $account, avatar: $avatar, desc: $desc, starSign: $starSign, location: $location, ageShow: $ageShow, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, charmLevel: $charmLevel, remarkName: $remarkName)';
+    return 'UserInfoDto(uid: $uid, nuid: $nuid, account: $account, avatar: $avatar, desc: $desc, starSign: $starSign, location: $location, ageShow: $ageShow, avatarEx: $avatarEx, nickName: $nickName, gender: $gender, level: $level, birthDay: $birthDay, charmLevel: $charmLevel, remarkName: $remarkName)';
   }
 
   @override
@@ -374,6 +394,8 @@ class _$_UserInfoDto implements _UserInfoDto {
                 other.nickName == nickName) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.level, level) || other.level == level) &&
+            (identical(other.birthDay, birthDay) ||
+                other.birthDay == birthDay) &&
             (identical(other.charmLevel, charmLevel) ||
                 other.charmLevel == charmLevel) &&
             (identical(other.remarkName, remarkName) ||
@@ -396,6 +418,7 @@ class _$_UserInfoDto implements _UserInfoDto {
       nickName,
       gender,
       level,
+      birthDay,
       charmLevel,
       remarkName);
 
@@ -429,6 +452,9 @@ abstract class _UserInfoDto implements UserInfoDto {
           final String? nickName,
           @JsonKey(name: 'sex') required final GenderEnum gender,
           @JsonKey(name: 'level') final String? level,
+          @JsonKey(name: 'data_birth')
+          @EpochDateTimeConverter()
+          final DateTime? birthDay,
           @JsonKey(name: 'charm_level') final String? charmLevel,
           @JsonKey(name: 'remarks_name') final String? remarkName}) =
     _$_UserInfoDto;
@@ -474,6 +500,10 @@ abstract class _UserInfoDto implements UserInfoDto {
   @override
   @JsonKey(name: 'level')
   String? get level;
+  @override
+  @JsonKey(name: 'data_birth')
+  @EpochDateTimeConverter()
+  DateTime? get birthDay;
   @override
   @JsonKey(name: 'charm_level')
   String? get charmLevel;
