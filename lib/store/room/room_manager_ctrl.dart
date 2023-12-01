@@ -140,7 +140,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           putRoomInfo(roomInfo);
           if(roomInfo["scene_id"] != 0) {
             if(Env.isDebug) {
-              AcceptEnterRoom.show(roomId, roomInfo);;
+              const GoComment().fire();
               return;
             }
             toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
