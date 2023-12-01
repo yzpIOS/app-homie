@@ -50,6 +50,10 @@ class ShopRefreshEvent extends RefreshEvent {
   const ShopRefreshEvent();
 }
 
+class UserInfoRefreshEvent extends RefreshEvent {
+  const UserInfoRefreshEvent();
+}
+
 class ExitDressUpEvent extends Event {
   final bool isNewDressUp;
 

@@ -1,4 +1,5 @@
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
+import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/model/enum/gender_enum.dart';
@@ -174,13 +175,14 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   }
 
   void updateDesc(String data) async {
-    final _tmp = dataRx().nickName;
+    final _tmp = dataRx().desc;
 
     dataRx.rebuild((val) => val.copyWith(desc: data));
 
     _doUpdate(
       Api.UserInfo.setInfo(desc: data),
       restore: (val) => val.copyWith(desc: _tmp),
+      updateCommon: (val) => val.copyWith(desc: data),
     );
   }
 
@@ -204,21 +206,25 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
     dataRx.rebuild((val) => val.copyWith(birthDay: data, starSign: starSign));
 
-    _doUpdate(
+    await _doUpdate(
       Api.UserInfo.setInfo(birth: data, starSign: starSign),
       restore: (val) => val.copyWith(birthDay: _tmp, starSign: _tmpStarSign),
+      updateCommon: (val) => val.copyWith(birthDay: data, starSign: starSign),
     );
+
+    // 请求数据刷新界面(刷新年龄)
+    const UserInfoRefreshEvent().fire();
   }
 
   // 更新地区
   void updateLocation(String data) async {
     final _tmp = dataRx().location;
-
     dataRx.rebuild((val) => val.copyWith(location: data));
 
     _doUpdate(
       Api.UserInfo.setInfo(location: data),
       restore: (val) => val.copyWith(location: _tmp),
+      updateCommon: (val) => val.copyWith(location: data),
     );
   }
 

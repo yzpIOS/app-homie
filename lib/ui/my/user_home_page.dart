@@ -12,7 +12,6 @@ import 'package:app/ui/message/chat/chat_page.dart';
 import 'package:app/ui/moment/common/giftwall_view.dart';
 import 'package:app/ui/moment/my/user_moment_view.dart';
 import 'package:app/ui/moment/report/moment_report_page.dart';
-import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/personal_page.dart';
 import 'package:app/widgets.dart';
@@ -31,7 +30,7 @@ class UserHomePage extends StatefulWidget {
   State<UserHomePage> createState() => _UserHomePageState();
 }
 
-class _UserHomePageState extends State<UserHomePage> {
+class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
   double _expHeight = 404 - 153;
 
   late final collapsedRx = RxBool(false);
@@ -52,6 +51,11 @@ class _UserHomePageState extends State<UserHomePage> {
       Api.UserInfo.access(uid);
     }
     updateUserInfo();
+
+    // 请求数据刷新界面
+    on<UserInfoRefreshEvent>(
+      (_) => updateUserInfo(),
+    );
 
     // Api.UserInfo.home(uid).onType<Map>(moreRx);
   }
@@ -254,6 +258,7 @@ class _InfoView extends StatelessWidget {
         final isSelf = OAuthCtrl.isSelf(uid);
 
         childView = Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             // Flexible(child: childView),
             childView,
@@ -292,6 +297,7 @@ class _InfoView extends StatelessWidget {
         );
       }
 
+      String? descStr = data?.desc;
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -309,18 +315,20 @@ class _InfoView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Spacing(height: 5, flex: null,),
+                const Spacing(height: 3, flex: null,),
                 myNickView(),
                 // NickView(nickName: data?.showName(), gender: data?.gender),
                 const Spacing(height: 10, flex: null,),
                 UidView(uid: uid, account: data?.account, level: data?.level),
                 const Spacing(height: 6, flex: null,),
-                Text(
-                  data?.desc ?? '介绍一下自己',
-                  style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
-                ),
+                if (descStr != null && descStr.isNotEmpty)
+                  XText(
+                    descStr,
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+                  ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: moreRx['age_show'], starSign: moreRx['star_sign'], location: moreRx['location'],),
+                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: data?.ageShow, starSign: data?.starSign, location: data?.location,),
               ],
             ),
           ),

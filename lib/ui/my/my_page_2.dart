@@ -29,12 +29,17 @@ class MyPage2 extends StatefulWidget {
   State<MyPage2> createState() => _MyPage2State();
 }
 
-class _MyPage2State extends State<MyPage2> {
+class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   @override
   void initState() {
     super.initState();
     Get.find<MyInfoCtrl>().doRefresh();
+
+    // 请求数据刷新界面
+    on<UserInfoRefreshEvent>(
+      (_) => Get.find<MyInfoCtrl>().doRefresh(),
+    );
   }
 
   @override
@@ -299,10 +304,12 @@ class _HeaderView extends StatelessWidget {
                 const Spacing(height: 10, flex: null,),
                 UidView(uid: data.uid, account: data.account, level: data.level),
                 const Spacing(height: 6, flex: null,),
-                Text(
-                  data.desc ?? '介绍一下自己',
-                  style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
-                ),
+                if (data.desc != null && data.desc!.isNotEmpty)
+                  XText(
+                    data.desc!,
+                    maxLines: 1,
+                    style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
+                  ),
                 const Spacing(height: 6, flex: null,),
                 OtherDetailsInfoView(uid: data.uid, level: data.level, ageShow: data.ageShow, starSign: data.starSign, location: data.location,),
                 // SizedBox(

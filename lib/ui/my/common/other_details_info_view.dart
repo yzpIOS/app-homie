@@ -44,9 +44,9 @@ class OtherDetailsInfoView extends StatelessWidget {
         //   ),
         // ],
         if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
-        if (ageShow != null) $OneItemView('${ageShow!}岁'),
-        if (starSign != null) $OneItemView(starSign!),
-        if (location != null) $OneItemView(location!),
+        if (ageShow != null && ageShow!.isNotEmpty) $OneItemView('${ageShow!}岁'),
+        if (starSign != null && starSign!.isNotEmpty) $OneItemView(starSign!),
+        if (location != null && location!.isNotEmpty) $OneItemView(location!),
       ].separator(Spacing.w4).toList(growable: false),
     );
   }
