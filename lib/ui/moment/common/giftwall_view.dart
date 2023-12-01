@@ -102,7 +102,7 @@ class _GiftWallViewState extends State<GiftWallView> {
     if(startCount >= 1) {
       giftImage = AspectRatio(
         aspectRatio: 1.0 / 1.0,
-        child: NetImage(data["cover"], fit: BoxFit.fitWidth),
+        child: NetImage(data["cover"], fit: BoxFit.cover),
       );
       isLighten = true;
     } else {
@@ -116,7 +116,7 @@ class _GiftWallViewState extends State<GiftWallView> {
         aspectRatio: 1.0 / 1.0,
         child: ColorFiltered(
           colorFilter: sepia,
-          child: NetImage(data["cover"], fit: BoxFit.fitWidth),
+          child: NetImage(data["cover"], fit: BoxFit.cover),
         ),
       );
     }
