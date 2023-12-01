@@ -33,7 +33,7 @@ class _GiftWallViewState extends State<GiftWallView> {
       behavior: HitTestBehavior.opaque,
       child: Container(
         // color: const Color(0xFFF6FDFF),
-        height: 153,
+        height: 153 * (AppSize.width / 375),
         margin: const EdgeInsets.only(left: 5, right: 5),
         child: Column(
           children: [
@@ -63,7 +63,7 @@ class _GiftWallViewState extends State<GiftWallView> {
                 itemBuilder: (context, index) {
                   return Container(
                     width: itemWidth,
-                    height: itemHeight,
+                    // height: itemHeight,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(color: const Color(0xFFBDBDBD).withAlpha(50), width: 0.5, strokeAlign: BorderSide.strokeAlignCenter,),
