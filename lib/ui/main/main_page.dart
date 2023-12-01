@@ -66,6 +66,9 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
     on<GoDressUpEvent>(
       (_) => selector.value = 2, //跳到商城页
     );
+    on<GoComment>((event) {
+      selector.value = 0; //跳到商城页
+    });
 
     if (Env.isRelease) {
       post(

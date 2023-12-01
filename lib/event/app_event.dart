@@ -30,6 +30,12 @@ class GoDressUpEvent extends Event {
   const GoDressUpEvent();
 }
 
+
+
+class GoComment extends Event {
+  const GoComment();
+}
+
 class GoWardrobeEvent extends Event {
   const GoWardrobeEvent();
 }

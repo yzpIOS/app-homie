@@ -17,6 +17,7 @@ import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
 import 'package:app/ui/room/user/accept_challenge_view.dart';
+import 'package:app/ui/room/user/accept_enter_room.dart';
 import 'package:app/widgets.dart';
 import 'package:dartz/dartz.dart';
 
@@ -97,6 +98,8 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
   }
 
+  bool canGoToComment = true;
+
   ///
   /// socket连接成功时，服务端返回的用户信息
   ///
@@ -136,6 +139,10 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           var roomInfo = await Api.Room.info(roomId: roomId, tryTimes: 2);
           putRoomInfo(roomInfo);
           if(roomInfo["scene_id"] != 0) {
+            if(Env.isDebug) {
+              AcceptEnterRoom.show(roomId, roomInfo);;
+              return;
+            }
             toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
           } else {
             toSquare(data: roomInfo);
@@ -150,20 +157,28 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         simpleTry(() => Api.Common.getEntryPoint(),
             callback: (t) {
               if(t is Map) {
-                Map<dynamic, dynamic>? roomData = t["room_data"];
-                // 随机进房
-                if(roomData != null) {
-                  if(roomData["scene_id"] != 0) {
-                    toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
-                  } else {
-                    toSquare(data: roomData);
+                var type = t["type"] ?? 0;
+                if(type == 1) {
+                  Map<dynamic, dynamic>? roomData = t["room_data"];
+                  // 随机进房
+                  if(roomData != null) {
+                    if(roomData["scene_id"] != 0) {
+                      // http://192.168.1.156:20000/project/15/interface/api/2114
+                      // toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+                      AcceptEnterRoom.show(roomId, roomData);
+                    } else {
+                      toSquare(data: roomData);
+                    }
                   }
+                } else if(type == 2 && canGoToComment) {
+                  const GoComment().fire();
                 }
               }
             }
         );
       });
     }
+    canGoToComment = false;
   }
 
   ///
