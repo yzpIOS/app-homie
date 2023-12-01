@@ -66,7 +66,7 @@ class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
-        _expHeight = bgHeight + 112 + 153;//434;
+        _expHeight = bgHeight + 112 + 140;//434;
       } else {
         _expHeight = bgHeight + 112;//404 - 153;
       }
@@ -210,13 +210,13 @@ class _InfoView extends StatelessWidget {
           child: $BgView(),
         ),
         Positioned(
+          top: bgHeight - 54,
           left: 15,
           right: 10,
-          top: bgHeight - 54,
           child: $UserView(),
         ),
         Positioned(
-          top: bgHeight + 60,
+          top: bgHeight + 50,
           left: 0,
           right: 0,
           child: $InfoView(),
@@ -347,10 +347,10 @@ class _InfoView extends StatelessWidget {
   }
 
   Widget $InfoView() {
-    const _decor = ShapeDecoration(
-      color: Colors.white,
-      shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-    );
+    // const _decor = ShapeDecoration(
+    //   color: Colors.white,
+    //   shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+    // );
 
     // Widget child = Box(
     //   padding: const Pad(top: 2, horizontal: 10),
@@ -372,18 +372,20 @@ class _InfoView extends StatelessWidget {
     Widget child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Spacing(height: 15, flex: null,),
         $NumView(),
-        // const SizedBox(height: 16,),
+        const Spacing(height: 2, flex: null,),
         Obx(() {
           bool hasGiftWall = moreRx.containsKey("gift_wall_items") && (moreRx["gift_wall_items"] as List<dynamic>).isNotEmpty;
           return Column(
             children: [
               // 礼物墙
               if(hasGiftWall)
-                SizedBox(
-                  // height: 153,
-                  child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
-                ),
+                GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
+                // SizedBox(
+                //   // height: 153,
+                //   child: GiftWallView(datas: moreRx["gift_wall_items"], uid: uid,),
+                // ),
               if(hasGiftWall)
                 Container(color: Colors.white, height: 10,),
               if(hasGiftWall)
@@ -431,23 +433,20 @@ class _InfoView extends StatelessWidget {
 
     return DefaultTextStyle.merge(
       style: const TextStyle(fontSize: 12, color: Colors.black),
-      child: SizedBox(
-        height: 54,
-        child: Obx(
-          () {
-            final data = {
-              '关注': $NumFormat(moreRx['follow_count']),
-              '分割1': '分割线',
-              '粉丝': $NumFormat(moreRx['fans_count']),
-              '分割2': '分割线',
-              '动态': $NumFormat(moreRx['dynamic_count']),
-            };
+      child:Obx(
+            () {
+          final data = {
+            '关注': $NumFormat(moreRx['follow_count']),
+            '分割1': '分割线',
+            '粉丝': $NumFormat(moreRx['fans_count']),
+            '分割2': '分割线',
+            '动态': $NumFormat(moreRx['dynamic_count']),
+          };
 
-            return Row(
-              children: data.entries.map(itemBuilder).toList(growable: false),
-            );
-          },
-        ),
+          return Row(
+            children: data.entries.map(itemBuilder).toList(growable: false),
+          );
+        },
       ),
     );
   }
