@@ -24,8 +24,6 @@ class _WebViewPageState extends State<WebViewPage> {
 
   String? url;
 
-  String? title = "";
-
   late WebViewController webViewController;
 
   final JsBridgeChannel _jsBridgeChannel = JsBridgeChannel();
@@ -84,11 +82,6 @@ class _WebViewPageState extends State<WebViewPage> {
     });
     webViewController.setNavigationDelegate(NavigationDelegate(
       onPageFinished: (url) async {
-        injectUserInfo();
-        title = await webViewController.getTitle();
-        setState(() { });
-      },
-      onProgress: (progress) {
         injectUserInfo();
       },
     ));
