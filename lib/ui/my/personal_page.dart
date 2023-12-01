@@ -25,14 +25,6 @@ class PersonalPage extends GetView<MyInfoCtrl> {
     );
   }
 
-  // 获取星座
-  String? getConstellation(MyInfoDto data) {
-    if (data.birthDay == null) {
-      return null;
-    }
-    return TimeUtils.getConstellationWith(data.birthDay!);
-  }
-
   Widget $BodyView(MyInfoDto data) {
     final items = <Tuple4<String?, String, String?, VoidCallback?>>[
       Tuple4(
@@ -68,7 +60,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
           showDatePicker(
             context: Get.context!,
             initialDate: now.copyWith(year: now.year - 20, month: 1, day: 1),
-            firstDate: now.copyWith(year: now.year - 100),
+            firstDate: DateTime(1970, 1, 1),
             lastDate: now,
             initialDatePickerMode: DatePickerMode.year,
           ).onNotNull(controller.updateBirthDay);
@@ -77,7 +69,6 @@ class PersonalPage extends GetView<MyInfoCtrl> {
       Tuple4(
         'my/编辑星座',
         '星座',
-        // getConstellation(data),
         data.starSign,
         null,
       ),
