@@ -175,7 +175,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   }
 
   void updateDesc(String data) async {
-    final _tmp = dataRx().nickName;
+    final _tmp = dataRx().desc;
 
     dataRx.rebuild((val) => val.copyWith(desc: data));
 
