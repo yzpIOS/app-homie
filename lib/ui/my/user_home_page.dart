@@ -12,7 +12,6 @@ import 'package:app/ui/message/chat/chat_page.dart';
 import 'package:app/ui/moment/common/giftwall_view.dart';
 import 'package:app/ui/moment/my/user_moment_view.dart';
 import 'package:app/ui/moment/report/moment_report_page.dart';
-import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/personal_page.dart';
 import 'package:app/widgets.dart';
@@ -31,7 +30,7 @@ class UserHomePage extends StatefulWidget {
   State<UserHomePage> createState() => _UserHomePageState();
 }
 
-class _UserHomePageState extends State<UserHomePage> {
+class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
   double _expHeight = 404 - 153;
 
   late final collapsedRx = RxBool(false);
@@ -52,6 +51,11 @@ class _UserHomePageState extends State<UserHomePage> {
       Api.UserInfo.access(uid);
     }
     updateUserInfo();
+
+    // 请求数据刷新界面
+    on<UserInfoRefreshEvent>(
+      (_) => updateUserInfo(),
+    );
 
     // Api.UserInfo.home(uid).onType<Map>(moreRx);
   }
