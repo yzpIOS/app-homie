@@ -153,7 +153,18 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 59,),
+            Container(
+              margin: EdgeInsets.only(right: 10, top: 10),
+              alignment: Alignment.bottomRight,
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: SvgView(SVG.$('ic_close'), width: 24, height: 24,),
+              ),
+            ),
+            SizedBox(height: 25,),
+
             Container(color: Color(0XFFEBEBFF), height: 3,),
             SizedBox(height: 12,),
             Container(
