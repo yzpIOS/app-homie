@@ -64,7 +64,7 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
       ],
     );
   }
-  
+
   Widget createHeader() {
     return Positioned(
       left: 11.5,
@@ -112,23 +112,22 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
               SizedBox(height: 5,),
               Container(
                 height: 20,
+                width: 90,
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.only(left: 5),
                 decoration: BoxDecoration(
                   color: Color(0xFFEBEBFF),
                   borderRadius: BorderRadius.circular(100),
                 ),
-                child: Flexible(
-                  child: Text(
-                    "ID:${widget.data["room_no"] ?? ""}",
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF717171),
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                    ),
+                child: Text(
+                  "ID:${widget.data["room_no"] ?? ""}",
+                  textAlign: TextAlign.start,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color(0xFF717171),
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               )
@@ -153,17 +152,22 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 24,
-              height: 24,
-              margin: EdgeInsets.only(right: 10, top: 10),
-              alignment: Alignment.bottomRight,
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: SvgView(SVG.$('ic_close'), width: 24, height: 24,),
-              ),
+            Row(
+              children: [
+                const Expanded(child: SizedBox()),
+                Container(
+                  width: 24,
+                  height: 24,
+                  margin: EdgeInsets.only(right: 10, top: 10),
+                  alignment: Alignment.bottomRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgView(SVG.$('ic_close'), width: 24, height: 24,),
+                  ),
+                )
+              ],
             ),
             SizedBox(height: 25,),
 
