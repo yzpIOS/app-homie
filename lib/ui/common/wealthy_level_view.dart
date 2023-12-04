@@ -8,8 +8,10 @@ class WealthyLevelView extends StatelessWidget {
   final UID? uid;
   final String? level;
   final double height;
+  final double width;
+  final double scale;
 
-  const WealthyLevelView({super.key, this.level, this.uid, this.height = 17});
+  const WealthyLevelView({super.key, this.level, this.uid, this.height = 17, this.width = 34, this.scale = 3});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +21,9 @@ class WealthyLevelView extends StatelessWidget {
 
     Widget child = Image.asset(
       IMG.format('level/$_level'),
-      scale: 3,
-      width: 34,
-      height: 17,
+      scale: scale,
+      width: width,
+      height: height,
       fit: BoxFit.fill,
     );
 

@@ -10,6 +10,8 @@ import 'package:app/ui/podcast/city_room_view.dart';
 import 'package:app/ui/podcast/create_room_page.dart';
 import 'package:app/ui/podcast/follow_room_view.dart';
 import 'package:app/ui/podcast/hot_room_view.dart';
+import 'package:app/ui/room/gift/blind_gift_marquee_view.dart';
+import 'package:app/ui/room/gift/common_gift_marquee_view.dart';
 import 'package:app/ui/room/user/accept_enter_room.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/mic_user_online_manager_sheet.dart';
@@ -116,6 +118,11 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           const SizedBox(width: 11,),
           GestureDetector(
             onTap: () {
+              if(Env.isDebug) {
+                // Get.insertOverlay(BlindGiftMarqueeView());
+                Get.insertOverlay(CommonGiftMarqueeView());
+                return;
+              }
               Get.to(() => const HomeSearchPage());
             },
             child: Image.asset(
