@@ -29,8 +29,10 @@ abstract class TableItemView<T extends ItemDataAdapter> extends ViewAdapter<T>
         if (tips != null) tips,
         if (action != null) //
           action
+        else if (onTap == null)
+          Spacing.w20
         else if (onTap != null) //
-          ...[space, const RightArrowIcon()],
+          ...[Spacing.w2, const RightArrowIcon()],
       ],
     );
 
