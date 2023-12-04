@@ -41,6 +41,15 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
       },
     );
 
+    delay(1000, () {
+      const UID myUid = 'z6dl6xdj';
+      final NUID myNUid = NUID(533);
+      _ctrl.add(_WelcomeView(uid: myUid, myNUid: myNUid,));
+    });
+
+    // roomId: 82
+    // roleId: 533
+    // uid: z6dl6xdj
     _doLoop().ignore();
   }
 
@@ -70,7 +79,7 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 50,
       child: view?.let(
         (child) => LayoutBuilder(
           builder: (_, c) => _AnimateView(onComplete: _doLoop, size: c.biggest, padding: padding, child: child),
@@ -134,56 +143,132 @@ class _WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = UserInfoCtrl.use(
-      uid,
-      builder: (it) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            WealthyLevelView(level: it?.level, height: 10),
-            Flexible(
-              child: Padding(
-                padding: const Pad(horizontal: 3),
-                child: XText(it?.showName() ?? '--', overflow: TextOverflow.fade),
-              ),
+    Widget builder(UserInfoDto? data) {
+      Widget child = Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          WealthyLevelView(level: data?.level, height: 10),
+          Flexible(
+            child: Padding(
+              padding: const Pad(horizontal: 3),
+              child: XText(data?.showName() ?? '--', overflow: TextOverflow.fade),
             ),
-            const Text('来了'),
-          ],
-        );
-      },
-    );
+          ),
+          const Text('来了'),
+        ],
+      );
 
-    child = DefaultTextStyle(
-      style: const TextStyle(fontSize: 12, color: Colors.white, height: 1),
-      child: child,
-    );
+      child = Padding(
+        padding: const Pad(left: 7, right: 6),
+        child: child,
+      );
 
-    child = Padding(
-      padding: const Pad(left: 4, right: 8),
-      child: child,
-    );
+      child = DefaultTextStyle(
+        style: const TextStyle(fontSize: 9, color: Colors.white,),
+        child: child,
+      );
 
-    child = DecoratedBox(
-      decoration: const ShapeDecoration(
-        shape: XStadiumBorder(
-          side: BorderSide(color: Color(0xFFCBCCFF), strokeAlign: BorderSide.strokeAlignOutside),
+      final _level = data?.level;
+      String bgImageName = '';
+      double _boxWidth = 134;
+      double _boxHeight = 20;
+      if (_level == '0' || _level == null || _level.isEmpty) {
+        bgImageName = 'room/welcome_bg_0';
+        _boxWidth = 104;
+      } else if (int.parse(_level) < 10) {
+        bgImageName = 'room/welcome_bg_1~9';
+      } else if (int.parse(_level) < 20) {
+        bgImageName = 'room/welcome_bg_10~19';
+      } else if (int.parse(_level) < 30) {
+        bgImageName = 'room/welcome_bg_20~29';
+      } else if (int.parse(_level) < 40) {
+        bgImageName = 'room/welcome_bg_30~39';
+      } else if (int.parse(_level) < 50) {
+        bgImageName = 'room/welcome_bg_40~49';
+      } else if (int.parse(_level) < 60) {
+        bgImageName = 'room/welcome_bg_50~59';
+      } else {
+        bgImageName = 'room/welcome_bg_60+';
+        _boxWidth = 175.5;
+        _boxHeight = 49.5;
+      }
+      child = DecoratedBox(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), scale: 3, fit: BoxFit.cover),
         ),
-        color: Color(0xFF7D7FD3),
-      ),
-      child: child,
-    );
+        child: child,
+      );
 
-    child = ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
-      child: child,
-    );
+      // child = ConstrainedBox(
+      //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
+      //   child: child,
+      // );
+      child = SizedBox(
+        width: _boxWidth,
+        height: _boxHeight,
+        child: child,
+      );
 
-    child = OpacityButton(
-      onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
-      child: child,
-    );
+      child = OpacityButton(
+        onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
+        child: child,
+      );
 
-    return child;
+      return child;
+    }
+    return UserInfoCtrl.use(uid, builder: builder);
+
+    // Widget child = UserInfoCtrl.use(
+    //   uid,
+    //   builder: (it) {
+    //     return Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       crossAxisAlignment: CrossAxisAlignment.center,
+    //       children: [
+    //         WealthyLevelView(level: it?.level, height: 10),
+    //         Flexible(
+    //           child: Padding(
+    //             padding: const Pad(horizontal: 3),
+    //             child: XText(it?.showName() ?? '--', overflow: TextOverflow.fade),
+    //           ),
+    //         ),
+    //         const Text('来了'),
+    //       ],
+    //     );
+    //   },
+    // );
+    //
+    // child = DefaultTextStyle(
+    //   style: const TextStyle(fontSize: 12, color: Colors.white, height: 1),
+    //   child: child,
+    // );
+    //
+    // child = Padding(
+    //   padding: const Pad(left: 4, right: 8),
+    //   child: child,
+    // );
+    //
+    // child = DecoratedBox(
+    //   decoration: const ShapeDecoration(
+    //     shape: XStadiumBorder(
+    //       side: BorderSide(color: Color(0xFFCBCCFF), strokeAlign: BorderSide.strokeAlignOutside),
+    //     ),
+    //     color: Color(0xFF7D7FD3),
+    //   ),
+    //   child: child,
+    // );
+    //
+    // child = ConstrainedBox(
+    //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
+    //   child: child,
+    // );
+    //
+    // child = OpacityButton(
+    //   onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
+    //   child: child,
+    // );
+    //
+    // return child;
   }
 }
