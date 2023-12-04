@@ -1,4 +1,5 @@
 
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -54,22 +55,16 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
   ///
   Widget _createLeftIcon() {
     return Container(
-      width: 49,
-      height: 49,
-      margin: EdgeInsets.only(left: 11, top: 9),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(500),
-        clipBehavior: Clip.hardEdge,
-        child: Image.network(
-          "https://picsum.photos/300/300?random=1",
-          width: avatarSize,
-          height: avatarSize,
-        ),
+      margin: const EdgeInsets.only(left: 17, top: 7),
+      child: AsyncAvatar(
+          size: 49.0,
+          uid: OAuthCtrl.uid
       ),
     );
   }
 
   Widget _createBackground() {
+    // todo 去看看
     return SizedBox(
       width: totalWidth,
       height: avatarSize,
@@ -82,21 +77,75 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
   }
 
   Widget _createMarquee() {
+    double textHeight = 37;
     return Positioned(
-      left: avatarSize,
+      left: avatarSize + 12,
       top: 15,
-      child: SizedBox(
-          height: 37,
+      child: Container(
+          height: textHeight,
+          alignment: Alignment.centerLeft,
           width: totalWidth - avatarSize - 30,
           child: Marqueer.builder(
             interaction: false,
             controller: controller,
-            itemCount: 40,
+            itemCount: 3,
             itemBuilder: (context, index) {
-              return Image.network(
-                'https://picsum.photos/300/300?random=$index',
-                height: 20,
-                width: 20,
+              if(index == 0) {
+                String text = "玩家名字";
+                var style = const TextStyle(
+                  color: Color(0xFFFED85B),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                );
+                var size = boundingTextSize(text, style);
+
+                return Container(
+                  width: size.width,
+                  height: textHeight,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    text,
+                    style: style,
+                  ),
+                );
+              }
+
+              if(index == 1) {
+                String text = "【在弯月亮的活动】";
+                var style = const TextStyle(
+                  color: Color(0xFFFF5888),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                );
+                var size = boundingTextSize(text, style);
+
+                return Container(
+                  width: size.width,
+                  height: textHeight,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    text,
+                    style: style,
+                  ),
+                );
+              }
+
+              String text = "开出静静弯月亮";
+              var style = const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 11,
+              );
+              var size = boundingTextSize(text, style);
+
+              return Container(
+                width: size.width,
+                height: textHeight,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  text,
+                  style: style,
+                ),
               );
             },
           )

@@ -57,7 +57,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
-    Characters number = "321".characters;
+    Characters number = "1321".characters;
     double totalLeft = 13.5;
     List<Widget> numbers = [];
     for(int index = 0; index < number.length; index ++) {
@@ -65,11 +65,11 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
         margin: EdgeInsets.only(left: totalLeft,),
         child: Image.asset(
           IMG.format("room/gift_${number.characterAt(index)}"),
-          width: number.characterAt(index).toString() == '1' ? 10.5 : 21,
+          width: number.characterAt(index).toString() == '1' ? 10.5 : 14,
           height: 21,
         ),
       ));
-      totalLeft += (number.characterAt(index).toString() == "1" ? 10.5 : 21);
+      totalLeft += (number.characterAt(index).toString() == "1" ? 8.5 : 14);
     }
 
     return Row(

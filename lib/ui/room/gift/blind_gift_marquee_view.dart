@@ -64,6 +64,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   }
 
   Widget _createBackground() {
+    // todo 去看看
     return SizedBox(
       width: 357,
       height: avatarSize,
