@@ -144,32 +144,8 @@ class _WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget builder(UserInfoDto? data) {
-      Widget child = Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          WealthyLevelView(level: data?.level, height: 10),
-          Flexible(
-            child: Padding(
-              padding: const Pad(horizontal: 3),
-              child: XText(data?.showName() ?? '--', overflow: TextOverflow.fade),
-            ),
-          ),
-          const Text('来了'),
-        ],
-      );
-
-      child = Padding(
-        padding: const Pad(left: 7, right: 6),
-        child: child,
-      );
-
-      child = DefaultTextStyle(
-        style: const TextStyle(fontSize: 9, color: Colors.white,),
-        child: child,
-      );
-
       final _level = data?.level;
+      bool isSpecial = false;
       String bgImageName = '';
       double _boxWidth = 134;
       double _boxHeight = 20;
@@ -192,7 +168,38 @@ class _WelcomeView extends StatelessWidget {
         bgImageName = 'room/welcome_bg_60+';
         _boxWidth = 175.5;
         _boxHeight = 49.5;
+        isSpecial = true;
       }
+
+      Widget child = Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: isSpecial ? MainAxisAlignment.center : MainAxisAlignment.start,
+        crossAxisAlignment: isSpecial ? CrossAxisAlignment.end : CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: Pad(bottom: isSpecial ? 1 : 0),
+            child: WealthyLevelView(level: data?.level, height: 10),
+          ),
+          Flexible(
+            child: Padding(
+              padding: const Pad(horizontal: 3,),
+              child: XText(data?.showName() ?? '--', overflow: TextOverflow.fade),
+            ),
+          ),
+          const XText('来了'),
+        ],
+      );
+
+      child = Padding(
+        padding: Pad(left: 7, right: 6, bottom: isSpecial ? 6 : 0),
+        child: child,
+      );
+
+      child = DefaultTextStyle(
+        style: const TextStyle(fontSize: 9, color: Colors.white,),
+        child: child,
+      );
+
       child = DecoratedBox(
         decoration: BoxDecoration(
           image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), scale: 3, fit: BoxFit.cover),
