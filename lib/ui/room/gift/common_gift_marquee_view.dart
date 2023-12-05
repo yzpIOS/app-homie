@@ -146,8 +146,6 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                           children: [
                             if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
                               WealthyLevelView(level: sender?.level ?? ""),
-                            if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
-                              CharmLevelView(level: sender?.charmLevel),
                           ],
                         )
                     )

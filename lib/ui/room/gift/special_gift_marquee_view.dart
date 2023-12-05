@@ -149,8 +149,6 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                               children: [
                                 if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
                                   WealthyLevelView(level: sender?.level ?? ""),
-                                if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
-                                  CharmLevelView(level: sender?.charmLevel),
                               ],
                             )
                         )
