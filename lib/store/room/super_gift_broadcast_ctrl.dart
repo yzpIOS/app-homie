@@ -45,13 +45,15 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
           BlindGiftMarqueeView(acceptUid: uid, users: users, data: data,
             blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
         );
-      } else if(data.bannerType.toInt() == 4) {
-        // 4：服装
-        addTask(
-          ClothGiftMarqueeView(acceptUid: uid, users: users, data: data,
-            blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
-        );
-      } else {
+      }
+      // else if(data.bannerType.toInt() == 4) {
+      //   // 4：服装
+      //   addTask(
+      //     ClothGiftMarqueeView(acceptUid: uid, users: users, data: data,
+      //       blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
+      //   );
+      // }
+      else {
         // 默认样式
         addTask(
           SuperGiftView(acceptUid: uid, users: users, data: data),

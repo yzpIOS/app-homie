@@ -126,127 +126,160 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
     return Positioned(
       left: avatarSize,
       top: 23,
-      child: Container(
-          height: textHeight,
-          width: totalWidth - avatarSize - 30,
-          child: Marqueer.builder(
-            interaction: false,
-            controller: controller,
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              // 发送人的：财富等级或者是魅力等级
-              if(index == 0) {
-                return Container(
-                    margin: const EdgeInsets.only(left: 5, top: 4),
-                    child: Stack(
+      child: Stack(
+        children: [
+          Container(
+              height: textHeight,
+              width: totalWidth - avatarSize - 30,
+              child: Marqueer.builder(
+                interaction: false,
+                controller: controller,
+                itemCount: 6,
+                itemBuilder: (context, index) {
+                  // 发送人的：财富等级或者是魅力等级
+                  if(index == 0) {
+                    return Container(
+                        margin: const EdgeInsets.only(left: 5, top: 4),
+                        child: Stack(
+                          children: [
+                            if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
+                              WealthyLevelView(level: sender?.level ?? ""),
+                            if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
+                              CharmLevelView(level: sender?.charmLevel),
+                          ],
+                        )
+                    );
+                  }
+
+                  // 发送人的：头像
+                  if(index == 1) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
-                          WealthyLevelView(level: sender?.level ?? ""),
-                        if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
-                          CharmLevelView(level: sender?.charmLevel),
+                        Container(
+                          height: 18,
+                          width: 18,
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 5, top: 2),
+                          child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                        )
                       ],
-                    )
-                );
-              }
+                    );
+                  }
 
-              // 发送人的：头像
-              if(index == 1) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: 18,
-                      width: 18,
+                  // 发送人的：名字
+                  if(index == 2) {
+                    String text = sender?.showName() ?? "";
+                    var style = const TextStyle(
+                      color: Color(0xFFFED85B),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                      decoration: TextDecoration.none,
+                    );
+                    var size = boundingTextSize(text, style);
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 5, top: 2),
-                      child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
-                    )
-                  ],
-                );
-              }
+                      margin: EdgeInsets.only(left: 5, top: 4),
+                      child: Text(
+                        text,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        style: style,
+                      ),
+                    );
+                  }
 
-              // 发送人的：名字
-              if(index == 2) {
-                String text = sender?.showName() ?? "";
-                var style = const TextStyle(
-                  color: Color(0xFFFED85B),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                  decoration: TextDecoration.none,
-                );
-                var size = boundingTextSize(text, style);
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 5, top: 4),
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    style: style,
-                  ),
-                );
-              }
-
-              // 发送人的：赚送给文案
-              if(index == 3) {
-                String text = "赚送给";
-                var style = const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                  decoration: TextDecoration.none,
-                );
-                var size = boundingTextSize(text, style);
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  margin: EdgeInsets.only(left: 5, top: 4),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
-                );
-              }
+                  // 发送人的：赚送给文案
+                  if(index == 3) {
+                    String text = "赚送给";
+                    var style = const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                      decoration: TextDecoration.none,
+                    );
+                    var size = boundingTextSize(text, style);
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      margin: EdgeInsets.only(left: 5, top: 4),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
 
 
-              // 接收人的：头像
-              if(index == 4) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: 18,
-                      width: 18,
-                      margin: EdgeInsets.only(left: 5, top: 2),
-                      child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
-                    )
-                  ],
-                );
-              }
-              // 接收人的：名字
-              String text = receiver?.showName() ?? "";
-              var style = const TextStyle(
-                color: Color(0xFFFED85B),
-                fontWeight: FontWeight.bold,
-                fontSize: 11,
-                decoration: TextDecoration.none,
-              );
-              var size = boundingTextSize(text, style);
-              return Container(
-                width: size.width,
-                height: textHeight,
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 5, top: 4),
-                child: Text(
-                  text,
-                  style: style,
+                  // 接收人的：头像
+                  if(index == 4) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 18,
+                          width: 18,
+                          margin: EdgeInsets.only(left: 5, top: 2),
+                          child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                        )
+                      ],
+                    );
+                  }
+                  // 接收人的：名字
+                  String text = receiver?.showName() ?? "";
+                  var style = const TextStyle(
+                    color: Color(0xFFFED85B),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                    decoration: TextDecoration.none,
+                  );
+                  var size = boundingTextSize(text, style);
+                  return Container(
+                    width: size.width,
+                    height: textHeight,
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(left: 5, top: 4),
+                    child: Text(
+                      text,
+                      style: style,
+                    ),
+                  );
+                },
+              )
+          ),
+
+
+          Positioned.fill(
+            left: totalWidth - 146,
+            right: 0,
+            child: GestureDetector(
+              onTap: () {
+                // todo 去看看
+              },
+              child: Container(
+                width: 51,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0XFFFF5787),
+                  borderRadius: BorderRadius.circular(100),
                 ),
-              );
-            },
+                child: const Text(
+                  "去看看",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
           )
+        ],
       ),
     );
   }
