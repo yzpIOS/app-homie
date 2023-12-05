@@ -125,7 +125,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
     final receiver = widget.users[widget.acceptUid];
     return Positioned(
       left: avatarSize,
-      top: 23,
+      top: 25,
       child: Stack(
         children: [
           Container(
@@ -142,7 +142,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                            margin: const EdgeInsets.only(left: 5, top: 4),
+                            margin: const EdgeInsets.only(left: 5, top: 2),
                             child: Stack(
                               children: [
                                 if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
@@ -165,7 +165,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                           height: 18,
                           width: 18,
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 5, top: 2),
+                          margin: EdgeInsets.only(left: 5, top: 1),
                           child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                         )
                       ],
@@ -189,7 +189,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                           width: size.width,
                           height: textHeight,
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 5, top: 4),
+                          margin: EdgeInsets.only(left: 5),
                           child: Text(
                             text,
                             textAlign: TextAlign.center,
@@ -217,7 +217,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                         Container(
                           width: size.width,
                           height: textHeight,
-                          margin: EdgeInsets.only(left: 5, top: 4),
+                          margin: EdgeInsets.only(left: 5),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             text,
@@ -237,7 +237,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                         Container(
                           height: 18,
                           width: 18,
-                          margin: EdgeInsets.only(left: 5, top: 2),
+                          margin: EdgeInsets.only(left: 5),
                           child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                         )
                       ],
@@ -259,7 +259,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                         width: size.width,
                         height: textHeight,
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.only(left: 5, top: 4),
+                        margin: EdgeInsets.only(left: 5),
                         child: Text(
                           text,
                           style: style,
