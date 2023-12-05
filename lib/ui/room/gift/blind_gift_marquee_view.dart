@@ -101,7 +101,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           Container(
               height: textHeight,
               alignment: Alignment.centerLeft,
-              width: totalWidth - avatarSize - 30,
+              width: totalWidth - avatarSize,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,

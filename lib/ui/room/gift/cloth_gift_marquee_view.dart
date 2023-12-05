@@ -98,7 +98,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
           Container(
               height: textHeight,
               alignment: Alignment.centerLeft,
-              width: totalWidth - avatarSize - 30,
+              width: totalWidth - avatarSize,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
@@ -190,7 +190,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 146,
+            left: totalWidth - 116,
             right: 0,
             child: GestureDetector(
               onTap: () {

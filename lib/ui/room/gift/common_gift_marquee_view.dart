@@ -129,7 +129,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
       top: 26,
       child: Container(
           height: textHeight,
-          width: totalWidth - avatarSize - 30,
+          width: totalWidth - avatarSize,
           child: Marqueer.builder(
             interaction: false,
             controller: controller,

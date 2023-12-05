@@ -130,7 +130,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
         children: [
           Container(
               height: textHeight,
-              width: totalWidth - avatarSize - 30,
+              width: totalWidth - avatarSize,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
@@ -273,7 +273,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
 
           Positioned.fill(
-            left: totalWidth - 146,
+            left: totalWidth - 116,
             right: 0,
             child: GestureDetector(
               onTap: () {
