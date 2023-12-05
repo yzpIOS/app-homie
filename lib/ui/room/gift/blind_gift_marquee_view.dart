@@ -43,26 +43,20 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          margin: EdgeInsets.only(top: 80),
-          alignment: Alignment.topCenter,
-          height: avatarSize,
-          width: totalWidth,
-          child: Stack(
-            children: [
-              // 左边的icon
-              _createLeftIcon(),
-              // 背景图
-              _createBackground(),
-              // 跑马灯
-              _createMarquee(),
-            ],
-          ),
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: 80),
+      alignment: Alignment.topCenter,
+      height: avatarSize,
+      width: totalWidth,
+      child: Stack(
+        children: [
+          // 左边的icon
+          _createLeftIcon(),
+          // 背景图
+          _createBackground(),
+          // 跑马灯
+          _createMarquee(),
+        ],
       ),
     );
   }
@@ -72,7 +66,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   ///
   Widget _createLeftIcon() {
     return Container(
-      margin: const EdgeInsets.only(left: 11, top: 9),
+      margin: const EdgeInsets.only(left: 6, top: 6),
       child: AsyncAvatar(
           size: 49.0,
           uid: widget.data.sendId
@@ -85,10 +79,11 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     return SizedBox(
       width: 357,
       height: avatarSize,
-      child: Image.network(
-        widget.blinkUrl ?? "",
+      child: NetImage(
+        widget.data.bannerStyleUrl ?? "",
         width: 357,
         height: avatarSize,
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -118,6 +113,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       color: Color(0xFFFED85B),
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
 
@@ -125,7 +121,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       width: size.width,
                       height: textHeight,
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: XText(
                         text,
                         style: style,
                       ),
@@ -138,13 +134,14 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
                     return Container(
                       width: size.width,
                       height: textHeight,
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: XText(
                         text,
                         style: style,
                       ),
@@ -157,6 +154,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       color: Color(0xFFFF5888),
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
 
@@ -164,7 +162,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       width: size.width,
                       height: textHeight,
                       alignment: Alignment.centerLeft,
-                      child: Text(
+                      child: XText(
                         text,
                         style: style,
                       ),
@@ -176,6 +174,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 11,
+                    decoration: TextDecoration.none,
                   );
                   var size = boundingTextSize(text, style);
 
@@ -192,28 +191,38 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
               )
           ),
 
-          Align(
-            alignment: Alignment.centerRight,
+          Positioned.fill(
+            left: totalWidth - 146,
+            right: 0,
             child: GestureDetector(
               onTap: () {
                 // todo 去看看
               },
-              child: Container(
-                width: 51,
-                height: 20,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Color(0xFFFF5787),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Text(
-                  "去看看",
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 51,
+                    height: 20,
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(top: 3),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFFF5787),
+                      borderRadius: BorderRadius.circular(100),
+
+                    ),
+                    child: Text(
+                      "去看看",
+                      style: TextStyle(
+                        fontSize: 11,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           )

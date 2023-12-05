@@ -29,23 +29,23 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
 
     for (final uid in ids) {
-      if(data.bannerType == 1) {
+      if(data.bannerType.toInt() == 1) {
         // 1：特殊礼物
         addTask(
           SpecialGiftMarqueeView(acceptUid: uid, users: users, data: data),
         );
-      } else if(data.bannerType == 1) {
+      } else if(data.bannerType.toInt() == 2) {
         // 2：普通礼物，
         addTask(
           CommonGiftMarqueeView(acceptUid: uid, users: users, data: data),
         );
-      } else if(data.bannerType == 2) {
+      } else if(data.bannerType.toInt() == 3) {
         // 3：盲盒礼物
         addTask(
           BlindGiftMarqueeView(acceptUid: uid, users: users, data: data,
             blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
         );
-      } else if(data.bannerType == 4) {
+      } else if(data.bannerType.toInt() == 4) {
         // 4：服装
         addTask(
           ClothGiftMarqueeView(acceptUid: uid, users: users, data: data,
