@@ -133,7 +133,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
           child: Marqueer.builder(
             interaction: false,
             controller: controller,
-            itemCount: 6,
+            itemCount: 7,
             itemBuilder: (context, index) {
               // 发送人的：财富等级或者是魅力等级
               if(index == 0) {
