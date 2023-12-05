@@ -55,6 +55,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           _createLeftIcon(),
           // 背景图
           _createBackground(),
+          _createLeftNumber(),
           // 跑马灯
           _createMarquee(),
         ],
@@ -66,6 +67,25 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 6, top: 6),
+          child: AsyncAvatar(
+              size: 49.0,
+              uid: widget.data.sendId
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  ///
+  /// 用户头像或者是礼物图片
+  ///
+  Widget _createLeftNumber() {
     Characters number = "${widget.data.count}".characters;
     double totalLeft = 13.5;
     List<Widget> numbers = [];
@@ -84,15 +104,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          margin: const EdgeInsets.only(left: 6, top: 6),
-          child: AsyncAvatar(
-              size: 49.0,
-              uid: widget.data.sendId
-          ),
-        ),
-
-
+        SizedBox(width: 49,),
         // X
         if(numbers.isNotEmpty)
           Container(

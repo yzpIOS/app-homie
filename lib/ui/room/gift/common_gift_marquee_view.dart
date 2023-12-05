@@ -239,15 +239,43 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                 );
               }
 
-              // 接收人的：名字
-              String text = receiver?.showName() ?? "";
+              if(index == 5) {
+                // 接收人的：名字
+                String text = receiver?.showName() ?? "";
+                var style = const TextStyle(
+                  color: Color(0xFFFED85B),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                  decoration: TextDecoration.none,
+                );
+                var size = boundingTextSize(text, style);
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 5),
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    )
+                  ],
+                );
+              }
+
+
+              String text = "${widget.data.giftName}";
               var style = const TextStyle(
-                color: Color(0xFFFED85B),
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 11,
                 decoration: TextDecoration.none,
               );
               var size = boundingTextSize(text, style);
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -255,7 +283,6 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                     width: size.width,
                     height: textHeight,
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 5),
                     child: Text(
                       text,
                       style: style,
