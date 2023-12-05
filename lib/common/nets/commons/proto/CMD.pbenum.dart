@@ -4,7 +4,7 @@
 //
 // @dart = 2.12
 
-// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
@@ -13,6 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// 注意：因导出规则约定，枚举值注释说明要求全写在值的后面（不要单独起一行）
 class CMD extends $pb.ProtobufEnum {
   static const CMD NONE = CMD._(0, _omitEnumNames ? '' : 'NONE');
   static const CMD G_Heart = CMD._(1, _omitEnumNames ? '' : 'G_Heart');
@@ -45,8 +46,6 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_SyncAttrs = CMD._(204, _omitEnumNames ? '' : 'S_SyncAttrs');
   static const CMD S_SyncMultiAttr = CMD._(205, _omitEnumNames ? '' : 'S_SyncMultiAttr');
   static const CMD S_SyncMultiAttrs = CMD._(206, _omitEnumNames ? '' : 'S_SyncMultiAttrs');
-  static const CMD C_RoleDetail = CMD._(207, _omitEnumNames ? '' : 'C_RoleDetail');
-  static const CMD S_RoleDetail = CMD._(208, _omitEnumNames ? '' : 'S_RoleDetail');
   static const CMD S_SyncRole = CMD._(209, _omitEnumNames ? '' : 'S_SyncRole');
   static const CMD C_ToZone = CMD._(240, _omitEnumNames ? '' : 'C_ToZone');
   static const CMD C_EnforceZone = CMD._(241, _omitEnumNames ? '' : 'C_EnforceZone');
@@ -179,6 +178,8 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_PKBattleEnd = CMD._(20050, _omitEnumNames ? '' : 'S_PKBattleEnd');
   static const CMD C_PKContinue = CMD._(20051, _omitEnumNames ? '' : 'C_PKContinue');
   static const CMD S_PKContinue = CMD._(20052, _omitEnumNames ? '' : 'S_PKContinue');
+  static const CMD C_Move = CMD._(100201, _omitEnumNames ? '' : 'C_Move');
+  static const CMD S_Move = CMD._(100202, _omitEnumNames ? '' : 'S_Move');
 
   static const $core.List<CMD> values = <CMD> [
     NONE,
@@ -212,8 +213,6 @@ class CMD extends $pb.ProtobufEnum {
     S_SyncAttrs,
     S_SyncMultiAttr,
     S_SyncMultiAttrs,
-    C_RoleDetail,
-    S_RoleDetail,
     S_SyncRole,
     C_ToZone,
     C_EnforceZone,
@@ -346,6 +345,8 @@ class CMD extends $pb.ProtobufEnum {
     S_PKBattleEnd,
     C_PKContinue,
     S_PKContinue,
+    C_Move,
+    S_Move,
   ];
 
   static final $core.Map<$core.int, CMD> _byValue = $pb.ProtobufEnum.initByValue(values);

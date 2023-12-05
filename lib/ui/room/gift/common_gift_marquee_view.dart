@@ -1,7 +1,9 @@
 
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/widgets.dart';
@@ -13,7 +15,11 @@ import 'package:marqueer/marqueer.dart';
 ///
 class CommonGiftMarqueeView extends StatefulWidget {
 
-  CommonGiftMarqueeView({super.key});
+  final UID acceptUid;
+  final Map<UID, UserInfoDto> users;
+  final S_FloatingScreen data;
+
+  CommonGiftMarqueeView({super.key,required this.data, required this.acceptUid, required this.users});
 
   @override
   State<StatefulWidget> createState() => _CommonGiftMarqueeViewState();
@@ -57,7 +63,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
-    Characters number = "1321".characters;
+    Characters number = "${widget.data.count}".characters;
     double totalLeft = 13.5;
     List<Widget> numbers = [];
     for(int index = 0; index < number.length; index ++) {
@@ -77,7 +83,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
       children: [
         // 礼物图片
         Image.network(
-          "https://picsum.photos/300/300?random=1",
+          widget.data.cover,
           width: 56,
           height: 56,
         ),
@@ -110,10 +116,10 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   Widget _createBackground() {
     return Container(
       width: 357,
-      margin: EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 20),
       height: avatarSize,
-      child: Image.asset(
-        IMG.format("room/common_gift_background2"),
+      child: Image.network(
+        widget.data.bannerStyleUrl,
         width: 357,
         height: avatarSize,
       ),
@@ -121,6 +127,8 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   }
 
   Widget _createMarquee() {
+    final sender = widget.users[widget.data.sendId];
+    final receiver = widget.users[widget.acceptUid];
     double textHeight = 18;
     return Positioned(
       left: avatarSize,
@@ -136,14 +144,16 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
               // 发送人的：财富等级或者是魅力等级
               if(index == 0) {
                 return Container(
-                  margin: EdgeInsets.only(left: 5),
-                  child: Image.asset(
-                    IMG.format('level/10'),
-                    fit: BoxFit.fill,
-                  ),
+                  margin: const EdgeInsets.only(left: 5),
+                  child: Stack(
+                    children: [
+                      if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
+                        WealthyLevelView(level: sender?.level ?? ""),
+                      if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
+                        CharmLevelView(level: sender?.charmLevel),
+                    ],
+                  )
                 );
-                CharmLevelView(level: "10", height: 14.5,);
-                return WealthyLevelView(level: "30", height: 8.5);
               }
 
               // 发送人的：头像
@@ -152,15 +162,13 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   height: 20,
                   width: 20,
                   margin: EdgeInsets.only(left: 5),
-                  child: UserInfoCtrl.use(OAuthCtrl.uid, builder: (user) {
-                    return AvatarView(user?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),);
-                  }),
+                  child: AvatarView(sender?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
                 );
               }
 
               // 发送人的：名字
               if(index == 2) {
-                String text = "玩家名字";
+                String text = sender?.showName() ?? "";
                 var style = const TextStyle(
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,
@@ -207,13 +215,11 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   height: 20,
                   width: 20,
                   margin: EdgeInsets.only(left: 5),
-                  child: UserInfoCtrl.use(OAuthCtrl.uid, builder: (user) {
-                    return AvatarView(user?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),);
-                  }),
+                  child: AvatarView(receiver?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
                 );
               }
               // 接收人的：名字
-              String text = "接收人的：名字";
+              String text = receiver?.showName() ?? "";
               var style = const TextStyle(
                 color: Color(0xFFFED85B),
                 fontWeight: FontWeight.bold,

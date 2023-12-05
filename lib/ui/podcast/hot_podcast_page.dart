@@ -13,6 +13,7 @@ import 'package:app/ui/podcast/hot_room_view.dart';
 import 'package:app/ui/room/gift/blind_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/cloth_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/common_gift_marquee_view.dart';
+import 'package:app/ui/room/gift/special_gift_marquee_view.dart';
 import 'package:app/ui/room/user/accept_enter_room.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/mic_user_online_manager_sheet.dart';
@@ -121,8 +122,9 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
             onTap: () {
               if(Env.isDebug) {
                 // Get.insertOverlay(BlindGiftMarqueeView());
-                //Get.insertOverlay(CommonGiftMarqueeView());
-                Get.insertOverlay(ClothGiftMarqueeView());
+                // Get.insertOverlay(CommonGiftMarqueeView());
+                // Get.insertOverlay(ClothGiftMarqueeView());
+                // Get.insertOverlay(SpecialGiftMarqueeView());
                 return;
               }
               Get.to(() => const HomeSearchPage());

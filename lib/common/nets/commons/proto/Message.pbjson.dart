@@ -4,7 +4,7 @@
 //
 // @dart = 2.12
 
-// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
@@ -911,31 +911,6 @@ final $typed_data.Uint8List s_SyncMultiAttrsDescriptor = $convert.base64Decode(
     'ChBTX1N5bmNNdWx0aUF0dHJzEg4KAmlkGAEgAygDUgJpZBIvCgVhdHRycxgCIAMoCzIZLmNvbS'
     '5zYXZ2eS5wcm90by5BdHRySW5mb1IFYXR0cnM=');
 
-@$core.Deprecated('Use c_RoleDetailDescriptor instead')
-const C_RoleDetail$json = {
-  '1': 'C_RoleDetail',
-  '2': [
-    {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-  ],
-};
-
-/// Descriptor for `C_RoleDetail`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List c_RoleDetailDescriptor = $convert.base64Decode(
-    'CgxDX1JvbGVEZXRhaWwSFwoHcm9sZV9pZBgBIAEoA1IGcm9sZUlk');
-
-@$core.Deprecated('Use s_RoleDetailDescriptor instead')
-const S_RoleDetail$json = {
-  '1': 'S_RoleDetail',
-  '2': [
-    {'1': 'info', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.RoleDetailInfo', '10': 'info'},
-  ],
-};
-
-/// Descriptor for `S_RoleDetail`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List s_RoleDetailDescriptor = $convert.base64Decode(
-    'CgxTX1JvbGVEZXRhaWwSMwoEaW5mbxgBIAEoCzIfLmNvbS5zYXZ2eS5wcm90by5Sb2xlRGV0YW'
-    'lsSW5mb1IEaW5mbw==');
-
 @$core.Deprecated('Use s_SyncRoleDescriptor instead')
 const S_SyncRole$json = {
   '1': 'S_SyncRole',
@@ -1656,6 +1631,9 @@ const S_FloatingScreen$json = {
     {'1': 'currency', '3': 10, '4': 1, '5': 5, '10': 'currency'},
     {'1': 'type', '3': 11, '4': 1, '5': 5, '10': 'type'},
     {'1': 'count', '3': 12, '4': 1, '5': 5, '10': 'count'},
+    {'1': 'banner_style_url', '3': 13, '4': 1, '5': 9, '10': 'bannerStyleUrl'},
+    {'1': 'guide_entry_room', '3': 14, '4': 1, '5': 8, '10': 'guideEntryRoom'},
+    {'1': 'banner_type', '3': 15, '4': 1, '5': 5, '10': 'bannerType'},
   ],
 };
 
@@ -1667,7 +1645,9 @@ final $typed_data.Uint8List s_FloatingScreenDescriptor = $convert.base64Decode(
     'xpc3QYBiADKAlSDWFjY2VwdFVpZExpc3QSLQoTYWNjZXB0X3JvbGVfaWRfbGlzdBgHIAMoA1IQ'
     'YWNjZXB0Um9sZUlkTGlzdBIUCgVjb3ZlchgIIAEoCVIFY292ZXISFAoFcHJpY2UYCSABKANSBX'
     'ByaWNlEhoKCGN1cnJlbmN5GAogASgFUghjdXJyZW5jeRISCgR0eXBlGAsgASgFUgR0eXBlEhQK'
-    'BWNvdW50GAwgASgFUgVjb3VudA==');
+    'BWNvdW50GAwgASgFUgVjb3VudBIoChBiYW5uZXJfc3R5bGVfdXJsGA0gASgJUg5iYW5uZXJTdH'
+    'lsZVVybBIoChBndWlkZV9lbnRyeV9yb29tGA4gASgIUg5ndWlkZUVudHJ5Um9vbRIfCgtiYW5u'
+    'ZXJfdHlwZRgPIAEoBVIKYmFubmVyVHlwZQ==');
 
 @$core.Deprecated('Use s_MoreGiftFloatingScreenDescriptor instead')
 const S_MoreGiftFloatingScreen$json = {
@@ -2254,4 +2234,32 @@ const S_PKRoomList$json = {
 final $typed_data.Uint8List s_PKRoomListDescriptor = $convert.base64Decode(
     'CgxTX1BLUm9vbUxpc3QSOAoJcm9vbV9saXN0GAIgAygLMhsuY29tLnNhdnZ5LnByb3RvLlBrUm'
     '9vbUluZm9SCHJvb21MaXN0');
+
+@$core.Deprecated('Use c_MoveDescriptor instead')
+const C_Move$json = {
+  '1': 'C_Move',
+  '2': [
+    {'1': 'xyz', '3': 1, '4': 1, '5': 11, '6': '.com.savvy.proto.XYZ', '10': 'xyz'},
+    {'1': 'r', '3': 2, '4': 1, '5': 5, '10': 'r'},
+    {'1': 'state', '3': 3, '4': 1, '5': 14, '6': '.com.savvy.proto.State', '10': 'state'},
+  ],
+};
+
+/// Descriptor for `C_Move`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_MoveDescriptor = $convert.base64Decode(
+    'CgZDX01vdmUSJgoDeHl6GAEgASgLMhQuY29tLnNhdnZ5LnByb3RvLlhZWlIDeHl6EgwKAXIYAi'
+    'ABKAVSAXISLAoFc3RhdGUYAyABKA4yFi5jb20uc2F2dnkucHJvdG8uU3RhdGVSBXN0YXRl');
+
+@$core.Deprecated('Use s_MoveDescriptor instead')
+const S_Move$json = {
+  '1': 'S_Move',
+  '2': [
+    {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'list'},
+  ],
+};
+
+/// Descriptor for `S_Move`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_MoveDescriptor = $convert.base64Decode(
+    'CgZTX01vdmUSLgoEbGlzdBgBIAMoCzIaLmNvbS5zYXZ2eS5wcm90by5TdGF0ZUluZm9SBGxpc3'
+    'Q=');
 

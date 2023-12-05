@@ -425,7 +425,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       return;
     }
     sMoreGiftFloatingScreen.items.forEach((element) {
-      SuperGiftEvent(element).fire();
+      SuperGiftEvent(element, blinkName: sMoreGiftFloatingScreen.blindBoxName,
+          blinkUrl: sMoreGiftFloatingScreen.blindBoxCover).fire();
     });
   }
 

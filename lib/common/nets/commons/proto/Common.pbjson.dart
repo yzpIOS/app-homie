@@ -4,7 +4,7 @@
 //
 // @dart = 2.12
 
-// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
@@ -32,9 +32,9 @@ const AttrCode$json = {
     {'1': 'growth_value', '2': 12},
     {'1': 'charm_growth_value', '2': 13},
     {'1': 'real_name_type', '2': 14},
+    {'1': 'animate', '2': 15},
     {'1': 'mike_id', '2': 16},
     {'1': 'mike_no', '2': 17},
-    {'1': 'animate', '2': 15},
     {'1': 'stage', '2': 18},
   ],
 };
@@ -44,8 +44,8 @@ final $typed_data.Uint8List attrCodeDescriptor = $convert.base64Decode(
     'CghBdHRyQ29kZRIICgRub25lEAASBgoCbHYQARIMCghjaGFybV9sdhACEgcKA3NleBADEgoKBm'
     'NhcmVlchAEEgkKBXNwZWVkEAUSCQoFc2NlbmUQBhIICgRyb29tEAcSBwoDam9iEAgSDgoKYXZh'
     'dGFyX3VybBAJEg0KCXB1YmxpY19pZBAKEg8KC2Rlc2NyaXB0aW9uEAsSEAoMZ3Jvd3RoX3ZhbH'
-    'VlEAwSFgoSY2hhcm1fZ3Jvd3RoX3ZhbHVlEA0SEgoOcmVhbF9uYW1lX3R5cGUQDhILCgdtaWtl'
-    'X2lkEBASCwoHbWlrZV9ubxAREgsKB2FuaW1hdGUQDxIJCgVzdGFnZRAS');
+    'VlEAwSFgoSY2hhcm1fZ3Jvd3RoX3ZhbHVlEA0SEgoOcmVhbF9uYW1lX3R5cGUQDhILCgdhbmlt'
+    'YXRlEA8SCwoHbWlrZV9pZBAQEgsKB21pa2Vfbm8QERIJCgVzdGFnZRAS');
 
 @$core.Deprecated('Use stateDescriptor instead')
 const State$json = {
@@ -55,12 +55,15 @@ const State$json = {
     {'1': 'Mai', '2': 1},
     {'1': 'Sit', '2': 2},
     {'1': 'Swim', '2': 3},
+    {'1': 'Walk', '2': 4},
+    {'1': 'Run', '2': 5},
   ],
 };
 
 /// Descriptor for `State`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
-    'CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAISCAoEU3dpbRAD');
+    'CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAISCAoEU3dpbRADEggKBFdhbGsQBB'
+    'IHCgNSdW4QBQ==');
 
 @$core.Deprecated('Use pKGiftStateDescriptor instead')
 const PKGiftState$json = {
@@ -159,20 +162,6 @@ final $typed_data.Uint8List suitVODescriptor = $convert.base64Decode(
     'CgZTdWl0Vk8SHgoKcG9zaXRpb25JZBgBIAEoA1IKcG9zaXRpb25JZBIYCgdnb29kc0lkGAIgAS'
     'gDUgdnb29kc0lk');
 
-@$core.Deprecated('Use kVStateDescriptor instead')
-const KVState$json = {
-  '1': 'KVState',
-  '2': [
-    {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-    {'1': 'state', '3': 2, '4': 1, '5': 9, '10': 'state'},
-  ],
-};
-
-/// Descriptor for `KVState`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List kVStateDescriptor = $convert.base64Decode(
-    'CgdLVlN0YXRlEhYKBnJvbGVJZBgBIAEoA1IGcm9sZUlkEhQKBXN0YXRlGAIgASgJUgVzdGF0ZQ'
-    '==');
-
 @$core.Deprecated('Use attrInfoDescriptor instead')
 const AttrInfo$json = {
   '1': 'AttrInfo',
@@ -249,25 +238,6 @@ final $typed_data.Uint8List roleInfoDescriptor = $convert.base64Decode(
     'QXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAUgASgLMhkuY29tLnNhdnZ5LnByb3RvLl'
     'N1aXRJbmZvUghzdWl0SW5mbw==');
 
-@$core.Deprecated('Use roleDetailInfoDescriptor instead')
-const RoleDetailInfo$json = {
-  '1': 'RoleDetailInfo',
-  '2': [
-    {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'attrInfo', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
-    {'1': 'suitInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
-    {'1': 'state', '3': 5, '4': 1, '5': 14, '6': '.com.savvy.proto.State', '10': 'state'},
-  ],
-};
-
-/// Descriptor for `RoleDetailInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roleDetailInfoDescriptor = $convert.base64Decode(
-    'Cg5Sb2xlRGV0YWlsSW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgRuYW1lGAIgASgJUg'
-    'RuYW1lEjUKCGF0dHJJbmZvGAMgASgLMhkuY29tLnNhdnZ5LnByb3RvLkF0dHJJbmZvUghhdHRy'
-    'SW5mbxI1CghzdWl0SW5mbxgEIAEoCzIZLmNvbS5zYXZ2eS5wcm90by5TdWl0SW5mb1IIc3VpdE'
-    'luZm8SLAoFc3RhdGUYBSABKA4yFi5jb20uc2F2dnkucHJvdG8uU3RhdGVSBXN0YXRl');
-
 @$core.Deprecated('Use roleSceneInfoDescriptor instead')
 const RoleSceneInfo$json = {
   '1': 'RoleSceneInfo',
@@ -292,23 +262,32 @@ final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode(
     'ZUluZm8SGgoIc2VhdEd1aWQYBiABKAlSCHNlYXRHdWlkEhYKBnJvb21JZBgHIAEoA1IGcm9vbU'
     'lkEhAKA3VpZBgIIAEoCVIDdWlk');
 
-@$core.Deprecated('Use roleDataDescriptor instead')
-const RoleData$json = {
-  '1': 'RoleData',
+@$core.Deprecated('Use seatInfoDescriptor instead')
+const SeatInfo$json = {
+  '1': 'SeatInfo',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
-    {'1': 'attrInfo', '3': 2, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
-    {'1': 'suitInfo', '3': 3, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
-    {'1': 'stateInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'stateInfo'},
+    {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'seatGuid', '3': 2, '4': 1, '5': 9, '10': 'seatGuid'},
   ],
 };
 
-/// Descriptor for `RoleData`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List roleDataDescriptor = $convert.base64Decode(
-    'CghSb2xlRGF0YRIOCgJpZBgBIAEoA1ICaWQSNQoIYXR0ckluZm8YAiABKAsyGS5jb20uc2F2dn'
-    'kucHJvdG8uQXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAMgASgLMhkuY29tLnNhdnZ5'
-    'LnByb3RvLlN1aXRJbmZvUghzdWl0SW5mbxI4CglzdGF0ZUluZm8YBCABKAsyGi5jb20uc2F2dn'
-    'kucHJvdG8uU3RhdGVJbmZvUglzdGF0ZUluZm8=');
+/// Descriptor for `SeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List seatInfoDescriptor = $convert.base64Decode(
+    'CghTZWF0SW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBIaCghzZWF0R3VpZBgCIAEoCVIIc2'
+    'VhdEd1aWQ=');
+
+@$core.Deprecated('Use sceneSeatInfoDescriptor instead')
+const SceneSeatInfo$json = {
+  '1': 'SceneSeatInfo',
+  '2': [
+    {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.SeatInfo', '10': 'list'},
+  ],
+};
+
+/// Descriptor for `SceneSeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sceneSeatInfoDescriptor = $convert.base64Decode(
+    'Cg1TY2VuZVNlYXRJbmZvEi0KBGxpc3QYASADKAsyGS5jb20uc2F2dnkucHJvdG8uU2VhdEluZm'
+    '9SBGxpc3Q=');
 
 @$core.Deprecated('Use userInfoDescriptor instead')
 const UserInfo$json = {
@@ -614,4 +593,17 @@ const RoleOnline$json = {
 final $typed_data.Uint8List roleOnlineDescriptor = $convert.base64Decode(
     'CgpSb2xlT25saW5lEhcKB3JvbGVfaWQYASABKANSBnJvbGVJZBI2CgVzdGF0ZRgCIAEoDjIgLm'
     'NvbS5zYXZ2eS5wcm90by5Sb2xlT25saW5lU3RhdGVSBXN0YXRl');
+
+@$core.Deprecated('Use sSStrDescriptor instead')
+const SSStr$json = {
+  '1': 'SSStr',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'val', '3': 2, '4': 1, '5': 9, '10': 'val'},
+  ],
+};
+
+/// Descriptor for `SSStr`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sSStrDescriptor = $convert.base64Decode(
+    'CgVTU1N0chIQCgNrZXkYASABKAlSA2tleRIQCgN2YWwYAiABKAlSA3ZhbA==');
 

@@ -7,5 +7,7 @@ class BroadcastEvent<T> extends Event {
 }
 
 class SuperGiftEvent extends BroadcastEvent<S_FloatingScreen> {
-  SuperGiftEvent(super.data);
+  String? blinkName;
+  String? blinkUrl;
+  SuperGiftEvent(super.data, {this.blinkName = "", this.blinkUrl = ""});
 }

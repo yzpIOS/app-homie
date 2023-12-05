@@ -1,6 +1,9 @@
 
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:marqueer/marqueer.dart';
@@ -10,7 +13,21 @@ import 'package:marqueer/marqueer.dart';
 ///
 class BlindGiftMarqueeView extends StatefulWidget {
 
-  BlindGiftMarqueeView({super.key});
+  String? blinkName;
+  String? blinkUrl;
+
+  final UID acceptUid;
+  final Map<UID, UserInfoDto> users;
+  final S_FloatingScreen data;
+
+  BlindGiftMarqueeView({
+    super.key,
+    required this.data,
+    required this.acceptUid,
+    required this.users,
+    this.blinkName,
+    this.blinkUrl
+  });
 
   @override
   State<StatefulWidget> createState() => _BlindGiftMarqueeViewState();
@@ -58,7 +75,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
       margin: const EdgeInsets.only(left: 11, top: 9),
       child: AsyncAvatar(
           size: 49.0,
-          uid: OAuthCtrl.uid
+          uid: widget.data.sendId
       ),
     );
   }
@@ -68,87 +85,139 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     return SizedBox(
       width: 357,
       height: avatarSize,
-      child: Image.asset(
-        IMG.format("room/blind_box_gift_background"),
+      child: Image.network(
+        widget.blinkUrl ?? "",
         width: 357,
         height: avatarSize,
       ),
     );
   }
 
+
   Widget _createMarquee() {
+    final user = widget.users[widget.data.sendId];
     double textHeight = 37;
     return Positioned(
       left: avatarSize + 12,
       top: 15,
-      child: Container(
-        height: textHeight,
-        alignment: Alignment.centerLeft,
-        width: totalWidth - avatarSize - 30,
-        child: Marqueer.builder(
-          interaction: false,
-          controller: controller,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            if(index == 0) {
-              String text = "玩家名字";
-              var style = const TextStyle(
-                color: Color(0xFFFED85B),
-                fontWeight: FontWeight.bold,
-                fontSize: 11,
-              );
-              var size = boundingTextSize(text, style);
-
-              return Container(
-                width: size.width,
-                height: textHeight,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  text,
-                  style: style,
-                ),
-              );
-            }
-
-            if(index == 1) {
-              String text = "【在弯月亮的活动】";
-              var style = const TextStyle(
-                color: Color(0xFFFF5888),
-                fontWeight: FontWeight.bold,
-                fontSize: 11,
-              );
-              var size = boundingTextSize(text, style);
-
-              return Container(
-                width: size.width,
-                height: textHeight,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  text,
-                  style: style,
-                ),
-              );
-            }
-
-            String text = "开出静静弯月亮";
-            var style = const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 11,
-            );
-            var size = boundingTextSize(text, style);
-
-            return Container(
-              width: size.width,
+      child: Stack(
+        children: [
+          // 漂屏
+          Container(
               height: textHeight,
               alignment: Alignment.centerLeft,
-              child: Text(
-                text,
-                style: style,
+              width: totalWidth - avatarSize - 30,
+              child: Marqueer.builder(
+                interaction: false,
+                controller: controller,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  if(index == 0) {
+                    String text = user?.showName() ?? "";
+                    var style = const TextStyle(
+                      color: Color(0xFFFED85B),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
+
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
+
+                  if(index == 1) {
+                    String text = "在";
+                    var style = const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
+
+                  if(index == 2) {
+                    String text = "【${widget.blinkName ?? ""}】";
+                    var style = const TextStyle(
+                      color: Color(0xFFFF5888),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
+
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
+
+                  String text = widget.data.giftName;
+                  var style = const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                  );
+                  var size = boundingTextSize(text, style);
+
+                  return Container(
+                    width: size.width,
+                    height: textHeight,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      text,
+                      style: style,
+                    ),
+                  );
+                },
+              )
+          ),
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                // todo 去看看
+              },
+              child: Container(
+                width: 51,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0xFFFF5787),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  "去看看",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ),
-            );
-          },
-        )
+            ),
+          )
+        ],
       ),
     );
   }

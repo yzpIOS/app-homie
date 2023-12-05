@@ -1,6 +1,9 @@
 
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:marqueer/marqueer.dart';
@@ -10,7 +13,21 @@ import 'package:marqueer/marqueer.dart';
 ///
 class ClothGiftMarqueeView extends StatefulWidget {
 
-  ClothGiftMarqueeView({super.key});
+  String? blinkName;
+  String? blinkUrl;
+
+  final UID acceptUid;
+  final Map<UID, UserInfoDto> users;
+  final S_FloatingScreen data;
+
+  ClothGiftMarqueeView({
+    super.key,
+    required this.data,
+    required this.acceptUid,
+    required this.users,
+    this.blinkName,
+    this.blinkUrl
+  });
 
   @override
   State<StatefulWidget> createState() => _ClothGiftMarqueeViewState();
@@ -31,7 +48,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
       body: Align(
         alignment: Alignment.topCenter,
         child: Container(
-          margin: EdgeInsets.only(top: 80),
+          margin: const EdgeInsets.only(top: 80),
           alignment: Alignment.topCenter,
           height: avatarSize,
           width: totalWidth,
@@ -68,8 +85,8 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
     return SizedBox(
       width: totalWidth,
       height: avatarSize,
-      child: Image.asset(
-        IMG.format("room/cloth_gift_background"),
+      child: Image.network(
+        widget.blinkUrl ?? "",
         width: totalWidth,
         height: avatarSize,
       ),
@@ -78,6 +95,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
 
   Widget _createMarquee() {
     double textHeight = 37;
+    final user = widget.users[widget.data.sendId];
     return Positioned(
       left: avatarSize + 12,
       top: 15,
@@ -91,7 +109,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
             itemCount: 3,
             itemBuilder: (context, index) {
               if(index == 0) {
-                String text = "玩家名字";
+                String text = user?.showName() ?? "";
                 var style = const TextStyle(
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,
@@ -111,7 +129,27 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
               }
 
               if(index == 1) {
-                String text = "【在弯月亮的活动】";
+                String text = "在";
+                var style = const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 11,
+                );
+                var size = boundingTextSize(text, style);
+
+                return Container(
+                  width: size.width,
+                  height: textHeight,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    text,
+                    style: style,
+                  ),
+                );
+              }
+
+              if(index == 1) {
+                String text = "【${widget.blinkName}】";
                 var style = const TextStyle(
                   color: Color(0xFFFF5888),
                   fontWeight: FontWeight.bold,
@@ -130,7 +168,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                 );
               }
 
-              String text = "开出静静弯月亮";
+              String text = "开出${widget.data.giftName}";
               var style = const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
