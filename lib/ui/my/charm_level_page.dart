@@ -116,8 +116,8 @@ class _LevelPageState extends State<CharmLevelPage> {
 
       final $GrowthView = Row(
         children: [
-          CharmLevelView(level: data['charm_level']),
-          Spacing.w4,
+          CharmLevelView(level: data['charm_level'], height: 20,),
+          Spacing.w2,
           Text('经验值：$growthVal'),
           Spacing.exp,
           Text('升级所需经验值：$growthToNextNeedVal'),
@@ -167,7 +167,7 @@ class _LevelPageState extends State<CharmLevelPage> {
           top: 80,
           child: Obx(() {
             var charmLevel = dataRx.value?.containsKey("charm_level") == true ? dataRx.value!["charm_level"] : info?.charmLevel;
-            return CharmLevelView(level: charmLevel);
+            return CharmLevelView(level: charmLevel, height: 20,);
           }),
         ),
         Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),

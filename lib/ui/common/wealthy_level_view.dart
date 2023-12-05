@@ -21,13 +21,14 @@ class WealthyLevelView extends StatelessWidget {
     Widget child = Image.asset(
       IMG.format('level/$_level'),
       scale: 3,
-      width: 72.3,
-      height: 29,
-      fit: BoxFit.fill,
+      // width: 72.3,
+      // height: 29,
+      // fit: BoxFit.fill,
     );
 
     child = SizedBox(
       height: height,
+      width: height / 87 * 217,
       child: FittedBox(fit: BoxFit.fitHeight, child: child),
     );
 

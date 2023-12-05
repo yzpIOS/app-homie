@@ -9,7 +9,7 @@ class CharmLevelView extends StatelessWidget {
   final String? level;
   final double height;
 
-  const CharmLevelView({super.key, this.level, this.uid, this.height = 20});
+  const CharmLevelView({super.key, this.level, this.uid, this.height = 17});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +20,14 @@ class CharmLevelView extends StatelessWidget {
     Widget child = Image.asset(
       IMG.format('level/charm/$_level'),
       scale: 3,
-      width: 40.3,
-      height: 47.6,
-      fit: BoxFit.fill,
+      // width: 40.3,
+      // height: 47.6,
+      // fit: BoxFit.fill,
     );
 
     child = SizedBox(
       height: height,
+      width: height / 143 * 212,
       child: FittedBox(fit: BoxFit.fitHeight, child: child),
     );
 
