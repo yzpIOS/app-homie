@@ -141,8 +141,7 @@ class _WelcomeView extends StatelessWidget {
       double _boxWidth = 134;
       double _boxHeight = 20;
       if (_level == '0' || _level == null || _level.isEmpty) {
-        bgImageName = 'room/welcome_bg_0';
-        _boxWidth = 104;
+        bgImageName = 'room/welcome_bg_1~9';
       } else if (int.parse(_level) < 10) {
         bgImageName = 'room/welcome_bg_1~9';
       } else if (int.parse(_level) < 20) {
