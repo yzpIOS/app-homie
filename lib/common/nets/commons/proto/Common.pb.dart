@@ -4,7 +4,7 @@
 //
 // @dart = 2.12
 
-// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
@@ -18,8 +18,21 @@ import 'Common.pbenum.dart';
 
 export 'Common.pbenum.dart';
 
+/// 数值属性键值列表
 class AttrVO extends $pb.GeneratedMessage {
-  factory AttrVO() => create();
+  factory AttrVO({
+    AttrCode? code,
+    $fixnum.Int64? val,
+  }) {
+    final $result = create();
+    if (code != null) {
+      $result.code = code;
+    }
+    if (val != null) {
+      $result.val = val;
+    }
+    return $result;
+  }
   AttrVO._() : super();
   factory AttrVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AttrVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -71,7 +84,19 @@ class AttrVO extends $pb.GeneratedMessage {
 }
 
 class KV32 extends $pb.GeneratedMessage {
-  factory KV32() => create();
+  factory KV32({
+    $core.int? key,
+    $core.int? val,
+  }) {
+    final $result = create();
+    if (key != null) {
+      $result.key = key;
+    }
+    if (val != null) {
+      $result.val = val;
+    }
+    return $result;
+  }
   KV32._() : super();
   factory KV32.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory KV32.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -123,7 +148,19 @@ class KV32 extends $pb.GeneratedMessage {
 }
 
 class KV64 extends $pb.GeneratedMessage {
-  factory KV64() => create();
+  factory KV64({
+    $core.int? key,
+    $fixnum.Int64? val,
+  }) {
+    final $result = create();
+    if (key != null) {
+      $result.key = key;
+    }
+    if (val != null) {
+      $result.val = val;
+    }
+    return $result;
+  }
   KV64._() : super();
   factory KV64.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory KV64.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -175,7 +212,19 @@ class KV64 extends $pb.GeneratedMessage {
 }
 
 class KVStr extends $pb.GeneratedMessage {
-  factory KVStr() => create();
+  factory KVStr({
+    $core.int? key,
+    $core.String? val,
+  }) {
+    final $result = create();
+    if (key != null) {
+      $result.key = key;
+    }
+    if (val != null) {
+      $result.val = val;
+    }
+    return $result;
+  }
   KVStr._() : super();
   factory KVStr.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory KVStr.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -226,8 +275,21 @@ class KVStr extends $pb.GeneratedMessage {
   void clearVal() => clearField(2);
 }
 
+/// 装扮
 class SuitVO extends $pb.GeneratedMessage {
-  factory SuitVO() => create();
+  factory SuitVO({
+    $fixnum.Int64? positionId,
+    $fixnum.Int64? goodsId,
+  }) {
+    final $result = create();
+    if (positionId != null) {
+      $result.positionId = positionId;
+    }
+    if (goodsId != null) {
+      $result.goodsId = goodsId;
+    }
+    return $result;
+  }
   SuitVO._() : super();
   factory SuitVO.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SuitVO.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -278,60 +340,22 @@ class SuitVO extends $pb.GeneratedMessage {
   void clearGoodsId() => clearField(2);
 }
 
-class KVState extends $pb.GeneratedMessage {
-  factory KVState() => create();
-  KVState._() : super();
-  factory KVState.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory KVState.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'KVState', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'state')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  KVState clone() => KVState()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  KVState copyWith(void Function(KVState) updates) => super.copyWith((message) => updates(message as KVState)) as KVState;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static KVState create() => KVState._();
-  KVState createEmptyInstance() => create();
-  static $pb.PbList<KVState> createRepeated() => $pb.PbList<KVState>();
-  @$core.pragma('dart2js:noInline')
-  static KVState getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<KVState>(create);
-  static KVState? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roleId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoleId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoleId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get state => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set state($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasState() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearState() => clearField(2);
-}
-
+/// 状态
+/// message KVState{
+/// 	int64 roleId = 1;//角色id
+/// 	string state = 2;//动作名
+/// }
+/// 数值属性信息
 class AttrInfo extends $pb.GeneratedMessage {
-  factory AttrInfo() => create();
+  factory AttrInfo({
+    $core.Iterable<AttrVO>? attrs,
+  }) {
+    final $result = create();
+    if (attrs != null) {
+      $result.attrs.addAll(attrs);
+    }
+    return $result;
+  }
   AttrInfo._() : super();
   factory AttrInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AttrInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -366,8 +390,17 @@ class AttrInfo extends $pb.GeneratedMessage {
   $core.List<AttrVO> get attrs => $_getList(0);
 }
 
+/// 套装信息
 class SuitInfo extends $pb.GeneratedMessage {
-  factory SuitInfo() => create();
+  factory SuitInfo({
+    $core.Iterable<SuitVO>? suits,
+  }) {
+    final $result = create();
+    if (suits != null) {
+      $result.suits.addAll(suits);
+    }
+    return $result;
+  }
   SuitInfo._() : super();
   factory SuitInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SuitInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -402,8 +435,29 @@ class SuitInfo extends $pb.GeneratedMessage {
   $core.List<SuitVO> get suits => $_getList(0);
 }
 
+/// 状态信息
 class StateInfo extends $pb.GeneratedMessage {
-  factory StateInfo() => create();
+  factory StateInfo({
+    $fixnum.Int64? id,
+    State? state,
+    XYZ? xyz,
+    $core.int? r,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (state != null) {
+      $result.state = state;
+    }
+    if (xyz != null) {
+      $result.xyz = xyz;
+    }
+    if (r != null) {
+      $result.r = r;
+    }
+    return $result;
+  }
   StateInfo._() : super();
   factory StateInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory StateInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -476,8 +530,25 @@ class StateInfo extends $pb.GeneratedMessage {
   void clearR() => clearField(4);
 }
 
+/// 三元向量-坐标、位置
 class XYZ extends $pb.GeneratedMessage {
-  factory XYZ() => create();
+  factory XYZ({
+    $core.int? x,
+    $core.int? y,
+    $core.int? z,
+  }) {
+    final $result = create();
+    if (x != null) {
+      $result.x = x;
+    }
+    if (y != null) {
+      $result.y = y;
+    }
+    if (z != null) {
+      $result.z = z;
+    }
+    return $result;
+  }
   XYZ._() : super();
   factory XYZ.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory XYZ.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -538,8 +609,33 @@ class XYZ extends $pb.GeneratedMessage {
   void clearZ() => clearField(3);
 }
 
+/// (用户角色)角色信息(登录基本信息)
 class RoleInfo extends $pb.GeneratedMessage {
-  factory RoleInfo() => create();
+  factory RoleInfo({
+    $fixnum.Int64? roleId,
+    $core.String? name,
+    $core.int? mark,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (mark != null) {
+      $result.mark = mark;
+    }
+    if (attrInfo != null) {
+      $result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      $result.suitInfo = suitInfo;
+    }
+    return $result;
+  }
   RoleInfo._() : super();
   factory RoleInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RoleInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -624,94 +720,53 @@ class RoleInfo extends $pb.GeneratedMessage {
   SuitInfo ensureSuitInfo() => $_ensure(4);
 }
 
-class RoleDetailInfo extends $pb.GeneratedMessage {
-  factory RoleDetailInfo() => create();
-  RoleDetailInfo._() : super();
-  factory RoleDetailInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleDetailInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleDetailInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'name')
-    ..aOM<AttrInfo>(3, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(4, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..e<State>(5, _omitFieldNames ? '' : 'state', $pb.PbFieldType.OE, defaultOrMaker: State.None, valueOf: State.valueOf, enumValues: State.values)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  RoleDetailInfo clone() => RoleDetailInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  RoleDetailInfo copyWith(void Function(RoleDetailInfo) updates) => super.copyWith((message) => updates(message as RoleDetailInfo)) as RoleDetailInfo;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static RoleDetailInfo create() => RoleDetailInfo._();
-  RoleDetailInfo createEmptyInstance() => create();
-  static $pb.PbList<RoleDetailInfo> createRepeated() => $pb.PbList<RoleDetailInfo>();
-  @$core.pragma('dart2js:noInline')
-  static RoleDetailInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoleDetailInfo>(create);
-  static RoleDetailInfo? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roleId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoleId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoleId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get name => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set name($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearName() => clearField(2);
-
-  @$pb.TagNumber(3)
-  AttrInfo get attrInfo => $_getN(2);
-  @$pb.TagNumber(3)
-  set attrInfo(AttrInfo v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasAttrInfo() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearAttrInfo() => clearField(3);
-  @$pb.TagNumber(3)
-  AttrInfo ensureAttrInfo() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  SuitInfo get suitInfo => $_getN(3);
-  @$pb.TagNumber(4)
-  set suitInfo(SuitInfo v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasSuitInfo() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearSuitInfo() => clearField(4);
-  @$pb.TagNumber(4)
-  SuitInfo ensureSuitInfo() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  State get state => $_getN(4);
-  @$pb.TagNumber(5)
-  set state(State v) { setField(5, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasState() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearState() => clearField(5);
-}
-
+/// (其他角色)玩家详细信息
+/// message RoleDetailInfo {
+/// 	int64 roleId = 1;//角色id
+/// 	string name = 2;//名字
+/// 	AttrInfo attrInfo = 3;//必要的属性列表
+/// 	SuitInfo suitInfo = 4;//必要的装扮数据
+/// 	State state = 5;//行为状态（0无 1上麦 2...）
+/// }
+/// (场景上角色)玩家场景信息（同步场景信息）
 class RoleSceneInfo extends $pb.GeneratedMessage {
-  factory RoleSceneInfo() => create();
+  factory RoleSceneInfo({
+    $fixnum.Int64? roleId,
+    $core.String? name,
+    AttrInfo? attrInfo,
+    SuitInfo? suitInfo,
+    StateInfo? stateInfo,
+    $core.String? seatGuid,
+    $fixnum.Int64? roomId,
+    $core.String? uid,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (attrInfo != null) {
+      $result.attrInfo = attrInfo;
+    }
+    if (suitInfo != null) {
+      $result.suitInfo = suitInfo;
+    }
+    if (stateInfo != null) {
+      $result.stateInfo = stateInfo;
+    }
+    if (seatGuid != null) {
+      $result.seatGuid = seatGuid;
+    }
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    return $result;
+  }
   RoleSceneInfo._() : super();
   factory RoleSceneInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RoleSceneInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -828,17 +883,28 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   void clearUid() => clearField(8);
 }
 
-class RoleData extends $pb.GeneratedMessage {
-  factory RoleData() => create();
-  RoleData._() : super();
-  factory RoleData.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory RoleData.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+/// 场景坐椅信息(每次登入|重连后客户端主动请求)
+class SeatInfo extends $pb.GeneratedMessage {
+  factory SeatInfo({
+    $fixnum.Int64? roleId,
+    $core.String? seatGuid,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (seatGuid != null) {
+      $result.seatGuid = seatGuid;
+    }
+    return $result;
+  }
+  SeatInfo._() : super();
+  factory SeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RoleData', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'id')
-    ..aOM<AttrInfo>(2, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
-    ..aOM<SuitInfo>(3, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
-    ..aOM<StateInfo>(4, _omitFieldNames ? '' : 'stateInfo', protoName: 'stateInfo', subBuilder: StateInfo.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, _omitFieldNames ? '' : 'seatGuid', protoName: 'seatGuid')
     ..hasRequiredFields = false
   ;
 
@@ -846,68 +912,122 @@ class RoleData extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  RoleData clone() => RoleData()..mergeFromMessage(this);
+  SeatInfo clone() => SeatInfo()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RoleData copyWith(void Function(RoleData) updates) => super.copyWith((message) => updates(message as RoleData)) as RoleData;
+  SeatInfo copyWith(void Function(SeatInfo) updates) => super.copyWith((message) => updates(message as SeatInfo)) as SeatInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static RoleData create() => RoleData._();
-  RoleData createEmptyInstance() => create();
-  static $pb.PbList<RoleData> createRepeated() => $pb.PbList<RoleData>();
+  static SeatInfo create() => SeatInfo._();
+  SeatInfo createEmptyInstance() => create();
+  static $pb.PbList<SeatInfo> createRepeated() => $pb.PbList<SeatInfo>();
   @$core.pragma('dart2js:noInline')
-  static RoleData getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoleData>(create);
-  static RoleData? _defaultInstance;
+  static SeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SeatInfo>(create);
+  static SeatInfo? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $fixnum.Int64 get id => $_getI64(0);
+  $fixnum.Int64 get roleId => $_getI64(0);
   @$pb.TagNumber(1)
-  set id($fixnum.Int64 v) { $_setInt64(0, v); }
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasRoleId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearRoleId() => clearField(1);
 
   @$pb.TagNumber(2)
-  AttrInfo get attrInfo => $_getN(1);
+  $core.String get seatGuid => $_getSZ(1);
   @$pb.TagNumber(2)
-  set attrInfo(AttrInfo v) { setField(2, v); }
+  set seatGuid($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasAttrInfo() => $_has(1);
+  $core.bool hasSeatGuid() => $_has(1);
   @$pb.TagNumber(2)
-  void clearAttrInfo() => clearField(2);
-  @$pb.TagNumber(2)
-  AttrInfo ensureAttrInfo() => $_ensure(1);
-
-  @$pb.TagNumber(3)
-  SuitInfo get suitInfo => $_getN(2);
-  @$pb.TagNumber(3)
-  set suitInfo(SuitInfo v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasSuitInfo() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearSuitInfo() => clearField(3);
-  @$pb.TagNumber(3)
-  SuitInfo ensureSuitInfo() => $_ensure(2);
-
-  @$pb.TagNumber(4)
-  StateInfo get stateInfo => $_getN(3);
-  @$pb.TagNumber(4)
-  set stateInfo(StateInfo v) { setField(4, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasStateInfo() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearStateInfo() => clearField(4);
-  @$pb.TagNumber(4)
-  StateInfo ensureStateInfo() => $_ensure(3);
+  void clearSeatGuid() => clearField(2);
 }
 
+/// 场景坐椅信息(每次登入|重连后客户端主动请求)
+class SceneSeatInfo extends $pb.GeneratedMessage {
+  factory SceneSeatInfo({
+    $core.Iterable<SeatInfo>? list,
+  }) {
+    final $result = create();
+    if (list != null) {
+      $result.list.addAll(list);
+    }
+    return $result;
+  }
+  SceneSeatInfo._() : super();
+  factory SceneSeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SceneSeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SceneSeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<SeatInfo>(1, _omitFieldNames ? '' : 'list', $pb.PbFieldType.PM, subBuilder: SeatInfo.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SceneSeatInfo clone() => SceneSeatInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SceneSeatInfo copyWith(void Function(SceneSeatInfo) updates) => super.copyWith((message) => updates(message as SceneSeatInfo)) as SceneSeatInfo;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SceneSeatInfo create() => SceneSeatInfo._();
+  SceneSeatInfo createEmptyInstance() => create();
+  static $pb.PbList<SceneSeatInfo> createRepeated() => $pb.PbList<SceneSeatInfo>();
+  @$core.pragma('dart2js:noInline')
+  static SceneSeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SceneSeatInfo>(create);
+  static SceneSeatInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<SeatInfo> get list => $_getList(0);
+}
+
+/// 用户信息
 class UserInfo extends $pb.GeneratedMessage {
-  factory UserInfo() => create();
+  factory UserInfo({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $core.String? username,
+    $core.String? avatarUrl,
+    $core.int? type,
+    $core.int? adminType,
+    $core.String? level,
+  }) {
+    final $result = create();
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (username != null) {
+      $result.username = username;
+    }
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    if (adminType != null) {
+      $result.adminType = adminType;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    return $result;
+  }
   UserInfo._() : super();
   factory UserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1008,8 +1128,37 @@ class UserInfo extends $pb.GeneratedMessage {
   void clearLevel() => clearField(7);
 }
 
+/// 麦位信息
 class MikeInfo extends $pb.GeneratedMessage {
-  factory MikeInfo() => create();
+  factory MikeInfo({
+    $fixnum.Int64? roomId,
+    $fixnum.Int64? mikeId,
+    $core.String? mikeNo,
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? number,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (mikeId != null) {
+      $result.mikeId = mikeId;
+    }
+    if (mikeNo != null) {
+      $result.mikeNo = mikeNo;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (number != null) {
+      $result.number = number;
+    }
+    return $result;
+  }
   MikeInfo._() : super();
   factory MikeInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MikeInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1100,8 +1249,45 @@ class MikeInfo extends $pb.GeneratedMessage {
   void clearNumber() => clearField(7);
 }
 
+/// 房间用户信息
 class RoomUserInfo extends $pb.GeneratedMessage {
-  factory RoomUserInfo() => create();
+  factory RoomUserInfo({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? roomId,
+    $core.String? username,
+    $core.String? avatarUrl,
+    $core.int? type,
+    $core.int? adminType,
+    $core.String? level,
+  }) {
+    final $result = create();
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (username != null) {
+      $result.username = username;
+    }
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    if (adminType != null) {
+      $result.adminType = adminType;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    return $result;
+  }
   RoomUserInfo._() : super();
   factory RoomUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RoomUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1212,8 +1398,21 @@ class RoomUserInfo extends $pb.GeneratedMessage {
   void clearLevel() => clearField(8);
 }
 
+/// (即将弃用 使用回调接口处理)app控制Unity ui控制结构状态
 class UnityUIStatus extends $pb.GeneratedMessage {
-  factory UnityUIStatus() => create();
+  factory UnityUIStatus({
+    $core.int? part,
+    $core.int? close,
+  }) {
+    final $result = create();
+    if (part != null) {
+      $result.part = part;
+    }
+    if (close != null) {
+      $result.close = close;
+    }
+    return $result;
+  }
   UnityUIStatus._() : super();
   factory UnityUIStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory UnityUIStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1264,8 +1463,21 @@ class UnityUIStatus extends $pb.GeneratedMessage {
   void clearClose() => clearField(2);
 }
 
+/// (即将弃用 使用回调接口处理)Unity控制app ui控制结构状态
 class AppUIStatus extends $pb.GeneratedMessage {
-  factory AppUIStatus() => create();
+  factory AppUIStatus({
+    $core.int? part,
+    $core.int? close,
+  }) {
+    final $result = create();
+    if (part != null) {
+      $result.part = part;
+    }
+    if (close != null) {
+      $result.close = close;
+    }
+    return $result;
+  }
   AppUIStatus._() : super();
   factory AppUIStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AppUIStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1316,8 +1528,22 @@ class AppUIStatus extends $pb.GeneratedMessage {
   void clearClose() => clearField(2);
 }
 
+/// PK小游戏相关数据定义
+/// 工会信息
 class PKGuildInfo extends $pb.GeneratedMessage {
-  factory PKGuildInfo() => create();
+  factory PKGuildInfo({
+    $fixnum.Int64? guildId,
+    $core.String? guildName,
+  }) {
+    final $result = create();
+    if (guildId != null) {
+      $result.guildId = guildId;
+    }
+    if (guildName != null) {
+      $result.guildName = guildName;
+    }
+    return $result;
+  }
   PKGuildInfo._() : super();
   factory PKGuildInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKGuildInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1368,8 +1594,53 @@ class PKGuildInfo extends $pb.GeneratedMessage {
   void clearGuildName() => clearField(2);
 }
 
+/// 用户相关信息，一局游戏内只需推送一次
 class PKUserInfo extends $pb.GeneratedMessage {
-  factory PKUserInfo() => create();
+  factory PKUserInfo({
+    $fixnum.Int64? userId,
+    $fixnum.Int64? gender,
+    $core.String? userName,
+    $fixnum.Int64? guildId,
+    $core.bool? isManager,
+    $core.String? avatarUrl,
+    $core.int? mikeId,
+    $core.Iterable<$fixnum.Int64>? clothingIds,
+    $fixnum.Int64? pkRoomId,
+    $core.int? battleStatus,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (gender != null) {
+      $result.gender = gender;
+    }
+    if (userName != null) {
+      $result.userName = userName;
+    }
+    if (guildId != null) {
+      $result.guildId = guildId;
+    }
+    if (isManager != null) {
+      $result.isManager = isManager;
+    }
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (mikeId != null) {
+      $result.mikeId = mikeId;
+    }
+    if (clothingIds != null) {
+      $result.clothingIds.addAll(clothingIds);
+    }
+    if (pkRoomId != null) {
+      $result.pkRoomId = pkRoomId;
+    }
+    if (battleStatus != null) {
+      $result.battleStatus = battleStatus;
+    }
+    return $result;
+  }
   PKUserInfo._() : super();
   factory PKUserInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKUserInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1494,8 +1765,41 @@ class PKUserInfo extends $pb.GeneratedMessage {
   void clearBattleStatus() => clearField(10);
 }
 
+/// 场景内角色属性，可以以较低频率推送的
 class PKRoleBattleInfoLF extends $pb.GeneratedMessage {
-  factory PKRoleBattleInfoLF() => create();
+  factory PKRoleBattleInfoLF({
+    $fixnum.Int64? userId,
+    $core.int? currentBlood,
+    $core.int? totalBlood,
+    $core.int? shield,
+    $core.int? attack,
+    $core.int? speed,
+    $core.int? swordCount,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (currentBlood != null) {
+      $result.currentBlood = currentBlood;
+    }
+    if (totalBlood != null) {
+      $result.totalBlood = totalBlood;
+    }
+    if (shield != null) {
+      $result.shield = shield;
+    }
+    if (attack != null) {
+      $result.attack = attack;
+    }
+    if (speed != null) {
+      $result.speed = speed;
+    }
+    if (swordCount != null) {
+      $result.swordCount = swordCount;
+    }
+    return $result;
+  }
   PKRoleBattleInfoLF._() : super();
   factory PKRoleBattleInfoLF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKRoleBattleInfoLF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1596,8 +1900,25 @@ class PKRoleBattleInfoLF extends $pb.GeneratedMessage {
   void clearSwordCount() => clearField(7);
 }
 
+/// 场景内角色属性，需尽可能高频率推送的
 class PKRoleBattleInfoHF extends $pb.GeneratedMessage {
-  factory PKRoleBattleInfoHF() => create();
+  factory PKRoleBattleInfoHF({
+    $fixnum.Int64? userId,
+    XYZ? position,
+    $fixnum.Int64? rotation,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (position != null) {
+      $result.position = position;
+    }
+    if (rotation != null) {
+      $result.rotation = rotation;
+    }
+    return $result;
+  }
   PKRoleBattleInfoHF._() : super();
   factory PKRoleBattleInfoHF.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKRoleBattleInfoHF.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1660,8 +1981,33 @@ class PKRoleBattleInfoHF extends $pb.GeneratedMessage {
   void clearRotation() => clearField(3);
 }
 
+/// 战斗结算信息，一局游戏内只需推送一次
 class PKRoleSummary extends $pb.GeneratedMessage {
-  factory PKRoleSummary() => create();
+  factory PKRoleSummary({
+    $fixnum.Int64? userId,
+    $core.int? totalDamage,
+    $fixnum.Int64? survivedTime,
+    $core.int? attackedCount,
+    $core.int? outBlood,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (totalDamage != null) {
+      $result.totalDamage = totalDamage;
+    }
+    if (survivedTime != null) {
+      $result.survivedTime = survivedTime;
+    }
+    if (attackedCount != null) {
+      $result.attackedCount = attackedCount;
+    }
+    if (outBlood != null) {
+      $result.outBlood = outBlood;
+    }
+    return $result;
+  }
   PKRoleSummary._() : super();
   factory PKRoleSummary.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKRoleSummary.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1742,8 +2088,33 @@ class PKRoleSummary extends $pb.GeneratedMessage {
   void clearOutBlood() => clearField(5);
 }
 
+/// 打赏者信息，一局游戏内只需推送一次
 class PKPresenterInfo extends $pb.GeneratedMessage {
-  factory PKPresenterInfo() => create();
+  factory PKPresenterInfo({
+    $fixnum.Int64? userId,
+    $core.String? userName,
+    $core.String? avatarUrl,
+    $fixnum.Int64? guildId,
+    $core.int? contribution,
+  }) {
+    final $result = create();
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (userName != null) {
+      $result.userName = userName;
+    }
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (guildId != null) {
+      $result.guildId = guildId;
+    }
+    if (contribution != null) {
+      $result.contribution = contribution;
+    }
+    return $result;
+  }
   PKPresenterInfo._() : super();
   factory PKPresenterInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKPresenterInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1824,8 +2195,37 @@ class PKPresenterInfo extends $pb.GeneratedMessage {
   void clearContribution() => clearField(5);
 }
 
+/// 场景内礼物信息
 class PKGift extends $pb.GeneratedMessage {
-  factory PKGift() => create();
+  factory PKGift({
+    $fixnum.Int64? giftId,
+    XYZ? position,
+    PKGiftState? state,
+    $core.String? modelId,
+    $fixnum.Int64? pickUserId,
+    $fixnum.Int64? id,
+  }) {
+    final $result = create();
+    if (giftId != null) {
+      $result.giftId = giftId;
+    }
+    if (position != null) {
+      $result.position = position;
+    }
+    if (state != null) {
+      $result.state = state;
+    }
+    if (modelId != null) {
+      $result.modelId = modelId;
+    }
+    if (pickUserId != null) {
+      $result.pickUserId = pickUserId;
+    }
+    if (id != null) {
+      $result.id = id;
+    }
+    return $result;
+  }
   PKGift._() : super();
   factory PKGift.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKGift.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -1918,8 +2318,33 @@ class PKGift extends $pb.GeneratedMessage {
   void clearId() => clearField(7);
 }
 
+/// 场景安全区信息
 class PKSceneToxic extends $pb.GeneratedMessage {
-  factory PKSceneToxic() => create();
+  factory PKSceneToxic({
+    $core.int? safeRadius,
+    $fixnum.Int64? takeEffectTime,
+    XYZ? safePosition,
+    $core.int? toxicFogSpeed,
+    $fixnum.Int64? nextSafeTakeEffectTime,
+  }) {
+    final $result = create();
+    if (safeRadius != null) {
+      $result.safeRadius = safeRadius;
+    }
+    if (takeEffectTime != null) {
+      $result.takeEffectTime = takeEffectTime;
+    }
+    if (safePosition != null) {
+      $result.safePosition = safePosition;
+    }
+    if (toxicFogSpeed != null) {
+      $result.toxicFogSpeed = toxicFogSpeed;
+    }
+    if (nextSafeTakeEffectTime != null) {
+      $result.nextSafeTakeEffectTime = nextSafeTakeEffectTime;
+    }
+    return $result;
+  }
   PKSceneToxic._() : super();
   factory PKSceneToxic.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PKSceneToxic.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -2003,7 +2428,31 @@ class PKSceneToxic extends $pb.GeneratedMessage {
 }
 
 class PkRoomInfo extends $pb.GeneratedMessage {
-  factory PkRoomInfo() => create();
+  factory PkRoomInfo({
+    $fixnum.Int64? roomId,
+    $core.String? roomName,
+    $core.String? roomImage,
+    $core.int? hotValue,
+    $core.bool? isInvite,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (roomName != null) {
+      $result.roomName = roomName;
+    }
+    if (roomImage != null) {
+      $result.roomImage = roomImage;
+    }
+    if (hotValue != null) {
+      $result.hotValue = hotValue;
+    }
+    if (isInvite != null) {
+      $result.isInvite = isInvite;
+    }
+    return $result;
+  }
   PkRoomInfo._() : super();
   factory PkRoomInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PkRoomInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -2085,7 +2534,59 @@ class PkRoomInfo extends $pb.GeneratedMessage {
 }
 
 class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
-  factory PkRoleDefaultConfiguration() => create();
+  factory PkRoleDefaultConfiguration({
+    $core.int? roleRadius,
+    $core.int? speed,
+    $core.int? weaponLength,
+    $core.int? weaponSpeed,
+    $core.int? maxWeaponNum,
+    $core.int? blood,
+    $core.int? totalBlood,
+    $core.int? shield,
+    $core.int? attack,
+    $fixnum.Int64? countdown,
+    $core.int? swordCount,
+    $core.int? maxSpeed,
+  }) {
+    final $result = create();
+    if (roleRadius != null) {
+      $result.roleRadius = roleRadius;
+    }
+    if (speed != null) {
+      $result.speed = speed;
+    }
+    if (weaponLength != null) {
+      $result.weaponLength = weaponLength;
+    }
+    if (weaponSpeed != null) {
+      $result.weaponSpeed = weaponSpeed;
+    }
+    if (maxWeaponNum != null) {
+      $result.maxWeaponNum = maxWeaponNum;
+    }
+    if (blood != null) {
+      $result.blood = blood;
+    }
+    if (totalBlood != null) {
+      $result.totalBlood = totalBlood;
+    }
+    if (shield != null) {
+      $result.shield = shield;
+    }
+    if (attack != null) {
+      $result.attack = attack;
+    }
+    if (countdown != null) {
+      $result.countdown = countdown;
+    }
+    if (swordCount != null) {
+      $result.swordCount = swordCount;
+    }
+    if (maxSpeed != null) {
+      $result.maxSpeed = maxSpeed;
+    }
+    return $result;
+  }
   PkRoleDefaultConfiguration._() : super();
   factory PkRoleDefaultConfiguration.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory PkRoleDefaultConfiguration.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -2236,8 +2737,21 @@ class PkRoleDefaultConfiguration extends $pb.GeneratedMessage {
   void clearMaxSpeed() => clearField(12);
 }
 
+/// flutter用的，Unity不用
 class RoleOnline extends $pb.GeneratedMessage {
-  factory RoleOnline() => create();
+  factory RoleOnline({
+    $fixnum.Int64? roleId,
+    RoleOnlineState? state,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (state != null) {
+      $result.state = state;
+    }
+    return $result;
+  }
   RoleOnline._() : super();
   factory RoleOnline.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RoleOnline.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
@@ -2286,6 +2800,71 @@ class RoleOnline extends $pb.GeneratedMessage {
   $core.bool hasState() => $_has(1);
   @$pb.TagNumber(2)
   void clearState() => clearField(2);
+}
+
+/// /////////////////////新协议号（旧协议号有些还用，慢慢过渡过来）//////////////////////
+class SSStr extends $pb.GeneratedMessage {
+  factory SSStr({
+    $core.String? key,
+    $core.String? val,
+  }) {
+    final $result = create();
+    if (key != null) {
+      $result.key = key;
+    }
+    if (val != null) {
+      $result.val = val;
+    }
+    return $result;
+  }
+  SSStr._() : super();
+  factory SSStr.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SSStr.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SSStr', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'key')
+    ..aOS(2, _omitFieldNames ? '' : 'val')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SSStr clone() => SSStr()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SSStr copyWith(void Function(SSStr) updates) => super.copyWith((message) => updates(message as SSStr)) as SSStr;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SSStr create() => SSStr._();
+  SSStr createEmptyInstance() => create();
+  static $pb.PbList<SSStr> createRepeated() => $pb.PbList<SSStr>();
+  @$core.pragma('dart2js:noInline')
+  static SSStr getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SSStr>(create);
+  static SSStr? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get key => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set key($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasKey() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKey() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get val => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set val($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasVal() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearVal() => clearField(2);
 }
 
 

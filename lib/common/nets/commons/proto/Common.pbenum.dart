@@ -4,7 +4,7 @@
 //
 // @dart = 2.12
 
-// ignore_for_file: annotate_overrides, camel_case_types
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
 // ignore_for_file: constant_identifier_names, library_prefixes
 // ignore_for_file: non_constant_identifier_names, prefer_final_fields
 // ignore_for_file: unnecessary_import, unnecessary_this, unused_import
@@ -13,6 +13,7 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
+/// 数值类属性码表(key-code-int64)
 class AttrCode extends $pb.ProtobufEnum {
   static const AttrCode none = AttrCode._(0, _omitEnumNames ? '' : 'none');
   static const AttrCode lv = AttrCode._(1, _omitEnumNames ? '' : 'lv');
@@ -29,9 +30,9 @@ class AttrCode extends $pb.ProtobufEnum {
   static const AttrCode growth_value = AttrCode._(12, _omitEnumNames ? '' : 'growth_value');
   static const AttrCode charm_growth_value = AttrCode._(13, _omitEnumNames ? '' : 'charm_growth_value');
   static const AttrCode real_name_type = AttrCode._(14, _omitEnumNames ? '' : 'real_name_type');
+  static const AttrCode animate = AttrCode._(15, _omitEnumNames ? '' : 'animate');
   static const AttrCode mike_id = AttrCode._(16, _omitEnumNames ? '' : 'mike_id');
   static const AttrCode mike_no = AttrCode._(17, _omitEnumNames ? '' : 'mike_no');
-  static const AttrCode animate = AttrCode._(15, _omitEnumNames ? '' : 'animate');
   static const AttrCode stage = AttrCode._(18, _omitEnumNames ? '' : 'stage');
 
   static const $core.List<AttrCode> values = <AttrCode> [
@@ -50,9 +51,9 @@ class AttrCode extends $pb.ProtobufEnum {
     growth_value,
     charm_growth_value,
     real_name_type,
+    animate,
     mike_id,
     mike_no,
-    animate,
     stage,
   ];
 
@@ -62,17 +63,22 @@ class AttrCode extends $pb.ProtobufEnum {
   const AttrCode._($core.int v, $core.String n) : super(v, n);
 }
 
+/// 状态
 class State extends $pb.ProtobufEnum {
   static const State None = State._(0, _omitEnumNames ? '' : 'None');
   static const State Mai = State._(1, _omitEnumNames ? '' : 'Mai');
   static const State Sit = State._(2, _omitEnumNames ? '' : 'Sit');
   static const State Swim = State._(3, _omitEnumNames ? '' : 'Swim');
+  static const State Walk = State._(4, _omitEnumNames ? '' : 'Walk');
+  static const State Run = State._(5, _omitEnumNames ? '' : 'Run');
 
   static const $core.List<State> values = <State> [
     None,
     Mai,
     Sit,
     Swim,
+    Walk,
+    Run,
   ];
 
   static final $core.Map<$core.int, State> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -81,6 +87,7 @@ class State extends $pb.ProtobufEnum {
   const State._($core.int v, $core.String n) : super(v, n);
 }
 
+/// 礼物状态
 class PKGiftState extends $pb.ProtobufEnum {
   static const PKGiftState Available = PKGiftState._(0, _omitEnumNames ? '' : 'Available');
   static const PKGiftState Disappeared = PKGiftState._(1, _omitEnumNames ? '' : 'Disappeared');
@@ -96,6 +103,7 @@ class PKGiftState extends $pb.ProtobufEnum {
   const PKGiftState._($core.int v, $core.String n) : super(v, n);
 }
 
+/// flutter用的，Unity不用
 class RoleOnlineState extends $pb.ProtobufEnum {
   static const RoleOnlineState RoleOnlineStateNil = RoleOnlineState._(0, _omitEnumNames ? '' : 'RoleOnlineStateNil');
   static const RoleOnlineState RoleOnlineStateOn = RoleOnlineState._(1, _omitEnumNames ? '' : 'RoleOnlineStateOn');
