@@ -34,26 +34,20 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          margin: EdgeInsets.only(top: 80),
-          alignment: Alignment.topCenter,
-          height: avatarSize,
-          width: totalWidth,
-          child: Stack(
-            children: [
-              // 背景图
-              _createBackground(),
-              // 左边的icon
-              _createLeftIcon(),
-              // 跑马灯
-              _createMarquee(),
-            ],
-          ),
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: 80),
+      alignment: Alignment.topCenter,
+      height: avatarSize,
+      width: totalWidth,
+      child: Stack(
+        children: [
+          // 背景图
+          _createBackground(),
+          // 左边的icon
+          _createLeftIcon(),
+          // 跑马灯
+          _createMarquee(),
+        ],
       ),
     );
   }
@@ -143,7 +137,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
               // 发送人的：财富等级或者是魅力等级
               if(index == 0) {
                 return Container(
-                    margin: const EdgeInsets.only(left: 5),
+                    margin: const EdgeInsets.only(left: 5, top: 4),
                     child: Stack(
                       children: [
                         if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
@@ -157,12 +151,17 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
               // 发送人的：头像
               if(index == 1) {
-                return Container(
-                  height: 20,
-                  width: 20,
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 5),
-                  child: AvatarView(sender?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 18,
+                      width: 18,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 5, top: 2),
+                      child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                    )
+                  ],
                 );
               }
 
@@ -173,16 +172,18 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
+                  decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
                 return Container(
                   width: size.width,
                   height: textHeight,
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 5, top: 3),
+                  margin: EdgeInsets.only(left: 5, top: 4),
                   child: Text(
                     text,
                     textAlign: TextAlign.center,
+                    maxLines: 1,
                     style: style,
                   ),
                 );
@@ -195,12 +196,13 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
+                  decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
                 return Container(
                   width: size.width,
                   height: textHeight,
-                  margin: EdgeInsets.only(left: 5, top: 3),
+                  margin: EdgeInsets.only(left: 5, top: 4),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     text,
@@ -212,11 +214,16 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
               // 接收人的：头像
               if(index == 4) {
-                return Container(
-                  height: 20,
-                  width: 20,
-                  margin: EdgeInsets.only(left: 5),
-                  child: AvatarView(receiver?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 18,
+                      width: 18,
+                      margin: EdgeInsets.only(left: 5, top: 2),
+                      child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                    )
+                  ],
                 );
               }
               // 接收人的：名字
@@ -225,13 +232,14 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                 color: Color(0xFFFED85B),
                 fontWeight: FontWeight.bold,
                 fontSize: 11,
+                decoration: TextDecoration.none,
               );
               var size = boundingTextSize(text, style);
               return Container(
                 width: size.width,
                 height: textHeight,
                 alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 5, top: 3),
+                margin: EdgeInsets.only(left: 5, top: 4),
                 child: Text(
                   text,
                   style: style,
@@ -250,7 +258,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
   }
 
   static Size boundingTextSize(String text, TextStyle style,
-      {int maxLines = 2^31, double maxWidth = double.infinity}) {
+      {int maxLines = 1, double maxWidth = double.infinity}) {
     if (text == null || text.isEmpty) {
       return Size.zero;
     }

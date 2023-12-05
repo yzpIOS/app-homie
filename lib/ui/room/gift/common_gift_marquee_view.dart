@@ -35,26 +35,20 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          margin: EdgeInsets.only(top: 80),
-          alignment: Alignment.topCenter,
-          height: avatarSize,
-          width: totalWidth,
-          child: Stack(
-            children: [
-              // 背景图
-              _createBackground(),
-              // 左边的icon
-              _createLeftIcon(),
-              // 跑马灯
-              _createMarquee(),
-            ],
-          ),
-        ),
+    return Container(
+      margin: EdgeInsets.only(top: 80),
+      alignment: Alignment.topCenter,
+      height: avatarSize,
+      width: totalWidth,
+      child: Stack(
+        children: [
+          // 背景图
+          _createBackground(),
+          // 左边的icon
+          _createLeftIcon(),
+          // 跑马灯
+          _createMarquee(),
+        ],
       ),
     );
   }
@@ -173,6 +167,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
+                  decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
                 return Container(
@@ -194,6 +189,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
+                  decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
                 return Container(
@@ -224,6 +220,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                 color: Color(0xFFFED85B),
                 fontWeight: FontWeight.bold,
                 fontSize: 11,
+                decoration: TextDecoration.none,
               );
               var size = boundingTextSize(text, style);
               return Container(

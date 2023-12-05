@@ -30,17 +30,17 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
 
     for (final uid in ids) {
       if(data.bannerType.toInt() == 1) {
-        // 1：特殊礼物
+        // 1：特殊礼物, 己测试
         addTask(
           SpecialGiftMarqueeView(acceptUid: uid, users: users, data: data),
         );
       } else if(data.bannerType.toInt() == 2) {
-        // 2：普通礼物，
+        // 2：普通礼物, 己测试
         addTask(
           CommonGiftMarqueeView(acceptUid: uid, users: users, data: data),
         );
       } else if(data.bannerType.toInt() == 3) {
-        // 3：盲盒礼物
+        // 3：盲盒礼物, 己测试
         addTask(
           BlindGiftMarqueeView(acceptUid: uid, users: users, data: data,
             blinkName: event.blinkName, blinkUrl: event.blinkUrl,),

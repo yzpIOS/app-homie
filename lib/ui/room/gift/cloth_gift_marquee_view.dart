@@ -43,26 +43,20 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Align(
-        alignment: Alignment.topCenter,
-        child: Container(
-          margin: const EdgeInsets.only(top: 80),
-          alignment: Alignment.topCenter,
-          height: avatarSize,
-          width: totalWidth,
-          child: Stack(
-            children: [
-              // 左边的icon
-              _createLeftIcon(),
-              // 背景图
-              _createBackground(),
-              // 跑马灯
-              _createMarquee(),
-            ],
-          ),
-        ),
+    return Container(
+      margin: const EdgeInsets.only(top: 80),
+      alignment: Alignment.topCenter,
+      height: avatarSize,
+      width: totalWidth,
+      child: Stack(
+        children: [
+          // 左边的icon
+          _createLeftIcon(),
+          // 背景图
+          _createBackground(),
+          // 跑马灯
+          _createMarquee(),
+        ],
       ),
     );
   }
@@ -116,6 +110,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                       color: Color(0xFFFED85B),
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
 
@@ -136,6 +131,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
 
@@ -156,6 +152,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                       color: Color(0xFFFF5888),
                       fontWeight: FontWeight.bold,
                       fontSize: 11,
+                      decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
 
@@ -175,6 +172,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 11,
+                    decoration: TextDecoration.none,
                   );
                   var size = boundingTextSize(text, style);
 
@@ -191,9 +189,9 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
               )
           ),
 
-
-          Align(
-            alignment: Alignment.centerRight,
+          Positioned.fill(
+            left: totalWidth - 146,
+            right: 0,
             child: GestureDetector(
               onTap: () {
                 // todo 去看看
@@ -212,11 +210,12 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                     fontSize: 11,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
                   ),
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
