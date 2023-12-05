@@ -18,6 +18,7 @@ class ShoppingCartCtrl extends AsyncListCtrl<Map> with BusGetLifeMixin {
 
   final showCarRx = RxBool(false);
   final activityItem = RxMap();
+  final markSelectedActivityItemList = [];//记录已选中的活动获得商品数组
 
   int count() => dataRx.map<int>((it) => it['count']).sum;
 

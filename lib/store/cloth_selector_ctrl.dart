@@ -293,9 +293,9 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
 
     return simpleTry(task, callback: (result) {
 
-      // 是否能购买（活动获得'商品不能购买）
+      // 是否能购买（'活动获得'商品不能购买）
+      var itemBuyAble = true;
       if (item != null && item.isNotEmpty) {
-        var itemBuyAble = true;
         if (item case {'label_list': List lists}) {
           if (lists.isNotEmpty) {
             itemBuyAble = lists.isNotEmpty && lists[0]["is_buy"] == true;
@@ -303,16 +303,30 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
         }
 
         final cartCtrl = Get.find<ShoppingCartCtrl>();
-        if (itemBuyAble == true) {//不是'活动获得'商品，可以购买，调用添加或删除购物车，显示“购买+数量”
-          cartCtrl.activityItem.value = {};
-        } else {////是'活动获得'商品，不能购买，不用调用添加或删除购物车，显示“活动获得”
-          if(addOrDel) {
-            cartCtrl.activityItem.value = item;
+        if (itemBuyAble == false) {
+          if (addOrDel) {
+            cartCtrl.markSelectedActivityItemList.add(item);
           } else {
-            cartCtrl.activityItem.value = {};
+            cartCtrl.markSelectedActivityItemList.remove(item);
           }
-          return;
         }
+        //检查最后选中的商品是否是'活动获得'商品
+        cartCtrl.activityItem.value = {};
+        if (_dataRx.isNotEmpty && cartCtrl.markSelectedActivityItemList.isNotEmpty) {
+          for (var i = 0; i < cartCtrl.markSelectedActivityItemList.length; ++i) {
+            Map tempMap = cartCtrl.markSelectedActivityItemList[i];
+            int lastId = _dataRx.last;
+            if (tempMap['id'] == lastId) {
+              cartCtrl.activityItem.value = tempMap;
+              break;
+            }
+          }
+        }
+      }
+      /// 不是'活动获得'商品，可以购买，调用添加或删除购物车，显示“购买+数量”
+      /// 是'活动获得'商品，不能购买，不用调用添加或删除购物车，显示“活动获得”
+      if (itemBuyAble == false) {
+        return;
       }
 
       // unity成功了
@@ -342,6 +356,11 @@ mixin _MultiMixin implements ClothSelector, _TryMixin {
       _debugTryUse();
     });
   }
+
+  _checkLastItemIsSpecialItem () {
+
+  }
+
 
   void _debugTryUse() => xlog(_dataRx);
 }
