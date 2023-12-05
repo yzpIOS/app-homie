@@ -66,12 +66,55 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
-    return Container(
-      margin: const EdgeInsets.only(left: 6, top: 6),
-      child: AsyncAvatar(
-          size: 49.0,
-          uid: widget.data.sendId
-      ),
+    Characters number = "${widget.data.count}".characters;
+    double totalLeft = 13.5;
+    List<Widget> numbers = [];
+    for(int index = 0; index < number.length; index ++) {
+      numbers.insert(0, Container(
+        margin: EdgeInsets.only(left: totalLeft,),
+        child: Image.asset(
+          IMG.format("room/gift_${number.characterAt(index)}"),
+          width: number.characterAt(index).toString() == '1' ? 10.5 : 14,
+          height: 21,
+        ),
+      ));
+      totalLeft += (number.characterAt(index).toString() == "1" ? 8.5 : 14);
+    }
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 6, top: 6),
+          child: AsyncAvatar(
+              size: 49.0,
+              uid: widget.data.sendId
+          ),
+        ),
+
+
+        // X
+        if(numbers.isNotEmpty)
+          Container(
+            width: totalLeft,
+            margin: EdgeInsets.only(top: 38),
+            height: 21,
+            child: Stack(
+              children: [
+                // X
+                Container(
+                  margin: EdgeInsets.only(top: 5,),
+                  child: Image.asset(
+                    IMG.format("room/gift_X"),
+                    width: 16.5,
+                    height: 15,
+                  ),
+                ),
+                ...numbers
+              ],
+            ),
+          ),
+      ],
     );
   }
 
