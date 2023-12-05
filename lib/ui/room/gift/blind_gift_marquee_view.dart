@@ -228,7 +228,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     );
                   }
 
-                  String text = widget.data.giftName;
+                  String text = "开出${widget.data.giftName}";
                   var style = const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
