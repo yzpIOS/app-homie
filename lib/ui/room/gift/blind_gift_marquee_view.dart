@@ -117,14 +117,19 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     );
                     var size = boundingTextSize(text, style);
 
-                    return Container(
-                      width: size.width,
-                      height: textHeight,
-                      alignment: Alignment.centerLeft,
-                      child: XText(
-                        text,
-                        style: style,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: textHeight,
+                          alignment: Alignment.centerLeft,
+                          child: XText(
+                            text,
+                            style: style,
+                          ),
+                        )
+                      ],
                     );
                   }
 
@@ -137,14 +142,19 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                       decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
-                    return Container(
-                      width: size.width,
-                      height: textHeight,
-                      alignment: Alignment.centerLeft,
-                      child: XText(
-                        text,
-                        style: style,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: textHeight,
+                          alignment: Alignment.centerLeft,
+                          child: XText(
+                            text,
+                            style: style,
+                          ),
+                        )
+                      ],
                     );
                   }
 
@@ -158,14 +168,19 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     );
                     var size = boundingTextSize(text, style);
 
-                    return Container(
-                      width: size.width,
-                      height: textHeight,
-                      alignment: Alignment.centerLeft,
-                      child: XText(
-                        text,
-                        style: style,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: textHeight,
+                          alignment: Alignment.centerLeft,
+                          child: XText(
+                            text,
+                            style: style,
+                          ),
+                        )
+                      ],
                     );
                   }
 
@@ -178,14 +193,19 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                   );
                   var size = boundingTextSize(text, style);
 
-                  return Container(
-                    width: size.width,
-                    height: textHeight,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      text,
-                      style: style,
-                    ),
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: size.width,
+                        height: textHeight,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          text,
+                          style: style,
+                        ),
+                      )
+                    ],
                   );
                 },
               )

@@ -153,10 +153,10 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
               // 发送人的：头像
               if(index == 1) {
                 return Container(
-                  height: 20,
-                  width: 20,
+                  height: 18,
+                  width: 18,
                   margin: EdgeInsets.only(left: 5),
-                  child: AvatarView(sender?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
+                  child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                 );
               }
 
@@ -170,15 +170,20 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(left: 5),
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(left: 5),
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    )
+                  ],
                 );
               }
 
@@ -192,26 +197,36 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   decoration: TextDecoration.none,
                 );
                 var size = boundingTextSize(text, style);
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  margin: const EdgeInsets.only(left: 2),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: size.width,
+                      height: textHeight,
+                      margin: const EdgeInsets.only(left: 2),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    )
+                  ],
                 );
               }
 
 
               // 接收人的：头像
               if(index == 4) {
-                return Container(
-                  height: 20,
-                  width: 20,
-                  margin: EdgeInsets.only(left: 5),
-                  child: AvatarView(receiver?.avatar ?? "", size: 20, side: BorderSide(color: Colors.white, width: 1),),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 18,
+                      width: 18,
+                      margin: EdgeInsets.only(left: 2),
+                      child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                    )
+                  ],
                 );
               }
               // 接收人的：名字
@@ -223,15 +238,20 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                 decoration: TextDecoration.none,
               );
               var size = boundingTextSize(text, style);
-              return Container(
-                width: size.width,
-                height: textHeight,
-                alignment: Alignment.centerLeft,
-                margin: EdgeInsets.only(left: 5),
-                child: Text(
-                  text,
-                  style: style,
-                ),
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: size.width,
+                    height: textHeight,
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(left: 5),
+                    child: Text(
+                      text,
+                      style: style,
+                    ),
+                  )
+                ],
               );
             },
           )

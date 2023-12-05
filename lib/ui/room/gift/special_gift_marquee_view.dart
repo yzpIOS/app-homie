@@ -138,16 +138,21 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                 itemBuilder: (context, index) {
                   // 发送人的：财富等级或者是魅力等级
                   if(index == 0) {
-                    return Container(
-                        margin: const EdgeInsets.only(left: 5, top: 4),
-                        child: Stack(
-                          children: [
-                            if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
-                              WealthyLevelView(level: sender?.level ?? ""),
-                            if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
-                              CharmLevelView(level: sender?.charmLevel),
-                          ],
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                            margin: const EdgeInsets.only(left: 5, top: 4),
+                            child: Stack(
+                              children: [
+                                if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
+                                  WealthyLevelView(level: sender?.level ?? ""),
+                                if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
+                                  CharmLevelView(level: sender?.charmLevel),
+                              ],
+                            )
                         )
+                      ],
                     );
                   }
 
@@ -177,17 +182,22 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                       decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
-                    return Container(
-                      width: size.width,
-                      height: textHeight,
-                      alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(left: 5, top: 4),
-                      child: Text(
-                        text,
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                        style: style,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: textHeight,
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 5, top: 4),
+                          child: Text(
+                            text,
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            style: style,
+                          ),
+                        )
+                      ],
                     );
                   }
 
@@ -201,15 +211,20 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                       decoration: TextDecoration.none,
                     );
                     var size = boundingTextSize(text, style);
-                    return Container(
-                      width: size.width,
-                      height: textHeight,
-                      margin: EdgeInsets.only(left: 5, top: 4),
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        text,
-                        style: style,
-                      ),
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: size.width,
+                          height: textHeight,
+                          margin: EdgeInsets.only(left: 5, top: 4),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            text,
+                            style: style,
+                          ),
+                        )
+                      ],
                     );
                   }
 
@@ -237,15 +252,20 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
                     decoration: TextDecoration.none,
                   );
                   var size = boundingTextSize(text, style);
-                  return Container(
-                    width: size.width,
-                    height: textHeight,
-                    alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.only(left: 5, top: 4),
-                    child: Text(
-                      text,
-                      style: style,
-                    ),
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: size.width,
+                        height: textHeight,
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(left: 5, top: 4),
+                        child: Text(
+                          text,
+                          style: style,
+                        ),
+                      )
+                    ],
                   );
                 },
               )
