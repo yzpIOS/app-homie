@@ -277,38 +277,35 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
           Positioned.fill(
             left: totalWidth - 116,
             right: 0,
-            child: Visibility(
-              visible: RoomManagerCtrl.ins.sceneCtrl2?.roomId != widget.data.roomId.toInt(),
-              child: GestureDetector(
-                onTap: () {
-                  // todo 去看看
-                  if(RoomManagerCtrl.ins.sceneCtrl2?.roomId == widget.data.roomId.toInt()) {
-                    return;
-                  }
-                  if(Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase())) {
-                    // 当前在房间中
-                    RoomManagerCtrl.ins.toMiddleRoom(roomId: widget.data.roomId.toInt());
-                  } else {
-                    // 没有在房间
-                    RoomManagerCtrl.ins.toRoom(roomId: widget.data.roomId.toInt());
-                  }
-                },
-                child: Container(
-                  width: 51,
-                  height: 20,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0XFFFF5787),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: const Text(
-                    "去看看",
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.none,
-                    ),
+            child: GestureDetector(
+              onTap: () {
+                // todo 去看看
+                if(RoomManagerCtrl.ins.sceneCtrl2?.roomId == widget.data.roomId.toInt()) {
+                  return;
+                }
+                if(Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase())) {
+                  // 当前在房间中
+                  RoomManagerCtrl.ins.toMiddleRoom(roomId: widget.data.roomId.toInt());
+                } else {
+                  // 没有在房间
+                  RoomManagerCtrl.ins.toRoom(roomId: widget.data.roomId.toInt());
+                }
+              },
+              child: Container(
+                width: 51,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0XFFFF5787),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: const Text(
+                  "去看看",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
                   ),
                 ),
               ),
