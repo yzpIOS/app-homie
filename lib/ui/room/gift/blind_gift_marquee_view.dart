@@ -2,6 +2,7 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
@@ -212,11 +213,12 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 146,
+            left: totalWidth - 116,
             right: 0,
             child: GestureDetector(
               onTap: () {
                 // todo 去看看
+                RoomManagerCtrl.ins.toRoomBlind(widget.data.roomId.toInt());
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

@@ -436,6 +436,11 @@ class RoomCtrl extends SceneCtrl {
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
     (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
+
+    if(RoomManagerCtrl.ins.shouldOpenGift) {
+      RoomOverlay.showGiftSend(roomId);
+    }
+    RoomManagerCtrl.ins.shouldOpenGift = false;
   }
 
   SceneMicCtrl? roomMicCtrl;

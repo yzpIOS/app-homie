@@ -12,6 +12,8 @@ import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/gift/gift_send_logic.dart';
+import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
@@ -23,6 +25,7 @@ import 'package:dartz/dartz.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
   final interval_time = 200;
+  bool shouldOpenGift = false;
 
   static RoomManagerCtrl get ins {
     return Get.find<RoomManagerCtrl>();
@@ -98,6 +101,25 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
   }
 
+  ///
+  /// 打开盲盒界面
+  ///
+  void toRoomBlind(int roomId) {
+    if(Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase())) {
+      // 跳到新的界面
+      if(sceneCtrl2?.roomId != roomId) {
+        shouldOpenGift = true;
+        // 当前不在同一个房间
+        toMiddleRoom(roomId: roomId);
+      } else {
+        RoomOverlay.showGiftSend(roomId);
+      }
+    } else {
+      shouldOpenGift = true;
+      toRoom(roomId: roomId);
+    }
+  }
+
   bool canGoToComment = true;
 
   ///
@@ -118,7 +140,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
         putPkInfo(roomInfo, pkRoomId);
 
         if(roomInfo["scene_id"] != 0) {
-          toMiddleRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name), callCloseRoom: false);
+          toMiddleRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase()), callCloseRoom: false);
         } else {
           toSquare(data: roomInfo);
         }
@@ -143,7 +165,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
               AcceptEnterRoom.show(roomId, roomInfo);
               return;
             }
-            toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
+            toRoom(roomId: roomId, data: roomInfo, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase()));
           } else {
             toSquare(data: roomInfo);
           }

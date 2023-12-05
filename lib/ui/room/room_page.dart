@@ -26,7 +26,7 @@ import 'package:slugid/slugid.dart';
 import 'package:wakelock/wakelock.dart';
 
 class RoomPage extends StatefulWidget {
-  static final String room_name = '$RoomPage';
+  static final String room_name = '/$RoomPage';
 
   final SceneCtrl controller;
 
@@ -158,7 +158,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
   void dispose() {
     Wakelock.disable();
     AppNavObserver.unsubscribe(this);
-
+    RoomManagerCtrl.ins.shouldOpenGift = false;
     super.dispose();
   }
 

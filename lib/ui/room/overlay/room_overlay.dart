@@ -144,7 +144,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         RoomToolDialog.show().onNotNull(onItemClick);
         break;
       case '礼物':
-        _showGiftSend();
+        showGiftSend(roomId);
         break;
       case '黑名单':
         OrientationSheet.show(
@@ -179,7 +179,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
     }
   }
 
-  void _showGiftSend() {
+  static void showGiftSend(int roomId) {
     // 获取房间在线的用户信息
     post(() async {
       WaitingCtrl.obj.show();
@@ -251,7 +251,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         userInMicList.insert(0, roomOwner);
       }
       GiftSheet.show(
-        GiftSend2Room(roomId: controller.roomId, users: userInMicList.toList(growable: false)),
+        GiftSend2Room(roomId: roomId, users: userInMicList.toList(growable: false)),
         hasShowUnityView: true,
       );
     });
