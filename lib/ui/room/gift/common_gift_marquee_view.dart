@@ -137,26 +137,36 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
             itemBuilder: (context, index) {
               // 发送人的：财富等级或者是魅力等级
               if(index == 0) {
-                return Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  child: Stack(
-                    children: [
-                      if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
-                        WealthyLevelView(level: sender?.level ?? ""),
-                      if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
-                        CharmLevelView(level: sender?.charmLevel),
-                    ],
-                  )
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        child: Stack(
+                          children: [
+                            if(sender?.level != null && (sender?.level ?? "").isNotEmpty)
+                              WealthyLevelView(level: sender?.level ?? ""),
+                            if(sender?.charmLevel != null && (sender?.charmLevel ?? "").isNotEmpty)
+                              CharmLevelView(level: sender?.charmLevel),
+                          ],
+                        )
+                    )
+                  ],
                 );
               }
 
               // 发送人的：头像
               if(index == 1) {
-                return Container(
-                  height: 18,
-                  width: 18,
-                  margin: EdgeInsets.only(left: 5),
-                  child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      height: 18,
+                      width: 18,
+                      margin: EdgeInsets.only(left: 5),
+                      child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                    )
+                  ],
                 );
               }
 
@@ -180,6 +190,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                       margin: EdgeInsets.only(left: 5),
                       child: Text(
                         text,
+                        maxLines: 1,
                         style: style,
                       ),
                     )
