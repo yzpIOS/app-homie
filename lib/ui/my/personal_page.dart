@@ -26,6 +26,12 @@ class PersonalPage extends GetView<MyInfoCtrl> {
   }
 
   Widget $BodyView(MyInfoDto data) {
+    String? tempBirthDay;
+    final birthDay = data.birthDay;
+    if (birthDay != null) {
+      tempBirthDay = '${birthDay.year}-${birthDay.month}-${birthDay.day}';
+    }
+
     final items = <Tuple4<String?, String, String?, VoidCallback?>>[
       Tuple4(
         'my/编辑昵称',
@@ -54,7 +60,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
       Tuple4(
         'my/编辑生日',
         '生日',
-        data.birthDay?.let(TimeFormat.yyyyMMdd.format),
+        tempBirthDay,//data.birthDay?.let(TimeFormat.yyyyMMdd.format),
         () {
           final now = DateTime.now();
           showDatePicker(
