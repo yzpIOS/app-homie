@@ -134,7 +134,7 @@ class _ItemView extends StatelessWidget {
           ),
           // const Expanded(child: Spacing.blank),
           XText(
-            data['amount'] != null ? data['amount'].toString() : '-',
+            data['amount'] != null ? '${data['type'] == 1 ? '+' : '-'}${data['amount'].toString()}' : '-',
             style: const TextStyle(fontSize: 15, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
           ),
         ],

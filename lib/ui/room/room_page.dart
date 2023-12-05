@@ -131,7 +131,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
     WaitingCtrl.obj.hidden();
 
     // 是否显示加载进度图
-    // WaitingCtrl.obj.show(text: '加载中...');
     if (controller.roomType == RoomType.square) {// 广场
       if (Get.find<UserCtrl>().squareLoadingHasBeenDisplayed == false) {
         Get.find<UserCtrl>().squareLoadingHasBeenDisplayed = true;

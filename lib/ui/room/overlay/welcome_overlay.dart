@@ -40,16 +40,7 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
         _ctrl.add(_WelcomeView(uid: myUid, myNUid: myNUid,));
       },
     );
-
-    delay(1000, () {
-      const UID myUid = 'z6dl6xdj';
-      final NUID myNUid = NUID(533);
-      _ctrl.add(_WelcomeView(uid: myUid, myNUid: myNUid,));
-    });
-
-    // roomId: 82
-    // roleId: 533
-    // uid: z6dl6xdj
+    
     _doLoop().ignore();
   }
 

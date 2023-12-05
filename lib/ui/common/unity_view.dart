@@ -120,8 +120,30 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
                     }
                     // 房间背景
                     if(widget.fromRoom || child == null) {
+                      AppWaiting appWaiting = Get.find<AppWaiting>();
+                      appWaiting.text = '3D画面加载中';
+
+                      return Stack(
+                        children: [
+                          Positioned.fill(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(IMG.format('room_background')),
+                                  scale: 2,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: SizedBox(width: AppSize.width, height: AppSize.height),
+                            ),
+                          ),
+                          Positioned(
+                            child: Center(child: appWaiting,),
+                          ),
+                        ],
+                      );
                       return DecoratedBox(
-                          decoration: BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage(IMG.format('room_background')),
                             scale: 2,
