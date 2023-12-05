@@ -3,12 +3,13 @@ import 'package:app/types.dart';
 import 'package:app/ui/my/charm_level_page.dart';
 import 'package:app/widgets.dart';
 
+/// 魅力等级
 class CharmLevelView extends StatelessWidget {
   final UID? uid;
   final String? level;
   final double height;
 
-  const CharmLevelView({super.key, this.level, this.uid, this.height = 17});
+  const CharmLevelView({super.key, this.level, this.uid, this.height = 20});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +20,8 @@ class CharmLevelView extends StatelessWidget {
     Widget child = Image.asset(
       IMG.format('level/charm/$_level'),
       scale: 3,
-      width: 34,
-      height: 17,
+      width: 40.3,
+      height: 47.6,
       fit: BoxFit.fill,
     );
 

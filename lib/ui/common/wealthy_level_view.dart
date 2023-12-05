@@ -4,6 +4,7 @@ import 'package:app/widgets.dart';
 
 import 'package:app/ui/my/wealth_level_page.dart';
 
+/// 财富等级
 class WealthyLevelView extends StatelessWidget {
   final UID? uid;
   final String? level;
@@ -20,8 +21,8 @@ class WealthyLevelView extends StatelessWidget {
     Widget child = Image.asset(
       IMG.format('level/$_level'),
       scale: 3,
-      width: 34,
-      height: 17,
+      width: 72.3,
+      height: 29,
       fit: BoxFit.fill,
     );
 

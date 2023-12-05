@@ -178,7 +178,7 @@ class _WelcomeView extends StatelessWidget {
         children: [
           Padding(
             padding: Pad(bottom: isSpecial ? 1 : 0),
-            child: WealthyLevelView(level: data?.level, height: 10),
+            child: WealthyLevelView(level: data?.level, height: 11),
           ),
           Flexible(
             child: Padding(

@@ -32,7 +32,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
 
     void showUserDialog() {
       RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
-    };
+    }
 
     InlineSpan span = TextSpan(
       text: info.showName(),
@@ -53,7 +53,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
               onTap: showUserDialog,
               child: Padding(
                 padding: const Pad(right: 4),
-                child: WealthyLevelView(level: level, height: 10),
+                child: WealthyLevelView(level: level, height: 11),
               ),
             ),
           ),
