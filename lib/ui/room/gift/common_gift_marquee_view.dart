@@ -240,6 +240,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                   ],
                 );
               }
+
               // 接收人的：名字
               String text = receiver?.showName() ?? "";
               var style = const TextStyle(

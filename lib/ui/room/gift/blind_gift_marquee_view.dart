@@ -106,7 +106,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
-                itemCount: 3,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   if(index == 0) {
                     String text = user?.showName() ?? "";
@@ -213,7 +213,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 116,
+            left: totalWidth - 136,
             right: 0,
             child: GestureDetector(
               onTap: () {

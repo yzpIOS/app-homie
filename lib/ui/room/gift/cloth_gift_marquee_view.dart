@@ -102,7 +102,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
-                itemCount: 3,
+                itemCount: 4,
                 itemBuilder: (context, index) {
                   if(index == 0) {
                     String text = user?.showName() ?? "";
@@ -146,7 +146,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                     );
                   }
 
-                  if(index == 1) {
+                  if(index == 2) {
                     String text = "【${widget.blinkName}】";
                     var style = const TextStyle(
                       color: Color(0xFFFF5888),
