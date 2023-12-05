@@ -99,94 +99,125 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
     return Positioned(
       left: avatarSize + 12,
       top: 15,
-      child: Container(
-          height: textHeight,
-          alignment: Alignment.centerLeft,
-          width: totalWidth - avatarSize - 30,
-          child: Marqueer.builder(
-            interaction: false,
-            controller: controller,
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              if(index == 0) {
-                String text = user?.showName() ?? "";
-                var style = const TextStyle(
-                  color: Color(0xFFFED85B),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                );
-                var size = boundingTextSize(text, style);
+      child: Stack(
+        children: [
+          Container(
+              height: textHeight,
+              alignment: Alignment.centerLeft,
+              width: totalWidth - avatarSize - 30,
+              child: Marqueer.builder(
+                interaction: false,
+                controller: controller,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  if(index == 0) {
+                    String text = user?.showName() ?? "";
+                    var style = const TextStyle(
+                      color: Color(0xFFFED85B),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
 
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
-                );
-              }
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
 
-              if(index == 1) {
-                String text = "在";
-                var style = const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                );
-                var size = boundingTextSize(text, style);
+                  if(index == 1) {
+                    String text = "在";
+                    var style = const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
 
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
-                );
-              }
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
 
-              if(index == 1) {
-                String text = "【${widget.blinkName}】";
-                var style = const TextStyle(
-                  color: Color(0xFFFF5888),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 11,
-                );
-                var size = boundingTextSize(text, style);
+                  if(index == 1) {
+                    String text = "【${widget.blinkName}】";
+                    var style = const TextStyle(
+                      color: Color(0xFFFF5888),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 11,
+                    );
+                    var size = boundingTextSize(text, style);
 
-                return Container(
-                  width: size.width,
-                  height: textHeight,
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    text,
-                    style: style,
-                  ),
-                );
-              }
+                    return Container(
+                      width: size.width,
+                      height: textHeight,
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        text,
+                        style: style,
+                      ),
+                    );
+                  }
 
-              String text = "开出${widget.data.giftName}";
-              var style = const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 11,
-              );
-              var size = boundingTextSize(text, style);
+                  String text = "开出${widget.data.giftName}";
+                  var style = const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 11,
+                  );
+                  var size = boundingTextSize(text, style);
 
-              return Container(
-                width: size.width,
-                height: textHeight,
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  text,
-                  style: style,
+                  return Container(
+                    width: size.width,
+                    height: textHeight,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      text,
+                      style: style,
+                    ),
+                  );
+                },
+              )
+          ),
+
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                // todo 去看看
+              },
+              child: Container(
+                width: 51,
+                height: 20,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Color(0XFFB840DB),
+                  borderRadius: BorderRadius.circular(100),
                 ),
-              );
-            },
+                child: const Text(
+                  "去看看",
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
           )
+        ],
       ),
     );
   }
