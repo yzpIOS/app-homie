@@ -78,7 +78,7 @@ class _LevelPageState extends State<WealthLevelPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         UserInfoCtrl.use(uid, builder: $HeaderView),
-        const Box(height: 10, color: AppPalette.background2),
+        const Box(height: 10, color: AppPalette.colorEB),
         child,
       ],
     );
@@ -97,12 +97,20 @@ class _LevelPageState extends State<WealthLevelPage> {
         animation: true,
         animationDuration: 618,
         curve: Curves.easeOutCubic,
-        lineHeight: 4,
+        lineHeight: 4.5,
         padding: Pad.zero,
         barRadius: AppRadius.max,
         percent: percent,
-        progressColor: AppPalette.primary,
-        backgroundColor: AppPalette.cc,
+        progressColor: AppPalette.newMain,
+        backgroundColor: const Color(0xFFCBCBCB),
+        widgetIndicator: Container(
+          width: 9,
+          height: 9,
+          decoration: const BoxDecoration(
+            color: AppPalette.newMain,
+            borderRadius: AppBorderRadius.max,
+          ),
+        ),
       );
     }
 
@@ -114,16 +122,6 @@ class _LevelPageState extends State<WealthLevelPage> {
       final num nextLevelGrowthVal = data['next_level_growth_value'];//下一级总经验值
       final num growthToNextNeedVal = nextLevelGrowthVal - growthVal;//升到下一级所需经验值
 
-      final $GrowthView = Row(
-        children: [
-          WealthyLevelView(level: data['level']),
-          Spacing.w4,
-          Text('经验值：$growthVal'),
-          Spacing.exp,
-          Text('升级所需经验值：$growthToNextNeedVal'),
-        ],
-      );
-
       final $LevelView = Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -133,18 +131,20 @@ class _LevelPageState extends State<WealthLevelPage> {
       );
 
       return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(child: $GrowthView),
+          Text('经验值：$growthVal'),
+          const Spacing(height: 20, flex: null,),
+          $LevelView,
+          const Spacing(height: 6, flex: null,),
           $Indicator(
-            max(
-              0,
-              min(
-                1,
-                (growthVal - levelGrowthValue) / (nextLevelGrowthVal - levelGrowthValue),
-              ),
-            ),
+            max(0, min(1, (growthVal - levelGrowthValue) / (nextLevelGrowthVal - levelGrowthValue),),),
           ),
-          Expanded(child: $LevelView),
+          const Spacing(height: 10, flex: null,),
+          Text(
+            '升级所需经验值：$growthToNextNeedVal',
+            style: const TextStyle(fontSize: 12, color: Colors.black),
+          ),
         ],
       );
     }
@@ -152,7 +152,7 @@ class _LevelPageState extends State<WealthLevelPage> {
     Widget child = Obx(() => builder(dataRx()));
 
     child = DefaultTextStyle(
-      style: const TextStyle(fontSize: 12, color: Colors.black),
+      style: const TextStyle(fontSize: 11, color: Colors.black),
       child: child,
     );
 
@@ -170,7 +170,7 @@ class _LevelPageState extends State<WealthLevelPage> {
             return WealthyLevelView(level: level);
           }),
         ),
-        Positioned(left: 10, right: 10, bottom: 8, height: 32 * 2, child: child),
+        Positioned(left: 10, right: 10, top: 100, height: 100, child: child),
       ],
     );
 

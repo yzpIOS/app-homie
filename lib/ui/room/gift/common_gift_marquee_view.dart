@@ -124,6 +124,8 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
           margin: EdgeInsets.only(left: avatarSize / 2.0),
           child: Image.network(
             widget.data.bannerStyleUrl,
+            width: totalWidth - avatarSize / 2.0,
+            height: avatarSize,
           ),
         )
       ],
