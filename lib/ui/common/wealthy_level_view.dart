@@ -28,7 +28,7 @@ class WealthyLevelView extends StatelessWidget {
 
     child = SizedBox(
       height: height,
-      width: height / 87 * 217,
+      width: height / 84 * 184,
       child: FittedBox(fit: BoxFit.fitHeight, child: child),
     );
 
