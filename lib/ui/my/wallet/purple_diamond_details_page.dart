@@ -40,7 +40,6 @@ class _PurpleDiamondDetailsPageState extends State<PurpleDiamondDetailsPage> {
                   alignment: Alignment.center,
                   child: Column(
                     children: [
-                      Divider(color: Color(0xFFE3E7ED),),
                       Spacing(height: 15, flex: null,),
                       XText(
                         '最多展示6个月的数据',
