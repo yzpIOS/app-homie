@@ -36,7 +36,6 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 80),
       alignment: Alignment.topCenter,
       height: avatarSize,
       width: totalWidth,

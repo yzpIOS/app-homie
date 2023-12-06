@@ -44,7 +44,6 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 80),
       alignment: Alignment.topCenter,
       height: avatarSize,
       width: totalWidth,

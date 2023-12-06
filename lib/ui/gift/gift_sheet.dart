@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class GiftSheet extends StatelessWidget {
+  static bool isPopUp = false;
+
   final GiftSendLogic logic;
 
   final bool hasShowUnityView;
@@ -24,6 +26,9 @@ class GiftSheet extends StatelessWidget {
   final numRx = RxInt(1);
 
   static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
+    if(isPopUp) {
+      return Future.value(null);
+    }
     // 配置请求礼物列表类型 true房间礼物列表  false普通礼物列表
     Get.find<GiftCtrl>().hasShowUnityView = hasShowUnityView;
 
@@ -32,8 +37,17 @@ class GiftSheet extends StatelessWidget {
     // 刷新金币
     WalletCtrl.ins.doRefresh();
 
+    isPopUp = true;
+
     return OrientationSheet.show(
-      child: sheet,
+      child: WillPopScope(
+        child: sheet,
+        onWillPop:() {
+          isPopUp = false;
+          debugPrint("debug ...");
+          return Future.value(true);
+        }
+      ),
       decoration: null,
       direction: logic.layout.value1,
       constraints: logic.layout.value2,
