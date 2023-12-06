@@ -95,6 +95,7 @@ const fw$Bold = FontWeight.w700;
 abstract class AppPalette {
   //App
   static const primary = Color(0xFFBD7CE5);
+  static const newMain = Color(0xFFC979FB);
   static const hint = c9;
   static const tips = Color(0xFF979797);
   static const divider = Color(0x80CCCCCC);
