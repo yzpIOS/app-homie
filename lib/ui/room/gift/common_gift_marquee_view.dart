@@ -197,7 +197,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
 
               // 发送人的：赚送给文案
               if(index == 3) {
-                String text = "赚送给";
+                String text = "赠送给";
                 var style = const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

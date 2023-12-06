@@ -149,15 +149,16 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     final user = widget.users[widget.data.sendId];
     double textHeight = 37;
     return Positioned(
-      left: avatarSize + 12,
+      left: avatarSize,
       top: 15,
+      right: 0,
       child: Stack(
         children: [
           // 漂屏
           Container(
               height: textHeight,
               alignment: Alignment.centerLeft,
-              width: totalWidth - avatarSize,
+              width: totalWidth - avatarSize - 51,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
@@ -268,8 +269,8 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 136,
-            right: 0,
+            left: totalWidth - 112,
+            right: 5,
             child: GestureDetector(
               onTap: () {
                 // todo 去看看
