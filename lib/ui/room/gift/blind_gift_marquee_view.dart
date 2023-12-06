@@ -72,9 +72,9 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          margin: const EdgeInsets.only(left: 6, top: 6),
+          margin: const EdgeInsets.only(left: 8, top: 8),
           child: AsyncAvatar(
-              size: 49.0,
+              size: 46.0,
               uid: widget.data.sendId
           ),
         ),
