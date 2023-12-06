@@ -1,5 +1,6 @@
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -74,12 +75,17 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
     return Row(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // 礼物图片
-        Image.network(
-          widget.data.cover,
-          width: 56,
-          height: 56,
+        ClipRRect(
+          clipBehavior: Clip.hardEdge,
+          borderRadius: BorderRadius.circular(40),
+          child: Image.network(
+            widget.data.cover,
+            width: 56,
+            height: 56,
+          ),
         ),
 
         // X
@@ -108,15 +114,21 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
   }
 
   Widget _createBackground() {
-    return Container(
-      width: 357,
-      margin: EdgeInsets.only(left: 20),
-      height: avatarSize,
-      child: Image.network(
-        widget.data.bannerStyleUrl,
-        width: 357,
-        height: avatarSize,
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          margin: EdgeInsets.only(left: avatarSize / 2.0),
+          width: totalWidth - avatarSize / 2.0,
+          height: avatarSize,
+          child: Image.network(
+            widget.data.bannerStyleUrl,
+            width: totalWidth - avatarSize / 2.0,
+            height: avatarSize,
+          ),
+        )
+      ],
     );
   }
 

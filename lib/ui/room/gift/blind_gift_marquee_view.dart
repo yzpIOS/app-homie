@@ -1,5 +1,6 @@
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -131,16 +132,20 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   }
 
   Widget _createBackground() {
-    // todo 去看看
-    return SizedBox(
-      width: 357,
-      height: avatarSize,
-      child: NetImage(
-        widget.data.bannerStyleUrl ?? "",
-        width: 357,
-        height: avatarSize,
-        fit: BoxFit.cover,
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: totalWidth - avatarSize / 2.0,
+          height: avatarSize,
+          child: Image.network(
+            widget.data.bannerStyleUrl,
+            width: totalWidth - avatarSize / 2.0,
+            height: avatarSize,
+          ),
+        )
+      ],
     );
   }
 
@@ -269,7 +274,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 112,
+            left: totalWidth - 142,
             right: 5,
             child: GestureDetector(
               onTap: () {

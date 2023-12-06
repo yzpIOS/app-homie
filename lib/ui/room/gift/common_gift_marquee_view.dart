@@ -1,5 +1,6 @@
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -28,7 +29,7 @@ class CommonGiftMarqueeView extends StatefulWidget {
 class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
 
   double avatarSize = 60;
-  double totalWidth = 357;
+  double totalWidth = AppSize.width - 26;
 
   final controller = MarqueerController();
 
@@ -72,6 +73,8 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
     }
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         // 礼物图片
@@ -111,15 +114,19 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
   }
 
   Widget _createBackground() {
-    return Container(
-      width: 357,
-      margin: const EdgeInsets.only(left: 20),
-      height: avatarSize,
-      child: Image.network(
-        widget.data.bannerStyleUrl,
-        width: 357,
-        height: avatarSize,
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: totalWidth - avatarSize / 2.0 ,
+          height: avatarSize,
+          margin: EdgeInsets.only(left: avatarSize / 2.0),
+          child: Image.network(
+            widget.data.bannerStyleUrl,
+          ),
+        )
+      ],
     );
   }
 

@@ -67,8 +67,8 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     return AnimeEntity(
       child: data,
       dock: const Tuple3(1.0, 0.0, -1.0),
-      times: const Tuple3(Duration(seconds: 1), Duration(milliseconds: 4600), Duration(milliseconds: 400)),
-      offsetTop: AppSize.safeTop + AppSize.appBar + 10,
+      times: const Tuple3(Duration(seconds: 1), Duration(milliseconds: 5400), Duration(milliseconds: 400)),
+      offsetTop: AppSize.safeTop + AppSize.appBar - 10,
     );
   }
 }
