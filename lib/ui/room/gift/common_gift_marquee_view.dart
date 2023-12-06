@@ -75,10 +75,14 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // 礼物图片
-        Image.network(
-          widget.data.cover,
-          width: 56,
-          height: 56,
+        ClipRRect(
+          clipBehavior: Clip.hardEdge,
+          borderRadius: BorderRadius.circular(40),
+          child: Image.network(
+            widget.data.cover,
+            width: 56,
+            height: 56,
+          ),
         ),
 
         // X
@@ -195,7 +199,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                 );
               }
 
-              // 发送人的：赚送给文案
+              // 发送人的：赚送给文案赠送
               if(index == 3) {
                 String text = "赠送给";
                 var style = const TextStyle(
