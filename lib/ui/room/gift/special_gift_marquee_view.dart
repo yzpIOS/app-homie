@@ -92,7 +92,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
         if(numbers.isNotEmpty)
           Container(
             width: totalLeft,
-            margin: EdgeInsets.only(top: 45),
+            margin: EdgeInsets.only(top: 36),
             height: 21,
             child: Stack(
               children: [
@@ -117,15 +117,17 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
           margin: EdgeInsets.only(left: avatarSize / 2.0),
           width: totalWidth - avatarSize / 2.0,
-          height: avatarSize,
+          height: avatarSize - 14,
           child: Image.network(
             widget.data.bannerStyleUrl,
             width: totalWidth - avatarSize / 2.0,
-            height: avatarSize,
+            height: avatarSize - 14,
+            fit: BoxFit.cover,
           ),
         )
       ],
@@ -138,13 +140,13 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
     final receiver = widget.users[widget.acceptUid];
     return Positioned(
       left: avatarSize,
-      top: 25,
+      top: 16,
       right: 0,
       child: Stack(
         children: [
           SizedBox(
               height: textHeight,
-              width: totalWidth - avatarSize - 51,
+              width: totalWidth - avatarSize - 55,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
@@ -313,7 +315,7 @@ class _SpecialGiftMarqueeViewState extends State<SpecialGiftMarqueeView> {
 
 
           Positioned.fill(
-            left: totalWidth - 102,
+            left: totalWidth - 112,
             right: 5,
             child: GestureDetector(
               onTap: () {

@@ -11,6 +11,7 @@ import 'package:app/store/intro_ctrl.dart';
 import 'package:app/store/link_ctrl.dart';
 import 'package:app/store/local_notify_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/super_gift_broadcast_ctrl.dart';
 import 'package:app/store/sound_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
@@ -173,5 +174,7 @@ class _AppBindings extends Bindings {
 
     Get.put(SoundCtrl());
     Get.put(UnityCtrl());
+
+    Get.put(SuperGiftBroadcastCtrl());
   }
 }

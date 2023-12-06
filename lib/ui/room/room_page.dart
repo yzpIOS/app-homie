@@ -253,8 +253,6 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
         });
       },
     );
-
-    bindGet(SuperGiftBroadcastCtrl(), tag: Slugid.nice().toString());
   }
 
   @override

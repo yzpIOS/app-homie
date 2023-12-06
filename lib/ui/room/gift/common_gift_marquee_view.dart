@@ -78,13 +78,16 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // 礼物图片
-        ClipRRect(
-          clipBehavior: Clip.hardEdge,
-          borderRadius: BorderRadius.circular(40),
-          child: Image.network(
-            widget.data.cover,
-            width: 56,
-            height: 56,
+        Container(
+          margin: EdgeInsets.only(top: 5),
+          child: ClipRRect(
+            clipBehavior: Clip.hardEdge,
+            borderRadius: BorderRadius.circular(40),
+            child: Image.network(
+              widget.data.cover,
+              width: 56,
+              height: 56,
+            ),
           ),
         ),
 
@@ -126,6 +129,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
             widget.data.bannerStyleUrl,
             width: totalWidth - avatarSize / 2.0,
             height: avatarSize,
+            fit: BoxFit.cover,
           ),
         )
       ],
