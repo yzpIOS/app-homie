@@ -156,8 +156,8 @@ class _WelcomeView extends StatelessWidget {
         bgImageName = 'room/welcome_bg_50~59';
       } else {
         bgImageName = 'room/welcome_bg_60+';
-        _boxWidth = 175.5;
-        _boxHeight = 49.5;
+        _boxWidth = 175.6;
+        _boxHeight = 49.6;
         isSpecial = true;
       }
 
@@ -167,7 +167,7 @@ class _WelcomeView extends StatelessWidget {
         crossAxisAlignment: isSpecial ? CrossAxisAlignment.end : CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: Pad(bottom: isSpecial ? 1 : 0),
+            padding: Pad(bottom: isSpecial ? 0.5 : 0),
             child: WealthyLevelView(level: data?.level, height: 11),
           ),
           Flexible(
@@ -192,7 +192,7 @@ class _WelcomeView extends StatelessWidget {
 
       child = DecoratedBox(
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), scale: 3, fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), centerSlice: const Rect.fromLTRB(30, 5, 40, 10), scale: 3, fit: BoxFit.fill,),
         ),
         child: child,
       );
@@ -201,9 +201,8 @@ class _WelcomeView extends StatelessWidget {
       //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
       //   child: child,
       // );
-      child = SizedBox(
-        width: _boxWidth,
-        height: _boxHeight,
+      child = ConstrainedBox(
+        constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
         child: child,
       );
 
