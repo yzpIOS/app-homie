@@ -5,7 +5,6 @@ import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/backpack_page.dart';
-import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
@@ -19,8 +18,7 @@ import 'package:app/ui/room/room_fav_page.dart';
 import 'package:app/ui/task/my_sign_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-
-import 'common/other_details_info_view.dart';
+import 'package:app/ui/my/common/other_details_info_view.dart';
 
 class MyPage2 extends StatefulWidget {
   const MyPage2({super.key});
