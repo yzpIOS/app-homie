@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
@@ -9,7 +11,6 @@ import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 class MyInfoCtrl extends GetxController with GetDisposableMixin {
   final UID uid;
@@ -119,13 +120,15 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     }
   }
 
-  void updateAvatar(AssetEntity asset) {
+  // void updateAvatar(AssetEntity asset) {
+  void updateAvatar(String path) {
     simpleSub(
       () async {
-        final originFile = await asset.originFile;
+        // final originFile = await asset.originFile;
+        // final upFile = await ImageHelp.clip(originFile!, size: asset.size);
 
-        final upFile = await ImageHelp.clip(originFile!, size: asset.size);
-
+        final originFile = File(path);
+        final upFile = await ImageHelp.clip(originFile);
         final data = await Api.Common.upImage(
           attach: FileImageAttach(asset: upFile),
         );

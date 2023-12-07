@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/local_attach.dart';
@@ -8,7 +10,6 @@ import 'package:app/ui/login/init/my_user_init_view_gender_model_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:photo_manager/photo_manager.dart';
 
 /// 注册成功后完善资料（头像、昵称、性别）
 class MyUserInitPerfectInfoPage extends StatefulWidget {
@@ -21,7 +22,7 @@ class MyUserInitPerfectInfoPage extends StatefulWidget {
 }
 
 class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
-  final avatarRx = Rxn<Tuple2<int, AssetEntity>>();
+  final avatarRx = Rxn<Tuple2<int, File>>();
   final inputs = Map.fromIterable(
     const {'昵称'},
     value: (_) => TextEditingController(),
@@ -85,17 +86,17 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
 
   Widget $Avatar(double size) {
     Widget child = Obx(() {
-      final asset = avatarRx()?.value2;
+      final file = avatarRx()?.value2;
 
       return ClipOval(
-        child: asset == null //
+        child: file == null //
             ? Box(
           width: size,
           height: size,
           color: const Color(0xFFEBEBFF),
           alignment: Alignment.center,
           child: Image.asset(IMG.format('login/login_icon_xiangji'), width: 23, scale: 23, fit: BoxFit.contain))
-            : Image(image: asset.toProvider(), width: size, height: size, fit: BoxFit.cover),
+            : Image(image: FileImage(file), width: size, height: size, fit: BoxFit.cover),
       );
     });
 
@@ -247,24 +248,49 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     imagePicker(
       max: 1,
       okCall: (it) async {
-        final asset = it.first;
+        String? filePath = await ImageHelp.cropImage(it.first);
+        if (filePath != null) {
+          final originFile = File(filePath);
+          final upFile = await ImageHelp.clip(originFile);
 
-        simpleSub(
-          Api.Common.upImage(attach: AssetImageAttach(asset: asset), need_audit: true),
-          callback1: (resp) {
-            Tuple4 data = (resp as Tuple4);
-            //头像是否通过审核
-            if (data.value4['pass_audit'] != null && data.value4['pass_audit'] == false) {
-              showToast('头像涉嫌违规');
-            } else {
-              avatarRx(
-                Tuple2(data.value1, asset),
-              );
-            }
-          },
-        );
+          simpleSub(
+            Api.Common.upImage(attach: FileImageAttach(asset: upFile), need_audit: true),
+            callback1: (resp) {
+              Tuple4 data = (resp as Tuple4);
+              //头像是否通过审核
+              if (data.value4['pass_audit'] != null && data.value4['pass_audit'] == false) {
+                showToast('头像涉嫌违规');
+              } else {
+                avatarRx(
+                  Tuple2(data.value1, upFile),
+                );
+              }
+            },
+          );
+        }
       },
     );
+    // imagePicker(
+    //   max: 1,
+    //   okCall: (it) async {
+    //     final asset = it.first;
+    //
+    //     simpleSub(
+    //       Api.Common.upImage(attach: AssetImageAttach(asset: asset), need_audit: true),
+    //       callback1: (resp) {
+    //         Tuple4 data = (resp as Tuple4);
+    //         //头像是否通过审核
+    //         if (data.value4['pass_audit'] != null && data.value4['pass_audit'] == false) {
+    //           showToast('头像涉嫌违规');
+    //         } else {
+    //           avatarRx(
+    //             Tuple2(data.value1, asset),
+    //           );
+    //         }
+    //       },
+    //     );
+    //   },
+    // );
   }
 
   void doSub() async {
