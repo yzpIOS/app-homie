@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import '../common/money_icon.dart';
+import 'package:app/ui/common/money_icon.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 /// 任务中心
 class TaskCenterPage extends StatefulWidget {
@@ -21,14 +24,14 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
       fadeIn: false,
       keepAlive: true,
       builder: (_) {
-        return TaskMainView(taskListType: 1);
+        return const TaskMainView(taskListType: 1);
       },
     ),
     '成长任务': DelayView(
       fadeIn: false,
       keepAlive: true,
       builder: (_) {
-        return TaskMainView(taskListType: 2);
+        return const TaskMainView(taskListType: 2);
       },
     ),
   };
@@ -151,9 +154,10 @@ class TaskMainView extends StatelessWidget {
     return Column(
       children: [
         if (taskListType == 1)
-          const Box(
+          Box(
             color: AppPalette.transparent,
-            height: 100,
+            height: 110,
+            child: $HeaderView(),
           ),
         Expanded(
           child: Material(
@@ -171,6 +175,86 @@ class TaskMainView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget $HeaderView() {
+    Widget $Indicator(double percent) {
+      return LinearPercentIndicator(
+        animation: false,
+        animationDuration: 618,
+        curve: Curves.easeOutCubic,
+        lineHeight: 4.5,
+        padding: Pad.zero,
+        barRadius: AppRadius.max,
+        percent: percent,
+        linearGradient: const LinearGradient(colors: [Color(0xFF18FF00), Color(0xFF9AFF9A)]),
+        backgroundColor: const Color(0xFF868686).withAlpha(80),
+      );
+    }
+
+    Widget $TaskBoxView(String bottomNum, double right, double boxWidth) {
+      return Positioned(
+        right: right,
+        top: 12,
+        child: Column(
+          children: [
+            Image.asset(IMG.format('task/task_box_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
+            XText(
+              bottomNum,
+              style: const TextStyle(fontSize: 10, color: AppPalette.colorA7),
+            )
+          ],
+        ),
+      );
+    }
+    
+    Widget child = Column(
+      children: [
+        const Padding(
+          padding: Pad(horizontal: 12),
+          child: Row(
+            children: [
+              XText('今日活跃度：0'),
+              Expanded(child: Spacing.blank),
+              XText('每日0点刷新'),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const Pad(horizontal: 19),
+            child: LayoutBuilder(
+              builder: (_ , c) {
+                const boxWidth = 36.0;
+                final tenPercentWidth = (c.maxWidth - boxWidth * 4.0) / 10.0;
+
+                return Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Positioned.fill(child: $Indicator(
+                      max(0, min(1, 0.5,),),
+                    ),),
+                    $TaskBoxView('100', 0, boxWidth),
+                    $TaskBoxView('70', 3 * tenPercentWidth + boxWidth, boxWidth),
+                    $TaskBoxView('40', 6 * tenPercentWidth + 2 * boxWidth, boxWidth),
+                    $TaskBoxView('10', 9 * tenPercentWidth + 3 * boxWidth, boxWidth),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+        Image.asset(IMG.format('task/task_box_desc_bg'), width: 195, height: 31.6, scale: 3,),
+        const Spacing(height: 3, flex: null,),
+      ],
+    );
+
+    child = DefaultTextStyle(
+      style: const TextStyle(fontSize: 12, color: Colors.white),
+      child: child,
+    );
+
+    return child;
   }
 }
 
