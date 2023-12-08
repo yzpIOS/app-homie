@@ -16,6 +16,7 @@ import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';
 import 'package:app/ui/room/room_fav_page.dart';
 import 'package:app/ui/task/my_sign_view.dart';
+import 'package:app/ui/task/task_center_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
@@ -166,7 +167,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const BackpackPage());
         break;
       case '我的任务':
-        SignDialog.show(isManual: true);
+        // SignDialog.show(isManual: true);
+        Get.to(() => const TaskCenterPage());
         break;
       case '我的动态':
         Get.to(() => const MyMomentPage());
