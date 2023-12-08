@@ -3,7 +3,6 @@ import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-
 import '../common/money_icon.dart';
 
 /// 任务中心
@@ -17,11 +16,36 @@ class TaskCenterPage extends StatefulWidget {
 }
 
 class _TaskCenterPageState extends State<TaskCenterPage> {
-  final tabs = {
-    '每日任务': const TaskMainView(taskListType: 1),
-    '成长任务': const TaskMainView(taskListType: 2),
+  final tabs = <String, Widget>{
+    '每日任务': DelayView(
+      fadeIn: false,
+      keepAlive: true,
+      builder: (_) {
+        return TaskMainView(taskListType: 1);
+      },
+    ),
+    '成长任务': DelayView(
+      fadeIn: false,
+      keepAlive: true,
+      builder: (_) {
+        return TaskMainView(taskListType: 2);
+      },
+    ),
   };
+
+  // 控制红点显示的标志位列表
+  final _showRedDotList = RxList([true, false]);
+
   static double bgHeight = AppSize.width / 375 * 221.5;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+    //   _showRedDotList[0] = false;
+    // });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +78,35 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
       labelColor: Colors.white,
       unselectedLabelColor: Colors.white,
       padding: const Pad(vertical: (AppSize.appBar - 30) / 2),
-      tabs: tabs.keys.map((it) => Tab(text: it, height: 30,)).toList(growable: false),
+      tabs: [
+        _buildTab(0, tabs.keys.toList(growable: false).first),
+        _buildTab(1, tabs.keys.toList(growable: false).last),
+      ],
     );
 
     return Align(
-      alignment: Alignment.bottomCenter,
-      child:child
+        alignment: Alignment.bottomCenter,
+        child: child
     );
+  }
+
+  // 带红点的tab
+  Widget _buildTab(int index, String title) {
+    return Obx(() {
+      bool showRedDot = _showRedDotList[index];
+      return Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Tab(text: title, height: 30,),
+          if (showRedDot)
+            Positioned(
+              top: 2,
+              right: -4,
+              child: Image.asset(IMG.format('task/task_tips_red_dot'), width: 10, height: 10, scale: 3,),
+            ),
+        ],
+      );
+    });
   }
 
   Widget $Body() {
@@ -97,7 +143,7 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
 }
 
 class TaskMainView extends StatelessWidget {
-  final int taskListType;//任务列表类型 1：每日任务，2：成长任务
+  final int taskListType; //任务列表类型 1：每日任务，2：成长任务
   const TaskMainView({super.key, required this.taskListType});
 
   @override
@@ -129,8 +175,8 @@ class TaskMainView extends StatelessWidget {
 }
 
 
-class _DetailsListView extends SimplePageView<Map> {
-  final int taskListType;//任务列表类型 1：每日任务，2：成长任务
+class _DetailsListView extends SimpleDataView<Map> {
+  final int taskListType; //任务列表类型 1：每日任务，2：成长任务
   _DetailsListView(this.taskListType);
 
   @override
@@ -142,7 +188,9 @@ class _DetailsListView extends SimplePageView<Map> {
   }
 
   @override
-  Future fetchPage(PageNum page) => Api.Finance.diamondDetail(type: taskListType, page: page);
+  Future fetch() =>
+      Api.Finance.diamondDetail(
+        type: taskListType, page: const PageNum(index: 0, size: 999),);
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
@@ -170,12 +218,16 @@ class _ItemView extends StatelessWidget {
               children: [
                 XText(
                   data['mainName'] ?? '每日登录',
-                  style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Medium),
+                  style: const TextStyle(fontSize: 14,
+                      color: AppPalette.txtDark,
+                      fontWeight: fw$Medium),
                 ),
                 const Spacing(height: 4, flex: null,),
                 XText(
                   data['subName'] ?? '每日登录游戏1次',
-                  style: const TextStyle(fontSize: 12, color: AppPalette.colorA7, fontWeight: fw$Regular),
+                  style: const TextStyle(fontSize: 12,
+                      color: AppPalette.colorA7,
+                      fontWeight: fw$Regular),
                 ),
                 const Spacing(height: 4, flex: null,),
                 const XRichText(
@@ -185,7 +237,10 @@ class _ItemView extends StatelessWidget {
                         child: MoneyIcon(type: MoneyType.diamond, size: 21),
                         alignment: PlaceholderAlignment.middle,
                       ),
-                      TextSpan(text: 'x5', style: TextStyle(fontSize: 12, color: AppPalette.txtDark, fontWeight: fw$Medium),),
+                      TextSpan(text: 'x5',
+                        style: TextStyle(fontSize: 12,
+                            color: AppPalette.txtDark,
+                            fontWeight: fw$Medium),),
                     ],
                   ),
                 ),
@@ -205,7 +260,8 @@ class _ItemView extends StatelessWidget {
             label: '领取',
             width: 55,
             height: 23,
-            textStyle: const TextStyle(fontSize: 12, color: AppPalette.txtWhite),
+            textStyle: const TextStyle(
+                fontSize: 12, color: AppPalette.txtWhite),
             onTap: () {
 
             },
