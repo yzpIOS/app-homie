@@ -71,10 +71,12 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   Widget _Action1() {
     final items = [
+      '开直播',
       '我的钱包',
       '我的装扮',
       '我的背包',
       '我的任务',
+      '我的称号',
     ];
 
     Widget itemBuilder(String item) {
@@ -199,7 +201,7 @@ class _HeaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     // return $Body();
     return SizedBox(
-      height: bgHeight + 104,
+      height: bgHeight + 85,
       child: $Body(),
     );
   }
@@ -224,7 +226,7 @@ class _HeaderView extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: 0,
-          height: 60,
+          height: 35,
           child: $NumView(),
         ),
       ],
