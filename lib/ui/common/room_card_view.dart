@@ -1,8 +1,6 @@
 import 'package:app/common/theme.dart';
-import 'package:app/ui/room/widgets/icon_button.dart';
 import 'package:app/widgets.dart';
-
-import '../../tools.dart';
+import 'package:app/tools.dart';
 
 class RoomCardView extends StatelessWidget {
   final String? image;
