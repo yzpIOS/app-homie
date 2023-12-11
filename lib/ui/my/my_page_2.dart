@@ -119,13 +119,17 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '实名认证',
       '联系客服',
       '设置',
+      '主播认证',
     ];
 
     Widget itemBuilder(String item) {
       Widget child = Column(
         children: [
           const Spacing(flex: 10),
-          SvgView(SVG.$('my/$item'), width: 40, height: 40, permanent: true),
+          if (item == '主播认证')
+            Image.asset(IMG.format('my/$item'), width: 30, height: 30,),
+          if (item != '主播认证')
+            SvgView(SVG.$('my/$item'), width: 40, height: 40, permanent: true),
           const Spacing(flex: 5),
           XText(
             item,
