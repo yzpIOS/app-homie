@@ -22,7 +22,7 @@ class IconBtn extends StatelessWidget {
         child: _icon == null
             ? SizedBox(width: size, height: size)
             : IconBtnDecor(
-                child: SvgView(SVG.$('room/$_icon'), width: size, height: size),
+                child: SvgView(SVG.$('room/$_icon'), width: size, height: size, color: Colors.red,),
               ),
       ),
     );
