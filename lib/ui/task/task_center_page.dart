@@ -234,18 +234,48 @@ class TaskMainView extends StatelessWidget {
                     Positioned.fill(child: $Indicator(
                       max(0, min(1, 0.5,),),
                     ),),
-                    $TaskBoxView('100', 0, boxWidth),
-                    $TaskBoxView('70', 3 * tenPercentWidth + boxWidth, boxWidth),
-                    $TaskBoxView('40', 6 * tenPercentWidth + 2 * boxWidth, boxWidth),
-                    $TaskBoxView('10', 9 * tenPercentWidth + 3 * boxWidth, boxWidth),
+                    $TaskBoxView('100', -3, boxWidth),
+                    $TaskBoxView('70', 3 * tenPercentWidth + boxWidth - 3, boxWidth),
+                    $TaskBoxView('40', 6 * tenPercentWidth + 2 * boxWidth - 3, boxWidth),
+                    $TaskBoxView('10', 9 * tenPercentWidth + 3 * boxWidth - 3, boxWidth),
                   ],
                 );
               },
             ),
           ),
         ),
-        Image.asset(IMG.format('task/task_box_desc_bg'), width: 195, height: 31.6, scale: 3,),
-        const Spacing(height: 3, flex: null,),
+        Container(
+          width: 195,
+          height: 31.6,
+          margin: const Pad(bottom: 4),
+          child: Stack(
+            children: [
+              Positioned.fill(child: Image.asset(IMG.format('task/task_box_desc_bg'), scale: 3, fit: BoxFit.cover,),),
+              Positioned(
+                bottom: 3.5,
+                left: 0,
+                right: 0,
+                child: XRichText(
+                  TextSpan(
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: SvgView(SVG.$('cz/紫钻'), width: 21, height: 21),
+                      ),
+                      const TextSpan(text: '  打开宝箱可获得，'),
+                      const TextSpan(
+                        text: '金币或体力点',
+                        style: TextStyle(fontSize: 11, color: Color(0xFFFF000C), fontWeight: fw$Regular),
+                      ),
+                    ],
+                  ),
+                  style: const TextStyle(fontSize: 11, color: AppPalette.txtDark, fontWeight: fw$Regular),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
 
