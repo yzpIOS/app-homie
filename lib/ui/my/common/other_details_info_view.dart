@@ -43,11 +43,11 @@ class OtherDetailsInfoView extends StatelessWidget {
         //     child: SelectableText('ID $account'),
         //   ),
         // ],
-        if (level != null) WealthyLevelView(level: level!, height: 17, uid: uid),
+        if (level != null) WealthyLevelView(level: level!, height: 20, uid: uid),
         if (ageShow != null && ageShow!.isNotEmpty) $OneItemView('${ageShow!}岁'),
         if (starSign != null && starSign!.isNotEmpty) $OneItemView(starSign!),
         if (location != null && location!.isNotEmpty) $OneItemView(location!),
-      ].separator(Spacing.w4).toList(growable: false),
+      ].separator(Spacing.w5).toList(growable: false),
     );
   }
 }

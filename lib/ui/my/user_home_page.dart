@@ -66,9 +66,9 @@ class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
     Api.UserInfo.home(uid).then((value) {
       var curMap = value as Map;
       if(curMap.containsKey("gift_wall_items") == true && (curMap["gift_wall_items"] as List).length > 0) {
-        _expHeight = bgHeight + 112 + 153 * (AppSize.width / 375);//434;
+        _expHeight = bgHeight + 107 + 153 * (AppSize.width / 375);//434;
       } else {
-        _expHeight = bgHeight + 112;//404 - 153;
+        _expHeight = bgHeight + 107;//404 - 153;
       }
       moreRx.value = value as Map;
     });
@@ -216,7 +216,7 @@ class _InfoView extends StatelessWidget {
           child: $UserView(),
         ),
         Positioned(
-          top: bgHeight + 50,
+          top: bgHeight + 45,
           left: 0,
           right: 0,
           child: $InfoView(),
@@ -410,7 +410,7 @@ class _InfoView extends StatelessWidget {
   Widget $NumView() {
     Widget itemBuilder(MapEntry<String, String> item) {
       if (item.value == '分割线') {
-        return const Box(width: 1, height: 10, color: AppPalette.color71);
+        return const Box(width: 1, height: 8.5, color: AppPalette.color71);
       }
       return Expanded(
         child: Row(

@@ -173,10 +173,13 @@ class TaskMainView extends StatelessWidget {
             // ),
           ),
         ),
+        if (taskListType == 2)
+          $BatchReceiveView(),
       ],
     );
   }
 
+  /// 头部活跃度视图
   Widget $HeaderView() {
     Widget $Indicator(double percent) {
       return LinearPercentIndicator(
@@ -286,6 +289,42 @@ class TaskMainView extends StatelessWidget {
 
     return child;
   }
+
+  /// 批量领取视图
+  Widget $BatchReceiveView() {
+    Widget child = Row(
+      children: [
+        const XRichText(
+          TextSpan(
+            children: [
+              TextSpan(text: '共'),
+              TextSpan(
+                text: '3',
+                style: TextStyle(fontSize: 13, color: Color(0xFFBD7BE5), fontWeight: fw$Regular),
+              ),
+              TextSpan(text: '个任务奖励未领取'),
+            ],
+            style: TextStyle(fontSize: 13, color: AppPalette.colorA7, fontWeight: fw$Regular),
+          ),
+        ),
+        Spacing.exp,
+        XTextBtn(
+          width: 116,
+          height: 30,
+          label: '一键领取',
+          textStyle: const TextStyle(fontSize: 15, color: AppPalette.txtWhite, fontWeight: fw$Regular),
+        ),
+      ],
+    );
+
+    child = Container(
+      padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
+      height: 53,
+      child: child,
+    );
+
+    return child;
+  }
 }
 
 
@@ -296,7 +335,7 @@ class _DetailsListView extends SimpleDataView<Map> {
   @override
   BaseConfig get config {
     return ListConfig(
-      padding: Pad(horizontal: 18, bottom: 10 + AppSize.safeBottom),
+      padding: Pad(horizontal: 18, bottom: AppSize.safeBottom),
       divider: const Divider(color: AppPalette.colorEB,),
     );
   }
