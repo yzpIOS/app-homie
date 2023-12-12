@@ -14,6 +14,7 @@ import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/my/setting/setting_page.dart';
+import 'package:app/ui/my/title/my_title_page.dart';
 import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';
 import 'package:app/ui/room/room_fav_page.dart';
@@ -174,7 +175,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const TaskCenterPage());
         break;
       case '我的称号':
-
+        Get.to(() => const MyTitlePage());
         break;
       case '我的动态':
         Get.to(() => const MyMomentPage());
