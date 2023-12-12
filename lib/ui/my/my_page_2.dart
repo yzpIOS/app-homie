@@ -2,25 +2,27 @@ import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/backpack_page.dart';
-import 'package:app/ui/my/common/nick_view.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
+import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/my/setting/setting_page.dart';
+import 'package:app/ui/my/title/my_title_page.dart';
 import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';
 import 'package:app/ui/room/room_fav_page.dart';
 import 'package:app/ui/task/my_sign_view.dart';
+import 'package:app/ui/task/task_center_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-
-import 'common/other_details_info_view.dart';
+import 'package:app/ui/my/common/other_details_info_view.dart';
 
 class MyPage2 extends StatefulWidget {
   const MyPage2({super.key});
@@ -72,21 +74,23 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   Widget _Action1() {
     final items = [
+      '开直播',
       '我的钱包',
       '我的装扮',
       '我的背包',
       '我的任务',
+      '我的称号',
+      '首充礼包',
     ];
 
     Widget itemBuilder(String item) {
       Widget child = Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // Spacing.blank,
           Image.asset(IMG.format('my/$item'), width: 70, height: 70, fit: BoxFit.contain, scale: 3),
           XText(
             item,
-            style: const TextStyle(fontSize: 14, color: Colors.black),
+            style: const TextStyle(fontSize: 15, color: Colors.black),
           ),
         ],
       );
@@ -100,12 +104,12 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
     }
 
     return GridView(
-      padding: Pad.zero,
+      padding: const Pad(vertical: 5,),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        mainAxisExtent: 118,
+        mainAxisExtent: 115,
       ),
       children: items.map(itemBuilder).toList(growable: false),
     );
@@ -118,14 +122,15 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '实名认证',
       '联系客服',
       '设置',
+      '主播认证',
     ];
 
     Widget itemBuilder(String item) {
       Widget child = Column(
         children: [
           const Spacing(flex: 10),
-          SvgView(SVG.$('my/$item'), width: 40, height: 40, permanent: true),
-          const Spacing(flex: 5),
+          Image.asset(IMG.format('my/$item'), width: 40, height: 40, scale: 3,),
+          const Spacing(flex: 10),
           XText(
             item,
             style: const TextStyle(fontSize: 14, color: Colors.black),
@@ -142,14 +147,13 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
     }
 
     return GridView(
-      padding: const Pad(horizontal: 10, vertical: 10),
+      padding: const Pad(vertical: 5),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
         mainAxisSpacing: 10,
-        crossAxisSpacing: 6,
-        mainAxisExtent: 77,
+        mainAxisExtent: 70,
       ),
       children: items.map(itemBuilder).toList(growable: false),
     );
@@ -168,7 +172,14 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const BackpackPage());
         break;
       case '我的任务':
-        SignDialog.show(isManual: true);
+        // SignDialog.show(isManual: true);
+        Get.to(() => const TaskCenterPage());
+        break;
+      case '我的称号':
+        Get.to(() => const MyTitlePage());
+        break;
+      case '首充礼包':
+        
         break;
       case '我的动态':
         Get.to(() => const MyMomentPage());
@@ -185,7 +196,22 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '足迹与关注':
         Get.to(() => const RoomFavPage());
         break;
+      case '主播认证':
+        toRealIdentity2Page();
+        break;
     }
+  }
+
+  void toRealIdentity2Page() async {
+    // 已认证
+    if (OAuthCtrl.isFaceValidate) {
+      showToast('您已认证');
+      return;
+    }
+    // 未认证，去认证
+    await Get.to(() => const RealIdentity2Page());
+    // 刷新用户数据
+    OAuthCtrl.ins.useAuth(OAuthCtrl.token ?? "");
   }
 }
 
@@ -199,7 +225,7 @@ class _HeaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     // return $Body();
     return SizedBox(
-      height: bgHeight + 104,
+      height: bgHeight + 85,
       child: $Body(),
     );
   }
@@ -224,7 +250,7 @@ class _HeaderView extends StatelessWidget {
           left: 0,
           right: 0,
           bottom: 0,
-          height: 60,
+          height: 35,
           child: $NumView(),
         ),
       ],
@@ -336,7 +362,7 @@ class _HeaderView extends StatelessWidget {
   Widget $NumView() {
     Widget itemBuilder(MapEntry<String, String> item) {
       if (item.value == '分割线') {
-        return const Box(width: 1, height: 10, color: AppPalette.color71);
+        return const Box(width: 1, height: 8.5, color: AppPalette.color71);
       }
       return Expanded(
         child: OpacityButton(

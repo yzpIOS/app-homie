@@ -1,13 +1,17 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
 import 'package:app/tools.dart' hide Option;
+import 'package:app/widgets/image/asset_entity_extension.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
 import 'package:image/image.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_editor/image_editor.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class ImageHelp {
   ImageHelp._();
@@ -52,6 +56,42 @@ class ImageHelp {
     return (await ImageEditor.editFileImageAndGetFile(file: file, imageEditorOption: option))!;
   }
 
+  /// 裁剪图片
+  static Future<String?> cropImage(AssetEntity asset) async {
+    final croppedFile = await ImageCropper().cropImage(
+      sourcePath: await asset.originPath,
+      compressFormat: ImageCompressFormat.jpg,
+      compressQuality: 100,
+      cropStyle: CropStyle.circle,
+      aspectRatioPresets: [CropAspectRatioPreset.square,],
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: '裁剪',
+          hideBottomControls: true,
+          toolbarColor: AppPalette.txtWhite,
+          toolbarWidgetColor: AppPalette.txtDark,
+          cropFrameColor: AppPalette.transparent,
+          showCropGrid: false,
+        ),
+        IOSUiSettings(
+          rotateClockwiseButtonHidden: true,
+          hidesNavigationBar: true,
+          rotateButtonsHidden: true,
+          resetButtonHidden: true,
+          aspectRatioPickerButtonHidden: true,
+          doneButtonTitle: '确定',
+          cancelButtonTitle: '取消',
+        ),
+      ],
+    );
+
+    if (croppedFile != null) {
+      return croppedFile.path;
+    }
+    return null;
+  }
+
+  /// 压缩图片
   static Future<File> clip(File file, {Size? size, int minSize = 256, int maxSize = 1080}) async {
     final info = await ImageHelp.getSize(file, orElse: size);
 

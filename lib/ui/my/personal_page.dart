@@ -32,7 +32,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
       tempBirthDay = '${birthDay.year}-${birthDay.month}-${birthDay.day}';
     }
 
-    final items = <Tuple4<String?, String, String?, VoidCallback?>>[
+    final items = <Tuple4<String?, String, String?, void Function()?>>[
       Tuple4(
         'my/编辑昵称',
         '昵称',
@@ -171,10 +171,21 @@ class PersonalPage extends GetView<MyInfoCtrl> {
             ),
           ],
         ),
-        onTap: () => imagePicker(
-          max: 1,
-          okCall: (it) => controller.updateAvatar(it.first),
-        ),
+        onTap: () {
+          imagePicker(
+            max: 1,
+            okCall: (it) async {
+              String? filePath = await ImageHelp.cropImage(it.first);
+              if (filePath != null) {
+                controller.updateAvatar(filePath);
+              }
+            },
+          );
+        },
+        // onTap: () => imagePicker(
+        //   max: 1,
+        //   okCall: (it) => controller.updateAvatar(it.first),
+        // ),
       ),
     );
   }
