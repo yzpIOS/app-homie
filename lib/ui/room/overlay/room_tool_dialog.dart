@@ -16,7 +16,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
   static Future<String?> show() {
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-      color: Color(0xCC333333),
+      color: Colors.white
     );
 
     return OrientationSheet.show<String>(
@@ -31,8 +31,9 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
   Widget build(BuildContext context) {
     return OrientationSheet.scaffold(
       title: '工具',
-      textStyle: const TextStyle(color: Colors.white),
+      textStyle: const TextStyle(color: Colors.black),
       body: $BodyView(),
+      titleWidget: createTitle(),
     );
   }
 
@@ -51,6 +52,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
         '黑名单',
         '清零',
       ],
+      if(isOwner || isManager) '全员禁麦',
       // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',
@@ -71,14 +73,11 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (item == '发起挑战')
-          Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
-        if (item != '发起挑战')
-          SvgView(SVG.$('room/setting/$item'), width: 34, height: 34),
+        Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
         Spacing.h2,
         XText(
           item,
-          style: const TextStyle(fontSize: 12, color: Colors.white),
+          style: const TextStyle(fontSize: 12, color: Colors.black),
         ),
       ],
     );
@@ -89,5 +88,24 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     );
 
     return child;
+  }
+
+  Widget createTitle() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(width: 24,),
+        const Expanded(
+          child: Center(
+            child: DefaultTextStyle(
+              style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
+              child: XText("工具", style: TextStyle(color: Colors.black),),
+            ),
+          ),
+        ),
+        Image.asset(IMG.format("close"), width: 14, height: 14,),
+        SizedBox(width: 10,),
+      ],
+    );
   }
 }

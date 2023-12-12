@@ -113,8 +113,8 @@ class OrientationSheet extends StatelessWidget {
     return child;
   }
 
-  static Widget scaffold({required String title, required Widget body, TextStyle? textStyle}) {
-    Widget child = DefaultTextStyle(
+  static Widget scaffold({required String title, required Widget body, TextStyle? textStyle, Widget? titleWidget}) {
+    Widget child = titleWidget ?? DefaultTextStyle(
       style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
       child: XText(title, style: textStyle),
     );
