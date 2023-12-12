@@ -3,7 +3,6 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:wechat_assets_picker_demo/l10n/gen/app_localizations.dart';
 
 extension BuildContextExtension on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;

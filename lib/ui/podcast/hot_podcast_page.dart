@@ -14,6 +14,8 @@ import 'package:app/ui/room/gift/blind_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/cloth_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/common_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/special_gift_marquee_view.dart';
+import 'package:app/ui/room/persion/apply_mic_dialog.dart';
+import 'package:app/ui/room/persion/receive_application_mic_dialog.dart';
 import 'package:app/ui/room/user/accept_enter_room.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/mic_user_online_manager_sheet.dart';
@@ -125,6 +127,10 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
                 // Get.insertOverlay(CommonGiftMarqueeView());
                 // Get.insertOverlay(ClothGiftMarqueeView());
                 // Get.insertOverlay(SpecialGiftMarqueeView());
+
+                // 个人麦处理
+                // ApplyMicDialog.show();
+                ReceiveApplicationMicDialog.show();
                 return;
               }
               Get.to(() => const HomeSearchPage());

@@ -1,3 +1,4 @@
+import 'package:app/common/theme.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
@@ -30,7 +31,48 @@ class RoomItemView extends StatelessWidget {
     child = Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        child,
+        Stack(
+          alignment: Alignment.bottomLeft,
+          children: [
+            child,
+
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color(0xFF000000).withAlpha(100),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  margin: EdgeInsets.only(left: 3, bottom: 3),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                  child: Text(
+                    "100人在线",
+                    maxLines: 1,
+                    style: TextStyle(
+                      overflow: TextOverflow.ellipsis,
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500
+                    ),
+                  ),
+                ),
+                Expanded(child: SizedBox()),
+                Container(
+                  width: 16,
+                  height: 16,
+                  margin: EdgeInsets.only(right: 5),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withAlpha(80),
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Image.asset(IMG.format("room/room_persion"), width: 12, height: 12,),
+                )
+              ],
+            )
+          ],
+        ),
         Spacing.exp,
         XText(data['room_name'] ?? '', style: textStyle),
       ],

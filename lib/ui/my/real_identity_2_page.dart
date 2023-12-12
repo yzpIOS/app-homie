@@ -33,6 +33,8 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
     },
   );
 
+  bool check = false;
+
   @override
   void initState() {
     super.initState();
@@ -63,28 +65,34 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
       body: Padding(
         padding: const Pad(horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Spacing.h32,
+            _createTitle(),
+            const SizedBox(height: 18,),
             FormInputView(
               controller: inputs['姓名'],
               hint: '真实姓名',
               autofocus: true,
+              borderRadius: BorderRadius.circular(6),
+              bgColor: const Color(0xFFEBEBFF),
             ),
             Spacing.h10,
             FormInputView(
               controller: inputs['证件号码'],
               hint: '18位身份证号码',
               inputFormatters: [maskFormatter],
+              borderRadius: BorderRadius.circular(6),
+              bgColor: const Color(0xFFEBEBFF),
             ),
             Spacing.exp,
-            Padding(
-              padding: Pad(horizontal: 40, bottom: AppSize.safeBottom + 40),
-              child: XTextBtn(
-                label: '确定',
-                textStyle: const TextStyle(fontSize: 16, fontWeight: fw$Medium),
-                onTap: doSub,
-              ),
+
+            _createAccord(),
+            SizedBox(height: 12,),
+            Align(
+              alignment: Alignment.topCenter,
+              child: _createBottom(),
             ),
+            SizedBox(height: AppSize.safeBottom + 40,)
           ],
         ),
       ),
@@ -134,6 +142,71 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
 
         showToast('打开失败');
       },
+    );
+  }
+
+  Widget _createTitle() {
+    return Text(
+      "主播主证",
+      style: TextStyle(
+        fontSize: 15,
+        color: Colors.black,
+      ),
+    );
+  }
+
+  Widget _createAccord() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            check = !check;
+            setState(() { });
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Image.asset(IMG.format(check ? "checkbox_checked_1" : "checkbox_unchecked_1"), width: 13, height: 13,),
+        ),
+        SizedBox(width: 3,),
+        Text(
+          "我已阅读并同意",
+          style: TextStyle(
+            fontSize: 11,
+            color: Color(0XFFA9A9A9),
+          ),
+        ),
+        Text(
+          "《主播协议》",
+          style: TextStyle(
+            fontSize: 11,
+            color: Color(0XFFBD7BE5),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _createBottom() {
+    return GestureDetector(
+      onTap: doSub,
+      child: Container(
+        width: 305,
+        height: 42,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Color(0xFFB17FDD),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Text(
+          "确 定",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
     );
   }
 }
