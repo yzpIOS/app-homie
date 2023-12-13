@@ -163,7 +163,7 @@ class _ItemView extends StatelessWidget {
 
           return val == null
               ? child
-              : _MicAnimeBuilder(
+              : MicAnimeBuilder(
                   value: val,
                   child: child,
                   builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
@@ -308,19 +308,19 @@ class _MicView extends StatelessWidget {
   }
 }
 
-class _MicAnimeBuilder extends StatefulWidget {
+class MicAnimeBuilder extends StatefulWidget {
   final double value;
   final Widget? child;
 
   final ValueWidgetBuilder<Decoration> builder;
 
-  const _MicAnimeBuilder({required this.value, required this.builder, this.child});
+  const MicAnimeBuilder({required this.value, required this.builder, this.child});
 
   @override
-  State<_MicAnimeBuilder> createState() => _MicAnimeBuilderState();
+  State<MicAnimeBuilder> createState() => _MicAnimeBuilderState();
 }
 
-class _MicAnimeBuilderState extends State<_MicAnimeBuilder> with SingleTickerProviderStateMixin {
+class _MicAnimeBuilderState extends State<MicAnimeBuilder> with SingleTickerProviderStateMixin {
   late final animation = AnimationController(vsync: this);
 
   final tween = DecorationTween(
@@ -341,7 +341,7 @@ class _MicAnimeBuilderState extends State<_MicAnimeBuilder> with SingleTickerPro
   }
 
   @override
-  void didUpdateWidget(_MicAnimeBuilder oldWidget) {
+  void didUpdateWidget(MicAnimeBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     _doPlay();

@@ -84,6 +84,10 @@ class RoomItemView extends StatelessWidget {
   }
 
   void toRoom() {
+    if(Env.isDebug) {
+      Get.find<RoomManagerCtrl>().toPersonRoom(roomId: data['room_id'] ?? data['id']);
+      return;
+    }
     Get.find<RoomManagerCtrl>().toRoom(roomId: data['room_id'] ?? data['id']);
   }
 }

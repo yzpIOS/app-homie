@@ -9,6 +9,7 @@ import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/persion/person_room_overlay.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
@@ -46,7 +47,12 @@ export 'package:app/model/enum/room_role_type.dart';
 typedef RoomBaseInfo = Map;
 typedef RoomRunInfo = Map;
 
-T sceneCtrl<T extends SceneCtrl>() => Get.find<SceneCtrl>(tag: '$T') as T;
+T sceneCtrl<T extends SceneCtrl>() {
+  if(RoomManagerCtrl.ins.sceneCtrl2 is T) {
+    return RoomManagerCtrl.ins.sceneCtrl2 as T;
+  }
+  return Get.find<SceneCtrl>(tag: '$T') as T;
+}
 
 abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin, ReadyMixin, ReadyCtrlMixin {
   final String? pwd;
@@ -591,5 +597,65 @@ class SquareCtrl extends SceneCtrl {
         height: 44,
         child: const SqureRoomHeader(),
     );
+  }
+}
+
+///
+/// 个人房的controller
+///
+class PersonRoomCtrl extends RoomCtrl {
+
+  PersonRoomCtrl({required super.info, required super.pwd, required super.overlay});
+
+
+  @override
+  Widget createHeader() {
+    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
+
+    return Obx(() {
+      final showMic = micPanelRx();
+      final freeMic = freeMicRx();
+
+      //公会房且不在pk中，才显示麦位
+      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
+
+      final showMicPanel = maxMic > 0 && !freeMic;
+      return Positioned(
+        top: 0,
+        left: 0,
+        right: 0,
+        child: PersonRoomHeader(
+          showMicPanel: showMicPanel && topMicMode,
+          showMic: showMic,
+          isLandscape: isLandscape,
+          onItemClick: (action) {
+            switch (action) {
+              case '最小化':
+                try {
+                  keepState = true;
+                  // 公会房通知下线
+                  if(roomType == RoomType.guild || roomType == RoomType.customize) {
+                    C_GoBack c_goBack = C_GoBack.create();
+                    c_goBack.roomId = Int64(roomId);
+                    SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
+                  }
+                } catch(e, s) {
+                }
+                Get.back();
+                break;
+              case '公告':
+                noticePanelRx.toggle();
+                break;
+              case '用户':
+                OrientationSheet.show(
+                  child: OnlineUserPage(roomId: roomId),
+                  direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+                );
+                break;
+            }
+          },
+        ),
+      );
+    });
   }
 }

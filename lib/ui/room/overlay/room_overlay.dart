@@ -297,16 +297,8 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
     );
 
     if (showMic) {
-      child = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          child,
-          Padding(
-            padding: const Pad(top: 28, bottom: 10),
-            child: MicUser$Header(myRole: controller.getRole(OAuthCtrl.uid)),
-          ),
-        ],
-      );
+      // 麦列表
+      child = createMicList(child);
 
       child = DecoratedBox(
         decoration: const ShapeDecoration(
@@ -336,6 +328,19 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
     }
 
     return child;
+  }
+
+  Widget createMicList(Widget child) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        child,
+        Padding(
+          padding: const Pad(top: 28, bottom: 10),
+          child: MicUser$Header(myRole: controller.getRole(OAuthCtrl.uid)),
+        ),
+      ],
+    );
   }
 
   Widget $AppBar([List<Widget> actions = const []]) {

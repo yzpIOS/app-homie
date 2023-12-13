@@ -16,6 +16,7 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/persion/person_room_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
 import 'package:app/ui/room/user/accept_challenge_view.dart';
@@ -420,6 +421,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
   bool tempCallCloseRoom = true;
 
+  ///
+  /// 公会房
+  ///
   void toRoom({required int roomId, Map? data, bool off = false}) {
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
@@ -430,6 +434,24 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       off: off,
       infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
+    );
+    // reset tempCallCloseRoom param
+    tempCallCloseRoom = true;
+  }
+
+  ///
+  /// 个人房
+  ///
+  void toPersonRoom({required int roomId, Map? data, bool off = false}) {
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
+      return;
+    }
+    _preClickTime = DateTime.now().millisecondsSinceEpoch;
+    _show(
+      roomId: roomId,
+      off: off,
+      infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
+      storeCreate: (it) => PersonRoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => PersonRoomOverlay()),
     );
     // reset tempCallCloseRoom param
     tempCallCloseRoom = true;

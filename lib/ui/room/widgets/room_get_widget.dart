@@ -8,8 +8,9 @@ abstract class RoomGetView<T extends SceneCtrl> extends GetView<SceneCtrl> {
 
   @override
   T get controller {
-    if (T == SceneCtrl) {
-      return Get.find<RoomManagerCtrl>().sceneCtrl as T;
+    var controller = Get.find<RoomManagerCtrl>().sceneCtrl2;
+    if (controller is SceneCtrl) {
+      return controller as T;
     } else {
       return super.controller as T;
     }
