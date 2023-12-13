@@ -42,8 +42,7 @@ class _MyTitlePageState extends State<MyTitlePage> {
       children: [
         Container(
           margin: Pad(top: AppSize.appBar + AppSize.safeTop + 20, bottom: 58),
-          child: Image.asset(
-            IMG.format('my/无上仙帝'), width: 216, fit: BoxFit.cover,),
+          child: Image.asset(IMG.format('my/无上仙帝'), width: 216, fit: BoxFit.cover,),
         ),
         Expanded(child: $ContentView(),),
       ],
