@@ -16,7 +16,7 @@ import 'package:app/ui/room/overlay/scene_overlay_input.dart';
 class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   final ValueChanged<String> onItemClick;
 
-  const SceneOverlayBottomBar({super.key, required this.onItemClick});
+  SceneOverlayBottomBar({super.key, required this.onItemClick});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         _IconBtn(icon: '动作', onItemClick: onItemClick),
         if (isRoom) _GiftBtn(onItemClick: onItemClick),
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
+        if(controller is PersonRoomCtrl) MicOperate(),
         if (isRoom) _IconBtn(icon: '工具', onItemClick: onItemClick),
       ],
     );
@@ -69,6 +70,44 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
           onItemClick: onItemClick,
         );
       },
+    );
+  }
+}
+
+class MicOperate extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState()  => _MicOperateState();
+
+}
+
+class _MicOperateState extends State<MicOperate> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 60,
+      height: 29,
+      padding: EdgeInsets.only(left: 5),
+      margin: EdgeInsets.only(bottom: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.black.withAlpha(75),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,),
+          SizedBox(width: 6,),
+          Text(
+            "上麦",
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
