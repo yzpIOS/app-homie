@@ -147,7 +147,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
 
   Widget _createTitle() {
     return Text(
-      "主播主证",
+      "主播认证",
       style: TextStyle(
         fontSize: 15,
         color: Colors.black,
