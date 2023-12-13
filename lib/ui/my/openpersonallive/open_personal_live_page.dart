@@ -6,6 +6,7 @@ import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OpenPersonalLivePage extends StatefulWidget {
   const OpenPersonalLivePage({super.key});
@@ -15,18 +16,30 @@ class OpenPersonalLivePage extends StatefulWidget {
 }
 
 class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
-  final imageRx = Rxn<String>();//直播头像
-  final freeMicRx = RxBool(false);//是否自由麦
-  final pactRx = RxBool(false);//是否选中直播规范
+  final imageRx = Rxn<String>(); //直播头像
+  final contentCountRx = RxInt(0); //房间公告字数
+  final freeMicRx = RxBool(false); //是否自由麦
+  final pactRx = RxBool(false); //是否选中直播规范
   final inputs = Map.fromIterable(
     const {'房间名称', '房间公告',},
     value: (_) => TextEditingController(),
   );
 
   @override
+  void initState() {
+    super.initState();
+
+    final noticeController = inputs['房间公告'];
+    noticeController?.addListener(() {
+      contentCountRx.value = noticeController.text.length;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: xAppBar(title: '开直播',),
+      resizeToAvoidBottomInset: false,//是否调整大小以避免底部嵌入(防止开始直播按钮上移)
       body: Column(
         children: [
           Expanded(
@@ -82,44 +95,43 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
     });
 
     child = Center(
-      child: Container(
-        width: size,
-        height: size,
-        margin: const Pad(top: 21),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        decoration: const ShapeDecoration(
-          color: AppPalette.background2,
-          shape: XRectangleBorder(
-            borderRadius: AppBorderRadius.a10,
-            side: BorderSide(width: 0.5, color: Color(0xFFDFDFDF),),
+      child: OpacityButton(
+        child: Container(
+          width: size,
+          height: size,
+          margin: const Pad(top: 21),
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          decoration: const ShapeDecoration(
+            color: AppPalette.background2,
+            shape: XRectangleBorder(
+              borderRadius: AppBorderRadius.a10,
+              side: BorderSide(width: 0.5, color: Color(0xFFDFDFDF),),
+            ),
           ),
+          child: child,
         ),
-        child: child,
+        onTap: () {
+          imagePicker(
+            max: 1,
+            okCall: (it) async {
+              simpleSub(
+                    () async {
+                  final asset = it.first;
+
+                  final originFile = await asset.originFile;
+                  final upFile = await ImageHelp.clip(
+                      originFile!, size: asset.size);
+
+                  return await Api.Common.upImage(
+                    attach: FileImageAttach(asset: upFile),
+                  );
+                },
+                callback1: (resp) => imageRx((resp as Tuple4).value2),
+              );
+            },
+          );
+        },
       ),
-    );
-
-    child = OpacityButton(
-      child: child,
-      onTap: () {
-        imagePicker(
-          max: 1,
-          okCall: (it) async {
-            simpleSub(
-                  () async {
-                final asset = it.first;
-
-                final originFile = await asset.originFile;
-                final upFile = await ImageHelp.clip(originFile!, size: asset.size);
-
-                return await Api.Common.upImage(
-                  attach: FileImageAttach(asset: upFile),
-                );
-              },
-              callback1: (resp) => imageRx((resp as Tuple4).value2),
-            );
-          },
-        );
-      },
     );
 
     return child;
@@ -136,7 +148,8 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
       hintStyle: const TextStyle(fontSize: 12, color: AppPalette.colorA9,),
       filled: true,
       fillColor: AppPalette.colorEB,
-      contentPadding: multiline ? const Pad(all: 10) : const Pad(horizontal: 10),
+      contentPadding: multiline ? const Pad(all: 10) : const Pad(
+          horizontal: 10),
       border: inputBorder,
     );
   }
@@ -158,24 +171,29 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
               ),
             ),
             if (multiline)
-              const XRichText(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '0/',
-                      style: TextStyle(color: AppPalette.colorA9),
-                    ),
-                    TextSpan(text: '150',),
-                  ],
-                  style: TextStyle(
-                      fontSize: 12, color: AppPalette.txtDark, fontWeight: fw$Regular),
-                ),
-              ),
+              Obx(() {
+                return XRichText(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '$contentCountRx/',
+                        style: const TextStyle(color: AppPalette.colorA9),
+                      ),
+                      const TextSpan(text: '150',),
+                    ],
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: AppPalette.txtDark,
+                        fontWeight: fw$Regular),
+                  ),
+                );
+              }),
           ],
         ),
       ),
       TextField(
         controller: inputs[title],
+        inputFormatters: multiline ? [LengthLimitingTextInputFormatter(150)] : null, //限制长度
         maxLines: lines,
         minLines: lines,
         style: const TextStyle(fontSize: 14),
@@ -195,16 +213,21 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
               Expanded(
                 child: XText(
                   '场景',
-                  style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
                 ),
               ),
               XRichText(
                 TextSpan(
                   children: [
                     TextSpan(text: '沙滩',),
-                    WidgetSpan(child: RightArrowIcon(color: AppPalette.primary,), alignment: PlaceholderAlignment.middle,),
+                    WidgetSpan(
+                      child: RightArrowIcon(color: AppPalette.primary,),
+                      alignment: PlaceholderAlignment.middle,),
                   ],
-                  style: TextStyle(fontSize: 15, color: AppPalette.primary, fontWeight: fw$Medium),
+                  style: TextStyle(fontSize: 15,
+                      color: AppPalette.primary,
+                      fontWeight: fw$Medium),
                 ),
               ),
             ],
@@ -221,10 +244,14 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
               const Expanded(
                 child: XText(
                   '自由麦',
-                  style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
                 ),
               ),
-              Obx(() => Image.asset(IMG.format(freeMicRx() ? 'my/rb_icon_kai' : 'my/rb_icon_guan'), width: 49.5, height: 26,),),
+              Obx(() =>
+                  Image.asset(IMG.format(
+                      freeMicRx() ? 'my/rb_icon_kai' : 'my/rb_icon_guan'),
+                    width: 49.5, height: 26,),),
             ],
           ),
         ),
@@ -243,13 +270,15 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
           height: 42,
           label: '开始直播',
           shape: AppShape.a4,
-          textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
+          textStyle: const TextStyle(
+              fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
           onTap: doStartLive,
         ),
         Spacing.h10,
         const XText(
           '需要完成主播人脸识别',
-          style: TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
+          style: TextStyle(
+              fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
         ),
       ],
     );
@@ -271,7 +300,8 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
           children: [
             Obx(() {
               return OpacityButton(
-                child: Image.asset(IMG.format(pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
+                child: Image.asset(IMG.format(
+                    pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
                     width: 13, height: 13, scale: 3, fit: BoxFit.contain),
                 onTap: () {
                   pactRx.toggle();
@@ -282,8 +312,10 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
             StyledText(
               text: '我已阅读并同意<c>《<a1>直播规范</a1>》</c>',
               tags: {
-                'c': StyledTextTag(style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) => ctrl.onTapLink(val!, 'recharge_agreement')),
+                'c': StyledTextTag(
+                    style: const TextStyle(color: AppPalette.primary)),
+                'a1': StyledTextActionTag((val, __) =>
+                    ctrl.onTapLink(val!, 'recharge_agreement')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
             ),
