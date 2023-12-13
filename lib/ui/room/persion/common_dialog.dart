@@ -1,4 +1,5 @@
 
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/persion/down_mic_settle_dialog.dart';
@@ -22,7 +23,7 @@ class CommonDialog extends StatefulWidget {
 
   // 取消回调
   Function? cancel;
-  String? cacelLabel;
+  String cancelLabel;
 
   CommonDialog({
     required this.title,
@@ -30,7 +31,7 @@ class CommonDialog extends StatefulWidget {
     this.confirmLabel = "确认",
     this.subTitle,
     this.cancel,
-    this.cacelLabel = "取消"
+    this.cancelLabel = "取消"
   });
 
   @override
@@ -52,7 +53,7 @@ class CommonDialog extends StatefulWidget {
   ///
   static void refuseApplyUpMic() async {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: "群主拒绝了你的上麦申请", cacelLabel: "再次申请", confirm:  () {
+      return CommonDialog(title: "群主拒绝了你的上麦申请", cancelLabel: "再次申请", confirm:  () {
         // 确认
         Get.back();
       }, cancel: () {
@@ -66,7 +67,7 @@ class CommonDialog extends StatefulWidget {
   ///
   static void inviteApplyUpMic() async {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: "群主邀请你上麦聊天", cacelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
+      return CommonDialog(title: "群主邀请你上麦聊天", cancelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
         // todo 同意邀请
       });
     });
@@ -77,7 +78,7 @@ class CommonDialog extends StatefulWidget {
   ///
   static void userApplyDownMic() async {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: "确认下麦吗？", subTitle: "再次上麦需要向群主发出申请", cacelLabel: "我再想想", confirmLabel: "我要下麦", confirm:  () {
+      return CommonDialog(title: "确认下麦吗？", subTitle: "再次上麦需要向群主发出申请", cancelLabel: "我再想想", confirmLabel: "我要下麦", confirm:  () {
         // todo 同意邀请
       });
     });
@@ -189,28 +190,28 @@ class _DownMicConfirmState extends State<CommonDialog> {
       },
       child: Container(
         width: 117,
-        height: 38,
+        height: 30,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
                 colors: [
                   Color(0xFF7F95F7),
                   Color(0xFF9ABCFF),
                 ]
             ),
-            borderRadius: BorderRadius.circular(1000),
+            borderRadius: AppBorderRadius.max,
             boxShadow: [
               BoxShadow(
-                color: Color(0xFF7F95F7).withAlpha(20),
-                offset: Offset(4.0, 0.0),
-                spreadRadius: 8.0,
-                blurRadius: 3,
+                color: Color(0xFF7F95F7),
+                offset: Offset(0.0, 3.0),
+                spreadRadius: 0,
+                blurRadius: 5,
               )
             ]
         ),
         child: Text(
-          "取消",
-          style: TextStyle(
+          widget.cancelLabel,
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.white,
             fontWeight: FontWeight.w500,
@@ -232,28 +233,28 @@ class _DownMicConfirmState extends State<CommonDialog> {
       },
       child: Container(
         width: 117,
-        height: 38,
+        height: 30,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
                 colors: [
                   Color(0xFFF7A665),
                   Color(0xFFFFC893),
                 ]
             ),
-            borderRadius: BorderRadius.circular(1000),
+            borderRadius: AppBorderRadius.max,
             boxShadow: [
               BoxShadow(
-                color: Color(0xFFFFC394).withAlpha(20),
-                offset: Offset(4.0, 0.0),
-                spreadRadius: 8.0,
+                color: Color(0xFFFFC394),
+                offset: Offset(0.0, 3.0),
+                spreadRadius: 0,
                 blurRadius: 5,
               )
             ]
         ),
         child: Text(
-          "申请",
-          style: TextStyle(
+          widget.confirmLabel,
+          style: const TextStyle(
             fontSize: 16,
             color: Colors.white,
             fontWeight: FontWeight.w500,

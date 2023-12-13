@@ -23,6 +23,7 @@ import 'package:app/ui/task/task_center_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
+import 'package:app/ui/my/openpersonallive/open_personal_live_page.dart';
 
 class MyPage2 extends StatefulWidget {
   const MyPage2({super.key});
@@ -161,6 +162,9 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   void onItemClick(String action) {
     switch (action) {
+      case '开直播':
+        Get.to(() => const OpenPersonalLivePage());
+        break;
       case '我的钱包':
         Get.to(() => const WalletPage());
         break;
