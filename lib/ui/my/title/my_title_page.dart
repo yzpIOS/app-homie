@@ -1,10 +1,8 @@
 import 'package:app/common/theme.dart';
+import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-
-import '../../podcast/city_room_view.dart';
-import '../../podcast/follow_room_view.dart';
-import '../../podcast/hot_room_view.dart';
 
 /// 我的称号
 class MyTitlePage extends StatefulWidget {
@@ -15,10 +13,10 @@ class MyTitlePage extends StatefulWidget {
 }
 
 class _MyTitlePageState extends State<MyTitlePage> {
-  final data = const {
-    '财富称号': FollowRoomView(),
-    '魅力称号': HotRoomView(),
-    '活动称号': CityRoomView(),
+  final data = {
+    '财富称号': TitleGridDataView(listType: 1,),
+    '魅力称号': TitleGridDataView(listType: 2,),
+    '活动称号': TitleGridDataView(listType: 3,),
   };
 
   @override
@@ -43,9 +41,8 @@ class _MyTitlePageState extends State<MyTitlePage> {
       children: [
         Container(
           margin: Pad(top: AppSize.appBar + AppSize.safeTop + 20, bottom: 58),
-          color: const Color(0xFF7816A2),
-          width: 168,
-          height: 62.5,
+          child: Image.asset(
+            IMG.format('my/无上仙帝'), width: 216, fit: BoxFit.cover,),
         ),
         Expanded(child: $ContentView(),),
       ],
@@ -59,11 +56,13 @@ class _MyTitlePageState extends State<MyTitlePage> {
         children: [
           const XText(
             '富可敌国',
-            style: TextStyle(fontSize: 19, color: AppPalette.txtDark, fontWeight: fw$Medium),
+            style: TextStyle(
+                fontSize: 19, color: AppPalette.txtDark, fontWeight: fw$Medium),
           ),
           const XText(
             ' (未获得)',
-            style: TextStyle(fontSize: 12, color: Color(0xFF00FF11), fontWeight: fw$Regular),
+            style: TextStyle(
+                fontSize: 12, color: Color(0xFF00FF11), fontWeight: fw$Regular),
           ),
           Spacing.exp,
           $ActionBtn(
@@ -83,7 +82,9 @@ class _MyTitlePageState extends State<MyTitlePage> {
           height: 45,
           child: const XText(
             '1.称号说明称号说明称号说明称号说明称号说明称号说明称号说明称号说明称号说明称号说明',
-            style: TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
+            style: TextStyle(fontSize: 14,
+                color: AppPalette.txtDark,
+                fontWeight: fw$Regular),
             maxLines: 2,
           ),
         ),
@@ -121,7 +122,8 @@ class _MyTitlePageState extends State<MyTitlePage> {
         labelColor: AppPalette.primary,
         unselectedLabelColor: Colors.black,
         labelStyle: const TextStyle(fontSize: 14, fontWeight: fw$Regular),
-        unselectedLabelStyle: const TextStyle(fontSize: 14, fontWeight: fw$Regular),
+        unselectedLabelStyle: const TextStyle(
+            fontSize: 14, fontWeight: fw$Regular),
         tabs: _buildTabs(),
       ),
     );
@@ -140,7 +142,8 @@ class _MyTitlePageState extends State<MyTitlePage> {
             Tab(text: data.keys.toList()[i], height: 28,),
             const Spacing(width: 18, flex: null,),
             if (i < data.keys.length - 1)
-              const Padding(padding: Pad(top: 3), child: Box(width: 1, height: 8.5, color: AppPalette.color71)),
+              const Padding(padding: Pad(top: 3),
+                  child: Box(width: 1, height: 8.5, color: AppPalette.color71)),
           ],
         ),
       );
@@ -152,7 +155,8 @@ class _MyTitlePageState extends State<MyTitlePage> {
   Widget $ActionBtn(String text, List<Color> colors,) {
     Widget child = Text(
       text,
-      style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Regular),
+      style: const TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: fw$Regular),
     );
 
     child = Container(
@@ -179,3 +183,133 @@ class _MyTitlePageState extends State<MyTitlePage> {
     return child;
   }
 }
+
+class TitleGridDataView extends StatelessWidget {
+  final int listType;
+
+  TitleGridDataView({super.key, required this.listType});
+
+  late final _selectedData = RxMap();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const Pad(horizontal: 9,),
+      child: CustomScrollView(
+        slivers: [
+          _createTitle("已获得: ", 18, true),
+          _createGridView([
+            {'name': '1'},
+            {'name': '2'},
+            {'name': '3'},
+            {'name': '4'},
+            {'name': '5'},
+          ], true),
+          _createTitle("未获得: ", 20, false),
+          _createGridView([
+            {'name': '1'},
+            {'name': '2'},
+            {'name': '3'},
+            {'name': '4'},
+            {'name': '5'},
+            {'name': '6'},
+            {'name': '7'},
+          ], false),
+          SizedBox(height: AppSize.safeBottom + 8.5,).toSliver(),
+        ],
+      ),
+    );
+  }
+
+  Widget _createTitle(String text, int count, bool isReceived) {
+    return Container(
+      height: 38,
+      padding: const Pad(top: 12),
+      child: XRichText(
+        TextSpan(
+          children: [
+            TextSpan(text: text),
+            TextSpan(
+              text: count.toString(),
+              style: TextStyle(
+                  color: isReceived ? AppPalette.primary : AppPalette.colorB5),
+            ),
+          ],
+          style: const TextStyle(
+              fontSize: 11, color: AppPalette.txtDark, fontWeight: fw$Medium),
+        ),
+      ),
+    ).toSliver();
+  }
+
+  Widget _createGridView(List data, bool isReceived) {
+    double ratio = (113.0 / 105.0);
+    return SliverGrid(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 8.5,
+        crossAxisSpacing: 7.5,
+        childAspectRatio: ratio,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        childCount: data.length,
+            (_, i) => _createGiftItem(data[i], isReceived),
+      ),
+    );
+  }
+
+  Widget _createGiftItem(Map data, bool isReceived) {
+    // 点亮图标
+    Widget giftImage; //NetImage(data["cover"], fit: BoxFit.cover),
+    bool isLighten = false;
+    if (isReceived) {
+      giftImage = Image.asset(IMG.format('my/无上仙帝'), fit: BoxFit.cover,);
+      isLighten = true;
+    } else {
+      const ColorFilter sepia = ColorFilter.matrix(<double>[
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0.2126, 0.7152, 0.0722, 0, 0,
+        0, 0, 0, 1, 0,
+      ]);
+
+      giftImage = ColorFiltered(
+        colorFilter: sepia,
+        child: Image.asset(IMG.format('my/无上仙帝'), fit: BoxFit.cover,),
+      );
+    }
+
+    Widget child = Obx(() {
+      bool isSelected = _selectedData == data;
+      double borderWidth = 1.5;
+
+      return Container(
+        decoration: BoxDecoration(
+          color: isReceived ? AppPalette.colorEB : const Color(0xFFD0D0D0),
+          borderRadius: BorderRadius.circular(10),
+          border: isSelected ? Border.all(color: AppPalette.primary, width: borderWidth) : null,
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: Pad(top: isSelected ? 13-borderWidth : 13, horizontal: isSelected ? 8-borderWidth : 8, bottom: 15, ),
+              child: giftImage,
+            ),
+            const XText(
+              '富可敌国',
+              style: TextStyle(fontSize: 12, color: AppPalette.txtDark, fontWeight: fw$Regular),
+            )
+          ],
+        ),
+      );
+    });
+
+    return GestureDetector(
+      child: child,
+      onTap: () {
+        _selectedData.value = data;
+      },
+    );
+  }
+}
+

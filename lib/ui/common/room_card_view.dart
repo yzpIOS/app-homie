@@ -45,17 +45,17 @@ class RoomCardView extends StatelessWidget {
                 },
               ),
             ),
-            Positioned(
-              bottom: 3,
-              right: 3,
-              child: DecoratedBox(
-                decoration: const BoxDecoration(shape: BoxShape.circle, color: AppPalette.room),
-                child: Padding(
-                  padding: const Pad(all: 2),
-                  child: Image.asset(IMG.format('room/房间关注中'), width: 12, height: 12, scale: 3,),
-                ),
-              ),
-            ),
+            // Positioned(
+            //   bottom: 3,
+            //   right: 3,
+            //   child: DecoratedBox(
+            //     decoration: const BoxDecoration(shape: BoxShape.circle, color: AppPalette.room),
+            //     child: Padding(
+            //       padding: const Pad(all: 2),
+            //       child: Image.asset(IMG.format('room/房间关注中'), width: 12, height: 12, scale: 3,),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
