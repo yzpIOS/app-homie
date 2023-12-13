@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -155,8 +156,7 @@ class _MyTitlePageState extends State<MyTitlePage> {
   Widget $ActionBtn(String text, List<Color> colors,) {
     Widget child = Text(
       text,
-      style: const TextStyle(
-          fontSize: 14, color: Colors.white, fontWeight: fw$Regular),
+      style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Regular),
     );
 
     child = Container(
@@ -176,7 +176,11 @@ class _MyTitlePageState extends State<MyTitlePage> {
     child = OpacityButton(
       child: child,
       onTap: () {
+        showDialog(context: Get.context!, builder: (context) {
+          return CommonDialog(title: '是否佩戴？', cancelLabel: '取消', confirmLabel: '确定', confirm: () {
 
+          });
+        });
       },
     );
 
