@@ -193,31 +193,28 @@ class TitleGridDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const Pad(horizontal: 9,),
-      child: CustomScrollView(
-        slivers: [
-          _createTitle("已获得: ", 18, true),
-          _createGridView([
-            {'name': '1'},
-            {'name': '2'},
-            {'name': '3'},
-            {'name': '4'},
-            {'name': '5'},
-          ], true),
-          _createTitle("未获得: ", 20, false),
-          _createGridView([
-            {'name': '1'},
-            {'name': '2'},
-            {'name': '3'},
-            {'name': '4'},
-            {'name': '5'},
-            {'name': '6'},
-            {'name': '7'},
-          ], false),
-          SizedBox(height: AppSize.safeBottom + 8.5,).toSliver(),
-        ],
-      ),
+    return CustomScrollView(
+      slivers: [
+        _createTitle("已获得: ", 18, true),
+        _createGridView([
+          {'name': '1'},
+          {'name': '2'},
+          {'name': '3'},
+          {'name': '4'},
+          {'name': '5'},
+        ], true),
+        _createTitle("未获得: ", 20, false),
+        _createGridView([
+          {'name': '1'},
+          {'name': '2'},
+          {'name': '3'},
+          {'name': '4'},
+          {'name': '5'},
+          {'name': '6'},
+          {'name': '7'},
+        ], false),
+        SizedBox(height: AppSize.safeBottom + 8.5,).toSliver(),
+      ],
     );
   }
 
@@ -239,23 +236,24 @@ class TitleGridDataView extends StatelessWidget {
               fontSize: 11, color: AppPalette.txtDark, fontWeight: fw$Medium),
         ),
       ),
-    ).toSliver();
+    ).toSliver(padding: const Pad(horizontal: 9),);
   }
 
   Widget _createGridView(List data, bool isReceived) {
-    double ratio = (113.0 / 105.0);
-    return SliverGrid(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    Widget sliverGrid = SliverGrid(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 8.5,
         crossAxisSpacing: 7.5,
-        childAspectRatio: ratio,
+        childAspectRatio: (113.0 / 105.0),
       ),
       delegate: SliverChildBuilderDelegate(
         childCount: data.length,
             (_, i) => _createGiftItem(data[i], isReceived),
       ),
     );
+
+    return SliverPadding(padding: const Pad(horizontal: 9), sliver: sliverGrid,);
   }
 
   Widget _createGiftItem(Map data, bool isReceived) {
@@ -281,24 +279,25 @@ class TitleGridDataView extends StatelessWidget {
 
     Widget child = Obx(() {
       bool isSelected = _selectedData == data;
-      double borderWidth = 1.5;
 
-      return Container(
-        decoration: BoxDecoration(
+      return DecoratedBox(
+        decoration: ShapeDecoration(
           color: isReceived ? AppPalette.colorEB : const Color(0xFFD0D0D0),
-          borderRadius: BorderRadius.circular(10),
-          border: isSelected ? Border.all(color: AppPalette.primary, width: borderWidth) : null,
+          shape: XRectangleBorder(
+            borderRadius: AppBorderRadius.a10,
+            side: isSelected ? const BorderSide(width: 1.5, color: AppPalette.primary) : BorderSide.none,
+          ),
         ),
         child: Column(
           children: [
             Padding(
-              padding: Pad(top: isSelected ? 13-borderWidth : 13, horizontal: isSelected ? 8-borderWidth : 8, bottom: 15, ),
+              padding: const Pad(top: 13, horizontal: 8, bottom: 15, ),
               child: giftImage,
             ),
             const XText(
               '富可敌国',
               style: TextStyle(fontSize: 12, color: AppPalette.txtDark, fontWeight: fw$Regular),
-            )
+            ),
           ],
         ),
       );
