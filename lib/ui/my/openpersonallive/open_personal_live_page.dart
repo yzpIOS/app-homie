@@ -155,7 +155,7 @@ class _OpenPersonalLivePageState extends State<OpenPersonalLivePage> {
   }
 
   Iterable<Widget> $InputView({required String title, bool multiline = false}) {
-    final int lines = multiline ? 5 : 1;
+    final int lines = multiline ? 4 : 1;
     final double top = multiline ? 20 : 39;
 
     return [
