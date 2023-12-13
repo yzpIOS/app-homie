@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 ///
-/// 个播：下麦结算页面
+/// 个播：个播结算页面
 ///
 class DownMicSettleDialog extends StatefulWidget {
 
@@ -36,6 +36,14 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
+            gradient: LinearGradient(
+              colors: [
+                Color(0XFFFAFDFE),
+                Color(0XFFECF5FD),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter
+            )
           ),
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Stack(
