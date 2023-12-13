@@ -126,7 +126,7 @@ class _DownMicConfirmState extends State<CommonDialog> {
       body: Center(
         child: Container(
           width: 303,
-          height: 161,
+          height: (widget.subTitle?.isNotEmpty == true && widget.title?.isNotEmpty == true) ? 167 : 161,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -145,16 +145,18 @@ class _DownMicConfirmState extends State<CommonDialog> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              if(widget.subTitle?.isNotEmpty == true)
+              if(widget.subTitle == null || widget.subTitle?.isEmpty == true)
                 SizedBox(height: 55,),
 
               // 富标题
               if(widget.subTitle?.isNotEmpty == true)
+                SizedBox(height: 12,),
+              if(widget.subTitle?.isNotEmpty == true)
                 Text(
                   widget.subTitle ?? "",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
+                    fontSize: 12,
+                    color: Color(0XFF999999),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
