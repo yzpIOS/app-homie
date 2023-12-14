@@ -10,14 +10,13 @@ import 'package:app/common/nets/socket/client/custom_client.dart';
 import 'package:app/common/nets/socket/client/custom_socket.dart';
 import 'package:app/common/nets/socket/server/custom_local_server.dart';
 import 'package:app/event/event.dart';
-import 'package:app/exception.dart';
-import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/announcement_message_dialog.dart';
-import 'package:app/widgets.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
@@ -314,6 +313,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       delay(300, () {
         share.reConnect(foreceConnect: true);
       });
+    }
+
+    // 没有人脸实名
+    if(role?.code == ErrorCode.NOT_FACE_REAL_NAME) {
+      showDialog(context: Get.context!, builder: (context) {
+        return CommonDialog(title: role?.message ?? "", cancelLabel: '取消', confirmLabel: '去完成', confirm: () {
+
+        });
+      });
+      return;
     }
 
     logForDebug("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);

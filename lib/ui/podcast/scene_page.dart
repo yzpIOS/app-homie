@@ -15,7 +15,7 @@ class _ScenePageState extends State<ScenePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(title: '选择场景'),
+      appBar: xAppBar(title: '选择世界'),
       body: _DataView(onSelect: onSelect),
     );
   }
@@ -35,7 +35,7 @@ class _DataView extends SimplePageView<Map> {
       gridDelegate: XGridDelegate(
         childAspectRatio: RoomCardView.ratio,
         crossAxisCount: 3,
-        mainAxisSpacing: 12,
+        mainAxisSpacing: 10,
         crossAxisSpacing: 12,
         fixedHeight: 25,
       ),

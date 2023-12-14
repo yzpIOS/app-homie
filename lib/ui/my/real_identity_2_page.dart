@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
@@ -17,6 +18,7 @@ class RealIdentity2Page extends StatefulWidget {
 }
 
 class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixin {
+  final pactRx = RxBool(false); //是否选中直播规范
   final inputs = Map.fromIterable(
     const {'姓名', '证件号码'},
     value: (_) => TextEditingController(),
@@ -79,7 +81,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
             Spacing.h10,
             FormInputView(
               controller: inputs['证件号码'],
-              hint: '18位身份证号码',
+              hint: '身份证号码',
               inputFormatters: [maskFormatter],
               borderRadius: BorderRadius.circular(6),
               bgColor: const Color(0xFFEBEBFF),
@@ -102,16 +104,18 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
   void doSub() async {
     final name = inputs.by('姓名').trim();
     final number = maskFormatter.getUnmaskedText();
+    final pact = pactRx();
 
     if (name.isEmpty) {
       showToast('请输入真实姓名');
-
       return;
     }
-
     if (number.length != 18) {
-      showToast('请输入18位身份证号码');
-
+      showToast('请输入身份证号码');
+      return;
+    }
+    if (pact == false) {
+      showToast('请阅读并同意《直播规范》');
       return;
     }
 
@@ -156,34 +160,36 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
   }
 
   Widget _createAccord() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            check = !check;
-            setState(() { });
-          },
-          behavior: HitTestBehavior.opaque,
-          child: Image.asset(IMG.format(check ? "checkbox_checked_1" : "checkbox_unchecked_1"), width: 13, height: 13,),
-        ),
-        SizedBox(width: 3,),
-        Text(
-          "我已阅读并同意",
-          style: TextStyle(
-            fontSize: 11,
-            color: Color(0XFFA9A9A9),
-          ),
-        ),
-        Text(
-          "《主播协议》",
-          style: TextStyle(
-            fontSize: 11,
-            color: Color(0XFFBD7BE5),
-          ),
-        )
-      ],
+    return GetBuilder<ConfigCtrl>(
+      initState: (state) => state.controller?.doRefresh(),
+      builder: (ctrl) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Obx(() {
+              return OpacityButton(
+                child: Image.asset(IMG.format(
+                    pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
+                    width: 13, height: 13, scale: 3, fit: BoxFit.contain),
+                onTap: () {
+                  pactRx.toggle();
+                },
+              );
+            }),
+            Spacing.w4,
+            StyledText(
+              text: '我已阅读并同意<c>《<a1>直播规范</a1>》</c>',
+              tags: {
+                'c': StyledTextTag(
+                    style: const TextStyle(color: AppPalette.primary)),
+                'a1': StyledTextActionTag((val, __) =>
+                    ctrl.onTapLink(val!, 'recharge_agreement')),
+              },
+              style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
+            ),
+          ],
+        );
+      },
     );
   }
 

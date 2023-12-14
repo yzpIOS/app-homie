@@ -465,7 +465,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       return;
     }
     if (scene == null) {
-      showToast('请选择直播场景');
+      showToast('请选择场景');
       return;
     }
     if (pact == false) {
