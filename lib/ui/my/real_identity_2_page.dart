@@ -178,7 +178,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
             }),
             Spacing.w4,
             StyledText(
-              text: '我已阅读并同意<c>《<a1>直播规范</a1>》</c>',
+              text: '我已阅读并同意<c>《<a1>主播协议</a1>》</c>',
               tags: {
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
