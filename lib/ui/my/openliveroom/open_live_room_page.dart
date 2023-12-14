@@ -429,7 +429,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
               tags: {
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) =>
+                'a1': StyledTextActionTag((val, __) =>/// TODO
                     ctrl.onTapLink(val!, 'recharge_agreement')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
@@ -440,6 +440,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     );
   }
 
+  /// 跳转选择场景
   void selectScene() {
     Get.to(() => const ScenePage())?.onType<Map>((val) {
       sceneRx(
@@ -449,6 +450,8 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
   }
 
   void doStartLive() async {
+    hideKeyboard();
+
     final title = inputs.by('房间名称');
     final notice = inputs.by('房间公告');
     final image = imageRx();
@@ -478,7 +481,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       title: title,
       image: image,
       notice: notice,
-      scene: sceneRx()?.value1,
+      scene: scene.value1,
       freeMic: freeMic,
     );
     // 获取到sceneId

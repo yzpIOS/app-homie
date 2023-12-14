@@ -14,6 +14,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/announcement_message_dialog.dart';
+import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -319,7 +320,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(role?.code == ErrorCode.NOT_FACE_REAL_NAME) {
       showDialog(context: Get.context!, builder: (context) {
         return CommonDialog(title: role?.message ?? "", cancelLabel: '取消', confirmLabel: '去完成', confirm: () {
-
+          Get.to(() => const RealIdentityPage());
         });
       });
       return;

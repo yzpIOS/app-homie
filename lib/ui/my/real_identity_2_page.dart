@@ -115,7 +115,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
       return;
     }
     if (pact == false) {
-      showToast('请阅读并同意《直播规范》');
+      showToast('请阅读并同意《主播协议》');
       return;
     }
 
@@ -182,7 +182,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
               tags: {
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) =>
+                'a1': StyledTextActionTag((val, __) =>/// TODO
                     ctrl.onTapLink(val!, 'recharge_agreement')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),

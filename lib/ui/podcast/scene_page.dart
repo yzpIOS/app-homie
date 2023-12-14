@@ -19,15 +19,15 @@ class _ScenePageState extends State<ScenePage> {
   final data = <String, Widget>{
     '免费': DelayView(
       keepAlive: true,
-      builder: (_) => _DataView(onSelect: (Map data) => Get.back(result: data)),
+      builder: (_) => _DataView(dataType: 1, onSelect: (Map data) => Get.back(result: data)),
     ),
     '付费': DelayView(
       keepAlive: true,
-      builder: (_) => _DataView(onSelect: (Map data) => Get.back(result: data)),
+      builder: (_) => _DataView(dataType: 2, onSelect: (Map data) => Get.back(result: data)),
     ),
     '热门': DelayView(
       keepAlive: true,
-      builder: (_) => _DataView(onSelect: (Map data) => Get.back(result: data)),
+      builder: (_) => _DataView(dataType: 3, onSelect: (Map data) => Get.back(result: data)),
     ),
   };
 
@@ -63,7 +63,7 @@ class _ScenePageState extends State<ScenePage> {
                 style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
               ),
             ),
-            Expanded(child: _DataView(onSelect: (Map data) => Get.back(result: data)),),
+            Expanded(child: _DataView(dataType: 4, onSelect: (Map data) => Get.back(result: data)),),
           ],
         );
       }),
@@ -144,9 +144,10 @@ class _ScenePageState extends State<ScenePage> {
 }
 
 class _DataView extends SimplePageView<Map> {
+  final int dataType;//数据类型：1免费 2付费 3热门 4搜索结果
   final ValueChanged<Map> onSelect;
 
-  _DataView({required this.onSelect});
+  _DataView({required this.dataType, required this.onSelect});
 
   @override
   BaseConfig get config {
@@ -163,7 +164,12 @@ class _DataView extends SimplePageView<Map> {
   }
 
   @override
-  Future fetchPage(PageNum page) => Api.Scene.list(page: page);
+  Future fetchPage(PageNum page) {
+    if (dataType == 4) {//4搜索结果
+      return Api.Scene.list(page: page);
+    }
+    return Api.Scene.list(page: page);
+  }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
