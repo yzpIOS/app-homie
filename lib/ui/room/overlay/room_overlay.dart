@@ -29,7 +29,7 @@ import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:app/ui/room/user/room_admin_page.dart';
 import 'package:app/ui/room/user/room_block_page.dart';
-import 'package:app/ui/room/widgets/icon_button.dart';
+import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/ui/room/widgets/portal_modal.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/widgets.dart';
@@ -357,7 +357,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
               visible: controller.noticePanelRx(),
               onDismiss: () => controller.noticePanelRx(false),
               modal: const NoticeOverlay(),
-              child: IconBtn(
+              child: IconBtnSvg(
                 icon: '公告',
                 size: 28,
                 padding: const Pad(all: 5),

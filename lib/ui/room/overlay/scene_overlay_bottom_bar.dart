@@ -7,6 +7,7 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/widgets/icon_button.dart';
+import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -26,11 +27,11 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        $MicView(isRoom),
+        if(controller is! PersonRoomCtrl) $MicView(isRoom),
         $SpeakView(),
         Expanded(child: SceneOverlayInput(onItemClick: onItemClick)),
         _ConvView(onItemClick: onItemClick),
-        _IconBtn(icon: '动作', onItemClick: onItemClick),
+        _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
         if (isRoom) _GiftBtn(onItemClick: onItemClick),
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
         if(controller is PersonRoomCtrl) MicOperate(),
@@ -54,7 +55,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
       () {
         final isEnable = (isRoom && freeMicRx) || canSpeak(myUid) || (manInHallNearByRoom?.isTrue ?? false);
 
-        return _IconBtn(
+        return _IconBtnSvg(
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
           onItemClick: isEnable ? onItemClick : null,
         );
@@ -65,7 +66,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   Widget $SpeakView() {
     return Obx(
       () {
-        return _IconBtn(
+        return _IconBtnSvg(
           icon: '声音_${Rtc.audioRx().intVal}',
           onItemClick: onItemClick,
         );
@@ -85,7 +86,7 @@ class _MicOperateState extends State<MicOperate> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 60,
+      width: 68,
       height: 29,
       padding: EdgeInsets.only(left: 5),
       margin: EdgeInsets.only(bottom: 5),
@@ -99,7 +100,7 @@ class _MicOperateState extends State<MicOperate> {
           Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,),
           SizedBox(width: 6,),
           Text(
-            "上麦",
+            "上麦中",
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w500,
@@ -108,6 +109,24 @@ class _MicOperateState extends State<MicOperate> {
           )
         ],
       ),
+    );
+  }
+}
+
+class _IconBtnSvg extends StatelessWidget {
+  final String? icon;
+
+  final ValueChanged<String>? onItemClick;
+
+  _IconBtnSvg({this.icon, this.onItemClick}) : super(key: ValueKey(icon));
+
+  @override
+  Widget build(BuildContext context) {
+    return IconBtnSvg(
+      icon: icon,
+      size: 28,
+      padding: const Pad(all: 5),
+      onTap: onItemClick?.let((fn) => () => fn(icon!)),
     );
   }
 }
@@ -224,7 +243,7 @@ class _ConvViewState extends State<_ConvView> {
               return Spacing.blank;
             },
           ),
-          _IconBtn(
+          _IconBtnSvg(
             icon: '消息_0',
           ),
         ],

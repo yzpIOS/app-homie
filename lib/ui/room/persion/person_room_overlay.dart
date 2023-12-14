@@ -10,7 +10,7 @@ import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
-import 'package:app/ui/room/widgets/icon_button.dart';
+import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/ui/room/widgets/portal_modal.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/widgets.dart';
