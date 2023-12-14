@@ -35,38 +35,44 @@ class _ScenePageState extends State<ScenePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: xAppBar(title: '选择世界'),
-      body: DefaultTabController(
-        initialIndex: 0,
-        length: data.length,
-        child: Column(
+      body: Obx(() {
+        final keyword = keywordRx();
+        bool isNormal = (keyword == null || keyword.isEmpty);
+
+        if (isNormal) {
+          return DefaultTabController(
+            initialIndex: 0,
+            length: data.length,
+            child: Column(
+              children: [
+                $TopSearchView(),
+                ...$NormalContentView(),
+              ],
+            ),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            $SearchView(),
-            Box(
-              padding: const Pad(left: 3, top: 10),
-              alignment: Alignment.centerLeft,
-              child: TabBar(
-                tabAlignment: TabAlignment.start,
-                labelPadding: const Pad(horizontal: 14),
-                isScrollable: true,
-                indicatorSize: TabBarIndicatorSize.label,
-                tabs: data.keys.map((it) => Tab(text: it, height: 28)).toList(growable: false),
+            $TopSearchView(),
+            const Padding(
+              padding: Pad(horizontal: 17, top: 10),
+              child: Text(
+                '相关场景',
+                style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
               ),
             ),
-            Expanded(
-              child: TabBarView(
-                children: data.values.map((it) => it).toList(growable: false),
-              ),
-            ),
-            // Expanded(child: _DataView(onSelect: onSelect),),
+            Expanded(child: _DataView(onSelect: (Map data) => Get.back(result: data)),),
           ],
-        ),
-      ),
+        );
+      }),
     );
   }
 
   // void onSelect(Map data) => Get.back(result: data);
 
-  Widget $SearchView() {
+  Widget $TopSearchView() {
     return Padding(
       padding: const Pad(horizontal: 17),
       child: XInputView(
@@ -78,7 +84,10 @@ class _ScenePageState extends State<ScenePage> {
         textInputAction: TextInputAction.search,
         prefixIcon: OpacityButton(
           onTap: () {},
-          child: SvgView(SVG.$('ic_search_2'), color: const Color(0xFF474747), width: 20, height: 20, fit: BoxFit.contain),
+          child: SvgView(SVG.$('ic_search_2'), color: const Color(0xFF474747),
+              width: 20,
+              height: 20,
+              fit: BoxFit.contain),
         ),
         suffixIcon: $SuffixIcon(),
         onSubmitted: keywordRx,
@@ -103,6 +112,28 @@ class _ScenePageState extends State<ScenePage> {
     });
   }
 
+  List<Widget> $NormalContentView() {
+    return [
+      Box(
+        padding: const Pad(left: 3, top: 10),
+        alignment: Alignment.centerLeft,
+        child: TabBar(
+          tabAlignment: TabAlignment.start,
+          labelPadding: const Pad(horizontal: 14),
+          isScrollable: true,
+          indicatorSize: TabBarIndicatorSize.label,
+          tabs: data.keys.map((it) => Tab(text: it, height: 28)).toList(
+              growable: false),
+        ),
+      ),
+      Expanded(
+        child: TabBarView(
+          children: data.values.map((it) => it).toList(growable: false),
+        ),
+      ),
+    ];
+  }
+
   void _doSearch(String keyword) {
     controller
       ..clear()
@@ -124,9 +155,9 @@ class _DataView extends SimplePageView<Map> {
       gridDelegate: XGridDelegate(
         childAspectRatio: RoomCardView.ratio,
         crossAxisCount: 3,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 12,
-        fixedHeight: 25,
+        mainAxisSpacing: 12,
+        crossAxisSpacing: 10,
+        fixedHeight: 22,
       ),
     );
   }
