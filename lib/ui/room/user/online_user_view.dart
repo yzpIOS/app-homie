@@ -3,6 +3,8 @@ import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/common/charm_level_view.dart';
+import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/room_user_sheet.dart';
 import 'package:app/widgets.dart';
@@ -305,23 +307,7 @@ class CharmUserView extends SimplePageView<Map> {
     final uid = item['uid'];//用户字符id
     final nuid = Int64(item['role_id']);//角色id
     final role = _ctrl.getRole(uid);
-    final dataUserIsSelf = OAuthCtrl.isSelf(uid);//这条数据用户是否是我本人
-    final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
     final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
-    /// 房主能对管理员、普通用户进行"添加"“移除”"封禁"管理员的操作
-    /// 管理员能对普通用户进行“封禁”操作
-    var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
-    var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
-
-    // 是否在个人直播间
-    var isPersonRoom = _ctrl is PersonRoomCtrl;
-    // 用户是否在mic上
-    var isUserOnMic = false;
-    PersonRoomMicCtrl? personRoomMicCtrl = null;
-    if(isPersonRoom) {
-      personRoomMicCtrl = ((_ctrl as PersonRoomCtrl?)?.getRoomMicCtrl() as PersonRoomMicCtrl?);
-      isUserOnMic = personRoomMicCtrl?.isUserOnMic(uid) ?? false;
-    }
 
     /// 添加或移除管理员
     Widget $EditManagerView() {
@@ -362,20 +348,37 @@ class CharmUserView extends SimplePageView<Map> {
       );
     }
 
+    // 排名
+    Widget rank;
+    if(index <= 2) {
+      rank = Image.asset(IMG.format("room/rank_${index + 1}"), width: 30, height: 30,);
+    } else {
+      rank = Text(
+        "${index + 1}",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
+    var charmLevel = item.containsKey("charm_level") ? item["charm_level"].toString() : "";
+
     Widget child = Row(
       children: [
+        Spacing.w12,
+        rank,
         Spacing.w10,
         Expanded(
           child: RoomUserItemView(
             uid: uid,
             role: role,
-            padding: const Pad(left: 10, right: 20),
+            showValue: charmLevel,
           ),
         ),
-        if (isShowEditManagerAction) $EditManagerView(),
-        Spacing.w6,
-        if (isShowEditBlackListAction) $EditBlackListView(),
-        Spacing.w6,
+
+        if(charmLevel.isNotEmpty) CharmLevelView(level: charmLevel, uid: uid,),
         // // 在线
         // if(isPersonRoom && isUserOnMic) TickDownMic(),
         // // 没有在线
@@ -421,23 +424,7 @@ class WealthUserView extends SimplePageView<Map> {
     final uid = item['uid'];//用户字符id
     final nuid = Int64(item['role_id']);//角色id
     final role = _ctrl.getRole(uid);
-    final dataUserIsSelf = OAuthCtrl.isSelf(uid);//这条数据用户是否是我本人
-    final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
     final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
-    /// 房主能对管理员、普通用户进行"添加"“移除”"封禁"管理员的操作
-    /// 管理员能对普通用户进行“封禁”操作
-    var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
-    var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
-
-    // 是否在个人直播间
-    var isPersonRoom = _ctrl is PersonRoomCtrl;
-    // 用户是否在mic上
-    var isUserOnMic = false;
-    PersonRoomMicCtrl? personRoomMicCtrl = null;
-    if(isPersonRoom) {
-      personRoomMicCtrl = ((_ctrl as PersonRoomCtrl?)?.getRoomMicCtrl() as PersonRoomMicCtrl?);
-      isUserOnMic = personRoomMicCtrl?.isUserOnMic(uid) ?? false;
-    }
 
     /// 添加或移除管理员
     Widget $EditManagerView() {
@@ -478,20 +465,37 @@ class WealthUserView extends SimplePageView<Map> {
       );
     }
 
+    // 排名
+    Widget rank;
+    if(index <= 2) {
+      rank = Image.asset(IMG.format("room/rank_${index + 1}"), width: 30, height: 30,);
+    } else {
+      rank = Text(
+        "${index + 1}",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      );
+    }
+
+    var level = item.containsKey("level") ? item["level"].toString() : "";
+
     Widget child = Row(
       children: [
+        Spacing.w12,
+        rank,
         Spacing.w10,
         Expanded(
           child: RoomUserItemView(
             uid: uid,
             role: role,
-            padding: const Pad(left: 10, right: 20),
+            showValue: level,
           ),
         ),
-        if (isShowEditManagerAction) $EditManagerView(),
-        Spacing.w6,
-        if (isShowEditBlackListAction) $EditBlackListView(),
-        Spacing.w6,
+
+        if(level.isNotEmpty) WealthyLevelView(level: level, uid: uid,),
         // // 在线
         // if(isPersonRoom && isUserOnMic) TickDownMic(),
         // // 没有在线

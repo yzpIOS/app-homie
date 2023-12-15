@@ -13,7 +13,9 @@ class RoomUserItemView extends StatelessWidget {
 
   RoomRoleType? role;
 
-  RoomUserItemView({super.key, required this.uid, this.role, this.padding = const Pad(horizontal: 20)});
+  String? showValue;
+
+  RoomUserItemView({super.key, required this.uid, this.role, this.padding = const Pad(horizontal: 20), this.showValue});
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +45,26 @@ class RoomUserItemView extends StatelessWidget {
                 style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
               ),
               Spacing.h4,
-              Row(
-                children: [
-                  WealthyLevelView(level: data.level, height: 13),
-                  if (data.level?.isNotEmpty == true)
-                    const SizedBox(width: 5,),
-                  RoleView(role: role),
-                ],
-              ),
+              // 显示才富等值
+              if(showValue == null || showValue?.isEmpty == true)
+                Row(
+                  children: [
+                    WealthyLevelView(level: data.level, height: 13),
+                    if (data.level?.isNotEmpty == true)
+                      const SizedBox(width: 5,),
+                    RoleView(role: role),
+                  ],
+                ),
+
+              if(showValue?.isNotEmpty == true)
+                Text(
+                  showValue ?? "",
+                  style: const TextStyle(
+                    color: Color(0XFF666666),
+                    fontSize: 12,
+                    fontWeight: FontWeight.normal,
+                  ),
+                )
             ],
           ),
         ),
