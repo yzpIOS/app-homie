@@ -41,3 +41,7 @@ class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
   late final String blindBoxName = data.blindBoxName;
   late final String blindBoxCover = data.blindBoxCover;
 }
+
+class LocalMsgData extends BaseMsgData<String> {
+  LocalMsgData({required super.data});
+}

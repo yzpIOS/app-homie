@@ -166,3 +166,9 @@ class RoomExitEvent extends EventPb {
 
   RoomExitEvent(this.message);
 }
+
+class LocalMsgEvent extends EventPb {
+  LocalMsgData localMsgData;
+
+  LocalMsgEvent(this.localMsgData);
+}

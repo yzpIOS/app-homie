@@ -1,14 +1,17 @@
 
 import 'package:app/3rd/tencent/rtc.dart';
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
 import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
+import 'package:app/ui/room/user/mic_user_sheet.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/ui/room/widgets/portal_modal.dart';
@@ -68,11 +71,17 @@ class PersonRoomOverlay extends RoomOverlay {
 
 class PersonRoomHeader extends CommonRoomHeader {
 
+  UserInfo? owner;
+  List<UserInfo>? userList;
+
   PersonRoomHeader({
     required super.showMicPanel,
     required super.showMic,
     required super.isLandscape,
-    required super.onItemClick
+    required super.onItemClick,
+
+    this.owner,
+    this.userList,
   });
 
   @override
@@ -146,7 +155,17 @@ class PersonRoomHeader extends CommonRoomHeader {
             children: [
               Obx(() {
                 final val = Rtc.speakRx[OAuthCtrl.uid];
-                var avatar = AsyncAvatar(uid: OAuthCtrl.uid, size: 46,);
+                var avatar = AsyncAvatar(
+                  uid: OAuthCtrl.uid,
+                  size: 46,
+                  // todo 点击处理
+                  onTap: Some(() {
+                    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                      return;
+                    }
+                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar("");
+                  }),
+                );
                 if(val == null) {
                   return avatar;
                 }

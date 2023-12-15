@@ -3,6 +3,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/room_user_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,16 @@ class OnlineUserView extends SimplePageView<Map> {
     var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
 
+    // 是否在个人直播间
+    var isPersonRoom = _ctrl is PersonRoomCtrl;
+    // 用户是否在mic上
+    var isUserOnMic = false;
+    PersonRoomMicCtrl? personRoomMicCtrl = null;
+    if(isPersonRoom) {
+      personRoomMicCtrl = ((_ctrl as PersonRoomCtrl?)?.getRoomMicCtrl() as PersonRoomMicCtrl?);
+      isUserOnMic = personRoomMicCtrl?.isUserOnMic(uid) ?? false;
+    }
+
     /// 添加或移除管理员
     Widget $EditManagerView() {
       return dataUserIsManager
@@ -85,6 +96,35 @@ class OnlineUserView extends SimplePageView<Map> {
         },
       );
     }
+
+    /// 邀请上麦
+    Widget InvideOnMic() {
+      return XTextBtn(
+        label: '邀请上麦',
+        width: 48,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: () async {
+          personRoomMicCtrl?.inviteMicUp2(uid: nuid);
+          controller.removeItem(item);
+        },
+      );
+    }
+
+    /// 闭麦
+    Widget TickDownMic() {
+      return XTextBtn(
+        label: '闭麦',
+        width: 48,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: () async {
+          personRoomMicCtrl?.onMicDown2(uid: nuid);
+          controller.removeItem(item);
+        },
+      );
+    }
+
 
     /// 拉黑用户
     Widget $EditBlackListView() {
@@ -113,6 +153,11 @@ class OnlineUserView extends SimplePageView<Map> {
         if (isShowEditManagerAction) $EditManagerView(),
         Spacing.w6,
         if (isShowEditBlackListAction) $EditBlackListView(),
+        Spacing.w6,
+        // 在线
+        if(isPersonRoom && isUserOnMic) TickDownMic(),
+        // 没有在线
+        if(isPersonRoom && !isUserOnMic) InvideOnMic(),
         Spacing.w20,
       ],
     );

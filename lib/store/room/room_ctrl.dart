@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/common/nets/cmds.dart';
+import 'package:app/common/nets/commons/proto/Common.pbserver.dart';
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
@@ -9,6 +10,8 @@ import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
+import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/persion/person_room_overlay.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:fixnum/fixnum.dart';
@@ -605,6 +608,13 @@ class SquareCtrl extends SceneCtrl {
 ///
 class PersonRoomCtrl extends RoomCtrl {
 
+  ///
+  /// 房主的信息
+  ///
+  Rxn<UserInfo> owner = Rxn();
+
+  ValueNotifier<int> value = ValueNotifier<int>(0);
+
   PersonRoomCtrl({required super.info, required super.pwd, required super.overlay});
 
 
@@ -615,9 +625,10 @@ class PersonRoomCtrl extends RoomCtrl {
     return Obx(() {
       final showMic = micPanelRx();
       final freeMic = freeMicRx();
-
       //公会房且不在pk中，才显示麦位
       final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
+      // 麦上用户列表
+      PersonRoomMicCtrl personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
 
       final showMicPanel = maxMic > 0 && !freeMic;
       return Positioned(
@@ -628,6 +639,8 @@ class PersonRoomCtrl extends RoomCtrl {
           showMicPanel: showMicPanel && topMicMode,
           showMic: showMic,
           isLandscape: isLandscape,
+          userList: personRoomMicCtrl.micUserList.value,
+          owner: owner.value,
           onItemClick: (action) {
             switch (action) {
               case '最小化':
@@ -658,4 +671,18 @@ class PersonRoomCtrl extends RoomCtrl {
       );
     });
   }
+
+  ///
+  /// 点击麦上用户的头像
+  ///
+  void onClickAvatar(String uid) {
+    RoomUserInfoDialog.show(uid: uid, nuid: Int64(0));
+  }
+
+  @override
+  SceneMicCtrl getRoomMicCtrl() {
+    roomMicCtrl ??= bindGet<PersonRoomMicCtrl>(PersonRoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType));
+    return roomMicCtrl!;
+  }
+
 }

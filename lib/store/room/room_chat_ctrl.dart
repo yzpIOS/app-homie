@@ -33,6 +33,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       });
     });
 
+    // 本地消息
+    on<LocalMsgEvent>((data) {
+      dataRx.add(SimpleTextMsg(data.localMsgData));
+    });
+
     /// 文本消息
     on<MsgTxtEvent>((data) {
       final uid = data.uid ?? "";

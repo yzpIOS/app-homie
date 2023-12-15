@@ -4,8 +4,10 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/widgets/icon_button.dart';
 import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/widgets.dart';
@@ -76,6 +78,9 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
 }
 
 class MicOperate extends StatefulWidget {
+
+  MicOperate();
+
   @override
   State<StatefulWidget> createState()  => _MicOperateState();
 
@@ -85,29 +90,60 @@ class _MicOperateState extends State<MicOperate> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 68,
-      height: 29,
-      padding: EdgeInsets.only(left: 5),
-      margin: EdgeInsets.only(bottom: 5),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.black.withAlpha(75),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,),
-          SizedBox(width: 6,),
-          Text(
-            "上麦中",
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          )
-        ],
+    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+      return SizedBox();
+    }
+    PersonRoomCtrl personRoomCtrl = RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl;
+    return GestureDetector(
+      onTap: () {
+        sceneMicCtrl<PersonRoomMicCtrl>().micOperate();
+      },
+      child: Container(
+        width: 68,
+        height: 29,
+        padding: EdgeInsets.only(left: 5),
+        margin: EdgeInsets.only(bottom: 5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.black.withAlpha(75),
+        ),
+        child: NotifierView(
+          personRoomCtrl.value,
+          onData: (data) {
+            Widget icon;
+            String title = "";
+            if(data == 1) {
+              title = "开麦中";
+              icon = Image.asset(IMG.format("room/mic/mic_join"), width: 15, height: 18,);
+            } else if(data == 2) {
+              title = "闭麦中";
+              icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
+            } else {
+              title = "上麦";
+              icon = Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,);
+            }
+            return Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 15,
+                  height: 18,
+                  child: icon,
+                ),
+
+                SizedBox(width: 6,),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

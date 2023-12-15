@@ -40,10 +40,10 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 个人房：申请上麦
   ///
-  static void applyUpMic() async {
+  static void applyUpMic(Function confirm) async {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "向群主申请上麦聊天？", confirm:  () {
-
+        confirm.call();
       });
     });
   }
@@ -51,13 +51,14 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 个人房：群主拒绝了你的上麦申请
   ///
-  static void refuseApplyUpMic() async {
+  static void refuseApplyUpMic(Function applyAgain) async {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "群主拒绝了你的上麦申请", cancelLabel: "再次申请", confirm:  () {
         // 确认
         Get.back();
       }, cancel: () {
         // todo 再次申请
+        applyAgain.call();
       },);
     });
   }
@@ -65,10 +66,11 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 个人房：群主邀请你上麦聊天
   ///
-  static void inviteApplyUpMic() async {
+  static void inviteApplyUpMic(Function callBack) async {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "群主邀请你上麦聊天", cancelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
         // todo 同意邀请
+        callBack.call();
       });
     });
   }
@@ -76,7 +78,7 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 个人房：确认下麦吗？
   ///
-  static void userApplyDownMic() async {
+  static void userApplyDownMic(Function onMicDownCallBack) async {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "确认下麦吗？", subTitle: "再次上麦需要向群主发出申请", cancelLabel: "我再想想", confirmLabel: "我要下麦", confirm:  () {
         // todo 同意邀请

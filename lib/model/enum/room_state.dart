@@ -9,6 +9,8 @@ enum RoomType {
   customize(1, '自定义'),
   guild(2, '公会'),
   square(3, '广场'),
+
+  person(4, '个播'), // 个人直播
   ;
 
   final int code;

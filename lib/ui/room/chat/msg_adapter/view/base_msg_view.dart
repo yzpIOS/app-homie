@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/base_msg_data.dart';
+import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -82,6 +83,25 @@ class SystemMsgView extends BaseMsgView<BaseMsgData<String>> {
         TextSpan(
           text: vm.data,
           style: const TextStyle(color: Colors.white),
+        ),
+      ],
+    );
+
+    return RichText(text: span, maxLines: null,);
+  }
+}
+
+class SimpleTextMsg extends BaseMsgView<LocalMsgData> {
+
+  const SimpleTextMsg(super.vm, {super.key});
+
+  @override
+  Widget msgView(BuildContext context) {
+    InlineSpan span = TextSpan(
+      children: [
+        TextSpan(
+          text: vm.data,
+          style: const TextStyle(color: AppPalette.colorY),
         ),
       ],
     );
