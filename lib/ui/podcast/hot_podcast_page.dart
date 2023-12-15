@@ -108,17 +108,18 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          GestureDetector(
-            onTap: () {
-              Get.to(() => const CreateRoomPage());
-            },
-            child: Image.asset(
-              IMG.format("ic_create"),
-              width: 28,
-              height: 28,
-            ),
-          ),
-          const SizedBox(width: 11,),
+          /// 取消热播界面右上角入口，统一放置于我的页面
+          // GestureDetector(
+          //   onTap: () {
+          //     Get.to(() => const CreateRoomPage());
+          //   },
+          //   child: Image.asset(
+          //     IMG.format("ic_create"),
+          //     width: 28,
+          //     height: 28,
+          //   ),
+          // ),
+          // const SizedBox(width: 11,),
           GestureDetector(
             onTap: () {
               if(Env.isDebug) {
