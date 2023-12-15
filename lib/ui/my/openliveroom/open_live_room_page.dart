@@ -366,8 +366,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
                   style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
                 ),
               ),
-              Obx(() =>
-                  Image.asset(IMG.format(freeMicRx() ? 'my/rb_icon_kai' : 'my/rb_icon_guan'), width: 49.5, height: 26,),),
+              Obx(() => Image.asset(IMG.format(freeMicRx() ? 'my/rb_icon_kai' : 'my/rb_icon_guan'), width: 49.5, height: 26,),),
             ],
           ),
         ),
@@ -385,15 +384,13 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
           height: 42,
           label: '开始直播',
           shape: AppShape.a4,
-          textStyle: const TextStyle(
-              fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
+          textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
           onTap: doStartLive,
         ),
         Spacing.h10,
         const XText(
           '需要完成主播人脸识别',
-          style: TextStyle(
-              fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
+          style: TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
         ),
       ],
     );
@@ -430,7 +427,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
                 'a1': StyledTextActionTag((val, __) =>/// TODO
-                    ctrl.onTapLink(val!, 'recharge_agreement')),
+                    ctrl.onTapLink(val!, 'xxxxx')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
             ),
