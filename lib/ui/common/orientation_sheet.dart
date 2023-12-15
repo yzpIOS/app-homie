@@ -113,7 +113,7 @@ class OrientationSheet extends StatelessWidget {
     return child;
   }
 
-  static Widget scaffold({required String title, required Widget body, TextStyle? textStyle, Widget? titleWidget}) {
+  static Widget scaffold({required String title, required Widget body, TextStyle? textStyle, Widget? titleWidget, bool needDivider = true}) {
     Widget child = titleWidget ?? DefaultTextStyle(
       style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
       child: XText(title, style: textStyle),
@@ -127,7 +127,8 @@ class OrientationSheet extends StatelessWidget {
           alignment: Alignment.center,
           child: child,
         ),
-        const Divider(indent: 10, endIndent: 10, color: Color(0x80CCCCCC)),
+        if(needDivider)
+          const Divider(indent: 10, endIndent: 10, color: Color(0x80CCCCCC)),
         Flexible(child: body),
       ],
     );

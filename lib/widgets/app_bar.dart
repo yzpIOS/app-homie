@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/my_tab_indicator.dart';
 import 'package:flutter/material.dart';
 
 AppBar xAppBar({
@@ -81,31 +82,38 @@ Widget xAppBar$TabBar(
   final Color indicatorColor = AppPalette.primary,
   final Tuple2<Color, Color> labelColor = const Tuple2(AppPalette.primary, Colors.black),
   final AlignmentGeometry alignment = Alignment.bottomCenter,
+  final needPadding = true,
+  final needDownLine = true,
+  final double fontSize = 17,
+  List<Widget>? tabManufacture,
+  Decoration? decoration,
+  final double horizonPadding = 0,
+  final double kItemHeight = 30,
+  final double labelPadding = 15,
 }) {
-  const double kItemHeight = 30;
 
   return Align(
     alignment: alignment,
     child: TabBar(
       tabAlignment: TabAlignment.center,
       controller: controller,
-      labelPadding: const Pad(horizontal: 15),
+      labelPadding: Pad(horizontal: labelPadding),
       //
       indicatorSize: TabBarIndicatorSize.label,
-      indicator: const UnderlineTabIndicator(
+      indicator: decoration ?? const UnderlineTabIndicator(
         borderRadius: AppBorderRadius.a2,
         borderSide: BorderSide(width: 2, color: AppPalette.primary),
       ),
       //
-      labelStyle: const TextStyle(fontSize: 17, fontWeight: fw$SemiBold),
-      unselectedLabelStyle: const TextStyle(fontSize: 17, fontWeight: fw$Regular),
+      labelStyle: TextStyle(fontSize: fontSize, fontWeight: fw$SemiBold),
+      unselectedLabelStyle: TextStyle(fontSize: fontSize, fontWeight: fw$Regular),
       //
       labelColor: labelColor.value1,
       unselectedLabelColor: labelColor.value2,
       //
       isScrollable: isScrollable,
-      padding: Pad(vertical: (height - kItemHeight) / 2),
-      tabs: tabs.map((it) => Tab(text: it, height: kItemHeight)).toList(growable: false),
+      padding: needPadding ? Pad(vertical: (height - kItemHeight) / 2, horizontal: horizonPadding) : null,
+      tabs: tabManufacture ?? tabs.map((it) => Tab(text: it, height: kItemHeight)).toList(growable: false),
     ),
   );
 }
