@@ -97,33 +97,33 @@ class OnlineUserView extends SimplePageView<Map> {
       );
     }
 
-    /// 邀请上麦
-    Widget InvideOnMic() {
-      return XTextBtn(
-        label: '邀请上麦',
-        width: 48,
-        height: 24,
-        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-        onTap: () async {
-          personRoomMicCtrl?.inviteMicUp2(uid: nuid);
-          controller.removeItem(item);
-        },
-      );
-    }
-
-    /// 闭麦
-    Widget TickDownMic() {
-      return XTextBtn(
-        label: '闭麦',
-        width: 48,
-        height: 24,
-        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-        onTap: () async {
-          personRoomMicCtrl?.onMicDown2(uid: nuid);
-          controller.removeItem(item);
-        },
-      );
-    }
+    // /// 邀请上麦
+    // Widget InvideOnMic() {
+    //   return XTextBtn(
+    //     label: '邀请上麦',
+    //     width: 72,
+    //     height: 24,
+    //     textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+    //     onTap: () async {
+    //       personRoomMicCtrl?.inviteMicUp2(uid: nuid);
+    //       controller.removeItem(item);
+    //     },
+    //   );
+    // }
+    //
+    // /// 闭麦
+    // Widget TickDownMic() {
+    //   return XTextBtn(
+    //     label: '闭麦',
+    //     width: 48,
+    //     height: 24,
+    //     textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+    //     onTap: () async {
+    //       personRoomMicCtrl?.onMicDown2(uid: nuid);
+    //       controller.removeItem(item);
+    //     },
+    //   );
+    // }
 
 
     /// 拉黑用户
@@ -154,10 +154,10 @@ class OnlineUserView extends SimplePageView<Map> {
         Spacing.w6,
         if (isShowEditBlackListAction) $EditBlackListView(),
         Spacing.w6,
-        // 在线
-        if(isPersonRoom && isUserOnMic) TickDownMic(),
-        // 没有在线
-        if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+        // // 在线
+        // if(isPersonRoom && isUserOnMic) TickDownMic(),
+        // // 没有在线
+        // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
         Spacing.w20,
       ],
     );
