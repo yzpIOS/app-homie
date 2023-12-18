@@ -453,7 +453,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     final title = inputs.by('房间名称');
     final notice = inputs.by('房间公告');
     final image = imageRx();
-    final scene = sceneRx();
+    // final scene = sceneRx();
     final freeMic = freeMicRx();
     final pact = pactRx();
 
@@ -482,7 +482,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       // scene: scene.value1,
       freeMic: freeMic,
     );
-    // 获取到sceneId
+    // 获取到roomId后跳转直播间
     int? roomId = response?.roomId.toInt();
     if (roomId == null) {
       return;
