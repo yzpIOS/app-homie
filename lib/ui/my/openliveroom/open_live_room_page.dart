@@ -325,39 +325,40 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
 
   Iterable<Widget> $MoreView() {
     return [
-      OpacityButton(
-        onTap: selectScene,
-        child: Container(
-          margin: const Pad(top: 20),
-          height: 44,
-          child: Row(
-            children: [
-              const Expanded(
-                child: XText(
-                  '场景',
-                  style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
-                ),
-              ),
-              Obx(() {
-                return XRichText(
-                  TextSpan(
-                    children: [
-                      TextSpan(text: sceneRx()?.value2,),
-                      const WidgetSpan(child: RightArrowIcon(color: AppPalette.primary,), alignment: PlaceholderAlignment.middle,),
-                    ],
-                    style: const TextStyle(fontSize: 15, color: AppPalette.primary, fontWeight: fw$Medium),
-                  ),
-                );
-              }),
-            ],
-          ),
-        ),
-      ),
-      const Divider(height: 1, color: Color(0xFFE3E7ED),),
+      // OpacityButton(
+      //   onTap: selectScene,
+      //   child: Container(
+      //     margin: const Pad(top: 20),
+      //     height: 44,
+      //     child: Row(
+      //       children: [
+      //         const Expanded(
+      //           child: XText(
+      //             '场景',
+      //             style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: fw$Medium),
+      //           ),
+      //         ),
+      //         Obx(() {
+      //           return XRichText(
+      //             TextSpan(
+      //               children: [
+      //                 TextSpan(text: sceneRx()?.value2,),
+      //                 const WidgetSpan(child: RightArrowIcon(color: AppPalette.primary,), alignment: PlaceholderAlignment.middle,),
+      //               ],
+      //               style: const TextStyle(fontSize: 15, color: AppPalette.primary, fontWeight: fw$Medium),
+      //             ),
+      //           );
+      //         }),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // const Divider(height: 1, color: Color(0xFFE3E7ED),),
       OpacityButton(
         onTap: () => freeMicRx.toggle(),
-        child: SizedBox(
+        child: Container(
           height: 44,
+          margin: const Pad(top: 20),
           child: Row(
             children: [
               const Expanded(
@@ -437,14 +438,14 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     );
   }
 
-  /// 跳转选择场景
-  void selectScene() {
-    Get.to(() => const ScenePage())?.onType<Map>((val) {
-      sceneRx(
-        Tuple2(val['id'], val['name']),
-      );
-    });
-  }
+  // /// 跳转选择场景
+  // void selectScene() {
+  //   Get.to(() => const ScenePage())?.onType<Map>((val) {
+  //     sceneRx(
+  //       Tuple2(val['id'], val['name']),
+  //     );
+  //   });
+  // }
 
   void doStartLive() async {
     hideKeyboard();
@@ -464,10 +465,10 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       showToast('请输入房间名称');
       return;
     }
-    if (scene == null) {
-      showToast('请选择场景');
-      return;
-    }
+    // if (scene == null) {
+    //   showToast('请选择场景');
+    //   return;
+    // }
     if (pact == false) {
       showToast('请阅读并同意《直播规范》');
       return;
@@ -478,7 +479,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       title: title,
       image: image,
       notice: notice,
-      scene: scene.value1,
+      // scene: scene.value1,
       freeMic: freeMic,
     );
     // 获取到sceneId
