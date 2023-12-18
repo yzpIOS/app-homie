@@ -9,10 +9,12 @@ import 'package:app/ui/common/room_card_view.dart';
 class RoomItemView extends StatelessWidget {
   final Map data;
   final TextStyle textStyle;
+  final bool isShowMore;// 是否显示x人在线和关注标识
 
   const RoomItemView({
     super.key,
     required this.data,
+    this.isShowMore = true,
     this.textStyle = const TextStyle(fontSize: 14, color: Colors.black),
   });
 
@@ -35,42 +37,42 @@ class RoomItemView extends StatelessWidget {
           alignment: Alignment.bottomLeft,
           children: [
             child,
-
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xFF000000).withAlpha(100),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  margin: EdgeInsets.only(left: 3, bottom: 3),
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  child: Text(
-                    "100人在线",
-                    maxLines: 1,
-                    style: TextStyle(
-                      overflow: TextOverflow.ellipsis,
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500
+            if(isShowMore)
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xFF000000).withAlpha(100),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    margin: EdgeInsets.only(left: 3, bottom: 3),
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: Text(
+                      "100人在线",
+                      maxLines: 1,
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500
+                      ),
                     ),
                   ),
-                ),
-                Expanded(child: SizedBox()),
-                Container(
-                  width: 16,
-                  height: 16,
-                  margin: EdgeInsets.only(right: 5),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.black.withAlpha(80),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Image.asset(IMG.format("room/room_persion"), width: 12, height: 12,),
-                )
-              ],
-            )
+                  Expanded(child: SizedBox()),
+                  Container(
+                    width: 16,
+                    height: 16,
+                    margin: EdgeInsets.only(right: 5),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(80),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Image.asset(IMG.format("room/room_persion"), width: 12, height: 12,),
+                  )
+                ],
+              )
           ],
         ),
         Spacing.exp,
