@@ -429,6 +429,31 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;
+    simpleTry(
+      () => Api.Room.info(roomId: roomId, tryTimes: 2),
+      callback: (data) {
+        if(data["room_type"] == 1) {
+          // 个人房
+          toPersonRoom(roomId: roomId, data: data, off: off);
+        } else if(data["room_type"] == 2) {
+          // 公会房
+          toGuildRoom(roomId: roomId, data: data, off: off);
+        } else if(data["room_type"] == 3) {
+          // 广场
+          toSquare(data: data);
+        }
+      },
+      showProgress: true
+    );
+    // reset tempCallCloseRoom param
+    tempCallCloseRoom = true;
+  }
+
+  void toGuildRoom({required int roomId, Map? data, bool off = false}) {
+    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
+      return;
+    }
+    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     _show(
       roomId: roomId,
       off: off,

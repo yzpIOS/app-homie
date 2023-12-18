@@ -104,8 +104,11 @@ Future<void> simpleSub(f, {ValueChanged? callback1, VoidCallback? callback, Stri
   );
 }
 
-Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueChanged<T>? callback}) async {
+Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueChanged<T>? callback, bool showProgress = false}) async {
   try {
+    if(showProgress) {
+      WaitingCtrl.obj.show();
+    }
     final resp = await body();
 
     callback?.call(resp);
@@ -139,6 +142,10 @@ Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueC
     SentryHelp.sendErr(e, s: s);
 
     showToast('服务异常');
+  } finally {
+    if(showProgress) {
+      WaitingCtrl.obj.hidden();
+    }
   }
 }
 //</editor-fold>
