@@ -126,7 +126,7 @@ class _ItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final info = controller.dataRx[no];
+        final info = controller.simpleUserList.firstWhereOrNull((element) => element.no == no);
 
         return info == null ? $EmptyView(no) : $UserView(no, info);
       },

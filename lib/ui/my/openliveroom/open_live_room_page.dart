@@ -99,7 +99,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     switch (await Get.simpleDialog(
         msg: '已经在直播啦，进入直播间', cancelLabel: '下播')) {
       case '确定':
-        Get.find<RoomManagerCtrl>().toRoom(roomId: data['room_id'], off: true);
+        Get.find<RoomManagerCtrl>().toPersonRoom(roomId: data['room_id'], off: true);
         break;
       case '下播':
         if (Get
@@ -487,6 +487,6 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     if (roomId == null) {
       return;
     }
-    Get.find<RoomManagerCtrl>().toRoom(roomId: roomId, off: true);
+    Get.find<RoomManagerCtrl>().toPersonRoom(roomId: roomId, off: true);
   }
 }

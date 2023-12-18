@@ -379,8 +379,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       return const SizedBox();
     }
     return Obx(() {
-      var onLine = roomMicCtrl.dataRx;
-      var mineMic = onLine.values.firstWhereOrNull((e) => e.uid == OAuthCtrl.uid);
+      var mineMic = roomMicCtrl.simpleUserList.firstWhereOrNull((e) => e.uid == OAuthCtrl.uid);
       return Row(
         children: [
           const Expanded(child: SizedBox()),

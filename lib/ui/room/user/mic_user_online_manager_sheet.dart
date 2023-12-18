@@ -145,9 +145,9 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
         // 麦上的用户信息列表
         List<Common.RoomUserInfo> userInMicList = [];
         // 获取麦上的用户列表
-        var userList = roomMicCtrl.dataRx.keys.toList();
+        var userList = roomMicCtrl.simpleUserList;
         for(int index = 0; index < userList.length; index ++) {
-          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == roomMicCtrl.dataRx[userList[index]]?.nUid);
+          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == userList[index].nUid);
           // 其它在mic上的用户的信息
           if(result != null) {
             if(userList[index] == "1") {

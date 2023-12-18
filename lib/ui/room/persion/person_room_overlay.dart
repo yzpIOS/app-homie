@@ -5,6 +5,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
 import 'package:app/ui/room/overlay/room_info_dialog.dart';
@@ -72,7 +73,7 @@ class PersonRoomOverlay extends RoomOverlay {
 class PersonRoomHeader extends CommonRoomHeader {
 
   UserInfo? owner;
-  List<UserInfo>? userList;
+  List<MicInfo>? userList;
 
   PersonRoomHeader({
     required super.showMicPanel,

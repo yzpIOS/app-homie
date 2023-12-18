@@ -493,14 +493,6 @@ class RoomCtrl extends SceneCtrl {
 
   bool isAdmin(UID uid) => managerRx.contains(uid);
 
-  bool isCharge(UID uid) {
-    try {
-      return (roomMicCtrl as RoomMicCtrl?)?.dataRx["1"]?.uid == uid;
-    } catch(e) {
-    }
-    return false;
-  }
-
   RoomRoleType? getRole(UID uid) {
     final owner = isOwner(uid);
     final admin = isAdmin(uid);
@@ -619,6 +611,21 @@ class PersonRoomCtrl extends RoomCtrl {
 
 
   @override
+  void onRender(S_SyncRoomInfo? data) {
+    followRx.value = roomHttpInfo?['follow_status'] ?? false;
+    userCountRx.value = data?.onlineList.length ?? 0;
+
+    // 更新mike位数据
+    roomMicCtrl = getRoomMicCtrl();
+    (roomMicCtrl as PersonRoomMicCtrl?)?.micUserList.value = RoomMicCtrl.createMicInfo2(data?.mikes ?? []);
+
+    if(RoomManagerCtrl.ins.shouldOpenGift) {
+      RoomOverlay.showGiftSend(roomId);
+    }
+    RoomManagerCtrl.ins.shouldOpenGift = false;
+  }
+
+  @override
   Widget createHeader() {
     final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
 
@@ -639,7 +646,7 @@ class PersonRoomCtrl extends RoomCtrl {
           showMicPanel: showMicPanel && topMicMode,
           showMic: showMic,
           isLandscape: isLandscape,
-          userList: personRoomMicCtrl.micUserList.value,
+          userList: personRoomMicCtrl.simpleUserList,
           owner: owner.value,
           onItemClick: (action) {
             switch (action) {

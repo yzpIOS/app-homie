@@ -444,6 +444,8 @@ const S_AccMikeBroadcast$json = {
     {'1': 'mike_id', '3': 2, '4': 1, '5': 3, '10': 'mikeId'},
     {'1': 'mike_no', '3': 3, '4': 1, '5': 9, '10': 'mikeNo'},
     {'1': 'number', '3': 4, '4': 1, '5': 5, '10': 'number'},
+    {'1': 'role_id', '3': 5, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'uid', '3': 6, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
@@ -451,7 +453,7 @@ const S_AccMikeBroadcast$json = {
 final $typed_data.Uint8List s_AccMikeBroadcastDescriptor = $convert.base64Decode(
     'ChJTX0FjY01pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB21pa2VfaW'
     'QYAiABKANSBm1pa2VJZBIXCgdtaWtlX25vGAMgASgJUgZtaWtlTm8SFgoGbnVtYmVyGAQgASgF'
-    'UgZudW1iZXI=');
+    'UgZudW1iZXISFwoHcm9sZV9pZBgFIAEoA1IGcm9sZUlkEhAKA3VpZBgGIAEoCVIDdWlk');
 
 @$core.Deprecated('Use s_BanMikeBroadcastDescriptor instead')
 const S_BanMikeBroadcast$json = {

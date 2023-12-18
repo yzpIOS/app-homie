@@ -125,7 +125,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
                 if(roomMicCtrl is! RoomMicCtrl) {
                   return;
                 }
-                var userList = roomMicCtrl.dataRx.values.map((e) => e.nUid);
+                var userList = roomMicCtrl.simpleUserList.map((e) => e.nUid);
                 selectedIds.addAll(userList);
                 selectedAll.value = true;
               }
@@ -174,18 +174,18 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
         List<Common.RoomUserInfo> userInMicList = [];
         Map<Int64, MicInfo?> micInfos = {};
         // 获取麦上的用户列表
-        var userList = roomMicCtrl.dataRx.keys.toList();
+        var userList = roomMicCtrl.simpleUserList;
         for(int index = 0; index < userList.length; index ++) {
-          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == roomMicCtrl.dataRx[userList[index]]?.nUid);
+          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == userList[index].nUid);
           // 其它在mic上的用户的信息
           if(result != null) {
-            if(userList[index] == "1") {
+            if(userList[index].no == "1") {
               roomOwner = result;
-              micInfos[result.roleId] = roomMicCtrl.dataRx[userList[index]];
-            } else if(userList[index] == "8") {
+              micInfos[result.roleId] = userList[index];
+            } else if(userList[index].no == "8") {
             } else {
               userInMicList.add(result);
-              micInfos[result.roleId] = roomMicCtrl.dataRx[userList[index]];
+              micInfos[result.roleId] = userList[index];
             }
           }
         }
@@ -331,7 +331,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     if(s_syncRoomInfo == null || roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
       return;
     }
-    var userList = roomMicCtrl.dataRx.values.toList();
+    var userList = roomMicCtrl.simpleUserList;
     // 获取在麦上的用户id
     var userRoleids = userList.where((e) => selectedIds.contains(e.nUid)).map((e) => Int64(e.micId)).toList();
     if(userRoleids.isEmpty) {

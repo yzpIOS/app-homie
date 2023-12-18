@@ -2084,6 +2084,8 @@ class S_AccMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? mikeId,
     $core.String? mikeNo,
     $core.int? number,
+    $fixnum.Int64? roleId,
+    $core.String? uid,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -2098,6 +2100,12 @@ class S_AccMikeBroadcast extends $pb.GeneratedMessage {
     if (number != null) {
       $result.number = number;
     }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
     return $result;
   }
   S_AccMikeBroadcast._() : super();
@@ -2109,6 +2117,8 @@ class S_AccMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(2, _omitFieldNames ? '' : 'mikeId')
     ..aOS(3, _omitFieldNames ? '' : 'mikeNo')
     ..a<$core.int>(4, _omitFieldNames ? '' : 'number', $pb.PbFieldType.O3)
+    ..aInt64(5, _omitFieldNames ? '' : 'roleId')
+    ..aOS(6, _omitFieldNames ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -2168,6 +2178,24 @@ class S_AccMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasNumber() => $_has(3);
   @$pb.TagNumber(4)
   void clearNumber() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get roleId => $_getI64(4);
+  @$pb.TagNumber(5)
+  set roleId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRoleId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRoleId() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get uid => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set uid($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasUid() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearUid() => clearField(6);
 }
 
 class S_BanMikeBroadcast extends $pb.GeneratedMessage {

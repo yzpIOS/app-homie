@@ -206,10 +206,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       // 麦上的用户信息列表
       List<GiftSend2RoomEntity> userInMicList = [];
       // 获取麦上的用户列表
-      var micUsers = sceneMicCtrl<RoomMicCtrl>().dataRx;
+      var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
       // 根据麦号进行排序
-      var userList = micUsers.keys.toList();
-      userList.sort((a, b) => a.compareTo(b));
+      var userList = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
+      userList.sort((a, b) => a.no.compareTo(b.no));
 
       // 获取房主的信息
       var roomOwnerInfo = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.type == 1);
@@ -223,20 +223,20 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       // 其它用户信息
       for(int index = 0; index < userList.length; index ++) {
         // 过滤自己
-        if(OAuthCtrl.isSelf(micUsers[userList[index]]?.uid)) {
+        if(OAuthCtrl.isSelf(userList[index].uid)) {
           continue;
         }
         // 其它用户信息
-        if(roomOwnerInfo?.uid == micUsers[userList[index]]?.uid) {
-          roomOwner = GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: "", userType: 1);
+        if(roomOwnerInfo?.uid == userList[index].uid) {
+          roomOwner = GiftSend2RoomEntity(uid: userList[index].uid ?? "", no: "", userType: 1);
         } else if(userList[index] == "1") {
           // 主持信息
-          mainRole = GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: "", userType: 2);
+          mainRole = GiftSend2RoomEntity(uid: userList[index].uid ?? "", no: "", userType: 2);
         } else if(userList[index] == "8"){
           // 板板位不显示
           continue;
         } else {
-          userInMicList.add(GiftSend2RoomEntity(uid: micUsers[userList[index]]?.uid ?? "", no: userList[index], userType: 3));
+          userInMicList.add(GiftSend2RoomEntity(uid: userList[index].uid ?? "", no: userList[index].no, userType: 3));
         }
       }
 
