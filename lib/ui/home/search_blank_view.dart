@@ -102,6 +102,7 @@ class _SearchBlankViewState extends State<SearchBlankView> {
         itemCount: min(data.length, 5),
         itemBuilder: (_, i) => RoomItemView(
           data: data[i],
+          isShowMore: false,
           textStyle: const TextStyle(fontSize: 12, color: Colors.black),
         ),
       ),
