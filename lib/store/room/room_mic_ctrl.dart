@@ -104,7 +104,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     on<InviteMicUpEvent>(
       test: (event) => OAuthCtrl.isSelf(event.uid),
       (event) {
-        onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
+        // onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
       },
     );
 
@@ -272,11 +272,15 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     final data = dataRx[no];
 
     if (data != null) {
-      Get.alertSub(
-        alert: alert,
-        isModal: false,
-        () => Api.Room.micDown(uid: data.nUid),
-      );
+      if(alert.isEmpty) {
+        Api.Room.micDown(uid: data.nUid);
+      } else {
+        Get.alertSub(
+          alert: alert,
+          isModal: false,
+              () => Api.Room.micDown(uid: data.nUid),
+        );
+      }
     } else {
       assert(false, '数据错误 -> $data $no');
     }

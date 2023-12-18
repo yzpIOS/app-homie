@@ -362,16 +362,13 @@ const S_InviteMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
-    {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
-    {'1': 'mike_id', '3': 5, '4': 1, '5': 3, '10': 'mikeId'},
   ],
 };
 
 /// Descriptor for `S_InviteMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_InviteMikeBroadcastDescriptor = $convert.base64Decode(
     'ChVTX0ludml0ZU1pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbG'
-    'VfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZBIXCgdtaWtlX25vGAQgASgJUgZt'
-    'aWtlTm8SFwoHbWlrZV9pZBgFIAEoA1IGbWlrZUlk');
+    'VfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZA==');
 
 @$core.Deprecated('Use s_CloseMikeBroadcastDescriptor instead')
 const S_CloseMikeBroadcast$json = {
@@ -413,15 +410,13 @@ const S_ApplyUpMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
-    {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
   ],
 };
 
 /// Descriptor for `S_ApplyUpMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_ApplyUpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChZTX0FwcGx5VXBNaWtlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2'
-    'xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQSFwoHbWlrZV9ubxgEIAEoCVIG'
-    'bWlrZU5v');
+    'xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQ=');
 
 @$core.Deprecated('Use s_RefuseUpMikeBroadcastDescriptor instead')
 const S_RefuseUpMikeBroadcast$json = {
@@ -430,15 +425,13 @@ const S_RefuseUpMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
-    {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
   ],
 };
 
 /// Descriptor for `S_RefuseUpMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_RefuseUpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChdTX1JlZnVzZVVwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm'
-    '9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhcKB21pa2Vfbm8YBCABKAlS'
-    'Bm1pa2VObw==');
+    '9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlk');
 
 @$core.Deprecated('Use s_AccMikeBroadcastDescriptor instead')
 const S_AccMikeBroadcast$json = {
@@ -1296,6 +1289,8 @@ const S_Test$json = {
     {'1': 'roomPwd', '3': 4, '4': 1, '5': 9, '10': 'roomPwd'},
     {'1': 'opt', '3': 5, '4': 1, '5': 5, '10': 'opt'},
     {'1': 'extra', '3': 6, '4': 1, '5': 9, '10': 'extra'},
+    {'1': 'roleId', '3': 7, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'userId', '3': 8, '4': 1, '5': 3, '10': 'userId'},
   ],
 };
 
@@ -1304,7 +1299,7 @@ final $typed_data.Uint8List s_TestDescriptor = $convert.base64Decode(
     'CgZTX1Rlc3QSLgoEY29kZRgBIAEoDjIaLmNvbS5zYXZ2eS5wcm90by5FcnJvckNvZGVSBGNvZG'
     'USGAoHc2NlbmVJZBgCIAEoA1IHc2NlbmVJZBIWCgZyb29tSWQYAyABKANSBnJvb21JZBIYCgdy'
     'b29tUHdkGAQgASgJUgdyb29tUHdkEhAKA29wdBgFIAEoBVIDb3B0EhQKBWV4dHJhGAYgASgJUg'
-    'VleHRyYQ==');
+    'VleHRyYRIWCgZyb2xlSWQYByABKANSBnJvbGVJZBIWCgZ1c2VySWQYCCABKANSBnVzZXJJZA==');
 
 @$core.Deprecated('Use s_DebugDescriptor instead')
 const S_Debug$json = {
@@ -2254,12 +2249,13 @@ final $typed_data.Uint8List c_MoveDescriptor = $convert.base64Decode(
 const S_Move$json = {
   '1': 'S_Move',
   '2': [
-    {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.StateInfo', '10': 'list'},
+    {'1': 'ids', '3': 1, '4': 3, '5': 3, '10': 'ids'},
+    {'1': 'list', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.C_Move', '10': 'list'},
   ],
 };
 
 /// Descriptor for `S_Move`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_MoveDescriptor = $convert.base64Decode(
-    'CgZTX01vdmUSLgoEbGlzdBgBIAMoCzIaLmNvbS5zYXZ2eS5wcm90by5TdGF0ZUluZm9SBGxpc3'
-    'Q=');
+    'CgZTX01vdmUSEAoDaWRzGAEgAygDUgNpZHMSKwoEbGlzdBgCIAMoCzIXLmNvbS5zYXZ2eS5wcm'
+    '90by5DX01vdmVSBGxpc3Q=');
 

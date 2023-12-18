@@ -73,6 +73,7 @@ class CMD {
   static const S_CloseMikeBroadcast = 2223; // 禁麦广播 【对应旧mq类型：12】
   static const S_OpenBroadcast = 2224; // 开麦广播 【对应旧mq类型：13】
   static const S_ApplyUpMikeBroadcast = 2225; // 申请上麦 【对应旧mq类型：14】
+  static const S_RefuseUpMikeBroadcast = 2226; // 拒绝申请上麦广播
 
   static const S_UpdateLevel = 3102; // 等级提升广播（对应mq的16）
   static const S_LiveStopBroadcast = 2201; // 房间关播广播【对应旧mq类型：17】

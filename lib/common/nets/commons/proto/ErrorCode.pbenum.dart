@@ -113,6 +113,11 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_START_MIKE_EXECUTING = ErrorCode._(16103, _omitEnumNames ? '' : 'ROOM_START_MIKE_EXECUTING');
   static const ErrorCode ROOM_MIKE_IN_USE = ErrorCode._(16104, _omitEnumNames ? '' : 'ROOM_MIKE_IN_USE');
   static const ErrorCode ROOM_MIKE_BAN_USE = ErrorCode._(16105, _omitEnumNames ? '' : 'ROOM_MIKE_BAN_USE');
+  static const ErrorCode ROOM_MIKE_APPLYING = ErrorCode._(16106, _omitEnumNames ? '' : 'ROOM_MIKE_APPLYING');
+  static const ErrorCode ROOM_MIKE_INVITING = ErrorCode._(16107, _omitEnumNames ? '' : 'ROOM_MIKE_INVITING');
+  static const ErrorCode ROOM_MIKE_EXIST = ErrorCode._(16108, _omitEnumNames ? '' : 'ROOM_MIKE_EXIST');
+  static const ErrorCode ROOM_MIKE_APPLY_EXPIRE = ErrorCode._(16109, _omitEnumNames ? '' : 'ROOM_MIKE_APPLY_EXPIRE');
+  static const ErrorCode ROOM_MIKE_INVITE_EXPIRE = ErrorCode._(16110, _omitEnumNames ? '' : 'ROOM_MIKE_INVITE_EXPIRE');
   static const ErrorCode ROOM_SCENE_NOT_EXIST = ErrorCode._(16201, _omitEnumNames ? '' : 'ROOM_SCENE_NOT_EXIST');
   static const ErrorCode NOT_FACE_REAL_NAME = ErrorCode._(16202, _omitEnumNames ? '' : 'NOT_FACE_REAL_NAME');
   static const ErrorCode ROOM_ANCHOR_NOT_FOUND = ErrorCode._(16203, _omitEnumNames ? '' : 'ROOM_ANCHOR_NOT_FOUND');
@@ -269,6 +274,11 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_START_MIKE_EXECUTING,
     ROOM_MIKE_IN_USE,
     ROOM_MIKE_BAN_USE,
+    ROOM_MIKE_APPLYING,
+    ROOM_MIKE_INVITING,
+    ROOM_MIKE_EXIST,
+    ROOM_MIKE_APPLY_EXPIRE,
+    ROOM_MIKE_INVITE_EXPIRE,
     ROOM_SCENE_NOT_EXIST,
     NOT_FACE_REAL_NAME,
     ROOM_ANCHOR_NOT_FOUND,

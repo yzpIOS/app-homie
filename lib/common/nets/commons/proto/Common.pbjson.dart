@@ -55,15 +55,12 @@ const State$json = {
     {'1': 'Mai', '2': 1},
     {'1': 'Sit', '2': 2},
     {'1': 'Swim', '2': 3},
-    {'1': 'Walk', '2': 4},
-    {'1': 'Run', '2': 5},
   ],
 };
 
 /// Descriptor for `State`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List stateDescriptor = $convert.base64Decode(
-    'CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAISCAoEU3dpbRADEggKBFdhbGsQBB'
-    'IHCgNSdW4QBQ==');
+    'CgVTdGF0ZRIICgROb25lEAASBwoDTWFpEAESBwoDU2l0EAISCAoEU3dpbRAD');
 
 @$core.Deprecated('Use pKGiftStateDescriptor instead')
 const PKGiftState$json = {
@@ -261,33 +258,6 @@ final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode(
     '5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0'
     'ZUluZm8SGgoIc2VhdEd1aWQYBiABKAlSCHNlYXRHdWlkEhYKBnJvb21JZBgHIAEoA1IGcm9vbU'
     'lkEhAKA3VpZBgIIAEoCVIDdWlk');
-
-@$core.Deprecated('Use seatInfoDescriptor instead')
-const SeatInfo$json = {
-  '1': 'SeatInfo',
-  '2': [
-    {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
-    {'1': 'seatGuid', '3': 2, '4': 1, '5': 9, '10': 'seatGuid'},
-  ],
-};
-
-/// Descriptor for `SeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List seatInfoDescriptor = $convert.base64Decode(
-    'CghTZWF0SW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBIaCghzZWF0R3VpZBgCIAEoCVIIc2'
-    'VhdEd1aWQ=');
-
-@$core.Deprecated('Use sceneSeatInfoDescriptor instead')
-const SceneSeatInfo$json = {
-  '1': 'SceneSeatInfo',
-  '2': [
-    {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.SeatInfo', '10': 'list'},
-  ],
-};
-
-/// Descriptor for `SceneSeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List sceneSeatInfoDescriptor = $convert.base64Decode(
-    'Cg1TY2VuZVNlYXRJbmZvEi0KBGxpc3QYASADKAsyGS5jb20uc2F2dnkucHJvdG8uU2VhdEluZm'
-    '9SBGxpc3Q=');
 
 @$core.Deprecated('Use userInfoDescriptor instead')
 const UserInfo$json = {
@@ -606,4 +576,31 @@ const SSStr$json = {
 /// Descriptor for `SSStr`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List sSStrDescriptor = $convert.base64Decode(
     'CgVTU1N0chIQCgNrZXkYASABKAlSA2tleRIQCgN2YWwYAiABKAlSA3ZhbA==');
+
+@$core.Deprecated('Use seatInfoDescriptor instead')
+const SeatInfo$json = {
+  '1': 'SeatInfo',
+  '2': [
+    {'1': 'roleId', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'seatGuid', '3': 2, '4': 1, '5': 9, '10': 'seatGuid'},
+  ],
+};
+
+/// Descriptor for `SeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List seatInfoDescriptor = $convert.base64Decode(
+    'CghTZWF0SW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBIaCghzZWF0R3VpZBgCIAEoCVIIc2'
+    'VhdEd1aWQ=');
+
+@$core.Deprecated('Use sceneSeatInfoDescriptor instead')
+const SceneSeatInfo$json = {
+  '1': 'SceneSeatInfo',
+  '2': [
+    {'1': 'list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.SeatInfo', '10': 'list'},
+  ],
+};
+
+/// Descriptor for `SceneSeatInfo`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List sceneSeatInfoDescriptor = $convert.base64Decode(
+    'Cg1TY2VuZVNlYXRJbmZvEi0KBGxpc3QYASADKAsyGS5jb20uc2F2dnkucHJvdG8uU2VhdEluZm'
+    '9SBGxpc3Q=');
 

@@ -34,6 +34,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_AdministratorBroadcast: AdminSetEvent.new,
     // 申请上麦
     CMD.S_ApplyUpMikeBroadcast: MicApplyEvent.new,
+    // 拒绝上麦
+    CMD.S_RefuseUpMikeBroadcast: RefuseUpEvent.new,
     // 开麦
     CMD.S_OpenBroadcast: MicOpenEvent.new,
     // 下麦

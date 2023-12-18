@@ -17,6 +17,22 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
 
   PersonRoomMicCtrl(super.roomId, {required super.maxMic, required super.roomType});
 
+  @override
+  void onInit() {
+    super.onInit();
+    // 拒绝上麦弹窗
+    on<RefuseUpEvent>((event) {
+      CommonDialog.refuseApplyUpMic(() {
+        micOperate();
+        sendTextNotify("申请上麦");
+      });
+    });
+    // 申请上麦成功
+    on<S_InviteMikeBroadcast>((event) {
+      sendTextNotify("公屏显示你已上麦");
+    });
+  }
+
   ///
   /// 登录用户：上下麦操作，要判断是否被禁
   ///
@@ -25,48 +41,27 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       // 自由组麦的形式
       if(isOnMic()) {
         // 在麦上，下麦
-        onMicDown();
+        micDow(no: "", alert: "");
       } else {
         // 不在麦上，上麦
-        onMicUp();
+        micUp(no: "");
       }
     } else {
       // 非自由组麦, 需要弹窗
       if(isOnMic()) {
         // 在麦上，下麦
         CommonDialog.userApplyDownMic(() {
-          onMicDown();
+          micDow(no: "", alert: "");
+          sendTextNotify("申请成功，等待群主同意");
         });
       } else {
         // 不在麦上，上麦
         CommonDialog.applyUpMic(() {
-          onMicUp();
+          micUp(no: "");
+          sendTextNotify("申请成功，等待群主同意");
         });
       }
     }
-    sendTextNotify("申请上麦");
-  }
-
-
-  ///
-  /// 登录用户：上麦操作
-  ///
-  void onMicDown() {
-
-  }
-
-  ///
-  /// 登录用户：下麦操作
-  ///
-  void onMicUp() {
-
-  }
-
-  ///
-  /// 房主管理员：邀请上麦
-  ///
-  void inviteMicUp2({required NUID uid}) {
-
   }
 
   ///

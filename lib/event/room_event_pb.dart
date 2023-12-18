@@ -122,6 +122,12 @@ class InviteMicUpEvent extends RoomEvent<S_InviteMikeBroadcast> {
   UID? get uid => data?.uid;
 }
 
+
+// 拒绝上麦
+class RefuseUpEvent extends RoomEvent<S_RefuseUpMikeBroadcast> {
+  UID? get uid => data?.uid;
+}
+
 // 开麦
 class MicOpenEvent extends RoomEvent<S_OpenBroadcast> {
   UID? get uid => data?.uid;

@@ -340,11 +340,6 @@ class SuitVO extends $pb.GeneratedMessage {
   void clearGoodsId() => clearField(2);
 }
 
-/// 状态
-/// message KVState{
-/// 	int64 roleId = 1;//角色id
-/// 	string state = 2;//动作名
-/// }
 /// 数值属性信息
 class AttrInfo extends $pb.GeneratedMessage {
   factory AttrInfo({
@@ -720,14 +715,6 @@ class RoleInfo extends $pb.GeneratedMessage {
   SuitInfo ensureSuitInfo() => $_ensure(4);
 }
 
-/// (其他角色)玩家详细信息
-/// message RoleDetailInfo {
-/// 	int64 roleId = 1;//角色id
-/// 	string name = 2;//名字
-/// 	AttrInfo attrInfo = 3;//必要的属性列表
-/// 	SuitInfo suitInfo = 4;//必要的装扮数据
-/// 	State state = 5;//行为状态（0无 1上麦 2...）
-/// }
 /// (场景上角色)玩家场景信息（同步场景信息）
 class RoleSceneInfo extends $pb.GeneratedMessage {
   factory RoleSceneInfo({
@@ -881,116 +868,6 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(7);
   @$pb.TagNumber(8)
   void clearUid() => clearField(8);
-}
-
-/// 场景坐椅信息(每次登入|重连后客户端主动请求)
-class SeatInfo extends $pb.GeneratedMessage {
-  factory SeatInfo({
-    $fixnum.Int64? roleId,
-    $core.String? seatGuid,
-  }) {
-    final $result = create();
-    if (roleId != null) {
-      $result.roleId = roleId;
-    }
-    if (seatGuid != null) {
-      $result.seatGuid = seatGuid;
-    }
-    return $result;
-  }
-  SeatInfo._() : super();
-  factory SeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
-    ..aOS(2, _omitFieldNames ? '' : 'seatGuid', protoName: 'seatGuid')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SeatInfo clone() => SeatInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SeatInfo copyWith(void Function(SeatInfo) updates) => super.copyWith((message) => updates(message as SeatInfo)) as SeatInfo;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static SeatInfo create() => SeatInfo._();
-  SeatInfo createEmptyInstance() => create();
-  static $pb.PbList<SeatInfo> createRepeated() => $pb.PbList<SeatInfo>();
-  @$core.pragma('dart2js:noInline')
-  static SeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SeatInfo>(create);
-  static SeatInfo? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get roleId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasRoleId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearRoleId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get seatGuid => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set seatGuid($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSeatGuid() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSeatGuid() => clearField(2);
-}
-
-/// 场景坐椅信息(每次登入|重连后客户端主动请求)
-class SceneSeatInfo extends $pb.GeneratedMessage {
-  factory SceneSeatInfo({
-    $core.Iterable<SeatInfo>? list,
-  }) {
-    final $result = create();
-    if (list != null) {
-      $result.list.addAll(list);
-    }
-    return $result;
-  }
-  SceneSeatInfo._() : super();
-  factory SceneSeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SceneSeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SceneSeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<SeatInfo>(1, _omitFieldNames ? '' : 'list', $pb.PbFieldType.PM, subBuilder: SeatInfo.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  SceneSeatInfo clone() => SceneSeatInfo()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  SceneSeatInfo copyWith(void Function(SceneSeatInfo) updates) => super.copyWith((message) => updates(message as SceneSeatInfo)) as SceneSeatInfo;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static SceneSeatInfo create() => SceneSeatInfo._();
-  SceneSeatInfo createEmptyInstance() => create();
-  static $pb.PbList<SceneSeatInfo> createRepeated() => $pb.PbList<SceneSeatInfo>();
-  @$core.pragma('dart2js:noInline')
-  static SceneSeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SceneSeatInfo>(create);
-  static SceneSeatInfo? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.List<SeatInfo> get list => $_getList(0);
 }
 
 /// 用户信息
@@ -2865,6 +2742,116 @@ class SSStr extends $pb.GeneratedMessage {
   $core.bool hasVal() => $_has(1);
   @$pb.TagNumber(2)
   void clearVal() => clearField(2);
+}
+
+/// 场景坐椅信息(每次登入|重连后客户端主动请求)
+class SeatInfo extends $pb.GeneratedMessage {
+  factory SeatInfo({
+    $fixnum.Int64? roleId,
+    $core.String? seatGuid,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (seatGuid != null) {
+      $result.seatGuid = seatGuid;
+    }
+    return $result;
+  }
+  SeatInfo._() : super();
+  factory SeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
+    ..aOS(2, _omitFieldNames ? '' : 'seatGuid', protoName: 'seatGuid')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SeatInfo clone() => SeatInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SeatInfo copyWith(void Function(SeatInfo) updates) => super.copyWith((message) => updates(message as SeatInfo)) as SeatInfo;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SeatInfo create() => SeatInfo._();
+  SeatInfo createEmptyInstance() => create();
+  static $pb.PbList<SeatInfo> createRepeated() => $pb.PbList<SeatInfo>();
+  @$core.pragma('dart2js:noInline')
+  static SeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SeatInfo>(create);
+  static SeatInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get seatGuid => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set seatGuid($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSeatGuid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSeatGuid() => clearField(2);
+}
+
+/// 场景坐椅信息(每次登入|重连后客户端主动请求)
+class SceneSeatInfo extends $pb.GeneratedMessage {
+  factory SceneSeatInfo({
+    $core.Iterable<SeatInfo>? list,
+  }) {
+    final $result = create();
+    if (list != null) {
+      $result.list.addAll(list);
+    }
+    return $result;
+  }
+  SceneSeatInfo._() : super();
+  factory SceneSeatInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SceneSeatInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SceneSeatInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<SeatInfo>(1, _omitFieldNames ? '' : 'list', $pb.PbFieldType.PM, subBuilder: SeatInfo.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SceneSeatInfo clone() => SceneSeatInfo()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SceneSeatInfo copyWith(void Function(SceneSeatInfo) updates) => super.copyWith((message) => updates(message as SceneSeatInfo)) as SceneSeatInfo;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SceneSeatInfo create() => SceneSeatInfo._();
+  SceneSeatInfo createEmptyInstance() => create();
+  static $pb.PbList<SceneSeatInfo> createRepeated() => $pb.PbList<SceneSeatInfo>();
+  @$core.pragma('dart2js:noInline')
+  static SceneSeatInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SceneSeatInfo>(create);
+  static SceneSeatInfo? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<SeatInfo> get list => $_getList(0);
 }
 
 

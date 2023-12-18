@@ -1632,8 +1632,6 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
-    $core.String? mikeNo,
-    $fixnum.Int64? mikeId,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1645,12 +1643,6 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
-    if (mikeNo != null) {
-      $result.mikeNo = mikeNo;
-    }
-    if (mikeId != null) {
-      $result.mikeId = mikeId;
-    }
     return $result;
   }
   S_InviteMikeBroadcast._() : super();
@@ -1661,8 +1653,6 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
-    ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
-    ..aInt64(5, _omitFieldNames ? '' : 'mikeId')
     ..hasRequiredFields = false
   ;
 
@@ -1713,24 +1703,6 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearMikeNo() => clearField(4);
-
-  @$pb.TagNumber(5)
-  $fixnum.Int64 get mikeId => $_getI64(4);
-  @$pb.TagNumber(5)
-  set mikeId($fixnum.Int64 v) { $_setInt64(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasMikeId() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearMikeId() => clearField(5);
 }
 
 /// 禁麦广播
@@ -1919,13 +1891,12 @@ class S_OpenBroadcast extends $pb.GeneratedMessage {
   void clearUid() => clearField(3);
 }
 
-/// 申请上麦【暂时废弃】
+/// 申请上麦
 class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   factory S_ApplyUpMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
-    $core.String? mikeNo,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1937,9 +1908,6 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
-    if (mikeNo != null) {
-      $result.mikeNo = mikeNo;
-    }
     return $result;
   }
   S_ApplyUpMikeBroadcast._() : super();
@@ -1950,7 +1918,6 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
-    ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
 
@@ -2001,24 +1968,14 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearMikeNo() => clearField(4);
 }
 
-/// 拒绝上麦 【暂时废弃】
+/// 拒绝上麦
 class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   factory S_RefuseUpMikeBroadcast({
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
-    $core.String? mikeNo,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -2030,9 +1987,6 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
-    if (mikeNo != null) {
-      $result.mikeNo = mikeNo;
-    }
     return $result;
   }
   S_RefuseUpMikeBroadcast._() : super();
@@ -2043,7 +1997,6 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
-    ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
 
@@ -2094,15 +2047,6 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get mikeNo => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set mikeNo($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasMikeNo() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearMikeNo() => clearField(4);
 }
 
 /// 房间计数器广播
@@ -6107,6 +6051,8 @@ class S_Test extends $pb.GeneratedMessage {
     $core.String? roomPwd,
     $core.int? opt,
     $core.String? extra,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? userId,
   }) {
     final $result = create();
     if (code != null) {
@@ -6127,6 +6073,12 @@ class S_Test extends $pb.GeneratedMessage {
     if (extra != null) {
       $result.extra = extra;
     }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (userId != null) {
+      $result.userId = userId;
+    }
     return $result;
   }
   S_Test._() : super();
@@ -6140,6 +6092,8 @@ class S_Test extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'roomPwd', protoName: 'roomPwd')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'opt', $pb.PbFieldType.O3)
     ..aOS(6, _omitFieldNames ? '' : 'extra')
+    ..aInt64(7, _omitFieldNames ? '' : 'roleId', protoName: 'roleId')
+    ..aInt64(8, _omitFieldNames ? '' : 'userId', protoName: 'userId')
     ..hasRequiredFields = false
   ;
 
@@ -6217,6 +6171,24 @@ class S_Test extends $pb.GeneratedMessage {
   $core.bool hasExtra() => $_has(5);
   @$pb.TagNumber(6)
   void clearExtra() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get roleId => $_getI64(6);
+  @$pb.TagNumber(7)
+  set roleId($fixnum.Int64 v) { $_setInt64(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasRoleId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearRoleId() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $fixnum.Int64 get userId => $_getI64(7);
+  @$pb.TagNumber(8)
+  set userId($fixnum.Int64 v) { $_setInt64(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasUserId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearUserId() => clearField(8);
 }
 
 /// 请求开启调试信息窗体（【仅本地开发服】成功可开启本地调试日志）
@@ -10846,9 +10818,13 @@ class C_Move extends $pb.GeneratedMessage {
 /// tcp定时向下同步
 class S_Move extends $pb.GeneratedMessage {
   factory S_Move({
-    $core.Iterable<$0.StateInfo>? list,
+    $core.Iterable<$fixnum.Int64>? ids,
+    $core.Iterable<C_Move>? list,
   }) {
     final $result = create();
+    if (ids != null) {
+      $result.ids.addAll(ids);
+    }
     if (list != null) {
       $result.list.addAll(list);
     }
@@ -10859,7 +10835,8 @@ class S_Move extends $pb.GeneratedMessage {
   factory S_Move.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_Move', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..pc<$0.StateInfo>(1, _omitFieldNames ? '' : 'list', $pb.PbFieldType.PM, subBuilder: $0.StateInfo.create)
+    ..p<$fixnum.Int64>(1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.K6)
+    ..pc<C_Move>(2, _omitFieldNames ? '' : 'list', $pb.PbFieldType.PM, subBuilder: C_Move.create)
     ..hasRequiredFields = false
   ;
 
@@ -10885,7 +10862,10 @@ class S_Move extends $pb.GeneratedMessage {
   static S_Move? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.List<$0.StateInfo> get list => $_getList(0);
+  $core.List<$fixnum.Int64> get ids => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.List<C_Move> get list => $_getList(1);
 }
 
 

@@ -69,16 +69,12 @@ class State extends $pb.ProtobufEnum {
   static const State Mai = State._(1, _omitEnumNames ? '' : 'Mai');
   static const State Sit = State._(2, _omitEnumNames ? '' : 'Sit');
   static const State Swim = State._(3, _omitEnumNames ? '' : 'Swim');
-  static const State Walk = State._(4, _omitEnumNames ? '' : 'Walk');
-  static const State Run = State._(5, _omitEnumNames ? '' : 'Run');
 
   static const $core.List<State> values = <State> [
     None,
     Mai,
     Sit,
     Swim,
-    Walk,
-    Run,
   ];
 
   static final $core.Map<$core.int, State> _byValue = $pb.ProtobufEnum.initByValue(values);
