@@ -1632,6 +1632,8 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
+    $core.String? mikeNo,
+    $fixnum.Int64? mikeId,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1643,6 +1645,12 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
+    if (mikeNo != null) {
+      $result.mikeNo = mikeNo;
+    }
+    if (mikeId != null) {
+      $result.mikeId = mikeId;
+    }
     return $result;
   }
   S_InviteMikeBroadcast._() : super();
@@ -1653,6 +1661,8 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
+    ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
+    ..aInt64(5, _omitFieldNames ? '' : 'mikeId')
     ..hasRequiredFields = false
   ;
 
@@ -1703,6 +1713,24 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get mikeNo => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set mikeNo($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMikeNo() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMikeNo() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get mikeId => $_getI64(4);
+  @$pb.TagNumber(5)
+  set mikeId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasMikeId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearMikeId() => clearField(5);
 }
 
 /// 禁麦广播

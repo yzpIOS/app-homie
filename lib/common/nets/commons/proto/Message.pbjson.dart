@@ -362,13 +362,16 @@ const S_InviteMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
+    {'1': 'mike_id', '3': 5, '4': 1, '5': 3, '10': 'mikeId'},
   ],
 };
 
 /// Descriptor for `S_InviteMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_InviteMikeBroadcastDescriptor = $convert.base64Decode(
     'ChVTX0ludml0ZU1pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbG'
-    'VfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZA==');
+    'VfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZBIXCgdtaWtlX25vGAQgASgJUgZt'
+    'aWtlTm8SFwoHbWlrZV9pZBgFIAEoA1IGbWlrZUlk');
 
 @$core.Deprecated('Use s_CloseMikeBroadcastDescriptor instead')
 const S_CloseMikeBroadcast$json = {

@@ -104,7 +104,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     on<InviteMicUpEvent>(
       test: (event) => OAuthCtrl.isSelf(event.uid),
       (event) {
-        // onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
+        onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
       },
     );
 
