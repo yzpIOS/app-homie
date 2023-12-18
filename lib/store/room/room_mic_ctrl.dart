@@ -432,4 +432,11 @@ class MicInfo {
   String no = "";
 
   MicInfo({required this.uid, required this.micId, required this.hotCount, required this.isMute, required this.nUid, this.no = ""});
+
+  ///
+  /// 是否主角
+  ///
+  bool isMainRole() {
+    return uid == OAuthCtrl.uid;
+  }
 }

@@ -233,7 +233,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   /// 当前用户是否在mic上
   ///
   bool isOnMic() {
-    return true;
+    return isUserOnMic(OAuthCtrl.uid);
   }
 
   void sendTextNotify(String msg) {

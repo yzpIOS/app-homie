@@ -450,10 +450,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   }
 
   void toGuildRoom({required int roomId, Map? data, bool off = false}) {
-    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
-      return;
-    }
-    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     _show(
       roomId: roomId,
       off: off,
@@ -468,10 +464,6 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   /// 个人房
   ///
   void toPersonRoom({required int roomId, Map? data, bool off = false}) {
-    if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
-      return;
-    }
-    _preClickTime = DateTime.now().millisecondsSinceEpoch;
     _show(
       roomId: roomId,
       off: off,
