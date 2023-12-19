@@ -23,13 +23,13 @@ class ShopTabBar extends StatelessWidget {
       isScrollable: true,
       indicator: const BoxDecoration(),
       //
-      padding: Pad.zero,
-      labelPadding: const Pad(left: 10, right: 8),
+      padding: const Pad(left: 4,),
+      labelPadding: const Pad(left: 4, right: 4),
       //
       labelColor: AppPalette.primary,
       labelStyle: const TextStyle(fontSize: 10, fontWeight: fw$SemiBold),
       //
-      unselectedLabelColor: AppPalette.c6,
+      unselectedLabelColor: AppPalette.txtDark,
       unselectedLabelStyle: const TextStyle(fontSize: 10, fontWeight: fw$Regular),
       //
       tabs: [
@@ -50,12 +50,14 @@ class ShopTabBar extends StatelessWidget {
 class ShopTab extends StatelessWidget {
   final String title;
   final Widget icon;
+  final bool isShowDivider;//是否显示分割线
 
-  const ShopTab({super.key, required this.title, required this.icon});
+  const ShopTab({super.key, required this.title, required this.icon, required this.isShowDivider,});
 
   @override
   Widget build(BuildContext context) {
-    const size = 46.0;
+    const sizeWidth = 60.0;
+    const sizeHeight = 40.0;
 
     Widget child;
 
@@ -63,22 +65,26 @@ class ShopTab extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         BlankImgState(
-          child: SizedBox(width: 36, height: 36, child: icon),
+          child: SizedBox(width: 31, height: 31, child: icon),
         ),
         Positioned(
-          top: 24,
-          left: 36 - 20,
-          child: Box(
-            width: 20 * 2,
-            height: 20,
-            alignment: Alignment.center,
-            child: XText(title, textAlign: TextAlign.center, overflow: TextOverflow.fade),
+          top: 16,
+          left: 30,
+          child: XText(
+            title,
+            overflow: TextOverflow.fade,
           ),
         ),
+        if(isShowDivider)
+          const Positioned(
+            top: 12,
+            right: 0,
+            child: Box(width: 1, height: 8.5, color: AppPalette.color71),
+          ),
       ],
     );
 
-    child = Box(width: size, height: size, child: child);
+    child = Box(width: sizeWidth, height: sizeHeight, child: child);
 
     return child;
   }

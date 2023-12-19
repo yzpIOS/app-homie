@@ -60,11 +60,14 @@ class _MyClothTabViewState extends State<MyClothTabView> with BusStateMixin, Ove
   Widget $TabBar(List data) {
     final switchWardrobeMode = Get.find<ClothSelectorCtrl>().setWardrobeMode;
 
-    final tabs = data.map((it) {
+    final tabs = data.asMap().entries.map((it) {
+      final index = it.key;
+
       return (b) {
         return ShopTab(
-          title: it['name'],
-          icon: NetImage(it[b ? 'select_icon' : 'icon'], fit: BoxFit.contain),
+          title: it.value['name'],
+          icon: NetImage(it.value[b ? 'select_icon' : 'icon'], fit: BoxFit.contain),
+          isShowDivider: index != data.length - 1,
         );
       };
     });
@@ -74,12 +77,13 @@ class _MyClothTabViewState extends State<MyClothTabView> with BusStateMixin, Ove
       tabs: tabs,
       beforeTab: ShopTab(
         title: '衣柜',
+        isShowDivider: true,
         icon: Builder(
           builder: (context) {
             return SvgView(
               SVG.$('dressup/我的'),
-              width: 28,
-              height: 28,
+              width: 31,
+              height: 31,
               color: DefaultTextStyle.of(context).style.color,
             );
           },

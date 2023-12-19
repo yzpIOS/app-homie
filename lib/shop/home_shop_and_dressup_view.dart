@@ -79,13 +79,15 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
 
   Widget $TabBar(List<Category> data) {
     //data.skip(1)
-    final tabs = data.map((it) {
-      final (_, title, icon) = it;
+    final tabs = data.asMap().entries.map((it) {
+      final index = it.key;
+      final (_, title, icon) = it.value;
 
       return (b) {
         return ShopTab(
           title: title,
           icon: NetImage(b ? icon.$2 : icon.$1, fit: BoxFit.contain),
+          isShowDivider: index != data.length - 1,
         );
       };
     });
