@@ -67,8 +67,14 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     }
     debugPrint("新增麦位：data = ${data.toProto3Json()}");
     // 新增mike
-    micUserList.add(MicInfo(uid: event.uid ?? "",
-        micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId));
+    micUserList.add(MicInfo(
+        uid: event.uid ?? "",
+        micId: data.mikeId.toInt(),
+        hotCount: event.hotCount,
+        isMute: event.isMute,
+        nUid: data.roleId,
+        roleType: event.data?.roleType ?? 0
+    ));
   }
 
 
@@ -238,5 +244,27 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
 
   void sendTextNotify(String msg) {
     LocalMsgEvent(LocalMsgData(data: msg)).fire();
+  }
+
+  ///
+  /// 房主
+  ///
+  MicInfo? roomOwner() {
+    return simpleUserList.firstWhereOrNull((element) => element.isMainRole());
+  }
+
+  ///
+  /// 观众
+  ///
+  List<MicInfo> getAudience() {
+    List<MicInfo> results = [];
+
+    simpleUserList.forEach((element) {
+      if(!element.isMainRole()) {
+        results.add(element);
+      }
+    });
+
+    return results;
   }
 }

@@ -1394,6 +1394,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     $core.String? oldMikeNo,
     $fixnum.Int64? mikeId,
     $core.int? number,
+    $core.int? roleType,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1417,6 +1418,9 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     if (number != null) {
       $result.number = number;
     }
+    if (roleType != null) {
+      $result.roleType = roleType;
+    }
     return $result;
   }
   S_UpMikeBroadcast._() : super();
@@ -1431,6 +1435,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'oldMikeNo')
     ..aInt64(6, _omitFieldNames ? '' : 'mikeId')
     ..a<$core.int>(7, _omitFieldNames ? '' : 'number', $pb.PbFieldType.O3)
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'roleType', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1517,6 +1522,15 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasNumber() => $_has(6);
   @$pb.TagNumber(7)
   void clearNumber() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get roleType => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set roleType($core.int v) { $_setSignedInt32(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasRoleType() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearRoleType() => clearField(8);
 }
 
 /// 下麦广播

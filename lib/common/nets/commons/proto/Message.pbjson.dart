@@ -327,6 +327,7 @@ const S_UpMikeBroadcast$json = {
     {'1': 'old_mike_no', '3': 5, '4': 1, '5': 9, '10': 'oldMikeNo'},
     {'1': 'mike_id', '3': 6, '4': 1, '5': 3, '10': 'mikeId'},
     {'1': 'number', '3': 7, '4': 1, '5': 5, '10': 'number'},
+    {'1': 'role_type', '3': 8, '4': 1, '5': 5, '10': 'roleType'},
   ],
 };
 
@@ -335,7 +336,7 @@ final $typed_data.Uint8List s_UpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChFTX1VwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm9sZV9pZB'
     'gCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhcKB21pa2Vfbm8YBCABKAlSBm1pa2VO'
     'bxIeCgtvbGRfbWlrZV9ubxgFIAEoCVIJb2xkTWlrZU5vEhcKB21pa2VfaWQYBiABKANSBm1pa2'
-    'VJZBIWCgZudW1iZXIYByABKAVSBm51bWJlcg==');
+    'VJZBIWCgZudW1iZXIYByABKAVSBm51bWJlchIbCglyb2xlX3R5cGUYCCABKAVSCHJvbGVUeXBl');
 
 @$core.Deprecated('Use s_DownMikeBroadcastDescriptor instead')
 const S_DownMikeBroadcast$json = {

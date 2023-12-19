@@ -1,22 +1,17 @@
 
+
+import 'package:fixnum/fixnum.dart';
 import 'package:app/3rd/tencent/rtc.dart';
-import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/theme.dart';
-import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
-import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
-import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
-import 'package:app/ui/room/user/mic_user_sheet.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
-import 'package:app/ui/room/widgets/icon_button_svg.dart';
-import 'package:app/ui/room/widgets/portal_modal.dart';
-import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -24,7 +19,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 
-import '../overlay/notice_overlay.dart';
 
 class PersonRoomOverlay extends RoomOverlay {
 
@@ -72,7 +66,7 @@ class PersonRoomOverlay extends RoomOverlay {
 
 class PersonRoomHeader extends CommonRoomHeader {
 
-  UserInfo? owner;
+  MicInfo? owner;
   List<MicInfo>? userList;
 
   PersonRoomHeader({
@@ -87,61 +81,82 @@ class PersonRoomHeader extends CommonRoomHeader {
 
   @override
   Widget createMicList(Widget child) {
+    if(owner == null && (userList == null || userList?.isEmpty == true)) {
+      return const SizedBox();
+    }
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         child,
-        Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            // 头像
-            AsyncAvatar(uid: OAuthCtrl.uid, size: 46,),
-            // 主持
-            Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,)
-          ],
-        ),
-
-        SizedBox(height: 5,),
+        // 房主
         createOwnerName(),
+        // 观众
+        if(userList?.isNotEmpty == true)
+          const SizedBox(height: 25,),
+        if(userList?.isNotEmpty == true)
+          createOnMicList(),
 
-        SizedBox(height: 6,),
-        createHotValue(),
-
-        SizedBox(height: 25,),
-        createOnMicList(),
-
-        SizedBox(height: 35,),
+        const SizedBox(height: 35,),
       ],
     );
   }
 
   Widget createOwnerName() {
-    return Text(
-      "1号麦",
-      style: TextStyle(
-        fontSize: 12,
-        color: Colors.white,
-        fontWeight: FontWeight.w600
-      ),
-    );
-  }
-
-  Widget createHotValue() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(IMG.format("room/fire"), width: 15, height: 15,),
-        Text(
-          "123456",
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.white,
-            fontWeight: FontWeight.w600
+    if(owner == null) {
+      return const SizedBox();
+    }
+    return UserInfoCtrl.use(owner?.uid ?? "", builder: (info) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              // 头像
+              AsyncAvatar(
+                uid: owner?.uid ?? "",
+                size: 46,
+                onTap: Some(() {
+                  if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                    return;
+                  }
+                  (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(owner?.uid ?? "", owner?.nUid ?? Int64(0));
+                }),
+              ),
+              // 主持
+              Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,)
+            ],
           ),
-        )
-      ],
-    );
+
+          const SizedBox(height: 5,),
+          Text(
+            info?.showName() ?? "",
+            style: TextStyle(
+                fontSize: 12,
+                color: Colors.white,
+                fontWeight: FontWeight.w600
+            ),
+          ),
+
+          const SizedBox(height: 6,),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(IMG.format("room/fire"), width: 15, height: 15,),
+              Text(
+                (owner?.hotCount ?? 0).toString(),
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600
+                ),
+              )
+            ],
+          )
+        ],
+      );
+    });
   }
 
   Widget createOnMicList() {
@@ -155,16 +170,17 @@ class PersonRoomHeader extends CommonRoomHeader {
             mainAxisSize: MainAxisSize.min,
             children: [
               Obx(() {
-                final val = Rtc.speakRx[OAuthCtrl.uid];
+                MicInfo? micInfo = userList?[index];
+                final val = Rtc.speakRx[micInfo?.uid];
                 var avatar = AsyncAvatar(
-                  uid: OAuthCtrl.uid,
+                  uid: micInfo?.uid ?? "",
                   size: 46,
                   // todo 点击处理
                   onTap: Some(() {
                     if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
                       return;
                     }
-                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar("");
+                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo?.uid ?? "", micInfo?.nUid ?? Int64(0));
                   }),
                 );
                 if(val == null) {
@@ -186,7 +202,7 @@ class PersonRoomHeader extends CommonRoomHeader {
         separatorBuilder: (context, index) {
           return SizedBox(width: 18, height: 1,);
         },
-        itemCount: 10
+        itemCount: userList?.length ?? 0
       ),
     );
   }

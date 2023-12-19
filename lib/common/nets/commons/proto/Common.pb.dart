@@ -1014,6 +1014,7 @@ class MikeInfo extends $pb.GeneratedMessage {
     $core.String? uid,
     $fixnum.Int64? roleId,
     $fixnum.Int64? number,
+    $core.int? roleType,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1034,6 +1035,9 @@ class MikeInfo extends $pb.GeneratedMessage {
     if (number != null) {
       $result.number = number;
     }
+    if (roleType != null) {
+      $result.roleType = roleType;
+    }
     return $result;
   }
   MikeInfo._() : super();
@@ -1047,6 +1051,7 @@ class MikeInfo extends $pb.GeneratedMessage {
     ..aOS(4, _omitFieldNames ? '' : 'uid')
     ..aInt64(6, _omitFieldNames ? '' : 'roleId')
     ..aInt64(7, _omitFieldNames ? '' : 'number')
+    ..a<$core.int>(8, _omitFieldNames ? '' : 'roleType', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1124,6 +1129,15 @@ class MikeInfo extends $pb.GeneratedMessage {
   $core.bool hasNumber() => $_has(5);
   @$pb.TagNumber(7)
   void clearNumber() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get roleType => $_getIZ(6);
+  @$pb.TagNumber(8)
+  set roleType($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasRoleType() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearRoleType() => clearField(8);
 }
 
 /// 房间用户信息

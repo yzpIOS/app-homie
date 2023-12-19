@@ -142,8 +142,14 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     // 删除旧mike
     dataRx.remove(data.oldMikeNo);
     // 新增mike
-    dataRx[data.mikeNo] = MicInfo(uid: event.uid ?? "",
-        micId: data.mikeId.toInt(), hotCount: event.hotCount, isMute: event.isMute, nUid: data.roleId);
+    dataRx[data.mikeNo] = MicInfo(
+        uid: event.uid ?? "",
+        micId: data.mikeId.toInt(),
+        hotCount: event.hotCount,
+        isMute: event.isMute,
+        nUid: data.roleId,
+        roleType: event.data?.roleType ?? 0
+    );
 
     onUpdateHotCount3Handler(data.mikeNo, data.number, refresh: true);
   }
@@ -366,6 +372,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
             hotCount: item['number'] ?? 0,
             isMute: item['open_status'] == 2,
             no: item['mike_no'],
+            roleType: item['role_type'] ?? 0,
           ),
     };
   }
@@ -383,6 +390,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
           micId: item['mike_id'],
           hotCount: item['number'] ?? 0,
           isMute: item['open_status'] == 2,
+          roleType: item['role_type'] ?? 0,
         ));
       }
     }
@@ -400,6 +408,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         hotCount: mikeInfo.number.toInt(),
         isMute: mikeInfo.isFrozen,
         no: mikeInfo.mikeNo,
+        roleType: mikeInfo.roleType,
       );
     }
     return map;
@@ -415,6 +424,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
         isMute: mikeInfo.isFrozen,
+        roleType: mikeInfo.roleType
       ));
     }
     return map;
@@ -431,12 +441,24 @@ class MicInfo {
   // 麦号
   String no = "";
 
-  MicInfo({required this.uid, required this.micId, required this.hotCount, required this.isMute, required this.nUid, this.no = ""});
+  // 1房主
+  int roleType;
+
+
+  MicInfo({
+    required this.uid,
+    required this.micId,
+    required this.hotCount,
+    required this.isMute,
+    required this.nUid,
+    required this.roleType,
+    this.no = ""
+  });
 
   ///
   /// 是否主角
   ///
   bool isMainRole() {
-    return uid == OAuthCtrl.uid;
+    return roleType == 1;
   }
 }

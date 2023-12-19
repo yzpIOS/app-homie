@@ -28,6 +28,9 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   final interval_time = 200;
   bool shouldOpenGift = false;
 
+  // 加一个标识用来是否要加入房间，个人房在创建的时候不需要加入房间
+  bool needJoinRoom = true;
+
   static RoomManagerCtrl get ins {
     return Get.find<RoomManagerCtrl>();
   }

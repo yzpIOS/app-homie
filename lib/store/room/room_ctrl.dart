@@ -173,6 +173,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     super.onClose();
     roomId = 0;
     isDisposed = true;
+    RoomManagerCtrl.ins.needJoinRoom = true;
   }
 
   @mustCallSuper
@@ -326,15 +327,18 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
         logForDebug("非pk状态，joinRoom");
         try {
-          final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
-          logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
-          if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-            if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-              throw const LogicException(-1, "该房间主人拒绝您进入");
-            } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-              throw const LogicException(-1, "输入的房间密码错误");
-            } else {
-              throw const LogicException(-1, "房间数据加载失败");
+          // 加一个标识用来是否要加入房间，个人房在创建的时候不需要加入房间
+          if(RoomManagerCtrl.ins.needJoinRoom) {
+            final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
+            logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+            if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+              if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+                throw const LogicException(-1, "该房间主人拒绝您进入");
+              } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+                throw const LogicException(-1, "输入的房间密码错误");
+              } else {
+                throw const LogicException(-1, "房间数据加载失败");
+              }
             }
           }
         } catch(e) {
@@ -345,6 +349,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           RoomManagerCtrl.ins.doNormalState();
           RoomManagerCtrl.ins.onSocketDisconnect(message: message);
           return false;
+        } finally {
+          RoomManagerCtrl.ins.needJoinRoom = true;
         }
       } else {
         logForDebug("pk状态，不需要joinRoom", enMsg: "user in pk status, don't need call joinRoom api");
@@ -618,6 +624,7 @@ class PersonRoomCtrl extends RoomCtrl {
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
     (roomMicCtrl as PersonRoomMicCtrl?)?.micUserList.value = RoomMicCtrl.createMicInfo2(data?.mikes ?? []);
+    (roomMicCtrl as PersonRoomMicCtrl?)?.micUserList.refresh();
 
     if(RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);
@@ -627,27 +634,21 @@ class PersonRoomCtrl extends RoomCtrl {
 
   @override
   Widget createHeader() {
-    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
 
     return Obx(() {
-      final showMic = micPanelRx();
-      final freeMic = freeMicRx();
-      //公会房且不在pk中，才显示麦位
-      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
       // 麦上用户列表
       PersonRoomMicCtrl personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
 
-      final showMicPanel = maxMic > 0 && !freeMic;
       return Positioned(
         top: 0,
         left: 0,
         right: 0,
         child: PersonRoomHeader(
-          showMicPanel: showMicPanel && topMicMode,
-          showMic: showMic,
-          isLandscape: isLandscape,
-          userList: personRoomMicCtrl.simpleUserList,
-          owner: owner.value,
+          showMicPanel: true,
+          showMic: true,
+          isLandscape: false,
+          userList: personRoomMicCtrl.getAudience(),
+          owner: personRoomMicCtrl.roomOwner(),
           onItemClick: (action) {
             switch (action) {
               case '最小化':
@@ -682,8 +683,8 @@ class PersonRoomCtrl extends RoomCtrl {
   ///
   /// 点击麦上用户的头像
   ///
-  void onClickAvatar(String uid) {
-    RoomUserInfoDialog.show(uid: uid, nuid: Int64(0));
+  void onClickAvatar(String uid, NUID nuid) {
+    RoomUserInfoDialog.show(uid: uid, nuid: nuid);
   }
 
   @override

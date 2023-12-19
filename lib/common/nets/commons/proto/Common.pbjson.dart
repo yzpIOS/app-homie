@@ -290,6 +290,7 @@ const MikeInfo$json = {
     {'1': 'uid', '3': 4, '4': 1, '5': 9, '10': 'uid'},
     {'1': 'role_id', '3': 6, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'number', '3': 7, '4': 1, '5': 3, '10': 'number'},
+    {'1': 'role_type', '3': 8, '4': 1, '5': 5, '10': 'roleType'},
   ],
 };
 
@@ -297,7 +298,8 @@ const MikeInfo$json = {
 final $typed_data.Uint8List mikeInfoDescriptor = $convert.base64Decode(
     'CghNaWtlSW5mbxIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHbWlrZV9pZBgCIAEoA1IGbW'
     'lrZUlkEhcKB21pa2Vfbm8YAyABKAlSBm1pa2VObxIQCgN1aWQYBCABKAlSA3VpZBIXCgdyb2xl'
-    'X2lkGAYgASgDUgZyb2xlSWQSFgoGbnVtYmVyGAcgASgDUgZudW1iZXI=');
+    'X2lkGAYgASgDUgZyb2xlSWQSFgoGbnVtYmVyGAcgASgDUgZudW1iZXISGwoJcm9sZV90eXBlGA'
+    'ggASgFUghyb2xlVHlwZQ==');
 
 @$core.Deprecated('Use roomUserInfoDescriptor instead')
 const RoomUserInfo$json = {
