@@ -28,7 +28,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 10,
+          right: 13,
           bottom: 60,
           width: 60,
           height: 30,
@@ -44,7 +44,7 @@ class ModelOverlay$Wardrobe extends StatelessWidget {
           }),
         ),
         Positioned(
-          right: 10,
+          right: 13,
           bottom: 20,
           width: 60,
           height: 30,

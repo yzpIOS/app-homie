@@ -14,7 +14,6 @@ import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/activity/act_main_dialog.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/dressup/model_overlay_cloth.dart';
 import 'package:app/ui/dressup/model_overlay_wardrobe.dart';
@@ -23,6 +22,8 @@ import 'package:app/widgets/webview/webview_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:app/shop/dressupdraw/dress_up_draw_main_dialog.dart';
+import 'package:app/ui/activity/act_main_dialog.dart';
 
 class MyModelView extends StatefulWidget {
 
@@ -150,7 +151,7 @@ class _MyModelViewState extends State<MyModelView> {
             bottom: 100,
             left: 20,
             child: $Btn(action: '广场'),
-            // left: 10,
+            // left: 13,
             // child: $Btn(action: '装扮抽奖入口'),
           ),
         // 加载成功后，才显示聚焦头部、概览全身的切换视图
@@ -163,7 +164,7 @@ class _MyModelViewState extends State<MyModelView> {
         // 加载成功后，才显示"商城""我的"切换视图
         if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned(
-            left: 10,
+            left: 13,
             bottom: 20,
             height: 30,
             child: $ModeView(),
@@ -293,7 +294,8 @@ class _MyModelViewState extends State<MyModelView> {
         Get.find<RoomManagerCtrl>().toSquare();
         break;
       case '装扮抽奖入口':
-        ActMainDialog.show();
+        // ActMainDialog.show();
+        DressUpDrawMainDialog.show();
         break;
     }
   }
@@ -335,7 +337,7 @@ class ModelOverlay$Shop extends StatelessWidget {
     return Stack(
       children: [
         Positioned(
-          right: 10,
+          right: 13,
           bottom: 20,
           width: 65,
           height: 30,
