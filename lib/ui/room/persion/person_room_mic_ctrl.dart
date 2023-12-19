@@ -295,7 +295,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   /// 是否自由麦
   ///
   bool isFreeMic() {
-    return true;
+    return false;
   }
 
   ///
