@@ -1,10 +1,12 @@
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
@@ -90,13 +92,15 @@ class _MicOperateState extends State<MicOperate> {
 
   @override
   Widget build(BuildContext context) {
-    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-      return SizedBox();
-    }
-    PersonRoomCtrl personRoomCtrl = RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl;
+
+    final canSpeak = sceneMicCtrl().canSpeakRx;
+    final myUid = OAuthCtrl.uid;
+
+
+    PersonRoomMicCtrl personRoomMicCtrl = sceneMicCtrl<PersonRoomMicCtrl>();
     return GestureDetector(
       onTap: () {
-        sceneMicCtrl<PersonRoomMicCtrl>().micOperate();
+        personRoomMicCtrl.micOperate();
       },
       child: Container(
         width: 68,
@@ -108,15 +112,18 @@ class _MicOperateState extends State<MicOperate> {
           color: Colors.black.withAlpha(75),
         ),
         child: NotifierView(
-          personRoomCtrl.value,
+          personRoomMicCtrl.userMicStatus,
           onData: (data) {
             Widget icon;
             String title = "";
-            if(data == 1) {
+            if(data == PersonMicStatus.open.val) {
               title = "开麦中";
               icon = Image.asset(IMG.format("room/mic/mic_join"), width: 15, height: 18,);
-            } else if(data == 2) {
+            } else if(data == PersonMicStatus.close.val) {
               title = "闭麦中";
+              icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
+            } else if(data == PersonMicStatus.disable.val) {
+              title = "禁麦中";
               icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
             } else {
               title = "上麦";

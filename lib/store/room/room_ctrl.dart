@@ -611,8 +611,6 @@ class PersonRoomCtrl extends RoomCtrl {
   ///
   Rxn<UserInfo> owner = Rxn();
 
-  ValueNotifier<int> value = ValueNotifier<int>(0);
-
   PersonRoomCtrl({required super.info, required super.pwd, required super.overlay});
 
 
@@ -634,8 +632,17 @@ class PersonRoomCtrl extends RoomCtrl {
 
   @override
   Widget createHeader() {
+    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
 
     return Obx(() {
+      final showMic = micPanelRx();
+      final freeMic = freeMicRx();
+
+      //公会房且不在pk中，才显示麦位
+      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
+
+      final showMicPanel = maxMic > 0 && !freeMic;
+
       // 麦上用户列表
       PersonRoomMicCtrl personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
 
@@ -644,9 +651,9 @@ class PersonRoomCtrl extends RoomCtrl {
         left: 0,
         right: 0,
         child: PersonRoomHeader(
-          showMicPanel: true,
-          showMic: true,
-          isLandscape: false,
+          showMicPanel: showMicPanel && topMicMode,
+          showMic: showMic,
+          isLandscape: isLandscape,
           userList: personRoomMicCtrl.getAudience(),
           owner: personRoomMicCtrl.roomOwner(),
           onItemClick: (action) {

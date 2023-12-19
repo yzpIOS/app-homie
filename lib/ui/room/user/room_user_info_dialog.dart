@@ -23,6 +23,7 @@ import 'package:app/ui/moment/report/moment_report_page.dart';
 import 'package:app/ui/my/charm_level_page.dart';
 import 'package:app/ui/my/report_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
+import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -469,13 +470,21 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         break;
       case '下麦':
         try {
-          Api.Room.micDown(uid: widget.nuid);
+          if(micCtrl is RoomMicCtrl) {
+            (micCtrl as RoomMicCtrl).userMicDow(widget.nuid);
+          } else {
+            Api.Room.micDown(uid: widget.nuid);
+          }
         } catch(e, s) {
         }
         break;
       case '上麦':
         try {
-          Api.Room.micUp(roomId: widget.sceneCtrl.roomId,uid: widget.nuid, no: widget.micNo);
+          if(micCtrl is RoomMicCtrl) {
+            (micCtrl as RoomMicCtrl).micUp(no: widget.micNo, uid: widget.nuid);
+          } else {
+            Api.Room.micUp(roomId: widget.sceneCtrl.roomId,uid: widget.nuid, no: widget.micNo);
+          }
         } catch(e, s) {
         }
         break;

@@ -11,6 +11,7 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
+import 'package:fixnum/fixnum.dart';
 
 class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   int roomId;
@@ -301,10 +302,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     });
   }
 
-  void micUp({required String no}) {
+  void micUp({required String no, NUID? uid}) {
     simpleTry(
       () async {
-        final result = await Api.Room.micUp(roomId: roomId, no: no);
+        final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
 
         switch (result?.status.toInt()) {
           case 3:
@@ -313,6 +314,13 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         }
       },
     );
+  }
+
+  ///
+  /// 下麦处理
+  ///
+  void userMicDow(Int64? uid) {
+    Api.Room.micDown(uid: uid);
   }
 
   void micDow({required String no, required String alert}) {

@@ -3,9 +3,11 @@ import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
@@ -19,6 +21,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   ///
   RxList<MicInfo> micUserList = RxList();
 
+  // 当前麦状态
+  ValueNotifier<int> userMicStatus = ValueNotifier<int>(0);
+
   @override
   List<MicInfo> get simpleUserList => micUserList.value;
 
@@ -30,13 +35,25 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 拒绝上麦弹窗
     on<RefuseUpEvent>((event) {
       CommonDialog.refuseApplyUpMic(() {
-        micOperate();
+        micOperate(reRequest: true);
         sendTextNotify("申请上麦");
       });
     });
     // 申请上麦成功
     on<S_InviteMikeBroadcast>((event) {
       sendTextNotify("公屏显示你已上麦");
+    });
+    // 申请上麦
+    on<MicApplyEvent>((event) async {
+      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
+      if(userInfo == null) {
+        return;
+      }
+      CommonDialog.receiveApplyMicUp(userInfo.showName(), () {
+        // todo 同意后，发送请求
+
+        sendTextNotify("你同意了${userInfo.showName()}上麦请求");
+      });
     });
   }
 
@@ -75,6 +92,14 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         nUid: data.roleId,
         roleType: event.data?.roleType ?? 0
     ));
+
+    // 用户己上麦
+    if(event.uid == OAuthCtrl.uid) {
+      sendTextNotify("你已上麦");
+      userMicStatus.value = PersonMicStatus.open.val;
+      // 关闭麦
+      Rtc.micRx.value = true;
+    }
   }
 
 
@@ -88,6 +113,14 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       info.isMute = true;
 
       micUserList.refresh();
+    }
+
+    // 用户己下麦
+    if(event.uid == OAuthCtrl.uid) {
+      sendTextNotify("你已下麦");
+      userMicStatus.value = PersonMicStatus.none.val;
+      // 关闭麦
+      Rtc.micRx.value = false;
     }
   }
 
@@ -171,40 +204,82 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     };
   }
 
+
+  @override
+  void onInviteMicUp(int micId) {
+    Get.simpleDialog(msg: '群主邀请你上麦聊天', okLabel: '接受', cancelLabel: '拒绝').then((val) {
+      simpleTry(() {
+        Api.Room.micConfirm(mikeId: micId, type: 2, isAgree: val == '接受');
+      },);
+    });
+  }
+
   ///
   /// 登录用户：上下麦操作，要判断是否被禁
   ///
-  void micOperate() {
-    if(isFreeMic()) {
-      // 自由组麦的形式
-      if(isOnMic()) {
-        // 在麦上，下麦
-        micDow(no: "", alert: "");
+  void micOperate({bool reRequest = false}) {
+    // 非自由组麦, 需要弹窗
+    if(isOnMic()) {
+      // 在麦上，下麦
+      if(userMicStatus.value == PersonMicStatus.open.val) {
+        // 开麦中，那么就把mic关闭
+        userMicStatus.value == PersonMicStatus.close.val;;
+        // 关闭麦
+        Rtc.micRx.value = false;
       } else {
-        // 不在麦上，上麦
-        micUp(no: "");
+        // 如果是闭麦中，那么就开麦
+        userMicStatus.value == PersonMicStatus.open.val;;
+        // 关闭麦
+        Rtc.micRx.value = true;
       }
     } else {
-      // 非自由组麦, 需要弹窗
-      if(isOnMic()) {
-        // 在麦上，下麦
-        CommonDialog.userApplyDownMic(() {
-          micDow(no: "", alert: "");
-          sendTextNotify("申请成功，等待群主同意");
-        });
-      } else {
-        // 不在麦上，上麦
-        CommonDialog.applyUpMic(() {
-          micUp(no: "");
-          sendTextNotify("申请成功，等待群主同意");
-        });
-      }
+      // 不在麦上，上麦
+      micUp(no: "", uid: OAuthCtrl.nUid, reRequest: reRequest);
+    }
+  }
+
+  @override
+  Future<void> micUp({required String no, NUID? uid, bool reRequest = false}) async {
+    MicInfo? ownerInfo = roomOwner();
+    if(ownerInfo == null || ownerInfo.nUid == uid) {
+      super.micUp(no: no);
+      return;
+    }
+    if(isFreeMic()) {
+      // 自由麦
+      super.micUp(no: no, uid: uid);
+    } else {
+      // 不在麦上，上麦
+      CommonDialog.applyUpMic(() {
+        super.micUp(no: "", uid: uid);
+        sendTextNotify("申请成功，等待群主同意");
+      }, reRequest);
     }
   }
 
   @override
   void micDow({required String no, required String alert}) {
-    Api.Room.micDown(uid: null);
+    MicInfo? ownerInfo = roomOwner();
+    // 主播下麦
+    if(ownerInfo?.nUid == OAuthCtrl.nUid) {
+      CommonDialog.confirmDownMic(() {
+        Api.Room.micDown(uid: null);
+      });
+      return;
+    }
+
+    if(isFreeMic()) {
+      // 自由组麦
+      CommonDialog.userConfirmDownMic(() {
+        Api.Room.micDown(uid: OAuthCtrl.nUid);
+      });
+    } else {
+      // 非自由
+      CommonDialog.userApplyDownMic(() {
+        Api.Room.micDown(uid: OAuthCtrl.nUid);
+        sendTextNotify("申请成功，等待群主同意");
+      });
+    }
   }
 
   ///
