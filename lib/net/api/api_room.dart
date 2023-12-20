@@ -170,7 +170,7 @@ class ApiRoom extends ApiBase {
       'type': type,
       'status': isAgree ? 1 : 2,
       if(uid != null)
-        "role_id": uid,
+        "role_id": uid.toInt(),
       if(roomId != null)
         "room_id": roomId,
     };
