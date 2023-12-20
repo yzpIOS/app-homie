@@ -59,10 +59,10 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       }
       CommonDialog.receiveApplyMicUp(userInfo.showName(), () {
         // todo 同意后，发送请求
-        Api.Room.micConfirm(mikeId: 0, type: 2, isAgree: true);
+        Api.Room.micConfirm(mikeId: 0, type: 1, isAgree: true, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
         sendTextNotify("你同意了${userInfo.showName()}上麦请求");
       }, () {
-        Api.Room.micConfirm(mikeId: 0, type: 2, isAgree: false);
+        Api.Room.micConfirm(mikeId: 0, type: 1, isAgree: false, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
         sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
       });
     });

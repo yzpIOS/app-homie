@@ -164,11 +164,15 @@ class ApiRoom extends ApiBase {
   /// type 1 申请 2.邀请
   /// status 1.确认 2.拒绝
   ///
-  Future micConfirm({required int mikeId, required bool isAgree, required int type}) {
+  Future micConfirm({required int mikeId, required bool isAgree, required int type, NUID? uid, int? roomId}) {
     final data = {
       'mike_id': mikeId,
       'type': type,
       'status': isAgree ? 1 : 2,
+      if(uid != null)
+        "role_id": uid,
+      if(roomId != null)
+        "room_id": roomId,
     };
 
     return _doPost('mike/confirm', data: data);
