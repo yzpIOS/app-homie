@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:provider/provider.dart';
 
 
@@ -82,7 +83,7 @@ class PersonRoomHeader extends CommonRoomHeader {
   @override
   Widget createMicList(Widget child) {
     if(owner == null && (userList == null || userList?.isEmpty == true)) {
-      return const SizedBox();
+      return SizedBox(child: child,);
     }
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -160,44 +161,57 @@ class PersonRoomHeader extends CommonRoomHeader {
   }
 
   Widget createOnMicList() {
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.only(left: 10),
       width: AppSize.width,
-      height: 68,
+      height: 71,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Obx(() {
-                MicInfo? micInfo = userList?[index];
-                final val = Rtc.speakRx[micInfo?.uid];
-                var avatar = AsyncAvatar(
-                  uid: micInfo?.uid ?? "",
-                  size: 46,
-                  // todo 点击处理
-                  onTap: Some(() {
-                    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-                      return;
-                    }
-                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo?.uid ?? "", micInfo?.nUid ?? Int64(0));
-                  }),
-                );
-                if(val == null) {
-                  return avatar;
-                }
-                return MicAnimeBuilder(
-                  value: val,
-                  child: avatar,
-                  builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
-                );
-              }),
+          MicInfo? micInfo = userList?[index];
+          if(micInfo == null) {
+            return const SizedBox();
+          }
+          return UserInfoCtrl.use(micInfo.uid, builder: (userInfoDto) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(() {
+                  final val = Rtc.speakRx[micInfo.uid];
+                  var avatar = AsyncAvatar(
+                    uid: micInfo.uid ?? "",
+                    size: 46,
+                    // todo 点击处理
+                    onTap: Some(() {
+                      if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                        return;
+                      }
+                      (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo.uid ?? "", micInfo.nUid ?? Int64(0));
+                    }),
+                  );
+                  if(val == null) {
+                    return avatar;
+                  }
+                  return MicAnimeBuilder(
+                    value: val,
+                    child: avatar,
+                    builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
+                  );
+                }),
 
-              // 麦上用户
-              const SizedBox(height: 6,),
-              createOwnerName(),
-            ],
-          );
+                // 麦上用户
+                const SizedBox(height: 6,),
+                Text(
+                  userInfoDto?.showName() ?? "",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                  )
+                )
+              ],
+            );
+          });
         },
         separatorBuilder: (context, index) {
           return SizedBox(width: 18, height: 1,);

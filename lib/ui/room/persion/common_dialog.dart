@@ -110,12 +110,14 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 申请上麦
   ///
-  static void receiveApplyMicUp(String name, Function onMicDownCallBack) async {
+  static void receiveApplyMicUp(String name, Function onMicDownCallBack, Function cancel) async {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "$name 向你申请上麦，是否同意？", cancelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
         // todo 同意邀请
         onMicDownCallBack.call();
-      });
+      }, cancel: () {
+        cancel.call();
+      },);
     });
   }
 

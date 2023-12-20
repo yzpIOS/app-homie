@@ -409,7 +409,7 @@ class RoomCtrl extends SceneCtrl {
   RxBool examineMicRx = RxBool(false);
   RxSet<String> managerRx = RxSet();
 
-  // 大厅房间不能自收组麦，只能是普通房间
+  // 大厅房间不由自收组麦，只能是普通房间
   // 由于在大厅
   RxBool freeMicRx = RxBool(false);
 
@@ -636,12 +636,6 @@ class PersonRoomCtrl extends RoomCtrl {
 
     return Obx(() {
       final showMic = micPanelRx();
-      final freeMic = freeMicRx();
-
-      //公会房且不在pk中，才显示麦位
-      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
-
-      final showMicPanel = maxMic > 0 && !freeMic;
 
       // 麦上用户列表
       PersonRoomMicCtrl personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
@@ -651,7 +645,7 @@ class PersonRoomCtrl extends RoomCtrl {
         left: 0,
         right: 0,
         child: PersonRoomHeader(
-          showMicPanel: showMicPanel && topMicMode,
+          showMicPanel: true,
           showMic: showMic,
           isLandscape: isLandscape,
           userList: personRoomMicCtrl.getAudience(),

@@ -3,9 +3,12 @@ import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/enum/api_switch.dart';
 import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -26,6 +29,11 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
 
   @override
   List<MicInfo> get simpleUserList => micUserList.value;
+
+  @override
+  List<MicInfo> getOnLineManager() {
+    return getAudience();
+  }
 
   PersonRoomMicCtrl(super.roomId, {required super.maxMic, required super.roomType});
 
@@ -51,8 +59,11 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       }
       CommonDialog.receiveApplyMicUp(userInfo.showName(), () {
         // todo 同意后，发送请求
-
+        Api.Room.micConfirm(mikeId: 0, type: 2, isAgree: true);
         sendTextNotify("你同意了${userInfo.showName()}上麦请求");
+      }, () {
+        Api.Room.micConfirm(mikeId: 0, type: 2, isAgree: false);
+        sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
       });
     });
   }
@@ -295,7 +306,11 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   /// 是否自由麦
   ///
   bool isFreeMic() {
-    return false;
+    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+      return false;
+    }
+    PersonRoomCtrl personRoomMicCtrl = RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl;
+    return personRoomMicCtrl.info['mike_status'] == ApiSwitch.open.code;
   }
 
   ///
@@ -325,7 +340,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   /// 房主
   ///
   MicInfo? roomOwner() {
-    return simpleUserList.firstWhereOrNull((element) => element.isMainRole());
+    return micUserList.firstWhereOrNull((element) => element.isMainRole());
   }
 
   ///
@@ -334,7 +349,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   List<MicInfo> getAudience() {
     List<MicInfo> results = [];
 
-    simpleUserList.forEach((element) {
+    micUserList.forEach((element) {
       if(!element.isMainRole()) {
         results.add(element);
       }

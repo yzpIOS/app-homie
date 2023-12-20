@@ -22,6 +22,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   List<MicInfo> get simpleUserList => dataRx.values.toList();
 
+  List<MicInfo> getOnLineManager() {
+    return simpleUserList;
+  }
+
   RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType});
 
   final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
