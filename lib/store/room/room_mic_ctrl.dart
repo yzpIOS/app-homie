@@ -283,7 +283,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     on<MicDownEvent>(
       test: (event) => isSelf(event.uid),
-      (_) => Rtc.micRx(false),
+      (_) => onMeMicDownHandler(),
     );
 
     // on<MicStateEvent>(
@@ -296,6 +296,13 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     on<RoomCloseEvent>(
       (_) => rtc.leaveRoom(),
     );
+  }
+
+  ///
+  /// 当前用户下麦广播
+  ///
+  void onMeMicDownHandler() {
+    Rtc.micRx(false);
   }
 
   void onInviteMicUp(int micId) {

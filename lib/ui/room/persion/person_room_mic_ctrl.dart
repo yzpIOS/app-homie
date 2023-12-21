@@ -135,6 +135,13 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     }
   }
 
+  @override
+  void onMeMicDownHandler() {
+    super.onMeMicDownHandler();
+    sendTextNotify("你已下麦");
+    userMicStatus.value = PersonMicStatus.none.val;
+  }
+
   ///
   /// 下麦处理
   ///
