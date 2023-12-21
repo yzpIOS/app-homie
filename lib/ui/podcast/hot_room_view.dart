@@ -17,6 +17,12 @@ class _HotRoomViewState extends State<HotRoomView> with GetStateMixin {
   late final ctrl = bindGet(RoomHotCtrl());
 
   @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(
       () {

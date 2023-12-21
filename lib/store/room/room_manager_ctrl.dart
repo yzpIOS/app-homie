@@ -4,6 +4,7 @@ import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/event/event.dart';
+import 'package:app/event/refresh_hot_event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/api_switch.dart';
 import 'package:app/model/enum/room_state.dart';
@@ -436,6 +437,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       () => Api.Room.info(roomId: roomId, tryTimes: 2),
       callback: (data) {
         if(data["room_type"] == 1) {
+          if(data["status"] == 2) {
+            Get.alertDialog2("主播已下播", callBack: () {
+              RefreshHotEvent().fire();
+              Get.back();
+            });
+            return;
+          }
           // 个人房
           toPersonRoom(roomId: roomId, data: data, off: off);
         } else if(data["room_type"] == 2) {

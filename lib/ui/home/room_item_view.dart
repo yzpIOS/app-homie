@@ -37,7 +37,7 @@ class RoomItemView extends StatelessWidget {
           alignment: Alignment.bottomLeft,
           children: [
             child,
-            if(isShowMore)
+            if(isShowMore && data.containsKey("online_num") && (data["online_num"] as int) > 0)
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -49,9 +49,9 @@ class RoomItemView extends StatelessWidget {
                     margin: EdgeInsets.only(left: 3, bottom: 3),
                     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     child: Text(
-                      "100人在线",
+                      "${data["online_num"]}人在线",
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         color: Colors.white,
                         fontSize: 12,

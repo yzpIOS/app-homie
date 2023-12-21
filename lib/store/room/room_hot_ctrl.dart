@@ -1,3 +1,4 @@
+import 'package:app/event/refresh_hot_event.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/activity_banner_ctrl.dart';
 import 'package:app/tools.dart';
@@ -6,10 +7,18 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../banner_ctrl.dart';
 
-class RoomHotCtrl extends PageListCtrl<Map> {
+class RoomHotCtrl extends PageListCtrl<Map> with BusGetLifeMixin {
   final top6Rx = Rxn<List<Map>>();
   final bannerCtrl = Get.find<BannerCtrl>();
   final activityBannerCtrl = Get.find<ActivityBannerCtrl>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    on<RefreshHotEvent>((e) {
+      doRefresh();
+    });
+  }
 
   @override
   Future fetchPage(PageNum page) {
