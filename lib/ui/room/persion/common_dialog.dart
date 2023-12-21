@@ -101,7 +101,7 @@ class CommonDialog extends StatefulWidget {
   ///
   static void userApplyDownMic(Function onMicDownCallBack) async {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: "确认下麦吗？", subTitle: "再次上麦需要向房主发出申请", cancelLabel: "我再想想", confirmLabel: "我要下麦", confirm:  () {
+      return CommonDialog(title: "确认下麦吗？", confirmLabel: "我要下麦", confirm:  () {
         // todo 同意邀请
       });
     });
@@ -128,6 +128,7 @@ class CommonDialog extends StatefulWidget {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "确认下麦吗？", confirm:  () {
         // todo 同意邀请
+        onMicDownCallBack.call();
       });
     });
   }

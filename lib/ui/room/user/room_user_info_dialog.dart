@@ -470,8 +470,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         break;
       case '下麦':
         try {
-          if(micCtrl is RoomMicCtrl) {
-            (micCtrl as RoomMicCtrl).userMicDow(widget.nuid);
+          if(micCtrl is PersonRoomMicCtrl) {
+            (micCtrl as PersonRoomMicCtrl).micDow(no: "", alert: "");
           } else {
             Api.Room.micDown(uid: widget.nuid);
           }

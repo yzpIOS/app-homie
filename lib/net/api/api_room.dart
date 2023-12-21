@@ -24,7 +24,7 @@ class ApiRoom extends ApiBase {
     c_createScene.noticeMessage = notice;
     c_createScene.maxNum = 0;
     c_createScene.sceneId = scene ?? 0;
-    if(freeMic != null) {
+    if(freeMic != null && freeMic == true) {
       c_createScene.mikeStatus = ApiSwitch.open.code;
     } else {
       c_createScene.mikeStatus = ApiSwitch.close.code;

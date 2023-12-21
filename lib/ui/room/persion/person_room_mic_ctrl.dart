@@ -278,19 +278,10 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       });
       return;
     }
-
-    if(isFreeMic()) {
-      // 自由组麦
-      CommonDialog.userConfirmDownMic(() {
-        Api.Room.micDown(uid: OAuthCtrl.nUid);
-      });
-    } else {
-      // 非自由
-      CommonDialog.userApplyDownMic(() {
-        Api.Room.micDown(uid: OAuthCtrl.nUid);
-        sendTextNotify("申请成功，等待群主同意");
-      });
-    }
+    // 自由组麦
+    CommonDialog.userConfirmDownMic(() {
+      Api.Room.micDown(uid: OAuthCtrl.nUid);
+    });
   }
 
   ///
