@@ -66,6 +66,8 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
       });
     });
+    // 房主都是在麦上的
+    userMicStatus.value = OAuthCtrl.isSelf(RoomManagerCtrl.ins.sceneCtrl2?.roomUid) ? 1 : 0;
   }
 
   @override
