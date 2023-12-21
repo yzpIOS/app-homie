@@ -194,6 +194,15 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       rethrow;
     }
   }
+
+  ///
+  /// 细节处理
+  ///
+  Future<void> udpateUserInfo() async {
+    var myInfo = await Api.UserInfo.myInfo(token: token);
+    await updateUserInfo(myInfo, token ?? "");
+  }
+
   Future<Map> updateUserInfo(Map info, String token) async {
     if(info.containsKey("uid") == false || info.containsKey("role_id") == false) {
       return info;
@@ -271,6 +280,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   // 是否人脸识别
   static bool get isFaceValidate => _auth?.real_name_type == 2;
+
+  // 是否实名
+  static bool get isNameValidate => _auth?.real_name_type == 1;
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;

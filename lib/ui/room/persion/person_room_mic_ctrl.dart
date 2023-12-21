@@ -13,6 +13,7 @@ import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
@@ -262,6 +263,21 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     if(ownerInfo == null || ownerInfo.nUid == uid) {
       super.micUp(no: no);
       return;
+    }
+
+    if(!OAuthCtrl.isNameValidate) {
+      String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+      if(label != "去实名") {
+        return;
+      }
+      // 未认证，去认证
+      await Get.to(() => const RealIdentity2Page());
+      // 更新用户数据
+      await OAuthCtrl.ins.udpateUserInfo();
+      // 未实名，直接返回
+      if(!OAuthCtrl.isNameValidate) {
+        return;
+      }
     }
     if(isFreeMic()) {
       // 自由麦
