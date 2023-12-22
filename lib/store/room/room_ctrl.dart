@@ -638,7 +638,14 @@ class PersonRoomCtrl extends RoomCtrl {
       final showMic = micPanelRx();
 
       // 麦上用户列表
-      PersonRoomMicCtrl personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
+      PersonRoomMicCtrl? personRoomMicCtrl;
+      try {
+        personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
+      } catch(e) {
+      }
+      if(personRoomMicCtrl == null) {
+        return SizedBox();
+      }
 
       return Positioned(
         top: 0,

@@ -34,12 +34,13 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
   void initState() {
     super.initState();
     data["在线列表"] = OnlineUserView(widget.roomId);
-    data["魅力榜"] = _TabViewWidget(widget.roomId, () {
-      return CharmUserView(widget.roomId);
-    });
-    data["财富榜"] = _TabViewWidget(widget.roomId, () {
-      return WealthUserView(widget.roomId);
-    });
+    // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
+    //   return CharmUserView(widget.roomId);
+    // });
+    // data["财富榜"] = _TabViewWidget(widget.roomId, () {
+    //   return WealthUserView(widget.roomId);
+    // });
+    data["财富榜"] = WealthUserView(widget.roomId);
 
     controller = TabController(vsync: this, length: data.length);;
   }
@@ -293,7 +294,7 @@ class CharmUserView extends SimplePageView<Map> {
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.onlineUser(page: page, roomId: roomId);
+  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
   @override
   BaseConfig get config {
@@ -355,6 +356,7 @@ class CharmUserView extends SimplePageView<Map> {
     } else {
       rank = Text(
         "${index + 1}",
+        textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -410,7 +412,7 @@ class WealthUserView extends SimplePageView<Map> {
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.onlineUser(page: page, roomId: roomId);
+  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
   @override
   BaseConfig get config {
@@ -466,12 +468,14 @@ class WealthUserView extends SimplePageView<Map> {
     }
 
     // 排名
+    var rankValue = index + 1;item.containsKey("rank") ? item["rank"] : 0;
     Widget rank;
-    if(index <= 2) {
-      rank = Image.asset(IMG.format("room/rank_${index + 1}"), width: 30, height: 30,);
+    if(rankValue <= 3) {
+      rank = Image.asset(IMG.format("room/rank_$rankValue"), width: 30, height: 30,);
     } else {
       rank = Text(
-        "${index + 1}",
+        "${index}",
+        textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -480,15 +484,19 @@ class WealthUserView extends SimplePageView<Map> {
       );
     }
 
-    var level = item.containsKey("level") ? item["level"].toString() : "";
+    var level = item.containsKey("amount") ? item["amount"].toString() : "";
 
     Widget child = Row(
       children: [
-        Spacing.w12,
-        rank,
-        Spacing.w10,
+        Container(
+          margin: const EdgeInsets.only(left: 2),
+          width: 50,
+          alignment: Alignment.center,
+          child: rank,
+        ),
         Expanded(
           child: RoomUserItemView(
+            padding: EdgeInsets.zero,
             uid: uid,
             role: role,
             showValue: level,

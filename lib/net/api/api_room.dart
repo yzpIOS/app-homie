@@ -73,6 +73,14 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
+  Future wealthyRankUserList({required PageNum page, required int roomId}) {
+    final data = {
+      'room_id': roomId,
+    };
+
+    return _doPost('rank', data: page + data);
+  }
+
   Future<S_JoinScene?> joinRoom(int id, {String? pwd, int timeout = 16}) async {
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene();

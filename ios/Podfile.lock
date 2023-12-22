@@ -29,6 +29,9 @@ PODS:
   - http_proxy (0.0.1):
     - Flutter
   - HydraAsync (2.0.6)
+  - image_cropper (0.0.4):
+    - Flutter
+    - TOCropViewController (~> 2.6.1)
   - image_editor_common (1.0.0):
     - Flutter
   - in_app_purchase_storekit (0.0.1):
@@ -84,6 +87,7 @@ PODS:
     - Flutter
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
     - TXLiteAVSDK_Professional (~> 11.4.14445)
+  - TOCropViewController (2.6.1)
   - TXCustomBeautyProcesserPlugin (1.0.2)
   - TXIMSDK_Plus_iOS (7.6.5011)
   - TXLiteAVSDK_Professional (11.4.14546):
@@ -121,6 +125,7 @@ DEPENDENCIES:
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_mxlogger (from `.symlinks/plugins/flutter_mxlogger/ios`)
   - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
+  - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
   - in_app_purchase_storekit (from `.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
@@ -158,6 +163,7 @@ SPEC REPOS:
     - MXLogger
     - MXLoggerCore
     - ReachabilitySwift
+    - TOCropViewController
     - TXCustomBeautyProcesserPlugin
     - TXIMSDK_Plus_iOS
     - TXLiteAVSDK_Professional
@@ -183,6 +189,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_mxlogger/ios"
   http_proxy:
     :path: ".symlinks/plugins/http_proxy/ios"
+  image_cropper:
+    :path: ".symlinks/plugins/image_cropper/ios"
   image_editor_common:
     :path: ".symlinks/plugins/image_editor_common/ios"
   in_app_purchase_storekit:
@@ -252,6 +260,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
   HydraAsync: 8d589bd725b0224f899afafc9a396327405f8063
+  image_cropper: a3291c624a953049bc6a02e1f8c8ceb162a24b25
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
@@ -275,6 +284,7 @@ SPEC CHECKSUMS:
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
   tencent_trtc_cloud: 8b55aa23005a77db473cdbc13841a4b13b261946
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
   TXIMSDK_Plus_iOS: b665f09489e7d1a35c2dd95a495544d0c2a84f37
   TXLiteAVSDK_Professional: 819f405470d75a7a76d8e267033e705e1979dadd
@@ -289,4 +299,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 805e71e24eb677d7be51c9d87531400367660f19
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.14.3
