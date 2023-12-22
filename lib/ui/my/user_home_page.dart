@@ -17,8 +17,7 @@ import 'package:app/ui/my/personal_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/image/image_gallery.dart';
 import 'package:flutter/material.dart';
-
-import 'common/other_details_info_view.dart';
+import 'package:app/ui/my/common/other_details_info_view.dart';
 
 /// 个人主页
 class UserHomePage extends StatefulWidget {
