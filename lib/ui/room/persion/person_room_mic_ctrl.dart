@@ -72,7 +72,8 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 说话处理
     streamSubscription = Rtc.speakRx.listenAndPump((event) {
       // 当前用户不在麦上时，就把说话的用户从所在的索引拿到前面
-      int startIndex = curUserMicInfo != null ? 1 : 0;
+      int startIndex = 0;
+      micUserList.removeWhere((element) => element == curUserMicInfo);
       for(var index = 0; index < micUserList.length; index ++) {
         if(event.containsKey(micUserList[index].uid)) {
           // 索引相等，不需要改变
@@ -84,6 +85,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
           micUserList.swap(index, startIndex);
           startIndex += 1;
         }
+      }
+      if(curUserMicInfo != null) {
+        micUserList.insert(0, curUserMicInfo!);
       }
       micUserList.refresh();
     });
