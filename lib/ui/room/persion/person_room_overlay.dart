@@ -32,7 +32,12 @@ class PersonRoomOverlay extends RoomOverlay {
 
     return Obx(
           () {
-        final showMic = controller.micPanelRx();
+
+        bool showMic = false;
+        try {
+          showMic = controller.micPanelRx();
+        } catch(e) {
+        }
 
         return Stack(
           alignment: Alignment.center,

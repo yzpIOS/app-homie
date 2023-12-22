@@ -183,6 +183,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   void onMeMicDownHandler() {
     super.onMeMicDownHandler();
     sendTextNotify("你已下麦");
+    curUserMicInfo = null;
     Rtc.status.value = PersonMicStatus.none.val;
   }
 
