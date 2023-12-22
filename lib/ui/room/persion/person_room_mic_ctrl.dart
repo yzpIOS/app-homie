@@ -25,8 +25,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   ///
   RxList<MicInfo> micUserList = RxList();
 
-  // 当前麦状态
-  ValueNotifier<int> userMicStatus = ValueNotifier<int>(0);
+  StreamSubscription? streamSubscription;
+
+  MicInfo? curUserMicInfo;
 
   @override
   List<MicInfo> get simpleUserList => micUserList.value;
@@ -67,6 +68,33 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
       });
     });
+
+    // 说话处理
+    streamSubscription = Rtc.speakRx.listenAndPump((event) {
+      // 当前用户不在麦上时，就把说话的用户从所在的索引拿到前面
+      int startIndex = curUserMicInfo != null ? 1 : 0;
+      for(var index = 0; index < micUserList.length; index ++) {
+        if(event.containsKey(micUserList[index].uid)) {
+          // 索引相等，不需要改变
+          if(startIndex == index) {
+            // 指针向前
+            startIndex += 1;
+            continue;
+          }
+          micUserList.swap(index, startIndex);
+          startIndex += 1;
+        }
+      }
+      micUserList.refresh();
+    });
+  }
+
+  void updateMicInfo(List<MicInfo> micInfos, String roomUid) {
+    micUserList.value = micInfos;
+    if(Rtc.status.value == PersonMicStatus.none.val) {
+      Rtc.status.value = micInfos.firstWhereOrNull((element) => element.uid == roomUid) != null
+          ? PersonMicStatus.open.val : PersonMicStatus.none.val;
+    }
   }
 
   @override
@@ -94,23 +122,34 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         micUserList.removeAt(index);
       }
     }
-    debugPrint("新增麦位：data = ${data.toProto3Json()}");
-    // 新增mike
-    micUserList.add(MicInfo(
+
+    var localMicInfo = MicInfo(
         uid: event.uid ?? "",
         micId: data.mikeId.toInt(),
         hotCount: event.hotCount,
         isMute: event.isMute,
         nUid: data.roleId,
         roleType: event.data?.roleType ?? 0
-    ));
+    );
+
+    // 当前用户的mic信息
+    if(event.uid == OAuthCtrl.uid) {
+      // 当前用户放在第一位
+      curUserMicInfo = localMicInfo;
+      micUserList.insert(0, localMicInfo);
+    } else {
+      // 新增mike
+      micUserList.add(localMicInfo);
+    }
+
+    debugPrint("新增麦位：data = ${data.toProto3Json()}");
 
     // 用户己上麦
     if(event.uid == OAuthCtrl.uid) {
       sendTextNotify("你已上麦");
-      userMicStatus.value = PersonMicStatus.open.val;
+      Rtc.status.value = PersonMicStatus.open.val;
       // 关闭麦
-      Rtc.micRx.value = true;
+      Rtc.micSwitch();
     }
   }
 
@@ -130,9 +169,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 用户己下麦
     if(event.uid == OAuthCtrl.uid) {
       sendTextNotify("你已下麦");
-      userMicStatus.value = PersonMicStatus.none.val;
+      Rtc.status.value = PersonMicStatus.none.val;
       // 关闭麦
-      Rtc.micRx.value = false;
+      Rtc.micSwitch();
     }
   }
 
@@ -140,7 +179,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   void onMeMicDownHandler() {
     super.onMeMicDownHandler();
     sendTextNotify("你已下麦");
-    userMicStatus.value = PersonMicStatus.none.val;
+    Rtc.status.value = PersonMicStatus.none.val;
   }
 
   ///
@@ -149,6 +188,15 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   @override
   void onMicDownEventHandle(MicDownEvent event) {
     micUserList.removeWhere((element) => element.uid == event.uid);
+
+    // 用户己下麦
+    if(event.uid == OAuthCtrl.uid) {
+      sendTextNotify("你已下麦");
+      Rtc.status.value = PersonMicStatus.none.val;
+      // 关闭麦
+      Rtc.micSwitch();
+      curUserMicInfo = null;
+    }
   }
 
 
@@ -240,17 +288,18 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 非自由组麦, 需要弹窗
     if(isOnMic()) {
       // 在麦上，下麦
-      if(userMicStatus.value == PersonMicStatus.open.val) {
+      if(Rtc.status.value == PersonMicStatus.open.val) {
         // 开麦中，那么就把mic关闭
-        userMicStatus.value == PersonMicStatus.close.val;;
-        // 关闭麦
-        Rtc.micRx.value = false;
-      } else {
+        Rtc.status.value = PersonMicStatus.close.val;
+      } else if(Rtc.status.value == PersonMicStatus.close.val) {
         // 如果是闭麦中，那么就开麦
-        userMicStatus.value == PersonMicStatus.open.val;;
-        // 关闭麦
-        Rtc.micRx.value = true;
+        Rtc.status.value = PersonMicStatus.open.val;
+      } else {
+        // 禁麦中
+        return;
       }
+      // 关闭麦
+      Rtc.micSwitch();
     } else {
       // 不在麦上，上麦
       micUp(no: "", uid: OAuthCtrl.nUid, reRequest: reRequest);
@@ -370,5 +419,11 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     });
 
     return results;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    streamSubscription?.cancel();
   }
 }

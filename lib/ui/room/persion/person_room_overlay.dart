@@ -173,43 +173,48 @@ class PersonRoomHeader extends CommonRoomHeader {
             return const SizedBox();
           }
           return UserInfoCtrl.use(micInfo.uid, builder: (userInfoDto) {
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Obx(() {
-                  final val = Rtc.speakRx[micInfo.uid];
-                  var avatar = AsyncAvatar(
-                    uid: micInfo.uid ?? "",
-                    size: 46,
-                    // todo 点击处理
-                    onTap: Some(() {
-                      if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-                        return;
-                      }
-                      (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo.uid ?? "", micInfo.nUid ?? Int64(0));
-                    }),
-                  );
-                  if(val == null) {
-                    return avatar;
-                  }
-                  return MicAnimeBuilder(
-                    value: val,
-                    child: avatar,
-                    builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
-                  );
-                }),
+            return SizedBox(
+              width: 46 + 20,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Obx(() {
+                    final val = Rtc.speakRx[micInfo.uid];
+                    var avatar = AsyncAvatar(
+                      uid: micInfo.uid ?? "",
+                      size: 46,
+                      // todo 点击处理
+                      onTap: Some(() {
+                        if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                          return;
+                        }
+                        (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo.uid ?? "", micInfo.nUid ?? Int64(0));
+                      }),
+                    );
+                    if(val == null) {
+                      return avatar;
+                    }
+                    return MicAnimeBuilder(
+                      value: val,
+                      child: avatar,
+                      builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
+                    );
+                  }),
 
-                // 麦上用户
-                const SizedBox(height: 6,),
-                Text(
-                  userInfoDto?.showName() ?? "",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
+                  // 麦上用户
+                  const SizedBox(height: 6,),
+                  Text(
+                      userInfoDto?.showName() ?? "",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 14,
+                      )
                   )
-                )
-              ],
+                ],
+              ),
             );
           });
         },

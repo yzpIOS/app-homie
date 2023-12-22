@@ -282,7 +282,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static bool get isFaceValidate => _auth?.real_name_type == 2;
 
   // 是否实名
-  static bool get isNameValidate => _auth?.real_name_type == 1;
+  static bool get isNameValidate => _auth?.real_name_type == 1 || _auth?.real_name_type == 2;
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;

@@ -622,11 +622,7 @@ class PersonRoomCtrl extends RoomCtrl {
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
-    (roomMicCtrl as PersonRoomMicCtrl?)?.micUserList.value = RoomMicCtrl.createMicInfo2(data?.mikes ?? []);
-    (roomMicCtrl as PersonRoomMicCtrl?)?.micUserList.refresh();
-
-    // 房主都是在麦上的
-    (roomMicCtrl as PersonRoomMicCtrl?)?.userMicStatus.value = OAuthCtrl.isSelf(roomUid) ? 1 : 0;
+    (roomMicCtrl as PersonRoomMicCtrl?)?.updateMicInfo(RoomMicCtrl.createMicInfo2(data?.mikes ?? []), roomUid);
 
     if(RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);

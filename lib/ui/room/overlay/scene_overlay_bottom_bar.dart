@@ -111,46 +111,45 @@ class _MicOperateState extends State<MicOperate> {
           borderRadius: BorderRadius.circular(20),
           color: Colors.black.withAlpha(75),
         ),
-        child: NotifierView(
-          personRoomMicCtrl.userMicStatus,
-          onData: (data) {
-            Widget icon;
-            String title = "";
-            if(data == PersonMicStatus.open.val) {
-              title = "开麦中";
-              icon = Image.asset(IMG.format("room/mic/mic_join"), width: 15, height: 18,);
-            } else if(data == PersonMicStatus.close.val) {
-              title = "闭麦中";
-              icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
-            } else if(data == PersonMicStatus.disable.val) {
-              title = "禁麦中";
-              icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
-            } else {
-              title = "上麦";
-              icon = Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,);
-            }
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 15,
-                  height: 18,
-                  child: icon,
-                ),
+        child: Obx(() {
+          Widget icon;
+          String title = "";
+          bool micRx = Rtc.micRx.value;
+          int status = Rtc.status.value;
+          if(micRx) {
+            title = "开麦中";
+            icon = Image.asset(IMG.format("room/mic/mic_join"), width: 15, height: 18,);
+          } else if(status == PersonMicStatus.close.val) {
+            title = "闭麦中";
+            icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
+          } else if(status == PersonMicStatus.disable.val) {
+            title = "禁麦中";
+            icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
+          } else {
+            title = "上麦";
+            icon = Image.asset(IMG.format("room/mic/mic_enable"), width: 15, height: 18,);
+          }
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 15,
+                height: 18,
+                child: icon,
+              ),
 
-                SizedBox(width: 6,),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            );
-          },
-        ),
+              SizedBox(width: 6,),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          );
+        }),
       ),
     );
   }

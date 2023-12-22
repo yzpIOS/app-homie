@@ -21,6 +21,9 @@ class Rtc {
   static final videoRx = RxBool(false);
   static final netQualityRx = RxInt(0);
 
+  // 麦状态，1禁麦
+  static final status = RxInt(0);
+
   static late final TRTCCloud _rtcClient;
 
   static Future<void> _init() async {
@@ -190,6 +193,7 @@ class Rtc {
     micRx(false);
     speakRx.clear();
     openMicRx.clear();
+    status(0);
 
     switch (args) {
       case 0: //主动调用 exitRoom 退房
