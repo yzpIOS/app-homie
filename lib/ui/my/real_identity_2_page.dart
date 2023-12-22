@@ -182,7 +182,7 @@ class _RealIdentity2PageState extends State<RealIdentity2Page> with BusStateMixi
               tags: {
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) =>/// TODO
+                'a1': StyledTextActionTag((val, __) =>
                     ctrl.onTapLink(val!, 'anchor_protocol')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
