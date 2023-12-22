@@ -427,8 +427,8 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
               tags: {
                 'c': StyledTextTag(
                     style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) =>/// TODO
-                    ctrl.onTapLink(val!, 'xxxxx')),
+                'a1': StyledTextActionTag((val, __) =>
+                    ctrl.onTapLink(val!, 'live_broadcast_specification')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.colorA9),
             ),

@@ -80,8 +80,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的装扮',
       '我的背包',
       '我的任务',
-      '我的称号',
-      '首充礼包',
+      // '我的称号',
+      // '首充礼包',
     ];
 
     Widget itemBuilder(String item) {
@@ -176,8 +176,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const BackpackPage());
         break;
       case '我的任务':
-        // SignDialog.show(isManual: true);
-        Get.to(() => const TaskCenterPage());
+        SignDialog.show(isManual: true);
+        // Get.to(() => const TaskCenterPage());
         break;
       case '我的称号':
         Get.to(() => const MyTitlePage());
