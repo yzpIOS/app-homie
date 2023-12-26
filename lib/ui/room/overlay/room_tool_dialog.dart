@@ -1,4 +1,6 @@
+import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -32,12 +34,14 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     return OrientationSheet.scaffold(
       title: '工具',
       textStyle: const TextStyle(color: Colors.black),
-      body: $BodyView(),
+      body: Obx(() {
+        return $BodyView(Rtc.status.value == PersonMicStatus.disable.val);
+      }),
       titleWidget: createTitle(),
     );
   }
 
-  Widget $BodyView() {
+  Widget $BodyView(bool disable) {
     final myRole = controller.getRole(OAuthCtrl.uid);
 
     final isOwner = myRole.isOwner;
@@ -52,7 +56,8 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
         '黑名单',
         '清零',
       ],
-      if(isOwner || isManager) '全员禁麦',
+      if((isOwner || isManager) && !disable) '全员禁麦',
+      if((isOwner || isManager) && disable) '全员开麦',
       // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',

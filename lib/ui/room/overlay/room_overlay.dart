@@ -1,7 +1,9 @@
+import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
@@ -175,7 +177,25 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         ActMainDialog.show();
         break;
       case '全员禁麦':
+      case '全员开麦':
         // todo 全员禁麦
+        int value = 0;
+        int newStatus = 0;
+        if(Rtc.status.value == PersonMicStatus.disable.val) {
+          // 1.开麦
+          value = 2;
+          newStatus = PersonMicStatus.open.val;
+        } else {
+          // 2.闭麦
+          value = 1;
+          newStatus = PersonMicStatus.disable.val;
+        }
+        simpleTry(
+          () => Api.Room.speaking(roomId, value),
+          callback: (t) {
+            Rtc.status.value = newStatus;
+          }
+        );
         break;
       default:
         super.onItemClick(action);

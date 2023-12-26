@@ -328,6 +328,7 @@ const S_UpMikeBroadcast$json = {
     {'1': 'mike_id', '3': 6, '4': 1, '5': 3, '10': 'mikeId'},
     {'1': 'number', '3': 7, '4': 1, '5': 5, '10': 'number'},
     {'1': 'role_type', '3': 8, '4': 1, '5': 5, '10': 'roleType'},
+    {'1': 'status', '3': 9, '4': 1, '5': 5, '10': 'status'},
   ],
 };
 
@@ -336,7 +337,8 @@ final $typed_data.Uint8List s_UpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChFTX1VwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm9sZV9pZB'
     'gCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhcKB21pa2Vfbm8YBCABKAlSBm1pa2VO'
     'bxIeCgtvbGRfbWlrZV9ubxgFIAEoCVIJb2xkTWlrZU5vEhcKB21pa2VfaWQYBiABKANSBm1pa2'
-    'VJZBIWCgZudW1iZXIYByABKAVSBm51bWJlchIbCglyb2xlX3R5cGUYCCABKAVSCHJvbGVUeXBl');
+    'VJZBIWCgZudW1iZXIYByABKAVSBm51bWJlchIbCglyb2xlX3R5cGUYCCABKAVSCHJvbGVUeXBl'
+    'EhYKBnN0YXR1cxgJIAEoBVIGc3RhdHVz');
 
 @$core.Deprecated('Use s_DownMikeBroadcastDescriptor instead')
 const S_DownMikeBroadcast$json = {
@@ -524,6 +526,25 @@ final $typed_data.Uint8List s_AdministratorBroadcastDescriptor = $convert.base64
     'JvbGVfaWQYAiABKANSBnJvbGVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cxIQCgN1aWQYBCAB'
     'KAlSA3VpZA==');
 
+@$core.Deprecated('Use s_LiveStopSettlementBroadcastDescriptor instead')
+const S_LiveStopSettlementBroadcast$json = {
+  '1': 'S_LiveStopSettlementBroadcast',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'live_times', '3': 2, '4': 1, '5': 5, '10': 'liveTimes'},
+    {'1': 'gift_income', '3': 3, '4': 1, '5': 5, '10': 'giftIncome'},
+    {'1': 'online_total_num', '3': 4, '4': 1, '5': 5, '10': 'onlineTotalNum'},
+    {'1': 'ds_num', '3': 5, '4': 1, '5': 5, '10': 'dsNum'},
+  ],
+};
+
+/// Descriptor for `S_LiveStopSettlementBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_LiveStopSettlementBroadcastDescriptor = $convert.base64Decode(
+    'Ch1TX0xpdmVTdG9wU2V0dGxlbWVudEJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSW'
+    'QSHQoKbGl2ZV90aW1lcxgCIAEoBVIJbGl2ZVRpbWVzEh8KC2dpZnRfaW5jb21lGAMgASgFUgpn'
+    'aWZ0SW5jb21lEigKEG9ubGluZV90b3RhbF9udW0YBCABKAVSDm9ubGluZVRvdGFsTnVtEhUKBm'
+    'RzX251bRgFIAEoBVIFZHNOdW0=');
+
 @$core.Deprecated('Use s_ChatMessageBroadcastDescriptor instead')
 const S_ChatMessageBroadcast$json = {
   '1': 'S_ChatMessageBroadcast',
@@ -555,6 +576,23 @@ const S_BanChatBroadcast$json = {
 final $typed_data.Uint8List s_BanChatBroadcastDescriptor = $convert.base64Decode(
     'ChJTX0JhbkNoYXRCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaW'
     'QYAiABKANSBnJvbGVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
+
+@$core.Deprecated('Use s_MikeSpeakingBroadcastDescriptor instead')
+const S_MikeSpeakingBroadcast$json = {
+  '1': 'S_MikeSpeakingBroadcast',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
+    {'1': 'uid', '3': 4, '4': 1, '5': 9, '10': 'uid'},
+  ],
+};
+
+/// Descriptor for `S_MikeSpeakingBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_MikeSpeakingBroadcastDescriptor = $convert.base64Decode(
+    'ChdTX01pa2VTcGVha2luZ0Jyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm'
+    '9sZV9pZBgCIAEoA1IGcm9sZUlkEhYKBnN0YXR1cxgDIAEoBVIGc3RhdHVzEhAKA3VpZBgEIAEo'
+    'CVIDdWlk');
 
 @$core.Deprecated('Use c_CreateSceneDescriptor instead')
 const C_CreateScene$json = {
@@ -2264,4 +2302,18 @@ const S_Move$json = {
 final $typed_data.Uint8List s_MoveDescriptor = $convert.base64Decode(
     'CgZTX01vdmUSEAoDaWRzGAEgAygDUgNpZHMSKwoEbGlzdBgCIAMoCzIXLmNvbS5zYXZ2eS5wcm'
     '90by5DX01vdmVSBGxpc3Q=');
+
+@$core.Deprecated('Use s_DialogDescriptor instead')
+const S_Dialog$json = {
+  '1': 'S_Dialog',
+  '2': [
+    {'1': 'ids', '3': 1, '4': 3, '5': 3, '10': 'ids'},
+    {'1': 'contents', '3': 2, '4': 3, '5': 9, '10': 'contents'},
+  ],
+};
+
+/// Descriptor for `S_Dialog`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_DialogDescriptor = $convert.base64Decode(
+    'CghTX0RpYWxvZxIQCgNpZHMYASADKANSA2lkcxIaCghjb250ZW50cxgCIAMoCVIIY29udGVudH'
+    'M=');
 

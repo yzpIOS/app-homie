@@ -1395,6 +1395,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? mikeId,
     $core.int? number,
     $core.int? roleType,
+    $core.int? status,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1421,6 +1422,9 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     if (roleType != null) {
       $result.roleType = roleType;
     }
+    if (status != null) {
+      $result.status = status;
+    }
     return $result;
   }
   S_UpMikeBroadcast._() : super();
@@ -1436,6 +1440,7 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(6, _omitFieldNames ? '' : 'mikeId')
     ..a<$core.int>(7, _omitFieldNames ? '' : 'number', $pb.PbFieldType.O3)
     ..a<$core.int>(8, _omitFieldNames ? '' : 'roleType', $pb.PbFieldType.O3)
+    ..a<$core.int>(9, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1531,6 +1536,15 @@ class S_UpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasRoleType() => $_has(7);
   @$pb.TagNumber(8)
   void clearRoleType() => clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get status => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set status($core.int v) { $_setSignedInt32(8, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasStatus() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearStatus() => clearField(9);
 }
 
 /// 下麦广播
@@ -1747,7 +1761,7 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   void clearMikeId() => clearField(5);
 }
 
-/// 禁麦广播
+/// 禁言广播
 class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
   factory S_CloseMikeBroadcast({
     $fixnum.Int64? roomId,
@@ -1854,7 +1868,7 @@ class S_CloseMikeBroadcast extends $pb.GeneratedMessage {
   void clearMikeId() => clearField(5);
 }
 
-/// 禁麦广播
+/// 禁言广播
 class S_OpenBroadcast extends $pb.GeneratedMessage {
   factory S_OpenBroadcast({
     $fixnum.Int64? roomId,
@@ -2601,6 +2615,112 @@ class S_AdministratorBroadcast extends $pb.GeneratedMessage {
   void clearUid() => clearField(4);
 }
 
+class S_LiveStopSettlementBroadcast extends $pb.GeneratedMessage {
+  factory S_LiveStopSettlementBroadcast({
+    $fixnum.Int64? roomId,
+    $core.int? liveTimes,
+    $core.int? giftIncome,
+    $core.int? onlineTotalNum,
+    $core.int? dsNum,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (liveTimes != null) {
+      $result.liveTimes = liveTimes;
+    }
+    if (giftIncome != null) {
+      $result.giftIncome = giftIncome;
+    }
+    if (onlineTotalNum != null) {
+      $result.onlineTotalNum = onlineTotalNum;
+    }
+    if (dsNum != null) {
+      $result.dsNum = dsNum;
+    }
+    return $result;
+  }
+  S_LiveStopSettlementBroadcast._() : super();
+  factory S_LiveStopSettlementBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_LiveStopSettlementBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_LiveStopSettlementBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'liveTimes', $pb.PbFieldType.O3)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'giftIncome', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'onlineTotalNum', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'dsNum', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_LiveStopSettlementBroadcast clone() => S_LiveStopSettlementBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_LiveStopSettlementBroadcast copyWith(void Function(S_LiveStopSettlementBroadcast) updates) => super.copyWith((message) => updates(message as S_LiveStopSettlementBroadcast)) as S_LiveStopSettlementBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_LiveStopSettlementBroadcast create() => S_LiveStopSettlementBroadcast._();
+  S_LiveStopSettlementBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_LiveStopSettlementBroadcast> createRepeated() => $pb.PbList<S_LiveStopSettlementBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_LiveStopSettlementBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_LiveStopSettlementBroadcast>(create);
+  static S_LiveStopSettlementBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get liveTimes => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set liveTimes($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLiveTimes() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLiveTimes() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get giftIncome => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set giftIncome($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasGiftIncome() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearGiftIncome() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get onlineTotalNum => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set onlineTotalNum($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasOnlineTotalNum() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearOnlineTotalNum() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get dsNum => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set dsNum($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDsNum() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDsNum() => clearField(5);
+}
+
 /// 房间聊天信息广播
 class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
   factory S_ChatMessageBroadcast({
@@ -2770,6 +2890,98 @@ class S_BanChatBroadcast extends $pb.GeneratedMessage {
   $core.bool hasStatus() => $_has(2);
   @$pb.TagNumber(3)
   void clearStatus() => clearField(3);
+}
+
+class S_MikeSpeakingBroadcast extends $pb.GeneratedMessage {
+  factory S_MikeSpeakingBroadcast({
+    $fixnum.Int64? roomId,
+    $fixnum.Int64? roleId,
+    $core.int? status,
+    $core.String? uid,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (status != null) {
+      $result.status = status;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    return $result;
+  }
+  S_MikeSpeakingBroadcast._() : super();
+  factory S_MikeSpeakingBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_MikeSpeakingBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_MikeSpeakingBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..aInt64(2, _omitFieldNames ? '' : 'roleId')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
+    ..aOS(4, _omitFieldNames ? '' : 'uid')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_MikeSpeakingBroadcast clone() => S_MikeSpeakingBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_MikeSpeakingBroadcast copyWith(void Function(S_MikeSpeakingBroadcast) updates) => super.copyWith((message) => updates(message as S_MikeSpeakingBroadcast)) as S_MikeSpeakingBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_MikeSpeakingBroadcast create() => S_MikeSpeakingBroadcast._();
+  S_MikeSpeakingBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_MikeSpeakingBroadcast> createRepeated() => $pb.PbList<S_MikeSpeakingBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_MikeSpeakingBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_MikeSpeakingBroadcast>(create);
+  static S_MikeSpeakingBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roleId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoleId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoleId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get status => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set status($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStatus() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearStatus() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get uid => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set uid($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUid() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUid() => clearField(4);
 }
 
 /// 创建房间场景
@@ -10936,6 +11148,59 @@ class S_Move extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<C_Move> get list => $_getList(1);
+}
+
+/// 接收 对话内容列表在场景中汽包显示
+class S_Dialog extends $pb.GeneratedMessage {
+  factory S_Dialog({
+    $core.Iterable<$fixnum.Int64>? ids,
+    $core.Iterable<$core.String>? contents,
+  }) {
+    final $result = create();
+    if (ids != null) {
+      $result.ids.addAll(ids);
+    }
+    if (contents != null) {
+      $result.contents.addAll(contents);
+    }
+    return $result;
+  }
+  S_Dialog._() : super();
+  factory S_Dialog.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_Dialog.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_Dialog', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..p<$fixnum.Int64>(1, _omitFieldNames ? '' : 'ids', $pb.PbFieldType.K6)
+    ..pPS(2, _omitFieldNames ? '' : 'contents')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_Dialog clone() => S_Dialog()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_Dialog copyWith(void Function(S_Dialog) updates) => super.copyWith((message) => updates(message as S_Dialog)) as S_Dialog;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_Dialog create() => S_Dialog._();
+  S_Dialog createEmptyInstance() => create();
+  static $pb.PbList<S_Dialog> createRepeated() => $pb.PbList<S_Dialog>();
+  @$core.pragma('dart2js:noInline')
+  static S_Dialog getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_Dialog>(create);
+  static S_Dialog? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$fixnum.Int64> get ids => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get contents => $_getList(1);
 }
 
 

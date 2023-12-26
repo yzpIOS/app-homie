@@ -16,6 +16,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_JoinBroadcast: UserInEvent.new,
     // 用户退出
     CMD.S_LeaveBroadcast: UserOutEvent.new,
+    // 全员禁麦
+    CMD.S_MikeSpeakingBroadcast: MikeSpeakingEvent.new,
     // 邀请上麦
     CMD.S_InviteMikeBroadcast: InviteMicUpEvent.new,
     // 上麦

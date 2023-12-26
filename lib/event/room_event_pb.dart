@@ -178,3 +178,13 @@ class LocalMsgEvent extends EventPb {
 
   LocalMsgEvent(this.localMsgData);
 }
+
+// 房间禁言广播
+class MikeSpeakingEvent extends RoomEvent<S_MikeSpeakingBroadcast> {
+
+  @override
+  UID? get uid => data?.uid;
+
+  @override
+  NUID? get nuid => data?.roomId;
+}

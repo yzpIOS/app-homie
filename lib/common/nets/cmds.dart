@@ -80,7 +80,7 @@ class CMD {
   static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18=======对接完成
   static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）=======对接完成
 
-
+  static const S_MikeSpeakingBroadcast = 2272; // 房间禁言广播
   static const S_FloatingScreen = 3105; // 礼物飘屏广播(对应mq的8，和礼物播放不同的mq通道)=======对接完成
   static const refuseUpMic = 22013; // 房间开关播广播
   static const msgTxt = 2206; // 礼物

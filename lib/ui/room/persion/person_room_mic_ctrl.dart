@@ -66,6 +66,30 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       });
     });
 
+    // 非房主收到的禁麦处理
+    on<MikeSpeakingEvent>((event) async {
+      MicInfo? micInfo = micUserList.firstWhereOrNull((element) => element.uid == event.uid);
+      // 是否禁麦中
+      micInfo?.isMute = event.data?.status == 1;
+      if(event.data?.status == 1) {
+        // 非房主时，需要下麦
+        if(Rtc.status.value == PersonMicStatus.open.val && event.uid == OAuthCtrl.uid) {
+          Rtc.micSwitch();
+          // 禁麦中
+          Rtc.status.value = PersonMicStatus.disable.val;
+        }
+      } else {
+        // 非房主时，需要重新上麦
+        if(Rtc.status.value == PersonMicStatus.disable.val && event.uid == OAuthCtrl.uid) {
+          Rtc.micSwitch();
+          Rtc.status.value = PersonMicStatus.open.val;
+        }
+      }
+      if(micInfo != null) {
+        micUserList.refresh();
+      }
+    });
+
     // 说话处理
     streamSubscription = Rtc.speakRx.listenAndPump((event) {
       // 当前用户不在麦上时，就把说话的用户从所在的索引拿到前面
@@ -294,6 +318,10 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   /// 登录用户：上下麦操作，要判断是否被禁
   ///
   void micOperate({bool reRequest = false}) {
+    if(Rtc.status.value == PersonMicStatus.disable.val) {
+      showToast("全员禁麦中");
+      return;
+    }
     // 非自由组麦, 需要弹窗
     if(isOnMic()) {
       if(preTime != 0 && (DateTime.now().millisecondsSinceEpoch - preTime) < 100) {

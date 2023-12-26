@@ -116,7 +116,7 @@ class PersonRoomHeader extends CommonRoomHeader {
         mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.topLeft,
             children: [
               // 头像
               AsyncAvatar(
@@ -130,7 +130,24 @@ class PersonRoomHeader extends CommonRoomHeader {
                 }),
               ),
               // 主持
-              Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,)
+              Positioned.fill(
+                left: (46 - 37) / 2,
+                top: (46 - 12),
+                child: Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,),
+              ),
+
+              if(owner?.isMute == true)
+                Positioned.fill(
+                  left: 46 - 14,
+                  top: 5,
+                  bottom: 46 - 19,
+                  child: Image.asset(
+                    IMG.format('room/mic/麦位_禁麦'),
+                    width: 14,
+                    height: 14,
+                    errorBuilder: (_, __, ___) => Spacing.blank,
+                  ),
+                )
             ],
           ),
 
@@ -185,16 +202,38 @@ class PersonRoomHeader extends CommonRoomHeader {
                 children: [
                   Obx(() {
                     final val = Rtc.speakRx[micInfo.uid];
-                    var avatar = AsyncAvatar(
-                      uid: micInfo.uid ?? "",
-                      size: 46,
-                      // todo 点击处理
-                      onTap: Some(() {
-                        if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-                          return;
-                        }
-                        (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo.uid ?? "", micInfo.nUid ?? Int64(0));
-                      }),
+                    var avatar = SizedBox(
+                      width: 46,
+                      height: 46,
+                      child: Stack(
+                        alignment: Alignment.topRight,
+                        children: [
+                          AsyncAvatar(
+                            uid: micInfo.uid ?? "",
+                            size: 46,
+                            // todo 点击处理
+                            onTap: Some(() {
+                              if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                                return;
+                              }
+                              (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(micInfo.uid ?? "", micInfo.nUid ?? Int64(0));
+                            }),
+                          ),
+
+                          if(micInfo.isMute)
+                            Positioned.fill(
+                              left: 46 - 14,
+                              top: 5,
+                              bottom: 46 - 19,
+                              child: Image.asset(
+                                IMG.format('room/mic/麦位_禁麦'),
+                                width: 14,
+                                height: 14,
+                                errorBuilder: (_, __, ___) => Spacing.blank,
+                              ),
+                            )
+                        ],
+                      ),
                     );
                     if(val == null) {
                       return avatar;

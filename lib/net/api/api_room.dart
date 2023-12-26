@@ -412,4 +412,20 @@ class ApiRoom extends ApiBase {
   Future getRandomRoom() async {
     return _doPost('random');
   }
+
+  ///
+  /// 开禁麦
+  /// [roomId] 房间id
+  /// [status] 1.开麦 2.闭麦
+  /// [role_id_list] 角色id组，不传默认是全员闭麦
+  ///
+  Future speaking(int roomId, int status, {List<String>? role_id_list}) {
+    final data = {
+      'room_id': roomId,
+      'status': status,
+      if(role_id_list != null)
+        'role_id_list': role_id_list,
+    };
+    return _doPost("mike/speaking", data: data);
+  }
 }
