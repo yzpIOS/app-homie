@@ -93,8 +93,18 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   void updateMicInfo(List<MicInfo> micInfos, String roomUid) {
     micUserList.value = micInfos;
     if(Rtc.status.value == PersonMicStatus.none.val) {
+      // 重置麦位状态
       Rtc.status.value = micInfos.firstWhereOrNull((element) => element.uid == roomUid) != null
           ? PersonMicStatus.open.val : PersonMicStatus.none.val;
+      // 第一次主动上麦
+      if(roomUid == OAuthCtrl.uid && Rtc.status.value == PersonMicStatus.open.val) {
+        if(Rtc.micRx.isTrue) {
+          return;
+        }
+        Future.delayed(const Duration(milliseconds: 500)).then((value) {
+          Rtc.micSwitch();
+        });
+      }
     }
   }
 
@@ -149,7 +159,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     if(event.uid == OAuthCtrl.uid) {
       sendTextNotify("你已上麦");
       // 关闭麦
-      Rtc.micSwitch();
+      if(Rtc.micRx.isFalse) {
+        Rtc.micSwitch();
+      }
       Rtc.status.value = PersonMicStatus.open.val;
     }
   }
