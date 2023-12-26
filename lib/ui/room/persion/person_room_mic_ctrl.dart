@@ -44,10 +44,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     super.onInit();
     // 拒绝上麦弹窗
     on<RefuseUpEvent>((event) {
-      CommonDialog.refuseApplyUpMic(() {
-        micOperate(reRequest: true);
-        sendTextNotify("申请上麦");
-      });
+      micOperate(reRequest: true);
     });
     // 申请上麦成功
     on<S_InviteMikeBroadcast>((event) {
