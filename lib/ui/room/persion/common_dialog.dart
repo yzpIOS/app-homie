@@ -76,7 +76,6 @@ class CommonDialog extends StatefulWidget {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "房主拒绝了你的上麦申请", cancelLabel: "再次申请", confirm:  () {
         // 确认
-        Get.back();
       }, cancel: () {
         // todo 再次申请
         applyAgain.call();

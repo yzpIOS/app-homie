@@ -279,12 +279,19 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     });
   }
 
+  int preTime = 0;
+
   ///
   /// 登录用户：上下麦操作，要判断是否被禁
   ///
   void micOperate({bool reRequest = false}) {
     // 非自由组麦, 需要弹窗
     if(isOnMic()) {
+      if(preTime != 0 && (DateTime.now().millisecondsSinceEpoch - preTime) < 100) {
+        return;
+      }
+      preTime = DateTime.now().millisecondsSinceEpoch;
+
       // 在麦上，下麦
       if(Rtc.status.value == PersonMicStatus.open.val) {
         // 开麦中，那么就把mic关闭
@@ -296,8 +303,12 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         // 禁麦中
         return;
       }
+      bool curMicValue = Rtc.micRx.value;
       // 关闭麦
       Rtc.micSwitch();
+      Future.delayed(const Duration(milliseconds: 100)).then((value) {
+        Rtc.micRx.value = !curMicValue;
+      });
     } else {
       // 不在麦上，上麦
       micUp(no: "", uid: OAuthCtrl.nUid, reRequest: reRequest);
