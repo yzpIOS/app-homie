@@ -151,9 +151,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 用户己上麦
     if(event.uid == OAuthCtrl.uid) {
       sendTextNotify("你已上麦");
-      Rtc.status.value = PersonMicStatus.open.val;
       // 关闭麦
       Rtc.micSwitch();
+      Rtc.status.value = PersonMicStatus.open.val;
     }
   }
 
@@ -169,22 +169,11 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
 
       micUserList.refresh();
     }
-
-    // 用户己下麦
-    if(event.uid == OAuthCtrl.uid) {
-      sendTextNotify("你已下麦");
-      Rtc.status.value = PersonMicStatus.none.val;
-      // 关闭麦
-      Rtc.micSwitch();
-    }
   }
 
   @override
   void onMeMicDownHandler() {
     super.onMeMicDownHandler();
-    sendTextNotify("你已下麦");
-    curUserMicInfo = null;
-    Rtc.status.value = PersonMicStatus.none.val;
   }
 
   ///
@@ -197,9 +186,13 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     // 用户己下麦
     if(event.uid == OAuthCtrl.uid) {
       sendTextNotify("你已下麦");
-      Rtc.status.value = PersonMicStatus.none.val;
       // 关闭麦
       Rtc.micSwitch();
+      Future.delayed(const Duration(milliseconds: 300)).then((value) {
+        Rtc.micRx.value = false;
+        Rtc.status.value = PersonMicStatus.none.val;
+        Rtc.status.refresh();
+      });
       curUserMicInfo = null;
     }
   }
