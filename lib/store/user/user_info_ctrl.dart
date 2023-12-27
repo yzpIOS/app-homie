@@ -190,9 +190,13 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
   }
 
   Future<UserInfoDto?> findByUidOrNull2(UID uid, {required bool forceUseNet}) async {
+    if(_cache.containsKey(uid)) {
+      _cache.remove(uid);
+    }
+
     final rxVal = _getOrCreate(uid);
 
-    return rxVal() ?? (await _loadByDbOrNet(uid, forceUseNet) ? rxVal() : null);
+    return await _loadByDbOrNet(uid, forceUseNet) ? rxVal() : null;
   }
 
   Future<Map<UID, UserInfoDto>> findByUidX(Iterable<UID> uid, {required bool useNet}) async {

@@ -83,7 +83,9 @@ abstract class $UserInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'level') String? level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
-      @JsonKey(name: 'remarks_name') String? remarkName});
+      @JsonKey(name: 'remarks_name') String? remarkName,
+        @JsonKey(name: 'real_name_type') int? realNameType
+      });
 }
 
 /// @nodoc
@@ -114,6 +116,7 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
     Object? birthDay = freezed,
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
+    Object? realNameType = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -176,6 +179,10 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
           ? _value.remarkName
           : remarkName // ignore: cast_nullable_to_non_nullable
               as String?,
+      realNameType: freezed == realNameType
+          ? _value.realNameType
+          : realNameType // ignore: cast_nullable_to_non_nullable
+      as int?,
     ) as $Val);
   }
 }
@@ -203,7 +210,8 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
       @JsonKey(name: 'level') String? level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
-      @JsonKey(name: 'remarks_name') String? remarkName});
+      @JsonKey(name: 'remarks_name') String? remarkName,
+      @JsonKey(name: 'real_name_type') int? realNameType});
 }
 
 /// @nodoc
@@ -232,6 +240,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
     Object? birthDay = freezed,
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
+    Object? realNameType = freezed,
   }) {
     return _then(_$_UserInfoDto(
       uid: freezed == uid
@@ -294,6 +303,10 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
           ? _value.remarkName
           : remarkName // ignore: cast_nullable_to_non_nullable
               as String?,
+      realNameType: freezed == realNameType
+          ? _value.realNameType
+          : realNameType // ignore: cast_nullable_to_non_nullable
+      as int?,
     ));
   }
 }
@@ -406,7 +419,10 @@ class _$_UserInfoDto implements _UserInfoDto {
             (identical(other.charmLevel, charmLevel) ||
                 other.charmLevel == charmLevel) &&
             (identical(other.remarkName, remarkName) ||
-                other.remarkName == remarkName));
+                other.remarkName == remarkName) &&
+            (identical(other.realNameType, realNameType) ||
+                other.realNameType == realNameType)
+        );
   }
 
   @JsonKey(ignore: true)
@@ -427,7 +443,9 @@ class _$_UserInfoDto implements _UserInfoDto {
       level,
       birthDay,
       charmLevel,
-      remarkName);
+      remarkName,
+      realNameType,
+  );
 
   @JsonKey(ignore: true)
   @override

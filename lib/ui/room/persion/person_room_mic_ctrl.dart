@@ -321,7 +321,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       return;
     }
     // 该用户未实名
-    if(userInfo.realNameType != 1 || userInfo.realNameType != 2) {
+    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
       showToast("无法操作，该用户未实名");
       return;
     }
