@@ -177,7 +177,12 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
       alignment: Alignment.topRight,
       child: Padding(
         padding: EdgeInsets.only(top: 20),
-        child: Image.asset(IMG.format("close"), width: 24, height: 24,),
+        child: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Image.asset(IMG.format("close"), width: 24, height: 24,),
+        ),
       ),
     );
   }
