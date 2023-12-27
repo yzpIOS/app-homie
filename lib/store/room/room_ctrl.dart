@@ -622,7 +622,7 @@ class PersonRoomCtrl extends RoomCtrl {
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
-    (roomMicCtrl as PersonRoomMicCtrl?)?.updateMicInfo(RoomMicCtrl.createMicInfo2(data?.mikes ?? []), roomUid);
+    (roomMicCtrl as PersonRoomMicCtrl?)?.updateMicInfo(RoomMicCtrl.createMicInfo2(data?.mikes ?? []), roomUid, info['status']);
 
     if(RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);

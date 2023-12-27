@@ -109,12 +109,18 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     });
   }
 
-  void updateMicInfo(List<MicInfo> micInfos, String roomUid) {
+  void updateMicInfo(List<MicInfo> micInfos, String roomUid, int micStatus) {
     micUserList.value = micInfos;
     if(Rtc.status.value == PersonMicStatus.none.val) {
       // 重置麦位状态
-      Rtc.status.value = micInfos.firstWhereOrNull((element) => element.uid == roomUid) != null
-          ? PersonMicStatus.open.val : PersonMicStatus.none.val;
+      if(micStatus != 3) {
+        // 房主开房时，会走到这里
+        Rtc.status.value = micInfos.firstWhereOrNull((element) => element.uid == roomUid) != null
+            ? PersonMicStatus.open.val : PersonMicStatus.none.val;
+      } else {
+        // 其它的玩家进房时，会走到这里
+        Rtc.status.value = PersonMicStatus.disable.val;
+      }
       // 第一次主动上麦
       if(roomUid == OAuthCtrl.uid && Rtc.status.value == PersonMicStatus.open.val) {
         if(Rtc.micRx.isTrue) {
