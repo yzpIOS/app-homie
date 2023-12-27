@@ -305,10 +305,12 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
 
   @override
   void onInviteMicUp(int micId) {
-    Get.simpleDialog(msg: '群主邀请你上麦聊天', okLabel: '接受', cancelLabel: '拒绝').then((val) {
+    Get.simpleDialog(msg: '房主邀请你上麦聊天', okLabel: '接受', cancelLabel: '拒绝').then((val) {
       simpleTry(() {
         Api.Room.micConfirm(mikeId: micId, type: 2, isAgree: val == '接受');
-      },);
+      }, callback: (d) {
+        sendTextNotify("你己$val了房主邀请");
+      });
     });
   }
 
@@ -381,7 +383,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       // 不在麦上，上麦
       CommonDialog.applyUpMic(() {
         super.micUp(no: "", uid: uid);
-        sendTextNotify("申请成功，等待群主同意");
+        sendTextNotify("申请成功，等待房主同意");
       }, reRequest);
     }
   }

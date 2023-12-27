@@ -94,7 +94,7 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
         // 开播时长和收的礼物数量
         const SizedBox(height: 14,),
         _createItem(
-          TimeFormat.yyyyMMddHms.formatEpoch(widget.settle.liveTimes),
+          TimeUtils.formate(widget.settle.liveTimes),
           "开播时长",
           widget.settle.giftIncome.toString(),
           "礼物收益"

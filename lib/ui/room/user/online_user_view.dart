@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
@@ -177,6 +178,34 @@ class OnlineUserView extends SimplePageView<Map> {
       );
     }
 
+    // 拉黑用户
+    Widget InvideOnMic() {
+      return XTextBtn(
+        label: '邀请',
+        width: 48,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: () async {
+          (_ctrl.getRoomMicCtrl() as RoomMicCtrl?)?.inviteMicUp(no: "", uid: nuid);
+          controller.updateItem(index, item);
+        },
+      );
+    }
+
+    // T下麦
+    Widget TickDownMic() {
+      return XTextBtn(
+        label: '下麦',
+        width: 48,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: () async {
+          Api.Room.micDown(uid: uid);
+          controller.removeItem(item);
+        },
+      );
+    }
+
     Widget child = Row(
       children: [
         Spacing.w10,
@@ -191,10 +220,10 @@ class OnlineUserView extends SimplePageView<Map> {
         Spacing.w6,
         if (isShowEditBlackListAction) $EditBlackListView(),
         Spacing.w6,
-        // // 在线
-        // if(isPersonRoom && isUserOnMic) TickDownMic(),
-        // // 没有在线
-        // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+        // 在线
+        if(isPersonRoom && isUserOnMic && OAuthCtrl.uid != uid) TickDownMic(),
+        // 没有在线
+        if(isPersonRoom && !isUserOnMic) InvideOnMic(),
         Spacing.w20,
       ],
     );

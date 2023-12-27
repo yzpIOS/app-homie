@@ -25,6 +25,31 @@ class TimeUtils {
     return '';
   }
 
+  ///
+  /// 时: 分:秒
+  static String formate(int seconds) {
+    String result = "";
+
+    int hour = seconds / 60 ~/ 60;
+    if(hour < 10) {
+      result += "0";
+    }
+    result = "$hour$result:";
+
+    int minute = ((seconds / 60) % 60).toInt();
+    result += "0";
+    if(minute < 10) {
+    }
+    result = "$result$minute:";
+
+    int second = seconds % 60;
+    if(second < 10) {
+      result += "0";
+    }
+    result = "$result$second";
+    return result;
+  }
+
   static String _fromNow(int ms) => ms.toDateTime().fromNow();
 
   ///根据月份和日期获取星座
@@ -100,6 +125,7 @@ class TimeFormat {
   static final yMMMMdHms = yMMMMd.add_Hms();
   static final yyMMdd = DateFormat('yyMMdd');
   static final yyyyMMdd = DateFormat('yyyy-MM-dd');
+  static final hhmmss = DateFormat('hh:mm:ss');
   static final yyyyMMddHms = yyyyMMdd.add_Hms();
 
   static Future<void> initLocale(String language) async {

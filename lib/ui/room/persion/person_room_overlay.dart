@@ -1,5 +1,6 @@
 
 
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
@@ -115,53 +116,52 @@ class PersonRoomHeader extends CommonRoomHeader {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              // 头像
-              Obx(() {
-                final val = Rtc.speakRx[owner?.uid];
-                var avatar = AsyncAvatar(
-                  uid: owner?.uid ?? "",
-                  size: 46,
-                  onTap: Some(() {
-                    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-                      return;
-                    }
-                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(owner?.uid ?? "", owner?.nUid ?? Int64(0));
-                  }),
-                );
+          Obx(() {
+            final val = Rtc.speakRx[owner?.uid];
+            bool isOpen = Rtc.openMicRx.contains(owner?.uid) || owner?.uid == OAuthCtrl.uid;
 
-                if(val == null) {
-                  return avatar;
+            Widget avatar = AsyncAvatar(
+              uid: owner?.uid ?? "",
+              size: 46,
+              onTap: Some(() {
+                if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                  return;
                 }
-                return MicAnimeBuilder(
-                  value: val,
-                  child: avatar,
-                  builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
-                );
+                (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(owner?.uid ?? "", owner?.nUid ?? Int64(0));
               }),
-              // 主持
-              Positioned.fill(
-                left: (46 - 37) / 2,
-                top: (46 - 12),
-                child: Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,),
-              ),
+            );
 
-              if(owner?.isMute == true)
+            if(val != null) {
+              avatar = MicAnimeBuilder(
+                value: val,
+                child: avatar,
+                builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
+              );
+            }
+
+            return Stack(
+              alignment: Alignment.topLeft,
+              children: [
+                // 头像
+                avatar,
+
+                // 主持
+                Positioned.fill(
+                  left: (46 - 37) / 2,
+                  top: (46 - 12),
+                  child: Image.asset(IMG.format("room/chair_man_label"), width: 37, height: 12,),
+                ),
+
+                // 麦状态
                 Positioned.fill(
                   left: 46 - 14,
                   top: 5,
                   bottom: 46 - 19,
-                  child: Image.asset(
-                    IMG.format('room/mic/麦位_禁麦'),
-                    width: 14,
-                    height: 14,
-                    errorBuilder: (_, __, ___) => Spacing.blank,
-                  ),
+                  child: owner?.isMute == true ? micStatusView('禁麦') : (isOpen ? Spacing.blank : micStatusView('闭麦')),
                 )
-            ],
-          ),
+              ],
+            );
+          }),
 
           const SizedBox(height: 5,),
           Text(
@@ -214,6 +214,7 @@ class PersonRoomHeader extends CommonRoomHeader {
                 children: [
                   Obx(() {
                     final val = Rtc.speakRx[micInfo.uid];
+                    bool isOpen = Rtc.openMicRx.contains(micInfo.uid) || micInfo.uid == OAuthCtrl.uid;
                     var avatar = SizedBox(
                       width: 46,
                       height: 46,
@@ -232,18 +233,12 @@ class PersonRoomHeader extends CommonRoomHeader {
                             }),
                           ),
 
-                          if(micInfo.isMute)
-                            Positioned.fill(
-                              left: 46 - 14,
-                              top: 5,
-                              bottom: 46 - 19,
-                              child: Image.asset(
-                                IMG.format('room/mic/麦位_禁麦'),
-                                width: 14,
-                                height: 14,
-                                errorBuilder: (_, __, ___) => Spacing.blank,
-                              ),
-                            )
+                          Positioned.fill(
+                            left: 46 - 14,
+                            top: 5,
+                            bottom: 46 - 19,
+                            child: micInfo.isMute == true ? micStatusView('禁麦') : (isOpen ? Spacing.blank : micStatusView('闭麦')),
+                          )
                         ],
                       ),
                     );
@@ -283,5 +278,26 @@ class PersonRoomHeader extends CommonRoomHeader {
   }
 
 
+  Widget micStatus(MicInfo item, bool isSelf) {
+    return item.isMute ? micStatusView('禁麦') : Obx(() {
+        final bool isOpen;
+        if (isSelf) {
+          isOpen = Rtc.micRx();
+        } else {
+          isOpen = Rtc.openMicRx.contains(item.uid);
+        }
+
+        return isOpen ? Spacing.blank : micStatusView('闭麦');
+      },
+    );
+  }
+
+  Widget micStatusView(String state) {
+    return Image.asset(
+      IMG.format('room/mic/麦位_$state'),
+      scale: 3,
+      errorBuilder: (_, __, ___) => Spacing.blank,
+    );
+  }
 }
 
