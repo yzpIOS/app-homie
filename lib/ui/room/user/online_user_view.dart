@@ -200,7 +200,7 @@ class OnlineUserView extends SimplePageView<Map> {
         height: 24,
         textStyle: const TextStyle(fontSize: 14, color: Colors.white),
         onTap: () async {
-          Api.Room.micDown(uid: uid);
+          Api.Room.micDown(uid: nuid);
           controller.removeItem(item);
         },
       );

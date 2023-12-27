@@ -56,7 +56,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
         '黑名单',
         '清零',
       ],
-      if((isOwner || isManager) && !disable) '全员禁麦',
+      if((isOwner || isManager) && !disable) '全员闭麦',
       if((isOwner || isManager) && disable) '全员开麦',
       // if (Env.isDebug) '切换横竖屏',
       // '自拍',

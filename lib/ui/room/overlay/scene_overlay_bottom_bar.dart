@@ -114,7 +114,7 @@ class _MicOperateState extends State<MicOperate> {
         child: Obx(() {
           Widget icon;
           String title = "";
-          bool micRx = Rtc.micRx.value;
+          bool micRx = Rtc.micRx.isTrue;
           int status = Rtc.status.value;
           if(micRx) {
             title = "开麦中";
@@ -123,7 +123,7 @@ class _MicOperateState extends State<MicOperate> {
             title = "闭麦中";
             icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
           } else if(status == PersonMicStatus.disable.val) {
-            title = "禁麦中";
+            title = "闭麦中";
             icon = Image.asset(IMG.format("room/mic/mic_disable"), width: 15, height: 18,);
           } else {
             title = "上麦";

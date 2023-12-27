@@ -72,13 +72,21 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       // 是否禁麦中
       micInfo?.isMute = event.data?.status == 1;
       if(event.data?.status == 1) {
-        if(Rtc.micRx.isTrue) {
+        if(Rtc.micRx.isTrue && event.uid == OAuthCtrl.uid) {
           Rtc.micSwitch();
         }
         // 禁麦中
         Rtc.status.value = PersonMicStatus.disable.val;
       } else {
-        Rtc.status.value = PersonMicStatus.open.val;
+        if(micInfo != null) {
+          // 当前用户在麦上，改成开麦
+          if(Rtc.micRx.isFalse && event.uid == OAuthCtrl.uid) {
+            Rtc.micSwitch();
+          }
+          Rtc.status.value = PersonMicStatus.open.val;
+        } else {
+          Rtc.status.value = PersonMicStatus.none.val;
+        }
       }
       if(micInfo != null) {
         micUserList.refresh();
@@ -166,7 +174,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         hotCount: event.hotCount,
         isMute: event.isMute,
         nUid: data.roleId,
-        roleType: event.data?.roleType ?? 0
+        roleType: event.data?.roleType ?? 0,
     );
 
     // 当前用户的mic信息
@@ -174,6 +182,15 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       // 当前用户放在第一位
       curUserMicInfo = localMicInfo;
       micUserList.insert(0, localMicInfo);
+
+      // 刚上麦用户，禁麦
+      if(localMicInfo.isMute) {
+        if(Rtc.micRx.isTrue) {
+          Rtc.micSwitch();
+        }
+        // 其它的玩家进房时，会走到这里
+        Rtc.status.value = PersonMicStatus.disable.val;
+      }
     } else {
       // 新增mike
       micUserList.add(localMicInfo);
@@ -345,7 +362,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   ///
   void micOperate({bool reRequest = false}) {
     if(Rtc.status.value == PersonMicStatus.disable.val) {
-      showToast("全员禁麦中");
+      showToast("全员闭麦中");
       return;
     }
     // 非自由组麦, 需要弹窗

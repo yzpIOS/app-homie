@@ -177,7 +177,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       case '装扮抽奖入口':
         ActMainDialog.show();
         break;
-      case '全员禁麦':
+      case '全员闭麦':
       case '全员开麦':
         // todo 全员禁麦
         int value = 0;
