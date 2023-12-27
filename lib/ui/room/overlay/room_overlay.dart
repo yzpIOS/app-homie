@@ -25,6 +25,7 @@ import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_tool_dialog.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
+import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/challenge_user_view.dart';
 import 'package:app/ui/room/user/mic_user_view_2.dart';
@@ -229,6 +230,16 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
       // 根据麦号进行排序
       var userList = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
+
+      // 个人房间只能送给房主
+      if(sceneMicCtrl<RoomMicCtrl>() is PersonRoomMicCtrl) {
+        PersonRoomMicCtrl personRoomMicCtrl = sceneMicCtrl<RoomMicCtrl>() as PersonRoomMicCtrl;
+        if(personRoomMicCtrl.roomOwner() == null) {
+          showToast("房主信息错误");
+          return;
+        }
+        userList = [personRoomMicCtrl.roomOwner()!];
+      }
       userList.sort((a, b) => a.no.compareTo(b.no));
 
       // 获取房主的信息
