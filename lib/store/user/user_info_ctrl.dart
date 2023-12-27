@@ -116,9 +116,12 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     }
   }
 
-  Future<bool> _loadByDbOrNet(UID uid, bool useNet) {
+  Future<bool> _loadByDbOrNet(UID uid, bool useNet, {bool forceUseNet = false}) {
     return _task.putIfAbsent(uid, () async {
       try {
+        if(forceUseNet) {
+          return await loadByNet(uid);
+        }
         return (await _loadByDb(uid)) || (useNet ? await loadByNet(uid) : false);
       } finally {
         _task.remove(uid);
@@ -184,6 +187,12 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     final rxVal = _getOrCreate(uid);
 
     return rxVal() ?? (await _loadByDbOrNet(uid, useNet) ? rxVal() : null);
+  }
+
+  Future<UserInfoDto?> findByUidOrNull2(UID uid, {required bool forceUseNet}) async {
+    final rxVal = _getOrCreate(uid);
+
+    return rxVal() ?? (await _loadByDbOrNet(uid, forceUseNet) ? rxVal() : null);
   }
 
   Future<Map<UID, UserInfoDto>> findByUidX(Iterable<UID> uid, {required bool useNet}) async {

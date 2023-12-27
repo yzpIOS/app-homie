@@ -315,13 +315,13 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     if(uid == null) {
       return;
     }
-    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
+    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
     if(userInfo == null) {
       showToast("无法操作，获取该用户信息异常");
       return;
     }
     // 该用户未实名
-    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+    if(userInfo.realNameType != 1 || userInfo.realNameType != 2) {
       showToast("无法操作，该用户未实名");
       return;
     }
