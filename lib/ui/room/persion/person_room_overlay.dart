@@ -119,16 +119,28 @@ class PersonRoomHeader extends CommonRoomHeader {
             alignment: Alignment.topLeft,
             children: [
               // 头像
-              AsyncAvatar(
-                uid: owner?.uid ?? "",
-                size: 46,
-                onTap: Some(() {
-                  if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
-                    return;
-                  }
-                  (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(owner?.uid ?? "", owner?.nUid ?? Int64(0));
-                }),
-              ),
+              Obx(() {
+                final val = Rtc.speakRx[owner?.uid];
+                var avatar = AsyncAvatar(
+                  uid: owner?.uid ?? "",
+                  size: 46,
+                  onTap: Some(() {
+                    if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
+                      return;
+                    }
+                    (RoomManagerCtrl.ins.sceneCtrl as PersonRoomCtrl).onClickAvatar(owner?.uid ?? "", owner?.nUid ?? Int64(0));
+                  }),
+                );
+
+                if(val == null) {
+                  return avatar;
+                }
+                return MicAnimeBuilder(
+                  value: val,
+                  child: avatar,
+                  builder: (context, value, child) => DecoratedBox(decoration: value, child: child),
+                );
+              }),
               // 主持
               Positioned.fill(
                 left: (46 - 37) / 2,

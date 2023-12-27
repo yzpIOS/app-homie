@@ -85,6 +85,8 @@ class CMD {
   static const refuseUpMic = 22013; // 房间开关播广播
   static const msgTxt = 2206; // 礼物
 
+  static const S_LiveStopSettlementBroadcast = 2281; // 房间下播结算广播 【有推送，但里面的数据暂时还没实现】
+
   // =========礼物相关===========
   static const C_GiveGiftByRoom = 3100; // 直播间赠送礼物=======对接完成
   static const S_GiveGiftByRoom = 3101; // 直播间赠送礼物返回=======对接完成

@@ -17,6 +17,7 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
+import 'package:app/ui/room/persion/down_mic_settle_dialog.dart';
 import 'package:app/ui/room/persion/person_room_overlay.dart';
 import 'package:app/ui/room/room_middle_page.dart';
 import 'package:app/ui/room/room_page.dart';
@@ -94,6 +95,14 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       },
       (_) => _doClose('你被封禁了'),
     );
+
+    // 个人房结算
+    on<LiveStopSettlementEvent>((data) {
+      if(data.data == null) {
+        return;
+      }
+      DownMicSettleDialog.show(data.data!);
+    });
     // 注册被邀请的F端，邀请对战信息监听回调
     SocketCtrl.ins.onDataCmd(CMD.S_PKInvite, onPKInvite);
     // 注册S端广播给同房间内所有C端匹配结果，如果双方都选择对战，则进入PK场景。【进入Start状态】监听回调

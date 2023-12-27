@@ -188,3 +188,8 @@ class MikeSpeakingEvent extends RoomEvent<S_MikeSpeakingBroadcast> {
   @override
   NUID? get nuid => data?.roomId;
 }
+
+// 个人房开麦结算
+class LiveStopSettlementEvent extends RoomEvent<S_LiveStopSettlementBroadcast> {
+
+}

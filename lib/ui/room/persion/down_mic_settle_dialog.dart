@@ -1,23 +1,26 @@
 
-import 'package:app/common/theme.dart';
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 ///
 /// 个播：个播结算页面
 ///
 class DownMicSettleDialog extends StatefulWidget {
 
+  S_LiveStopSettlementBroadcast settle;
+
+  DownMicSettleDialog({super.key, required this.settle});
+
   @override
   State<StatefulWidget> createState() => _DownMicSettleState();
 
-  static void show() {
+  static void show(S_LiveStopSettlementBroadcast settle) {
     showDialog(context: Get.context!, builder: (context) {
-      return DownMicSettleDialog();
+      return DownMicSettleDialog(settle: settle,);
     });
   }
 }
@@ -36,7 +39,7 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [
                 Color(0XFFFAFDFE),
                 Color(0XFFECF5FD),
@@ -45,7 +48,7 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
               end: Alignment.bottomCenter
             )
           ),
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Stack(
             children: [
               _createContentView(),
@@ -61,25 +64,27 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
   Widget _createContentView() {
     return Column(
       children: [
-        SizedBox(height: 30,),
+        const SizedBox(height: 30,),
         AsyncAvatar(uid: OAuthCtrl.uid, size: 70,),
 
         // 用户名
-        SizedBox(height: 5,),
-        Text(
-          "哈哈哈哈哈哈",
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        const SizedBox(height: 5,),
+        UserInfoCtrl.use(OAuthCtrl.uid, builder: (userInfo) {
+          return Text(
+            userInfo?.showName() ?? "",
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          );
+        }),
 
         // 用户id
-        SizedBox(height: 2,),
+        const SizedBox(height: 2,),
         Text(
-          "ID:123468",
-          style: TextStyle(
+          "ID:${OAuthCtrl.uid}",
+          style: const TextStyle(
             fontSize: 12,
             color: Color(0XFF666666),
             fontWeight: FontWeight.w400,
@@ -87,14 +92,24 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
         ),
 
         // 开播时长和收的礼物数量
-        SizedBox(height: 14,),
-        _createItem("01:15:29", "开播时长", "100000", "礼物收益"),
+        const SizedBox(height: 14,),
+        _createItem(
+          TimeFormat.yyyyMMddHms.formatEpoch(widget.settle.liveTimes),
+          "开播时长",
+          widget.settle.giftIncome.toString(),
+          "礼物收益"
+        ),
 
         // 直播间人数，打赏人数
-        SizedBox(height: 28,),
-        _createItem("150000", "直播间人数", "100000", "打赏人数"),
+        const SizedBox(height: 28,),
+        _createItem(
+            widget.settle.onlineTotalNum.toString(),
+          "直播间人数",
+            widget.settle.dsNum.toString(),
+          "打赏人数"
+        ),
 
-        SizedBox(height: 30,),
+        const SizedBox(height: 30,),
       ],
     );
   }
@@ -109,16 +124,16 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
             children: [
               Text(
                 value,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 2,),
+              const SizedBox(height: 2,),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: Color(0XFF666666),
                   fontWeight: FontWeight.bold,
@@ -128,23 +143,23 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
           ),
         ),
 
-        Container(width: 1, height: 20, color: Color(0XFFCCCCCC).withAlpha(200)),
+        Container(width: 1, height: 20, color: const Color(0XFFCCCCCC).withAlpha(200)),
 
         Expanded(
           child: Column(
             children: [
               Text(
                 value2,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 2,),
+              const SizedBox(height: 2,),
               Text(
                 title2,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: Color(0XFF666666),
                   fontWeight: FontWeight.bold,
@@ -154,73 +169,6 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _createCancelButton() {
-    return Container(
-      width: 117,
-      height: 38,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF7F95F7),
-            Color(0xFF9ABCFF),
-          ]
-        ),
-        borderRadius: BorderRadius.circular(1000),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFF7F95F7).withAlpha(20),
-            offset: Offset(4.0, 0.0),
-            spreadRadius: 8.0,
-            blurRadius: 3,
-          )
-        ]
-      ),
-      child: Text(
-        "取消",
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
-    );
-  }
-
-
-  Widget _createAgreeButton() {
-    return Container(
-      width: 117,
-      height: 38,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color(0xFFF7A665),
-                Color(0xFFFFC893),
-              ]
-          ),
-          borderRadius: BorderRadius.circular(1000),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFFFC394).withAlpha(20),
-              offset: Offset(4.0, 0.0),
-              spreadRadius: 8.0,
-              blurRadius: 5,
-            )
-          ]
-      ),
-      child: Text(
-        "申请",
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.white,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
     );
   }
 

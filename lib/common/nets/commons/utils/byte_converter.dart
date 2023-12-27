@@ -56,6 +56,7 @@ class ByteConverter {
     register(CMD.C_ControlAppUI, C_ControlAppUI.fromBuffer);
     register(CMD.S_BulletinBroadcast, S_BulletinBroadcast.fromBuffer);
     register(CMD.S_MikeSpeakingBroadcast, S_MikeSpeakingBroadcast.fromBuffer);
+    register(CMD.S_LiveStopSettlementBroadcast, S_LiveStopSettlementBroadcast.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
