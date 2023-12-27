@@ -188,6 +188,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
         if(Rtc.micRx.isTrue) {
           Rtc.micSwitch();
         }
+        Rtc.micRx.value = false;
         // 其它的玩家进房时，会走到这里
         Rtc.status.value = PersonMicStatus.disable.val;
       }

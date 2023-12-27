@@ -4,7 +4,7 @@ enum PersonMicStatus {
   none(0, '上麦'),
   open(1, '你已上麦'),
   close(2, '闭麦中'),
-  disable(3, '房主禁麦中'),
+  disable(3, '房主闭麦中'),
   ;
 
   final int val;
