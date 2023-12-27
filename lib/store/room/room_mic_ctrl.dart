@@ -352,9 +352,9 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     }
   }
 
-  void inviteMicUp({required String no, required NUID uid}) {
+  void inviteMicUp({required String no, required NUID nuid, UID? uid}) {
     Future api() async {
-      final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
+      final result = await Api.Room.micUp(roomId: roomId, no: no, uid: nuid);
 
       // 1.上麦， 2.下麦， 3.申请中 4.邀请
       switch (result?.status.toInt()) {

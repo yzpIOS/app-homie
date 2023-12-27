@@ -22,6 +22,7 @@ _$_UserInfoDto _$$_UserInfoDtoFromJson(Map<String, dynamic> json) =>
       level: json['level'] as String?,
       charmLevel: json['charm_level'] as String?,
       remarkName: json['remarks_name'] as String?,
+      realNameType: json['real_name_type'] as int?,
     );
 
 Map<String, dynamic> _$$_UserInfoDtoToJson(_$_UserInfoDto instance) =>
@@ -41,6 +42,7 @@ Map<String, dynamic> _$$_UserInfoDtoToJson(_$_UserInfoDto instance) =>
       'level': instance.level,
       'charm_level': instance.charmLevel,
       'remarks_name': instance.remarkName,
+      "real_name_type": instance.realNameType,
     };
 
 const _$GenderEnumEnumMap = {

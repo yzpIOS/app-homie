@@ -30,7 +30,7 @@ abstract class MicUserSheet {
           '抱Ta上麦': () {
             Get.to(() => SelectUserPage(roomId: roomId, title: '抱Ta上麦')) //
                 ?.onType<Map>((val) {
-              sceneMicCtrl<RoomMicCtrl>().inviteMicUp(no: no, uid: Int64(val['role_id']));
+              sceneMicCtrl<RoomMicCtrl>().inviteMicUp(no: no, nuid: Int64(val['role_id']), uid: val['uid']);
             });
           },
           '移到此座位': () {

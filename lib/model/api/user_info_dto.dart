@@ -27,6 +27,7 @@ class UserInfoDto with _$UserInfoDto {
     @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
     @JsonKey(name: 'charm_level') String? charmLevel,
     @JsonKey(name: 'remarks_name') String? remarkName,
+    @JsonKey(name: 'real_name_type') int? realNameType,
   }) = _UserInfoDto;
 
   factory UserInfoDto.fromJson(Map<String, dynamic> json) => _$UserInfoDtoFromJson(json);

@@ -186,7 +186,7 @@ class OnlineUserView extends SimplePageView<Map> {
         height: 24,
         textStyle: const TextStyle(fontSize: 14, color: Colors.white),
         onTap: () async {
-          (_ctrl.getRoomMicCtrl() as RoomMicCtrl?)?.inviteMicUp(no: "", uid: nuid);
+          (_ctrl.getRoomMicCtrl() as RoomMicCtrl?)?.inviteMicUp(no: "", nuid: nuid, uid: uid);
           controller.updateItem(index, item);
         },
       );

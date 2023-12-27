@@ -127,6 +127,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     }
   }
 
+
   @override
   Future<void> onJoinChannelEventHandle(JoinChannelEvent event) async {
     final myUid = OAuthCtrl.uid;
@@ -309,6 +310,24 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     });
   }
 
+  @override
+  void inviteMicUp({required String no, required NUID nuid, UID? uid}) async {
+    if(uid == null) {
+      return;
+    }
+    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(uid, useNet: true);
+    if(userInfo == null) {
+      showToast("无法操作，获取该用户信息异常");
+      return;
+    }
+    // 该用户未实名
+    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+      showToast("无法操作，该用户未实名");
+      return;
+    }
+    super.inviteMicUp(no: no, nuid:nuid, uid: uid);
+  }
+
   int preTime = 0;
 
   ///
@@ -356,7 +375,6 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       super.micUp(no: no);
       return;
     }
-
     if(!OAuthCtrl.isNameValidate) {
       String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
       if(label != "去实名") {

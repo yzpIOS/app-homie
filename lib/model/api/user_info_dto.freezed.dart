@@ -53,6 +53,8 @@ mixin _$UserInfoDto {
   String? get charmLevel => throw _privateConstructorUsedError;
   @JsonKey(name: 'remarks_name')
   String? get remarkName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'real_name_type')
+  int? get realNameType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -314,7 +316,9 @@ class _$_UserInfoDto implements _UserInfoDto {
       @JsonKey(name: 'level') this.level,
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() this.birthDay,
       @JsonKey(name: 'charm_level') this.charmLevel,
-      @JsonKey(name: 'remarks_name') this.remarkName});
+      @JsonKey(name: 'remarks_name') this.remarkName,
+      @JsonKey(name: 'real_name_type') this.realNameType,
+      });
 
   factory _$_UserInfoDto.fromJson(Map<String, dynamic> json) =>
       _$$_UserInfoDtoFromJson(json);
@@ -367,6 +371,9 @@ class _$_UserInfoDto implements _UserInfoDto {
   @override
   @JsonKey(name: 'remarks_name')
   final String? remarkName;
+  @override
+  @JsonKey(name: 'real_name_type')
+  final int? realNameType;
 
   @override
   String toString() {
@@ -456,7 +463,9 @@ abstract class _UserInfoDto implements UserInfoDto {
           @EpochDateTimeConverter()
           final DateTime? birthDay,
           @JsonKey(name: 'charm_level') final String? charmLevel,
-          @JsonKey(name: 'remarks_name') final String? remarkName}) =
+          @JsonKey(name: 'remarks_name') final String? remarkName,
+          @JsonKey(name: 'real_name_type') int? realNameType,
+          }) =
     _$_UserInfoDto;
 
   factory _UserInfoDto.fromJson(Map<String, dynamic> json) =
