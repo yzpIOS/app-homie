@@ -1,5 +1,6 @@
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_admin_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/user/room_user_item_view.dart';
@@ -40,24 +41,26 @@ class _RoomAdminPageState extends State<RoomAdminPage> {
   Widget itemBuilder(BuildContext context, String item, int index) {
     final uid = item;
 
-    Widget child = Row(
-      children: [
-        Expanded(
-          child: RoomUserItemView(uid: uid,),
-        ),
-        XTextBtn(
-          label: '移除',
-          width: 60,
-          height: 24,
-          textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-          onTap: () async {
-            await Api.Room.setManager(roomId: controller.roomId, uid: uid, isAdd: false);
-            controller.dataRx.remove(uid);
-          },
-        ),
-        Spacing.w20,
-      ],
-    );
+    Widget child = UserInfoCtrl.use(uid, builder: (dto) {
+      return Row(
+        children: [
+          Expanded(
+            child: RoomUserItemView(data: dto,),
+          ),
+          XTextBtn(
+            label: '移除',
+            width: 60,
+            height: 24,
+            textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+            onTap: () async {
+              await Api.Room.setManager(roomId: controller.roomId, uid: uid, isAdd: false);
+              controller.dataRx.remove(uid);
+            },
+          ),
+          Spacing.w20,
+        ],
+      );
+    });
 
     // Widget child = RoomUserItemView(uid: uid);
     //

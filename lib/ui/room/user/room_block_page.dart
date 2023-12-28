@@ -1,4 +1,5 @@
 import 'package:app/net/api.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools/help.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
@@ -46,24 +47,26 @@ class _DataView extends SimplePageView<Map> {
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final uid = item['uid'];
 
-    Widget child = Row(
-      children: [
-        Expanded(
-          child: RoomUserItemView(uid: uid,),
-        ),
-        XTextBtn(
-          label: '解封',
-          width: 60,
-          height: 24,
-          textStyle: const TextStyle(fontSize: 14, color: Colors.white),
-          onTap: () async {
-            await Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: false);
-            controller.removeItem(item);
-          },
-        ),
-        Spacing.w20,
-      ],
-    );
+    Widget child = UserInfoCtrl.use(uid, builder: (dto) {
+      return Row(
+        children: [
+          Expanded(
+            child: RoomUserItemView(data: dto,),
+          ),
+          XTextBtn(
+            label: '解封',
+            width: 60,
+            height: 24,
+            textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+            onTap: () async {
+              await Api.Room.setBlock(roomId: roomId, uid: uid, isAdd: false);
+              controller.removeItem(item);
+            },
+          ),
+          Spacing.w20,
+        ],
+      );
+    });
 
     // Widget child = RoomUserItemView(uid: uid);
     //

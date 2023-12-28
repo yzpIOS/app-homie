@@ -8,24 +8,22 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class RoomUserItemView extends StatelessWidget {
-  final UID uid;
   final EdgeInsetsGeometry? padding;
 
   RoomRoleType? role;
 
+  UserInfoDto? data;
+
   String? showValue;
 
-  RoomUserItemView({super.key, required this.uid, this.role, this.padding = const Pad(horizontal: 20), this.showValue});
+  RoomUserItemView({super.key, required this.data, this.role, this.padding = const Pad(horizontal: 20), this.showValue});
 
   @override
   Widget build(BuildContext context) {
     return Box(
       height: 70,
       padding: padding,
-      child: UserInfoCtrl.use(
-        uid,
-        builder: (it) => it == null ? Spacing.blank : itemBuilder(it),
-      ),
+      child: data == null ? Spacing.blank : itemBuilder(data!),
     );
   }
 

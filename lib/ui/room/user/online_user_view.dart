@@ -2,10 +2,14 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
+import 'package:app/ui/gift/gift_send_logic.dart';
+import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/room_user_sheet.dart';
 import 'package:app/widgets.dart';
@@ -210,11 +214,13 @@ class OnlineUserView extends SimplePageView<Map> {
       children: [
         Spacing.w10,
         Expanded(
-          child: RoomUserItemView(
-            uid: uid,
-            role: role,
-            padding: const Pad(left: 10, right: 20),
-          ),
+          child: UserInfoCtrl.use(uid, builder: (dto) {
+            return RoomUserItemView(
+              data: dto,
+              role: role,
+              padding: const Pad(left: 10, right: 20),
+            );
+          }),
         ),
         if (isShowEditManagerAction) $EditManagerView(),
         Spacing.w6,
@@ -394,29 +400,30 @@ class CharmUserView extends SimplePageView<Map> {
       );
     }
 
-    var charmLevel = item.containsKey("charm_level") ? item["charm_level"].toString() : "";
 
-    Widget child = Row(
-      children: [
-        Spacing.w12,
-        rank,
-        Spacing.w10,
-        Expanded(
-          child: RoomUserItemView(
-            uid: uid,
-            role: role,
-            showValue: charmLevel,
+    Widget child = UserInfoCtrl.use(uid, builder: (dto) {
+      return Row(
+        children: [
+          Spacing.w12,
+          rank,
+          Spacing.w10,
+          Expanded(
+            child: RoomUserItemView(
+              data: dto,
+              role: role,
+              showValue: dto?.level,
+            ),
           ),
-        ),
 
-        if(charmLevel.isNotEmpty) CharmLevelView(level: charmLevel, uid: uid,),
-        // // 在线
-        // if(isPersonRoom && isUserOnMic) TickDownMic(),
-        // // 没有在线
-        // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
-        Spacing.w20,
-      ],
-    );
+          if(dto?.level?.isNotEmpty == true) CharmLevelView(level: dto?.level, uid: uid,),
+          // // 在线
+          // if(isPersonRoom && isUserOnMic) TickDownMic(),
+          // // 没有在线
+          // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+          Spacing.w20,
+        ],
+      );
+    });
 
     child = InkWell(
       child: child,
@@ -440,8 +447,18 @@ class WealthUserView extends SimplePageView<Map> {
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
+  Map? current_user_item;
+
   @override
-  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId);
+  Future fetchPage(PageNum page) async {
+    var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
+
+    if(result is Map && result.containsKey("result")) {
+      current_user_item = result["current_user_item"];
+    }
+
+    return result;
+  }
 
   @override
   BaseConfig get config {
@@ -453,6 +470,15 @@ class WealthUserView extends SimplePageView<Map> {
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final uid = item['uid'];//用户字符id
+    if(OAuthCtrl.uid != uid) {
+      return createUser(context, item, index, uid);
+    }
+
+    return createMine(context, item, index, uid);
+  }
+
+  Widget createUser(BuildContext context, Map item, int index, String uid) {
+
     final nuid = Int64(item['role_id']);//角色id
     final role = _ctrl.getRole(uid);
     final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
@@ -497,13 +523,13 @@ class WealthUserView extends SimplePageView<Map> {
     }
 
     // 排名
-    var rankValue = index + 1;item.containsKey("rank") ? item["rank"] : 0;
+    var rankValue = item.containsKey("rank") ? item["rank"] : 0;
     Widget rank;
-    if(rankValue <= 3) {
+    if(rankValue <= 3 && rankValue > 0) {
       rank = Image.asset(IMG.format("room/rank_$rankValue"), width: 30, height: 30,);
     } else {
       rank = Text(
-        "${index}",
+        "${rankValue}",
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.black,
@@ -515,34 +541,167 @@ class WealthUserView extends SimplePageView<Map> {
 
     var level = item.containsKey("amount") ? item["amount"].toString() : "";
 
-    Widget child = Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(left: 2),
-          width: 50,
-          alignment: Alignment.center,
-          child: rank,
-        ),
-        Expanded(
-          child: RoomUserItemView(
-            padding: EdgeInsets.zero,
-            uid: uid,
-            role: role,
-            showValue: level,
+    Widget child = UserInfoCtrl.use(uid, builder: (dto) {
+      return Row(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 2),
+            width: 50,
+            alignment: Alignment.center,
+            child: rank,
           ),
-        ),
+          Expanded(
+            child: RoomUserItemView(
+              data: dto,
+              padding: EdgeInsets.zero,
+              role: role,
+              showValue: level,
+            ),
+          ),
 
-        if(level.isNotEmpty) WealthyLevelView(level: level, uid: uid,),
-        // // 在线
-        // if(isPersonRoom && isUserOnMic) TickDownMic(),
-        // // 没有在线
-        // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
-        Spacing.w20,
-      ],
-    );
+          if(level.isNotEmpty) WealthyLevelView(level: dto?.level, uid: uid,),
+          // // 在线
+          // if(isPersonRoom && isUserOnMic) TickDownMic(),
+          // // 没有在线
+          // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+          Spacing.w20,
+        ],
+      );
+    });
 
     child = InkWell(
       child: child,
+      onTap: () => RoomUserSheet.show(uid, nuid),
+    );
+
+    return child;
+  }
+
+
+
+  Widget createMine(BuildContext context, Map item, int index, String uid) {
+
+
+    final nuid = Int64(item['role_id']);//角色id
+    final role = _ctrl.getRole(uid);
+
+    // 是否上榜
+    final is_rank = current_user_item?["is_rank"] ?? false;
+
+    // 下一个等级的数据
+    int? nextValue;
+    if(is_rank) {
+      // 己上榜
+      nextValue = current_user_item?["next_rank"] ?? 0;
+    } else {
+      // 未上榜
+      nextValue = current_user_item?["next_amount"] ?? 0;
+    }
+
+
+    // 排名
+    var rankValue = item.containsKey("rank") ? item["rank"] : 0;
+    Widget? rank;
+    if(rankValue > 0) {
+      if(rankValue <= 3) {
+        rank = Image.asset(IMG.format("room/rank_$rankValue"), width: 30, height: 30,);
+      } else {
+        rank = Text(
+          "${rankValue}",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      }
+    }
+
+    var level = item.containsKey("amount") ? item["amount"].toString() : "";
+
+    Widget child = UserInfoCtrl.use(uid, builder: (dto) {
+      return Row(
+        children: [
+            Container(
+              margin: const EdgeInsets.only(left: 2),
+              width: rank != null ? 50 : 10,
+              alignment: Alignment.center,
+              child: rank,
+            ),
+          Expanded(
+            child: RoomUserItemView(
+              data: dto,
+              padding: EdgeInsets.zero,
+              role: role,
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  int? roomId = RoomManagerCtrl.ins.sceneCtrl2?.roomId;
+                  if(roomId == null) {
+                    return;
+                  }
+                  GiftSheet.show(
+                      GiftSend2UserInRoom(roomId: roomId, uid: uid),
+                      hasShowUnityView: true
+                  );
+                },
+                child: Container(
+                  width: 64,
+                  height: 26,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(1000),
+                      gradient: const LinearGradient(
+                          colors: [
+                            Color(0XFFFF8181),
+                            Color(0XFFFF3D43),
+                          ]
+                      )
+                  ),
+                  child: Text(
+                    "送礼",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ),
+
+              if(rankValue > 1)
+                Text(
+                  is_rank ? "距离前一名还需：$nextValue" :  "距离上榜还需：$nextValue",
+                  style: const TextStyle(
+                    color: Color(0XFF666666),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+            ],
+          ),
+          // // 在线
+          // if(isPersonRoom && isUserOnMic) TickDownMic(),
+          // // 没有在线
+          // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+          Spacing.w20,
+        ],
+      );
+    });
+
+    child = InkWell(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(
+          color: Color(0XFFF8F1FF),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: child,
+      ),
       onTap: () => RoomUserSheet.show(uid, nuid),
     );
 
