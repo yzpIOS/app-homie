@@ -421,9 +421,7 @@ class RoomCtrl extends SceneCtrl {
         maxMic = info['mike_num'],
         maxUser = info['max_num'] ?? -1,
         //麦克风状态1开放 2.关闭；默认:2
-        freeMicRx = RxBool(
-          info['mike_status'] == ApiSwitch.open.code && info['room_type'] != RoomType.guild.code,
-        ),
+        freeMicRx = RxBool(info['room_type'] == RoomType.guild.code,),
         //房间麦审核状态1.开 2.关  默认：2
         examineMicRx = RxBool(info['mike_examine_status'] == ApiSwitch.open.code),
         managerRx = RxSet();
