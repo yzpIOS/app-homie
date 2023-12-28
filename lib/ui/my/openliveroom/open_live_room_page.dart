@@ -481,8 +481,8 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     if(RoomManagerCtrl.ins.sceneCtrl2 != null) {
       bool changeRoom = (RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl) && (RoomManagerCtrl.ins.sceneCtrl2?.roomUid == OAuthCtrl.uid);
 
-      String msg = changeRoom ? "您正在直播中，是否下播" : '已在另一个房间，需要切换房间吗';
-      String okLabel = changeRoom ? "下播" : '切换';
+      String msg = changeRoom ? "您正在直播中，是否下播" : '已在另一个房间，需要开启直播间吗';
+      String okLabel = changeRoom ? "下播" : '开播';
       final other = await Get.simpleDialog(msg: msg, okLabel: okLabel);
       if(other != okLabel) {
         return;
