@@ -173,22 +173,22 @@ class PersonRoomHeader extends CommonRoomHeader {
             ),
           ),
 
-          // const SizedBox(height: 6,),
-          // Row(
-          //   mainAxisSize: MainAxisSize.max,
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Image.asset(IMG.format("room/fire"), width: 15, height: 15,),
-          //     Text(
-          //       (owner?.hotCount ?? 0).toString(),
-          //       style: TextStyle(
-          //           fontSize: 12,
-          //           color: Colors.white,
-          //           fontWeight: FontWeight.w600
-          //       ),
-          //     )
-          //   ],
-          // )
+          const SizedBox(height: 6,),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(IMG.format("room/fire"), width: 15, height: 15,),
+              Text(
+                (owner?.hotCount ?? 0).toString(),
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600
+                ),
+              )
+            ],
+          )
         ],
       );
     });
