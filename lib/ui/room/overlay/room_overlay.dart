@@ -181,12 +181,15 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       case '全员开麦':
         // todo 全员禁麦
         int value = 0;
+        int newStatus = 0;
         if(Rtc.status.value == PersonMicStatus.disable.val) {
           // 1.开麦
           value = 2;
+          newStatus = PersonMicStatus.open.val;
         } else {
           // 2.闭麦
           value = 1;
+          newStatus = PersonMicStatus.disable.val;
         }
         simpleTry(
           () => Api.Room.speaking(roomId, value),

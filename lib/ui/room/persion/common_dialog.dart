@@ -173,55 +173,60 @@ class _DownMicConfirmState extends State<CommonDialog> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Center(
-        child: Container(
-          width: 303,
-          height: (widget.subTitle?.isNotEmpty == true && widget.title?.isNotEmpty == true) ? 167 : 161,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            children: [
-              SizedBox(height: 27,),
-              // 标题
-              Text(
-                widget.title,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w500,
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 303,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
               ),
-              if(widget.subTitle == null || widget.subTitle?.isEmpty == true)
-                SizedBox(height: 55,),
-
-              // 富标题
-              if(widget.subTitle?.isNotEmpty == true)
-                SizedBox(height: 12,),
-              if(widget.subTitle?.isNotEmpty == true)
-                Text(
-                  widget.subTitle ?? "",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Color(0XFF999999),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              if(widget.subTitle?.isNotEmpty == true)
-                SizedBox(height: 28,),
-
-              Row(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  _createCancelButton(),
-                  const Expanded(child: SizedBox()),
-                  _createAgreeButton(),
+                  SizedBox(height: 27,),
+                  // 标题
+                  Text(
+                    widget.title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  if(widget.subTitle == null || widget.subTitle?.isEmpty == true)
+                    SizedBox(height: 55,),
+
+                  // 富标题
+                  if(widget.subTitle?.isNotEmpty == true)
+                    SizedBox(height: 12,),
+                  if(widget.subTitle?.isNotEmpty == true)
+                    Text(
+                      widget.subTitle ?? "",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Color(0XFF999999),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  if(widget.subTitle?.isNotEmpty == true)
+                    SizedBox(height: 28,),
+
+                  Row(
+                    children: [
+                      _createCancelButton(),
+                      const Expanded(child: SizedBox()),
+                      _createAgreeButton(),
+                    ],
+                  ),
+                  SizedBox(height: 20,),
                 ],
               ),
-              SizedBox(height: 20,),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

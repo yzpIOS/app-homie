@@ -224,11 +224,6 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
     }
   }
 
-  @override
-  void onMeMicDownHandler() {
-    super.onMeMicDownHandler();
-  }
-
   ///
   /// 下麦处理
   ///
