@@ -457,7 +457,11 @@ class WealthUserView extends SimplePageView<Map> {
       current_user_item = result["current_user_item"];
 
       if(result.containsKey("items") && current_user_item != null) {
-        (result["items"] as List).add(current_user_item);
+        var mine = (result["items"] as List).firstWhereOrNull((element) => element["uid"] == current_user_item?["uid"]);
+        // 没有包函用户数据
+        if(mine == null) {
+          (result["items"] as List).add(current_user_item);
+        }
       }
     }
 
@@ -475,11 +479,11 @@ class WealthUserView extends SimplePageView<Map> {
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final uid = item['uid'];//用户字符id
-    if(OAuthCtrl.uid != uid) {
+    if(OAuthCtrl.uid != uid || current_user_item == null) {
       return createUser(context, item, index, uid);
     }
 
-    return createMine(context, item, index, uid);
+    return createMine(context, current_user_item!, index, uid);
   }
 
   Widget createUser(BuildContext context, Map item, int index, String uid) {
