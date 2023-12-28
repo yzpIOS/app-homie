@@ -52,7 +52,7 @@ class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> {
 
   UID? get uid => data?.uid;
 
-  late final bool isMute = data?.status == 1;
+  late final bool isMute = data?.status == 3;
   late final int hotCount = 0;
 }
 
