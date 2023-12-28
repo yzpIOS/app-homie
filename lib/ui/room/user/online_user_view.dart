@@ -688,7 +688,7 @@ class WealthUserView extends SimplePageView<Map> {
           // if(isPersonRoom && isUserOnMic) TickDownMic(),
           // // 没有在线
           // if(isPersonRoom && !isUserOnMic) InvideOnMic(),
-          Spacing.w20,
+          Spacing.w10,
         ],
       );
     });
