@@ -607,7 +607,7 @@ class WealthUserView extends SimplePageView<Map> {
     // 排名
     var rankValue = item.containsKey("rank") ? item["rank"] : 0;
     Widget? rank;
-    if(rankValue > 0) {
+    if(rankValue > 0 && is_rank) {
       if(rankValue <= 3) {
         rank = Image.asset(IMG.format("room/rank_$rankValue"), width: 30, height: 30,);
       } else {
