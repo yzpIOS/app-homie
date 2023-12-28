@@ -13,6 +13,7 @@ import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
@@ -428,7 +429,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
         return;
       }
       // 未认证，去认证
-      await Get.to(() => const RealIdentity2Page());
+      await Get.to(() => const RealIdentity1Page());
       // 更新用户数据
       await OAuthCtrl.ins.udpateUserInfo();
       // 未实名，直接返回
