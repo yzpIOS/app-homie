@@ -229,7 +229,7 @@ class OnlineUserView extends SimplePageView<Map> {
         // 在线
         if(isPersonRoom && isUserOnMic && OAuthCtrl.uid != uid && isShowEditManagerAction) TickDownMic(),
         // 没有在线
-        if(isPersonRoom && !isUserOnMic) InvideOnMic(),
+        if(isPersonRoom && !isUserOnMic && isShowEditManagerAction) InvideOnMic(),
         Spacing.w20,
       ],
     );
