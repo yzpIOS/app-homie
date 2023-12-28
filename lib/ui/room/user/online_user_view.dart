@@ -227,7 +227,7 @@ class OnlineUserView extends SimplePageView<Map> {
         if (isShowEditBlackListAction) $EditBlackListView(),
         Spacing.w6,
         // 在线
-        if(isPersonRoom && isUserOnMic && OAuthCtrl.uid != uid) TickDownMic(),
+        if(isPersonRoom && isUserOnMic && OAuthCtrl.uid != uid && isShowEditManagerAction) TickDownMic(),
         // 没有在线
         if(isPersonRoom && !isUserOnMic) InvideOnMic(),
         Spacing.w20,
