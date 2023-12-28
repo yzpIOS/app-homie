@@ -352,10 +352,6 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
       simpleTry(() {
         Api.Room.micConfirm(mikeId: micId, type: 2, isAgree: val == '接受');
       }, callback: (dynamic d) {
-        if(d["code"] != 0 && d["code"] != 200) {
-          showToast(d["msg"] ?? "上麦失败");
-          return;
-        }
         sendTextNotify("你己$val了房主邀请");
       });
     });
