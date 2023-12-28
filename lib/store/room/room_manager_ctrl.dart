@@ -96,12 +96,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       (_) => _doClose('你被封禁了'),
     );
 
-    // 个人房结算
     on<LiveStopSettlementEvent>((data) {
-      if(data.data == null) {
-        return;
-      }
-      DownMicSettleDialog.show(data.data!);
     });
     // 注册被邀请的F端，邀请对战信息监听回调
     SocketCtrl.ins.onDataCmd(CMD.S_PKInvite, onPKInvite);
@@ -113,6 +108,18 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.onDataCmd(CMD.C_ControlAppUI, onControlAppUI);
     // 连接成功时，服务端通知的用户信息
     SocketCtrl.ins.onDataCmd(CMD.S_Role, onRoleResponse);
+    // 个人房结算
+    SocketCtrl.ins.onDataCmd(CMD.S_LiveStopSettlementBroadcast, handleSettle);
+  }
+
+  ///
+  /// 结算
+  ///
+  void handleSettle(int cmd, S_LiveStopSettlementBroadcast? settle) {
+    if(settle == null) {
+      return;
+    }
+    DownMicSettleDialog.show(settle);
   }
 
   ///
@@ -320,6 +327,8 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.removeOnDataCmd(CMD.C_ControlAppUI, onControlAppUI);
     // 移除用户监听
     SocketCtrl.ins.removeOnDataCmd(CMD.S_Role, onRoleResponse);
+    // 结算
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_LiveStopSettlementBroadcast, handleSettle);
   }
 
   ///
