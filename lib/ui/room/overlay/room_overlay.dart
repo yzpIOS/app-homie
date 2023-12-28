@@ -25,6 +25,7 @@ import 'package:app/ui/room/overlay/room_info_dialog.dart';
 import 'package:app/ui/room/overlay/room_tool_dialog.dart';
 import 'package:app/ui/room/overlay/scene_overlay.dart';
 import 'package:app/ui/room/overlay/scene_overlay_bottom_bar.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/mic_user_charm_manager_sheet.dart';
 import 'package:app/ui/room/user/challenge_user_view.dart';
@@ -197,6 +198,13 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
             Rtc.status.value = newStatus;
           }
         );
+        break;
+      case "下播":
+        CommonDialog.confirmDownMic(() {
+          controller.keepState = false;
+
+          Get.back();
+        });
         break;
       default:
         super.onItemClick(action);

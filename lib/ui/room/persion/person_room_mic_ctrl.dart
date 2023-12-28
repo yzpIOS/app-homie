@@ -134,7 +134,9 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
         frameMapGlobal[skippedFrameCount]++;
       }
     }
-    print("fps: ${uiFps.toStringAsFixed(0)}");
+    if(Env.isDebug) {
+      print("fps: ${uiFps.toStringAsFixed(0)}");
+    }
   }
 
   void updateMicInfo(List<MicInfo> micInfos, String roomUid, int micStatus) {

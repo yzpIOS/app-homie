@@ -45,7 +45,7 @@ class CommonDialog extends StatefulWidget {
     if(reRequest) {
       showDialog(context: Get.context!, builder: (context) {
         return CommonDialog(
-          title: "主播拒绝了你的上麦申请",
+          title: "房主拒绝了你的上麦申请",
           cancel: () {
             confirm.call();
           },
