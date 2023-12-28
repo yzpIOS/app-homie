@@ -447,15 +447,15 @@ class WealthUserView extends SimplePageView<Map> {
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
-  Map? current_user_item;
+  Map? item;
   ValueNotifier<Map?> notifierView = ValueNotifier(null);
 
   @override
   Future fetchPage(PageNum page) async {
     var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
-    if(result is Map && result.containsKey("current_user_item")) {
-      notifierView.value = result["current_user_item"];
+    if(result is Map && result.containsKey("item")) {
+      notifierView.value = result["item"];
     }
     return result;
   }
@@ -602,16 +602,16 @@ class WealthUserView extends SimplePageView<Map> {
     final role = _ctrl.getRole(uid);
 
     // 是否上榜
-    final is_rank = current_user_item?["is_rank"] ?? false;
+    final is_rank = item?["is_rank"] ?? false;
 
     // 下一个等级的数据
     int? nextValue;
     if(is_rank) {
       // 己上榜
-      nextValue = current_user_item?["next_rank"] ?? 0;
+      nextValue = item?["next_rank"] ?? 0;
     } else {
       // 未上榜
-      nextValue = current_user_item?["next_amount"] ?? 0;
+      nextValue = item?["next_amount"] ?? 0;
     }
 
 
