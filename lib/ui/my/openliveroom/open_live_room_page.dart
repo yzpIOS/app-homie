@@ -11,6 +11,7 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/podcast/scene_page.dart';
 import 'package:app/widgets.dart';
@@ -84,7 +85,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
             Get.simpleDialog(msg: '请先完成实名认证').then((val) {
               switch (val) {
                 case '确定':
-                  Get.off(() => const RealIdentityPage());
+                  Get.off(() => const RealIdentity2Page());
                   break;
                 default:
                   Get.back();
