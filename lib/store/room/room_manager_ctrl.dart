@@ -561,7 +561,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     stateRx(RoomState.Mini);
   }
 
-  void closeRoom2() async {
+  Future<void> closeRoom2() async {
     if(sceneCtrl2 == null) {
       await doCloseState();
       return;

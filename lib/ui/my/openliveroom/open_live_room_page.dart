@@ -56,6 +56,10 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
 
       if (!mounted) return;
 
+      if(!OAuthCtrl.isFaceValidate) {
+        throw const LogicException(16202, "请先完成实名认证");
+      }
+
       switch (info['status']) {
         case 1:
           return _doJoin(info);
@@ -473,6 +477,19 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
       showToast('请阅读并同意《直播规范》');
       return;
     }
+
+    if(RoomManagerCtrl.ins.sceneCtrl2 != null) {
+      bool changeRoom = (RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl) && (RoomManagerCtrl.ins.sceneCtrl2?.roomUid == OAuthCtrl.uid);
+
+      String msg = changeRoom ? "您正在直播中，是否下播" : '已在另一个房间，需要切换房间吗';
+      String okLabel = changeRoom ? "下播" : '切换';
+      final other = await Get.simpleDialog(msg: msg, okLabel: okLabel);
+      if(other != okLabel) {
+        return;
+      }
+      await RoomManagerCtrl.ins.closeRoom2();
+    }
+
 
     // 创建房间
     S_CreateScene? response = await Api.Room.open(
