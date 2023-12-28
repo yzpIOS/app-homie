@@ -427,7 +427,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         nUid: mikeInfo.roleId,
         micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
-        isMute: mikeInfo.isFrozen,
+        isMute: false,
         no: mikeInfo.mikeNo,
         roleType: mikeInfo.roleType,
       );
@@ -444,7 +444,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         nUid: mikeInfo.roleId,
         micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
-        isMute: mikeInfo.isFrozen,
+        isMute: false,
         roleType: mikeInfo.roleType,
         no: mikeInfo.mikeNo
       ));
