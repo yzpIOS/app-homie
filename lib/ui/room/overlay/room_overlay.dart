@@ -57,7 +57,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
         final showMic = controller.micPanelRx();
         final freeMic = controller.freeMicRx();
 
-        final showMicPanel = controller.maxMic > 0 && !freeMic;
+        final showMicPanel = controller.maxMic > 0 && freeMic;
 
         //公会房且不在pk中，才显示麦位
         final topMicMode = (controller.roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
