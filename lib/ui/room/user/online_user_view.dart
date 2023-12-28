@@ -612,7 +612,7 @@ class WealthUserView extends SimplePageView<Map> {
     int? nextValue;
     if(is_rank) {
       // 己上榜
-      nextValue = item?["next_rank"] ?? 0;
+      nextValue = item?["next_amount"] ?? 0;
     } else {
       // 未上榜
       nextValue = item?["next_amount"] ?? 0;
@@ -701,7 +701,7 @@ class WealthUserView extends SimplePageView<Map> {
 
               if(rankValue > 1)
                 Text(
-                  is_rank ? "距离前一名还需：$nextValue" :  "距离上榜还需：$nextValue",
+                  is_rank ? "距离前一名还需：${item?["next_amount"] ?? 0}" :  "距离上榜还需：${item?["next_amount"] ?? 0}",
                   style: const TextStyle(
                     color: Color(0XFF666666),
                     fontSize: 12,
