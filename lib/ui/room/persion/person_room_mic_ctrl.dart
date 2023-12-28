@@ -17,8 +17,9 @@ import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:flutter/scheduler.dart';
 
-class PersonRoomMicCtrl extends RoomMicCtrl {
+class PersonRoomMicCtrl extends RoomMicCtrl  {
 
   ///
   /// 在麦上的用户列表, 自由麦和关闭自由麦共用
@@ -115,6 +116,25 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
       }
       micUserList.refresh();
     });
+
+    frameMapGlobal = List<int>.filled(600, 0, growable: false);
+    WidgetsBinding.instance.addTimingsCallback(_timingsCallback);
+  }
+
+  static late List<int> frameMapGlobal;
+  static const int _fpsHz = 60;
+  static const  _frameInterval = const Duration(microseconds: Duration.microsecondsPerSecond ~/ _fpsHz);
+
+
+  void _timingsCallback(List<FrameTiming> timings) {
+    for (FrameTiming timing in timings) {
+      final int skippedFrameCount =
+          timing.totalSpan.inMilliseconds ~/ _frameInterval.inMilliseconds;
+      if (skippedFrameCount < frameMapGlobal.length) {
+        frameMapGlobal[skippedFrameCount]++;
+      }
+    }
+    print("fps: ${uiFps.toStringAsFixed(0)}");
   }
 
   void updateMicInfo(List<MicInfo> micInfos, String roomUid, int micStatus) {
@@ -509,5 +529,25 @@ class PersonRoomMicCtrl extends RoomMicCtrl {
   void dispose() {
     super.dispose();
     streamSubscription?.cancel();
+    WidgetsBinding.instance.removeTimingsCallback(_timingsCallback);
+  }
+
+
+  num get uiFps {
+    // 跳帧数量
+    int skippedCount = 0;
+    // 实际绘制帧数
+    int drawnCount = 0;
+
+    for (int i = 0; i < frameMapGlobal.length; i++) {
+      drawnCount += frameMapGlobal[i];
+      skippedCount += i * frameMapGlobal[i];
+    }
+    final int totalCount = drawnCount + skippedCount;
+    if (totalCount > 0) {
+      return _fpsHz * drawnCount / totalCount;
+    }
+    return _fpsHz;
   }
 }
+

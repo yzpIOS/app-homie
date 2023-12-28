@@ -322,11 +322,15 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.removeOnDataCmd(CMD.S_Role, onRoleResponse);
   }
 
+  ///
+  /// [changeRoom] 是否个人房主切换房间
+  ///
   void _show({
     required bool off,
     required FutureOr Function(int?) infoApi,
     required SceneCtrl Function(Tuple2<RoomBaseInfo, String?>) storeCreate,
     int? roomId,
+    bool changeRoom = false,
   }) async {
     Future doJoin() async {
       Future<Tuple2<RoomBaseInfo, String?>> api() async {
@@ -411,8 +415,8 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
           return;
         } else {
-          const msg = '已在另一个房间，需要切换房间吗';
-          const okLabel = '切换';
+          String msg = changeRoom ? "您正在直播中，是否下播" : '已在另一个房间，需要切换房间吗';
+          String okLabel = changeRoom ? "下播" : '切换';
 
           final other = await Get.simpleDialog(msg: msg, okLabel: okLabel);
 
@@ -454,13 +458,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
             return;
           }
           // 个人房
-          toPersonRoom(roomId: roomId, data: data, off: off);
+          toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: sceneCtrl2 is PersonRoomCtrl);
         } else if(data["room_type"] == 2) {
           // 公会房
-          toGuildRoom(roomId: roomId, data: data, off: off);
+          toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: sceneCtrl2 is PersonRoomCtrl);
         } else if(data["room_type"] == 3) {
           // 广场
-          toSquare(data: data);
+          toSquare(data: data, changeRoom: sceneCtrl2 is PersonRoomCtrl);
         }
       },
       showProgress: true
@@ -469,12 +473,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     tempCallCloseRoom = true;
   }
 
-  void toGuildRoom({required int roomId, Map? data, bool off = false}) {
+  void toGuildRoom({required int roomId, Map? data, bool off = false, bool changeRoom = false}) {
     _show(
       roomId: roomId,
       off: off,
       infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => RoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => RoomOverlay()),
+      changeRoom:changeRoom,
     );
     // reset tempCallCloseRoom param
     tempCallCloseRoom = true;
@@ -483,12 +488,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   /// 个人房
   ///
-  void toPersonRoom({required int roomId, Map? data, bool off = false}) {
+  void toPersonRoom({required int roomId, Map? data, bool off = false, bool changeRoom = false}) {
     _show(
       roomId: roomId,
       off: off,
       infoApi: (it) => data ?? Api.Room.info(roomId: it, tryTimes: 2),
       storeCreate: (it) => PersonRoomCtrl(info: it.value1, pwd: it.value2, overlay: (_) => PersonRoomOverlay()),
+      changeRoom: changeRoom,
     );
     // reset tempCallCloseRoom param
     tempCallCloseRoom = true;
@@ -509,7 +515,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   /// 广场
   ///
-  void toSquare({Map? data}) {
+  void toSquare({Map? data, bool changeRoom = false}) {
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
     }
@@ -518,6 +524,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
       off: false,
       infoApi: (_) => data ?? Api.Room.info(type: RoomType.square),
       storeCreate: (it) => SquareCtrl(info: it.value1, pwd: it.value2, overlay: (_) => SquareOverlay()),
+      changeRoom: changeRoom,
     );
   }
 
