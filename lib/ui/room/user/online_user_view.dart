@@ -447,15 +447,14 @@ class WealthUserView extends SimplePageView<Map> {
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
-  Map? item;
   ValueNotifier<Map?> notifierView = ValueNotifier(null);
 
   @override
   Future fetchPage(PageNum page) async {
     var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
-    if(result is Map && result.containsKey("item")) {
-      notifierView.value = result["item"];
+    if(result is Map && result.containsKey("current_user_item")) {
+      notifierView.value = result["current_user_item"];
     }
     return result;
   }
