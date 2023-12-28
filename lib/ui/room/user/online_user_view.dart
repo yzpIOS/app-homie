@@ -448,24 +448,15 @@ class WealthUserView extends SimplePageView<Map> {
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   Map? current_user_item;
+  ValueNotifier<Map?> notifierView = ValueNotifier(null);
 
   @override
   Future fetchPage(PageNum page) async {
     var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
     if(result is Map && result.containsKey("current_user_item")) {
-      current_user_item = result["current_user_item"];
-
-      if(result.containsKey("items") && current_user_item != null) {
-        var mine = (result["items"] as List).firstWhereOrNull((element) => element["uid"] == current_user_item?["uid"]);
-        // 没有包函用户数据
-        if(mine == null) {
-          (result["items"] as List).add(current_user_item);
-        }
-      }
+      notifierView.value = result["current_user_item"];
     }
-
-
     return result;
   }
 
@@ -477,13 +468,27 @@ class WealthUserView extends SimplePageView<Map> {
   }
 
   @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(child: super.build(context)),
+        NotifierView(notifierView, onData: (data) {
+          if(data == null) {
+            return const SizedBox();
+          }
+          return createMine(context, data, 0, data["uid"]);
+        }),
+        const SizedBox(height: 20,),
+      ],
+    );
+
+  }
+
+  @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     final uid = item['uid'];//用户字符id
-    if(OAuthCtrl.uid != uid || current_user_item == null) {
-      return createUser(context, item, index, uid);
-    }
-
-    return createMine(context, current_user_item!, index, uid);
+    return createUser(context, item, index, uid);
   }
 
   Widget createUser(BuildContext context, Map item, int index, String uid) {
@@ -651,11 +656,12 @@ class WealthUserView extends SimplePageView<Map> {
               GestureDetector(
                 onTap: () {
                   int? roomId = RoomManagerCtrl.ins.sceneCtrl2?.roomId;
-                  if(roomId == null) {
+                  String? roomUid = RoomManagerCtrl.ins.sceneCtrl2?.roomUid;
+                  if(roomId == null || roomUid == null) {
                     return;
                   }
                   GiftSheet.show(
-                      GiftSend2UserInRoom(roomId: roomId, uid: uid),
+                      GiftSend2UserInRoom(roomId: roomId, uid: roomUid),
                       hasShowUnityView: true
                   );
                 },
