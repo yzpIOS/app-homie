@@ -529,7 +529,7 @@ class RoomCtrl extends SceneCtrl {
       //公会房且不在pk中，才显示麦位
       final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
 
-      final showMicPanel = maxMic > 0 && !freeMic;
+      final showMicPanel = maxMic > 0 && freeMic;
       return Positioned(
         top: 0,
         left: 0,
