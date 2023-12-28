@@ -388,7 +388,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     }
     // 非自由组麦, 需要弹窗
     if(isOnMic()) {
-      if(preTime != 0 && (DateTime.now().millisecondsSinceEpoch - preTime) < 100) {
+      if(preTime != 0 && (DateTime.now().millisecondsSinceEpoch - preTime) < 300) {
         return;
       }
       preTime = DateTime.now().millisecondsSinceEpoch;
@@ -407,7 +407,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
       bool curMicValue = Rtc.micRx.value;
       // 关闭麦
       Rtc.micSwitch();
-      Future.delayed(const Duration(milliseconds: 100)).then((value) {
+      Future.delayed(const Duration(milliseconds: 300)).then((value) {
         Rtc.micRx.value = !curMicValue;
       });
     } else {
