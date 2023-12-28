@@ -75,17 +75,19 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
       micInfo?.isMute = event.data?.status == 1;
       if(event.data?.status == 1) {
         if(Rtc.micRx.isTrue && event.uid == OAuthCtrl.uid) {
+          // 禁麦中
           Rtc.micSwitch();
+          Rtc.status.value = PersonMicStatus.disable.val;
+          Rtc.micRx.value = false;
         }
-        // 禁麦中
-        Rtc.status.value = PersonMicStatus.disable.val;
       } else {
         if(micInfo != null) {
           // 当前用户在麦上，改成开麦
           if(Rtc.micRx.isFalse && event.uid == OAuthCtrl.uid) {
+            Rtc.status.value = PersonMicStatus.open.val;
             Rtc.micSwitch();
+            Rtc.micRx.value = true;
           }
-          Rtc.status.value = PersonMicStatus.open.val;
         } else {
           Rtc.status.value = PersonMicStatus.none.val;
         }
