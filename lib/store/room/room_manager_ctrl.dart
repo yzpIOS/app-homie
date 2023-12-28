@@ -458,6 +458,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     simpleTry(
       () => Api.Room.info(roomId: roomId, tryTimes: 2),
       callback: (data) {
+        bool changeRoom = (sceneCtrl2 is PersonRoomCtrl) && (sceneCtrl2?.roomUid == OAuthCtrl.uid);
         if(data["room_type"] == 1) {
           if(data["status"] == 2) {
             Get.alertDialog2("主播已下播", callBack: () {
@@ -467,13 +468,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
             return;
           }
           // 个人房
-          toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: sceneCtrl2 is PersonRoomCtrl);
+          toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 2) {
           // 公会房
-          toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: sceneCtrl2 is PersonRoomCtrl);
+          toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 3) {
           // 广场
-          toSquare(data: data, changeRoom: sceneCtrl2 is PersonRoomCtrl);
+          toSquare(data: data, changeRoom: changeRoom);
         }
       },
       showProgress: true
