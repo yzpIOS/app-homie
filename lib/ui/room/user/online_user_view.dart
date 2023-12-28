@@ -66,6 +66,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
             fontSize: 18
           ),
         ),
+
         Container(
           color: Color(0XFFE4E7EE),
           width: double.infinity,
@@ -73,26 +74,30 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
           margin: EdgeInsets.only(top: 17),
         ),
 
-        Expanded(
-          child: OrientationSheet.scaffold(
-            title: '房间成员',
-            needDivider: false,
-            titleWidget: xAppBar$TabBar(
-              data.keys,
-              controller: controller,
-              alignment: Alignment.center,
-              needPadding: false,
+        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
+          Expanded(child: OnlineUserView(widget.roomId)),
 
+        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
+          Expanded(
+            child: OrientationSheet.scaffold(
+              title: '房间成员',
+              needDivider: false,
+              titleWidget: xAppBar$TabBar(
+                data.keys,
+                controller: controller,
+                alignment: Alignment.center,
+                needPadding: false,
+
+              ),
+              body: TabBarView(
+                controller: controller,
+                children: data.values
+                    .map((it) => (_) => it)
+                    .map((it) => DelayView(keepAlive: true, builder: it))
+                    .toList(growable: false),
+              ),
             ),
-            body: TabBarView(
-              controller: controller,
-              children: data.values
-                  .map((it) => (_) => it)
-                  .map((it) => DelayView(keepAlive: true, builder: it))
-                  .toList(growable: false),
-            ),
-          ),
-        )
+          )
       ],
     );
   }
