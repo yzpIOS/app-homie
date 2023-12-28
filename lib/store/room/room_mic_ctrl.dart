@@ -151,7 +151,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         uid: event.uid ?? "",
         micId: data.mikeId.toInt(),
         hotCount: event.hotCount,
-        isMute: event.isMute,
+        isMute: false,
         nUid: data.roleId,
         roleType: event.data?.roleType ?? 0,
         no: event.data?.mikeNo ?? ""
