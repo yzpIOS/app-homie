@@ -453,9 +453,14 @@ class WealthUserView extends SimplePageView<Map> {
   Future fetchPage(PageNum page) async {
     var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
 
-    if(result is Map && result.containsKey("result")) {
+    if(result is Map && result.containsKey("current_user_item")) {
       current_user_item = result["current_user_item"];
+
+      if(result.containsKey("items") && current_user_item != null) {
+        (result["items"] as List).add(current_user_item);
+      }
     }
+
 
     return result;
   }
@@ -672,6 +677,9 @@ class WealthUserView extends SimplePageView<Map> {
                   ),
                 ),
               ),
+
+              if(rankValue > 1)
+                SizedBox(height: 5,),
 
               if(rankValue > 1)
                 Text(
