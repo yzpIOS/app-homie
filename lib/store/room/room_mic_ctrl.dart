@@ -153,7 +153,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         hotCount: event.hotCount,
         isMute: event.isMute,
         nUid: data.roleId,
-        roleType: event.data?.roleType ?? 0
+        roleType: event.data?.roleType ?? 0,
+        no: event.data?.mikeNo ?? ""
     );
 
     onUpdateHotCount3Handler(data.mikeNo, data.number, refresh: true);
@@ -409,6 +410,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
           micId: item['mike_id'],
           hotCount: item['number'] ?? 0,
           isMute: item['open_status'] == 2,
+          no: item['mike_no'],
           roleType: item['role_type'] ?? 0,
         ));
       }
@@ -443,7 +445,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
         isMute: mikeInfo.isFrozen,
-        roleType: mikeInfo.roleType
+        roleType: mikeInfo.roleType,
+        no: mikeInfo.mikeNo
       ));
     }
     return map;
