@@ -21,4 +21,6 @@ abstract class Env {
   static const serverPort = int.fromEnvironment('server_port');
 
   static const version = 10191;
+  // 平台id
+  static const platformId = "1";
 }

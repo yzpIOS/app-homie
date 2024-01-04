@@ -2,6 +2,7 @@
 
 import 'dart:ffi';
 import 'dart:io';
+import 'dart:convert' as converter;
 
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
@@ -15,6 +16,7 @@ import 'package:app/model/enum/verify_code_enum.dart';
 import 'package:app/model/local_attach.dart';
 import 'package:app/net/http.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
@@ -37,6 +39,7 @@ part 'api/api_user_auth.dart';
 part 'api/api_user_info.dart';
 part 'api/api_wallet.dart';
 part 'api/base.dart';
+part 'api/api_data.dart';
 
 final Api = _Api._();
 
@@ -58,4 +61,6 @@ class _Api extends ApiBase {
   late final Shop = ApiShop('$_path/v1/dress_up');
   late final ShoppingCart = ApiShoppingCart('$_path/v1/dress_up/shopping_cart');
   late final Activity = ApiActivity('$_path/v1/activity');
+
+  late final Data = ApiData();
 }

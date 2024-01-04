@@ -216,6 +216,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       nuid: nUid,
       sex: info["sex"] ?? 0,
       real_name_type: info["real_name_type"] ?? 0,
+      show_name: ""
     );
 
     Map<String, dynamic> data = auth.toJson();
@@ -277,6 +278,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   static String get uid => _auth!.uid;
   static NUID get nUid => _auth!.nuid;
+  static int get sex => _auth!.sex;
+  static String get showName => _auth!.show_name;
 
   // 是否人脸识别
   static bool get isFaceValidate => _auth?.real_name_type == 2;

@@ -25,6 +25,7 @@ mixin _$AuthInfo {
   NUID get nuid => throw _privateConstructorUsedError;
   int get sex => throw _privateConstructorUsedError;
   int get real_name_type => throw _privateConstructorUsedError;
+  String get show_name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +38,7 @@ abstract class $AuthInfoCopyWith<$Res> {
   factory $AuthInfoCopyWith(AuthInfo value, $Res Function(AuthInfo) then) =
       _$AuthInfoCopyWithImpl<$Res, AuthInfo>;
   @useResult
-  $Res call({String token, UID uid, NUID nuid, int sex, int real_name_type});
+  $Res call({String token, UID uid, NUID nuid, int sex, int real_name_type, String show_name});
 }
 
 /// @nodoc
@@ -58,6 +59,7 @@ class _$AuthInfoCopyWithImpl<$Res, $Val extends AuthInfo>
     Object? nuid = freezed,
     Object? sex = null,
     Object? real_name_type = null,
+    Object? show_name = null,
   }) {
     return _then(_value.copyWith(
       token: null == token
@@ -80,6 +82,10 @@ class _$AuthInfoCopyWithImpl<$Res, $Val extends AuthInfo>
           ? _value.real_name_type
           : real_name_type // ignore: cast_nullable_to_non_nullable
               as int,
+      show_name: null == show_name
+          ? _value.show_name
+          : show_name // ignore: cast_nullable_to_non_nullable
+      as String,
     ) as $Val);
   }
 }
@@ -91,7 +97,7 @@ abstract class _$$_AuthInfoCopyWith<$Res> implements $AuthInfoCopyWith<$Res> {
       __$$_AuthInfoCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String token, UID uid, NUID nuid, int sex, int real_name_type});
+  $Res call({String token, UID uid, NUID nuid, int sex, int real_name_type, String show_name});
 }
 
 /// @nodoc
@@ -110,6 +116,7 @@ class __$$_AuthInfoCopyWithImpl<$Res>
     Object? nuid = freezed,
     Object? sex = null,
     Object? real_name_type = null,
+    Object? show_name = null,
   }) {
     return _then(_$_AuthInfo(
       token: null == token
@@ -132,6 +139,10 @@ class __$$_AuthInfoCopyWithImpl<$Res>
           ? _value.real_name_type
           : real_name_type // ignore: cast_nullable_to_non_nullable
               as int,
+      show_name: null == show_name
+          ? _value.show_name
+          : show_name // ignore: cast_nullable_to_non_nullable
+      as String,
     ));
   }
 }
@@ -144,7 +155,8 @@ class _$_AuthInfo implements _AuthInfo {
       required this.uid,
       required this.nuid,
       required this.sex,
-      required this.real_name_type});
+      required this.real_name_type,
+        required this.show_name,});
 
   factory _$_AuthInfo.fromJson(Map<String, dynamic> json) =>
       _$$_AuthInfoFromJson(json);
@@ -159,10 +171,12 @@ class _$_AuthInfo implements _AuthInfo {
   final int sex;
   @override
   final int real_name_type;
+  @override
+  final String show_name;
 
   @override
   String toString() {
-    return 'AuthInfo(token: $token, uid: $uid, nuid: $nuid, sex: $sex, real_name_type: $real_name_type)';
+    return 'AuthInfo(token: $token, uid: $uid, nuid: $nuid, sex: $sex, real_name_type: $real_name_type, show_name: $show_name)';
   }
 
   @override
@@ -175,7 +189,9 @@ class _$_AuthInfo implements _AuthInfo {
             const DeepCollectionEquality().equals(other.nuid, nuid) &&
             (identical(other.sex, sex) || other.sex == sex) &&
             (identical(other.real_name_type, real_name_type) ||
-                other.real_name_type == real_name_type));
+                other.real_name_type == real_name_type) &&
+              (identical(other.show_name, show_name) ||
+                other.show_name == show_name));
   }
 
   @JsonKey(ignore: true)
@@ -185,6 +201,7 @@ class _$_AuthInfo implements _AuthInfo {
       token,
       const DeepCollectionEquality().hash(uid),
       const DeepCollectionEquality().hash(nuid),
+      show_name,
       sex,
       real_name_type);
 
@@ -208,7 +225,8 @@ abstract class _AuthInfo implements AuthInfo {
       required final UID uid,
       required final NUID nuid,
       required final int sex,
-      required final int real_name_type}) = _$_AuthInfo;
+      required final int real_name_type,
+      required final String show_name,}) = _$_AuthInfo;
 
   factory _AuthInfo.fromJson(Map<String, dynamic> json) = _$_AuthInfo.fromJson;
 
@@ -222,6 +240,8 @@ abstract class _AuthInfo implements AuthInfo {
   int get sex;
   @override
   int get real_name_type;
+  @override
+  String get show_name;
   @override
   @JsonKey(ignore: true)
   _$$_AuthInfoCopyWith<_$_AuthInfo> get copyWith =>
