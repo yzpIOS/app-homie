@@ -7,6 +7,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/open_install_utils.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
@@ -57,6 +58,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       rechargeRecordNotReportQuery();
       // 需要等待unity加载完成
       UnityCtrl.ins.needWaitForUnityReady = true;
+      Statistic.launch();
     } else {
       // 未登录，或者资料没有完善
       App.toLogin();
@@ -108,6 +110,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         loginUpdate();
         // 查询未上报的充值订单
         rechargeRecordNotReportQuery();
+        // 统计登录
+        Statistic.login();
       },
       callback: () {
         App.toApp();
@@ -179,6 +183,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
         if (info is Map) {
           await updateUserInfo(info, token);
           _setup(_auth!, false, info: myInfo);
+          // 创建角色成功
+          Statistic.userCreate();
         } else {
           throw const CanceledException();
         }
@@ -248,6 +254,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   //<editor-fold desc="注销">
   void doLogout({bool reqApi = true, String? msg}) {
+    // 退出统计
+    Statistic.logout();
     simpleSub(
       _logoutTask(reqApi),
       callback: () => App.toLogin(msg),

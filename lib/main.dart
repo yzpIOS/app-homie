@@ -4,6 +4,7 @@ import 'package:app/3rd/sentry/sentry.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/special_text.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';

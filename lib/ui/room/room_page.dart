@@ -14,6 +14,7 @@ import 'package:app/store/room/super_gift_broadcast_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/ui/common/svga_effect_overlay.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/intro/room_intro_overlay.dart';
@@ -34,6 +35,11 @@ class RoomPage extends StatefulWidget {
 
   static Future<void> show([bool off = false]) async {
     final mgr = Get.find<RoomManagerCtrl>();
+
+    if(RoomManagerCtrl.ins.sceneCtrl2 != null) {
+      var roomHttpInfo = RoomManagerCtrl.ins.sceneCtrl.info;
+      Statistic.userEnterRoom(roomId: RoomManagerCtrl.ins.sceneCtrl.roomId, roomName: roomHttpInfo["room_name"]);
+    }
 
     // 处理异常
     if(SocketCtrl.ins.share.forceWaitTimes > 0) {
@@ -156,6 +162,11 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
   @override
   void dispose() {
+    // 退出房间
+    if(RoomManagerCtrl.ins.sceneCtrl2 != null) {
+      var roomHttpInfo = RoomManagerCtrl.ins.sceneCtrl.info;
+      Statistic.userExitRoom(roomId: RoomManagerCtrl.ins.sceneCtrl.roomId, roomName: roomHttpInfo["room_name"]);
+    }
     Wakelock.disable();
     AppNavObserver.unsubscribe(this);
     RoomManagerCtrl.ins.shouldOpenGift = false;

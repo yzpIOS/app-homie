@@ -13,7 +13,7 @@ class ApiData extends ApiBase {
     }
 
     // 渠道号
-    if(!data.containsKey("channel") && OAuthCtrl.isLogin) {
+    if(!data.containsKey("channel")) {
       data["channel"] = Env.channelCode;
     }
 
@@ -38,13 +38,13 @@ class ApiData extends ApiBase {
     }
 
     // 名称
-    if(!data.containsKey("sex") && OAuthCtrl.isLogin) {
+    if(!data.containsKey("showName") && OAuthCtrl.isLogin) {
       data["showName"] = OAuthCtrl.showName;
     }
 
 
     _doPost("/v1/data/app_event/create", data: {
-      "type":type,
+      "event_type":type,
       "params_json":converter.jsonEncode(data)
     });
   }

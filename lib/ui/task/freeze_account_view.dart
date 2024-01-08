@@ -2,6 +2,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/ui/login/widgets/pact_view.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,8 @@ class _FreezeAccountPageState extends State<FreezeAccountPage> {
         Get.alertSub(
           alert: '确定注销',
           () async {
+            // 注删帐号
+            Statistic.deleteCount();
             await Api.UserAuth.cancelAccount();
 
             Get.find<OAuthCtrl>().doLogout(reqApi: false);

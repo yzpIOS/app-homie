@@ -14,49 +14,67 @@ class Statistic {
   /// 2、用户登入App(C2): 	时间戳, 用户ID, 平台ID, 渠道
   ///
   static void login() {
-    Api.Data.create(1);
+    Api.Data.create(2);
   }
 
   ///
   /// 3、用户登出App(C3):  (后台监控掉线,或失连用户十分钟后二次判定  app不作处理)	时间戳, 用户ID, 平台ID, 渠道
   ///
   static void logout() {
-    Api.Data.create(1);
+    Api.Data.create(3);
   }
 
   ///
   /// 4、App注销用户(C4):  (后台处理结果后记录 app不作处理)	时间戳, 用户ID , 平台ID, 渠道
   ///
-  static void unRegist() {
-    Api.Data.create(1);
+  static void deleteCount() {
+    Api.Data.create(4);
   }
 
   ///
   /// 5、用户创建角色成功(C5):	平台ID, 渠道、时间戳, 用户ID, 角色ID, 角色名[, 性别]
   ///
   static void userCreate() {
-    Api.Data.create(1);
+    Api.Data.create(5);
   }
 
   ///
   /// 6、用户角色进入直播间(C6):  时间戳, 用户ID, 角色ID, 角色名, 房间ID, 房间名
   ///
-  static void userEnterRoom() {
-    Api.Data.create(1);
+  static void userEnterRoom({int? roomId, String? roomName}) {
+    Map? data;
+    if(roomId != null || roomName != null) {
+      data = {};
+      if(roomId != null) data["roomID"] = roomId;
+      if(roomName != null) data["roomName"] = roomName;
+    }
+    Api.Data.create(6, data: data);
   }
 
   ///
   /// 7、用户角色退出直播间(C7):  (后台监控掉线,或失连用户十分钟后二次判定  app不作处理)	时间戳, 用户ID, 角色ID, 角色名, 房间ID, 房间名
   ///
-  static void userExitRoom() {
-    Api.Data.create(1);
+  static void userExitRoom({int? roomId, String? roomName}) {
+    Map? data;
+    if(roomId != null || roomName != null) {
+      data = {};
+      if(roomId != null) data["roomID"] = roomId;
+      if(roomName != null) data["roomName"] = roomName;
+    }
+    Api.Data.create(7, data: data);
   }
 
   ///
   /// 8、用户创建直播间(C8): 	时间戳, 用户ID,房间ID, 房间名, 房间描述
   ///
-  static void userCreateRoom() {
-    Api.Data.create(1);
+  static void userCreateRoom({int? roomId, String? roomName}) {
+    Map? data;
+    if(roomId != null || roomName != null) {
+      data = {};
+      if(roomId != null) data["roomID"] = roomId;
+      if(roomName != null) data["roomName"] = roomName;
+    }
+    Api.Data.create(8, data: data);
   }
 
   ///
