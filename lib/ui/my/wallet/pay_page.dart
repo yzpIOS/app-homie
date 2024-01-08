@@ -5,6 +5,7 @@ import 'package:app/3rd/tencent/wx.dart';
 import 'package:app/exception.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/ui/common/web_page.dart';
 import 'package:app/widgets.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
@@ -210,6 +211,9 @@ class _PayPageState extends State<PayPage> {
     showToast('支付取消');
 
     Get.back(result: false);
+
+    Statistic.cancelPay(
+        widget.payType, orderId: widget.data["record_number_string"] ?? "");
   }
 
 

@@ -80,24 +80,39 @@ class Statistic {
   ///
   /// 9、户充值发起(选择相应充值档)(C9):	时间戳, 用户ID, 充值订单ID, 描述("充值发起"), [支付类型]
   ///
-  static void userCharge() {
-    Api.Data.create(1);
+  static void userCharge(int type, {String? orderId}) {
+    Api.Data.create(9, data: {
+      "payType": type,
+      "desc": "充值发起",
+      if(orderId != null)
+        "orderID": orderId
+    });
   }
 
 
   ///
   /// 10、用户充值支付唤起(C10):	时间戳, 用户ID, 订单编号, 订单ID, 订单描述 (支付结果或三方平台反馈结果), 支付类型
   ///
-  static void risePay() {
-    Api.Data.create(1);
+  static void risePay(int type, {String? orderId}) {
+    Api.Data.create(10, data: {
+      "payType": type,
+      "desc": "",
+      if(orderId != null)
+        "orderID": orderId
+    });
   }
 
 
   ///
   /// 11、用户充值支付成功(C11):	时间戳, 用户ID, 订单编号, 订单ID, 订单描述 (支付结果或三方平台反馈结果), 支付类型
   ///
-  static void paySuccess() {
-    Api.Data.create(1);
+  static void paySuccess(int type, {String? orderId}) {
+    Api.Data.create(11, data: {
+      "payType": type,
+      "desc": "",
+      if(orderId != null)
+        "orderID": orderId
+    });
   }
 
 
@@ -105,15 +120,25 @@ class Statistic {
   ///
   /// 12、用户充值支付失败(C12):	时间戳, 用户ID, 订单编号, 订单ID, 订单描述 (支付结果或三方平台反馈结果), 支付类型
   ///
-  static void payFail() {
-    Api.Data.create(1);
+  static void payFail(int type, {String? orderId}) {
+    Api.Data.create(12, data: {
+      "payType": type,
+      "desc": "",
+      if(orderId != null)
+        "orderID": orderId
+    });
   }
 
 
   ///
   /// 13、用户充值支付取消(C13):	时间戳, 用户ID, [订单编号,] 订单ID, [订单描述 (支付结果或三方平台反馈结果)], 支付类型, 描述("充值取消")
   ///
-  static void cancelPay() {
-    Api.Data.create(1);
+  static void cancelPay(int type, {String? orderId}) {
+    Api.Data.create(13, data: {
+      "payType": type,
+      "desc": "",
+      if(orderId != null)
+        "orderID": orderId
+    });
   }
 }

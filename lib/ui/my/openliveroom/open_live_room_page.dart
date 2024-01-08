@@ -10,6 +10,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -505,6 +506,7 @@ class _OpenLiveRoomPageState extends State<OpenLiveRoomPage>
     if (roomId == null) {
       return;
     }
+    Statistic.userCreateRoom(roomId: roomId, roomName: title);
     RoomManagerCtrl.ins.needJoinRoom = false;
     Get.find<RoomManagerCtrl>().toPersonRoom(roomId: roomId, off: true);
   }

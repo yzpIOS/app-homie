@@ -8,6 +8,7 @@ import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/open_install_utils.dart';
+import 'package:app/tools/statistic.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
@@ -347,11 +348,19 @@ class _RechargePageState extends State<RechargePage> {
       showToast('请先阅读并同意《充值及购买协议》');
       return;
     }
+    if(payType != null) {
+      Statistic.userCharge(payType);
+    }
 
     simpleSub(
       Api.Wallet.recharge(id: data['id'], payType: payType!),
       callback1: (resp) async {
         bool payResult;
+
+        if(payType != null) {
+          Statistic.risePay(payType, orderId: resp["record_number_string"] ?? "");
+        }
+
         if(payType == 4) {
           payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
         } else {
@@ -365,6 +374,16 @@ class _RechargePageState extends State<RechargePage> {
           await Api.Wallet.rechargeRecordReportFinish(idList: [data['id']]);
           Get.back(result: true);
           MoneyChangeEvent({type: data['diamond_amount']}).fire();
+
+          if(payType != null) {
+            Statistic.paySuccess(
+                payType, orderId: resp["record_number_string"] ?? "");
+          }
+        } else {
+          if(payType != null) {
+            Statistic.payFail(
+                payType, orderId: resp["record_number_string"] ?? "");
+          }
         }
       },
     );
