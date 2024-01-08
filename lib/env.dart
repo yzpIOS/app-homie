@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 abstract class Env {
   static const isRelease = kReleaseMode;
@@ -21,6 +24,24 @@ abstract class Env {
   static const serverPort = int.fromEnvironment('server_port');
 
   static const version = 10191;
-  // 平台id
-  static const platformId = "1";
+
+
+  // vivo, oppo等
+  static String _innerPlatformId = "";
+
+  static Future<String> get platformId async {
+    // 己经初始化
+    if(_innerPlatformId.isNotEmpty) {
+      return _innerPlatformId;
+    }
+    // 获取厂商信息
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      _innerPlatformId = (await deviceInfoPlugin.androidInfo).manufacturer;
+      return _innerPlatformId;
+    } else if(Platform.isIOS) {
+      return Future.value("1");
+    }
+    return "";
+  }
 }

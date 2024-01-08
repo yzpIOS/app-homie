@@ -9,7 +9,7 @@ class ApiData extends ApiBase {
 
     // 平台ID
     if(!data.containsKey("platID")) {
-      data["platID"] = Env.platformId;
+      data["platID"] = await Env.platformId;
     }
 
     // 渠道号
