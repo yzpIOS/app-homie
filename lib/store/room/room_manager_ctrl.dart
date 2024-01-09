@@ -208,7 +208,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
                     if(roomData["scene_id"] != 0) {
                       // http://192.168.1.156:20000/project/15/interface/api/2114
                       // toRoom(roomId: roomId, data: roomData, off: Get.currentRoute.toLowerCase().contains(RoomPage.room_name));
-                      AcceptEnterRoom.show(roomId, roomData);
+                      AcceptEnterRoom.show(roomData["room_id"], roomData);
                     } else {
                       toSquare(data: roomData);
                     }

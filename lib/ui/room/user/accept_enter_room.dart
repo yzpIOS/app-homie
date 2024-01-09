@@ -37,9 +37,8 @@ class _AcceptEnterRoomState extends State<AcceptEnterRoom> {
     var child = _createBody();
 
     child = Container(
-      width: double.infinity,
+      width: 350,
       height: 280,
-      margin: const EdgeInsets.symmetric(horizontal: 7.5),
       child: child,
     );
 
