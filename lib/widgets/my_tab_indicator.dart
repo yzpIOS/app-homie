@@ -24,6 +24,7 @@ class MyUnderlineTabIndicator extends Decoration {
     this.borderRadius,
     this.borderSide = const BorderSide(width: 2.0, color: Colors.white),
     this.insets = EdgeInsets.zero,
+    this.horizonDistance = 20,
   });
 
   /// The radius of the indicator's corners.
@@ -34,6 +35,8 @@ class MyUnderlineTabIndicator extends Decoration {
 
   /// The color and weight of the horizontal line drawn below the selected tab.
   final BorderSide borderSide;
+
+  final int horizonDistance;
 
   /// Locates the selected tab's underline relative to the tab's boundary.
   ///
@@ -67,7 +70,7 @@ class MyUnderlineTabIndicator extends Decoration {
 
   @override
   BoxPainter createBoxPainter([ VoidCallback? onChanged ]) {
-    return _UnderlinePainter(this, borderRadius, onChanged);
+    return _UnderlinePainter(this, borderRadius, horizonDistance, onChanged);
   }
 
   Rect _indicatorRectFor(Rect rect, TextDirection textDirection) {
@@ -95,11 +98,14 @@ class _UnderlinePainter extends BoxPainter {
   _UnderlinePainter(
       this.decoration,
       this.borderRadius,
+      this.horizonDistance,
       super.onChanged,
       );
 
   final MyUnderlineTabIndicator decoration;
   final BorderRadius? borderRadius;
+
+  final int horizonDistance;
 
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
@@ -126,7 +132,7 @@ class _UnderlinePainter extends BoxPainter {
     // }
     assert(configuration.size != null);
     Rect rect = offset & configuration.size!;
-    rect = Rect.fromLTRB(rect.left - 20, rect.top, rect.right + 20, rect.bottom);
+    rect = Rect.fromLTRB(rect.left - horizonDistance, rect.top, rect.right + horizonDistance, rect.bottom);
     final RRect rrect = RRect.fromRectAndRadius(rect, Radius.circular(26.0));
     canvas.drawRRect(rrect,
         Paint()..style = PaintingStyle.fill

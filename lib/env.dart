@@ -8,7 +8,7 @@ abstract class Env {
   static const isDebug = kDebugMode;
   static const isDebugCfg = bool.fromEnvironment('is_debug', defaultValue: isDebug);
 
-  static const channelCode = String.fromEnvironment('channelCode', defaultValue: 'app'); //渠道号
+  static const channelCode = String.fromEnvironment('channelCode', defaultValue: ''); //渠道号
   static const useUnity = true;
 
   static final apiUrl = Uri.parse(const String.fromEnvironment('api_url'));
@@ -29,5 +29,5 @@ abstract class Env {
   // vivo, oppo等
   static String _innerPlatformId = "";
 
-  static const platformId = String.fromEnvironment('platId', defaultValue: 'app'); //渠道号
+  static const platformId = String.fromEnvironment('platId', defaultValue: ''); //渠道号
 }
