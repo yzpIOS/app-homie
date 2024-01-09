@@ -267,7 +267,7 @@ class _MyModelViewState extends State<MyModelView> {
       builder: (it) {
         int groupListId = it.groupListId.value;
         return Container(
-          width: 30,
+          width: 29,
           padding: const Pad(vertical: 10),
           decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFF5F5F5)),
           child: Column(
@@ -276,7 +276,7 @@ class _MyModelViewState extends State<MyModelView> {
                 onTap: () => onChangeCameraDressTypeClick(1),
                 child: Image.asset(IMG.format(groupListId == 1 ? 'shop/shangcheng_icon_tb_selected' : 'shop/shangcheng_icon_tb_unselected'), scale: 3),
               ),
-              const Spacing(height: 10, flex: null),
+              const Spacing(height: 7, flex: null),
               OpacityButton(
                 onTap: () => onChangeCameraDressTypeClick(2),
                 child: Image.asset(IMG.format(groupListId == 2 ? 'shop/shangcheng_icon_fz_selected' : 'shop/shangcheng_icon_fz_unselected'), scale: 3),

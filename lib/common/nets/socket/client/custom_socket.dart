@@ -353,6 +353,7 @@ class CustomSocket {
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();
+        xlog("[socket]:断开连接回调处理成功", type: LogType.SOCKET);
       } catch(e) {
         xlog("[socket]:断开连接回调处理失败, ${e.toString()}", type: LogType.SOCKET);
       }

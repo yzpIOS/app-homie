@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert' as convert;
 
 import 'package:app/net/api.dart';
 import 'package:app/tools/help.dart';
@@ -43,6 +44,7 @@ class ApplePurchase {
 
     // 补单自动添加
     if(compensate) {
+      showToastQueue("开始补单444");
       addPurchaseCallBack();
     }
   }
@@ -55,6 +57,9 @@ class ApplePurchase {
     // 监听支付结果
     // https://www.jianshu.com/p/5eb553a0e0f0
     _subscription = InAppPurchase.instance.purchaseStream.listen((data) async {
+      showToastQueue("recordNumber = ${recordNumber}, compensate = ${compensate}, "
+          "萍果返回补单数据: ${data.length}");
+
       // 处理内购回调
       // recordNumber为空证明是补单，而compensate表明当前不补单
       if(recordNumber.isEmpty && !compensate) {
@@ -64,6 +69,7 @@ class ApplePurchase {
       // 检查是否支持苹果支付
     }, onError: (error) {
       debugPrint("aaa");
+      showToastQueue(error.toString());
     });
   }
 
@@ -140,6 +146,7 @@ class ApplePurchase {
         return;
       }
       if (purchaseDetails.status == PurchaseStatus.error) {
+        showToastQueue("萍果支付失败：status = ${purchaseDetails.status}");
         // todo 支付失败
         _handleError(purchaseDetails.error!);
         // 隐藏loading
@@ -148,6 +155,7 @@ class ApplePurchase {
         await InAppPurchase.instance.completePurchase(purchaseDetails);
       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
           purchaseDetails.status == PurchaseStatus.restored) {
+        showToastQueue("萍果通知服务端订单状态：status = ${purchaseDetails.status}");
         // 验证订单是否成功
         bool valid = false;
         int totalValidateTime = 3;
@@ -161,6 +169,7 @@ class ApplePurchase {
           if(totalValidateTime <= 0) {
             break;
           }
+
           await Future.delayed(const Duration(seconds: 3));
           totalValidateTime = totalValidateTime - 1;
         }
@@ -193,6 +202,7 @@ class ApplePurchase {
     if(details is AppStorePurchaseDetails) {
       try {
         var result = await Api.Wallet.checkAppPayStatus(recordNumber, details.purchaseID ?? "");
+
         if(result is Map == false || result["code"] != 0) {
           return Future.value(false);
         }
