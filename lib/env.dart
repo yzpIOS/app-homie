@@ -29,19 +29,5 @@ abstract class Env {
   // vivo, oppo等
   static String _innerPlatformId = "";
 
-  static Future<String> get platformId async {
-    // 己经初始化
-    if(_innerPlatformId.isNotEmpty) {
-      return _innerPlatformId;
-    }
-    // 获取厂商信息
-    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      _innerPlatformId = (await deviceInfoPlugin.androidInfo).manufacturer;
-      return _innerPlatformId;
-    } else if(Platform.isIOS) {
-      return Future.value("1");
-    }
-    return "";
-  }
+  static const platformId = String.fromEnvironment('platId', defaultValue: 'app'); //渠道号
 }
