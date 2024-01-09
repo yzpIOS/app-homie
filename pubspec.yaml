@@ -115,6 +115,8 @@ dependencies:
   # https://pub.dev/packages/protoc_plugin/install
   protoc_plugin: ^20.0.1
 
+  tencent_kit: ^6.0.1
+
   # 苹果内购
   in_app_purchase: ^3.1.7
   # 获取当前设备信息
@@ -139,6 +141,10 @@ wechat_kit:
   app_id: ""
   universal_link: ""
   ios: no_pay
+
+tencent_kit:
+  app_id: ""
+  universal_link: ""
 
 alipay_kit:
   scheme: ""
