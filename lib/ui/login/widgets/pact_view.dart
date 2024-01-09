@@ -77,7 +77,7 @@ abstract class IPact {
 
           // 来自登录, 同意后才进行初始化
           if(fromLogin) {
-            OpenInstallUtils.ins.initPrivacy();
+            // OpenInstallUtils.ins.initPrivacy();
             Statistic.launch();
           }
 

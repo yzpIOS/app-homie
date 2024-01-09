@@ -51,7 +51,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       // 己登录，并且资料己经填完
       App.toApp();
       // 己登录
-      OpenInstallUtils.ins.initPrivacy();
+      // OpenInstallUtils.ins.initPrivacy();
       // 登录时间记录
       loginUpdate();
       // 查询未上报的充值订单
