@@ -6,6 +6,7 @@ import 'package:app/ui/home/home_activity_banner_view.dart';
 import 'package:app/ui/home/home_banner_view.dart';
 import 'package:app/ui/home/home_play_together.dart';
 import 'package:app/ui/home/home_search_page.dart';
+import 'package:app/ui/my/invite_new_members/invite_new_members_activity_page.dart';
 import 'package:app/ui/podcast/city_room_view.dart';
 import 'package:app/ui/podcast/create_room_page.dart';
 import 'package:app/ui/podcast/follow_room_view.dart';
@@ -123,6 +124,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           GestureDetector(
             onTap: () {
               if(Env.isDebug) {
+                Get.to(()=> InviteNewMembersActivityPage());
                 // Get.insertOverlay(BlindGiftMarqueeView());
                 // Get.insertOverlay(CommonGiftMarqueeView());
                 // Get.insertOverlay(ClothGiftMarqueeView());

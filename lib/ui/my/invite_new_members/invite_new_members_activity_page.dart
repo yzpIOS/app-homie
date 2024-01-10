@@ -64,7 +64,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
     Widget child = Stack(
       alignment: Alignment.center,
       children: [
-        Positioned.fill(child: Image.asset(IMG.format('my/hd_pic_bg_lx'), scale: 3, fit: BoxFit.contain),),
+        Positioned.fill(child: Image.asset(IMG.format('my/hd_pic_bg_lx'), width: AppSize.width, height: AppSize.height, fit: BoxFit.fill),),
         const Positioned(top: 0, left: 0, child: OnlyBackAppBar(),),
         Positioned(top: startTop, right: 0, child: $RightEntranceButton('活动规则'),),
         Positioned(top: startTop + 33, right: 0, child: $RightEntranceButton('我的奖励'),),
