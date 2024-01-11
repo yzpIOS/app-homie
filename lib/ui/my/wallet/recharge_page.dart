@@ -394,5 +394,6 @@ class _RechargePageState extends State<RechargePage> {
   void dispose() {
     super.dispose();
     applePurchase.dispose();
+    PayPage.needSendFailStatistic = true;
   }
 }
