@@ -42,6 +42,7 @@ class ApiData extends ApiBase {
       data["showName"] = OAuthCtrl.showName;
     }
 
+    data.addAll(await Env.advertisement);
 
     _doPost("v1/data/app_event/create", data: {
       "event_type":type,

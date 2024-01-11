@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:oaid/oaid.dart';
 
 abstract class Env {
   static const isRelease = kReleaseMode;
@@ -30,4 +31,23 @@ abstract class Env {
   static String _innerPlatformId = "";
 
   static const platformId = String.fromEnvironment('platId', defaultValue: ''); //渠道号
+
+  ///
+  /// 广告数据
+  ///
+  static Map<String, String>? _advertisement;
+  static Future<Map> get advertisement async {
+    if(_advertisement == null) {
+      if(Platform.isAndroid) {
+        // 获取android OAID
+        _advertisement = await Oaid().getOAID();
+      } else if(Platform.isIOS) {
+        // 获取ios的IDFA
+        _advertisement = await Oaid().getIDFA();
+        // ios配置
+        // https://www.openinstall.io/doc/asa.html
+      }
+    }
+    return _advertisement ?? {};
+  }
 }
