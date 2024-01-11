@@ -46,6 +46,7 @@ class _RechargePageState extends State<RechargePage> {
   @override
   void initState() {
     super.initState();
+    PayPage.needSendFailStatistic = true;
 
     _init();
   }
@@ -380,7 +381,7 @@ class _RechargePageState extends State<RechargePage> {
                 payType, orderId: resp["record_number_string"] ?? "");
           }
         } else {
-          if(payType != null) {
+          if(payType != null && PayPage.needSendFailStatistic) {
             Statistic.payFail(
                 payType, orderId: resp["record_number_string"] ?? "");
           }

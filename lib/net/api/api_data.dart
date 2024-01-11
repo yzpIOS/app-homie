@@ -43,7 +43,7 @@ class ApiData extends ApiBase {
     }
 
 
-    _doPost("/v1/data/app_event/create", data: {
+    _doPost("v1/data/app_event/create", data: {
       "event_type":type,
       "params_json":converter.jsonEncode(data)
     });

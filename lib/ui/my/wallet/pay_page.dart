@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 class PayPage extends StatefulWidget {
+  static bool needSendFailStatistic = true;
   final int payType;
   final Map data;
 
@@ -209,7 +210,7 @@ class _PayPageState extends State<PayPage> {
 
   void _onCancelled() {
     showToast('支付取消');
-
+    PayPage.needSendFailStatistic = false;
     Get.back(result: false);
 
     Statistic.cancelPay(
