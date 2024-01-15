@@ -1,5 +1,7 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/tools.dart';
+import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/room_card_view.dart';
 import 'package:app/ui/main/nav_view.dart';
 import 'package:app/widgets.dart';
@@ -76,6 +78,7 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
 
     return Scaffold(
       appBar: xAppBar(title: "装扮"),
+      bottomNavigationBar: createBottomBar(),
       body: Column(
         children: [
           Container(
@@ -103,7 +106,9 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
               controller: controller,
               children: data.values.toList(),
             )
-          )
+          ),
+
+
         ],
       ),
     );
@@ -173,10 +178,10 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
         itemCount: 8,
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
+          crossAxisCount: 3,
           crossAxisSpacing: 10,
-          mainAxisSpacing: 19,
-          childAspectRatio: 0.62
+          mainAxisSpacing: 11,
+          childAspectRatio: 0.68
         ),
         itemBuilder: (context, index) {
           return Column(
@@ -208,7 +213,7 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        NetImage("", width: 16, height: 16,),
+        MoneyIcon(type: MoneyType.gold, size: 16),
         SizedBox(width: 2,),
         Text(
           "10",
@@ -240,6 +245,129 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
           fontWeight: FontWeight.w700,
           fontSize: 10
         ),
+      ),
+    );
+  }
+
+  Widget createBottomBar() {
+    return Container(
+      height: 87,
+      color: Color(0xFFEBEBFF),
+      padding: EdgeInsets.only(bottom: 10, left: 11, right: 11),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            "余额：",
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w700,
+              color: AppPalette.txtDark,
+            ),
+          ),
+
+          Expanded(child: SizedBox()),
+
+          // 紫砖
+          Row(
+            children: [
+              // 紫砖
+              SizedBox(
+                height: 26,
+                width: 26,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      left: 12,
+                      top: 3,
+                      bottom: 3,
+                      child: Container(color: Color(0xFFC1C1C1)),
+                    ),
+                    Positioned.fill(
+                      child: MoneyIcon(type: MoneyType.diamond, size: 50),
+                    ),
+                  ],
+                ),
+              ),
+
+              // 金额
+              Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Color(0xFFC1C1C1),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 5,),
+                    Text(
+                      "1000",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: AppPalette.txtDark,
+                      ),
+                    ),
+                    // 充值
+                    SizedBox(width: 8,),
+                    Image.asset(IMG.format("my/charge_add"), width: 17, height: 17,),
+                  ],
+                ),
+              )
+            ],
+          ),
+
+
+          // 黄砖
+          SizedBox(width: 20,),
+          Row(
+            children: [
+              // 紫砖
+              SizedBox(
+                height: 26,
+                width: 26,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      left: 12,
+                      top: 3,
+                      bottom: 3,
+                      child: Container(color: Color(0xFFC1C1C1)),
+                    ),
+                    Positioned.fill(
+                      child: MoneyIcon(type: MoneyType.gold, size: 50),
+                    ),
+                  ],
+                ),
+              ),
+
+              // 金额
+              Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  color: Color(0xFFC1C1C1),
+                  borderRadius: BorderRadius.only(topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(width: 5,),
+                    Text(
+                      "100011",
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: AppPalette.txtDark,
+                      ),
+                    ),
+                    SizedBox(width: 11,),
+                  ],
+                ),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
