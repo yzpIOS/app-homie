@@ -87,6 +87,7 @@ Widget xAppBar$TabBar(
   final double fontSize = 17,
   List<Widget>? tabManufacture,
   Decoration? decoration,
+  final useDecoration = true,
   final double horizonPadding = 0,
   final double kItemHeight = 30,
   final double labelPadding = 15,
@@ -100,10 +101,10 @@ Widget xAppBar$TabBar(
       labelPadding: Pad(horizontal: labelPadding),
       //
       indicatorSize: TabBarIndicatorSize.label,
-      indicator: decoration ?? const UnderlineTabIndicator(
+      indicator: useDecoration ? (decoration ?? const UnderlineTabIndicator(
         borderRadius: AppBorderRadius.a2,
         borderSide: BorderSide(width: 2, color: AppPalette.primary),
-      ),
+      )) : null,
       //
       labelStyle: TextStyle(fontSize: fontSize, fontWeight: fw$SemiBold),
       unselectedLabelStyle: TextStyle(fontSize: fontSize, fontWeight: fw$Regular),
