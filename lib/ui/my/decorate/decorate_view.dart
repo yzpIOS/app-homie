@@ -4,6 +4,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/room_card_view.dart';
 import 'package:app/ui/main/nav_view.dart';
+import 'package:app/ui/my/decorate/purchase_decorate_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/my_tab_indicator.dart';
 import 'package:dartz/dartz.dart' as T;
@@ -170,6 +171,9 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
     );
   }
 
+  ///
+  /// 商品列表
+  ///
   Widget createGrid() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -184,31 +188,42 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
           childAspectRatio: 0.68
         ),
         itemBuilder: (context, index) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // 图标
-              RoomCardView(image: ""),
-              // 名字
-              SizedBox(height: 6,),
-              Text(
-                "电音派对",
-                style: TextStyle(
-                  color: AppPalette.txtDark,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700
+          // 单个商品item
+          return GestureDetector(
+            onTap: () {
+              PurchaseDecorateSheet.show();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // 图标
+                RoomCardView(image: ""),
+
+                // 名字
+                SizedBox(height: 6,),
+                Text(
+                  "电音派对",
+                  style: TextStyle(
+                      color: AppPalette.txtDark,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700
+                  ),
                 ),
-              ),
-              // 价格
-              SizedBox(height: 5,),
-              createPrize(),
-            ],
+                // 价格
+                SizedBox(height: 5,),
+                createPrize(),
+              ],
+            ),
           );
         }
       ),
     );
   }
 
+  ///
+  /// 每个item下的价格
+  ///
   Widget createPrize() {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -229,6 +244,9 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
     );
   }
 
+  ///
+  /// item下的活动
+  ///
   Widget createActivity() {
     return Container(
       width: 50,
@@ -249,6 +267,9 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
     );
   }
 
+  ///
+  /// 整个界面底部的余额显示
+  ///
   Widget createBottomBar() {
     return Container(
       height: 87,
