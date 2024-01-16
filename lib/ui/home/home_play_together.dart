@@ -72,19 +72,19 @@ class HomePlayTogether extends StatelessWidget {
               ],
             ),
 
-
-            SizedBox(
-              width: 200,
-              child: NineImage(
-                //imageProvider 图像处理
-                imageProvider: AssetImage("assets/img/chat/pic_qp_3.9.png"),
-                //内容填充区域
-                child: Text(
-                  "sadasdasdasdassadasdasdasdassadasdasdasdas我",
-                  style: TextStyle(color: Colors.white),
+            if(Env.isDebug)
+              SizedBox(
+                width: 200,
+                child: NineImage(
+                  //imageProvider 图像处理
+                  imageProvider: AssetImage("assets/img/chat/chat_box_13.9.png"),
+                  //内容填充区域ß
+                  child: Text(
+                    "sadasdasdasdassadasdasdasdassadasdasdasdas我",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ),
-            )
+              )
           ],
         ),
       ),
