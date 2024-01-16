@@ -49,7 +49,6 @@ class PurchaseDecorateSheet extends  StatefulWidget {
     // 465
     view = PurchaseDecorateView();
 
-
     OrientationSheet.show(
       constraints: BoxConstraints(maxHeight: 280 + header.viewHeight()),
       barrierColor: const Color(0x80000000),
@@ -59,20 +58,6 @@ class PurchaseDecorateSheet extends  StatefulWidget {
       ),
       direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
     );
-  }
-
-  ///
-  /// 购买进场背景
-  ///
-  static void buyBackground() {
-
-  }
-
-  ///
-  /// 购买头像框
-  ///
-  static void buyDecorate() {
-
   }
 
   @override

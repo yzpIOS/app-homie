@@ -8,7 +8,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/backpack_page.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
-import 'package:app/ui/my/decorate/decorate_view.dart';
+import 'package:app/ui/my/decorate/decorate_shop_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
@@ -170,10 +170,12 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const WalletPage());
         break;
       case '我的装扮':
-        // Get.find<ClothSelectorCtrl>().needGoToMyWardrobe = true;
-        // const GoDressUpEvent().fire();
-
-        Get.to(() => const DecoratePage());
+        if(Env.isDebug) {
+          Get.to(() => const DecorateShopPage());
+          return;
+        }
+        Get.find<ClothSelectorCtrl>().needGoToMyWardrobe = true;
+        const GoDressUpEvent().fire();
         break;
       case '我的背包':
         Get.to(() => const BackpackPage());

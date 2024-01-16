@@ -5,6 +5,7 @@ import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/room_card_view.dart';
 import 'package:app/ui/main/nav_view.dart';
 import 'package:app/ui/my/decorate/purchase_decorate_sheet.dart';
+import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/my_tab_indicator.dart';
 import 'package:dartz/dartz.dart' as T;
@@ -14,17 +15,17 @@ import 'package:get/utils.dart';
 typedef ItemFactory = Widget Function(String title);
 
 ///
-/// 装扮页面
+/// 2D商城；装扮页面
 ///
-class DecoratePage extends StatefulWidget {
+class DecorateShopPage extends StatefulWidget {
 
-  const DecoratePage({super.key});
+  const DecorateShopPage({super.key});
 
   @override
-  _DecorateState createState() => _DecorateState();
+  _DecorateShopState createState() => _DecorateShopState();
 }
 
-class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateMixin {
+class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProviderStateMixin {
 
   final data = <String, Widget>{};
 
@@ -228,7 +229,7 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        MoneyIcon(type: MoneyType.gold, size: 16),
+        MoneyIcon(type: MoneyType.diamond, size: 16),
         SizedBox(width: 2,),
         Text(
           "10",
@@ -290,104 +291,60 @@ class _DecorateState extends State<DecoratePage> with SingleTickerProviderStateM
           Expanded(child: SizedBox()),
 
           // 紫砖
-          Row(
-            children: [
-              // 紫砖
-              SizedBox(
-                height: 26,
-                width: 26,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      left: 12,
-                      top: 3,
-                      bottom: 3,
-                      child: Container(color: Color(0xFFC1C1C1)),
-                    ),
-                    Positioned.fill(
-                      child: MoneyIcon(type: MoneyType.diamond, size: 50),
-                    ),
-                  ],
-                ),
-              ),
-
-              // 金额
-              Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  color: Color(0xFFC1C1C1),
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(width: 5,),
-                    Text(
-                      "1000",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: AppPalette.txtDark,
+          GestureDetector(
+            onTap: () {
+              Get.to(() => RechargePage(hasShowUnityView: false,));
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Row(
+              children: [
+                // 紫砖
+                SizedBox(
+                  height: 26,
+                  width: 26,
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        left: 12,
+                        top: 3,
+                        bottom: 3,
+                        child: Container(color: Color(0xFFC1C1C1)),
                       ),
-                    ),
-                    // 充值
-                    SizedBox(width: 8,),
-                    Image.asset(IMG.format("my/charge_add"), width: 17, height: 17,),
-                  ],
+                      Positioned.fill(
+                        child: MoneyIcon(type: MoneyType.diamond, size: 50),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
+
+                // 金额
+                Container(
+                  height: 20,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFC1C1C1),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(width: 5,),
+                      Text(
+                        "1000",
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: AppPalette.txtDark,
+                        ),
+                      ),
+                      // 充值
+                      SizedBox(width: 8,),
+                      Image.asset(IMG.format("my/charge_add"), width: 17, height: 17,),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-
-
-          // 黄砖
-          SizedBox(width: 20,),
-          Row(
-            children: [
-              // 紫砖
-              SizedBox(
-                height: 26,
-                width: 26,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      left: 12,
-                      top: 3,
-                      bottom: 3,
-                      child: Container(color: Color(0xFFC1C1C1)),
-                    ),
-                    Positioned.fill(
-                      child: MoneyIcon(type: MoneyType.gold, size: 50),
-                    ),
-                  ],
-                ),
-              ),
-
-              // 金额
-              Container(
-                height: 20,
-                decoration: BoxDecoration(
-                  color: Color(0xFFC1C1C1),
-                  borderRadius: BorderRadius.only(topRight: Radius.circular(100), bottomRight: Radius.circular(100)),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(width: 5,),
-                    Text(
-                      "100011",
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: AppPalette.txtDark,
-                      ),
-                    ),
-                    SizedBox(width: 11,),
-                  ],
-                ),
-              )
-            ],
-          )
         ],
       ),
     );

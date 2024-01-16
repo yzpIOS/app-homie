@@ -134,6 +134,8 @@ dependencies:
   oaid:
     path: ./plugin/oaid
 
+  image_pixels: ^3.0.1
+
 link_kit:
   deep_link: homie:///
 

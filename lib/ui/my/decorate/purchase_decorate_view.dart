@@ -76,7 +76,7 @@ class PurchaseDecorateView extends  PurchaseBaseView {
         Expanded(child: SizedBox()),
 
         // 价格图标
-        MoneyIcon(type: MoneyType.gold, size: 23),
+        MoneyIcon(type: MoneyType.diamond, size: 23),
 
         // 价格显示
         SizedBox(width: 5,),
@@ -84,7 +84,7 @@ class PurchaseDecorateView extends  PurchaseBaseView {
           "900",
           style: TextStyle(
               fontSize: 18,
-              color: Color(0xFFED8757),
+              color: AppPalette.txtDark,
               fontWeight: FontWeight.w700
           ),
         ),
@@ -179,7 +179,7 @@ class PurchaseDecorateView extends  PurchaseBaseView {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(width: 6,),
-              MoneyIcon(type: MoneyType.gold, size: 23),
+              MoneyIcon(type: MoneyType.diamond, size: 23),
               SizedBox(width: 5,),
               Text(
                 "100011",

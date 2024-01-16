@@ -3,6 +3,8 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/nine_image.dart';
+import 'package:flutter/material.dart';
 
 ///
 /// 一起玩
@@ -42,6 +44,7 @@ class HomePlayTogether extends StatelessWidget {
                   ),
                 ),
 
+
                 const Positioned(
                   top: 19,
                   left: 10,
@@ -67,6 +70,20 @@ class HomePlayTogether extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+
+
+            SizedBox(
+              width: 200,
+              child: NineImage(
+                //imageProvider 图像处理
+                imageProvider: AssetImage("assets/img/chat/pic_qp_3.9.png"),
+                //内容填充区域
+                child: Text(
+                  "sadasdasdasdassadasdasdasdassadasdasdasdas我",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             )
           ],
         ),
