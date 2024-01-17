@@ -142,9 +142,8 @@ class _ItemView extends StatelessWidget {
     TextStyle textStyle = const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular);
     String value1 = listType == 1 ? data["prize_name"] : data["invite_name"];
     String value2 = listType == 1 ? data["prize_source"] : data["invite_status"];
-    int value3 = listType == 1 ? data["acquire_at"] : data["acquire_at"];
+    int value3 = listType == 1 ? data["acquire_at"] : data["register_at"];
 
-    ;
     Widget child = SizedBox(
       height: 50,
       child: Row(
