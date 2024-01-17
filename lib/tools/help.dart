@@ -259,10 +259,10 @@ extension XNilMap<K, V> on Map<K, V>? {
 extension XInput<T> on Map<T, TextEditingController> {
   String by(T key) => this[key]!.text.trim();
 
-  bool validate() {
+  bool validate({String? nonValidateKey}) {
     final item = entries.firstWhereOrNull((it) => it.value.text.trim().isEmpty);
 
-    if (item != null) {
+    if (item != null && item.key != nonValidateKey) {
       showToast('请输入${item.key}');
 
       return false;

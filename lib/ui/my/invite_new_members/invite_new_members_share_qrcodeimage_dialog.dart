@@ -46,7 +46,7 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
           width: 160,
           height: 34,
           textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
-          onTap: () => RepaintBoundaryUtils().savePhoto(),
+          onTap: () => RepaintBoundaryUtils().savePhoto(back: true),
         ),
       ],
     );
@@ -70,7 +70,7 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
       children: [
         Expanded(child: XText('我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~', maxLines: 3, style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
         Spacing.w10,
-        const NetImage('http', width: 68, height: 68,),
+        Image.asset(IMG.format("my/invite_qrcode"), width: 68, height: 68,),
       ],
     );
   }

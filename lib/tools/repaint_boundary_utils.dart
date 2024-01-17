@@ -65,7 +65,7 @@ class RepaintBoundaryUtils {
   }
 
   //保存到相册
-  void savePhoto() async {
+  void savePhoto({bool back = false}) async {
     RenderRepaintBoundary? boundary = boundaryKey.currentContext!
         .findRenderObject() as RenderRepaintBoundary?;
 
@@ -82,6 +82,9 @@ class RepaintBoundaryUtils {
       ),
       callback1: (resp) {
         showToast('已保存至相册');
+        if(back) {
+          Get.back();
+        }
       },
     );
   }

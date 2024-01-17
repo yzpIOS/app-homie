@@ -51,7 +51,7 @@ class ApiUserInfo extends ApiBase {
     return _doPost('user_name/check', data: data, ext: {HttpHeaders.authorizationHeader: token});
   }
 
-  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, String? starSign, String? location, GenderEnum? gender, String? token}) async {
+  Future setInfo({String? nickName, int? avatar, String? desc, DateTime? birth, String? starSign, String? location, GenderEnum? gender, String? token, String? inveteUid}) async {
     final data = <dynamic, dynamic>{
       if (nickName != null) //昵称
         'username': nickName,
@@ -67,6 +67,9 @@ class ApiUserInfo extends ApiBase {
         'star_sign': starSign,
       if (location != null) //地区
         'location': location,
+
+      if(inveteUid != null)
+        'invite_uid': inveteUid,
     };
 
     /// 拉新数据

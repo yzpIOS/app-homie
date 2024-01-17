@@ -26,6 +26,8 @@ import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
 import 'package:app/ui/my/openliveroom/open_live_room_page.dart';
 
+import 'invite_new_members/invite_new_members_activity_page.dart';
+
 class MyPage2 extends StatefulWidget {
   const MyPage2({super.key});
 
@@ -83,6 +85,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的任务',
       // '我的称号',
       // '首充礼包',
+      '邀请好友',
     ];
 
     Widget itemBuilder(String item) {
@@ -207,6 +210,9 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         break;
       case '主播认证':
         toRealIdentity2Page();
+        break;
+      case '邀请好友':
+        Get.to(()=> const InviteNewMembersActivityPage());
         break;
     }
   }

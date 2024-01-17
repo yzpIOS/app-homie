@@ -1,20 +1,21 @@
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class OpenRedPacketResultDialog extends StatelessWidget {
-  final int type;
-  final int num;
+  RxString giftName;
+  RxString giftImageName;
 
-  const OpenRedPacketResultDialog._({
-    required this.type,
-    required this.num,
+  OpenRedPacketResultDialog._({
+    required this.giftName,
+    required this.giftImageName,
   });
 
-  static Future<void> show() async {
-    await Get.dialog(
-      const OpenRedPacketResultDialog._(type: 1, num: 888),
+  static Future<void> show(String giftName, String giftImageName) async {
+    return await Get.dialog(
+      OpenRedPacketResultDialog._(giftName: RxString(giftName), giftImageName: RxString(giftImageName),),
     );
   }
 
@@ -27,8 +28,18 @@ class OpenRedPacketResultDialog extends StatelessWidget {
         Positioned(
           child: Image.asset(IMG.format('my/pop_gongxihuode_result'), scale: 3),
         ),
-        Positioned(top: 81, child: Image.asset(IMG.format('my/invite_new_members_zizuan'), width: 113, height: 86, scale: 3,),),
-        const Positioned(top: 81 + 86 + 20, child: XText('888紫钻', style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Regular),),),
+        Positioned(
+          top: 81,
+          child: Obx(() {
+            return NetImage(giftImageName.value, width: 113, height: 86);
+          }),
+        ),
+        Positioned(
+          top: 81 + 86 + 20,
+          child: Obx(() {
+            return XText(giftName.value, style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Regular),);
+          })
+        ),
         Positioned(
           bottom: 36,
           child: XTextBtn(
@@ -68,10 +79,17 @@ class OpenRedPacketResultDialog extends StatelessWidget {
     );
   }
 
-  void onItemClick(String action) {
+  void onItemClick(String action) async {
     switch (action) {
       case '再来一次':
-
+        var result = await Api.Activity.openEnvelope();
+        var name = result["name"];
+        var image = result["image"];
+        if(name == null || image == null) {
+          return;
+        }
+        giftName.value = name;
+        giftImageName.value = image;
         break;
       case '收下了':
         Get.back();

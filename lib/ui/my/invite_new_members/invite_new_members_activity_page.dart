@@ -24,6 +24,9 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
 
   late final api = Api.Wallet.rechargeCombo();
 
+  // 规则数据
+  final ruleMap = RxMap();
+
   @override
   void initState() {
     super.initState();
@@ -40,9 +43,12 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
       final items = val['items'];
       final types = val['pay_type_items'];
 
-      delay(1000, () {
-        remainingRedPacketCountRx(3);
-      });
+      // 规则
+      final rules = await Api.Activity.queryLotteryRule();
+      ruleMap.value = rules;
+
+      // 剩余拆红包次数
+      refreshLeftOpenCount();
     } catch (e, s) {
       errLog(e, s);
 
@@ -66,7 +72,18 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
       children: [
         Positioned.fill(child: Image.asset(IMG.format('my/hd_pic_bg_lx'), width: AppSize.width, height: AppSize.height, fit: BoxFit.fill),),
         const Positioned(top: 0, left: 0, child: OnlyBackAppBar(),),
-        Positioned(top: startTop, right: 0, child: $RightEntranceButton('活动规则'),),
+        // 活动规则
+        Positioned(
+          top: startTop,
+          right: 0,
+          child: Obx(() {
+            if(ruleMap.isEmpty) {
+              return SizedBox();
+            }
+            return $RightEntranceButton('活动规则');
+          }),
+        ),
+
         Positioned(top: startTop + 33, right: 0, child: $RightEntranceButton('我的奖励'),),
         Positioned(top: startTop + 66, right: 0, child: $RightEntranceButton('我的邀请'),),
         Positioned(
@@ -126,12 +143,15 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
     );
   }
 
-  void onItemClick(String action) {
+  Future<void> onItemClick(String action) async {
     switch (action) {
       case '活动规则':
+        if(!ruleMap.containsKey("rule_desc") || ruleMap["rule_desc"] == null) {
+          return;
+        }
         OrientationSheet.show(
           barrierColor: const Color(0x80000000),
-          child: const InviteNewMembersRulesSheet(),
+          child: InviteNewMembersRulesSheet(ruleContent: ruleMap["rule_desc"],),
           direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
         );
         break;
@@ -150,8 +170,14 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
         );
         break;
       case '拆红包':
-        OpenRedPacketResultDialog.show();
-        remainingRedPacketCountRx.value -= 1;
+        var result = await Api.Activity.openEnvelope();
+        var giftName = result["name"];
+        var giftImageUrl = result["image"];
+        if(giftName == null || giftImageUrl == null) {
+          return;
+        }
+        await OpenRedPacketResultDialog.show(giftName, giftImageUrl);
+        refreshLeftOpenCount();
         break;
       case '邀请好友':
         OrientationSheet.show(
@@ -162,6 +188,14 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
         );
         break;
     }
+  }
+
+  ///
+  /// 剩余拆红包次数
+  ///
+  void refreshLeftOpenCount() async {
+    final leftOpenTime = await Api.Activity.queryLeftOpenCount();
+    remainingRedPacketCountRx(leftOpenTime["count"]);
   }
 }
 

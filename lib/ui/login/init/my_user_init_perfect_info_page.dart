@@ -24,7 +24,7 @@ class MyUserInitPerfectInfoPage extends StatefulWidget {
 class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
   final avatarRx = Rxn<Tuple2<int, File>>();
   final inputs = Map.fromIterable(
-    const {'昵称'},
+    const {'昵称', "邀请人ID"},
     value: (_) => TextEditingController(),
   );
   final nickNameCountRx = RxInt(0); //昵称数字
@@ -73,6 +73,9 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
                   $ModeView(),
                   const Spacing(height: 10, flex: null,),
                   const XText('性别选择后不能修改哦~',style: TextStyle(fontSize: 13, color: AppPalette.primary, fontWeight: fw$Regular),),
+
+                  const Spacing(height: 30, flex: null,),
+                  inviteUserId(),
                   const Expanded(child: SizedBox()),
                   $NextView(),
                 ],
@@ -198,6 +201,37 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
     return child;
   }
 
+
+  Widget inviteUserId() {
+    Widget child = Container(
+        height: 57,
+        width: 299,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(150),
+          border: Border.all(color: AppPalette.primary, width: 1),
+        ),
+        child: Center(
+          child: XInputView(
+            controller: inputs['邀请人ID'],
+            hintText: '请输入邀请人ID(选填)',
+            fontSize: 15,
+            fontWeight: fw$Bold,
+            bgColor: AppPalette.transparent,
+            inputFormatters: [
+              //只允许输入最大文本数
+              LengthLimitingTextInputFormatter(20),
+            ],
+            textAlign: TextAlign.center,
+            onChanged: (text) {
+            },
+          ),
+        )
+    );
+
+    return child;
+  }
+
+
   Widget $OneGenderItemView(double size, GenderEnum gender) {
     return InkWell(
       onTap: () => selectedGender.value = gender,
@@ -294,7 +328,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
   }
 
   void doSub() async {
-    if (inputs.validate()) {
+    if (inputs.validate(nonValidateKey: "邀请人ID")) {
       hideKeyboard();
 
       // 检查昵称是否合规
@@ -334,7 +368,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
 
     final result = await holderProgress(
       Get.to(
-            () => MyUserInitViewGenderModelPage(token: widget.token, nickName: inputs.by('昵称'), gender: selectedGender.value!, avatar: avatar),
+            () => MyUserInitViewGenderModelPage(token: widget.token, nickName: inputs.by('昵称'), gender: selectedGender.value!, avatar: avatar, inveteUid: inputs.by('邀请人ID'),),
         transition: Transition.noTransition,
       )!,
     );

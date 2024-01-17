@@ -3,7 +3,9 @@ import 'dart:typed_data';
 import 'package:app/3rd/tencent/qq.dart';
 import 'package:app/3rd/tencent/wx.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/invite_new_members/invite_new_members_share_qrcodeimage_dialog.dart';
 import 'package:app/widgets.dart';
@@ -31,8 +33,8 @@ class CommonShareSheet extends StatelessWidget {
     final items = [
       '微信好友',
       '朋友圈',
-      'QQ好友',
-      'QQ空间',
+      // 'QQ好友',
+      // 'QQ空间',
       '生成二维码',
       '复制链接',
     ];
@@ -75,13 +77,19 @@ class CommonShareSheet extends StatelessWidget {
     switch (action) {
       case '微信好友':
       case '朋友圈':
+
+        UserInfoDto? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
+        if(userDt0 == null) {
+          return;
+        }
+
         final ByteData assetIcon = await rootBundle.load('assets/img/my/icon_home60.webp');
         final Uint8List iconBytes = assetIcon.buffer.asUint8List();
 
         Wx.doShare(WxShareModel(
           shareType: 1,
           scene: (action == '微信好友') ? WechatScene.kSession : WechatScene.kTimeline,
-          webpageUrl: 'http://www.baidu.com',
+          webpageUrl: 'http://app.web.homieyy.com?inviteId=${userDt0.account}',
           title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',
           thumbData: iconBytes,
         ));
@@ -99,7 +107,11 @@ class CommonShareSheet extends StatelessWidget {
         InviteNewMembersShareQrcodeImageDialog.show();
         break;
       case '复制链接':
-        copyTxt('http://');
+        UserInfoDto? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
+        if(userDt0 == null) {
+          return;
+        }
+        copyTxt('http://app.web.homieyy.com?inviteId=${userDt0.account}');
         break;
     }
   }

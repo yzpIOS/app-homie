@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:app/model/enum/room_role_type.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_ctrl.dart';
+import 'package:intl/intl.dart';
 
 class InviteNewMembersMyRewardListSheet extends StatefulWidget {
   final int listType;//1.我的奖励  2.我的邀请
@@ -51,7 +52,7 @@ class _InviteNewMembersMyRewardListSheetState extends State<InviteNewMembersMyRe
           ],
         ),
         Spacing.h4,
-        Expanded(child: ActivityDataView(82),),
+        Expanded(child: ActivityDataView(82, widget.listType),),
       ],
     );
 
@@ -96,10 +97,11 @@ class _InviteNewMembersMyRewardListSheetState extends State<InviteNewMembersMyRe
 }
 
 class ActivityDataView extends SimplePageView<Map> {
+  final int listType;
   final int roomId;
   final RoomRoleType? myRole;
 
-  ActivityDataView(this.roomId, {super.key, this.myRole});
+  ActivityDataView(this.roomId, this.listType, {super.key, this.myRole});
 
   @override
   BaseConfig get config {
@@ -109,40 +111,52 @@ class ActivityDataView extends SimplePageView<Map> {
   }
 
   @override
-  Future fetchPage(PageNum page) => Api.Moment.recommendList(page: page);
+  Future fetchPage(PageNum page) {
+    if(listType == 1) {
+      return Api.Activity.prizeList(page: page);
+    } else {
+      return Api.Activity.inviteList(page: page);
+    }
+  }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     // final uid = item['uid'];
     const role = RoomRoleType.owner;
 
-    return _ItemView(data: item, role: role);
+    return _ItemView(data: item, role: role, listType: listType,);
   }
 }
 
 class _ItemView extends StatelessWidget {
   final Map data;
+  final int listType;
   final RoomRoleType? role;
 
-  const _ItemView({required this.data, required this.role});
+  const _ItemView({required this.data, required this.role, required this.listType});
 
   @override
   Widget build(BuildContext context) {
     // final uid = data['uid'];
     // final nuid = Int64(data['role_id']);
+    TextStyle textStyle = const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular);
+    String value1 = listType == 1 ? data["prize_name"] : data["invite_name"];
+    String value2 = listType == 1 ? data["prize_source"] : data["invite_status"];
+    int value3 = listType == 1 ? data["acquire_at"] : data["acquire_at"];
 
-    Widget child = const SizedBox(
+    ;
+    Widget child = SizedBox(
       height: 50,
       child: Row(
         children: [
           Expanded(
-            child: XText('88紫钻', maxLines: 2, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),
+            child: XText(value1, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
           ),
           Expanded(
-            child: XText('红包抽取', maxLines: 2, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),
+            child: XText(value2, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
           ),
           Expanded(
-            child: XText('2023/10/12\n10：10', maxLines: 2, textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),
+            child: XText(DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(value3), maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
           ),
         ],
       ),

@@ -5,26 +5,35 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class InviteNewMembersRulesSheet extends StatelessWidget {
-  const InviteNewMembersRulesSheet({super.key});
+  String ruleContent;
+  InviteNewMembersRulesSheet({super.key, required this.ruleContent});
 
   @override
   Widget build(BuildContext context) {
     const textStyle = TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular);
 
     Widget child = SingleChildScrollView(
-      padding: Pad(horizontal: 31, top: 44, bottom: AppSize.safeBottom),
-      child: const Column(
-        children: [
-          Text('1.每次成功邀请1个新用户，即可获得1次抽取红包的机会；红包内必定包含紫钻，最高可得999紫钻', style: textStyle,),
-          Spacing.h10,
-          Text('2.受邀用户必须是没有注册且未登陆过Homie世界的新用户，同一手机号，设备，实名认证视为同一用户；完成邀请后新用户需要下载并登录Homie世界才算成功邀请', style: textStyle,),
-          Spacing.h10,
-          Text('3.严禁使用缺陷或非正常手段参与活动，一经发现，取消参与资格，并有权回收已获得的奖励', style: textStyle,),
-          Spacing.h10,
-          Text('4.所有活动奖励均为系统发放，如遇奖励没有到账或奖励失效请联系客服处理', style: textStyle,),
-          Spacing.h10,
-          Text('5.Homie世界运营团队保留对活动规则进行修改和解释的权利，此活动和苹果公司无关', style: textStyle,),
-        ],
+      padding: Pad(horizontal: 11, top: 26, bottom: AppSize.safeBottom),
+      // child: const Column(
+      //   children: [
+      //     Text('1.每次成功邀请1个新用户，即可获得1次抽取红包的机会；红包内必定包含紫钻，最高可得999紫钻', style: textStyle,),
+      //     Spacing.h10,
+      //     Text('2.受邀用户必须是没有注册且未登陆过Homie世界的新用户，同一手机号，设备，实名认证视为同一用户；完成邀请后新用户需要下载并登录Homie世界才算成功邀请', style: textStyle,),
+      //     Spacing.h10,
+      //     Text('3.严禁使用缺陷或非正常手段参与活动，一经发现，取消参与资格，并有权回收已获得的奖励', style: textStyle,),
+      //     Spacing.h10,
+      //     Text('4.所有活动奖励均为系统发放，如遇奖励没有到账或奖励失效请联系客服处理', style: textStyle,),
+      //     Spacing.h10,
+      //     Text('5.Homie世界运营团队保留对活动规则进行修改和解释的权利，此活动和苹果公司无关', style: textStyle,),
+      //   ],
+      // ),
+      child: Text(
+        ruleContent,
+        style: const TextStyle(
+          fontSize: 14,
+          color: Colors.black,
+          fontWeight: fw$Regular
+        ),
       ),
     );
 

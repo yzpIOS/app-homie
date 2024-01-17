@@ -17,7 +17,9 @@ class MyUserInitViewGenderModelPage extends StatefulWidget {
   final GenderEnum gender;
   final int? avatar;
 
-  const MyUserInitViewGenderModelPage({super.key, required this.token, required this.nickName, required this.gender, this.avatar});
+  final String? inveteUid;
+
+  const MyUserInitViewGenderModelPage({super.key, required this.token, required this.nickName, required this.gender, this.avatar, this.inveteUid});
 
   @override
   State<MyUserInitViewGenderModelPage> createState() => _MyUserInitViewGenderModelPageState();
@@ -113,7 +115,7 @@ class _MyUserInitViewGenderModelPageState extends State<MyUserInitViewGenderMode
   void doSub() async {
     simpleSub(
       () async {
-        await Api.UserInfo.setInfo(nickName: widget.nickName, gender: widget.gender, avatar: widget.avatar, token: widget.token);
+        await Api.UserInfo.setInfo(nickName: widget.nickName, gender: widget.gender, avatar: widget.avatar, token: widget.token, inveteUid: widget.inveteUid);
         Map info = await Api.UserInfo.myInfo(token: widget.token);
 
         await KvBox.remove(PrefKey.OpenInstallBlindData);
