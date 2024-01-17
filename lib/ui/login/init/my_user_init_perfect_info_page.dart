@@ -46,7 +46,6 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
       child: Scaffold(
         appBar: xAppBar(bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
         extendBodyBehindAppBar: true,
-        resizeToAvoidBottomInset: false,//是否调整大小以避免底部嵌入(防止下一步按钮上移)
         body: Stack(
           alignment: Alignment.center,
           children: [
@@ -59,26 +58,29 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
             Positioned.fill(
               top: AppSize.safeTop + 50,
               bottom: AppSize.safeBottom + 10,
-              child: Column(
-                // mainAxisSize: MainAxisSize.max,
-                children: [
-                  const Text('嗨，欢迎来到HOMIE世界~', style: TextStyle(fontSize: 22, color: AppPalette.primary, fontWeight: fw$SemiBold),),
-                  const Spacing(height: 10, flex: null,),
-                  const Text('有头像的小伙伴容易获得关注哦~', style: TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$Regular),),
-                  const Spacing(height: 50, flex: null,),
-                  $Avatar(103),
-                  const Spacing(height: 30, flex: null,),
-                  $NickView(),
-                  const Spacing(height: 30, flex: null,),
-                  $ModeView(),
-                  const Spacing(height: 10, flex: null,),
-                  const XText('性别选择后不能修改哦~',style: TextStyle(fontSize: 13, color: AppPalette.primary, fontWeight: fw$Regular),),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('嗨，欢迎来到HOMIE世界~', style: TextStyle(fontSize: 22, color: AppPalette.primary, fontWeight: fw$SemiBold),),
+                    const Spacing(height: 10, flex: null,),
+                    const Text('有头像的小伙伴容易获得关注哦~', style: TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$Regular),),
+                    const Spacing(height: 50, flex: null,),
+                    $Avatar(103),
+                    const Spacing(height: 30, flex: null,),
+                    $NickView(),
+                    const Spacing(height: 30, flex: null,),
+                    $ModeView(),
+                    const Spacing(height: 10, flex: null,),
+                    const XText('性别选择后不能修改哦~',style: TextStyle(fontSize: 13, color: AppPalette.primary, fontWeight: fw$Regular),),
 
-                  const Spacing(height: 30, flex: null,),
-                  inviteUserId(),
-                  const Expanded(child: SizedBox()),
-                  $NextView(),
-                ],
+                    const Spacing(height: 30, flex: null,),
+                    inviteUserId(),
+
+                    const Spacing(height: 90, flex: null,),
+                    $NextView(),
+                  ],
+                ),
               ),
             ),
           ],
