@@ -51,7 +51,7 @@ class _InviteNewMembersMyRewardListSheetState extends State<InviteNewMembersMyRe
               ),
           ],
         ),
-        Spacing.h4,
+        Spacing.h12,
         Expanded(child: ActivityDataView(82, widget.listType),),
       ],
     );
@@ -70,6 +70,7 @@ class _InviteNewMembersMyRewardListSheetState extends State<InviteNewMembersMyRe
       alignment: Alignment.center,
       children: [
         Container(
+          margin: EdgeInsets.symmetric(horizontal: 5),
             height: AppSize.safeBottom + 368,
             decoration: const ShapeDecoration(
               shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
@@ -82,11 +83,11 @@ class _InviteNewMembersMyRewardListSheetState extends State<InviteNewMembersMyRe
             child: child
         ),
         Positioned(
-          top: -6,
+          top: 10,
           child: Image.asset(IMG.format('my/invite_new_members_sheet_header'), scale: 3),
         ),
         Positioned(
-          top: 0,
+          top: 15,
           child: XText(headerTitle, style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: fw$SemiBold),),
         ),
       ],
@@ -139,23 +140,35 @@ class _ItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     // final uid = data['uid'];
     // final nuid = Int64(data['role_id']);
-    TextStyle textStyle = const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular);
+    TextStyle textStyle = const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular);
     String value1 = listType == 1 ? data["prize_name"] : data["invite_name"];
-    String value2 = listType == 1 ? data["prize_source"] : data["invite_status"];
-    int value3 = listType == 1 ? data["acquire_at"] : data["register_at"];
+    String value2 = listType == 1 ? data["prize_source"] : DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(data["register_at"]);
+    String value3 = listType == 1 ? DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(data["acquire_at"]) : data["invite_status"];
 
     Widget child = SizedBox(
       height: 50,
-      child: Row(
+      child: Column(
         children: [
-          Expanded(
-            child: XText(value1, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
+          Container(
+            height: 1,
+            margin: EdgeInsets.symmetric(horizontal: 8),
+            width: double.infinity,
+            color: Color(0xFFE3E7ED),
           ),
           Expanded(
-            child: XText(value2, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
-          ),
-          Expanded(
-            child: XText(DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(value3), maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
+            child: Row(
+              children: [
+                Expanded(
+                  child: XText(value1, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
+                ),
+                Expanded(
+                  child: XText(value2, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
+                ),
+                Expanded(
+                  child: XText(value3, maxLines: 2, textAlign: TextAlign.center, style: textStyle,),
+                ),
+              ],
+            ),
           ),
         ],
       ),

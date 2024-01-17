@@ -66,7 +66,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
   }
 
   Widget $BodyView() {
-    final startTop = AppSize.safeTop + (AppSize.appBar - 24) / 2.0;
+    final startTop = AppSize.safeTop + (AppSize.appBar - 24) / 2.0 + 25;
     Widget child = Stack(
       alignment: Alignment.center,
       children: [
@@ -91,18 +91,43 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           right: 32,
           height: 60,
           bottom: AppSize.safeBottom + 26,
-          child: XOutlinedBtn(
-            label: '邀请好友获得红包',
-            textStyle: const TextStyle(fontSize: 28, fontWeight: fw$Regular),
-            color: const Color(0xFFFE4A27),
-            side: const BorderSide(color: Color(0xFFFFF3A5), width: 2.0),
-            onTap: () => onItemClick('邀请好友'),
+          child: GestureDetector(
+            onTap: () {
+              onItemClick('邀请好友');
+            },
+            child: Container(
+              width: 321,
+              height: 71,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: AssetImage(IMG.format('my/open_btn'))
+                )
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                "邀请好友获得红包",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 28,
+                  color: AppPalette.txtWhite,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ),
         Positioned(
           bottom: AppSize.safeBottom + 26 + 60 + 17,
           child: Obx(() {
-            return XText('剩余红包次数:${remainingRedPacketCountRx.value}', style: const TextStyle(fontSize: 12, color: AppPalette.c6, fontWeight: fw$Regular),);
+            return XText(
+              '剩余红包次数:${remainingRedPacketCountRx.value}',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color(0xFFFF306A),
+                fontWeight: fw$Bold
+              ),
+            );
           }),
         ),
         Positioned(
@@ -112,12 +137,38 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           bottom: AppSize.safeBottom + 26 + 60 + 34,
           child: Obx(() {
             bool canOpen = remainingRedPacketCountRx.value > 0;
-            return XOutlinedBtn(
-              label: '拆红包',
-              textStyle: TextStyle(fontSize: 28, color: canOpen ? Colors.white : AppPalette.c9, fontWeight: fw$Regular),
-              color: canOpen ? const Color(0xFFFE4A27) : AppPalette.cc,
-              side: BorderSide(color: canOpen ? const Color(0xFFFFF3A5) : AppPalette.cc, width: 2.0),
-              onTap: () {if (canOpen) onItemClick('拆红包');},
+
+            return GestureDetector(
+              onTap: () {
+                if(Env.isDebug) {
+                  onItemClick('拆红包');
+                  return;
+                }
+                if(!canOpen) {
+                  return;
+                }
+                onItemClick('拆红包');
+              },
+              child: Container(
+                width: 321,
+                height: 71,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage(IMG.format(canOpen ? 'my/open_btn' : "my/open_disable"))
+                  )
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  "拆红包",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: AppPalette.txtWhite,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             );
           })
         ),
@@ -160,6 +211,10 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           barrierColor: const Color(0x80000000),
           child: const InviteNewMembersMyRewardListSheet(listType: 1,),
           direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+          decoration: ShapeDecoration(
+            color: Colors.transparent,
+            shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+          )
         );
         break;
       case '我的邀请':
@@ -167,9 +222,17 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           barrierColor: const Color(0x80000000),
           child: const InviteNewMembersMyRewardListSheet(listType: 2,),
           direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+          decoration: ShapeDecoration(
+            color: Colors.transparent,
+            shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+          )
         );
         break;
       case '拆红包':
+        if(Env.isDebug) {
+          await OpenRedPacketResultDialog.show("111", "");
+          return;
+        }
         var result = await Api.Activity.openEnvelope();
         var giftName = result["name"];
         var giftImageUrl = result["image"];
@@ -195,6 +258,10 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
   ///
   void refreshLeftOpenCount() async {
     final leftOpenTime = await Api.Activity.queryLeftOpenCount();
+    if(Env.isDebug) {
+      remainingRedPacketCountRx(10);
+      return;
+    }
     remainingRedPacketCountRx(leftOpenTime["count"]);
   }
 }

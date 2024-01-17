@@ -33,8 +33,6 @@ class CommonShareSheet extends StatelessWidget {
     final items = [
       '微信好友',
       '朋友圈',
-      // 'QQ好友',
-      // 'QQ空间',
       '生成二维码',
       '复制链接',
     ];

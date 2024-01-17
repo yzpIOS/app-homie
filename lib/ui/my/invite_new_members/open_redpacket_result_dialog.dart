@@ -29,39 +29,76 @@ class OpenRedPacketResultDialog extends StatelessWidget {
           child: Image.asset(IMG.format('my/pop_gongxihuode_result'), scale: 3),
         ),
         Positioned(
-          top: 81,
+          top: 165,
           child: Obx(() {
-            return NetImage(giftImageName.value, width: 113, height: 86);
+            return NetImage(giftImageName.value, width: 126, height: 126);
           }),
         ),
         Positioned(
-          top: 81 + 86 + 20,
+          top: 309,
           child: Obx(() {
-            return XText(giftName.value, style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Regular),);
+            return XText(giftName.value, style: TextStyle(fontSize: 24, color: Color(0xFFFF0000), fontWeight: fw$Regular),);
           })
         ),
+
         Positioned(
-          bottom: 36,
-          child: XTextBtn(
-            label: '收下了',
-            width: 140,
-            height: 34,
-            color: const Color(0xFFFE4A27),
-            textStyle: const TextStyle(fontSize: 16, color: Colors.white),
-            onTap: () => onItemClick('收下了'),
-          )
-        ),
-        Positioned(
-            bottom: 36 + 48,
-            child: XTextBtn(
-              label: '再来一次',
-              width: 140,
-              height: 34,
-              color: const Color(0xFFFE4A27),
-              textStyle: const TextStyle(fontSize: 16, color: Colors.white),
-              onTap: () => onItemClick('再来一次'),
-            )
-        ),
+          top: 439,
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  onItemClick('再来一次');
+                },
+                child: Expanded(
+                  child: Container(
+                    width: 158,
+                    height: 50,
+                    padding: EdgeInsets.only(bottom: 7),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(IMG.format('my/invite_button_1'))
+                        )
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "再来一次",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+
+              SizedBox(width: 5,),
+
+              GestureDetector(
+                onTap: () {
+                  onItemClick('收下了');
+                },
+                child: Expanded(
+                  child: Container(
+                    width: 158,
+                    height: 50,
+                    padding: EdgeInsets.only(bottom: 7),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: AssetImage(IMG.format('my/invite_button_1'))
+                        )
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "收下了",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
 
