@@ -192,7 +192,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           left: 32,
           right: 32,
           height: 71,
-          bottom: 440 + startTop + 20 + 85 + 71 + 44,
+          top: 440 + startTop + 20 + 85 + 71 + 44,
           child: GestureDetector(
             onTap: () {
               onItemClick('邀请好友');
