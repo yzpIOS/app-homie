@@ -79,6 +79,8 @@ abstract class IPact {
           if(fromLogin) {
             // OpenInstallUtils.ins.initPrivacy();
             Statistic.launch();
+            // 安装信息
+            Statistic.install();
           }
 
           doSub?.call();

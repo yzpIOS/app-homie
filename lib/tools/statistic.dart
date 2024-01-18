@@ -1,5 +1,7 @@
 
 import 'package:app/net/api.dart';
+import 'package:app/tools.dart';
+import 'package:app/tools/local_storage.dart';
 
 class Statistic {
 
@@ -140,5 +142,17 @@ class Statistic {
       if(orderId != null)
         "orderID": orderId
     });
+  }
+
+
+  ///
+  /// 13、用户充值支付取消(C13):	时间戳, 用户ID, [订单编号,] 订单ID, [订单描述 (支付结果或三方平台反馈结果)], 支付类型, 描述("充值取消")
+  ///
+  static void install() async {
+    if(await KvBox.contains(PrefKey.OpenInstallBlindDataFlag)) {
+    return;
+    }
+    Api.Data.create(14);
+    KvBox.write(PrefKey.OpenInstallBlindDataFlag, PrefKey.OpenInstallBlindDataFlag);
   }
 }
