@@ -143,7 +143,7 @@ class _ItemView extends StatelessWidget {
     TextStyle textStyle = const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular);
     String value1 = listType == 1 ? data["prize_name"] : data["invite_name"];
     String value2 = listType == 1 ? data["prize_source"] : DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(data["register_at"]);
-    String value3 = listType == 1 ? DateFormat("yyyy/MM/dd/hh:mm").formatEpoch(data["acquire_at"]) : data["invite_status"];
+    String value3 = listType == 1 ? DateFormat("yyyy/MM/dd/HH:mm").formatEpoch(data["acquire_at"]) : data["invite_status"];
 
     Widget child = SizedBox(
       height: 50,
