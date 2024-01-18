@@ -146,7 +146,7 @@ class InvitePrizeAnimateView extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(100),
-        child: NetImage(""),
+        child: NetImage((curData["image"] ?? "")),
       ),
     );
   }
