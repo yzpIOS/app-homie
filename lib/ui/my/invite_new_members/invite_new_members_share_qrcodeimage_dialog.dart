@@ -114,7 +114,7 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
                             )
                         ),
                         TextSpan(
-                            text: '(${Get.find<MyInfoCtrl>().dataRx().account})',
+                            text: '(ID:${Get.find<MyInfoCtrl>().dataRx().account})',
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: AppPalette.primary,

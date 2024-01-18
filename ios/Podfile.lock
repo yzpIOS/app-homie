@@ -83,6 +83,11 @@ PODS:
     - Flutter
     - HydraAsync
     - TXIMSDK_Plus_iOS (>= 7.4.4661)
+  - tencent_kit (6.0.1):
+    - Flutter
+    - tencent_kit/vendor (= 6.0.1)
+  - tencent_kit/vendor (6.0.1):
+    - Flutter
   - tencent_trtc_cloud (10.7):
     - Flutter
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
@@ -144,6 +149,7 @@ DEPENDENCIES:
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tencent_cloud_chat_sdk (from `.symlinks/plugins/tencent_cloud_chat_sdk/ios`)
+  - tencent_kit (from `.symlinks/plugins/tencent_kit/ios`)
   - tencent_trtc_cloud (from `.symlinks/plugins/tencent_trtc_cloud/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_compress (from `.symlinks/plugins/video_compress/ios`)
@@ -227,6 +233,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   tencent_cloud_chat_sdk:
     :path: ".symlinks/plugins/tencent_cloud_chat_sdk/ios"
+  tencent_kit:
+    :path: ".symlinks/plugins/tencent_kit/ios"
   tencent_trtc_cloud:
     :path: ".symlinks/plugins/tencent_trtc_cloud/ios"
   url_launcher_ios:
@@ -283,6 +291,7 @@ SPEC CHECKSUMS:
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
   sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
   tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
+  tencent_kit: 81ca28c061c5e239043b3a266f9316ab60141e1b
   tencent_trtc_cloud: 8b55aa23005a77db473cdbc13841a4b13b261946
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
