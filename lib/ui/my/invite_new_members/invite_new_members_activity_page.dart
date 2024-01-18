@@ -90,37 +90,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
 
         Positioned(top: startTop + 33, right: 0, child: $RightEntranceButton('我的奖励'),),
         Positioned(top: startTop + 66, right: 0, child: $RightEntranceButton('我的邀请'),),
-        Positioned(
-          left: 32,
-          right: 32,
-          height: 71,
-          bottom: AppSize.safeBottom + 57,
-          child: GestureDetector(
-            onTap: () {
-              onItemClick('邀请好友');
-            },
-            child: Container(
-              width: 321,
-              height: 71,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(IMG.format('my/open_btn'))
-                )
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "邀请好友获得红包",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  color: AppPalette.txtWhite,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ),
+
 
 
         Positioned(
@@ -216,6 +186,38 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
               ),
             );
           }),
+        ),
+
+        Positioned(
+          left: 32,
+          right: 32,
+          height: 71,
+          bottom: 440 + startTop + 20 + 85 + 71 + 44,
+          child: GestureDetector(
+            onTap: () {
+              onItemClick('邀请好友');
+            },
+            child: Container(
+              width: 321,
+              height: 71,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(IMG.format('my/open_btn'))
+                  )
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                "邀请好友获得红包",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 28,
+                  color: AppPalette.txtWhite,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );

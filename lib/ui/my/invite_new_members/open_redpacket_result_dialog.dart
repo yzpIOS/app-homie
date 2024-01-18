@@ -51,23 +51,21 @@ class OpenRedPacketResultDialog extends StatelessWidget {
                 onTap: () {
                   onItemClick('再来一次');
                 },
-                child: Expanded(
-                  child: Container(
-                    width: 158,
-                    height: 50,
-                    padding: EdgeInsets.only(bottom: 7),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage(IMG.format('my/invite_button_1'))
-                      )
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "再来一次",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+                child: Container(
+                  width: 158,
+                  height: 50,
+                  padding: EdgeInsets.only(bottom: 7),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(IMG.format('my/invite_button_1'))
+                    )
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "再来一次",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
               ),
@@ -78,23 +76,21 @@ class OpenRedPacketResultDialog extends StatelessWidget {
                 onTap: () {
                   onItemClick('收下了');
                 },
-                child: Expanded(
-                  child: Container(
-                    width: 158,
-                    height: 50,
-                    padding: EdgeInsets.only(bottom: 7),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage(IMG.format('my/invite_button_1'))
-                        )
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "收下了",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+                child: Container(
+                  width: 158,
+                  height: 50,
+                  padding: EdgeInsets.only(bottom: 7),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: AssetImage(IMG.format('my/invite_button_1'))
+                    )
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "收下了",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
               ),
