@@ -89,7 +89,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
         Positioned(
           left: 32,
           right: 32,
-          height: 60,
+          height: 71,
           bottom: AppSize.safeBottom + 26,
           child: GestureDetector(
             onTap: () {
@@ -165,7 +165,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
         Positioned(
           left: 32,
           right: 32,
-          height: 60,
+          height: 71,
           bottom: AppSize.safeBottom + 26 + 60 + 34,
           child: Obx(() {
             bool canOpen = remainingRedPacketCountRx.value > 0;

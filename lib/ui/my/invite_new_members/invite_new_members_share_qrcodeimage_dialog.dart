@@ -41,13 +41,29 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
       children: [
         child,
         Spacing.h20,
-        XTextBtn(
-          label: '保存图片',
-          width: 160,
-          height: 34,
-          textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
-          onTap: () => RepaintBoundaryUtils().savePhoto(back: true),
-        ),
+
+        GestureDetector(
+          onTap: () {
+            RepaintBoundaryUtils().savePhoto(back: true);
+          },
+          child: Container(
+            width: 117,
+            height: 38,
+            padding: EdgeInsets.only(bottom: 7),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: AssetImage(IMG.format('my/invite_button_1'))
+                )
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              "保存图片",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ),
+        )
       ],
     );
 
@@ -68,7 +84,47 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
   Widget $BottomItemsView() {
     return Row(
       children: [
-        Expanded(child: XText('我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~', maxLines: 3, style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular),),),
+        Expanded(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Flexible(
+                child: Text.rich(
+                  TextSpan(
+                      children: [
+                        TextSpan(
+                            text: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: fw$Regular
+                            )
+                        ),
+                        TextSpan(
+                            text: '(${Get.find<MyInfoCtrl>().dataRx().account})',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: AppPalette.primary,
+                                fontWeight: fw$Regular
+                            )
+                        ),
+                        TextSpan(
+                            text: '我是，邀请你一起畅游Homie世界，感受次时代社交~',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                fontWeight: fw$Regular
+                            )
+                        )
+                      ]
+                  ),
+                  maxLines: 3,
+                ),
+              ),
+            ],
+          ),
+        ),
+
         Spacing.w10,
         Image.asset(IMG.format("my/invite_qrcode"), width: 68, height: 68,),
       ],
