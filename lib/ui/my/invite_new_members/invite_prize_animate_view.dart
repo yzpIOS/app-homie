@@ -79,6 +79,7 @@ class InvitePrizeAnimateView extends StatelessWidget {
       child: child,
     );
     _views[key] = await Get.insertOverlay(child);
+
     // 等待上一个横幅
     return await Future.delayed(data.times.value1 + data.times.value2);
   }
@@ -86,8 +87,12 @@ class InvitePrizeAnimateView extends StatelessWidget {
   static void clearAnimate() {
     _startId = DateTime.now().millisecondsSinceEpoch;
     _views.forEach((key, value) {
-      _views[key]?.remove();
+      try {
+        _views[key]?.remove();
+      } catch(e) {
+      }
     });
+    _views.clear();
   }
 
   @override
