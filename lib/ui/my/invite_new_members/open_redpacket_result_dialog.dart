@@ -104,8 +104,10 @@ class OpenRedPacketResultDialog extends StatelessWidget {
       ],
     );
 
-    child = Box(
+    child = Container(
       width: 375,
+      margin: EdgeInsets.only(bottom: 120),
+      alignment: Alignment.topCenter,
       child: child,
     );
 
