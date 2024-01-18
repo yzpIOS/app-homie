@@ -62,4 +62,11 @@ class ApiActivity extends ApiBase {
   Future prizeList({required PageNum page}) async {
     return _doPost("pull_newcomers/winning/query", data: page + {});
   }
+
+  ///
+  /// 滚动数据
+  ///
+  Future rollList() async {
+    return _doPost("pull_newcomers/red_pkg/rolle_data");
+  }
 }

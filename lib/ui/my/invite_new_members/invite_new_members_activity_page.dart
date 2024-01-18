@@ -3,6 +3,7 @@ import 'package:app/net/api.dart';
 import 'package:app/ui/my/invite_new_members/common_share_sheet.dart';
 import 'package:app/ui/my/invite_new_members/invite_new_members_myrewardlist_sheet.dart';
 import 'package:app/ui/my/invite_new_members/invite_new_members_rules_sheet.dart';
+import 'package:app/ui/my/invite_new_members/invite_prize_animate_view.dart';
 import 'package:app/ui/my/invite_new_members/open_redpacket_result_dialog.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -49,6 +50,9 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
 
       // 剩余拆红包次数
       refreshLeftOpenCount();
+
+      // 开始动画
+      InvitePrizeAnimateView.startRolling();
     } catch (e, s) {
       errLog(e, s);
 
@@ -333,6 +337,12 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
       return;
     }
     remainingRedPacketCountRx(leftOpenTime["count"]);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    InvitePrizeAnimateView.clearAnimate();
   }
 }
 
