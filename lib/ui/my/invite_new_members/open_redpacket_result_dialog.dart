@@ -37,7 +37,7 @@ class OpenRedPacketResultDialog extends StatelessWidget {
         Positioned(
           top: 309,
           child: Obx(() {
-            return XText(giftName.value, style: TextStyle(fontSize: 24, color: Color(0xFFFF0000), fontWeight: fw$Regular),);
+            return XText(giftName.value, style: TextStyle(fontSize: 24, color: Color(0xFFFF0000), fontWeight: FontWeight.w900),);
           })
         ),
 

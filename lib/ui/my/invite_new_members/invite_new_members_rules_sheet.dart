@@ -13,7 +13,7 @@ class InviteNewMembersRulesSheet extends StatelessWidget {
     const textStyle = TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Regular);
 
     Widget child = SingleChildScrollView(
-      padding: Pad(horizontal: 11, top: 26, bottom: AppSize.safeBottom),
+      padding: Pad(horizontal: 11, top: 39, bottom: AppSize.safeBottom),
       // child: const Column(
       //   children: [
       //     Text('1.每次成功邀请1个新用户，即可获得1次抽取红包的机会；红包内必定包含紫钻，最高可得999紫钻', style: textStyle,),
@@ -52,6 +52,7 @@ class InviteNewMembersRulesSheet extends StatelessWidget {
       children: [
         Container(
             height: AppSize.safeBottom + 368,
+            margin: EdgeInsets.symmetric(horizontal: 5),
             decoration: const ShapeDecoration(
               shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
               gradient: LinearGradient(
@@ -63,11 +64,11 @@ class InviteNewMembersRulesSheet extends StatelessWidget {
             child: child
         ),
         Positioned(
-          top: -6,
+          top: 10,
           child: Image.asset(IMG.format('my/invite_new_members_sheet_header'), scale: 3),
         ),
         const Positioned(
-          top: 0,
+          top: 16,
           child: XText('活动规则', style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: fw$SemiBold),),
         ),
       ],

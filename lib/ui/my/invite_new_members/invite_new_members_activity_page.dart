@@ -125,11 +125,43 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
               style: const TextStyle(
                 fontSize: 12,
                 color: Color(0xFFFF306A),
-                fontWeight: fw$Bold
+                fontWeight: FontWeight.w900
               ),
             );
           }),
         ),
+
+        Positioned(
+          left: 32,
+          right: 32,
+          height: 85,
+          top: 478 + startTop,
+          child: Stack(
+            children: [
+              Positioned(
+                child: Image.asset(IMG.format('my/ic_pic_kuang_bg')),
+              ),
+              Positioned(
+                top: 16,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // https://blog.csdn.net/ZuoYueLiang/article/details/129788014
+                    creatRichText("最高可得", 0xFFFFF1DE, 27),
+                    SizedBox(width: 6,),
+                    creatRichText("999", 0xFFf0ff00, 40),
+
+                    SizedBox(width: 6,),
+                    creatRichText("钻石", 0xFFFFF1DE, 27),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+
         Positioned(
           left: 32,
           right: 32,
@@ -178,6 +210,33 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
     return child;
   }
 
+  Widget creatRichText(String text, int color, double fontSize) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: fontSize,
+        fontWeight: FontWeight.bold,
+        foreground: Paint()
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 5
+          ..color = Color(color),
+        shadows: [
+          Shadow(
+              blurRadius: 30,
+              color: Color(0xFFffab34),
+              offset: Offset(0, 0)
+          ),
+
+          Shadow(
+              blurRadius: 30,
+              color: Color(0xFFffab34),
+              offset: Offset(0, 0)
+          )
+        ]
+      ),
+    );
+  }
+
   Widget $RightEntranceButton(String text) {
     return InkWell(
       onTap: () => onItemClick(text),
@@ -204,6 +263,10 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           barrierColor: const Color(0x80000000),
           child: InviteNewMembersRulesSheet(ruleContent: ruleMap["rule_desc"],),
           direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+          decoration: ShapeDecoration(
+            color: Colors.transparent,
+            shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+          )
         );
         break;
       case '我的奖励':
