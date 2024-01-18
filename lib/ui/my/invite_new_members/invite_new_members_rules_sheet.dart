@@ -64,7 +64,7 @@ class InviteNewMembersRulesSheet extends StatelessWidget {
             child: child
         ),
         Positioned(
-          top: 10,
+          top: 12,
           child: Image.asset(IMG.format('my/invite_new_members_sheet_header'), scale: 3),
         ),
         const Positioned(
