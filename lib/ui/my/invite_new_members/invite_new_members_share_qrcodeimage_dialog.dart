@@ -49,18 +49,31 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
           child: Container(
             width: 117,
             height: 38,
-            padding: EdgeInsets.only(bottom: 7),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: AssetImage(IMG.format('my/invite_button_1'))
-                )
-            ),
             alignment: Alignment.center,
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      Color(0xFFF7A665),
+                      Color(0xFFFFC893),
+                    ]
+                ),
+                borderRadius: AppBorderRadius.max,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFFFFC394),
+                    offset: Offset(0.0, 3.0),
+                    spreadRadius: 0,
+                    blurRadius: 5,
+                  )
+                ]
+            ),
             child: Text(
               "保存图片",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.white),
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         )
