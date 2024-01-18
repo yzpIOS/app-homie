@@ -151,7 +151,14 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
                     // https://blog.csdn.net/ZuoYueLiang/article/details/129788014
                     creatRichText("最高可得", 0xFFFFF1DE, 27),
                     SizedBox(width: 6,),
-                    creatRichText("999", 0xFFf0ff00, 40),
+
+                    Obx(() {
+                      if(ruleMap.isEmpty) {
+                        return SizedBox();
+                      }
+                      return creatRichText(ruleMap["activity_value"].toString(), 0xFFf0ff00, 40);
+                    }),
+
 
                     SizedBox(width: 6,),
                     creatRichText("钻石", 0xFFFFF1DE, 27),
