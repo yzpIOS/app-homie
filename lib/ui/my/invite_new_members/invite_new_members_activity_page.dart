@@ -97,7 +97,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           left: 32,
           right: 32,
           height: 85,
-          top: 440 + startTop,
+          top: 430 + startTop,
           child: Stack(
             children: [
               Positioned(
