@@ -116,19 +116,17 @@ class InvitePrizeAnimateView extends StatelessWidget {
                   width: 1
               )
           ),
-          child: Flexible(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // 圆形头像
-                const SizedBox(width: 3,),
-                createAvatar(),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // 圆形头像
+              const SizedBox(width: 3,),
+              createAvatar(),
 
-                // 名字，等信息
-                SizedBox(width: 5,),
-                createRightInfo(),
-              ],
-            ),
+              // 名字，等信息
+              SizedBox(width: 5,),
+              createRightInfo(),
+            ],
           ),
         )
       ],
@@ -181,17 +179,17 @@ class InvitePrizeAnimateView extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(left: 5),
-          padding: EdgeInsets.symmetric(
-              horizontal: 4.5,
-              vertical: 3
-          ),
-          decoration: BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(100)
-          ),
-          child: Flexible(
+        Flexible(
+          child: Container(
+            margin: EdgeInsets.only(left: 5),
+            padding: EdgeInsets.symmetric(
+                horizontal: 4.5,
+                vertical: 3
+            ),
+            decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(100)
+            ),
             child: Text(
               curData["time"] ?? "",
               style: TextStyle(
