@@ -7,6 +7,7 @@ class ApiLottery extends ApiBase {
     return _doPost('gift/lottery/medium/query');
   }
 
+
   Future pool() {
     return _doPost('activity/lottery/prize_pool/query');
   }
@@ -21,6 +22,25 @@ class ApiLottery extends ApiBase {
 
   Future winning() {
     return _doPost('activity/lottery/user/winning');
+  }
+
+
+
+
+  Future pool2(int giftId) {
+    return _doPost('activity/blind_box/prize_pool/query', data: {"gift_id": giftId});
+  }
+
+  Future today2(int giftId) {
+    return _doPost('activity/blind_box/top/today', data: {"gift_id": giftId});
+  }
+
+  Future yesterday2(int giftId) {
+    return _doPost('activity/blind_box/top/yesterday', data: {"gift_id": giftId});
+  }
+
+  Future winning2(int giftId) {
+    return _doPost('activity/blind_box/user/winning', data: {"gift_id": giftId});
   }
 
   Future buy({required int id, required int count}) {

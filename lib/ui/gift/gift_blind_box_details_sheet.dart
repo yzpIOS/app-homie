@@ -10,10 +10,11 @@ import 'package:flutter/material.dart';
 /// 盲盒
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
   final int price;
-  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20});
+  final int giftId;
+  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20, required this.giftId});
 
-  static Future show({required int price}) {
-    final sheet = GiftBlindBoxDetailsSheet._(price: price,);
+  static Future show({required int price, required int giftId}) {
+    final sheet = GiftBlindBoxDetailsSheet._(price: price, giftId: giftId,);
 
     return OrientationSheet.show(
       child: sheet,
@@ -39,14 +40,14 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return _BlindBoxRecordingDataView();
+          return _BlindBoxRecordingDataView(giftId);
         },
       ),
       '排行榜': DelayView(
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return const _BlindBoxRankingListMainDataView();
+          return _BlindBoxRankingListMainDataView(giftId);
         },
       ),
     };
@@ -142,6 +143,10 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
 }
 
 class _BlindBoxRecordingDataView extends SimpleDataView<Map> {
+  int giftId;
+
+  _BlindBoxRecordingDataView(this.giftId);
+
   @override
   BaseConfig get config {
     return GridConfig(
@@ -156,7 +161,7 @@ class _BlindBoxRecordingDataView extends SimpleDataView<Map> {
   }
 
   @override
-  Future fetch() => Api.Lottery.winning();
+  Future fetch() => Api.Lottery.winning2(giftId);
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
@@ -243,7 +248,8 @@ class _BlindBoxRecordingDataView extends SimpleDataView<Map> {
 }
 
 class _BlindBoxRankingListMainDataView extends StatefulWidget {
-  const _BlindBoxRankingListMainDataView();
+  final int giftId;
+  const _BlindBoxRankingListMainDataView(this.giftId);
 
   @override
   State<_BlindBoxRankingListMainDataView> createState() => _BlindBoxRankingListMainDataViewState();
@@ -256,8 +262,8 @@ class _BlindBoxRankingListMainDataViewState extends State<_BlindBoxRankingListMa
   );
 
   late final tabs = {
-    '今日榜': _SubListDataView(Api.Lottery.today),
-    '昨日榜': _SubListDataView(Api.Lottery.yesterday),
+    '今日榜': _SubListDataView(Api.Lottery.today2, widget.giftId),
+    '昨日榜': _SubListDataView(Api.Lottery.yesterday2, widget.giftId),
   };
 
   @override
@@ -296,9 +302,10 @@ class _BlindBoxRankingListMainDataViewState extends State<_BlindBoxRankingListMa
 }
 
 class _SubListDataView extends SimpleDataView<Map> {
-  final Future Function() api;
+  int giftId;
+  final Future Function(int giftId) api;
 
-  _SubListDataView(this.api);
+  _SubListDataView(this.api, this.giftId);
 
   @override
   BaseConfig get config {
@@ -309,7 +316,7 @@ class _SubListDataView extends SimpleDataView<Map> {
   }
 
   @override
-  Future fetch() => api();
+  Future fetch() => api(giftId);
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {

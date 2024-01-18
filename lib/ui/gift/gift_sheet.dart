@@ -112,7 +112,10 @@ class GiftSheet extends StatelessWidget {
             return (logic.selectRx() != null && logic.selectRx()?['type'] == 6)
                 ? GestureDetector(
                     child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145, height: 46.9,),
-                    onTap: () => GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price']),
+                    onTap: () {
+                      int giftId = logic.selectRx()?["id"];
+                      GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId);
+                    },
                   )
                 : const Spacing(height: 46.9, flex: null);
           }

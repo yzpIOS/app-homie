@@ -169,10 +169,10 @@ class InvitePrizeAnimateView extends StatelessWidget {
             (curData["user_name"] ?? ""),
             maxLines: 1,
             style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 15,
-                decoration: TextDecoration.none
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 15,
+              decoration: TextDecoration.none
             ),
           ),
         ),
