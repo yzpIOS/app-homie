@@ -225,7 +225,7 @@ class InvitePrizeAnimateView extends StatelessWidget {
               style: TextStyle(
                 color: Color(0xFFFFED35),
                 fontWeight: FontWeight.w500,
-                fontSize: 12,
+                fontSize: 16,
                 decoration: TextDecoration.none
               )
             ),

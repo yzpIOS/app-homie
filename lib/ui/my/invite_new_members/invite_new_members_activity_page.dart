@@ -94,7 +94,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           left: 32,
           right: 32,
           height: 71,
-          bottom: AppSize.safeBottom + 26,
+          bottom: AppSize.safeBottom + 57,
           child: GestureDetector(
             onTap: () {
               onItemClick('邀请好友');
@@ -121,25 +121,13 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
             ),
           ),
         ),
-        Positioned(
-          bottom: AppSize.safeBottom + 26 + 60 + 17,
-          child: Obx(() {
-            return XText(
-              '剩余红包次数:${remainingRedPacketCountRx.value}',
-              style: const TextStyle(
-                fontSize: 12,
-                color: Color(0xFFFF306A),
-                fontWeight: FontWeight.w900
-              ),
-            );
-          }),
-        ),
+
 
         Positioned(
           left: 32,
           right: 32,
           height: 85,
-          top: 478 + startTop,
+          top: 440 + startTop,
           child: Stack(
             children: [
               Positioned(
@@ -177,7 +165,7 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
           left: 32,
           right: 32,
           height: 71,
-          bottom: AppSize.safeBottom + 26 + 60 + 34,
+          top: 440 + startTop + 20 + 85,
           child: Obx(() {
             bool canOpen = remainingRedPacketCountRx.value > 0;
 
@@ -214,6 +202,20 @@ class _InviteNewMembersActivityPageState extends State<InviteNewMembersActivityP
               ),
             );
           })
+        ),
+
+        Positioned(
+          top: 440 + startTop + 20 + 85 + 71,
+          child: Obx(() {
+            return XText(
+              '剩余红包次数:${remainingRedPacketCountRx.value}',
+              style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFFFF306A),
+                  fontWeight: FontWeight.w900
+              ),
+            );
+          }),
         ),
       ],
     );

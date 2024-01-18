@@ -42,8 +42,10 @@ class OpenRedPacketResultDialog extends StatelessWidget {
         ),
 
         Positioned(
-          top: 439,
+          top: 449,
+          height: 50,
           child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               GestureDetector(
                 onTap: () {
@@ -55,10 +57,10 @@ class OpenRedPacketResultDialog extends StatelessWidget {
                     height: 50,
                     padding: EdgeInsets.only(bottom: 7),
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: AssetImage(IMG.format('my/invite_button_1'))
-                        )
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage(IMG.format('my/invite_button_1'))
+                      )
                     ),
                     alignment: Alignment.center,
                     child: Text(
