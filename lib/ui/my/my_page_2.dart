@@ -5,7 +5,8 @@ import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/my/backpack/backpack_page.dart';
+import 'package:app/ui/my/backpack/v1/backpack_page.dart';
+import 'package:app/ui/my/backpack/v2/backpack_page2.dart';
 import 'package:app/ui/my/common/uid_view.dart';
 import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/decorate/decorate_shop_page.dart';
@@ -181,6 +182,10 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         const GoDressUpEvent().fire();
         break;
       case '我的背包':
+        if(Env.isDebug) {
+          Get.to(() => const BackpackPage2());
+          return;
+        }
         Get.to(() => const BackpackPage());
         break;
       case '我的任务':

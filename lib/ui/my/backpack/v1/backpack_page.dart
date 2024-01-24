@@ -1,5 +1,5 @@
-import 'package:app/ui/my/backpack/backpack_view_gift.dart';
-import 'package:app/ui/my/backpack/backpack_view_wardrobe.dart';
+import 'package:app/ui/my/backpack/v1/backpack_view_gift.dart';
+import 'package:app/ui/my/backpack/v1/backpack_view_wardrobe.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 

@@ -10,7 +10,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/common/video_page.dart';
 import 'package:app/ui/message/msg_adapter/data/base_adapter.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
-import 'package:app/ui/my/backpack/backpack_page.dart';
+import 'package:app/ui/my/backpack/v1/backpack_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/image/image_gallery.dart';
 import 'package:bubble/bubble.dart';

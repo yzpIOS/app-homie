@@ -2,7 +2,7 @@
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/my/backpack/backpack_page.dart';
+import 'package:app/ui/my/backpack/v1/backpack_page.dart';
 import 'package:app/ui/my/wallet/exchange_page.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';

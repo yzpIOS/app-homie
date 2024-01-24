@@ -33,7 +33,7 @@ class _BackpackView$WardrobeState extends State<BackpackView$Wardrobe> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        _DataView(selectRx: selectRx),
+        BackPackDataView(selectRx: selectRx, padding: Pad(horizontal: 20, top: 20, bottom: selectRx.isEmpty ? 20 : 150)),
         Positioned(
           left: 0,
           right: 0,
@@ -162,10 +162,14 @@ class _BackpackView$WardrobeState extends State<BackpackView$Wardrobe> {
   }
 }
 
-class _DataView extends StatelessWidget {
+
+
+class BackPackDataView extends StatelessWidget {
   final RxMap<int, DateItem> selectRx;
 
-  const _DataView({required this.selectRx});
+  final Pad? padding;
+
+  const BackPackDataView({required this.selectRx, required this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -186,11 +190,11 @@ class _DataView extends StatelessWidget {
           child: data.isEmpty
               ? context.state<DataEmpty>(it.doRefresh)
               : GridView.builder(
-                  padding: Pad(horizontal: 20, top: 20, bottom: selectRx.isEmpty ? 20 : 150),
-                  gridDelegate: delegate,
-                  itemCount: data.length,
-                  itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx),
-                ),
+            padding: padding,
+            gridDelegate: delegate,
+            itemCount: data.length,
+            itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx),
+          ),
         );
       },
     );
@@ -236,7 +240,7 @@ class _ItemView extends StatelessWidget {
       decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0x4D000000)),
       alignment: Alignment.center,
       child: Obx(
-        () => XText(
+            () => XText(
           'X${_countRx()}',
           style: const TextStyle(fontSize: 8, color: Colors.white),
         ),
@@ -269,24 +273,24 @@ class _ItemView extends StatelessWidget {
     );
 
     return Obx(
-      () {
+          () {
         final _decor = BoxDecoration(
           borderRadius: AppBorderRadius.a8,
           border: selectRx.containsKey(_id)
               ? const Border.fromBorderSide(
-                  BorderSide(
-                    width: 2,
-                    color: AppPalette.primary,
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                  ),
-                )
+            BorderSide(
+              width: 2,
+              color: AppPalette.primary,
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          )
               : const Border.fromBorderSide(
-                  BorderSide(
-                    width: 2,
-                    color: Color(0xFFE8F5FF),
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                  ),
-                ),
+            BorderSide(
+              width: 2,
+              color: Color(0xFFE8F5FF),
+              strokeAlign: BorderSide.strokeAlignOutside,
+            ),
+          ),
         );
 
         return AnimatedContainer(
