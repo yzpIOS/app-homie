@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/room_card_view.dart';
@@ -27,101 +28,198 @@ class DecorateShopPage extends StatefulWidget {
 
 class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProviderStateMixin {
 
-  final data = <String, Widget>{};
+  final data = RxMap<String, Map>();
 
-  late TabController  controller;
+  TabController? controller;
 
-  int curSelectIndex = 0;
+  // 当前选择的tab
+  RxInt curSelectIndex = RxInt(0);
+
+  // 点击tab时，锁住不给滚动
+  bool canMove = true;
+
+  // 滚动
+  ScrollController scrollController = ScrollController();
+  List<T.Tuple2<String, GlobalKey>> titles = [];
+
 
   @override
   void initState() {
     super.initState();
-    data["派对背景"] = createItem({"title": "语音派对背景", "data": {}});
-    data["头像框"] = createItem({"title": "语音派对背景", "data": {}});
-    data["坐骑"] = createItem({"title": "语音派对背景", "data": {}});
-    data["气泡"] = createItem({"title": "语音派对背景", "data": {}});
-    data["月榜"] = createItem({"title": "语音派对背景", "data": {}});
-    data["月榜"] = createItem({"title": "语音派对背景", "data": {}});
 
-    controller = TabController(vsync: this, length: data.length);
-    controller.addListener(() {
-      curSelectIndex = controller.index;
-      setState(() { });
+
+    requestTypes();
+
+    scrollController.addListener(() {
+      if(!canMove) {
+        return;
+      }
+      int preIndex = 0;
+      RenderBox? parent = scrollViewKey.currentContext?.findRenderObject() as RenderBox?;
+
+      for(int index = 0; index < titles.length; index ++) {
+
+        RenderBox? child = titles[index].value2.currentContext?.findRenderObject() as RenderBox?;
+
+        Offset? childOffset = child?.localToGlobal(Offset.zero);
+        if(childOffset != null) {
+          //convert
+          Offset? childRelativeToParent = parent?.globalToLocal(childOffset);
+          debugPrint("数据异常[${titles[index].value1}]: offSetX = ${childRelativeToParent?.dx}, "
+              "offSetY = ${childRelativeToParent?.dy}");
+          if((childRelativeToParent?.dy ?? -1) >= 0.0) {
+            break;
+          }
+          preIndex = index;
+        }
+      }
+      if(controller?.index != preIndex) {
+        controller?.animateTo(preIndex);
+      }
+    });
+  }
+
+  void requestTypes() {
+    Api.Shop.categoryList_(groupId: [3]).then((value) {
+      if(Env.isRelease) {
+        if(value !is List<dynamic>) {
+          showToast('数据异常');
+          Get.back();
+          return;
+        }
+      }
+      debugPrint("aa");
+      data.clear();
+      (value as List<dynamic>).forEach((element) {
+        data[element["name"]] = element;
+      });
+      controller = TabController(vsync: this, length: data.length);
+      controller?.addListener(() {
+        curSelectIndex.value = controller?.index ?? 0;
+      });
+      data.refresh();
+    }).onError((error, stackTrace) {
+      showToast('服务异常');
+      Get.back();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var children = <Widget>[];
-    var items = data.keys.toList();
-    for(int index = 0; index < items.length; index ++) {
-      children.add(Container(
-        height: 23,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: curSelectIndex == index ? BoxDecoration(
-            color: AppPalette.primary,
-            borderRadius: BorderRadius.circular(100)
-        ) : BoxDecoration(
-            color: const Color(0xFFE9E9E9),
-            borderRadius: BorderRadius.circular(100)
-        ),
-
-        child: Text(
-          items[index],
-          style: TextStyle(
-              color: curSelectIndex == index ? Colors.white : Color(0xFF6C6C6C),
-              fontWeight: FontWeight.normal,
-              fontSize: 12
-          ),
-        ),
-      ));
-    }
-
     return Scaffold(
       appBar: xAppBar(title: "装扮"),
       bottomNavigationBar: createBottomBar(),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 7),
-            child: xAppBar$TabBar(
-              data.keys,
-              controller: controller,
-              alignment: Alignment.centerLeft,
-              needPadding: false,
-              needDownLine: false,
-              isScrollable: true,
-              fontSize: 12,
-              height: 23,
-              labelPadding: 5,
-              kItemHeight: 23,
-              decoration: const BoxDecoration(),
-              indicatorColor: AppPalette.sheetWhite,
-              labelColor:const T.Tuple2(Colors.white, Color(0XFF666666)),
-              tabManufacture: children,
-            ),
-          ),
+          createTab(),
 
-          Expanded(
-            child: TabBarView(
-              controller: controller,
-              children: data.values.toList(),
-            )
-          ),
-
-
+          Obx(() {
+            var inerDagta = data.value;
+            return Expanded(
+              child: createItem(inerDagta),
+            );
+          })
         ],
       ),
     );
   }
 
-  Widget createItem(Map data) {
-    String title = data["title"];
-    List datas = [1, 10, 11, 12];
+  ///
+  /// 创建tab
+  ///
+  Widget createTab() {
+    return Container(
+      height: 30,
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 7),
+      child: Obx(() {
+        if(data.keys.isEmpty) {
+          return SizedBox();
+        }
+        var children = <Widget>[];
+        var items = data.keys.toList();
+        for(int index = 0; index < items.length; index ++) {
+          children.add(createTabItem(index, items[index]));
+        }
 
-    // return SizedBox();
+        return xAppBar$TabBar(
+            data.keys,
+            controller: controller,
+            alignment: Alignment.centerLeft,
+            needPadding: false,
+            needDownLine: false,
+            isScrollable: true,
+            fontSize: 12,
+            height: 23,
+            labelPadding: 5,
+            kItemHeight: 23,
+            decoration: const BoxDecoration(),
+            indicatorColor: AppPalette.sheetWhite,
+            labelColor:const T.Tuple2(Colors.white, Color(0XFF666666)),
+            tabManufacture: children
+        );
+      }),
+    );
+  }
+
+  Widget createTabItem(int index, String title) {
+    return GestureDetector(
+      onTap: () {
+        RenderBox? parent = scrollViewKey.currentContext?.findRenderObject() as RenderBox?;
+        RenderBox? child = titles[index].value2.currentContext?.findRenderObject() as RenderBox?;
+        Offset? childOffset = child?.localToGlobal(Offset.zero);
+        if(childOffset != null) {
+          Offset? childRelativeToParent = parent?.globalToLocal(childOffset);
+          if(childRelativeToParent != null) {
+            scrollController.animateTo(childRelativeToParent.dy + scrollController.offset,
+                duration: const Duration(milliseconds: 10), curve: Curves.linear);
+
+            canMove = false;
+            Future.delayed(const Duration(milliseconds: 50)).whenComplete(() {
+              canMove = true;
+              curSelectIndex.value = index;
+            });
+          }
+        }
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Obx(() {
+        var localIndex = curSelectIndex.value;
+        return Container(
+          constraints: BoxConstraints(minWidth: 30, maxHeight: 23, minHeight: 23),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: localIndex == index ? BoxDecoration(
+              color: AppPalette.primary,
+              borderRadius: BorderRadius.circular(100)
+          ) : BoxDecoration(
+              color: const Color(0xFFE9E9E9),
+              borderRadius: BorderRadius.circular(100)
+          ),
+
+          child: Text(
+            title,
+            style: TextStyle(
+                color: localIndex == index ? Colors.white : Color(0xFF6C6C6C),
+                fontWeight: FontWeight.normal,
+                fontSize: 12
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  GlobalKey scrollViewKey = GlobalKey();
+
+  Widget createItem(Map data) {
+    List datas = data.keys.toList();
+
     return CustomScrollView(
+      key: scrollViewKey,
+      controller: scrollController,
       slivers: datas.map((e) {
         return SliverToBoxAdapter(
           child: Column(
@@ -130,7 +228,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
               // 两个类别的间距
               datas.indexOf(e) == 0 ? SizedBox(height: 22,) : SizedBox(height: 15,),
               // 标题
-              createNavigator(title),
+              createNavigator(e),
               SizedBox(height: 19,),
               // 表格处理
               createGrid(),
@@ -142,7 +240,12 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   }
 
   Widget createNavigator(String title) {
+    titles.removeWhere((element) => element.value1 == title);
+    var globalKey = GlobalKey(debugLabel: title);
+    titles.add(T.Tuple2(title, globalKey));
+
     return Row(
+      key: globalKey,
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -157,16 +260,6 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
             ),
           ),
         ),
-
-        Text(
-          title,
-          style: TextStyle(
-            color: Color(0xFF6B6B6B),
-            fontWeight: FontWeight.w500,
-            fontSize: 12
-          ),
-        ),
-        RightArrowIcon(),
         SizedBox(width: 11,),
       ],
     );
@@ -177,12 +270,12 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   ///
   Widget createGrid() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 8,
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 11,
@@ -348,5 +441,11 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
   }
 }

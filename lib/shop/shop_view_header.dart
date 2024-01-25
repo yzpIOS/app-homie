@@ -17,6 +17,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/unity_view.dart';
 import 'package:app/ui/dressup/model_overlay_cloth.dart';
 import 'package:app/ui/dressup/model_overlay_wardrobe.dart';
+import 'package:app/ui/my/backpack/v2/backpack_page2.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/webview/webview_page.dart';
 import 'package:flutter/foundation.dart';
@@ -280,6 +281,13 @@ class _MyModelViewState extends State<MyModelView> {
               OpacityButton(
                 onTap: () => onChangeCameraDressTypeClick(2),
                 child: Image.asset(IMG.format(groupListId == 2 ? 'shop/shangcheng_icon_fz_selected' : 'shop/shangcheng_icon_fz_unselected'), scale: 3),
+              ),
+              const Spacing(height: 7, flex: null),
+              OpacityButton(
+                onTap: () {
+                  Get.to(() => const BackpackPage2());
+                },
+                child: Image.asset(IMG.format('shop/sc_icon_zb_unselectde'), scale: 3),
               ),
             ],
           ),

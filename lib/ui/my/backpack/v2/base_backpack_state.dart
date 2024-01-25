@@ -104,11 +104,12 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
 
 
 class BackPackDataView2 extends StatelessWidget {
-  final RxMap<int, DateItem> selectRx;
 
   final Pad? padding;
 
-  const BackPackDataView2({required this.selectRx, required this.padding});
+  final selectRx = RxMap<int, DateItem>();
+
+  BackPackDataView2({required this.padding});
 
   @override
   Widget build(BuildContext context) {

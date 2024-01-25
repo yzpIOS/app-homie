@@ -18,7 +18,6 @@ class _BackPackActivateState extends BaseBackPackState<BackPackActivateView> {
   @override
   Widget createItem(Map data) {
     return BackPackDataView2(
-        selectRx: RxMap(),
         padding: Pad(
           horizontal: 10,
           top: 0,

@@ -4,11 +4,14 @@ class ApiShop extends ApiBase {
   const ApiShop(super.path);
 
   /// 查询装扮分类
-  Future categoryList_({int parentId = 0}) {
+  Future categoryList_({int parentId = 0, List<int>? groupId}) {
     final data = {
       'status': 1,
       'parent_id_list': [parentId],
-      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
+      if(groupId != null)
+        'group_id_list': groupId,
+      if(groupId == null)
+        'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
@@ -18,7 +21,7 @@ class ApiShop extends ApiBase {
   Future categoryList(bool needGroupListId) {
     final data = {
       if (needGroupListId)
-      'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
+        'group_id_list': [Get.find<ClothSelectorCtrl>().groupListId.value],
     };
 
     return _doPost('sales_category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
