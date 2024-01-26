@@ -30,6 +30,9 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
 
   final data = RxMap<String, Map>();
 
+  // 当前
+  final selectedItem = RxMap<int, Map>();
+
   TabController? controller;
 
   // 当前选择的tab
@@ -42,6 +45,8 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   ScrollController scrollController = ScrollController();
   List<T.Tuple2<String, GlobalKey>> titles = [];
 
+
+  GlobalKey scrollViewKey = GlobalKey();
 
   @override
   void initState() {
@@ -80,7 +85,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   }
 
   void requestTypes() {
-    Api.Shop.categoryList_(groupId: [3]).then((value) {
+    Api.Shop.get2DGoods().then((value) {
       if(Env.isRelease) {
         if(value !is List<dynamic>) {
           showToast('数据异常');
@@ -91,7 +96,9 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
       debugPrint("aa");
       data.clear();
       (value as List<dynamic>).forEach((element) {
-        data[element["name"]] = element;
+        if(((element["product_item_list"] as List?)?.length ?? 0) > 0) {
+          data[element["category_name"]] = element;
+        }
       });
       controller = TabController(vsync: this, length: data.length);
       controller?.addListener(() {
@@ -212,8 +219,6 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
     );
   }
 
-  GlobalKey scrollViewKey = GlobalKey();
-
   Widget createItem(Map data) {
     List datas = data.keys.toList();
 
@@ -231,7 +236,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
               createNavigator(e),
               SizedBox(height: 19,),
               // 表格处理
-              createGrid(),
+              createGrid(data[e]),
             ],
           ),
         );
@@ -268,36 +273,40 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   ///
   /// 商品列表
   ///
-  Widget createGrid() {
+  Widget createGrid(Map data) {
+    List items = data["product_item_list"];
+    if(items.isEmpty) {
+      return SizedBox();
+    }
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 8,
+        itemCount: items.length,
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 11,
-          childAspectRatio: 0.68
+          childAspectRatio: 0.66
         ),
         itemBuilder: (context, index) {
           // 单个商品item
           return GestureDetector(
             onTap: () {
-              PurchaseDecorateSheet.show();
+              PurchaseDecorateSheet.show(items[index]);
             },
             behavior: HitTestBehavior.opaque,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 // 图标
-                RoomCardView(image: ""),
+                RoomCardView(image: items[index]["image"]),
 
                 // 名字
                 SizedBox(height: 6,),
                 Text(
-                  "电音派对",
+                  items[index]["name"],
                   style: TextStyle(
                       color: AppPalette.txtDark,
                       fontSize: 12,
@@ -306,7 +315,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
                 ),
                 // 价格
                 SizedBox(height: 5,),
-                createPrize(),
+                createPrize(items[index]["sku_list"], items[index]["label_list"]),
               ],
             ),
           );
@@ -318,14 +327,25 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   ///
   /// 每个item下的价格
   ///
-  Widget createPrize() {
+  Widget createPrize(List? skuList, List? label_list) {
+    // 活动获得
+    if (label_list != null && label_list.isNotEmpty) {
+      bool itemBuyAble = label_list.isNotEmpty && label_list[0]["is_buy"] == true;
+      if(!itemBuyAble) {
+        return createActivity();
+      }
+    }
+
+    if(skuList == null || skuList.isEmpty) {
+      return SizedBox();
+    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         MoneyIcon(type: MoneyType.diamond, size: 16),
         SizedBox(width: 2,),
         Text(
-          "10",
+          skuList.first["price"].toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -344,7 +364,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   Widget createActivity() {
     return Container(
       width: 50,
-      height: 16,
+      height: 18,
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
       decoration: BoxDecoration(
         color: Color(0xFFFFEBF3),

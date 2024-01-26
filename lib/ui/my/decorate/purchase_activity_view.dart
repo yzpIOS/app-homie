@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,9 @@ import 'Purchase_base_view.dart';
 ///
 class PurchaseActivityView extends  PurchaseBaseView {
 
-  PurchaseActivityView({super.key});
+  final Map data;
+
+  PurchaseActivityView({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +61,7 @@ class PurchaseActivityView extends  PurchaseBaseView {
         // 商品名称
         Expanded(
           child: Text(
-            "聊天气泡",
+            data["name"] ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 16,
@@ -85,7 +88,7 @@ class PurchaseActivityView extends  PurchaseBaseView {
 
   Widget createDes() {
     return Text(
-      "聊天气泡",
+      data["name"] ?? "",
       style: TextStyle(
           fontSize: 12,
           color: Color(0xFF7A7A7A),
@@ -99,20 +102,26 @@ class PurchaseActivityView extends  PurchaseBaseView {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          width: 173,
-          height: 42,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppPalette.primary,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: Text(
-            "活动获得",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: AppPalette.txtWhite,
+        GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            width: 173,
+            height: 42,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppPalette.primary,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Text(
+              "活动获得",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppPalette.txtWhite,
+              ),
             ),
           ),
         )

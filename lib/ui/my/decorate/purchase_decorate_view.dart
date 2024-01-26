@@ -7,12 +7,30 @@ import 'package:flutter/material.dart';
 
 import 'Purchase_base_view.dart';
 
+class PurchaseDecorateView extends StatefulWidget {
+
+  Map data;
+
+  PurchaseDecorateView({super.key, required this.data});
+
+  @override
+  State<StatefulWidget> createState() => PurchaseDecorateState();
+}
+
 ///
 /// 购买界面
 ///
-class PurchaseDecorateView extends  PurchaseBaseView {
+class PurchaseDecorateState extends  State<PurchaseDecorateView> {
 
-  PurchaseDecorateView({super.key});
+  late List skuList;
+
+  PurchaseDecorateState();
+
+  @override
+  void initState() {
+    super.initState();
+    skuList = (widget.data["sku_list"] as List?) ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,50 +41,57 @@ class PurchaseDecorateView extends  PurchaseBaseView {
   /// 购物view
   ///
   Widget createPurchaseView() {
+    int colum = (skuList.length % 3 > 0 ? skuList.length / 3 + 1 : skuList.length / 3).toInt();
     return Container(
-      height: 280,
       width: double.infinity,
+      height: (222 + 58 * colum).toDouble(),
       margin: EdgeInsets.symmetric(horizontal: 15),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 商品名称，价格
-          SizedBox(height: 23,),
-          _createTitle(),
+          const SizedBox(height: 23,),
+          _createTitle(widget.data, skuList.isNotEmpty),
 
           // 购买数量
-          SizedBox(height: 19,),
-          buyTypeTitle(),
+          if(skuList.isNotEmpty)
+            const SizedBox(height: 19,),
+          if(skuList.isNotEmpty)
+            buyTypeTitle(),
 
           // 购买的套餐列表
-          SizedBox(height: 15,),
-          buyOptions(),
+          if(skuList.isNotEmpty)
+            const SizedBox(height: 15,),
+          if(skuList.isNotEmpty)
+            buyOptions(skuList),
 
           // 商品描述标题
-          SizedBox(height: 12,),
+          const SizedBox(height: 12,),
           createDesTitle(),
 
           // 商品描述
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           createDes(),
 
           Expanded(child: SizedBox()),
-          createSubmit(),
 
-          SizedBox(height: 32,),
+          if(skuList.isNotEmpty)
+            createSubmit(),
+
+          SizedBox(height: 10,)
         ],
       ),
     );
   }
 
-  Widget _createTitle() {
+  Widget _createTitle(Map data, bool canBuy) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         // 商品名称
         Text(
-          "聊天气泡",
+          data["name"] ?? "",
           style: TextStyle(
               fontSize: 16,
               color: AppPalette.txtDark,
@@ -76,18 +101,21 @@ class PurchaseDecorateView extends  PurchaseBaseView {
         Expanded(child: SizedBox()),
 
         // 价格图标
-        MoneyIcon(type: MoneyType.diamond, size: 23),
+        if(canBuy)
+          MoneyIcon(type: MoneyType.diamond, size: 23),
 
         // 价格显示
-        SizedBox(width: 5,),
-        Text(
-          "900",
-          style: TextStyle(
-              fontSize: 18,
-              color: AppPalette.txtDark,
-              fontWeight: FontWeight.w700
+        if(canBuy)
+          SizedBox(width: 5,),
+        if(canBuy)
+          Text(
+            "${skuList[curSelectedIndex]["price"]}",
+            style: TextStyle(
+                fontSize: 18,
+                color: AppPalette.txtDark,
+                fontWeight: FontWeight.w700
+            ),
           ),
-        ),
       ],
     );
   }
@@ -111,9 +139,9 @@ class PurchaseDecorateView extends  PurchaseBaseView {
   ///
   /// 购买选项
   ///
-  Widget buyOptions() {
+  Widget buyOptions(List skuList) {
     return GridView.builder(
-        itemCount: 3,
+        itemCount: skuList.length,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -123,18 +151,25 @@ class PurchaseDecorateView extends  PurchaseBaseView {
           childAspectRatio: 101.0 / 42.5,
         ),
         itemBuilder: (BuildContext context, int index) {
-          return Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: curSelectedIndex == index ? Color(0xFFEBEBFF) : Color(0xFFF3F3F3),
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Text(
-              "4天",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: curSelectedIndex == index ? Color(0xFFBD7BE5) : Color(0xFF313131),
+          return GestureDetector(
+            onTap: () {
+              curSelectedIndex = index;
+              setState(() { });
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: curSelectedIndex == index ? Color(0xFFEBEBFF) : Color(0xFFF3F3F3),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Text(
+                "${skuList[index]["effective_time_txt"]}",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  color: curSelectedIndex == index ? Color(0xFFBD7BE5) : Color(0xFF313131),
+                ),
               ),
             ),
           );
@@ -155,7 +190,7 @@ class PurchaseDecorateView extends  PurchaseBaseView {
 
   Widget createDes() {
     return Text(
-      "聊天气泡",
+      widget.data["name"] ?? "",
       style: TextStyle(
           fontSize: 12,
           color: Color(0xFF7A7A7A),
@@ -182,7 +217,7 @@ class PurchaseDecorateView extends  PurchaseBaseView {
               MoneyIcon(type: MoneyType.diamond, size: 23),
               SizedBox(width: 5,),
               Text(
-                "100011",
+                "${skuList[curSelectedIndex]["price"]}",
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,

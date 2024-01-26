@@ -17,6 +17,10 @@ class ApiShop extends ApiBase {
     return _doPost('category/query', data: const PageNum(size: 999) + data).then((val) => val?['items'] ?? []);
   }
 
+  Future get2DGoods() {
+    return _doPost('2d/query', data: const PageNum(size: 999) + {}).then((val) => val?['items'] ?? []);
+  }
+
   /// 查询商城分类
   Future categoryList(bool needGroupListId) {
     final data = {

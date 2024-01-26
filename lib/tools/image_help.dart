@@ -6,12 +6,14 @@ import 'package:app/exception.dart';
 import 'package:app/tools.dart' hide Option;
 import 'package:app/widgets/image/asset_entity_extension.dart';
 import 'package:blurhash_dart/blurhash_dart.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:image/image.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_editor/image_editor.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart' as isg;
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:app/widgets.dart' as W;
 
 class ImageHelp {
   ImageHelp._();
@@ -165,6 +167,28 @@ class ImageHelp {
     }
 
     return copyResize(image, width: _w, height: _h);
+  }
+
+  ///
+  /// 获取网络图片的大小
+  static Future<Size?> getNetImageSize(String url) async {
+    Completer<Size> comp = Completer();
+    W.Image image = W.Image(image: CachedNetworkImageProvider(url));
+    image.image.resolve(const W.ImageConfiguration()).addListener(
+      W.ImageStreamListener(
+            (W.ImageInfo image, bool synchronousCall) {
+          var myImage = image.image;
+          Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
+          comp.complete(size);
+        },
+      ),
+    );
+    return await W.FutureBuilder<Size>(
+        future: comp.future,
+        builder: (context, snapshot) {
+          return W.SizedBox();
+        }
+    ).future;
   }
 }
 
