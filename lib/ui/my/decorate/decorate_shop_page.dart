@@ -1,6 +1,7 @@
 
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/room_card_view.dart';
@@ -441,13 +442,13 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(width: 5,),
-                      Text(
-                        "1000",
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: AppPalette.txtDark,
-                        ),
+                      WalletCtrl.use(
+                        builder: (it) {
+                          return XText(
+                            '${it[MoneyType.diamond] ?? '--'}',
+                            style: const TextStyle(fontSize: 13, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
+                          );
+                        },
                       ),
                       // 充值
                       SizedBox(width: 8,),
