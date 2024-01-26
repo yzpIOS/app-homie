@@ -4,12 +4,9 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
-import 'package:app/ui/common/room_card_view.dart';
-import 'package:app/ui/main/nav_view.dart';
 import 'package:app/ui/my/decorate/purchase_decorate_sheet.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/widgets.dart';
-import 'package:app/widgets/my_tab_indicator.dart';
 import 'package:dartz/dartz.dart' as T;
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -302,7 +299,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
               mainAxisSize: MainAxisSize.min,
               children: [
                 // 图标
-                NetImage(items[index]["icon"]),
+                NetImage(items[index]["icon"], width: 117, height: 121,),
 
                 // 名字
                 SizedBox(height: 6,),
