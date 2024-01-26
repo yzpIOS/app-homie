@@ -12,6 +12,7 @@ class PicItem extends StatelessWidget {
   final Widget? placeholder;
   final ImageWidgetBuilder? imageBuilder;
   final bool autoSize;
+  final double scale;
 
   PicItem(
     this.url, {super.key,
@@ -20,6 +21,7 @@ class PicItem extends StatelessWidget {
     this.placeholder,
     this.imageBuilder,
     this.autoSize = false,
+    this.scale = 1.0,
   });
 
   @override
@@ -53,15 +55,15 @@ class PicItem extends StatelessWidget {
       imageBuilder: imageBuilder,
       placeholder: (context, url) => placeholder ?? Container(color: AppPalette.background2,),
       imageUrl: url,
-      width: imageWidth,
-      height: imageHeight,
+      width: imageWidth / scale,
+      height: imageHeight / scale,
       fit: BoxFit.cover,
       errorWidget: (context, url, error) {
         return Container(
           color: AppPalette.background2,
           alignment: Alignment.center,
-          width: width,
-          height: height,
+          width: width / scale,
+          height: height / scale,
         );
       },
     );

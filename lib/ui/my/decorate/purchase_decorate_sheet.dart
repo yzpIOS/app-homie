@@ -2,6 +2,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/my/decorate/purchase_activity_view.dart';
@@ -33,7 +34,7 @@ class PurchaseDecorateSheet extends  StatefulWidget {
 
   static void show(Map data) async {
     // 获取商品的高度
-    Size? picItem = await ImageHelp.getNetImageSize(data[Env.isDebug ? "image" : "detail_image"]);
+    Size? picItem = await ImageHelp.getNetImageSize(data["detail_image"]);
 
     // 商品详情的图片
     Widget headerView = createHeaderViw(data["detail_image"], picItem);
@@ -50,11 +51,17 @@ class PurchaseDecorateSheet extends  StatefulWidget {
       }
     }
 
+    var scaleHeight = picItem != null ? ((AppSize.width / picItem.width) * picItem.height) : 0;
+
     // 计算sku列表的高度
     var totalCount = caculateColumn(data) * 58;
 
-    OrientationSheet.show(
-      constraints: BoxConstraints(maxHeight: 222 + (picItem?.height ?? 180) / 3 + 30 + totalCount),
+    await OrientationSheet.show(
+      decoration: const ShapeDecoration(
+        color: Colors.transparent,
+        shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
+      ),
+      constraints: BoxConstraints(maxHeight: 222 + scaleHeight.toDouble() + 30 + totalCount),
       barrierColor: const Color(0x80000000),
       child: PurchaseDecorateSheet(
         header: headerView,
@@ -84,6 +91,9 @@ class PurchaseDecorateSheet extends  StatefulWidget {
   }
 
   static Widget createHeaderViw(String imageUrl, Size? picItem) {
+    if(picItem == null || picItem.height <= 0) {
+      return SizedBox();
+    }
     return ClipRRect(
       borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(8),
@@ -91,9 +101,10 @@ class PurchaseDecorateSheet extends  StatefulWidget {
       ),
       child: PicItem(
         imageUrl,
-        width: double.infinity,
-        height: (picItem?.height ?? 180) / 3 + 30,
+        width: AppSize.width,
+        height: ((AppSize.width.toDouble() / picItem.width.toDouble()) * picItem.height),
         autoSize: true,
+        scale: picItem.width.toDouble() / AppSize.width.toDouble(),
       ),
     );
   }

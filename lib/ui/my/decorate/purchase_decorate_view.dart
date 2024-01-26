@@ -1,6 +1,8 @@
 
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/money_type.dart';
+import 'package:app/net/api.dart';
+import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -232,20 +234,32 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
         Expanded(child: SizedBox()),
 
         // 立即购买
-        Container(
-          width: 130,
-          height: 42,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppPalette.primary,
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: Text(
-            "立即购买",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: AppPalette.txtWhite,
+        GestureDetector(
+          onTap: () async {
+            var map = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
+            if(map["items"] == null || ((map["items"] as List?)?.length ?? 0) <= 0) {
+              showToast("购买失败");
+              return;
+            }
+            showToast("购买失败");
+            Get.back();
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            width: 130,
+            height: 42,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppPalette.primary,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Text(
+              "立即购买",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: AppPalette.txtWhite,
+              ),
             ),
           ),
         )

@@ -135,4 +135,12 @@ class ApiDressUp extends ApiBase {
   Future myAnimeList() {
     return _doPost('action_warehouse/query').then((val) => val['items']);
   }
+
+  ///
+  /// 购买商品
+  /// http://192.168.1.156:20000/project/15/interface/api/776
+  ///
+  Future buyGoods(int productId) {
+    return _doPost('buy', data: {"product_id": productId}).then((val) => val['items']);
+  }
 }
