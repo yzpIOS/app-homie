@@ -1,24 +1,14 @@
 
 import 'package:app/common/theme.dart';
-import 'package:app/model/enum/money_type.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
-import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/my/decorate/purchase_activity_view.dart';
-import 'package:app/ui/my/decorate/purchase_header_avatar_view.dart';
-import 'package:app/ui/my/decorate/purchase_header_background_view.dart';
-import 'package:app/ui/my/decorate/purchase_header_bubble_view.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/pic_item.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import 'Purchase_base_view.dart';
-import 'purchase_charge_view.dart';
 import 'purchase_decorate_view.dart';
-import 'purchase_header_base.dart';
-import 'purchase_header_pet_view.dart';
 
 class PurchaseDecorateSheet extends  StatefulWidget {
 
