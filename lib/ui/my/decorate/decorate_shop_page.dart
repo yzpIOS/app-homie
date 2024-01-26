@@ -302,7 +302,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
               mainAxisSize: MainAxisSize.min,
               children: [
                 // 图标
-                RoomCardView(image: items[index]["image"]),
+                NetImage(items[index]["icon"]),
 
                 // 名字
                 SizedBox(height: 6,),
