@@ -1,4 +1,5 @@
 
+import 'package:app/net/api.dart';
 import 'package:app/ui/my/backpack/v2/base_backpack_state.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,10 @@ class BackPackInActivateView extends StatefulWidget {
 class _BackPackInActivateState extends BaseBackPackState<BackPackInActivateView> {
 
   @override
-  Widget createItem(Map data) {
+  Widget createTabView(Map data) {
     return BackPackDataView2(
+        api: Api.DressUp.backpackList,
+        category: data,
         padding: Pad(
             horizontal: 10,
             top: 0,
@@ -23,3 +26,4 @@ class _BackPackInActivateState extends BaseBackPackState<BackPackInActivateView>
   }
 
 }
+

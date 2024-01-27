@@ -236,12 +236,12 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
         // 立即购买
         GestureDetector(
           onTap: () async {
-            var map = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
-            if(map["items"] == null || ((map["items"] as List?)?.length ?? 0) <= 0) {
+            var list = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
+            if(list == null || (list?.length ?? 0) <= 0) {
               showToast("购买失败");
               return;
             }
-            showToast("购买失败");
+            showToast("购买成功");
             Get.back();
           },
           behavior: HitTestBehavior.opaque,

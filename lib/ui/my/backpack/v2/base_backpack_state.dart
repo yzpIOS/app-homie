@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/my_wardrobe_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -7,13 +8,13 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../v1/backpack_view_wardrobe.dart';
-typedef DateItem = Tuple2<RxInt, Map>;
+typedef DateItem = Map;
 
 abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with SingleTickerProviderStateMixin {
 
-  int curSelectIndex = 0;
+  RxInt curSelectIndex = RxInt(0);
 
-  final data = RxMap<String, Widget>();
+  final tabViews = RxMap<String, Widget>();
 
   late final selectRx = RxMap<int, DateItem>();
 
@@ -22,55 +23,75 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
   @override
   void initState() {
     super.initState();
-    data["派对背景"] = createItem({"title": "语音派对背景", "data": {}});
-    data["头像框"] = createItem({"title": "语音派对背景", "data": {}});
-    data["坐骑"] = createItem({"title": "语音派对背景", "data": {}});
-    data["气泡"] = createItem({"title": "语音派对背景", "data": {}});
-    data["月榜"] = createItem({"title": "语音派对背景", "data": {}});
-    data["月榜"] = createItem({"title": "语音派对背景", "data": {}});
 
-    controller = TabController(vsync: this, length: data.length);
-    controller.addListener(() {
-      curSelectIndex = controller.index;
-      setState(() { });
+    requestCategoryList();
+  }
+
+  void requestCategoryList() {
+    Api.Shop.categoryList_(groupId: [3]).then((value) {
+      tabViews.clear();
+      var list = (value as List?) ?? [];
+
+      // 滚动监听
+      controller = TabController(vsync: this, length: list.length);
+      controller.addListener(() {
+        curSelectIndex.value = controller.index;
+      });
+
+      list.forEach((element) {
+        tabViews[element["name"]] = createTabView(element);
+      });
+
+      tabViews.refresh();
+    }).onError((error, stackTrace) {
+      showToast("服务接口报错");
+      Get.back();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var children = <Widget>[];
-    var items = data.keys.toList();
-    for(int index = 0; index < items.length; index ++) {
-      children.add(Container(
-        height: 23,
-        alignment: Alignment.center,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        decoration: curSelectIndex == index ? BoxDecoration(
-            color: AppPalette.primary,
-            borderRadius: BorderRadius.circular(5)
-        ) : BoxDecoration(
-            color: const Color(0xFFE9E9E9),
-            borderRadius: BorderRadius.circular(5)
-        ),
-
-        child: Text(
-          items[index],
-          style: TextStyle(
-              color: curSelectIndex == index ? Colors.white : Color(0xFF6C6C6C),
-              fontWeight: FontWeight.normal,
-              fontSize: 12
-          ),
-        ),
-      ));
-    }
 
     return Column(
       mainAxisSize: MainAxisSize.max,
       children: [
-        Container(
-          margin: EdgeInsets.only(left: 7, right: 7, top: 7, bottom: 10),
-          child: xAppBar$TabBar(
-            data.keys,
+        createTab(),
+        Obx(() {
+          if(tabViews.isEmpty) {
+            return SizedBox();
+          }
+          return Expanded(
+              child: TabBarView(
+                controller: controller,
+                children: tabViews.values.toList(),
+              )
+          );
+        })
+      ],
+    );
+  }
+
+
+  ///
+  /// 创建tab
+  ///
+  Widget createTab() {
+    return Container(
+      height: 30,
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 7),
+      child: Obx(() {
+        if(tabViews.isEmpty) {
+          return SizedBox();
+        }
+        var children = <Widget>[];
+        var keyList = tabViews.keys.toList();
+        for(int index = 0; index < keyList.length; index ++) {
+          children.add(createTabItem(index, keyList[index]));
+        }
+
+        return xAppBar$TabBar(
+            [],
             controller: controller,
             alignment: Alignment.centerLeft,
             needPadding: false,
@@ -83,25 +104,48 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
             decoration: const BoxDecoration(),
             indicatorColor: AppPalette.sheetWhite,
             labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
-            tabManufacture: children,
-          ),
-        ),
-
-        Expanded(
-            child: TabBarView(
-              controller: controller,
-              children: data.values.toList(),
-            )
-        ),
-      ],
+            tabManufacture: children
+        );
+      }),
     );
   }
 
+  Widget createTabItem(int index, String title) {
+    return Obx(() {
+      return GestureDetector(
+        onTap: () {
+          curSelectIndex.value = index;
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          height: 23,
+          alignment: Alignment.center,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: curSelectIndex.value == index ? BoxDecoration(
+              color: AppPalette.primary,
+              borderRadius: BorderRadius.circular(5)
+          ) : BoxDecoration(
+              color: const Color(0xFFE9E9E9),
+              borderRadius: BorderRadius.circular(5)
+          ),
 
-  Widget createItem(Map data);
+          child: Text(
+            title,
+            style: TextStyle(
+                color: curSelectIndex.value == index ? Colors.white : Color(0xFF6C6C6C),
+                fontWeight: FontWeight.normal,
+                fontSize: 12
+            ),
+          ),
+        ),
+      );
+    });
+  }
+
+  Widget createTabView(Map data);
 }
 
-
+typedef GoodsApi = Future Function({List<int>? categories});
 
 class BackPackDataView2 extends StatelessWidget {
 
@@ -109,34 +153,35 @@ class BackPackDataView2 extends StatelessWidget {
 
   final selectRx = RxMap<int, DateItem>();
 
-  BackPackDataView2({required this.padding});
+  GoodsApi api;
+
+  Map category;
+
+  BackPackDataView2({required this.padding, required this.api, required this.category});
 
   @override
   Widget build(BuildContext context) {
-    const delegate = XGridDelegate(
-      childAspectRatio: 112 / 116,
-      crossAxisCount: 3,
-      mainAxisSpacing: 12,
-      crossAxisSpacing: 12,
-      fixedHeight: 22,
-    );
 
-    return GetX<MyWardrobeCtrl>(
-      builder: (it) {
-        final data = it.dataRx();
-
-        return RefreshIndicator(
-          onRefresh: it.doRefresh,
-          child: data.isEmpty
-              ? context.state<DataEmpty>(it.doRefresh)
-              : GridView.builder(
-            padding: padding,
-            gridDelegate: delegate,
-            itemCount: data.length,
-            itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx),
+    return FutureBuilder(
+      future: api(categories: [category["id"]]),
+      builder: (contenxt, snap) {
+        if(snap.data == null) {
+          return SizedBox();
+        }
+        final data = snap.data;
+        return GridView.builder(
+          padding: padding,
+          gridDelegate: XGridDelegate(
+            childAspectRatio: 112.toDouble() / 116.toDouble(),
+            crossAxisCount: 3,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            fixedHeight: 22,
           ),
+          itemCount: data?.length ?? 0,
+          itemBuilder: (_, i) => _ItemView(data: data?[i] ?? {}, selectRx: selectRx),
         );
-      },
+      }
     );
   }
 }
@@ -147,9 +192,8 @@ class _ItemView extends StatelessWidget {
 
   _ItemView({required this.data, required this.selectRx});
 
-  late final _countRx = data.value1;
-  late final _data = data.value2;
-  late final _id = _data['product_id'];
+  late final _data = data;
+  late final _id = data['id'];
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +236,7 @@ class _ItemView extends StatelessWidget {
       alignment: Alignment.center,
       child: Obx(
             () => XText(
-          'X${_countRx()}',
+          'X${0}',
           style: const TextStyle(fontSize: 12, color: Colors.white),
         ),
       ),

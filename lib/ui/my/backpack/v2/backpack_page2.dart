@@ -32,6 +32,17 @@ class _BackpackPageState extends State<BackpackPage2> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
+    // 未使用的
+    // http://192.168.1.156:20000/project/15/interface/api/746
+    // group_id_list: [3]
+
+    // http://192.168.1.156:20000/project/15/interface/api/741
+    // category_id_list:[上面的id]
+
+    // 己使用的
+    // http://192.168.1.156:20000/project/15/interface/api/736
+    // category_id_list:[上面的id]
+
     data["未激活"] = BackPackInActivateView();
     data["己使用"] = BackPackActivateView();
     controller = TabController(vsync: this, length: data.length);

@@ -1,6 +1,7 @@
 
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/my/backpack/v2/base_backpack_state.dart';
@@ -16,36 +17,15 @@ class BackPackActivateView extends StatefulWidget {
 class _BackPackActivateState extends BaseBackPackState<BackPackActivateView> {
 
   @override
-  Widget createItem(Map data) {
+  Widget createTabView(Map data) {
     return BackPackDataView2(
-        padding: Pad(
-          horizontal: 10,
-          top: 0,
-          bottom: 0
-        )
-    );
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10),
-      child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 8,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 11,
-              childAspectRatio: 0.68
-          ),
-          itemBuilder: (context, index) {
-            // 单个商品item
-            return GestureDetector(
-              onTap: () {
-
-              },
-              behavior: HitTestBehavior.opaque,
-              child: createGoodsItem({}),
-            );
-          }
-      ),
+      api: Api.DressUp.backpackList,
+      category: data,
+      padding: Pad(
+        horizontal: 10,
+        top: 0,
+        bottom: 0
+      )
     );
   }
 
