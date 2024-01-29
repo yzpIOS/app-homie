@@ -154,50 +154,8 @@ class _BackpackPageState extends State<BackpackPage2> with SingleTickerProviderS
       ),
     );
 
-    // child = Row(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Expanded(child: child),
-    //     Padding(
-    //       padding: const Pad(top: 35),
-    //       child: $Btn(data.keys.toList(growable: false), '赠送'),
-    //     ),
-    //     Padding(
-    //       padding: const Pad(top: 35),
-    //       child: $Btn(data.keys.toList(growable: false), '使用'),
-    //     ),
-    //   ].separator(Spacing.w10).toList(growable: false),
-    // );
-
     child = Padding(padding: const Pad(horizontal: 20), child: child);
 
     return child;
   }
-
-
-  // Widget $Btn(List<int> ids, String action) {
-  //   void onTap() {
-  //     switch (action) {
-  //       case '赠送':
-  //         wardrobeCtrl.doGive(
-  //           ids: ids,
-  //           callback: selectRx.clear,
-  //         );
-  //         break;
-  //       case '使用':
-  //         wardrobeCtrl.doUse(
-  //           ids: ids,
-  //           callback: (_) => selectRx.clear(),
-  //         );
-  //     }
-  //   }
-  //
-  //   return XTextBtn(
-  //     label: action,
-  //     width: 67,
-  //     height: 34,
-  //     textStyle: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
-  //     onTap: onTap,
-  //   );
-  // }
 }

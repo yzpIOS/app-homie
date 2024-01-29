@@ -12,6 +12,8 @@ class BackPackInActivateView extends StatefulWidget {
 
 class _BackPackInActivateState extends BaseBackPackState<BackPackInActivateView> {
 
+  _BackPackInActivateState():super([{"category":[1, 2], "name":"衣柜"}]);
+
   @override
   Widget createTabView(Map data) {
     return BackPackDataView2(

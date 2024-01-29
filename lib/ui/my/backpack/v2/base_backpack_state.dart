@@ -12,13 +12,20 @@ typedef DateItem = Map;
 
 abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with SingleTickerProviderStateMixin {
 
+  // 当前选中的index
   RxInt curSelectIndex = RxInt(0);
 
+  // 对应的tabView
   final tabViews = RxMap<String, Widget>();
 
+  // 选中的商品
   late final selectRx = RxMap<int, DateItem>();
 
+  final List<Map> defaultTab;
+
   late TabController  controller;
+
+  BaseBackPackState(this.defaultTab);
 
   @override
   void initState() {
@@ -32,15 +39,23 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
       tabViews.clear();
       var list = (value as List?) ?? [];
 
+      // 默认分类
+      defaultTab.forEach((element) {
+        tabViews[element["name"]] = createTabView(element);
+      });
+
+      // 服务端传过来的分类
+      list.forEach((element) {
+        element["category"] = [element["id"]];
+        tabViews[element["name"]] = createTabView(element);
+      });
+
       // 滚动监听
-      controller = TabController(vsync: this, length: list.length);
+      controller = TabController(vsync: this, length: tabViews.length);
       controller.addListener(() {
         curSelectIndex.value = controller.index;
       });
 
-      list.forEach((element) {
-        tabViews[element["name"]] = createTabView(element);
-      });
 
       tabViews.refresh();
     }).onError((error, stackTrace) {
@@ -145,7 +160,7 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
   Widget createTabView(Map data);
 }
 
-typedef GoodsApi = Future Function({List<int>? categories});
+typedef GoodsApi = Future Function({List categories});
 
 class BackPackDataView2 extends StatelessWidget {
 
@@ -163,10 +178,10 @@ class BackPackDataView2 extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: api(categories: [category["id"]]),
+      future: api(categories: category["category"]),
       builder: (contenxt, snap) {
-        if(snap.data == null) {
-          return SizedBox();
+        if(snap.data == null || (snap.data?.length ?? 0) <= 0) {
+          return const TipsView();
         }
         final data = snap.data;
         return GridView.builder(
@@ -192,15 +207,16 @@ class _ItemView extends StatelessWidget {
 
   _ItemView({required this.data, required this.selectRx});
 
-  late final _data = data;
-  late final _id = data['id'];
 
   @override
   Widget build(BuildContext context) {
+
     final imageView = Box(
       padding: const Pad(top: 4, bottom: 8),
+      width: 70,
+      height: 70,
       child: BlankImgState(
-        child: NetImage(_data['image']),
+        child: NetImage(data['image'], width: 70, height: 70,),
       ),
     );
 
@@ -215,7 +231,7 @@ class _ItemView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           XText(
-            _data['name'],
+            data['name'],
             style: const TextStyle(fontSize: 12, color: Colors.black),
           ),
           Image.asset(IMG.format("my/icon_nan"), width: 20, height: 20,)
@@ -224,8 +240,7 @@ class _ItemView extends StatelessWidget {
     );
 
     final countView = Container(
-      constraints: BoxConstraints(
-          minWidth: 35, minHeight: 16),
+      constraints: BoxConstraints(minWidth: 35, minHeight: 16),
       decoration: BoxDecoration(
         color: Color(0xFF27E4BB),
         borderRadius: BorderRadius.only(
@@ -234,11 +249,9 @@ class _ItemView extends StatelessWidget {
         )
       ),
       alignment: Alignment.center,
-      child: Obx(
-            () => XText(
-          'X${0}',
-          style: const TextStyle(fontSize: 12, color: Colors.white),
-        ),
+      child: XText(
+        'X${0}',
+        style: const TextStyle(fontSize: 12, color: Colors.white),
       ),
     );
 
@@ -263,7 +276,7 @@ class _ItemView extends StatelessWidget {
     Widget child = Stack(
       children: [
         Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
-        Positioned(top: 1, left: 1, height: 16, child: countView),
+        Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
         Positioned(
           right: 3,
@@ -273,7 +286,7 @@ class _ItemView extends StatelessWidget {
         ),
 
         // label图片
-        if (_data case {'label_list': List items})
+        if (data case {'label_list': List items})
           for (var i = 0; i < items.length; ++i)
             Positioned(
               top: 5,
@@ -284,38 +297,43 @@ class _ItemView extends StatelessWidget {
     );
 
     child = GestureDetector(
-      behavior: HitTestBehavior.opaque,
       onTap: () {
-        if (selectRx.remove(_id) == null) selectRx[_id] = data;
+        if (!selectRx.containsKey(data["product_id"])) {
+          selectRx[data["product_id"]] = data;
+        } else {
+          selectRx.remove(data["product_id"]);
+        }
+        debugPrint("aaa");
       },
+      behavior: HitTestBehavior.opaque,
       child: child,
     );
 
-    return Obx(
-          () {
-        final _decor = BoxDecoration(
-          borderRadius: AppBorderRadius.a10,
-          border: selectRx.containsKey(_id)
-              ? const Border.fromBorderSide(
-            BorderSide(
-              width: 2,
-              color: AppPalette.primary,
-            ),
-          )
-              : const Border.fromBorderSide(
-            BorderSide(
-              width: 2,
-              color: Color(0xFFE8F5FF),
-            ),
+    return Obx(() {
+      var selected = selectRx.containsKey(data["product_id"]);
+      final _decor = BoxDecoration(
+        borderRadius: AppBorderRadius.a10,
+        border: selectRx.containsKey(data["product_id"])
+            ? const Border.fromBorderSide(
+          BorderSide(
+            width: 2,
+            color: AppPalette.primary,
           ),
-        );
+        )
+            : const Border.fromBorderSide(
+          BorderSide(
+            width: 2,
+            color: Color(0xFFE8F5FF),
+          ),
+        ),
+      );
 
-        return AnimatedContainer(
+      return AnimatedContainer(
           duration: kTabScrollDuration,
           curve: Curves.easeOutCubic,
           decoration: _decor,
-          child: child,
-        );
+          child: child
+      );
       },
     );
   }
