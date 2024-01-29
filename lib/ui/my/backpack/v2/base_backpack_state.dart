@@ -207,6 +207,7 @@ class _ItemView extends StatelessWidget {
 
   _ItemView({required this.data, required this.selectRx});
 
+  final idKey = "product_id";
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +235,8 @@ class _ItemView extends StatelessWidget {
             data['name'],
             style: const TextStyle(fontSize: 12, color: Colors.black),
           ),
-          Image.asset(IMG.format("my/icon_nan"), width: 20, height: 20,)
+          if(data["gender"] == 1 || data["gender"] == 2)
+            Image.asset(IMG.format(data["gender"] == 1 ? "my/icon_nan" : "my/icon_nv"), width: 20, height: 20,)
         ],
       ),
     );
@@ -250,7 +252,7 @@ class _ItemView extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: XText(
-        'X${0}',
+        'X${data["count"] ?? 0}',
         style: const TextStyle(fontSize: 12, color: Colors.white),
       ),
     );
@@ -298,10 +300,10 @@ class _ItemView extends StatelessWidget {
 
     child = GestureDetector(
       onTap: () {
-        if (!selectRx.containsKey(data["product_id"])) {
-          selectRx[data["product_id"]] = data;
+        if (!selectRx.containsKey(data[idKey])) {
+          selectRx[data[idKey]] = data;
         } else {
-          selectRx.remove(data["product_id"]);
+          selectRx.remove(data[idKey]);
         }
         debugPrint("aaa");
       },
@@ -310,10 +312,10 @@ class _ItemView extends StatelessWidget {
     );
 
     return Obx(() {
-      var selected = selectRx.containsKey(data["product_id"]);
+      var selected = selectRx.containsKey(data[idKey]);
       final _decor = BoxDecoration(
         borderRadius: AppBorderRadius.a10,
-        border: selectRx.containsKey(data["product_id"])
+        border: selectRx.containsKey(data[idKey])
             ? const Border.fromBorderSide(
           BorderSide(
             width: 2,
