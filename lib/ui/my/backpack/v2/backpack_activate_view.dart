@@ -27,7 +27,8 @@ class _BackPackActivateState extends BaseBackPackState<BackPackActivateView> {
         horizontal: 10,
         top: 0,
         bottom: 0
-      )
+      ),
+      selectRx: selectRx,
     );
   }
 }
