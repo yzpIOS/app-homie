@@ -176,3 +176,4 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
 }
 
 typedef GoodsApi = Future Function({List categories});
+

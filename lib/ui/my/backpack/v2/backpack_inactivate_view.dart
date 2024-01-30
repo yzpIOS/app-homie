@@ -22,23 +22,26 @@ class _BackPackInActivateState extends BaseBackPackState<BackPackInActivateView>
 
   @override
   Widget createTabView(Map data) {
-    return Column(
-      children: [
-        Expanded(
-          child: InactiveBackPackDataView2(
-            api: Api.DressUp.backpackList,
-            category: data,
-            padding: Pad(
-                horizontal: 10,
-                top: 0,
-                bottom: 0
+    return Obx(() {
+      var test = selectRx.value;
+      return Column(
+        children: [
+          Expanded(
+            child: InactiveBackPackDataView2(
+              api: Api.DressUp.backpackList,
+              category: data,
+              padding: Pad(
+                  horizontal: 10,
+                  top: 0,
+                  bottom: 0
+              ),
+              selectRx: selectRx,
             ),
-            selectRx: selectRx,
           ),
-        ),
-
-      ],
-    );
+          Text(test.isNotEmpty ? "": ""),
+        ],
+      );
+    });
   }
 
 

@@ -11,6 +11,8 @@ import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+typedef WareDrawApi = Future Function({required PageNum page, int? categoryId});
+
 class BackPackActivateView extends StatefulWidget {
 
   @override
@@ -19,25 +21,39 @@ class BackPackActivateView extends StatefulWidget {
 
 class _BackPackActivateState extends BaseBackPackState<BackPackActivateView> {
 
+  var refreshFlag = RxBool(false);
+
   _BackPackActivateState():super([]);
 
   @override
   Widget createTabView(Map data) {
-    return ActiveBackPackDataView2(
-      category: data,
-      padding: Pad(
-        horizontal: 10,
-        top: 0,
-        bottom: 0
-      ),
-      selectRx: selectRx,
-      callBack: (productId) {
-        debugPrint("选择发生变化: data = ${data.toString()}");
-        CommonDialog.useImmediate(() {
-
-        });
-      },
-    );
+    return Obx(() {
+      var test = refreshFlag.value;
+      return Column(
+        children: [
+          Expanded(
+            child: ActiveBackPackDataView2(
+              api: Api.DressUp.myList,
+              category: data,
+              padding: Pad(
+                  horizontal: 10,
+                  top: 0,
+                  bottom: 0
+              ),
+              selectRx: selectRx,
+              callBack: (productId) {
+                debugPrint("选择发生变化: data = ${data.toString()}");
+                CommonDialog.useImmediate(() async {
+                  await Api.DressUp.dressUp2(productId);
+                  refreshFlag.value = !refreshFlag.value;
+                });
+              },
+            ),
+          ),
+          Text(test ? "": ""),
+        ],
+      );
+    });
   }
   @override
   bool needActionView() => false;
@@ -57,12 +73,15 @@ class ActiveBackPackDataView2 extends StatelessWidget {
 
   Map category;
 
+  WareDrawApi api;
+
   Function(int productId)? callBack;
 
   ActiveBackPackDataView2({
     required this.padding,
     required this.category,
     required this.selectRx,
+    required this.api,
     this.callBack,
   });
 
@@ -70,7 +89,7 @@ class ActiveBackPackDataView2 extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-        future: Api.DressUp.myList(page: PageNum(size: 999),
+        future: api(page: PageNum(size: 999),
             categoryId: (category["category"] as List).first as int),
         builder: (contenxt, snap) {
           if(snap.data == null) {
@@ -139,6 +158,8 @@ class _ItemView extends StatelessWidget {
       ),
     );
 
+    var is_dress_up = data["is_dress_up"] ?? false;
+
     final countView = Container(
       constraints: BoxConstraints(minWidth: 35, minHeight: 16),
       decoration: BoxDecoration(
@@ -150,7 +171,7 @@ class _ItemView extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: XText(
-        'X${data["count"] ?? 0}',
+        '使用中',
         style: const TextStyle(fontSize: 12, color: Colors.white),
       ),
     );
@@ -178,7 +199,8 @@ class _ItemView extends StatelessWidget {
     Widget child = Stack(
       children: [
         Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
-        Positioned(left: 1, top: 0, child: countView),
+        if(is_dress_up)
+          Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
 
         if(effective_time.isNotEmpty)
