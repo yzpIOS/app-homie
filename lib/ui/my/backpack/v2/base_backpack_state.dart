@@ -139,6 +139,7 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
       return GestureDetector(
         onTap: () {
           curSelectIndex.value = index;
+          controller.animateTo(index);
         },
         behavior: HitTestBehavior.opaque,
         child: Container(
