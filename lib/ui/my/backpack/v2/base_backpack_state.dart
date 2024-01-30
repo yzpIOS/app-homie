@@ -27,12 +27,15 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
 
   late TabController  controller;
 
+  late final wardrobeCtrl = Get.find<MyWardrobeCtrl>();
+
   BaseBackPackState(this.defaultTab);
 
   @override
   void initState() {
     super.initState();
 
+    wardrobeCtrl.doRefresh();
     requestCategoryList();
   }
 
@@ -228,7 +231,10 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
 
           GestureDetector(
             onTap: () {
-
+              wardrobeCtrl.doGive(
+                ids: data.keys.toList(),
+                callback: selectRx.clear,
+              );
             },
             behavior: HitTestBehavior.opaque,
             child: Container(
@@ -254,7 +260,10 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
 
           GestureDetector(
             onTap: () {
-
+              wardrobeCtrl.doUse(
+                ids: data.keys.toList(),
+                callback: (_) => selectRx.clear(),
+              );
             },
             behavior: HitTestBehavior.opaque,
             child: Container(
