@@ -286,7 +286,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
           crossAxisCount: 3,
           crossAxisSpacing: 10,
           mainAxisSpacing: 11,
-          childAspectRatio: 0.66
+          childAspectRatio: 0.65
         ),
         itemBuilder: (context, index) {
           // 单个商品item
@@ -302,7 +302,6 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
                 NetImage(items[index]["icon"], width: 117, height: 121,),
 
                 // 名字
-                SizedBox(height: 6,),
                 Text(
                   items[index]["name"],
                   style: TextStyle(
