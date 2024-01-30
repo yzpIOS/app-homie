@@ -56,6 +56,18 @@ mixin _$UserInfoDto {
   @JsonKey(name: 'real_name_type')
   int? get realNameType => throw _privateConstructorUsedError;
 
+  @JsonKey(name: 'avatar_frame')
+  String? get avatar_frame => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'voice_party_background')
+  String? get voice_party_background  => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'approach_special_effect')
+  String? get approach_special_effect  => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'chat_bubble')
+  String? get chat_bubble  => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $UserInfoDtoCopyWith<UserInfoDto> get copyWith =>
@@ -84,7 +96,12 @@ abstract class $UserInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
       @JsonKey(name: 'remarks_name') String? remarkName,
-        @JsonKey(name: 'real_name_type') int? realNameType
+        @JsonKey(name: 'real_name_type') int? realNameType,
+
+      @JsonKey(name: 'avatar_frame') String? avatar_frame,
+        @JsonKey(name: 'chat_bubble') String? chat_bubble,
+      @JsonKey(name: 'voice_party_background') String? voice_party_background,
+      @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
       });
 }
 
@@ -117,6 +134,12 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
     Object? realNameType = freezed,
+
+
+    Object? avatar_frame = freezed,
+    Object? chat_bubble = freezed,
+    Object? voice_party_background = freezed,
+    Object? approach_special_effect = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -182,7 +205,23 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
       realNameType: freezed == realNameType
           ? _value.realNameType
           : realNameType // ignore: cast_nullable_to_non_nullable
-      as int?,
+          as int?,
+      avatar_frame: freezed == avatar_frame
+          ? _value.avatar_frame
+          : avatar_frame // ignore: cast_nullable_to_non_nullable
+        as String?,
+      voice_party_background: freezed == voice_party_background
+          ? _value.voice_party_background
+          : voice_party_background // ignore: cast_nullable_to_non_nullable
+      as String?,
+      approach_special_effect: freezed == approach_special_effect
+          ? _value.approach_special_effect
+          : approach_special_effect // ignore: cast_nullable_to_non_nullable
+      as String?,
+      chat_bubble: freezed == chat_bubble
+          ? _value.chat_bubble
+          :  chat_bubble // ignore: cast_nullable_to_non_nullable
+      as String?,
     ) as $Val);
   }
 }
@@ -211,7 +250,12 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
       @JsonKey(name: 'data_birth') @EpochDateTimeConverter() DateTime? birthDay,
       @JsonKey(name: 'charm_level') String? charmLevel,
       @JsonKey(name: 'remarks_name') String? remarkName,
-      @JsonKey(name: 'real_name_type') int? realNameType});
+      @JsonKey(name: 'real_name_type') int? realNameType,
+      @JsonKey(name: 'avatar_frame') String? avatar_frame,
+        @JsonKey(name: 'chat_bubble') String? chat_bubble,
+      @JsonKey(name: 'voice_party_background') String? voice_party_background,
+      @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
+      });
 }
 
 /// @nodoc
@@ -241,6 +285,10 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
     Object? charmLevel = freezed,
     Object? remarkName = freezed,
     Object? realNameType = freezed,
+    Object? avatar_frame = freezed,
+    Object? voice_party_background = freezed,
+    Object? approach_special_effect = freezed,
+    Object? chat_bubble = freezed,
   }) {
     return _then(_$_UserInfoDto(
       uid: freezed == uid
@@ -306,7 +354,23 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
       realNameType: freezed == realNameType
           ? _value.realNameType
           : realNameType // ignore: cast_nullable_to_non_nullable
-      as int?,
+        as int?,
+        avatar_frame: freezed == avatar_frame
+            ? _value.avatar_frame
+            : avatar_frame // ignore: cast_nullable_to_non_nullable
+        as String?,
+        voice_party_background: freezed == voice_party_background
+            ? _value.voice_party_background
+            : voice_party_background // ignore: cast_nullable_to_non_nullable
+        as String?,
+        approach_special_effect: freezed == approach_special_effect
+            ? _value.approach_special_effect
+            : approach_special_effect // ignore: cast_nullable_to_non_nullable
+        as String?,
+      chat_bubble: freezed == chat_bubble
+          ? _value.chat_bubble
+          : chat_bubble // ignore: cast_nullable_to_non_nullable
+      as String?,
     ));
   }
 }
@@ -331,6 +395,10 @@ class _$_UserInfoDto implements _UserInfoDto {
       @JsonKey(name: 'charm_level') this.charmLevel,
       @JsonKey(name: 'remarks_name') this.remarkName,
       @JsonKey(name: 'real_name_type') this.realNameType,
+      @JsonKey(name: 'avatar_frame') this.avatar_frame,
+      @JsonKey(name: 'chat_bubble') this.chat_bubble,
+      @JsonKey(name: 'voice_party_background') this.voice_party_background,
+      @JsonKey(name: 'approach_special_effect') this.approach_special_effect,
       });
 
   factory _$_UserInfoDto.fromJson(Map<String, dynamic> json) =>
@@ -387,6 +455,18 @@ class _$_UserInfoDto implements _UserInfoDto {
   @override
   @JsonKey(name: 'real_name_type')
   final int? realNameType;
+  @override
+  @JsonKey(name: 'avatar_frame')
+  final String? avatar_frame;
+  @override
+  @JsonKey(name: 'voice_party_background')
+  final String? voice_party_background;
+  @override
+  @JsonKey(name: 'approach_special_effect')
+  final String? approach_special_effect;
+  @override
+  @JsonKey(name: 'chat_bubble')
+  final String? chat_bubble;
 
   @override
   String toString() {
@@ -421,7 +501,15 @@ class _$_UserInfoDto implements _UserInfoDto {
             (identical(other.remarkName, remarkName) ||
                 other.remarkName == remarkName) &&
             (identical(other.realNameType, realNameType) ||
-                other.realNameType == realNameType)
+                other.realNameType == realNameType) &&
+            (identical(other.avatar_frame, avatar_frame) ||
+                other.avatar_frame == avatar_frame) &&
+            (identical(other.voice_party_background, voice_party_background) ||
+                other.voice_party_background == voice_party_background) &&
+            (identical(other.approach_special_effect, approach_special_effect) ||
+                other.approach_special_effect == approach_special_effect) &&
+            (identical(other.chat_bubble, chat_bubble) ||
+                other.chat_bubble == chat_bubble)
         );
   }
 
@@ -445,6 +533,9 @@ class _$_UserInfoDto implements _UserInfoDto {
       charmLevel,
       remarkName,
       realNameType,
+      avatar_frame,
+      voice_party_background,
+      approach_special_effect,
   );
 
   @JsonKey(ignore: true)
@@ -483,6 +574,11 @@ abstract class _UserInfoDto implements UserInfoDto {
           @JsonKey(name: 'charm_level') final String? charmLevel,
           @JsonKey(name: 'remarks_name') final String? remarkName,
           @JsonKey(name: 'real_name_type') int? realNameType,
+
+          @JsonKey(name: 'avatar_frame') String? avatar_frame,
+          @JsonKey(name: 'chat_bubble') String? chat_bubble,
+          @JsonKey(name: 'voice_party_background') String? voice_party_background,
+          @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
           }) =
     _$_UserInfoDto;
 
@@ -541,4 +637,17 @@ abstract class _UserInfoDto implements UserInfoDto {
   @JsonKey(ignore: true)
   _$$_UserInfoDtoCopyWith<_$_UserInfoDto> get copyWith =>
       throw _privateConstructorUsedError;
+
+  @override
+  @JsonKey(name: 'avatar_frame')
+  String? get avatar_frame;
+  @override
+  @JsonKey(name: 'voice_party_background')
+  String? get voice_party_background;
+  @override
+  @JsonKey(name: 'approach_special_effect')
+  String? get approach_special_effect;
+  @override
+  @JsonKey(name: 'chat_bubble')
+  String? get chat_bubble;
 }

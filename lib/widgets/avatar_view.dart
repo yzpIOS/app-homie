@@ -25,7 +25,14 @@ class AsyncAvatar extends StatelessWidget {
       onTap: onTap,
       child: UserInfoCtrl.use(
         uid,
-        builder: (it) => AvatarView(it?.avatar, blur: it?.avatarEx, size: size, side: side, isShowOnline: isShowOnline,),
+        forceUseNet: true,
+        builder: (it) => AvatarView(
+          it?.avatar,
+          blur: it?.avatarEx,
+          size: size,
+          side: side,
+          isShowOnline: isShowOnline,
+        ),
       ),
     );
   }
@@ -38,7 +45,11 @@ class AvatarView extends StatelessWidget {
   final BorderSide side;
   final bool isShowOnline;
 
-  const AvatarView(this.url, {super.key, this.blur, this.size = 82, this.side = BorderSide.none, this.isShowOnline = false});
+  const AvatarView(this.url, {
+    super.key,
+    this.blur,
+    this.size = 82,
+    this.side = BorderSide.none, this.isShowOnline = false});
 
   @override
   Widget build(BuildContext context) {

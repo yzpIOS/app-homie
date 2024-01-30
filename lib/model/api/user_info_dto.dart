@@ -28,6 +28,11 @@ class UserInfoDto with _$UserInfoDto {
     @JsonKey(name: 'charm_level') String? charmLevel,
     @JsonKey(name: 'remarks_name') String? remarkName,
     @JsonKey(name: 'real_name_type') int? realNameType,
+
+    @JsonKey(name: 'avatar_frame') String? avatar_frame,
+    @JsonKey(name: 'chat_bubble') String? chat_bubble,
+    @JsonKey(name: 'voice_party_background') String? voice_party_background,
+    @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
   }) = _UserInfoDto;
 
   factory UserInfoDto.fromJson(Map<String, dynamic> json) => _$UserInfoDtoFromJson(json);
