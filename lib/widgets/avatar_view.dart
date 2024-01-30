@@ -32,6 +32,7 @@ class AsyncAvatar extends StatelessWidget {
           size: size,
           side: side,
           isShowOnline: isShowOnline,
+          avatarFrameUrl: it?.avatar_frame,
         ),
       ),
     );
@@ -40,6 +41,7 @@ class AsyncAvatar extends StatelessWidget {
 
 class AvatarView extends StatelessWidget {
   final String? url;
+  final String? avatarFrameUrl;
   final String? blur;
   final double size;
   final BorderSide side;
@@ -49,12 +51,16 @@ class AvatarView extends StatelessWidget {
     super.key,
     this.blur,
     this.size = 82,
-    this.side = BorderSide.none, this.isShowOnline = false});
+    this.side = BorderSide.none, this.isShowOnline = false,
+
+    this.avatarFrameUrl = null,
+  });
 
   @override
   Widget build(BuildContext context) {
     Widget child = _Avatar(
       url: url,
+      avatarFrameUrl: avatarFrameUrl,
       blur: blur,
       size: size,
       shape: CircleBorder(side: side),
@@ -92,15 +98,23 @@ class AvatarView extends StatelessWidget {
 
 class _Avatar extends StatelessWidget {
   final String? url;
+  final String? avatarFrameUrl;
   final String? blur;
   final double size;
   final ShapeBorder shape;
 
-  const _Avatar({this.url, this.blur, required this.size, required this.shape});
+  const _Avatar({
+    this.url,
+    this.blur,
+    required this.size,
+    required this.shape,
+    this.avatarFrameUrl = null,
+  });
 
   @override
   Widget build(BuildContext context) {
     Widget child = NetImage(url, blur: blur, width: size, height: size, fit: BoxFit.cover);
+
 
     child = ClipPath(
       clipper: ShapeBorderClipper(shape: shape),
@@ -113,6 +127,23 @@ class _Avatar extends StatelessWidget {
       decoration: ShapeDecoration(shape: shape),
       child: child,
     );
+
+    // 加头像框
+    if(avatarFrameUrl?.isNotEmpty == true) {
+      Widget avatarFrame = avatarFrameUrl?.isNotEmpty == true ?
+        NetImage(avatarFrameUrl, blur: blur, width: size, height: size, fit: BoxFit.cover) : SizedBox();
+      child = Stack(
+        alignment: Alignment.center,
+        children: [
+          child,
+          OverflowBox(
+            maxHeight: size + 8,
+            maxWidth: size + 8,
+            child: avatarFrame,
+          )
+        ],
+      );
+    }
 
     return child;
   }
