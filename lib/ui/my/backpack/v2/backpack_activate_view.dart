@@ -172,7 +172,7 @@ class _ItemView extends StatelessWidget {
       alignment: Alignment.center,
       child: XText(
         '使用中',
-        style: const TextStyle(fontSize: 12, color: Colors.white),
+        style: const TextStyle(fontSize: 10, color: Colors.white),
       ),
     );
 
