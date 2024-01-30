@@ -136,10 +136,14 @@ class _Avatar extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           child,
-          OverflowBox(
-            maxHeight: size + 8,
-            maxWidth: size + 8,
-            child: avatarFrame,
+          SizedBox(
+            width: size + 8,
+            height: size + 8,
+            child: OverflowBox(
+              maxHeight: size + 8,
+              maxWidth: size + 8,
+              child: avatarFrame,
+            ),
           )
         ],
       );
