@@ -24,6 +24,7 @@ _$_UserInfoDto _$$_UserInfoDtoFromJson(Map<String, dynamic> json) =>
       remarkName: json['remarks_name'] as String?,
       realNameType: json['real_name_type'] as int?,
 
+      chat_bubble: json["chat_bubble"] as String?,
       avatar_frame: json['avatar_frame'] as String?,
       voice_party_background: json['voice_party_background'] as String?,
       approach_special_effect: json['approach_special_effect'] as String?,
@@ -47,6 +48,8 @@ Map<String, dynamic> _$$_UserInfoDtoToJson(_$_UserInfoDto instance) =>
       'charm_level': instance.charmLevel,
       'remarks_name': instance.remarkName,
       "real_name_type": instance.realNameType,
+
+      "chat_bubble": instance.chat_bubble,
       "avatar_frame":instance.avatar_frame,
       "voice_party_background":instance.voice_party_background,
       "approach_special_effect":instance.approach_special_effect,

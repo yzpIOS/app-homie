@@ -70,6 +70,10 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
         ageShow: result.ageShow,
         starSign: result.starSign,
         location: result.location,
+        avatar_frame: result.avatar_frame,
+        voice_party_background: result.voice_party_background,
+        approach_special_effect: result.approach_special_effect,
+        chat_bubble: result.chat_bubble,
       );
     });
     dataRx.value = result;
