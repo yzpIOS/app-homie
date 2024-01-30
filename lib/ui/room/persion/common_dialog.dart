@@ -6,6 +6,7 @@ import 'package:app/ui/room/persion/down_mic_settle_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:path/path.dart';
 
 ///
 /// 个播：通用弹窗
@@ -160,6 +161,17 @@ class CommonDialog extends StatefulWidget {
   static void confirmDownMic(Function callBack) {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "你当前正在直播中，是否下播？", confirm:  () {
+        callBack.call();
+      });
+    });
+  }
+
+  ///
+  /// 立即使用
+  ///
+  static void useImmediate(Function callBack) {
+    showDialog(context: Get.context!, builder: (context) {
+      return CommonDialog(title: "是否立即使用？", confirm:  () {
         callBack.call();
       });
     });

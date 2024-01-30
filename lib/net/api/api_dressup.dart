@@ -146,4 +146,11 @@ class ApiDressUp extends ApiBase {
   Future buyGoods(int productId) {
     return _doPost('buy', data: {"product_id": productId}).then((val) => val['items']);
   }
+
+  ///
+  /// 背包里穿上衣服
+  ///
+  Future dressUp2(int productId) {
+    return _doPost("warehouse/dress_up", data: {"product_id": productId});
+  }
 }
