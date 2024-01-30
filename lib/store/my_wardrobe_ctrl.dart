@@ -75,7 +75,9 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
             final tmp = data[item['product_id']];
 
             if (tmp == null) {
-              assert(false, '数据错误 -> $item');
+              if(Env.isDebug) {
+                // assert(false, '数据错误 -> $item');
+              }
             } else {
               final count = tmp.value1.value -= item['count'] as int;
 

@@ -165,7 +165,7 @@ class _ItemView extends StatelessWidget {
         Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
         SizedBox(width: 1,),
         Text(
-          data["effective_time_txt"],
+          data["effective_time_txt"] ?? "",
           style: TextStyle(
               fontSize: 10,
               color: Color(0xFF999999),
