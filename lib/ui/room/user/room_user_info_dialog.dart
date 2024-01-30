@@ -145,7 +145,11 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   }
 
   Widget $Avatar() {
-    return AsyncAvatar(uid: uid, size: 80);
+    return AsyncAvatar(
+      uid: uid,
+      size: 80,
+      avatarFrameSize: 12,
+    );
   }
 
   Widget $LabelView(UserInfoDto? info) {
