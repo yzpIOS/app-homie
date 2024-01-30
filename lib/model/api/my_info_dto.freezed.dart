@@ -57,6 +57,17 @@ mixin _$MyInfoDto {
   MyAddrDto? get addr => throw _privateConstructorUsedError;
   @JsonKey(name: 'show_winning_lottery')
   bool? get showWinningLottery => throw _privateConstructorUsedError;
+  @JsonKey(name: 'avatar_frame')
+  String? get avatar_frame => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'voice_party_background')
+  String? get voice_party_background  => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'approach_special_effect')
+  String? get approach_special_effect  => throw _privateConstructorUsedError;
+
+  @JsonKey(name: 'chat_bubble')
+  String? get chat_bubble  => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -87,7 +98,13 @@ abstract class $MyInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'access_user_count') int? accessCount,
       @JsonKey(name: 'real_name_type') int? realNameType,
       @JsonKey(name: 'addr') MyAddrDto? addr,
-      @JsonKey(name: 'show_winning_lottery') bool? showWinningLottery});
+      @JsonKey(name: 'show_winning_lottery') bool? showWinningLottery,
+
+      @JsonKey(name: 'avatar_frame') String? avatar_frame,
+      @JsonKey(name: 'chat_bubble') String? chat_bubble,
+      @JsonKey(name: 'voice_party_background') String? voice_party_background,
+      @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
+      });
 
   $MyAddrDtoCopyWith<$Res>? get addr;
 }
@@ -123,6 +140,12 @@ class _$MyInfoDtoCopyWithImpl<$Res, $Val extends MyInfoDto>
     Object? realNameType = freezed,
     Object? addr = freezed,
     Object? showWinningLottery = freezed,
+
+
+    Object? avatar_frame = freezed,
+    Object? chat_bubble = freezed,
+    Object? voice_party_background = freezed,
+    Object? approach_special_effect = freezed,
   }) {
     return _then(_value.copyWith(
       uid: freezed == uid
@@ -197,6 +220,22 @@ class _$MyInfoDtoCopyWithImpl<$Res, $Val extends MyInfoDto>
           ? _value.showWinningLottery
           : showWinningLottery // ignore: cast_nullable_to_non_nullable
               as bool?,
+      avatar_frame: freezed == avatar_frame
+          ? _value.avatar_frame
+          : avatar_frame // ignore: cast_nullable_to_non_nullable
+      as String?,
+      voice_party_background: freezed == voice_party_background
+          ? _value.voice_party_background
+          : voice_party_background // ignore: cast_nullable_to_non_nullable
+      as String?,
+      approach_special_effect: freezed == approach_special_effect
+          ? _value.approach_special_effect
+          : approach_special_effect // ignore: cast_nullable_to_non_nullable
+      as String?,
+      chat_bubble: freezed == chat_bubble
+          ? _value.chat_bubble
+          :  chat_bubble // ignore: cast_nullable_to_non_nullable
+      as String?,
     ) as $Val);
   }
 
@@ -238,7 +277,13 @@ abstract class _$$_MyInfoDtoCopyWith<$Res> implements $MyInfoDtoCopyWith<$Res> {
       @JsonKey(name: 'access_user_count') int? accessCount,
       @JsonKey(name: 'real_name_type') int? realNameType,
       @JsonKey(name: 'addr') MyAddrDto? addr,
-      @JsonKey(name: 'show_winning_lottery') bool? showWinningLottery});
+      @JsonKey(name: 'show_winning_lottery') bool? showWinningLottery,
+
+        @JsonKey(name: 'avatar_frame') String? avatar_frame,
+        @JsonKey(name: 'chat_bubble') String? chat_bubble,
+        @JsonKey(name: 'voice_party_background') String? voice_party_background,
+        @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
+      });
 
   @override
   $MyAddrDtoCopyWith<$Res>? get addr;
@@ -273,6 +318,12 @@ class __$$_MyInfoDtoCopyWithImpl<$Res>
     Object? realNameType = freezed,
     Object? addr = freezed,
     Object? showWinningLottery = freezed,
+
+
+    Object? avatar_frame = freezed,
+    Object? chat_bubble = freezed,
+    Object? voice_party_background = freezed,
+    Object? approach_special_effect = freezed,
   }) {
     return _then(_$_MyInfoDto(
       uid: freezed == uid
@@ -347,6 +398,22 @@ class __$$_MyInfoDtoCopyWithImpl<$Res>
           ? _value.showWinningLottery
           : showWinningLottery // ignore: cast_nullable_to_non_nullable
               as bool?,
+      avatar_frame: freezed == avatar_frame
+          ? _value.avatar_frame
+          : avatar_frame // ignore: cast_nullable_to_non_nullable
+      as String?,
+      voice_party_background: freezed == voice_party_background
+          ? _value.voice_party_background
+          : voice_party_background // ignore: cast_nullable_to_non_nullable
+      as String?,
+      approach_special_effect: freezed == approach_special_effect
+          ? _value.approach_special_effect
+          : approach_special_effect // ignore: cast_nullable_to_non_nullable
+      as String?,
+      chat_bubble: freezed == chat_bubble
+          ? _value.chat_bubble
+          :  chat_bubble // ignore: cast_nullable_to_non_nullable
+      as String?,
     ));
   }
 }
@@ -372,7 +439,12 @@ class _$_MyInfoDto implements _MyInfoDto {
       @JsonKey(name: 'access_user_count') this.accessCount,
       @JsonKey(name: 'real_name_type') this.realNameType,
       @JsonKey(name: 'addr') this.addr,
-      @JsonKey(name: 'show_winning_lottery') this.showWinningLottery});
+      @JsonKey(name: 'show_winning_lottery') this.showWinningLottery,
+      @JsonKey(name: 'avatar_frame') this.avatar_frame,
+      @JsonKey(name: 'chat_bubble') this.chat_bubble,
+      @JsonKey(name: 'voice_party_background') this.voice_party_background,
+      @JsonKey(name: 'approach_special_effect') this.approach_special_effect,
+      });
 
   factory _$_MyInfoDto.fromJson(Map<String, dynamic> json) =>
       _$$_MyInfoDtoFromJson(json);
@@ -432,6 +504,18 @@ class _$_MyInfoDto implements _MyInfoDto {
   @override
   @JsonKey(name: 'show_winning_lottery')
   final bool? showWinningLottery;
+  @override
+  @JsonKey(name: 'avatar_frame')
+  final String? avatar_frame;
+  @override
+  @JsonKey(name: 'voice_party_background')
+  final String? voice_party_background;
+  @override
+  @JsonKey(name: 'approach_special_effect')
+  final String? approach_special_effect;
+  @override
+  @JsonKey(name: 'chat_bubble')
+  final String? chat_bubble;
 
   @override
   String toString() {
@@ -470,7 +554,16 @@ class _$_MyInfoDto implements _MyInfoDto {
                 other.realNameType == realNameType) &&
             (identical(other.addr, addr) || other.addr == addr) &&
             (identical(other.showWinningLottery, showWinningLottery) ||
-                other.showWinningLottery == showWinningLottery));
+                other.showWinningLottery == showWinningLottery) &&
+            (identical(other.avatar_frame, avatar_frame) ||
+                other.avatar_frame == avatar_frame) &&
+            (identical(other.voice_party_background, voice_party_background) ||
+                other.voice_party_background == voice_party_background) &&
+            (identical(other.approach_special_effect, approach_special_effect) ||
+                other.approach_special_effect == approach_special_effect) &&
+            (identical(other.chat_bubble, chat_bubble) ||
+                other.chat_bubble == chat_bubble)
+        );
   }
 
   @JsonKey(ignore: true)
@@ -494,7 +587,9 @@ class _$_MyInfoDto implements _MyInfoDto {
       accessCount,
       realNameType,
       addr,
-      showWinningLottery);
+      showWinningLottery,
+    avatar_frame
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -531,8 +626,13 @@ abstract class _MyInfoDto implements MyInfoDto {
       @JsonKey(name: 'access_user_count') final int? accessCount,
       @JsonKey(name: 'real_name_type') final int? realNameType,
       @JsonKey(name: 'addr') final MyAddrDto? addr,
-      @JsonKey(name: 'show_winning_lottery')
-          final bool? showWinningLottery}) = _$_MyInfoDto;
+      @JsonKey(name: 'show_winning_lottery') final bool? showWinningLottery,
+
+      @JsonKey(name: 'avatar_frame') String? avatar_frame,
+      @JsonKey(name: 'chat_bubble') String? chat_bubble,
+      @JsonKey(name: 'voice_party_background') String? voice_party_background,
+      @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
+      }) = _$_MyInfoDto;
 
   factory _MyInfoDto.fromJson(Map<String, dynamic> json) =
       _$_MyInfoDto.fromJson;
@@ -592,6 +692,21 @@ abstract class _MyInfoDto implements MyInfoDto {
   @override
   @JsonKey(name: 'show_winning_lottery')
   bool? get showWinningLottery;
+
+  @override
+  @JsonKey(name: 'avatar_frame')
+  String? get avatar_frame;
+  @override
+  @JsonKey(name: 'voice_party_background')
+  String? get voice_party_background;
+  @override
+  @JsonKey(name: 'approach_special_effect')
+  String? get approach_special_effect;
+  @override
+  @JsonKey(name: 'chat_bubble')
+  String? get chat_bubble;
+
+
   @override
   @JsonKey(ignore: true)
   _$$_MyInfoDtoCopyWith<_$_MyInfoDto> get copyWith =>

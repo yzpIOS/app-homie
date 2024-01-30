@@ -29,6 +29,11 @@ class MyInfoDto with _$MyInfoDto {
     @JsonKey(name: 'real_name_type') int? realNameType,
     @JsonKey(name: 'addr') MyAddrDto? addr,
     @JsonKey(name: 'show_winning_lottery') bool? showWinningLottery,
+
+    @JsonKey(name: 'avatar_frame') String? avatar_frame,
+    @JsonKey(name: 'chat_bubble') String? chat_bubble,
+    @JsonKey(name: 'voice_party_background') String? voice_party_background,
+    @JsonKey(name: 'approach_special_effect') String? approach_special_effect,
   }) = _MyInfoDto;
 
   factory MyInfoDto.fromJson(Map<String, dynamic> json) => _$MyInfoDtoFromJson(json);
