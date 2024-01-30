@@ -305,7 +305,9 @@ class _InfoView extends StatelessWidget {
             child: AvatarView(
               avatar,
               blur: data?.avatarEx,
-              size: 75,
+              avatarFrameUrl: data?.avatar_frame,
+              size: 70,
+              avatarFrameSize: 16,
               side: const BorderSide(width: 2, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),
             ),
           ),

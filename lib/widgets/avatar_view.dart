@@ -13,8 +13,17 @@ class AsyncAvatar extends StatelessWidget {
   final BorderSide side;
   final Option<VoidCallback>? onTap;
   final bool isShowOnline;
+  final int avatarFrameSize;
 
-  const AsyncAvatar({super.key, required this.uid, this.size = 82, this.side = BorderSide.none, this.onTap, this.isShowOnline = false});
+  const AsyncAvatar({
+    super.key,
+    required this.uid,
+    this.size = 82,
+    this.side = BorderSide.none,
+    this.onTap,
+    this.avatarFrameSize = 8,
+    this.isShowOnline = false
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +42,7 @@ class AsyncAvatar extends StatelessWidget {
           side: side,
           isShowOnline: isShowOnline,
           avatarFrameUrl: it?.avatar_frame,
+          avatarFrameSize: avatarFrameSize,
         ),
       ),
     );
@@ -46,13 +56,14 @@ class AvatarView extends StatelessWidget {
   final double size;
   final BorderSide side;
   final bool isShowOnline;
+  final int avatarFrameSize;
 
   const AvatarView(this.url, {
     super.key,
     this.blur,
     this.size = 82,
     this.side = BorderSide.none, this.isShowOnline = false,
-
+    this.avatarFrameSize = 8,
     this.avatarFrameUrl = null,
   });
 
@@ -61,6 +72,7 @@ class AvatarView extends StatelessWidget {
     Widget child = _Avatar(
       url: url,
       avatarFrameUrl: avatarFrameUrl,
+      avatarFrameSize: avatarFrameSize,
       blur: blur,
       size: size,
       shape: CircleBorder(side: side),
@@ -102,12 +114,14 @@ class _Avatar extends StatelessWidget {
   final String? blur;
   final double size;
   final ShapeBorder shape;
+  final int avatarFrameSize;
 
   const _Avatar({
     this.url,
     this.blur,
     required this.size,
     required this.shape,
+    this.avatarFrameSize = 8,
     this.avatarFrameUrl = null,
   });
 
@@ -137,11 +151,11 @@ class _Avatar extends StatelessWidget {
         children: [
           child,
           SizedBox(
-            width: size + 8,
-            height: size + 8,
+            width: size + avatarFrameSize,
+            height: size + avatarFrameSize,
             child: OverflowBox(
-              maxHeight: size + 8,
-              maxWidth: size + 8,
+              maxHeight: size + avatarFrameSize,
+              maxWidth: size + avatarFrameSize,
               child: avatarFrame,
             ),
           )
