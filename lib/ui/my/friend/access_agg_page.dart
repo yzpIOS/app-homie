@@ -48,7 +48,13 @@ class _DtaView extends SimplePageView<Map> {
         dense: false,
         contentPadding: Pad(left: onlineStatus ? 10 : 16, right: 16),
         onTap: toUserPage(uid),
-        leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: onlineStatus,),
+        leading: AvatarView(
+          it?.avatar,
+          blur: it?.avatarEx,
+          size: 50,
+          isShowOnline: onlineStatus,
+          avatarFrameUrl: it?.avatar_frame,
+        ),
         title: Text(
           it?.showName() ?? '',
           style: const TextStyle(fontSize: 14, color: Colors.black),

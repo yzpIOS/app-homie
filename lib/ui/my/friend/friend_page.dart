@@ -99,7 +99,13 @@ class _ItemBuilderState extends State<_ItemBuilder> {
             dense: false,
             contentPadding: Pad(left: onlineStatus ? 10 : 16, right: 16),
             onTap: toUserPage(uid),
-            leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50, isShowOnline: onlineStatus,),
+            leading: AvatarView(
+              it?.avatar,
+              blur: it?.avatarEx,
+              size: 50,
+              avatarFrameUrl: it?.avatar_frame,
+              isShowOnline: onlineStatus,
+            ),
             title: Text(
               it?.showName() ?? '',
               style: const TextStyle(fontSize: 14, color: Colors.black),

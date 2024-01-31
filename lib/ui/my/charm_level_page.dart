@@ -160,7 +160,13 @@ class _LevelPageState extends State<CharmLevelPage> {
       children: [
         Positioned(
           top: 20,
-          child: AvatarView(info?.avatar, blur: info?.avatarEx, size: 70),
+          child: AvatarView(
+            info?.avatar,
+            blur: info?.avatarEx,
+            size: 70,
+            avatarFrameUrl: info?.avatar_frame,
+            avatarFrameSize: 12,
+          ),
         ),
         Positioned(
           top: 80,

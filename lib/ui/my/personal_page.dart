@@ -163,7 +163,13 @@ class PersonalPage extends GetView<MyInfoCtrl> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AvatarView(data.avatar, blur: data.avatarEx, size: 82.6),
+            AvatarView(
+                data.avatar,
+                blur: data.avatarEx,
+                size: 82.6,
+              avatarFrameUrl: data.avatar_frame,
+              avatarFrameSize: 16,
+            ),
             Spacing.h10,
             const XText(
               '点击编辑头像',

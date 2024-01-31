@@ -45,7 +45,12 @@ class _DataView extends SimplePageView<String> {
           return ListTile(
             contentPadding: const Pad(vertical: 7, horizontal: 10),
             onTap: toUserPage(uid),
-            leading: AvatarView(it?.avatar, blur: it?.avatarEx, size: 50),
+            leading: AvatarView(
+              it?.avatar,
+              blur: it?.avatarEx,
+              size: 50,
+              avatarFrameUrl: it?.avatar_frame,
+            ),
             title: Text(
               it?.showName() ?? '',
               style: const TextStyle(fontSize: 14, color: AppPalette.c3),

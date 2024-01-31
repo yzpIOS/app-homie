@@ -152,7 +152,9 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
             child: AvatarView(
               avatar,
               blur: data?.avatarEx,
+              avatarFrameUrl: data?.avatar_frame,
               size: 70,
+              avatarFrameSize: 16,
               side: const BorderSide(color: Colors.white, width: 1),
             ),
           ),

@@ -39,7 +39,12 @@ class UserSearchItemView extends StatelessWidget {
       children: [
         Padding(
           padding: const Pad(horizontal: 10),
-          child: AvatarView(data['avatar_url'], blur: data['avatar_extra'], size: 40),
+          child: AvatarView(
+              data['avatar_url'],
+              blur: data['avatar_extra'],
+              avatarFrameUrl: data["avatar_frame"],
+              size: 40
+          ),
         ),
         Expanded(child: child),
       ],
