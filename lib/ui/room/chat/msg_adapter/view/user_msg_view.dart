@@ -7,6 +7,7 @@ import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/chat/msg_adapter/view/base_msg_view.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/nine_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -24,11 +25,11 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
 
     return UserInfoCtrl.use(
       vm.uid,
-      builder: (it) => it == null ? Spacing.blank : _builder(special, it),
+      builder: (it) => it == null ? Spacing.blank : builder(special, it),
     );
   }
 
-  Widget _builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
+  Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
 
     void showUserDialog() {
       RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
@@ -69,6 +70,71 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
 
 class TxtMsgView extends _UserMsgView<TxtMsgData> {
   const TxtMsgView(super.vm, {super.key});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return UserInfoCtrl.use(vm.uid, builder: (dto) {
+      if(dto == null || dto.avatar_frame == null || dto.avatar_frame?.isEmpty == true) {
+        return super.build(context);
+      }
+      final special = context.watch<SpecialTextSpanBuilder?>();
+      return builder(special, dto);
+    });
+  }
+
+  @override
+  Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
+    // 没有头像框
+    if(info.avatar_frame == null || info.avatar_frame?.isEmpty == true) {
+      return super.builder(special, info);
+    }
+
+    void showUserDialog() {
+      RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
+    }
+
+    InlineSpan span = TextSpan(
+      text: info.showName(),
+      style: const TextStyle(color: AppPalette.colorY),
+      recognizer: TapGestureRecognizer() //
+        ..onTap = showUserDialog,
+    );
+
+    final level = info.level;
+
+    span = TextSpan(
+      children: [
+        if (level != null)
+          WidgetSpan(
+            alignment: PlaceholderAlignment.middle,
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: showUserDialog,
+              child: Padding(
+                padding: const Pad(right: 4),
+                child: WealthyLevelView(level: level, height: 11),
+              ),
+            ),
+          ),
+        span,
+        richText(special, info),
+      ],
+    );
+
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        NineImage(
+          //imageProvider 图像处理
+          imageProvider: AssetImage("assets/img/chat/chat_box_13.9.png"),
+          //内容填充区域ß
+          child: RichText(text: span),
+        ),
+
+      ],
+    );
+  }
 
   @override
   InlineSpan richText(special, info) {
