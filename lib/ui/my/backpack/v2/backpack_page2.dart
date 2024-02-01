@@ -61,7 +61,6 @@ class _BackpackPageState extends State<BackpackPage2> with SingleTickerProviderS
         items[index],
         style: TextStyle(
             color: curSelectIndex == index ? Color(0xFFB97BE6) : Color(0xFF6C6C6C),
-            fontWeight: FontWeight.bold,
             fontSize: 16
         ),
       ));
