@@ -88,7 +88,7 @@ class _BackpackPageState extends State<BackpackPage2> with SingleTickerProviderS
             tabManufacture: children,
           ),
 
-          SizedBox(height: 19,),
+          SizedBox(height: 12,),
 
           Expanded(
             child: TabBarView(

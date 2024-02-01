@@ -111,6 +111,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
+          SizedBox(height: 10,),
           createTab(),
 
           Obx(() {
@@ -225,7 +226,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
               datas.indexOf(e) == 0 ? SizedBox(height: 22,) : SizedBox(height: 15,),
               // 标题
               createNavigator(e),
-              SizedBox(height: 19,),
+              SizedBox(height: 10,),
               // 表格处理
               createGrid(data[e]),
             ],
@@ -278,7 +279,6 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           crossAxisSpacing: 10,
-          mainAxisSpacing: 11,
           childAspectRatio: 0.65
         ),
         itemBuilder: (context, index) {

@@ -88,30 +88,32 @@ class ActiveBackPackDataView2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return FutureBuilder(
-        future: api(page: PageNum(size: 999),
-            categoryId: (category["category"] as List).first as int),
-        builder: (contenxt, snap) {
-          if(snap.data == null) {
-            return const TipsView();
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: FutureBuilder(
+          future: api(page: PageNum(size: 999),
+              categoryId: (category["category"] as List).first as int),
+          builder: (contenxt, snap) {
+            if(snap.data == null) {
+              return const TipsView();
+            }
+            final data = snap.data["items"];
+            if(data == null || data.length <= 0) {
+              return const TipsView();
+            }
+            return GridView.builder(
+              padding: padding,
+              gridDelegate: XGridDelegate(
+                childAspectRatio: 112.toDouble() / 116.toDouble(),
+                crossAxisCount: 3,
+                mainAxisSpacing: 9,
+                crossAxisSpacing: 8,
+              ),
+              itemCount: data?.length ?? 0,
+              itemBuilder: (_, i) => _ItemView(data: data?[i] ?? {}, selectRx: selectRx, callBack: callBack,),
+            );
           }
-          final data = snap.data["items"];
-          if(data == null || data.length <= 0) {
-            return const TipsView();
-          }
-          return GridView.builder(
-            padding: padding,
-            gridDelegate: XGridDelegate(
-              childAspectRatio: 112.toDouble() / 116.toDouble(),
-              crossAxisCount: 3,
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              fixedHeight: 22,
-            ),
-            itemCount: data?.length ?? 0,
-            itemBuilder: (_, i) => _ItemView(data: data?[i] ?? {}, selectRx: selectRx, callBack: callBack,),
-          );
-        }
+      ),
     );
   }
 }
@@ -138,11 +140,12 @@ class _ItemView extends StatelessWidget {
       ),
     );
 
-    final nameView = DecoratedBox(
-      decoration: const ShapeDecoration(
-        shape: XRectangleBorder(borderRadius: AppBorderRadius.b8),
-        gradient: LinearGradient(
-          colors: [Color(0xFFB7E0FC), Color(0xFFE1F3FF), Color(0xFFB7E0FC)],
+    final nameView = Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFFEBEBFF),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(8),
+          bottomLeft: Radius.circular(8),
         ),
       ),
       child: Row(
@@ -260,7 +263,7 @@ class _ItemView extends StatelessWidget {
             : const Border.fromBorderSide(
           BorderSide(
             width: 2,
-            color: Color(0xFFE8F5FF),
+            color: Color(0xFFEBEBFF),
           ),
         ),
       );
