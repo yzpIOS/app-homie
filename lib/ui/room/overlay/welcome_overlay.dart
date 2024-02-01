@@ -5,6 +5,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/user/room_user_info_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:app/widgets/nine_image.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -140,6 +141,7 @@ class _WelcomeView extends StatelessWidget {
       String bgImageName = '';
       double _boxWidth = 134;
       double _boxHeight = 20;
+
       if (_level == '0' || _level == null || _level.isEmpty) {
         bgImageName = 'room/welcome_bg_1~9';
       } else if (int.parse(_level) < 10) {
@@ -190,12 +192,23 @@ class _WelcomeView extends StatelessWidget {
         child: child,
       );
 
-      child = DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), centerSlice: const Rect.fromLTRB(30, 5, 40, 10), scale: 3, fit: BoxFit.fill,),
-        ),
-        child: child,
-      );
+      if(data?.approach_special_effect?.isNotEmpty == true || Env.isDebug) {
+        child = NineImage(
+          //imageProvider 图像处理
+          // imageProvider: NetworkImage(info.approach_special_effect ?? ""),
+          imageProvider: AssetImage("assets/img/room/星球.9.png"),
+          // imageProvider: NetworkImage(info.chat_bubble ?? ""),
+          //内容填充区域ß
+          child: child,
+        );
+      } else {
+        child = DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), centerSlice: const Rect.fromLTRB(30, 5, 40, 10), scale: 3, fit: BoxFit.fill,),
+          ),
+          child: child,
+        );
+      }
 
       // child = ConstrainedBox(
       //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),

@@ -272,6 +272,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       uniqueKey: 'RoomScene[${controller.roomId}]',
       onInit: controller.loadScene,
       fromRoom: true,
+      image2D: controller.info["bg_2d_image"],
     );
 
     child = Scaffold(
