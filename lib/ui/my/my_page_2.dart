@@ -182,11 +182,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         const GoDressUpEvent().fire();
         break;
       case '我的背包':
-        if(Env.isDebug) {
-          Get.to(() => const BackpackPage2());
-          return;
-        }
-        Get.to(() => const BackpackPage());
+        Get.to(() => const BackpackPage2());
         break;
       case '我的任务':
         SignDialog.show(isManual: true);
