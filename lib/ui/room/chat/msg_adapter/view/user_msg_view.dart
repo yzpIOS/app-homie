@@ -140,104 +140,12 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   InlineSpan richText(special, info) {
     final txt = vm.data;
 
-    return special?.build(txt) ?? TextSpan(text: txt);
+    return special?.build(":$txt") ?? TextSpan(text: ":$txt");
   }
 }
 
 class UserInMsgView extends _UserMsgView<UserInMsgData> {
   const UserInMsgView(super.vm, {super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return UserInfoCtrl.use(vm.uid, builder: (dto) {
-      if(Env.isDebug) {
-        final special = context.watch<SpecialTextSpanBuilder?>();
-        return builder(special, dto!!);
-      }
-
-      if(dto == null || dto.approach_special_effect == null || dto.approach_special_effect?.isEmpty == true) {
-        return super.build(context);
-      }
-      final special = context.watch<SpecialTextSpanBuilder?>();
-      return builder(special, dto);
-    });
-  }
-
-  @override
-  Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
-    if(Env.isRelease) {
-      if(info.approach_special_effect == null || info.approach_special_effect?.isEmpty == true) {
-        return super.builder(special, info);
-      }
-    }
-
-
-    void showUserDialog() {
-      RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
-    }
-
-    InlineSpan span = TextSpan(
-      text: info.showName(),
-      style: const TextStyle(color: AppPalette.colorY),
-      recognizer: TapGestureRecognizer() //
-        ..onTap = showUserDialog,
-    );
-
-    final level = info.level;
-
-    span = TextSpan(
-      children: [
-        if (level != null)
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: showUserDialog,
-              child: Padding(
-                padding: const Pad(right: 4),
-                child: WealthyLevelView(level: level, height: 11),
-              ),
-            ),
-          ),
-        span,
-        richText(special, info),
-      ],
-    );
-
-    return Stack(
-      alignment: Alignment.centerLeft,
-      children: [
-        if(Env.isRelease)
-          NineImage(
-            //imageProvider 图像处理
-            // imageProvider: NetworkImage(info.approach_special_effect ?? ""),
-            // imageProvider: AssetImage("assets/img/room/pic_ltqp_1.9.png"),
-            imageProvider: NetworkImage(info.approach_special_effect ?? ""),
-            //内容填充区域ß
-            child: RichText(
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              text: span,
-            ),
-          ),
-
-        if(Env.isDebug)
-          NineImage(
-            //imageProvider 图像处理
-            // imageProvider: NetworkImage(info.approach_special_effect ?? ""),
-            imageProvider: AssetImage("assets/img/room/星球.9.png"),
-            // imageProvider: NetworkImage(info.chat_bubble ?? ""),
-            //内容填充区域ß
-            child: RichText(
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              text: span,
-            ),
-          ),
-      ],
-    );
-  }
 
   @override
   InlineSpan richText(special, info) {

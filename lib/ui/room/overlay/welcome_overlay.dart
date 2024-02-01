@@ -175,54 +175,69 @@ class _WelcomeView extends StatelessWidget {
           Flexible(
             child: Padding(
               padding: const Pad(horizontal: 3,),
-              child: XText(data?.showName() ?? '--', overflow: TextOverflow.fade),
+              child: XText(
+                  data?.showName() ?? '--',
+                  overflow: TextOverflow.fade,
+              ),
             ),
           ),
           const XText('来了'),
         ],
       );
 
-      child = Padding(
-        padding: Pad(left: 7, right: 6, bottom: isSpecial ? 6 : 0),
-        child: child,
-      );
-
-      child = DefaultTextStyle(
-        style: const TextStyle(fontSize: 9, color: Colors.white,),
-        child: child,
-      );
 
       if(data?.approach_special_effect?.isNotEmpty == true) {
-        child = NineImage(
-          //imageProvider 图像处理
-          imageProvider: NetworkImage(data?.approach_special_effect ?? ""),
-          // imageProvider: AssetImage("assets/img/room/星球.9.png"),
-          // imageProvider: NetworkImage(info.chat_bubble ?? ""),
-          //内容填充区域ß
+
+        child = DefaultTextStyle(
+          style: const TextStyle(fontSize: 9, color: Colors.white,),
+          child: child,
+        );
+
+
+        return Container(
+          width: 191,
+          height: 51,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
+              )
+          ),
+          padding: EdgeInsets.only(left: 53, top: 7),
           child: child,
         );
       } else {
+        child = Padding(
+          padding: Pad(left: 7, right: 6, bottom: isSpecial ? 6 : 0),
+          child: child,
+        );
+
+        child = DefaultTextStyle(
+          style: const TextStyle(fontSize: 9, color: Colors.white,),
+          child: child,
+        );
+
         child = DecoratedBox(
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(IMG.format(bgImageName)), centerSlice: const Rect.fromLTRB(30, 5, 40, 10), scale: 3, fit: BoxFit.fill,),
           ),
           child: child,
         );
+
+        // child = ConstrainedBox(
+        //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
+        //   child: child,
+        // );
+        child = ConstrainedBox(
+          constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
+          child: child,
+        );
+
+        child = OpacityButton(
+          onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
+          child: child,
+        );
       }
 
-      // child = ConstrainedBox(
-      //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
-      //   child: child,
-      // );
-      // child = ConstrainedBox(
-      //   constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
-      //   child: child,
-      // );
-
-      child = OpacityButton(
-        onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
-        child: child,
-      );
 
       return child;
     }
