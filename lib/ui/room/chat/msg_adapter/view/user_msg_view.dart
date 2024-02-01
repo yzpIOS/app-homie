@@ -75,7 +75,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   @override
   Widget build(BuildContext context) {
     return UserInfoCtrl.use(vm.uid, builder: (dto) {
-      if(dto == null || dto.avatar_frame == null || dto.avatar_frame?.isEmpty == true) {
+      if(dto == null || dto.chat_bubble == null || dto.chat_bubble?.isEmpty == true) {
         return super.build(context);
       }
       final special = context.watch<SpecialTextSpanBuilder?>();
@@ -86,7 +86,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   @override
   Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
     // 没有头像框
-    if(info.avatar_frame == null || info.avatar_frame?.isEmpty == true) {
+    if(info.chat_bubble == null || info.chat_bubble?.isEmpty == true) {
       return super.builder(special, info);
     }
 
@@ -127,7 +127,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
       children: [
         NineImage(
           //imageProvider 图像处理
-          imageProvider: AssetImage("assets/img/chat/chat_box_13.9.png"),
+          imageProvider: NetworkImage(info.chat_bubble ?? ""),
           //内容填充区域ß
           child: RichText(text: span),
         ),

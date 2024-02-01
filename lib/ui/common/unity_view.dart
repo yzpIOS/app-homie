@@ -26,6 +26,8 @@ class UnityView extends StatefulWidget {
   
   final bool fromRoom;
 
+  final String? image2D;
+
   final Set<Factory<OneSequenceGestureRecognizer>>? gestureRecognizers;
 
   UnityView({
@@ -34,6 +36,8 @@ class UnityView extends StatefulWidget {
     this.onClose,
     this.gestureRecognizers,
     this.fromRoom = false,
+
+    this.image2D = null,
   })  : assert(uniqueKey.isNotEmpty),
         super(key: Key(uniqueKey));
 
@@ -125,18 +129,32 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
 
                       return Stack(
                         children: [
-                          Positioned.fill(
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(IMG.format('room_background')),
-                                  scale: 2,
-                                  fit: BoxFit.cover,
+                          if(widget.image2D == null || widget.image2D?.isEmpty == true)
+                            Positioned.fill(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(IMG.format('room_background')),
+                                    scale: 2,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
+                                child: SizedBox(width: AppSize.width, height: AppSize.height),
                               ),
-                              child: SizedBox(width: AppSize.width, height: AppSize.height),
                             ),
-                          ),
+                          if(widget.image2D?.isNotEmpty == true)
+                            Positioned.fill(
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(widget.image2D ?? ""),
+                                    scale: 2,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: SizedBox(width: AppSize.width, height: AppSize.height),
+                              ),
+                            ),
                           Positioned(
                             child: Center(child: appWaiting,),
                           ),

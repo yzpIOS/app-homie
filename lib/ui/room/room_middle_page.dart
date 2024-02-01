@@ -38,7 +38,9 @@ class _RoomMiddlePageState extends State<RoomMiddlePage> {
         body: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          child: Image.asset(
+          child: widget.data?["bg_2d_image"] != null ?
+          NetImage(widget.data?["bg_2d_image"], fit: BoxFit.cover,) :
+          Image.asset(
             IMG.format('room_background'),
             fit: BoxFit.cover,
           ),
