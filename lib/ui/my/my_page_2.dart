@@ -80,8 +80,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
   Widget _Action1() {
     final items = [
       '开直播',
+      '装扮商城',
       '我的钱包',
-      '我的装扮',
       '我的背包',
       '我的任务',
       // '我的称号',
@@ -173,7 +173,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '我的钱包':
         Get.to(() => const WalletPage());
         break;
-      case '我的装扮':
+      case '装扮商城':
         Get.to(() => const DecorateShopPage());
         break;
       case '我的背包':

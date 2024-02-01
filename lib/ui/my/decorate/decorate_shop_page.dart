@@ -105,7 +105,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(title: "装扮"),
+      appBar: xAppBar(title: "装扮商城"),
       bottomNavigationBar: createBottomBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
