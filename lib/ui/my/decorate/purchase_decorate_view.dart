@@ -238,31 +238,33 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
         // 立即购买
         GestureDetector(
           onTap: () async {
+            CommonDialog.confirmBuy( skuList[curSelectedIndex]["price"], widget.data["name"] ?? "", () async {
+              var data = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
+              if(data["code"] != 0) {
+                // 余额不足
+                if(data["code"] == 11001) {
+                  CommonDialog.toCharge(() {
+                    Get.to(() => RechargePage());
+                  });
+                  return;
+                }
 
-            var data = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
-            if(data["code"] != 0) {
-              // 余额不足
-              if(data["code"] == 11001) {
-                CommonDialog.toCharge(() {
-                  Get.to(() => RechargePage());
-                });
+                if(data["msg"] != null) {
+                  showToast(data["msg"]);
+                } else {
+                  showToast("购买失败");
+                }
                 return;
               }
-
-              if(data["msg"] != null) {
-                showToast(data["msg"]);
-              } else {
+              var list = data["items"];
+              if(list == null || (list?.length ?? 0) <= 0) {
                 showToast("购买失败");
+                return;
               }
-              return;
-            }
-            var list = data["items"];
-            if(list == null || (list?.length ?? 0) <= 0) {
-              showToast("购买失败");
-              return;
-            }
-            showToast("购买成功");
-            Get.back();
+              showToast("购买成功");
+              Get.back();
+              }
+            );
           },
           behavior: HitTestBehavior.opaque,
           child: Container(

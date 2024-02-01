@@ -14,6 +14,7 @@ import 'package:path/path.dart';
 class CommonDialog extends StatefulWidget {
   // 主标题
   String title;
+  RichText? richTextTitle;
 
   // 副标题
   String? subTitle;
@@ -32,7 +33,9 @@ class CommonDialog extends StatefulWidget {
     this.confirmLabel = "确认",
     this.subTitle,
     this.cancel,
-    this.cancelLabel = "取消"
+    this.cancelLabel = "取消",
+
+    this.richTextTitle,
   });
 
   @override
@@ -187,6 +190,42 @@ class CommonDialog extends StatefulWidget {
       });
     });
   }
+
+  static void confirmBuy(int count, String name, Function callBack) {
+    var span = RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: "确定花费",
+            style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFF000000),
+            )
+          ),
+          TextSpan(
+              text: "$count",
+            style: TextStyle(
+              fontSize: 18,
+              color: Color(0xFFFF8D30),
+            )
+          ),
+          TextSpan(
+              text: "钻石, 购买$name吗？",
+              style: TextStyle(
+                fontSize: 18,
+                color: Color(0xFF000000),
+              )
+          ),
+        ],
+      ),
+    );
+
+    showDialog(context: Get.context!, builder: (context) {
+      return CommonDialog(title: "", richTextTitle: span, confirm:  () {
+        callBack.call();
+      });
+    });
+  }
 }
 
 class _DownMicConfirmState extends State<CommonDialog> {
@@ -212,14 +251,19 @@ class _DownMicConfirmState extends State<CommonDialog> {
                 children: [
                   SizedBox(height: 27,),
                   // 标题
-                  Text(
-                    widget.title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
+                  if(widget.title.isNotEmpty)
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ),
+
+                  if(widget.richTextTitle != null)
+                    widget.richTextTitle!,
+
                   if(widget.subTitle == null || widget.subTitle?.isEmpty == true)
                     SizedBox(height: 55,),
 
@@ -235,6 +279,8 @@ class _DownMicConfirmState extends State<CommonDialog> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+
+
                   if(widget.subTitle?.isNotEmpty == true)
                     SizedBox(height: 28,),
 
