@@ -84,16 +84,9 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
 
   void requestTypes() {
     Api.Shop.get2DGoods().then((value) {
-      if(Env.isRelease) {
-        if(value !is List<dynamic>) {
-          showToast('数据异常');
-          Get.back();
-          return;
-        }
-      }
       debugPrint("aa");
       data.clear();
-      (value as List<dynamic>).forEach((element) {
+      (value as List).forEach((element) {
         if(((element["product_item_list"] as List?)?.length ?? 0) > 0) {
           data[element["category_name"]] = element;
         }
