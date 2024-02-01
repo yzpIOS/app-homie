@@ -182,7 +182,7 @@ class CommonDialog extends StatefulWidget {
   ///
   static void toCharge(Function callBack) {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: "是否立即使用？", confirmLabel: "去充值", confirm:  () {
+      return CommonDialog(title: "你的钻石不够了,先买点钻石吧~ ", confirmLabel: "去充值", confirm:  () {
         callBack.call();
       });
     });

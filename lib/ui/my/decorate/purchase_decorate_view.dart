@@ -238,6 +238,7 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
         // 立即购买
         GestureDetector(
           onTap: () async {
+
             var data = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
             if(data["code"] != 0) {
               // 余额不足

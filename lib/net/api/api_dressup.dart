@@ -144,7 +144,7 @@ class ApiDressUp extends ApiBase {
   /// http://192.168.1.156:20000/project/15/interface/api/776
   ///
   Future buyGoods(int productId) {
-    return _doPost('buy', data: {"product_id": productId});
+    return _doPost3('buy', data: {"product_id": productId});
   }
 
   ///
