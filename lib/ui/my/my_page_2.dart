@@ -174,12 +174,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const WalletPage());
         break;
       case '我的装扮':
-        if(Env.isDebug) {
-          Get.to(() => const DecorateShopPage());
-          return;
-        }
-        Get.find<ClothSelectorCtrl>().needGoToMyWardrobe = true;
-        const GoDressUpEvent().fire();
+        Get.to(() => const DecorateShopPage());
         break;
       case '我的背包':
         Get.to(() => const BackpackPage2());
