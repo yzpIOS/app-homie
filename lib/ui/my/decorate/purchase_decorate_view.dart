@@ -166,6 +166,10 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
               decoration: BoxDecoration(
                 color: curSelectedIndex == index ? Color(0xFFEBEBFF) : Color(0xFFF3F3F3),
                 borderRadius: BorderRadius.circular(6),
+                border: curSelectedIndex == index ? Border.all(
+                  color: Color(0xFFBD7BE5),
+                  width: 1.5
+                ) : null
               ),
               child: Text(
                 "${skuList[index]["effective_time_txt"]}",
@@ -240,7 +244,7 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
           onTap: () async {
             CommonDialog.confirmBuy( skuList[curSelectedIndex]["price"], widget.data["name"] ?? "", () async {
               var data = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
-              if(data["code"] != 0) {
+              if(data["code"] != 0 || data["data"] == null) {
                 // 余额不足
                 if(data["code"] == 11001) {
                   CommonDialog.toCharge(() {
@@ -256,7 +260,7 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
                 }
                 return;
               }
-              var list = data["items"];
+              var list = data["data"]["items"];
               if(list == null || (list?.length ?? 0) <= 0) {
                 showToast("购买失败");
                 return;
