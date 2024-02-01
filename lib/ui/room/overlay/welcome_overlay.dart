@@ -192,11 +192,11 @@ class _WelcomeView extends StatelessWidget {
         child: child,
       );
 
-      if(data?.approach_special_effect?.isNotEmpty == true || Env.isDebug) {
+      if(data?.approach_special_effect?.isNotEmpty == true) {
         child = NineImage(
           //imageProvider 图像处理
-          // imageProvider: NetworkImage(info.approach_special_effect ?? ""),
-          imageProvider: AssetImage("assets/img/room/星球.9.png"),
+          imageProvider: NetworkImage(data?.approach_special_effect ?? ""),
+          // imageProvider: AssetImage("assets/img/room/星球.9.png"),
           // imageProvider: NetworkImage(info.chat_bubble ?? ""),
           //内容填充区域ß
           child: child,
@@ -214,10 +214,10 @@ class _WelcomeView extends StatelessWidget {
       //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
       //   child: child,
       // );
-      child = ConstrainedBox(
-        constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
-        child: child,
-      );
+      // child = ConstrainedBox(
+      //   constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
+      //   child: child,
+      // );
 
       child = OpacityButton(
         onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
