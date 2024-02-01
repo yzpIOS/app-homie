@@ -271,7 +271,12 @@ class _ConvViewState extends State<_ConvView> {
                             }
                           }
                         }
-                        return AsyncAvatar(uid: uid, size: 26, onTap: Some(() => widget.onItemClick('消息_0')),);
+                        return AsyncAvatar(
+                          uid: uid,
+                          size: 26,
+                          avatarFrameSize: 4,
+                          onTap: Some(() => widget.onItemClick('消息_0')),
+                        );
                       }),
                     ),
                     Positioned(

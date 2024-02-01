@@ -4,6 +4,8 @@ import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/my/wallet/recharge_page.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -236,7 +238,24 @@ class PurchaseDecorateState extends  State<PurchaseDecorateView> {
         // 立即购买
         GestureDetector(
           onTap: () async {
-            var list = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
+            var data = await Api.DressUp.buyGoods(skuList[curSelectedIndex]["id"]);
+            if(data["code"] != 0) {
+              // 余额不足
+              if(data["code"] == 11001) {
+                CommonDialog.toCharge(() {
+                  Get.to(() => RechargePage());
+                });
+                return;
+              }
+
+              if(data["msg"] != null) {
+                showToast(data["msg"]);
+              } else {
+                showToast("购买失败");
+              }
+              return;
+            }
+            var list = data["items"];
             if(list == null || (list?.length ?? 0) <= 0) {
               showToast("购买失败");
               return;

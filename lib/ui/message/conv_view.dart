@@ -137,19 +137,24 @@ class _ItemView extends StatelessWidget {
 
     Widget? child;
 
+    double padding = 0;
+
     if (data.isSysConv) {
       child = AvatarView(data.faceUrl, size: size);
     } else {
       switch (data.type) {
         case ConversationType.V2TIM_C2C:
-          child = AsyncAvatar(uid: data.userID!, size: size, isShowOnline: isOnlineState,);
+          padding = 4;
+          child = AsyncAvatar(uid: data.userID!, size: size, avatarFrameSize: 4, isShowOnline: isOnlineState,);
           break;
         case ConversationType.V2TIM_GROUP:
           break;
       }
     }
 
-    return Box(width: isOnlineState ? size + 6 : size, height: isOnlineState ? size + 6 : size, child: child);
+    return Container(
+      padding: EdgeInsets.all(padding),
+        width: isOnlineState ? size + 6 : size, height: isOnlineState ? size + 6 : size, child: child);
   }
 
   Widget $TitleView() {

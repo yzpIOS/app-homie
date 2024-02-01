@@ -176,6 +176,17 @@ class CommonDialog extends StatefulWidget {
       });
     });
   }
+
+  ///
+  /// 去充值
+  ///
+  static void toCharge(Function callBack) {
+    showDialog(context: Get.context!, builder: (context) {
+      return CommonDialog(title: "是否立即使用？", confirmLabel: "去充值", confirm:  () {
+        callBack.call();
+      });
+    });
+  }
 }
 
 class _DownMicConfirmState extends State<CommonDialog> {
