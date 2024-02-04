@@ -11,7 +11,14 @@ class OrientationSheet extends StatelessWidget {
   final Decoration? decoration;
   final BoxConstraints? constraints;
 
-  const OrientationSheet._({required this.sheet, this.constraints, this.decoration});
+  final Color bgColor;
+
+  const OrientationSheet._({
+    required this.sheet,
+    this.constraints,
+    this.decoration,
+    this.bgColor = Colors.white
+  });
 
   static BoxConstraints get _boxConstraints {
     final width = AppSize.width;
@@ -35,8 +42,10 @@ class OrientationSheet extends StatelessWidget {
     Color? barrierColor,
     bool barrierDismissible = true,
     SheetOrientation direction = SheetOrientation.bottom,
+    Color bgColor = Colors.white,
   }) {
     final sheet = OrientationSheet._(
+      bgColor: bgColor,
       constraints: constraints ?? (minHeight?.let((it) => _boxConstraints.copyWith(minHeight: it)) ?? _boxConstraints),
       decoration: decoration,
       sheet: child,
@@ -97,6 +106,7 @@ class OrientationSheet extends StatelessWidget {
     );
 
     child = Material(
+      color: bgColor,
       type: MaterialType.transparency,
       clipBehavior: Clip.none,
       child: child,

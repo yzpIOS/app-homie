@@ -58,6 +58,7 @@ class PurchaseDecorateSheet extends  StatefulWidget {
         view: view,
       ),
       direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+      bgColor: Colors.transparent,
     );
   }
 

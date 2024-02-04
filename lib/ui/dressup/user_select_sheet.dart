@@ -150,7 +150,6 @@ class _ItemView extends StatelessWidget {
         Widget child = AvatarView(
           it?.avatar,
           blur: it?.avatarEx,
-          avatarFrameUrl: it?.avatar_frame,
           side: selectRx() == uid ? const BorderSide(width: 2, color: AppPalette.primary) : BorderSide.none,
         );
 
