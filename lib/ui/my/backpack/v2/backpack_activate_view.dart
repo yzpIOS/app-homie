@@ -131,12 +131,12 @@ class _ItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    double size = 90;
+
     final imageView = Box(
       padding: const Pad(top: 4, bottom: 8),
-      width: 70,
-      height: 70,
       child: BlankImgState(
-        child: NetImage(data['image'], width: 70, height: 70,),
+        child: NetImage(data['image']),
       ),
     );
 
@@ -186,7 +186,7 @@ class _ItemView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
+        Positioned(top: 5, width: size, height: size, child: imageView),
         SizedBox(width: 1,),
         Text(
           data["effective_time_txt"] ?? "",

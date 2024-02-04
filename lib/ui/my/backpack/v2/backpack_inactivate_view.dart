@@ -234,13 +234,12 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double size = 90;
 
     final imageView = Box(
       padding: const Pad(top: 4, bottom: 8),
-      width: 70,
-      height: 70,
       child: BlankImgState(
-        child: NetImage(data['image'], width: 70, height: 70,),
+        child: NetImage(data['image']),
       ),
     );
 
@@ -286,14 +285,19 @@ class _ItemView extends StatelessWidget {
     Widget leftTime = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 1,),
+            Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
+          ],
+        ),
         SizedBox(width: 1,),
         Text(
           data["effective_time_txt"],
           style: TextStyle(
-              fontSize: 10,
+              fontSize: 11,
               color: Color(0xFF999999),
               fontWeight: FontWeight.normal
           ),
@@ -302,8 +306,9 @@ class _ItemView extends StatelessWidget {
     );
 
     Widget child = Stack(
+      alignment: Alignment.topCenter,
       children: [
-        Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
+        Positioned(top: 5, width: size, height: size, child: imageView),
         Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
 
@@ -311,7 +316,7 @@ class _ItemView extends StatelessWidget {
           Positioned(
             right: 3,
             bottom: 25,
-            height: 11,
+            height: 13,
             child: leftTime,
           ),
 
