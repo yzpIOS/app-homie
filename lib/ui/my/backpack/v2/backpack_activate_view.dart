@@ -134,7 +134,6 @@ class _ItemView extends StatelessWidget {
     double size = 70;
 
     final imageView = Box(
-      padding: const Pad(top: 4, bottom: 8),
       child: BlankImgState(
         child: NetImage(data['image']),
       ),
@@ -206,8 +205,9 @@ class _ItemView extends StatelessWidget {
     );
 
     Widget child = Stack(
+      alignment: Alignment.center,
       children: [
-        Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
+        Positioned(top: 5, width: size, height: size, child: imageView),
         if(is_dress_up)
           Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
@@ -216,7 +216,7 @@ class _ItemView extends StatelessWidget {
           Positioned(
             right: 3,
             bottom: 25,
-            height: 11,
+            height: 13,
             child: leftTime,
           ),
 
