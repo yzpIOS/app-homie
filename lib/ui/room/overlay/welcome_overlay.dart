@@ -187,14 +187,17 @@ class _WelcomeView extends StatelessWidget {
 
 
       if(data?.approach_special_effect?.isNotEmpty == true) {
+        _boxHeight = 49.6;
 
         child = DefaultTextStyle(
           style: const TextStyle(fontSize: 9, color: Colors.white,),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           child: child,
         );
 
 
-        return Container(
+        child = Container(
           width: 191,
           height: 51,
           decoration: BoxDecoration(
@@ -202,7 +205,7 @@ class _WelcomeView extends StatelessWidget {
                 image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
               )
           ),
-          padding: EdgeInsets.only(left: 53, top: 7),
+          padding: EdgeInsets.only(left: 57, top: 0),
           child: child,
         );
       } else {
@@ -227,17 +230,17 @@ class _WelcomeView extends StatelessWidget {
         //   constraints: const BoxConstraints(maxWidth: 160, minHeight: 20, maxHeight: 20),
         //   child: child,
         // );
-        child = ConstrainedBox(
-          constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
-          child: child,
-        );
-
-        child = OpacityButton(
-          onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
-          child: child,
-        );
       }
 
+      child = ConstrainedBox(
+        constraints: BoxConstraints(minWidth: _boxWidth, maxWidth: 180, minHeight: _boxHeight, maxHeight: _boxHeight),
+        child: child,
+      );
+
+      child = OpacityButton(
+        onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: myNUid),
+        child: child,
+      );
 
       return child;
     }
