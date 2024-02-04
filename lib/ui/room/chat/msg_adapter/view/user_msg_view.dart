@@ -141,8 +141,8 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   InlineSpan richText(special, info, {bool plusTxt = false}) {
     var txt = vm.data;
 
-    if((txt.length ?? 0) + info.showName().length < 9) {
-      txt += "      ";
+    if(((txt.length ?? 0) + info.showName().length < 9) && plusTxt) {
+      txt += "        ";
     }
 
     return special?.build(":$txt") ?? TextSpan(text: ":$txt");
