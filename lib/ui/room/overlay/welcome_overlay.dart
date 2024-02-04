@@ -187,7 +187,8 @@ class _WelcomeView extends StatelessWidget {
 
 
       if(data?.approach_special_effect?.isNotEmpty == true) {
-        _boxHeight = 49.6;
+        _boxHeight = 69.6;
+        _boxWidth = 180;
 
         child = DefaultTextStyle(
           style: const TextStyle(fontSize: 9, color: Colors.white,),
@@ -199,13 +200,15 @@ class _WelcomeView extends StatelessWidget {
 
         child = Container(
           width: 191,
-          height: 51,
+          alignment: Alignment.centerLeft,
+          height: _boxHeight,
           decoration: BoxDecoration(
+            color: Colors.red,
               image: DecorationImage(
                 image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
               )
           ),
-          padding: EdgeInsets.only(left: 57, top: 0),
+          padding: EdgeInsets.only(left: 57),
           child: child,
         );
       } else {
