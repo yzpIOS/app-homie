@@ -207,7 +207,11 @@ class _WelcomeView extends StatelessWidget {
             )
           ),
           padding: EdgeInsets.only(left: 56, top: 11),
-          child: child,
+          child: SizedBox(
+            height: 25,
+            width: _boxWidth,
+            child: child,
+          ),
         );
       } else {
         child = Padding(
