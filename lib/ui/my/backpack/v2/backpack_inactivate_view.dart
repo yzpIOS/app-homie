@@ -286,7 +286,7 @@ class _ItemView extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(height: 1,),
+            SizedBox(height: 1.5,),
             Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
           ],
         ),
@@ -312,8 +312,8 @@ class _ItemView extends StatelessWidget {
         if(effective_time.isNotEmpty)
           Positioned(
             right: 3,
-            bottom: 25,
-            height: 13,
+            bottom: 22,
+            height: 15,
             child: leftTime,
           ),
 
