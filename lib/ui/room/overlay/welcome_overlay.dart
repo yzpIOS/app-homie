@@ -203,12 +203,11 @@ class _WelcomeView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           height: _boxHeight,
           decoration: BoxDecoration(
-            color: Colors.red,
-              image: DecorationImage(
-                image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
-              )
+            image: DecorationImage(
+              image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
+            )
           ),
-          padding: EdgeInsets.only(left: 57),
+          padding: EdgeInsets.only(left: 53, top: 2),
           child: child,
         );
       } else {
