@@ -48,7 +48,7 @@ class PurchaseDecorateSheet extends  StatefulWidget {
 
     await OrientationSheet.show(
       decoration: const ShapeDecoration(
-        color: Colors.transparent,
+        color: Colors.white,
         shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
       ),
       constraints: BoxConstraints(maxHeight: 222 + scaleHeight.toDouble() + 30 + totalCount),
@@ -58,7 +58,6 @@ class PurchaseDecorateSheet extends  StatefulWidget {
         view: view,
       ),
       direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
-      bgColor: Colors.transparent,
     );
   }
 
@@ -109,6 +108,7 @@ class _PurchaseDecorateState extends State<PurchaseDecorateSheet> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
