@@ -200,14 +200,13 @@ class _WelcomeView extends StatelessWidget {
 
         child = Container(
           width: 191,
-          alignment: Alignment.centerLeft,
           height: _boxHeight,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
             )
           ),
-          padding: EdgeInsets.only(left: 53, top: 2),
+          padding: EdgeInsets.only(left: 56, top: 11),
           child: child,
         );
       } else {
