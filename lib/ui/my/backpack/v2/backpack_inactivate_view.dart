@@ -234,13 +234,10 @@ class _ItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double size = 90;
+    double size = 70;
 
-    final imageView = Box(
-      padding: const Pad(top: 4, bottom: 8),
-      child: BlankImgState(
-        child: NetImage(data['image']),
-      ),
+    final imageView = BlankImgState(
+      child: NetImage(data['image']),
     );
 
     final nameView =  Container(
