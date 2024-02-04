@@ -251,12 +251,10 @@ class _ConvViewState extends State<_ConvView> {
                 return Stack(
                   clipBehavior: Clip.none,
                   children: [
+                    // Positioned(
+                    //   child: Image.asset(IMG.format('room/房间消息提醒框'), width: 20, height: 20.7, scale: 3, fit: BoxFit.contain),
+                    // ),
                     Positioned(
-                      child: Image.asset(IMG.format('room/房间消息提醒框'), width: 31, height: 34, scale: 3, fit: BoxFit.contain),
-                    ),
-                    Positioned(
-                      top: 2.5,
-                      left: 2.5,
                       child: Obx(() {
                         String uid = '';
                         final list = Get.find<ConvManagerCtrl>().convRx;
