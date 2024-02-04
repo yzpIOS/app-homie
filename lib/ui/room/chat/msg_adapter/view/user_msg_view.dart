@@ -118,7 +118,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
             ),
           ),
         span,
-        richText(special, info),
+        richText(special, info, plusTxt: true),
       ],
     );
 
@@ -128,6 +128,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
         NineImage(
           //imageProvider 图像处理
           imageProvider: NetworkImage(info.chat_bubble ?? ""),
+          // imageProvider: AssetImage("assets/img/chat/chat_box_2.9.png"),
           //内容填充区域ß
           child: RichText(text: span),
         ),
@@ -137,8 +138,12 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   }
 
   @override
-  InlineSpan richText(special, info) {
-    final txt = vm.data;
+  InlineSpan richText(special, info, {bool plusTxt = false}) {
+    var txt = vm.data;
+
+    if((txt.length ?? 0) + info.showName().length < 9) {
+      txt += "      ";
+    }
 
     return special?.build(":$txt") ?? TextSpan(text: ":$txt");
   }
