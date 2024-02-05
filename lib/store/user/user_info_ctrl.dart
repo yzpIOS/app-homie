@@ -86,7 +86,6 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
           await Api.UserInfo.simple(task.keys.toList(growable: false)) //
               .then((it) => it.map((k, v) => MapEntry(k, UserInfoDto.fromApi(k, v))));
 
-      _loadInfo.addAll(_taskNet.keys);
     } catch (e, s) {
       errLog(e, s);
 
@@ -97,6 +96,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
       return;
     }
 
+    _loadInfo.addAll(_taskNet.keys);
     for (final uid in task.keys) {
       final completer = _taskNet[uid]!;
 
@@ -123,9 +123,11 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
   Future<bool> _loadByDbOrNet(UID uid, bool useNet, {bool forceUseNet = false}) {
     return _task.putIfAbsent(uid, () async {
       try {
+        // 己经加载过
         if(_loadInfo.contains(uid)) {
-          return Future.value(true);
+          forceUseNet = false;
         }
+
         if(forceUseNet) {
           return await loadByNet(uid);
         }
