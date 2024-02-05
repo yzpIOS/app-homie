@@ -284,8 +284,10 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
         itemBuilder: (context, index) {
           // 单个商品item
           return GestureDetector(
-            onTap: () {
-              PurchaseDecorateSheet.show(items[index]);
+            onTap: () async {
+              await PurchaseDecorateSheet.show(items[index]);
+
+              WalletCtrl.ins.doRefresh();
             },
             behavior: HitTestBehavior.opaque,
             child: Column(

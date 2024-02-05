@@ -22,7 +22,7 @@ class PurchaseDecorateSheet extends  StatefulWidget {
     super.key
   });
 
-  static void show(Map data) async {
+  static Future<void> show(Map data) async {
     // 获取商品的高度
     Size? picItem = await ImageHelp.getNetImageSize(data["detail_image"]);
 
