@@ -17,6 +17,11 @@ class ApiData extends ApiBase {
       data["channel"] = Env.channelCode;
     }
 
+    // 苹果渠道
+    if(Platform.isIOS) {
+      data["channel"] = "apple";
+    }
+
     // 时间戳
     if(!data.containsKey("time")) {
       data["time"] = DateTime.now().millisecondsSinceEpoch;
