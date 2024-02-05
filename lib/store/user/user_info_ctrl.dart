@@ -29,6 +29,8 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
   final _taskNet = <UID, Completer<bool>>{};
   final _batchTask = <UID, Completer<bool>>{};
 
+  final _loadInfo = <UID>[];
+
   @override
   void onReady() {
     on<UserLevelUpEvent>(
@@ -83,6 +85,8 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
       items = //
           await Api.UserInfo.simple(task.keys.toList(growable: false)) //
               .then((it) => it.map((k, v) => MapEntry(k, UserInfoDto.fromApi(k, v))));
+
+      _loadInfo.addAll(_taskNet.keys);
     } catch (e, s) {
       errLog(e, s);
 
@@ -119,6 +123,9 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
   Future<bool> _loadByDbOrNet(UID uid, bool useNet, {bool forceUseNet = false}) {
     return _task.putIfAbsent(uid, () async {
       try {
+        if(_loadInfo.contains(uid)) {
+          return Future.value(true);
+        }
         if(forceUseNet) {
           return await loadByNet(uid);
         }
@@ -167,6 +174,8 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
 
   Future<bool> loadByNet(UID uid) {
     if (uid.isEmpty) return Future.value(false);
+
+    if(_loadInfo.contains(uid)) return Future.value(true);
 
     xlog('LoadByNet -> $uid');
 
