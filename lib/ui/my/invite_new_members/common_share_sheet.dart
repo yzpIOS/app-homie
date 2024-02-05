@@ -87,7 +87,7 @@ class CommonShareSheet extends StatelessWidget {
         Wx.doShare(WxShareModel(
           shareType: 1,
           scene: (action == '微信好友') ? WechatScene.kSession : WechatScene.kTimeline,
-          webpageUrl: 'http://app.web.homieyy.com?inviteId=${userDt0.account}',
+          webpageUrl: 'https://app.web.homieyy.com?inviteId=${userDt0.account}',
           title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',
           thumbData: iconBytes,
         ));
