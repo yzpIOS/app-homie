@@ -246,7 +246,7 @@ class _WelcomeView extends StatelessWidget {
 
       return child;
     }
-    return UserInfoCtrl.use(uid, builder: builder);
+    return UserInfoCtrl.use(uid, forceUseNet: true, builder: builder);
 
     // Widget child = UserInfoCtrl.use(
     //   uid,

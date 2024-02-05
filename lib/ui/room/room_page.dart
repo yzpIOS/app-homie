@@ -13,6 +13,7 @@ import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/super_gift_broadcast_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/statistic.dart';
 import 'package:app/ui/common/svga_effect_overlay.dart';
@@ -34,6 +35,9 @@ class RoomPage extends StatefulWidget {
   const RoomPage._(this.controller);
 
   static Future<void> show([bool off = false]) async {
+    // 头像缓存
+    UserInfoCtrl.ins.clearCache();
+
     final mgr = Get.find<RoomManagerCtrl>();
 
     if(RoomManagerCtrl.ins.sceneCtrl2 != null) {

@@ -74,7 +74,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
 
   @override
   Widget build(BuildContext context) {
-    return UserInfoCtrl.use(vm.uid, builder: (dto) {
+    return UserInfoCtrl.use(vm.uid, forceUseNet: true, builder: (dto) {
       if(dto == null || dto.chat_bubble == null || dto.chat_bubble?.isEmpty == true) {
         return super.build(context);
       }

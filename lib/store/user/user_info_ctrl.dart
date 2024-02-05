@@ -136,6 +136,10 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     });
   }
 
+  void clearCache() {
+    _loadInfo.clear();
+  }
+
   Future<bool> _loadByDb(UID uid) {
     xlog('LoadByDb -> $uid', level: 0);
 
