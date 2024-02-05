@@ -109,7 +109,7 @@ class CommonShareSheet extends StatelessWidget {
         if(userDt0 == null) {
           return;
         }
-        copyTxt('http://app.web.homieyy.com?inviteId=${userDt0.account}');
+        copyTxt('https://app.web.homieyy.com?inviteId=${userDt0.account}');
         break;
     }
   }
