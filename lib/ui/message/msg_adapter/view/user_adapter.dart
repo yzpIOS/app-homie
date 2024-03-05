@@ -569,11 +569,12 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
     return GestureDetector(
       onTap: () async {
         String guildId = json!["guild_id"] ?? "";
-        int recordId = json!["record_id"] ?? 0;
+        int recordId = int.tryParse(json!["record_id"] ?? "0") ?? 0;
         // 解析数据
         simpleTry(
           () => Api.Common.getGuildInfo(recordId),
           callback: (data) {
+            data = (data as Iterable).firstOrNull;
             if(data != null && data["status"] == 2) {
               // 未拒绝，未加入
               var notOperate = "${json!["user_name"]}邀请您加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}，是否同意？";
