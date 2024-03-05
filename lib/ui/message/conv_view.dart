@@ -131,14 +131,13 @@ class _ItemView extends StatelessWidget {
               } catch(e) {
               }
 
-              ;
 
               // 打开聊天
               ChatPage.to2(() {
                 var ctrl = SingleChatCtrl.fromUid(data.userID!);
                 ctrl.type = type;
                 return ctrl;
-              });
+              }, needCheckValid: type != TYPE_INVITE_GUILD);
               break;
             default:
               showToast('当前版本不支持');
