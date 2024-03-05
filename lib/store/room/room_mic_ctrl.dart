@@ -2,12 +2,14 @@ import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_rtc_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/widgets.dart';
@@ -314,7 +316,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     });
   }
 
-  void micUp({required String no, NUID? uid}) {
+  void micUp({required String no, NUID? uid}) async {
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(0);
+    }
     simpleTry(
       () async {
         final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
@@ -353,7 +358,21 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     }
   }
 
-  void inviteMicUp({required String no, required NUID nuid, UID? uid}) {
+  void inviteMicUp({required String no, required NUID nuid, UID? uid}) async {
+    if(uid == null) {
+      return;
+    }
+    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
+    if(userInfo == null) {
+      showToast("无法操作，获取该用户信息异常");
+      return;
+    }
+    // 该用户未实名
+    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+      showToast("无法操作，该用户未实名");
+      return;
+    }
+
     Future api() async {
       final result = await Api.Room.micUp(roomId: roomId, no: no, uid: nuid);
 

@@ -56,6 +56,8 @@ mixin GroupMixin on GetConvMixin {
   }
 }
 
+const int TYPE_INVITE_GUILD = 4;
+
 abstract class ChatCtrl extends GetxController
     with
         GetConvMixin,
@@ -67,6 +69,9 @@ abstract class ChatCtrl extends GetxController
         GetDisposableMixin,
         GetSingleTickerProviderStateMixin {
   final kPageSize = 20;
+
+
+  int? type = 0;
 
   final msgManager = Get.find<MessageManagerCtrl>();
   final isMuteRx = false.obs;
@@ -459,6 +464,7 @@ class ChatMsgSender extends MsgSender with TxtSender, ImageSender, GiftSender, C
 }
 
 class SingleChatCtrl extends ChatCtrl {
+
   @override
   final Either<V2TimConversation, ConvCreator> _conv;
 

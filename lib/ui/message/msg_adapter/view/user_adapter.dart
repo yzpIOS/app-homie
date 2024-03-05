@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'dart:convert' as convert;
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/common/size_provider.dart';
 import 'package:app/store/sound_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
@@ -11,6 +13,7 @@ import 'package:app/ui/common/video_page.dart';
 import 'package:app/ui/message/msg_adapter/data/base_adapter.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
 import 'package:app/ui/my/backpack/v1/backpack_page.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/image/image_gallery.dart';
 import 'package:bubble/bubble.dart';
@@ -44,10 +47,7 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
       ),
     );
 
-    popView = //
-        vm.isSend //
-            ? _$PopView$Send(child: popView)
-            : _$PopView$Receive(child: popView);
+    popView = vm.isSend ? _$PopView$Send(child: popView) : _$PopView$Receive(child: popView);
     //</editor-fold>
 
     return DefaultTextStyle.merge(
@@ -542,6 +542,108 @@ class VoiceMsg extends UserMsg<VoiceMsgAdapter> {
   }
 }
 
+class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
+  InviteGuildMsg(super.vm);
+
+  @override
+  Widget build(BuildContext context) {
+    var datas = vm.msg.cloudCustomData ?? "";
+    if(datas.isEmpty) {
+      return const XText('[数据异常]');
+    }
+
+    // 数据异常
+    Map? json = null;
+    try {
+      json = convert.jsonDecode(datas);
+
+      json = convert.jsonDecode(json!["data"]!!);
+    } catch(e) {
+    }
+    if(json == null || json.isEmpty == true) {
+      return const XText('[数据异常]');
+    }
+
+
+    // 解析数据
+    return GestureDetector(
+      onTap: () async {
+        String guildId = json!["guild_id"] ?? "";
+        // 解析数据
+        simpleTry(
+          () => Api.Common.getGuildInfo(),
+          callback: (data) {
+            if(data == null || data["guildId"] == null) {
+              // 未拒绝，未加入
+              var notOperate = "${json!["user_name"]}邀请您加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}，是否同意？";
+              CommonDialog.joinGuildDialog(notOperate, () {
+                simpleTry(
+                  () => Api.Room.joinGuild(guildId, 0),
+                  callback: (data) {
+
+                  }
+                );
+              });
+            } else if(data == null || data["guildId"] == null) {
+              // 己加入
+              var hasJoinTips = "您已加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}";
+              CommonDialog.simpleText(hasJoinTips);
+            } else {
+              // 未拒绝
+              var rejectTips = "你已拒绝${json!["guild_name"]}公会邀请";
+              CommonDialog.simpleText(rejectTips);
+            }
+          }
+        );
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8)
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10,),
+            XText("入会通知", style: TextStyle(color: Color(0xFF000000), fontSize: 14),),
+
+            SizedBox(height: 10,),
+            Container(height: 1, width: double.infinity, color: Color(0xFFCCCCCC).withAlpha(80),),
+
+            SizedBox(height: 10,),
+            XText(vm.msg.msgTime.toString(), style: TextStyle(color: Color(0xFF999999), fontSize: 12)),
+
+            SizedBox(height: 10,),
+            XText(
+              "${json["user_name"]}邀请你加入${json["guild_name"]}公会，预计在${json["out_time"]}前完成处理，如有逾期将作为拒绝处理，点击确认。",
+              style: TextStyle(color: Color(0xFF000000), fontSize: 14),
+              maxLines: 3,
+            ),
+
+            SizedBox(height: 17,),
+            Container(height: 1, width: double.infinity, color: Color(0xFFCCCCCC).withAlpha(80),),
+
+            SizedBox(
+              height: 42,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(child: XText("查看详情")),
+                  Image.asset(IMG.format("wode_icon_right"), width: 24, height: 24,)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 Widget _$ImgBox({required Size? size, required Widget? Function(Size) byLocal, required Widget? Function(Size) byNet}) {
   return Stack(
     fit: StackFit.loose,
@@ -565,6 +667,7 @@ Widget _$ImgBox({required Size? size, required Widget? Function(Size) byLocal, r
     ],
   );
 }
+
 
 extension on Iterable<File?> {
   File? firstExists() => firstWhereOrNull((it) => it != null && it.existsSync());

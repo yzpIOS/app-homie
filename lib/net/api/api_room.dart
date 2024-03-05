@@ -428,4 +428,26 @@ class ApiRoom extends ApiBase {
     };
     return _doPost("mike/speaking", data: data);
   }
+
+  ///
+  /// 查询用户是否在公会中
+  /// [guildId] 公会id
+  ///
+  Future userGuildStatus(String guildId) {
+    return _doPost("guild/confirm", data: {
+      "guild_id": guildId,
+    });
+  }
+
+  ///
+  /// 加入公会
+  /// http://192.168.1.156:20000/project/15/interface/api/2320
+  /// [status] 1.同意 2.拒绝
+  ///
+  Future joinGuild(String guildId, int status) {
+    return _doPost("guild/confirm", data: {
+      "guild_id": guildId,
+      "status": status,
+    });
+  }
 }

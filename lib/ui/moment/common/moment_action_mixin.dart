@@ -1,11 +1,15 @@
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/moment/widgets/reply_view.dart';
 import 'package:flutter/material.dart';
 
 mixin MomentActionMixin<T extends StatefulWidget> on State<T> {
   void doCommentReply(int commentId, {String? replyId}) {
-    void doSub(String txt) {
+    void doSub(String txt) async {
+      if(!(await OAuthCtrl.checkValid())) {
+        return;
+      }
       simpleSub(
         Api.Moment.commentReply(id: commentId, replyId: replyId, text: txt),
       );

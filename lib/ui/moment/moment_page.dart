@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/moment/create/moment_create_page.dart';
 import 'package:app/ui/moment/index/moment_view.dart';
@@ -69,7 +70,12 @@ class _MomentPageState extends State<MomentPage> with SingleTickerProviderStateM
 
   _actions() {
     return 'moment/ic_moment'.toSvgAction(
-      onPressed: () => Get.to(() => const MomentCreatePage()),
+      onPressed: () async  {
+        if(!(await OAuthCtrl.checkValid())) {
+          return;
+        }
+        Get.to(() => const MomentCreatePage());
+      },
     );
   }
 }

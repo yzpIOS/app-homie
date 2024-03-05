@@ -5,6 +5,7 @@ import 'package:app/event/event.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/config_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/open_install_utils.dart';
@@ -325,7 +326,7 @@ class _RechargePageState extends State<RechargePage> {
     );
   }
 
-  void doSub() {
+  void doSub() async {
     final data = selectRx();
 
     if (data == null) {
@@ -349,6 +350,11 @@ class _RechargePageState extends State<RechargePage> {
       showToast('请先阅读并同意《充值及购买协议》');
       return;
     }
+
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value();
+    }
+
     if(payType != null) {
       Statistic.userCharge(payType);
     }

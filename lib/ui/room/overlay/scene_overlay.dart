@@ -4,6 +4,7 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
@@ -91,7 +92,10 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
     }
   }
 
-  void _showSendMsg({bool autofocus = true}) {
+  void _showSendMsg({bool autofocus = true}) async {
+    if(!(await OAuthCtrl.checkValid())) {
+      return;
+    }
     final sheet = ReplySheet.show(
       TextEditingController(),
       autofocus: autofocus,

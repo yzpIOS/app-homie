@@ -12,6 +12,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/app.dart';
 import 'package:app/ui/login/init/my_user_init_perfect_info_page.dart';
 import 'package:app/ui/login/init/user_init_0_page.dart';
+import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -310,4 +311,22 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static String? get token => _auth?.token;
 
   static bool get isLogin => _auth != null;
+
+  static Future<bool> checkValid() async {
+    if(!OAuthCtrl.isNameValidate) {
+      String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+      if(label != "去实名") {
+        return Future.value(false);
+      }
+      // 未认证，去认证
+      await Get.to(() => const RealIdentity1Page());
+      // 更新用户数据
+      await OAuthCtrl.ins.udpateUserInfo();
+      // 未实名，直接返回
+      if(!OAuthCtrl.isNameValidate) {
+        return Future.value(false);
+      }
+    }
+    return Future.value(true);
+  }
 }

@@ -152,7 +152,7 @@ class _UserHomePageState extends State<UserHomePage> with BusStateMixin {
       ),
       'my/用户聊天'.toSvgAction(
         onPressed: () {
-          ChatPage.to(SingleChatCtrl.fromUid(uid));
+          ChatPage.to2(() => SingleChatCtrl.fromUid(uid));
         },
       ),
       'my/dontai_icon_siliao'.toSvgAction(

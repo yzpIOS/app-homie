@@ -30,6 +30,10 @@ class ApiGift extends ApiBase {
     required List<String> uid,
   }) async {
 
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(null);
+    }
+
     C_GiveGiftByRoom c_giveGiftByRoom = C_GiveGiftByRoom.create();
     c_giveGiftByRoom.acceptUidList.addAll(uid);
     c_giveGiftByRoom.roomId = Int64(roomId);
@@ -64,6 +68,11 @@ class ApiGift extends ApiBase {
     required int count,
     required bool isBackpack,
   }) async {
+
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(null);
+    }
+
     C_GiveGiftByDynamic c_giveGiftByRoom = C_GiveGiftByDynamic.create();
     c_giveGiftByRoom.dynamicId = Int64(id);
     c_giveGiftByRoom.giftId = Int64(giftId);
@@ -95,6 +104,7 @@ class ApiGift extends ApiBase {
     required int giftId,
     required int count,
   }) async {
+
 
     // C_GiveGiftByIm c_giveGiftByRoom = C_GiveGiftByIm.create();
     // c_giveGiftByRoom.acceptUid = uid;

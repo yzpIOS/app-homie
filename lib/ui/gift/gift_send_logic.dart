@@ -8,6 +8,7 @@ import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/my_gift_ctrl.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
@@ -124,6 +125,10 @@ class GiftSend2ImUser extends GiftSendLogic {
     final type = MoneyType.fromVal(data['currency']);
 
     assert(type != null, '数据错误 -> $data');
+
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(0);
+    }
 
     await Api.Gift.sendGift2ImUser(
       uid: uid,

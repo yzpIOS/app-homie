@@ -1,6 +1,7 @@
 import 'package:app/event/event.dart';
 import 'package:app/model/api/moment_dto.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
@@ -48,7 +49,10 @@ extension XRxMomentDto on Rx<MomentDto> {
   }
 
   void doComment() {
-    void doSub(String txt) {
+    void doSub(String txt) async {
+      if(!(await OAuthCtrl.checkValid())) {
+        return;
+      }
       simpleSub(
         Api.Moment.comment(id: _id, text: txt),
         callback1: (resp) {

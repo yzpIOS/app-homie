@@ -2,22 +2,41 @@ import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/store/im/chat_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/input/input_view.dart';
+import 'package:app/ui/message/msg_adapter/data/base_adapter.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
+import 'package:app/ui/message/msg_adapter/view/user_adapter.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
+typedef ChatCtrlFactory = ChatCtrl Function();
+
 class ChatPage extends StatelessWidget {
   static const routeName = '/Chat';
 
   const ChatPage({super.key});
 
-  static void to(ChatCtrl ctrl) => Get.toNamed(routeName, arguments: ctrl);
+  static void to(ChatCtrl callBack) async {
+
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(0);
+    }
+    Get.toNamed(routeName, arguments: callBack);
+  }
+
+
+  static void to2(ChatCtrlFactory callBack) async {
+    if(!(await OAuthCtrl.checkValid())) {
+      return Future.value(0);
+    }
+    Get.toNamed(routeName, arguments: callBack.call());
+  }
 
   static void replaceChat(ChatCtrl ctrl) {
     bool close = false;
@@ -114,6 +133,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
   Widget build(BuildContext context) {
     Widget builder() {
       return Scaffold(
+        backgroundColor: _ctrl.type == TYPE_INVITE_GUILD ? const Color(0XFFF5F5F5) : null,
         body: Obx(() {
           final b = _ctrl.fullRx();
 
@@ -242,12 +262,18 @@ class _DataView extends StatelessWidget {
     final length = data.length, count = length + 2;
 
     Widget itemBuilder(int i) {
+
       if (i == 0) {
         return $Loading(controller.topLoading);
       } else if (i == count - 1) {
         return $Loading(controller.bottomLoading);
       } else {
         final index = length - (i - 1) - 1;
+
+        // 邀请入会
+        if(controller.type == TYPE_INVITE_GUILD) {
+          return InviteGuildMsg(TxtMsgAdapter(data[index]));
+        }
 
         return BaseMsgAdapter.from(data[index]);
       }

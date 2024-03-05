@@ -141,4 +141,11 @@ class ApiCommon extends ApiBase {
   Future getEntryPoint() async {
     return _doPost('base/point');
   }
+
+  ///
+  ///  获取用户公会信息
+  ///
+  Future getGuildInfo() async {
+    return _doPost("guild/belong");
+  }
 }

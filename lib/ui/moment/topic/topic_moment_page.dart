@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/moment/create/moment_create_page.dart';
 import 'package:app/ui/moment/index/moment_view.dart';
@@ -39,7 +40,12 @@ class TopicMomentPage extends StatelessWidget {
   _actions() {
     return 'moment/ic_moment'.toSvgAction(
       color: Colors.white,
-      onPressed: () => Get.to(() => MomentCreatePage(topic: topic)),
+      onPressed: () async {
+        if(!(await OAuthCtrl.checkValid())) {
+          return;
+        }
+        Get.to(() => MomentCreatePage(topic: topic));
+      },
     );
   }
 }

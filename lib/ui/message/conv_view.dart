@@ -1,3 +1,4 @@
+import 'dart:convert' as convert;
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/im/chat_ctrl.dart';
@@ -119,8 +120,25 @@ class _ItemView extends StatelessWidget {
         onTap: () {
           switch (data.type) {
             case ConversationType.V2TIM_C2C:
+
+              // 数据异常
+              Map? json = null;
+              int type = 0;
+              try {
+                json = convert.jsonDecode(data.lastMessage?.cloudCustomData ?? "");
+
+                type = int.tryParse(json!["type"]) ?? 0;
+              } catch(e) {
+              }
+
+              ;
+
               // 打开聊天
-              ChatPage.to(SingleChatCtrl.fromUid(data.userID!));
+              ChatPage.to2(() {
+                var ctrl = SingleChatCtrl.fromUid(data.userID!);
+                ctrl.type = type;
+                return ctrl;
+              });
               break;
             default:
               showToast('当前版本不支持');

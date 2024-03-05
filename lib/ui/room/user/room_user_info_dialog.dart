@@ -441,7 +441,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       case '私聊':
         Get.back();
 
-        ChatPage.to(SingleChatCtrl.fromUid(uid));
+        ChatPage.to2(() => SingleChatCtrl.fromUid(uid));
         break;
       case '送礼物':
         Get.back();

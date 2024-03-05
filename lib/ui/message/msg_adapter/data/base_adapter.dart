@@ -91,6 +91,7 @@ class TxtMsgAdapter extends MsgAdapter<V2TimTextElem> {
   V2TimTextElem get body => msg.textElem!;
 }
 
+
 class ExtMsgAdapter extends MsgAdapter<V2TimTextElem> {
   final Map ext;
   final SysConvEnum type;

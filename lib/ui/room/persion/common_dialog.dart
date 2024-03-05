@@ -25,7 +25,7 @@ class CommonDialog extends StatefulWidget {
 
   // 取消回调
   Function? cancel;
-  String cancelLabel;
+  String? cancelLabel;
 
   CommonDialog({
     required this.title,
@@ -172,6 +172,24 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 立即使用
   ///
+  static void simpleText(String text) {
+    showDialog(context: Get.context!, builder: (context) {
+      return CommonDialog(title: text, cancelLabel: null, confirm:  () {
+      });
+    });
+  }
+
+  static void joinGuildDialog(String text, Function callBack) {
+    showDialog(context: Get.context!, builder: (context) {
+      return CommonDialog(title: text, cancelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
+        callBack.call();
+      });
+    });
+  }
+
+  ///
+  /// 立即使用
+  ///
   static void useImmediate(Function callBack) {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: "是否立即使用？", confirm:  () {
@@ -284,13 +302,14 @@ class _DownMicConfirmState extends State<CommonDialog> {
                   if(widget.subTitle?.isNotEmpty == true)
                     SizedBox(height: 28,),
 
-                  Row(
-                    children: [
-                      _createCancelButton(),
-                      const Expanded(child: SizedBox()),
-                      _createAgreeButton(),
-                    ],
-                  ),
+                  if(widget.cancelLabel != null)
+                    Row(
+                      children: [
+                        _createCancelButton(),
+                        const Expanded(child: SizedBox()),
+                        _createAgreeButton(),
+                      ],
+                    ),
                   SizedBox(height: 20,),
                 ],
               ),
@@ -332,7 +351,7 @@ class _DownMicConfirmState extends State<CommonDialog> {
             ]
         ),
         child: Text(
-          widget.cancelLabel,
+          widget.cancelLabel ?? "",
           style: const TextStyle(
             fontSize: 16,
             color: Colors.white,
