@@ -302,12 +302,19 @@ class _DownMicConfirmState extends State<CommonDialog> {
                   if(widget.subTitle?.isNotEmpty == true)
                     SizedBox(height: 28,),
 
-                  if(widget.cancelLabel != null)
                     Row(
                       children: [
-                        _createCancelButton(),
-                        const Expanded(child: SizedBox()),
+                        if(widget.cancelLabel != null)
+                          _createCancelButton(),
+                        if(widget.cancelLabel != null)
+                          const Expanded(child: SizedBox()),
+
+                        if(widget.cancelLabel == null)
+                          const Expanded(child: SizedBox()),
                         _createAgreeButton(),
+
+                        if(widget.cancelLabel == null)
+                          const Expanded(child: SizedBox()),
                       ],
                     ),
                   SizedBox(height: 20,),

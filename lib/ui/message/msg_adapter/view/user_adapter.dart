@@ -573,7 +573,7 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
         simpleTry(
           () => Api.Common.getGuildInfo(),
           callback: (data) {
-            if(data == null || data["guildId"] == null) {
+            if(data == null || data["guild_id"] == null) {
               // 未拒绝，未加入
               var notOperate = "${json!["user_name"]}邀请您加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}，是否同意？";
               CommonDialog.joinGuildDialog(notOperate, () {
@@ -584,7 +584,7 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
                   }
                 );
               });
-            } else if(data == null || data["guildId"] == null) {
+            } else if(data != null && data["guild_id"] == null) {
               // 己加入
               var hasJoinTips = "您已加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}";
               CommonDialog.simpleText(hasJoinTips);
@@ -615,7 +615,7 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
             Container(height: 1, width: double.infinity, color: Color(0xFFCCCCCC).withAlpha(80),),
 
             SizedBox(height: 10,),
-            XText(vm.msg.msgTime.toString(), style: TextStyle(color: Color(0xFF999999), fontSize: 12)),
+            XText(vm.msg.msgTime.toString().split(" ")[0], style: TextStyle(color: Color(0xFF999999), fontSize: 12)),
 
             SizedBox(height: 10,),
             XText(
