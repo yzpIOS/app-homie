@@ -153,6 +153,10 @@ void _handleError(DioError e) {
         case 500:
         case 502:
           break;
+        case 12026:
+          Bus.fire(NeedRealName(data?['msg']));
+
+          throw const AuthException();
         default:
           xlog('未处理的网络请求状态【$status】', type: LogType.HTTP);
       }

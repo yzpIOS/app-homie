@@ -314,7 +314,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   static Future<bool> checkValid() async {
     if(!OAuthCtrl.isNameValidate) {
-      String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+      String? label = await Get.simpleDialog(msg: "此功能需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
       if(label != "去实名") {
         return Future.value(false);
       }
@@ -328,5 +328,16 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       }
     }
     return Future.value(true);
+  }
+
+  static Future<void> toIdentityReal() async {
+    String? label = await Get.simpleDialog(msg: "此功能需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+    if(label != "去实名") {
+      return Future.value();
+    }
+    // 未认证，去认证
+    await Get.to(() => const RealIdentity1Page());
+    // 更新用户数据
+    await OAuthCtrl.ins.udpateUserInfo();
   }
 }

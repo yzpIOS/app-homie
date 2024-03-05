@@ -67,6 +67,12 @@ class NoAuthEvent extends Event {
   const NoAuthEvent([this.msg]);
 }
 
+class NeedRealName extends Event {
+  final String? msg;
+
+  const NeedRealName([this.msg]);
+}
+
 class AppLifecycleEvent extends Event {
   final AppLifecycleState state;
 

@@ -145,7 +145,7 @@ class ApiCommon extends ApiBase {
   ///
   ///  获取用户公会信息
   ///
-  Future getGuildInfo() async {
-    return _doPost("guild/belong");
+  Future getGuildInfo(int recordId) async {
+    return _doPost("guild/invite/record", data: {"record_id_list": [recordId]}).then((val) => (val['items'] as Iterable?)?.firstOrNull);
   }
 }

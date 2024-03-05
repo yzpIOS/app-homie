@@ -63,6 +63,15 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       },
     );
 
+    on<NeedRealName>((event) {
+      Get.until((route) {
+        return route.isFirst;
+      });
+      delay(300, () {
+        OAuthCtrl.toIdentityReal();
+      });
+    });
+
     on<GoDressUpEvent>(
       (_) => selector.value = 2, //跳到商城页
     );
