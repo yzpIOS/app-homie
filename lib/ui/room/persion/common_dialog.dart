@@ -179,11 +179,13 @@ class CommonDialog extends StatefulWidget {
     });
   }
 
-  static void joinGuildDialog(String text, Function callBack) {
+  static void joinGuildDialog(String text, Function(int value) callBack) {
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(title: text, cancelLabel: "拒绝", confirmLabel: "同意", confirm:  () {
-        callBack.call();
-      });
+        callBack.call(1);
+      }, cancel: () {
+        callBack.call(3);
+      },);
     });
   }
 

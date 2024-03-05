@@ -568,7 +568,7 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
     // 解析数据
     return GestureDetector(
       onTap: () async {
-        String guildId = json!["guild_id"] ?? "";
+        int guildId = int.tryParse(json!["guild_id"] ?? "0") ?? 0;
         int recordId = int.tryParse(json!["record_id"] ?? "0") ?? 0;
         // 解析数据
         simpleTry(
@@ -578,11 +578,15 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
             if(data != null && data["status"] == 2) {
               // 未拒绝，未加入
               var notOperate = "${json!["user_name"]}邀请您加入${json!["guild_name"]}公会，分成比例为${json["ledger_ratio"]}，是否同意？";
-              CommonDialog.joinGuildDialog(notOperate, () {
+              CommonDialog.joinGuildDialog(notOperate, (value) {
                 simpleTry(
-                  () => Api.Room.joinGuild(guildId, 0),
+                  () => Api.Room.joinGuild(guildId, value),
                   callback: (data) {
-
+                    if(value == 3) {
+                      showToast("您己拒绝了${json!["guild_name"]}公会的邀请");
+                    } else {
+                      showToast("您己加入${json!["guild_name"]}公会");
+                    }
                   }
                 );
               });

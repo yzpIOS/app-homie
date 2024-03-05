@@ -442,9 +442,9 @@ class ApiRoom extends ApiBase {
   ///
   /// 加入公会
   /// http://192.168.1.156:20000/project/15/interface/api/2320
-  /// [status] 1.同意 2.拒绝
+  /// [status] 状态： 1.确认， 2.邀请中 3.已拒绝
   ///
-  Future joinGuild(String guildId, int status) {
+  Future joinGuild(int guildId, int status) {
     return _doPost("guild/confirm", data: {
       "guild_id": guildId,
       "status": status,
