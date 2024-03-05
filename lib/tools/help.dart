@@ -136,6 +136,7 @@ Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueC
     showToast('已取消');
   } on NetException catch (e) {
     showToast(e.msg);
+  } on NonToastException catch (e) {
   } catch (e, s) {
     errLog(e, s, type: LogType.SIMPLE_TRY);
 

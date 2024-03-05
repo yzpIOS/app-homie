@@ -101,6 +101,12 @@ class Http {
         return await request(method, path, ext: ext, query: query, data: data, tryTimes: tryTimes - 1);
       }
 
+      if(response.data is Map && response.data["code"] == 12026) {
+        Bus.fire(NeedRealName(data?['msg']));
+
+        throw const NonToastException("");
+      }
+
       return response.data;
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {

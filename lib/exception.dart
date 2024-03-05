@@ -20,6 +20,14 @@ class NetException implements Exception {
   @override
   String toString() => msg;
 }
+class NonToastException implements Exception {
+  final String msg;
+
+  const NonToastException(this.msg);
+
+  @override
+  String toString() => msg;
+}
 
 class AuthException implements Exception {
   const AuthException();

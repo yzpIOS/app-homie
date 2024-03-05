@@ -313,6 +313,9 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static bool get isLogin => _auth != null;
 
   static Future<bool> checkValid() async {
+    if(Env.isDebug) {
+      return Future.value(true);
+    }
     if(!OAuthCtrl.isNameValidate) {
       String? label = await Get.simpleDialog(msg: "此功能需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
       if(label != "去实名") {
