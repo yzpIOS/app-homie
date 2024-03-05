@@ -52,10 +52,6 @@ class BaseMsgAdapter<T extends MsgAdapter> extends ViewAdapter<T> {
 
   static ViewAdapter from(V2TimMessage msg) {
 
-    if(Env.isDebug) {
-      return InviteGuildMsg(TxtMsgAdapter(msg));
-    }
-
 
     final create = _createMap[msg.elemType];
 
