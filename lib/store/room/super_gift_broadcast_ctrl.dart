@@ -28,35 +28,45 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     final ids = data.acceptUidList;
     final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
 
-    for (final uid in ids) {
-      if(data.bannerType.toInt() == 1) {
-        // 1：特殊礼物, 己测试
-        addTask(
-          SpecialGiftMarqueeView(acceptUid: uid, users: users, data: data),
-        );
-      } else if(data.bannerType.toInt() == 2) {
-        // 2：普通礼物, 己测试
-        addTask(
-          CommonGiftMarqueeView(acceptUid: uid, users: users, data: data),
-        );
-      } else if(data.bannerType.toInt() == 3) {
+    if(ids.isNotEmpty) {
+      for (final uid in ids) {
+        if(data.bannerType.toInt() == 1) {
+          // 1：特殊礼物, 己测试
+          addTask(
+            SpecialGiftMarqueeView(acceptUid: uid, users: users, data: data),
+          );
+        } else if(data.bannerType.toInt() == 2) {
+          // 2：普通礼物, 己测试
+          addTask(
+            CommonGiftMarqueeView(acceptUid: uid, users: users, data: data),
+          );
+        } else if(data.bannerType.toInt() == 3) {
+          // 3：盲盒礼物, 己测试
+          addTask(
+            BlindGiftMarqueeView(users: users, data: data,
+              blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
+          );
+        }
+        // else if(data.bannerType.toInt() == 4) {
+        //   // 4：服装
+        //   addTask(
+        //     ClothGiftMarqueeView(acceptUid: uid, users: users, data: data,
+        //       blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
+        //   );
+        // }
+        else {
+          // 默认样式
+          addTask(
+            SuperGiftView(acceptUid: uid, users: users, data: data),
+          );
+        }
+      }
+    } else {
+      if(data.bannerType.toInt() == 3) {
         // 3：盲盒礼物, 己测试
         addTask(
-          BlindGiftMarqueeView(acceptUid: uid, users: users, data: data,
+          BlindGiftMarqueeView(users: users, data: data,
             blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
-        );
-      }
-      // else if(data.bannerType.toInt() == 4) {
-      //   // 4：服装
-      //   addTask(
-      //     ClothGiftMarqueeView(acceptUid: uid, users: users, data: data,
-      //       blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
-      //   );
-      // }
-      else {
-        // 默认样式
-        addTask(
-          SuperGiftView(acceptUid: uid, users: users, data: data),
         );
       }
     }

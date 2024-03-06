@@ -18,14 +18,12 @@ class BlindGiftMarqueeView extends StatefulWidget {
   String? blinkName;
   String? blinkUrl;
 
-  final UID acceptUid;
   final Map<UID, UserInfoDto> users;
   final S_FloatingScreen data;
 
   BlindGiftMarqueeView({
     super.key,
     required this.data,
-    required this.acceptUid,
     required this.users,
     this.blinkName,
     this.blinkUrl
