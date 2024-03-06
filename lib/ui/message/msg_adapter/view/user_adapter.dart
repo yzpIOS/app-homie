@@ -542,8 +542,8 @@ class VoiceMsg extends UserMsg<VoiceMsgAdapter> {
   }
 }
 
-class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
-  InviteGuildMsg(super.vm);
+class SysMsgInviteGuild extends UserMsg<TxtMsgAdapter> {
+  SysMsgInviteGuild(super.vm);
 
   @override
   Widget build(BuildContext context) {
@@ -643,6 +643,71 @@ class InviteGuildMsg extends UserMsg<TxtMsgAdapter> {
                 ],
               ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+class SysMsgText extends UserMsg<TxtMsgAdapter> {
+  SysMsgText(super.vm);
+
+  @override
+  Widget build(BuildContext context) {
+    var datas = vm.msg.cloudCustomData ?? "";
+    if(datas.isEmpty) {
+      return const XText('[数据异常]');
+    }
+
+    // 数据异常
+    Map? json = null;
+    try {
+      json = convert.jsonDecode(datas);
+
+      json = convert.jsonDecode(json!["data"]!!);
+    } catch(e) {
+    }
+    if(json == null || json.isEmpty == true) {
+      return const XText('[数据异常]');
+    }
+
+    // 解析数据
+    return GestureDetector(
+      onTap: () async {
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8)
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 10,),
+            XText(json.containsKey("title") ? json["title"] : "通知", style: TextStyle(color: Color(0xFF000000), fontSize: 14),),
+
+            SizedBox(height: 10,),
+            Container(height: 1, width: double.infinity, color: Color(0xFFCCCCCC).withAlpha(80),),
+
+            SizedBox(height: 10,),
+            XText(vm.msg.msgTime.toString().split(" ")[0], style: TextStyle(color: Color(0xFF999999), fontSize: 12)),
+
+            SizedBox(height: 10,),
+            XText(
+              vm.txt ?? "",
+              style: TextStyle(color: Color(0xFF000000), fontSize: 14),
+              maxLines: 3,
+            ),
+
+            SizedBox(height: 17,),
           ],
         ),
       ),

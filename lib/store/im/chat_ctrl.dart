@@ -56,7 +56,8 @@ mixin GroupMixin on GetConvMixin {
   }
 }
 
-const int TYPE_INVITE_GUILD = 4;
+const int TYPE_SYSTEM_MSG = 5;
+const int SUBTYPE_INVITE_GUILD = 2;
 
 abstract class ChatCtrl extends GetxController
     with
@@ -72,6 +73,8 @@ abstract class ChatCtrl extends GetxController
 
 
   int? type = 0;
+
+  int? subType = 0;
 
   final msgManager = Get.find<MessageManagerCtrl>();
   final isMuteRx = false.obs;

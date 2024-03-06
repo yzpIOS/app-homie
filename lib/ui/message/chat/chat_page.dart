@@ -1,3 +1,4 @@
+import 'dart:convert' as convert;
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
@@ -133,7 +134,7 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
   Widget build(BuildContext context) {
     Widget builder() {
       return Scaffold(
-        backgroundColor: _ctrl.type == TYPE_INVITE_GUILD ? const Color(0XFFF5F5F5) : null,
+        backgroundColor: (_ctrl.type == TYPE_SYSTEM_MSG) ? const Color(0XFFF5F5F5) : null,
         body: Obx(() {
           final b = _ctrl.fullRx();
 
@@ -271,8 +272,25 @@ class _DataView extends StatelessWidget {
         final index = length - (i - 1) - 1;
 
         // 邀请入会
-        if(controller.type == TYPE_INVITE_GUILD) {
-          return InviteGuildMsg(TxtMsgAdapter(data[index]));
+        var item = data[index];
+        Map json;
+        int type = 0;
+        int subType = 0;
+        try {
+          json = convert.jsonDecode(item.cloudCustomData ?? "");
+          type = int.tryParse(json!["type"]) ?? 0;
+
+          json = convert.jsonDecode(json!["data"] ?? "");
+          subType = int.tryParse(json!["subType"] ?? "0") ?? 0;
+        } catch(e) {
+        }
+        if((type == TYPE_SYSTEM_MSG)) {
+          // 邀请
+          if(subType == SUBTYPE_INVITE_GUILD) {
+            return SysMsgInviteGuild(TxtMsgAdapter(data[index]));
+          }
+          // 系统消息
+          return SysMsgText(TxtMsgAdapter(data[index]));
         }
 
         return BaseMsgAdapter.from(data[index]);

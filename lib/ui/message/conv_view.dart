@@ -124,20 +124,23 @@ class _ItemView extends StatelessWidget {
               // 数据异常
               Map? json = null;
               int type = 0;
+              int subType = 0;
               try {
                 json = convert.jsonDecode(data.lastMessage?.cloudCustomData ?? "");
-
                 type = int.tryParse(json!["type"]) ?? 0;
+
+                json = convert.jsonDecode(json!["data"] ?? "");
+                subType = int.tryParse(json!["subType"] ?? "0") ?? 0;
               } catch(e) {
               }
-
 
               // 打开聊天
               ChatPage.to2(() {
                 var ctrl = SingleChatCtrl.fromUid(data.userID!);
                 ctrl.type = type;
+                ctrl.subType = subType;
                 return ctrl;
-              }, needCheckValid: type != TYPE_INVITE_GUILD);
+              }, needCheckValid: type != TYPE_SYSTEM_MSG);
               break;
             default:
               showToast('当前版本不支持');
