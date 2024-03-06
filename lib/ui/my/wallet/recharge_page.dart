@@ -351,9 +351,9 @@ class _RechargePageState extends State<RechargePage> {
       return;
     }
 
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value();
-    }
+    // if(!(await OAuthCtrl.checkValid())) {
+    //   return Future.value();
+    // }
 
     if(payType != null) {
       Statistic.userCharge(payType);

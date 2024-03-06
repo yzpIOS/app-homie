@@ -25,17 +25,17 @@ class ChatPage extends StatelessWidget {
 
   static void to(ChatCtrl callBack) async {
 
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value(0);
-    }
+    // if(!(await OAuthCtrl.checkValid())) {
+    //   return Future.value(0);
+    // }
     Get.toNamed(routeName, arguments: callBack);
   }
 
 
   static void to2(ChatCtrlFactory callBack, {bool needCheckValid = true}) async {
-    if(needCheckValid && !(await OAuthCtrl.checkValid())) {
-      return Future.value(0);
-    }
+    // if(needCheckValid && !(await OAuthCtrl.checkValid())) {
+    //   return Future.value(0);
+    // }
     Get.toNamed(routeName, arguments: callBack.call());
   }
 

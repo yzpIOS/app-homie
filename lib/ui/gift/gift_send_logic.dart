@@ -126,9 +126,9 @@ class GiftSend2ImUser extends GiftSendLogic {
 
     assert(type != null, '数据错误 -> $data');
 
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value(0);
-    }
+    // if(!(await OAuthCtrl.checkValid())) {
+    //   return Future.value(0);
+    // }
 
     await Api.Gift.sendGift2ImUser(
       uid: uid,

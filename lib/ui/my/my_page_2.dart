@@ -79,7 +79,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
   Widget _Action1() {
     final items = [
-      '开直播',
+      // '开直播',
       '装扮商城',
       '我的钱包',
       '我的背包',

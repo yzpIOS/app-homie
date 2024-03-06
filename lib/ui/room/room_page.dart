@@ -254,9 +254,9 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     on<RoomAtEvent>(
       (event) async {
-        if(!(await OAuthCtrl.checkValid())) {
-          return;
-        }
+        // if(!(await OAuthCtrl.checkValid())) {
+        //   return;
+        // }
 
         final sheet = ReplySheet.show(
           TextEditingController(text: '@${event.nickName} '),

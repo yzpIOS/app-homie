@@ -30,9 +30,9 @@ class ApiGift extends ApiBase {
     required List<String> uid,
   }) async {
 
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value(null);
-    }
+    // if(!(await OAuthCtrl.checkValid())) {
+    //   return Future.value(null);
+    // }
 
     C_GiveGiftByRoom c_giveGiftByRoom = C_GiveGiftByRoom.create();
     c_giveGiftByRoom.acceptUidList.addAll(uid);
@@ -69,9 +69,9 @@ class ApiGift extends ApiBase {
     required bool isBackpack,
   }) async {
 
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value(null);
-    }
+    // if(!(await OAuthCtrl.checkValid())) {
+    //   return Future.value(null);
+    // }
 
     C_GiveGiftByDynamic c_giveGiftByRoom = C_GiveGiftByDynamic.create();
     c_giveGiftByRoom.dynamicId = Int64(id);
