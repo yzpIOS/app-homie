@@ -120,7 +120,7 @@ class _HomeBanedUserList extends SimplePageView<Map> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  (item["punish"] ?? "") + (item["punish"] ?? "") + item["punish"] ?? "",
+                  (item["punish"] ?? ""),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
