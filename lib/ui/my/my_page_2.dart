@@ -82,6 +82,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       // '开直播',
       '装扮商城',
       '我的钱包',
+      '我的装扮',
       '我的背包',
       '我的任务',
       // '我的称号',
@@ -176,8 +177,12 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '装扮商城':
         Get.to(() => const DecorateShopPage());
         break;
-      case '我的背包':
+      case '我的装扮':
         Get.to(() => const BackpackPage2());
+        break;
+      case '我的背包':
+        Get.to(() => const BackpackPage());
+        break;
         break;
       case '我的任务':
         SignDialog.show(isManual: true);

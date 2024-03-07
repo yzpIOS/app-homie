@@ -120,10 +120,12 @@ class _HomeBannerViewState extends State<HomeBannerView> with GetStateMixin {
     child = OpacityButton(
       child: child,
       onTap: () {
-        if(Env.isDebug) {
+        // 违规用户列表
+        if(data["type"] == 3) {
           Get.to(() => HomeBanedUserPage());
           return;
         }
+        // WebView
         Get.to(() => WebPage(title: data['title'], uri: Uri.parse(data['url'])));
       },
     );
