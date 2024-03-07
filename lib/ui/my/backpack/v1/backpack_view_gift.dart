@@ -49,6 +49,10 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
     return Obx(() {
       final agg = <int, num>{};
 
+      if(selectRx.isEmpty) {
+        return SizedBox();
+      }
+
       for (final item in selectRx.values) {
         final k = item['currency'];
         final v = item['price'];
@@ -168,7 +172,7 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
     double size = 70;
 
     final imageView = BlankImgState(
-      child: NetImage(data['conver']),
+      child: NetImage(data['cover']),
     );
 
     final nameView =  Container(
