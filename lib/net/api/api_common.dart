@@ -148,4 +148,8 @@ class ApiCommon extends ApiBase {
   Future getGuildInfo(int recordId) async {
     return _doPost("guild/invite/record", data: {"record_id_list": [recordId]});
   }
+
+  Future getBannedUserList({required PageNum page}) {
+    return _doPost("feedback/banned/user/list", data: page + {});
+  }
 }

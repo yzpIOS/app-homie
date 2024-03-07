@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/store/banner_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/home/home_baned_user_page.dart';
 import 'package:app/widgets.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -119,6 +120,10 @@ class _HomeBannerViewState extends State<HomeBannerView> with GetStateMixin {
     child = OpacityButton(
       child: child,
       onTap: () {
+        if(Env.isDebug) {
+          Get.to(() => HomeBanedUserPage());
+          return;
+        }
         Get.to(() => WebPage(title: data['title'], uri: Uri.parse(data['url'])));
       },
     );
