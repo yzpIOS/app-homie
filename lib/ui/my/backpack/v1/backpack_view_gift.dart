@@ -29,7 +29,14 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: xAppBar(title: "我的背包"),
-      body: _BackpackView$Gift(selectRx),
+      body: Container(
+        margin: EdgeInsets.only(
+          left: 12,
+          right: 12,
+          top: 17
+        ),
+        child: _BackpackView$Gift(selectRx),
+      ),
       bottomNavigationBar: $ActionView(),
     );
   }
@@ -142,14 +149,12 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
 
   @override
   BaseConfig? get config {
-    return const GridConfig(
-      padding: Pad(horizontal: 20, vertical: 20),
+    return GridConfig(
       gridDelegate: XGridDelegate(
-        childAspectRatio: 105 / 78,
+        childAspectRatio: 112.toDouble() / 116.toDouble(),
         crossAxisCount: 3,
-        mainAxisSpacing: 12,
-        crossAxisSpacing: 12,
-        fixedHeight: 22,
+        mainAxisSpacing: 9,
+        crossAxisSpacing: 8,
       ),
     );
   }

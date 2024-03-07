@@ -17,7 +17,16 @@ class _HomeBanedUserState extends State<HomeBanedUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(title: "用户违规公告"),
+      appBar: xAppBar(
+          title: Text(
+            "用户违规公告",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+            ),
+          )
+      ),
       body: Column(
         children: [
           // 标题
@@ -45,7 +54,7 @@ class _HomeBanedUserState extends State<HomeBanedUserPage> {
               style: TextStyle(
                   color: Color(0xFF999999),
                   fontSize: 14,
-                  fontWeight: FontWeight.w600
+                  
               ),
             ),
           ),
@@ -58,7 +67,7 @@ class _HomeBanedUserState extends State<HomeBanedUserPage> {
               style: TextStyle(
                   color: Color(0xFF999999),
                   fontSize: 14,
-                  fontWeight: FontWeight.w600
+                  
               ),
             ),
           ),
@@ -71,7 +80,7 @@ class _HomeBanedUserState extends State<HomeBanedUserPage> {
               style: TextStyle(
                   color: Color(0xFF999999),
                   fontSize: 14,
-                  fontWeight: FontWeight.w600
+                  
               ),
             ),
           ),
@@ -109,7 +118,7 @@ class _HomeBanedUserList extends SimplePageView<Map> {
                   style: TextStyle(
                       color: Color(0xFF000000),
                       fontSize: 14,
-                      fontWeight: FontWeight.w600
+                      
                   ),
                 ),
               ),
@@ -127,7 +136,7 @@ class _HomeBanedUserList extends SimplePageView<Map> {
                   style: TextStyle(
                       color: Color(0xFF000000),
                       fontSize: 14,
-                      fontWeight: FontWeight.w600
+                      
                   ),
                 ),
               ),
@@ -144,7 +153,7 @@ class _HomeBanedUserList extends SimplePageView<Map> {
                   style: TextStyle(
                       color: Color(0xFF000000),
                       fontSize: 14,
-                      fontWeight: FontWeight.w600
+                      
                   ),
                 ),
               ),
