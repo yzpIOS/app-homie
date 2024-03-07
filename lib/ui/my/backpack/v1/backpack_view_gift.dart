@@ -172,7 +172,7 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
     double size = 70;
 
     final imageView = BlankImgState(
-      child: NetImage(data['cover']),
+      child: NetImage(data["cover"]),
     );
 
     final nameView =  Container(
@@ -245,7 +245,7 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
     Widget child = Stack(
       alignment: Alignment.topCenter,
       children: [
-        Positioned(top: 5, width: size, height: size, child: imageView),
+        Positioned(top: 17, width: size, height: size, child: imageView),
         Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
 
