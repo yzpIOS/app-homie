@@ -21,9 +21,11 @@ abstract class ISheetWidget extends StatelessWidget {
 class XBottomSheet extends StatelessWidget {
   final ISheetWidget sheet;
 
-  const XBottomSheet._({required this.sheet});
+  final bool needIndicator;
 
-  static Future<T?> show<T>({required ISheetWidget child, double? maxHeight}) {
+  XBottomSheet._({required this.sheet, this.needIndicator = true});
+
+  static Future<T?> show<T>({required ISheetWidget child, double? maxHeight, bool needIndicator = true}) {
     const _shape = XRectangleBorder(
       borderRadius: AppBorderRadius.t10,
     );
@@ -40,7 +42,7 @@ class XBottomSheet extends StatelessWidget {
       isDismissible: true,
       isScrollControlled: true,
       constraints: constraints,
-      builder: (_) => XBottomSheet._(sheet: child),
+      builder: (_) => XBottomSheet._(sheet: child, needIndicator: needIndicator,),
     );
   }
 
@@ -63,7 +65,8 @@ class XBottomSheet extends StatelessWidget {
     child = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        _indicator,
+        if(needIndicator)
+          _indicator,
         $TitleView(),
         if (_hint != null)
           DefaultTextStyle.merge(

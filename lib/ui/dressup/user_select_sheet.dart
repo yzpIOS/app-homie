@@ -9,13 +9,24 @@ import 'package:flutter/material.dart';
 class UserSelectSheet extends ISheetWidget {
   UserSelectSheet._();
 
-  static Future<UID?> show() => XBottomSheet.show(child: UserSelectSheet._(), maxHeight: 480);
+  static Future<UID?> show() => XBottomSheet.show(child: UserSelectSheet._(), maxHeight: 480, needIndicator: false);
 
   late final selectRx = Rxn<UID>();
   late final keywordRx = RxnString();
 
   @override
-  late final Widget title = $SearchView();
+  late final Widget title = Column(
+    children: [
+      SizedBox(height: 8,),
+      Text(
+        '好友',
+        style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+      ),
+      SizedBox(height: 12,),
+      $SearchView(),
+    ],
+  );
+
 
   @override
   late final Tuple2<Widget, VoidCallback>? leading = null;
@@ -90,13 +101,6 @@ class UserSelectSheet extends ISheetWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: Pad(left: 20, vertical: 10),
-          child: Text(
-            '好友',
-            style: TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
-          ),
-        ),
         Expanded(child: _FriendView(selectRx: selectRx)),
       ],
     );
