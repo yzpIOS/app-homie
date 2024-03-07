@@ -23,7 +23,7 @@ class InputConfig {
         // InputAction$Call(ctrl),
         InputAction$Image(ctrl),
         // InputAction$Shop(ctrl),
-        InputAction$Gift(ctrl),
+        // InputAction$Gift(ctrl),
         InputAction$Report(uid, ctrl),
       ],
     );

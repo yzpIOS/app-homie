@@ -24,11 +24,11 @@ mixin MomentBottomBar implements IBottomBar<MomentDtoAdapter> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (!isSelf)
-                NumView(
-                  action: '礼物',
-                  num: $NumFormat(count.giftCount),
-                  onTap: onItemClick,
-                ),
+                // NumView(
+                //   action: '礼物',
+                //   num: $NumFormat(count.giftCount),
+                //   onTap: onItemClick,
+                // ),
               ...<Widget>[
                 NumView(
                   action: '收藏${more.isCollect == true ? '_1' : ''}',
