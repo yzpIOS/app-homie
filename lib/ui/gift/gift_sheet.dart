@@ -38,6 +38,9 @@ class GiftSheet extends StatelessWidget {
     WalletCtrl.ins.doRefresh();
 
     isPopUp = true;
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      isPopUp = false;
+    });
 
     return OrientationSheet.show(
       child: WillPopScope(
