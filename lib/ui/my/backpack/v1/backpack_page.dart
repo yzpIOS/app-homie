@@ -18,19 +18,8 @@ class _BackpackPageState extends State<BackpackPage> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: tabs.length,
-      child: Scaffold(
-        appBar: xAppBar(title: xAppBar$TabBar(tabs.keys)),
-        body: ConfigListState(
-          buildEmptyView: ([arg]) => TipsView(tips: '还没有装扮哦~', doRefresh: arg),
-          child: TabBarView(
-            children: tabs.values //
-                .map((it) => DelayView(builder: (_) => it, keepAlive: true))
-                .toList(growable: false),
-          ),
-        ),
-      ),
+    return Scaffold(
+      body: BackpackView$Gift(),
     );
   }
 }

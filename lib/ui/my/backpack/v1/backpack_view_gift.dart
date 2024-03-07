@@ -1,18 +1,145 @@
 import 'package:app/common/theme.dart';
+import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/my_wardrobe_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/common/money_icon.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+typedef DateItem = Tuple2<RxInt, Map>;
+
 class BackpackView$Gift extends StatefulWidget {
+
   const BackpackView$Gift({super.key});
 
   @override
   State<BackpackView$Gift> createState() => _BackpackView$GiftState();
 }
 
-class _BackpackView$GiftState extends SimpleDataState<Map, BackpackView$Gift> {
+class _BackpackView$GiftState extends State<BackpackView$Gift> {
+
+
+  late final selectRx = RxMap<int, Map>();
+
+  late final wardrobeCtrl = Get.find<MyWardrobeCtrl>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: xAppBar(title: "我的背包"),
+      body: _BackpackView$Gift(selectRx),
+      bottomNavigationBar: $ActionView(),
+    );
+  }
+
+
+  @override
+  Widget $ActionView() {
+
+
+    return Obx(() {
+      final agg = <int, num>{};
+
+      for (final item in selectRx.values) {
+        final k = item['currency'];
+        final v = item['price'];
+
+        final _v = agg[k];
+
+        if (_v is num) {
+          agg[k] = _v + v;
+        } else {
+          agg[k] = v;
+        }
+      }
+
+      return Container(
+        color: Color(0xFFEBEBFF),
+        height: 88,
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 价格
+            SizedBox(width: 35,),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  XText(
+                    '共${selectRx.length}件商品',
+                    style: const TextStyle(fontWeight: fw$Medium),
+                  ),
+                  Spacing.h4,
+                  XRichText(
+                    TextSpan(
+                      children: [
+                        const TextSpan(text: '总价值'),
+                        ...agg.entries.expand((it) {
+                          final type = MoneyType.fromVal(it.key);
+                          return [
+                            TextSpan(text: '\t${it.value}'),
+                            if (type != null)
+                              WidgetSpan(
+                                child: MoneyIcon(type: type, size: 24),
+                                alignment: PlaceholderAlignment.middle,
+                              ),
+                          ];
+                        })
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                wardrobeCtrl.doGive(
+                  ids: selectRx.keys.toList(),
+                  callback: selectRx.clear,
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Container(
+                width: 66,
+                height: 29,
+                decoration: BoxDecoration(
+                  color: Color(0XFFBD7BE5),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                margin: EdgeInsets.only(right: 13),
+                alignment: Alignment.center,
+                child: Text(
+                  "赠送",
+                  style: TextStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+}
+
+
+class _BackpackView$Gift extends SimpleDataView<Map>{
+
+  final idKey = "id";
+
+  late RxMap<int, Map> selectRx;
+
+  _BackpackView$Gift(this.selectRx);
+
   @override
   BaseConfig? get config {
     return const GridConfig(
@@ -31,61 +158,147 @@ class _BackpackView$GiftState extends SimpleDataState<Map, BackpackView$Gift> {
   Future fetch() => Api.Gift.backpack();
 
   @override
-  Widget itemBuilder(BuildContext context, Map item, int index) {
-    final imageView = Box(
-      padding: const Pad(top: 4, bottom: 8),
-      child: GiftImgState(
-        child: NetImage(item['cover']),
-      ),
+  Widget itemBuilder(BuildContext context, Map data, int index) {
+
+    double size = 70;
+
+    final imageView = BlankImgState(
+      child: NetImage(data['conver']),
     );
 
-    final nameView = DecoratedBox(
-      decoration: const ShapeDecoration(
-        shape: XRectangleBorder(borderRadius: AppBorderRadius.b8),
-        gradient: LinearGradient(
-          colors: [Color(0xFFB7E0FC), Color(0xFFE1F3FF), Color(0xFFB7E0FC)],
-        ),
+    final nameView =  Container(
+      decoration: const BoxDecoration(
+          color: Color(0xFFEBEBFF),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(8),
+            bottomLeft: Radius.circular(8),
+          )
       ),
-      child: Center(
-        child: XText(
-          item['name'],
-          style: const TextStyle(fontSize: 12, color: Colors.black),
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          XText(
+            data['name'] ?? "",
+            style: const TextStyle(fontSize: 12, color: Colors.black),
+          ),
+          if(data["gender"] == 1 || data["gender"] == 2)
+            Image.asset(IMG.format(data["gender"] == 1 ? "my/icon_nan" : "my/icon_nv"), width: 20, height: 20,)
+        ],
       ),
     );
 
     final countView = Container(
-      constraints: const BoxConstraints(minWidth: 20),
-      decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0x4D000000)),
+      constraints: BoxConstraints(minWidth: 35, minHeight: 16),
+      decoration: BoxDecoration(
+          color: Color(0xFF27E4BB),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              bottomRight: Radius.circular(8.0)
+          )
+      ),
       alignment: Alignment.center,
       child: XText(
-        'X${item['count']}',
-        style: const TextStyle(fontSize: 8, color: Colors.white),
+        'X${data["count"] ?? 0}',
+        style: const TextStyle(fontSize: 12, color: Colors.white),
       ),
     );
 
+    var effective_time = data["effective_time_txt"]?.toString() ?? "";
+
+    Widget leftTime;
+    if(effective_time.isNotEmpty) {
+      leftTime = Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 1.5,),
+              Image.asset(IMG.format("my/icon_sj"), width: 12, height: 12,),
+            ],
+          ),
+          SizedBox(width: 1,),
+          Text(
+            data["effective_time_txt"],
+            style: TextStyle(
+                fontSize: 11,
+                color: Color(0xFF999999),
+                fontWeight: FontWeight.normal
+            ),
+          )
+        ],
+      );
+    } else {
+      leftTime = SizedBox();
+    }
+
     Widget child = Stack(
+      alignment: Alignment.topCenter,
       children: [
-        Positioned(top: 0, left: 0, right: 0, bottom: 22, child: imageView),
-        Positioned(top: 3, right: 3, height: 10, child: countView),
+        Positioned(top: 5, width: size, height: size, child: imageView),
+        Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
+
+        if(effective_time.isNotEmpty)
+          Positioned(
+            right: 3,
+            bottom: 22,
+            height: 15,
+            child: leftTime,
+          ),
+
+        // label图片
+        if (data case {'label_list': List items})
+          for (var i = 0; i < items.length; ++i)
+            Positioned(
+              top: 5,
+              left: 5.0 * (i + 1) + 32 * i,
+              child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
+            ),
       ],
     );
 
-    child = Container(
-      foregroundDecoration: const ShapeDecoration(
-        shape: XRectangleBorder(
-          borderRadius: AppBorderRadius.a8,
-          side: BorderSide(
-            width: 2,
-            color: Color(0xFFE8F5FF),
-            strokeAlign: BorderSide.strokeAlignOutside,
-          ),
-        ),
-      ),
+    child = GestureDetector(
+      onTap: () {
+        // 取消选择
+        if(selectRx.containsKey(data[idKey])) {
+          selectRx.clear();
+          return;
+        }
+        selectRx.clear();
+        selectRx[data[idKey]] = data;
+      },
+      behavior: HitTestBehavior.opaque,
       child: child,
     );
 
-    return child;
+    return Obx(() {
+      var selected = selectRx.containsKey(data[idKey]);
+      final _decor = BoxDecoration(
+        borderRadius: AppBorderRadius.a10,
+        border: selectRx.containsKey(data[idKey])
+            ? const Border.fromBorderSide(
+          BorderSide(
+            width: 2,
+            color: AppPalette.primary,
+          ),
+        )
+            : const Border.fromBorderSide(
+          BorderSide(
+            width: 2,
+            color: Color(0xFFEBEBFF),
+          ),
+        ),
+      );
+
+      return AnimatedContainer(
+          duration: kTabScrollDuration,
+          curve: Curves.easeOutCubic,
+          decoration: _decor,
+          child: child
+      );
+    },
+    );
   }
 }
