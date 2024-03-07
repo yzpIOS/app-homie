@@ -93,9 +93,6 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
   }
 
   void _showSendMsg({bool autofocus = true}) async {
-    if(!(await OAuthCtrl.checkValid())) {
-      return;
-    }
     final sheet = ReplySheet.show(
       TextEditingController(),
       autofocus: autofocus,
