@@ -67,7 +67,7 @@ class _BackpackPageState extends State<BackpackPage2> with SingleTickerProviderS
     }
 
     return Scaffold(
-      appBar: xAppBar(title: "我的背包"),
+      appBar: xAppBar(title: "我的装扮"),
       // bottomNavigationBar: $ActionView(selectRx),
       body: Column(
         mainAxisSize: MainAxisSize.max,
