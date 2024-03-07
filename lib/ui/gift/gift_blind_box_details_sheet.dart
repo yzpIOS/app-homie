@@ -43,13 +43,13 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
           return _BlindBoxRecordingDataView(giftId);
         },
       ),
-      '排行榜': DelayView(
-        fadeIn: false,
-        keepAlive: true,
-        builder: (_) {
-          return _BlindBoxRankingListMainDataView(giftId);
-        },
-      ),
+      // '排行榜': DelayView(
+      //   fadeIn: false,
+      //   keepAlive: true,
+      //   builder: (_) {
+      //     return _BlindBoxRankingListMainDataView(giftId);
+      //   },
+      // ),
     };
 
     Widget child = XSnapshotWidget(
