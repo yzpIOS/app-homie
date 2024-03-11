@@ -704,7 +704,7 @@ class SysMsgText extends UserMsg<TxtMsgAdapter> {
             XText(
               vm.txt ?? "",
               style: TextStyle(color: Color(0xFF000000), fontSize: 14),
-              maxLines: 3,
+              maxLines: 10,
             ),
 
             SizedBox(height: 17,),
