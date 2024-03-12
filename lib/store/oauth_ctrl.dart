@@ -44,7 +44,8 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       markReady();
     }
 
-    App.toADLoading();
+    skipToMain();
+    // App.toADLoading();
   }
 
   void skipToMain() {
