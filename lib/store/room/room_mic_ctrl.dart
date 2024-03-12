@@ -362,15 +362,19 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     if(uid == null) {
       return;
     }
-    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
-    if(userInfo == null) {
-      showToast("无法操作，获取该用户信息异常");
-      return;
-    }
-    // 该用户未实名
-    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
-      showToast("无法操作，该用户未实名");
-      return;
+
+    // 自己不用判断
+    if(uid != OAuthCtrl.uid) {
+      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
+      if(userInfo == null) {
+        showToast("无法操作，获取该用户信息异常");
+        return;
+      }
+      // 该用户未实名
+      if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+        showToast("无法操作，该用户未实名");
+        return;
+      }
     }
 
     Future api() async {
