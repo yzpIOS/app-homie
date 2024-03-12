@@ -20,6 +20,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   int maxMic;
   RoomType roomType;
 
+  UID roomUid;
+
   RxMap<String, MicInfo> dataRx = RxMap();
 
   List<MicInfo> get simpleUserList => dataRx.values.toList();
@@ -28,7 +30,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     return simpleUserList;
   }
 
-  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType});
+  RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required this.roomUid});
 
   final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
@@ -363,8 +365,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       return;
     }
 
-    // 自己不用判断
-    if(uid != OAuthCtrl.uid) {
+    // 房主不用判断
+    if(uid != roomUid) {
       UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
       if(userInfo == null) {
         showToast("无法操作，获取该用户信息异常");

@@ -39,7 +39,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     return getAudience();
   }
 
-  PersonRoomMicCtrl(super.roomId, {required super.maxMic, required super.roomType});
+  PersonRoomMicCtrl(super.roomId, {required super.maxMic, required super.roomType, required super.roomUid});
 
   @override
   void onInit() {
@@ -366,7 +366,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     if(uid == null) {
       return;
     }
-    if(uid != OAuthCtrl.uid) {
+    if(uid != roomUid) {
       UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
       if (userInfo == null) {
         showToast("无法操作，获取该用户信息异常");

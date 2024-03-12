@@ -473,7 +473,7 @@ class RoomCtrl extends SceneCtrl {
   }
 
   SceneMicCtrl getRoomMicCtrl() {
-    roomMicCtrl ??= bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType));
+    roomMicCtrl ??= bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, roomUid: roomUid));
     return roomMicCtrl!;
   }
 
@@ -701,7 +701,7 @@ class PersonRoomCtrl extends RoomCtrl {
 
   @override
   SceneMicCtrl getRoomMicCtrl() {
-    roomMicCtrl ??= bindGet<PersonRoomMicCtrl>(PersonRoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType));
+    roomMicCtrl ??= bindGet<PersonRoomMicCtrl>(PersonRoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, roomUid: roomUid));
     return roomMicCtrl!;
   }
 
