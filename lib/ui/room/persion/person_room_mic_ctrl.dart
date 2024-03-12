@@ -366,15 +366,17 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     if(uid == null) {
       return;
     }
-    UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
-    if(userInfo == null) {
-      showToast("无法操作，获取该用户信息异常");
-      return;
-    }
-    // 该用户未实名
-    if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
-      showToast("无法操作，该用户未实名");
-      return;
+    if(uid != OAuthCtrl.uid) {
+      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
+      if (userInfo == null) {
+        showToast("无法操作，获取该用户信息异常");
+        return;
+      }
+      // 该用户未实名
+      if (userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+        showToast("无法操作，该用户未实名");
+        return;
+      }
     }
     super.inviteMicUp(no: no, nuid:nuid, uid: uid);
   }
