@@ -164,13 +164,20 @@ class GiftSend2Room extends GiftSendLogic {
     // 删除空数据
     users.removeWhere((element) => element.isEmpty);
 
-    var canSend = await ConfigCtrl.ins.canBlinkBoxSend();
-    if(canSend) {
+    var isSelectBlind = selectRx() != null && selectRx()?['type'] == 6;
+    if(isSelectBlind) {
+      var canSend = await ConfigCtrl.ins.canBlinkBoxSend();
+      if(canSend) {
+        if (users.isEmpty) {
+          throw LogicException(-1, '请选择礼物赠送对象'.en());
+        }
+      } else {
+        users.clear();
+      }
+    } else {
       if (users.isEmpty) {
         throw LogicException(-1, '请选择礼物赠送对象'.en());
       }
-    } else {
-      users.clear();
     }
 
     assert(type != null, '数据错误 -> $data');
@@ -206,9 +213,12 @@ class GiftSend2Room extends GiftSendLogic {
   @override
   Widget? get $MiddleView {
     return Obx(() {
+      var gray = false;
       var config = ConfigCtrl.ins.dataRx;
-      if(config.isEmpty || !ConfigCtrl.ins.canBlinkBoxSend2()) {
-        return SizedBox();
+      if(selectRx() != null && selectRx()?['type'] == 6) {
+        if(config.isEmpty || !ConfigCtrl.ins.canBlinkBoxSend2()) {
+          return SizedBox(height: 45,);
+        }
       }
       Widget $UserView() {
         final _decor = BoxDecoration(
@@ -313,7 +323,7 @@ class GiftSend2Room extends GiftSendLogic {
         return child;
       }
 
-      final child = Stack(
+      Widget child = Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned.fill(right: 40, child: $UserView()),
