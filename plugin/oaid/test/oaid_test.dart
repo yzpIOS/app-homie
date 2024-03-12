@@ -2,11 +2,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:oaid/oaid.dart';
 import 'package:oaid/oaid_platform_interface.dart';
 import 'package:oaid/oaid_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockOaidPlatform
-    with MockPlatformInterfaceMixin
-    implements OaidPlatform {
+class MockOaidPlatform implements OaidPlatform {
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');

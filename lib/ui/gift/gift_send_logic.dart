@@ -8,6 +8,7 @@ import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/my_gift_ctrl.dart';
 import 'package:app/store/wallet_ctrl.dart';
@@ -163,8 +164,13 @@ class GiftSend2Room extends GiftSendLogic {
     // 删除空数据
     users.removeWhere((element) => element.isEmpty);
 
-    if (users.isEmpty) {
-      throw LogicException(-1, '请选择礼物赠送对象'.en());
+    var canSend = await ConfigCtrl.ins.canBlinkBoxSend();
+    if(canSend) {
+      if (users.isEmpty) {
+        throw LogicException(-1, '请选择礼物赠送对象'.en());
+      }
+    } else {
+      users.clear();
     }
 
     assert(type != null, '数据错误 -> $data');
@@ -199,136 +205,142 @@ class GiftSend2Room extends GiftSendLogic {
 
   @override
   Widget? get $MiddleView {
-    Widget $UserView() {
-      final _decor = BoxDecoration(
-        shape: BoxShape.circle,
-        color: AppPalette.barrier,
-        border: Border.fromBorderSide(BorderSide(color: Colors.white, width: AppSize.px1)),
-      );
+    return Obx(() {
+      var config = ConfigCtrl.ins.dataRx;
+      if(config.isEmpty || !ConfigCtrl.ins.canBlinkBoxSend2()) {
+        return SizedBox();
+      }
+      Widget $UserView() {
+        final _decor = BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppPalette.barrier,
+          border: Border.fromBorderSide(BorderSide(color: Colors.white, width: AppSize.px1)),
+        );
 
-      Widget itemBuilder(GiftSend2RoomEntity item) {
-        // 分隔线
-        if(item.userType == GiftSend2RoomEntity.DIVIDE_TYPE) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                color: Colors.white,
-                width: 1,
-                height: 20,
-              )
-            ],
-          );
-        }
-
-        final onTap = Some(() {
-          if (!userRx.remove(item)) userRx.add(item);
-        });
-
-        Widget child = Obx(
-          () {
-            final isSelected = userRx.contains(item);
-
-            return Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.center,
+        Widget itemBuilder(GiftSend2RoomEntity item) {
+          // 分隔线
+          if(item.userType == GiftSend2RoomEntity.DIVIDE_TYPE) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                AsyncAvatar(
-                  uid: item.uid,
-                  size: 30,
-                  onTap: onTap,
-                  side: isSelected //
-                      ? const BorderSide(width: 1, color: AppPalette.primary, strokeAlign: BorderSide.strokeAlignCenter)
-                      : BorderSide.none,
-                ),
-                if (isSelected)
-                  IgnorePointer(
-                    child: SvgView(SVG.$('room/选中'), width: 12, height: 12),
+                Container(
+                  color: Colors.white,
+                  width: 1,
+                  height: 20,
+                )
+              ],
+            );
+          }
+
+          final onTap = Some(() {
+            if (!userRx.remove(item)) userRx.add(item);
+          });
+
+          Widget child = Obx(
+                () {
+              final isSelected = userRx.contains(item);
+
+              return Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.center,
+                children: [
+                  AsyncAvatar(
+                    uid: item.uid,
+                    size: 30,
+                    onTap: onTap,
+                    side: isSelected //
+                        ? const BorderSide(width: 1, color: AppPalette.primary, strokeAlign: BorderSide.strokeAlignCenter)
+                        : BorderSide.none,
                   ),
-                if (item.no.isNotEmpty)
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    width: 10,
-                    height: 10,
-                    child: IgnorePointer(
-                      child: Container(
-                        decoration: _decor,
-                        alignment: Alignment.center,
-                        child: XText(
-                          item.no,
-                          textHeightBehavior: const TextHeightBehavior(
-                            applyHeightToFirstAscent: false,
-                            applyHeightToLastDescent: false,
+                  if (isSelected)
+                    IgnorePointer(
+                      child: SvgView(SVG.$('room/选中'), width: 12, height: 12),
+                    ),
+                  if (item.no.isNotEmpty)
+                    Positioned(
+                      right: 0,
+                      bottom: 0,
+                      width: 10,
+                      height: 10,
+                      child: IgnorePointer(
+                        child: Container(
+                          decoration: _decor,
+                          alignment: Alignment.center,
+                          child: XText(
+                            item.no,
+                            textHeightBehavior: const TextHeightBehavior(
+                              applyHeightToFirstAscent: false,
+                              applyHeightToLastDescent: false,
+                            ),
+                            style: const TextStyle(fontSize: 8, color: Colors.white, height: 1),
                           ),
-                          style: const TextStyle(fontSize: 8, color: Colors.white, height: 1),
                         ),
                       ),
                     ),
-                  ),
 
-                if(item.userType == 1)
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(IMG.format("room/room_owner"), width: 24,height: 11,),
-                  ),
+                  if(item.userType == 1)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Image.asset(IMG.format("room/room_owner"), width: 24,height: 11,),
+                    ),
 
-                if(item.userType == 2)
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Image.asset(IMG.format("room/room_direct"), width: 24,height: 11,),
-                  )
-              ],
-            );
-          },
+                  if(item.userType == 2)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Image.asset(IMG.format("room/room_direct"), width: 24,height: 11,),
+                    )
+                ],
+              );
+            },
+          );
+
+          child = SizedBox(width: 30, height: 30, child: child);
+
+          return child;
+        }
+
+        Widget child = Box(
+          padding: const Pad(vertical: 2),
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            padding: const Pad(left: 10, right: 72),
+            itemCount: users.length,
+            itemBuilder: (_, i) => itemBuilder(users[i]),
+            separatorBuilder: (_, __) => Spacing.w10,
+          ),
         );
-
-        child = SizedBox(width: 30, height: 30, child: child);
 
         return child;
       }
 
-      Widget child = Box(
-        padding: const Pad(vertical: 2),
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          padding: const Pad(left: 10, right: 72),
-          itemCount: users.length,
-          itemBuilder: (_, i) => itemBuilder(users[i]),
-          separatorBuilder: (_, __) => Spacing.w10,
+      final child = Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(right: 40, child: $UserView()),
+          Positioned(
+            top: -1,
+            right: -1,
+            bottom: -1,
+            width: 50,
+            child: $SelectAll(),
+          ),
+        ],
+      );
+
+      const _decor = ShapeDecoration(
+        shape: XRectangleBorder(
+          borderRadius: AppBorderRadius.a6,
+          side: BorderSide(color: AppPalette.primary),
         ),
       );
 
-      return child;
-    }
-
-    final child = Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Positioned.fill(right: 40, child: $UserView()),
-        Positioned(
-          top: -1,
-          right: -1,
-          bottom: -1,
-          width: 50,
-          child: $SelectAll(),
-        ),
-      ],
-    );
-
-    const _decor = ShapeDecoration(
-      shape: XRectangleBorder(
-        borderRadius: AppBorderRadius.a6,
-        side: BorderSide(color: AppPalette.primary),
-      ),
-    );
-
-    return Container(
-      height: 40,
-      decoration: _decor,
-      margin: const Pad(horizontal: 10, bottom: 5),
-      child: child,
-    );
+      return Container(
+        height: 40,
+        decoration: _decor,
+        margin: const Pad(horizontal: 10, bottom: 5),
+        child: child,
+      );
+    });
   }
 
   Widget $SelectAll() {

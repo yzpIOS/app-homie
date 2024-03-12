@@ -7,8 +7,21 @@ import 'package:app/ui/podcast/version_updating_dialog.dart';
 class ConfigCtrl extends AsyncMapCtrl {
   ConfigCtrl() : super(boxName: 'ConfigData', uid: '');
 
+  static ConfigCtrl get ins => Get.find<ConfigCtrl>();
+
+
   @override
-  Future get api => Api.Common.config();
+  void onInit() async {
+    super.onInit();
+    super.doRefresh();
+  }
+
+  @override
+  Future get api async {
+    var result = await Api.Common.config();
+
+    return result;
+  }
 
   Uri? _getUri(String key) {
     final url = dataRx[key];
@@ -58,4 +71,20 @@ class ConfigCtrl extends AsyncMapCtrl {
       }
     );
   }
+
+  Future<bool> canBlinkBoxSend() async {
+    if(dataRx.isNotEmpty) {
+      return dataRx["blind_box_gift_is_direct_send"] ?? false;
+    }
+    await doRefresh();
+    return dataRx["blind_box_gift_is_direct_send"] ?? false;
+  }
+
+  bool canBlinkBoxSend2() {
+    if(dataRx.isNotEmpty) {
+      return dataRx["blind_box_gift_is_direct_send"] ?? false;
+    }
+    return dataRx["blind_box_gift_is_direct_send"] ?? false;
+  }
+
 }
