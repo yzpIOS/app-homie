@@ -106,7 +106,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
   }
 
   Widget $BlindBoxRulesView() {
-    String explainImageName = (price == 50 || price == 100) ? 'activity/说明$price' : 'activity/说明20';
+    String explainImageName = 'activity/说明$price';
 
     return SingleChildScrollView(
       padding: Pad(horizontal: 15, vertical: 4, bottom: AppSize.safeBottom),
