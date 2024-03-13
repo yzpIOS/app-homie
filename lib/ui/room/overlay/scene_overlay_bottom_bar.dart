@@ -31,7 +31,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        if(controller is! PersonRoomCtrl) $MicView(isRoom),
+        if((controller is PersonRoomCtrl) == false) $MicView(isRoom),
         $SpeakView(),
         Expanded(child: SceneOverlayInput(onItemClick: onItemClick)),
         _ConvView(onItemClick: onItemClick),
@@ -57,7 +57,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
 
     return Obx(
       () {
-        final isEnable = (isRoom && freeMicRx) || canSpeak(myUid) || (manInHallNearByRoom?.isTrue ?? false);
+        final isEnable = (isRoom && freeMicRx && canSpeak(myUid)) || (manInHallNearByRoom?.isTrue ?? false);
 
         return _IconBtnSvg(
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
