@@ -73,6 +73,9 @@ mixin BaseClient {
       ByteUtils.decrypt(curPkg);
       // 唤起ProtoBuff的数据回调
       GeneratedMessage? message = onGeneratedMessage[curCmd]?.call(curPkg);
+      if(Env.isDebug) {
+        debugPrint("cmd = $curCmd; data = ${message?.toProto3Json()}");
+      }
       // 监听的方法回调
       riseOnData(curCmd, message);
       // Future事件回调

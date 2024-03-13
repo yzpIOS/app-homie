@@ -317,18 +317,24 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     if(Env.isDebug) {
       return Future.value(true);
     }
+    // 更新数据
     if(!OAuthCtrl.isNameValidate) {
-      String? label = await Get.simpleDialog(msg: "此功能需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
-      if(label != "去实名") {
-        return Future.value(false);
-      }
-      // 未认证，去认证
-      await Get.to(() => const RealIdentity1Page());
-      // 更新用户数据
+      // 没有实名，更新用户信息，防止缓存数据问题
       await OAuthCtrl.ins.udpateUserInfo();
-      // 未实名，直接返回
+      // 更新数据后，仍然未实名，就去实名
       if(!OAuthCtrl.isNameValidate) {
-        return Future.value(false);
+        String? label = await Get.simpleDialog(msg: "此功能需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+        if(label != "去实名") {
+          return Future.value(false);
+        }
+        // 未认证，去认证
+        await Get.to(() => const RealIdentity1Page());
+        // 更新用户数据
+        await OAuthCtrl.ins.udpateUserInfo();
+        // 未实名，直接返回
+        if(!OAuthCtrl.isNameValidate) {
+          return Future.value(false);
+        }
       }
     }
     return Future.value(true);
