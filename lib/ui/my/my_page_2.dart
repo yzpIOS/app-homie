@@ -192,7 +192,6 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const MyTitlePage());
         break;
       case '首充礼包':
-        
         break;
       case '我的动态':
         Get.to(() => const MyMomentPage());

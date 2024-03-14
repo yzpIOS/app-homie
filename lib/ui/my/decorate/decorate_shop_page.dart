@@ -356,7 +356,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
   Widget createActivity() {
     return Container(
       width: 50,
-      height: 18,
+      height: 21,
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
       decoration: BoxDecoration(
         color: Color(0xFFFFEBF3),
