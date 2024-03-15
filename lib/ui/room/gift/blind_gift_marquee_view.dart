@@ -36,7 +36,7 @@ class BlindGiftMarqueeView extends StatefulWidget {
 class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
 
   double avatarSize = 60;
-  double totalWidth = 357;
+  double totalWidth = 288;
 
   final controller = MarqueerController();
 
@@ -44,16 +44,17 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       alignment: Alignment.topCenter,
       height: avatarSize,
       width: totalWidth,
+      margin: EdgeInsets.only(left: 20, right: 20),
       child: Stack(
+        fit: StackFit.expand,
         children: [
-          // 左边的icon
-          _createLeftIcon(),
           // 背景图
           _createBackground(),
+          // 左边的icon
+          _createLeftIcon(),
           _createLeftNumber(),
           // 跑马灯
           _createMarquee(),
@@ -66,17 +67,13 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(left: 8, top: 8),
-          child: AsyncAvatar(
-              size: 46.0,
-              uid: widget.data.sendId
-          ),
-        ),
-      ],
+    return Positioned(
+      width: avatarSize,
+      height: avatarSize,
+      child: AsyncAvatar(
+          size: avatarSize - 8,
+          uid: widget.data.sendId
+      ),
     );
   }
 
@@ -130,20 +127,14 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   }
 
   Widget _createBackground() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: totalWidth - avatarSize / 2.0,
-          height: avatarSize,
-          child: Image.network(
-            widget.data.bannerStyleUrl,
-            width: totalWidth - avatarSize / 2.0,
-            height: avatarSize,
-          ),
-        )
-      ],
+    return Positioned.fill(
+      left: avatarSize / 2.0,
+
+      child: Container(
+        child: Image.network(
+          widget.data.bannerStyleUrl,
+        ),
+      ),
     );
   }
 
@@ -161,7 +152,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           Container(
               height: textHeight,
               alignment: Alignment.centerLeft,
-              width: totalWidth - avatarSize - 51,
+              width: totalWidth - avatarSize - 20,
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
@@ -272,7 +263,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
           ),
 
           Positioned.fill(
-            left: totalWidth - 142,
+            left: totalWidth - 100,
             right: 5,
             child: GestureDetector(
               onTap: () {
