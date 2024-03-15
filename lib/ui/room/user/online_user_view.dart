@@ -39,13 +39,13 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
   void initState() {
     super.initState();
     data["在线列表"] = OnlineUserView(widget.roomId);
-    data["魅力榜"] = _TabViewWidget(widget.roomId, () {
-      return CharmUserView(widget.roomId);
-    });
-    data["财富榜"] = _TabViewWidget(widget.roomId, () {
-      return WealthUserView(widget.roomId);
-    });
-    // data["财富榜"] = WealthUserView(widget.roomId);
+    // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
+    //   return CharmUserView(widget.roomId);
+    // });
+    // data["财富榜"] = _TabViewWidget(widget.roomId, () {
+    //   return WealthUserView(widget.roomId);
+    // });
+    data["财富榜"] = WealthUserView(widget.roomId);
 
     controller = TabController(vsync: this, length: data.length);;
   }
@@ -61,9 +61,9 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
         Text(
           "房间成员",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 18
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 18
           ),
         ),
 
@@ -74,10 +74,10 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
           margin: EdgeInsets.only(top: 17),
         ),
 
-        // if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
-        //   Expanded(child: OnlineUserView(widget.roomId)),
-        //
-        // if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
+        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
+          Expanded(child: OnlineUserView(widget.roomId)),
+
+        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
           Expanded(
             child: OrientationSheet.scaffold(
               title: '房间成员',
@@ -288,8 +288,8 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
         width: 192,
         height: 26,
         decoration: BoxDecoration(
-          color: Color(0XFFBD7CE5).withAlpha(26),
-          borderRadius: BorderRadius.circular(100)
+            color: Color(0XFFBD7CE5).withAlpha(26),
+            borderRadius: BorderRadius.circular(100)
         ),
         child: xAppBar$TabBar(
           data.keys,
@@ -645,12 +645,12 @@ class WealthUserView extends SimplePageView<Map> {
     Widget child = UserInfoCtrl.use(uid, builder: (dto) {
       return Row(
         children: [
-            Container(
-              margin: const EdgeInsets.only(left: 2),
-              width: rank != null ? 50 : 10,
-              alignment: Alignment.center,
-              child: rank,
-            ),
+          Container(
+            margin: const EdgeInsets.only(left: 2),
+            width: rank != null ? 50 : 10,
+            alignment: Alignment.center,
+            child: rank,
+          ),
           Expanded(
             child: RoomUserItemView(
               data: dto,
@@ -741,8 +741,8 @@ Size boundingTextSize(String text, TextStyle style, {int maxLines = 2^31, double
     return Size.zero;
   }
   final TextPainter textPainter = TextPainter(
-  textDirection: TextDirection.ltr,
-  text: TextSpan(text: text, style: style), maxLines: maxLines)
-  ..layout(maxWidth: maxWidth);
+      textDirection: TextDirection.ltr,
+      text: TextSpan(text: text, style: style), maxLines: maxLines)
+    ..layout(maxWidth: maxWidth);
   return textPainter.size;
 }
