@@ -155,9 +155,9 @@ class _UnityViewState extends State<UnityView> with GetStateMixin, TickerProvide
                                 child: SizedBox(width: AppSize.width, height: AppSize.height),
                               ),
                             ),
-                          Positioned(
-                            child: Center(child: appWaiting,),
-                          ),
+                          // Positioned(
+                          //   child: Center(child: appWaiting,),
+                          // ),
                         ],
                       );
                       return DecoratedBox(
