@@ -39,13 +39,13 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
   void initState() {
     super.initState();
     data["在线列表"] = OnlineUserView(widget.roomId);
-    // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
-    //   return CharmUserView(widget.roomId);
-    // });
-    // data["财富榜"] = _TabViewWidget(widget.roomId, () {
-    //   return WealthUserView(widget.roomId);
-    // });
-    data["财富榜"] = WealthUserView(widget.roomId);
+    data["魅力榜"] = _TabViewWidget(widget.roomId, () {
+      return CharmUserView(widget.roomId);
+    });
+    data["财富榜"] = _TabViewWidget(widget.roomId, () {
+      return WealthUserView(widget.roomId);
+    });
+    // data["财富榜"] = WealthUserView(widget.roomId);
 
     controller = TabController(vsync: this, length: data.length);;
   }
@@ -74,10 +74,10 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
           margin: EdgeInsets.only(top: 17),
         ),
 
-        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
-          Expanded(child: OnlineUserView(widget.roomId)),
-
-        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
+        // if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
+        //   Expanded(child: OnlineUserView(widget.roomId)),
+        //
+        // if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
           Expanded(
             child: OrientationSheet.scaffold(
               title: '房间成员',

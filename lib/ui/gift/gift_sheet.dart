@@ -117,7 +117,8 @@ class GiftSheet extends StatelessWidget {
                     child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145, height: 46.9,),
                     onTap: () {
                       int giftId = logic.selectRx()?["id"];
-                      GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId);
+                      String image = logic.selectRx()?["blind_box_probability_image"] ?? "";
+                      GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId, blinkRateUrl: image);
                     },
                   )
                 : const Spacing(height: 46.9, flex: null);

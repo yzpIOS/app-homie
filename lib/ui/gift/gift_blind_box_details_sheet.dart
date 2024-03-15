@@ -11,10 +11,11 @@ import 'package:flutter/material.dart';
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
   final int price;
   final int giftId;
-  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20, required this.giftId});
+  final String blinkRateUrl;
+  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20, required this.giftId, required this.blinkRateUrl});
 
-  static Future show({required int price, required int giftId}) {
-    final sheet = GiftBlindBoxDetailsSheet._(price: price, giftId: giftId,);
+  static Future show({required int price, required int giftId, required String blinkRateUrl}) {
+    final sheet = GiftBlindBoxDetailsSheet._(price: price, giftId: giftId, blinkRateUrl: blinkRateUrl,);
 
     return OrientationSheet.show(
       child: sheet,
@@ -33,7 +34,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
-          return $BlindBoxRulesView();
+          return $BlindBoxRulesView(blinkRateUrl);
         },
       ),
       '盲盒记录': DelayView(
@@ -105,7 +106,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
     );
   }
 
-  Widget $BlindBoxRulesView() {
+  Widget $BlindBoxRulesView(String image) {
     String explainImageName = 'activity/说明$price';
 
     return SingleChildScrollView(
@@ -135,7 +136,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
             ),
           ),
           Spacing.h10,
-          Image.asset(IMG.format(explainImageName), fit: BoxFit.contain,),
+          Image.network(image, fit: BoxFit.contain),
         ],
       ),
     );
