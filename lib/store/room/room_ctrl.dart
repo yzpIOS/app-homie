@@ -87,7 +87,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   final bottomBarIsShowRx = RxBool(false);//底部栏视图是否显示
 
   // todo 去掉加载页面
-  final adLoadingIsFinishRx = RxBool(true);//广告加载图是否完成
+  final adLoadingIsFinishRx = RxBool(false);//广告加载图是否完成
 
   final noticePanelRx = RxBool(false);//房间公告是否显示
 
@@ -119,8 +119,6 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   @override
   void onInit() {
-    // todo 去掉加载页面
-    completeProgress();
 
     debugPrint("开始监听麦位信息");
 
