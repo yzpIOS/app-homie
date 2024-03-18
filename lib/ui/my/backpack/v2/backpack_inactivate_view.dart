@@ -305,7 +305,13 @@ class _ItemView extends StatelessWidget {
     Widget child = Stack(
       alignment: Alignment.topCenter,
       children: [
-        Positioned(top: 5, width: size, height: size, child: imageView),
+        Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 30,
+            child: Center(child: SizedBox(width: size, height: size, child: imageView,),)
+        ),
         Positioned(left: 1, top: 0, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
 
@@ -321,8 +327,8 @@ class _ItemView extends StatelessWidget {
         if (data case {'label_list': List items})
           for (var i = 0; i < items.length; ++i)
             Positioned(
-              top: 5,
-              left: 5.0 * (i + 1) + 32 * i,
+              top: (i + 1) * 16 + 2,
+              left: 0,
               child: NetImage(items[i]['icon'], width: 32, height: 16, fit: BoxFit.contain),
             ),
       ],
