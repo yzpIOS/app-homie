@@ -13,6 +13,10 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
 
   List? categories = null;
 
+  static MyWardrobeCtrl get ins {
+    return Get.find<MyWardrobeCtrl>();
+  }
+
   MyWardrobeCtrl({required super.uid}) : super(boxName: 'MyWardrobeData');
 
   @override

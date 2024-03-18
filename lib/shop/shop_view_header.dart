@@ -8,6 +8,7 @@ import 'package:app/event/event.dart';
 import 'package:app/shop/cart_sheet.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/my_dressup_ctrl.dart';
+import 'package:app/store/my_wardrobe_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/shop_category_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
@@ -335,6 +336,8 @@ class _MyModelViewState extends State<MyModelView> {
     S_CameraSwitch s_cameraSwitch = S_CameraSwitch();
     s_cameraSwitch.position = clothSelectorCtrl.groupListId.value == 1 ? 0 : 1;
     SocketCtrl.ins.sendUnity(CMD.S_CameraSwitch, message: s_cameraSwitch);
+    // 刷新衣柜数据
+    MyWardrobeCtrl.ins.doRefresh();
   }
 }
 
