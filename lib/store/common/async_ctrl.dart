@@ -34,7 +34,7 @@ mixin _ListMixin<T> on AsyncCtrl<RxList<T>, List<T>, T> {
   }
 
   @override
-  void _onData(List<T> data) {
+  void onRefreshData(List<T> data) {
     _ready = true;
     if(data.isEmpty) {
       _dataRx.clear();
@@ -79,7 +79,7 @@ mixin _MapMixin<T> on AsyncCtrl<RxMap<String, T>, Map<String, T>, T> {
   }
 
   @override
-  void _onData(Map<String, T> data) {
+  void onRefreshData(Map<String, T> data) {
     _ready = true;
 
     _dataRx.assignAll(data);
@@ -158,7 +158,7 @@ abstract class AsyncCtrl<RX extends RxInterface<DATA>, DATA, T> extends GetxCont
 
       if (isClosed) return false;
 
-      _onData(transform(result));
+      onRefreshData(transform(result));
 
       return false;
     } catch (e, s) {
@@ -172,7 +172,7 @@ abstract class AsyncCtrl<RX extends RxInterface<DATA>, DATA, T> extends GetxCont
 
   void doPreCache() => autoGet;
 
-  void _onData(DATA data);
+  void onRefreshData(DATA data);
 }
 
 abstract class AsyncListCtrl<T> extends AsyncCtrl<RxList<T>, List<T>, T> with _ListMixin<T> {

@@ -49,10 +49,10 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
       width: totalWidth,
       child: Stack(
         children: [
-          // 左边的icon
-          _createLeftIcon(),
           // 背景图
           _createBackground(),
+          // 左边的icon
+          _createLeftIcon(),
           // 跑马灯
           _createMarquee(),
         ],
@@ -64,12 +64,10 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
   /// 用户头像或者是礼物图片
   ///
   Widget _createLeftIcon() {
-    return Container(
-      margin: const EdgeInsets.only(left: 17, top: 7),
-      child: AsyncAvatar(
-          size: 49.0,
-          uid: OAuthCtrl.uid
-      ),
+    return Positioned(
+      width: avatarSize,
+      height: avatarSize,
+      child: Image.network(widget.data.cover),
     );
   }
 

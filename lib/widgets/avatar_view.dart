@@ -15,6 +15,8 @@ class AsyncAvatar extends StatelessWidget {
   final bool isShowOnline;
   final int avatarFrameSize;
 
+  final bool userFrame;
+
   const AsyncAvatar({
     super.key,
     required this.uid,
@@ -22,7 +24,8 @@ class AsyncAvatar extends StatelessWidget {
     this.side = BorderSide.none,
     this.onTap,
     this.avatarFrameSize = 8,
-    this.isShowOnline = false
+    this.isShowOnline = false,
+    this.userFrame = true,
   });
 
   @override
@@ -41,7 +44,7 @@ class AsyncAvatar extends StatelessWidget {
           size: size,
           side: side,
           isShowOnline: isShowOnline,
-          avatarFrameUrl: it?.avatar_frame,
+          avatarFrameUrl: userFrame ? it?.avatar_frame : "",
           avatarFrameSize: avatarFrameSize,
         ),
       ),

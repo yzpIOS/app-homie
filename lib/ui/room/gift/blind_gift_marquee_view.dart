@@ -70,10 +70,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     return Positioned(
       width: avatarSize,
       height: avatarSize,
-      child: AsyncAvatar(
-          size: avatarSize - 8,
-          uid: widget.data.sendId
-      ),
+      child: Image.network(widget.data.cover),
     );
   }
 
@@ -156,9 +153,28 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
               child: Marqueer.builder(
                 interaction: false,
                 controller: controller,
-                itemCount: 4,
+                itemCount: 5,
                 itemBuilder: (context, index) {
+
+                  // 发送人的：头像
                   if(index == 0) {
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          height: 18,
+                          width: 18,
+                          alignment: Alignment.center,
+                          margin: EdgeInsets.only(top: 10, right: 3),
+                          padding: EdgeInsets.only(left: 3),
+                          child: AvatarView(widget.data.sendId ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                        )
+                      ],
+                    );
+                  }
+
+
+                  if(index == 1) {
                     String text = user?.showName() ?? "";
                     var style = const TextStyle(
                       color: Color(0xFFFED85B),
@@ -184,7 +200,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     );
                   }
 
-                  if(index == 1) {
+                  if(index == 2) {
                     String text = "在";
                     var style = const TextStyle(
                       color: Colors.white,
@@ -209,7 +225,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                     );
                   }
 
-                  if(index == 2) {
+                  if(index == 3) {
                     String text = "【${widget.blinkName ?? ""}】";
                     var style = const TextStyle(
                       color: Color(0xFFFF5888),
