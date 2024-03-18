@@ -167,7 +167,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(top: 10, right: 3),
                           padding: EdgeInsets.only(left: 3),
-                          child: AvatarView(widget.data.sendId ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                          child: AsyncAvatar(uid: widget.data.sendId ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                         )
                       ],
                     );
