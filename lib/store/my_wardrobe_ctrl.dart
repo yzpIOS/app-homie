@@ -20,7 +20,7 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
 
   Future myRefresh({List? ids = null}) async {
     var result = await Api.DressUp.backpackList(categories: ids);
-    onRefreshData(result);
+    onRefreshData(transform({"items": result}));
     return true;
   }
 
