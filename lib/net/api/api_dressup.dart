@@ -131,7 +131,7 @@ class ApiDressUp extends ApiBase {
   Future backpackList2({List? categories = null}) {
     return _doPost('backpack/query', data: {
       if(categories != null)
-        "category_id_list": categories,
+        "group_id_list": categories,
     }).then((val) => val['items']);
   }
 
