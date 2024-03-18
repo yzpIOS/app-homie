@@ -21,7 +21,7 @@ class MyView$Wardrobe extends StatelessWidget {
     final cfg = context.read<BaseConfig>() as GridConfig;
 
     return GetX<MyWardrobeCtrl>(
-      initState: (state) => state.controller?.myRefresh(ids: [1, 2]),
+      initState: (state) => state.controller?.doRefresh(),
       builder: (it) {
         final data = it.dataRx();
 

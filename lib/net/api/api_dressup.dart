@@ -128,11 +128,15 @@ class ApiDressUp extends ApiBase {
     return _doPost('backpack/use', data: data).then((val) => val['items']);
   }
 
-  Future backpackList({List? categories = null}) {
+  Future backpackList2({List? categories = null}) {
     return _doPost('backpack/query', data: {
       if(categories != null)
         "category_id_list": categories,
     }).then((val) => val['items']);
+  }
+
+  Future backpackList() {
+    return _doPost('backpack/query');
   }
 
   Future myAnimeList() {

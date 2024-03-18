@@ -28,7 +28,7 @@ class _BackPackInActivateState extends BaseBackPackState<BackPackInActivateView>
         children: [
           Expanded(
             child: InactiveBackPackDataView2(
-              api: Api.DressUp.backpackList,
+              api: Api.DressUp.backpackList2,
               category: data,
               padding: Pad(
                   horizontal: 10,
