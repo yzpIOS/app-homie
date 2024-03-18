@@ -16,7 +16,8 @@ class MyWardrobeCtrl extends AsyncListCtrl<DateItem> with BusGetLifeMixin {
   MyWardrobeCtrl({required super.uid}) : super(boxName: 'MyWardrobeData');
 
   @override
-  Future get api => Api.DressUp.backpackList();
+  Future get api => Api.DressUp.backpackList(categories: [1, 2]);
+
 
   Map<int, DateItem> get _data => dataRx.groupFoldBy((val) => val.value2['product_id'], (_, val) => val);
 
