@@ -23,32 +23,24 @@ mixin MomentBottomBar implements IBottomBar<MomentDtoAdapter> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (!isSelf)
-                // NumView(
-                //   action: '礼物',
-                //   num: $NumFormat(count.giftCount),
-                //   onTap: onItemClick,
-                // ),
-              ...<Widget>[
-                NumView(
-                  action: '收藏${more.isCollect == true ? '_1' : ''}',
-                  num: $NumFormat(count.collectCount),
+              NumView(
+                action: '收藏${more.isCollect == true ? '_1' : ''}',
+                num: $NumFormat(count.collectCount),
+                onTap: onItemClick,
+              ),
+              NumView(
+                action: '赞${more.isLike == true ? '_1' : ''}',
+                num: $NumFormat(count.likeCount),
+                onTap: onItemClick,
+              ),
+              IgnorePointer(
+                ignoring: !isDetail,
+                child: NumView(
+                  action: '评论',
+                  num: $NumFormat(count.commentCount),
                   onTap: onItemClick,
                 ),
-                NumView(
-                  action: '赞${more.isLike == true ? '_1' : ''}',
-                  num: $NumFormat(count.likeCount),
-                  onTap: onItemClick,
-                ),
-                IgnorePointer(
-                  ignoring: !isDetail,
-                  child: NumView(
-                    action: '评论',
-                    num: $NumFormat(count.commentCount),
-                    onTap: onItemClick,
-                  ),
-                ),
-              ],
+              ),
             ],
           );
         },
