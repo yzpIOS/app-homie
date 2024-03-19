@@ -12,6 +12,9 @@ import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/my/real_identity_1_page.dart';
+import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:fixnum/fixnum.dart';
 
@@ -318,12 +321,50 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     });
   }
 
-  void micUp({required String no, NUID? uid}) async {
+  void micUp({required String no, NUID? uid, bool reRequest = false}) async {
     if(!(await OAuthCtrl.checkValid())) {
       return Future.value(0);
     }
+
+    // 房主上麦
+    MicInfo? ownerInfo = roomOwner();
+    if(ownerInfo == null || ownerInfo.nUid == uid) {
+      _doMicUp(no: no, uid: uid);
+      return;
+    }
+
+
+    if(!OAuthCtrl.isNameValidate) {
+      String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
+      if(label != "去实名") {
+        return;
+      }
+      // 未认证，去认证
+      await Get.to(() => const RealIdentity1Page());
+      // 更新用户数据
+      await OAuthCtrl.ins.udpateUserInfo();
+      // 未实名，直接返回
+      if(!OAuthCtrl.isNameValidate) {
+        return;
+      }
+    }
+    if(isFreeMic()) {
+      // 自由麦
+      _doMicUp(no: no, uid: uid);
+    } else {
+      // 不在麦上，上麦
+      CommonDialog.applyUpMic(() {
+        _doMicUp(no: "", uid: uid);
+        sendTextNotify("申请成功，等待房主同意");
+      }, reRequest);
+    }
+  }
+
+  bool isFreeMic() => false;
+
+  void _doMicUp({required String no, NUID? uid}) {
     simpleTry(
-      () async {
+          () async {
         final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
 
         switch (result?.status.toInt()) {
@@ -333,6 +374,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         }
       },
     );
+  }
+
+  void sendTextNotify(String msg) {
+    LocalMsgEvent(LocalMsgData(data: msg)).fire();
   }
 
   ///
@@ -358,6 +403,14 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     } else {
       assert(false, '数据错误 -> $data $no');
     }
+  }
+
+
+  ///
+  /// 房主
+  ///
+  MicInfo? roomOwner() {
+    return simpleUserList.firstWhereOrNull((element) => element.isMainRole());
   }
 
   void inviteMicUp({required String no, required NUID nuid, UID? uid}) async {

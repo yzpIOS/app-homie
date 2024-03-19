@@ -1,5 +1,6 @@
 import 'package:app/common/AppNavObserver.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
+import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
 import 'package:app/model/enum/room_state.dart';
@@ -154,6 +155,11 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
         RoomManagerCtrl.ins.sceneCtrl2?.completeProgress();
       }
     }
+
+    // todo
+    if(!Env.roomUnity3DOpen) {
+      widget.controller.loadScene();
+    }
   }
 
   @override
@@ -276,22 +282,45 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
   @override
   Widget build(BuildContext context) {
-    Widget child = UnityView(
-      uniqueKey: 'RoomScene[${controller.roomId}]',
-      onInit: controller.loadScene,
-      fromRoom: true,
-      image2D: controller.info["bg_2d_image"],
-    );
+    // Widget child = UnityView(
+    //   uniqueKey: 'RoomScene[${controller.roomId}]',
+    //   onInit: controller.loadScene2,
+    //   fromRoom: true,
+    //   image2D: controller.info["bg_2d_image"],
+    // );
 
-    child = Scaffold(
+
+
+    Widget child = Scaffold(
       backgroundColor: Colors.grey,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // unity界面
-          Positioned.fill(
-            child: child,
-          ),
+          if(Env.roomUnity3DOpen)
+            Positioned.fill(
+              child: UnityView(
+                uniqueKey: 'RoomScene[${controller.roomId}]',
+                onInit: controller.loadScene2,
+                fromRoom: true,
+                image2D: controller.info["bg_2d_image"],
+              ),
+            ),
+
+          if(!Env.roomUnity3DOpen && controller.info["bg_2d_image"]?.isNotEmpty == true)
+            Positioned.fill(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(controller.info["bg_2d_image"] ?? ""),
+                      scale: 2,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: SizedBox(width: AppSize.width, height: AppSize.height),
+                )
+            ),
+
           // 返回按钮
           controller.createHeader(),
           // 加载进度

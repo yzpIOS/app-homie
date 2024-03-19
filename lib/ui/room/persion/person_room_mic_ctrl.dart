@@ -423,35 +423,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
 
   @override
   Future<void> micUp({required String no, NUID? uid, bool reRequest = false}) async {
-    MicInfo? ownerInfo = roomOwner();
-    if(ownerInfo == null || ownerInfo.nUid == uid) {
-      super.micUp(no: no);
-      return;
-    }
-    if(!OAuthCtrl.isNameValidate) {
-      String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
-      if(label != "去实名") {
-        return;
-      }
-      // 未认证，去认证
-      await Get.to(() => const RealIdentity1Page());
-      // 更新用户数据
-      await OAuthCtrl.ins.udpateUserInfo();
-      // 未实名，直接返回
-      if(!OAuthCtrl.isNameValidate) {
-        return;
-      }
-    }
-    if(isFreeMic()) {
-      // 自由麦
-      super.micUp(no: no, uid: uid);
-    } else {
-      // 不在麦上，上麦
-      CommonDialog.applyUpMic(() {
-        super.micUp(no: "", uid: uid);
-        sendTextNotify("申请成功，等待房主同意");
-      }, reRequest);
-    }
+    super.micUp(no: no, uid: uid,);
   }
 
   @override
@@ -482,6 +454,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
   ///
   /// 是否自由麦
   ///
+  @override
   bool isFreeMic() {
     if(RoomManagerCtrl.ins.sceneCtrl2 is! PersonRoomCtrl) {
       return false;
@@ -509,9 +482,6 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     return isUserOnMic(OAuthCtrl.uid);
   }
 
-  void sendTextNotify(String msg) {
-    LocalMsgEvent(LocalMsgData(data: msg)).fire();
-  }
 
   ///
   /// 房主

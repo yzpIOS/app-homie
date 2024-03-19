@@ -26,6 +26,9 @@ abstract class Env {
 
   static const version = 10191;
 
+  // 房间是否开启unity
+  static const  bool roomUnity3DOpen = false;
+
 
   // vivo, oppo等
   static String _innerPlatformId = "";

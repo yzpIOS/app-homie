@@ -219,7 +219,64 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     );
   }
 
-  Future<void> loadScene(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
+  Future<void> loadScene() async {
+    sceneHudRx(RoomHudState.None);
+    isRequestBack = false;
+
+    void isNotClose() {
+      if (isClosed) throw 'isClosed';
+    }
+
+    // unity初始化与加入房间同时进行
+    try {
+      roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
+    } catch(e) {
+      RoomManagerCtrl.ins.doNormalState();
+      RoomManagerCtrl.ins.onSocketDisconnect();
+      return;
+    }
+    logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+
+    // 监听unity发过来的信息
+    logForDebug("获听unity初始化完成消息");
+    // 判断是否关闭界面
+    isNotClose();
+
+    // loadSceneInfo method return false means load fail, and this page will close
+    bool result = await loadSceneInfo();
+    if(!result) {
+      return;
+    }
+
+    // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
+    if(keepState) {
+      RoomManagerCtrl.ins.doMiniState();
+    } else {
+      RoomManagerCtrl.ins.doNormalState();
+    }
+
+    // 服务端数据返回
+    isRequestBack = true;
+
+    /// 请求房间系统公告消息数组
+    isNotClose();
+    Api.Common.systemQuery().then((data) {
+      isNotClose();
+      List systemNoticeList = data['system_notice_list'];
+      SystemMsgEvent(systemNoticeList).fire();
+    });
+    sceneHudRx(RoomHudState.Normal);
+
+    // unity初始化与加入房间同时进行
+    logForDebug("开始加载unity");
+
+    markReady();
+    // unity加载完成，设置成normal状态，如果返回的时候
+    RoomManagerCtrl.ins.doNormalState();
+  }
+
+
+  Future<void> loadScene2(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
     sceneHudRx(RoomHudState.None);
     isRequestBack = false;
 
