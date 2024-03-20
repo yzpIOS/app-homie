@@ -38,14 +38,29 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    data["在线列表"] = OnlineUserView(widget.roomId);
-    // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
-    //   return CharmUserView(widget.roomId);
-    // });
-    // data["财富榜"] = _TabViewWidget(widget.roomId, () {
-    //   return WealthUserView(widget.roomId);
-    // });
-    data["财富榜"] = WealthUserView(widget.roomId);
+
+    if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false) {
+      // 公会直播间
+      data["在线列表"] = _TabViewWidget(widget.roomId, (type) {
+        return OnlineUserView(widget.roomId);
+      });
+      data["魅力榜"] = _TabViewWidget(widget.roomId, (type) {
+        return CharmUserView(widget.roomId, type);
+      });
+      data["财富榜"] = _TabViewWidget(widget.roomId, (type) {
+        return WealthUserView(widget.roomId, type);
+      });
+    } else {
+      // 个人直播间
+      data["在线列表"] = OnlineUserView(widget.roomId);
+      // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
+      //   return CharmUserView(widget.roomId);
+      // });
+      // data["财富榜"] = _TabViewWidget(widget.roomId, () {
+      //   return WealthUserView(widget.roomId);
+      // });
+      data["财富榜"] = WealthUserView(widget.roomId, 1);
+    }
 
     controller = TabController(vsync: this, length: data.length);;
   }
@@ -74,30 +89,26 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
           margin: EdgeInsets.only(top: 17),
         ),
 
-        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false)
-          Expanded(child: OnlineUserView(widget.roomId)),
+        Expanded(
+          child: OrientationSheet.scaffold(
+            title: '房间成员',
+            needDivider: false,
+            titleWidget: xAppBar$TabBar(
+              data.keys,
+              controller: controller,
+              alignment: Alignment.center,
+              needPadding: false,
 
-        if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl)
-          Expanded(
-            child: OrientationSheet.scaffold(
-              title: '房间成员',
-              needDivider: false,
-              titleWidget: xAppBar$TabBar(
-                data.keys,
-                controller: controller,
-                alignment: Alignment.center,
-                needPadding: false,
-
-              ),
-              body: TabBarView(
-                controller: controller,
-                children: data.values
-                    .map((it) => (_) => it)
-                    .map((it) => DelayView(keepAlive: true, builder: it))
-                    .toList(growable: false),
-              ),
             ),
-          )
+            body: TabBarView(
+              controller: controller,
+              children: data.values
+                  .map((it) => (_) => it)
+                  .map((it) => DelayView(keepAlive: true, builder: it))
+                  .toList(growable: false),
+            ),
+          ),
+        )
       ],
     );
   }
@@ -248,7 +259,7 @@ class OnlineUserView extends SimplePageView<Map> {
   }
 }
 
-typedef ViewManufacture = Widget Function();
+typedef ViewManufacture = Widget Function(int type);
 
 class _TabViewWidget extends StatefulWidget {
   final int roomId;
@@ -271,9 +282,9 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    data["日榜"] = widget.viewManufacture.call();
-    data["周榜"] = widget.viewManufacture.call();
-    data["月榜"] = widget.viewManufacture.call();
+    data["日榜"] = widget.viewManufacture.call(1);
+    data["周榜"] = widget.viewManufacture.call(2);
+    data["月榜"] = widget.viewManufacture.call(3);
 
     controller = TabController(vsync: this, length: data.length);;
   }
@@ -328,13 +339,15 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
 class CharmUserView extends SimplePageView<Map> {
   final int roomId;
 
-  CharmUserView(this.roomId, {super.key});
+  final int type;
+
+  CharmUserView(this.roomId, this.type, {super.key});
 
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId);
+  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId, type: type);
 
   @override
   BaseConfig get config {
@@ -446,8 +459,8 @@ class CharmUserView extends SimplePageView<Map> {
 ///
 class WealthUserView extends SimplePageView<Map> {
   final int roomId;
-
-  WealthUserView(this.roomId, {super.key});
+  final int type;
+  WealthUserView(this.roomId, this.type, {super.key});
 
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
@@ -456,7 +469,7 @@ class WealthUserView extends SimplePageView<Map> {
 
   @override
   Future fetchPage(PageNum page) async {
-    var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId);
+    var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId, type: type);
 
     if(result is Map && result.containsKey("current_user_item")) {
       notifierView.value = result["current_user_item"];

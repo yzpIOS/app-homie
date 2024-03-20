@@ -73,9 +73,10 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
-  Future wealthyRankUserList({required PageNum page, required int roomId}) {
+  Future wealthyRankUserList({required PageNum page, required int roomId, required int type}) {
     final data = {
       'room_id': roomId,
+      'rank_date_type': type,
     };
 
     return _doPost('rank', data: page + data);
