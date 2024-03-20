@@ -53,12 +53,6 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
     } else {
       // 个人直播间
       data["在线列表"] = OnlineUserView(widget.roomId);
-      // data["魅力榜"] = _TabViewWidget(widget.roomId, () {
-      //   return CharmUserView(widget.roomId);
-      // });
-      // data["财富榜"] = _TabViewWidget(widget.roomId, () {
-      //   return WealthUserView(widget.roomId);
-      // });
       data["财富榜"] = WealthUserView(widget.roomId, 1);
     }
 
@@ -418,6 +412,41 @@ class CharmUserView extends SimplePageView<Map> {
       );
     }
 
+    Widget giveGifft = GestureDetector(
+      onTap: () {
+        int? roomId = RoomManagerCtrl.ins.sceneCtrl2?.roomId;
+        String? roomUid = RoomManagerCtrl.ins.sceneCtrl2?.roomUid;
+        if(roomId == null || roomUid == null) {
+          return;
+        }
+        GiftSheet.show(
+            GiftSend2UserInRoom(roomId: roomId, uid: roomUid),
+            hasShowUnityView: true
+        );
+      },
+      child: Container(
+        width: 64,
+        height: 26,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1000),
+            gradient: const LinearGradient(
+                colors: [
+                  Color(0XFFFF8181),
+                  Color(0XFFFF3D43),
+                ]
+            )
+        ),
+        child: Text(
+          "送礼",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+      ),
+    );
+
 
     Widget child = UserInfoCtrl.use(uid, builder: (dto) {
       return Row(
@@ -433,7 +462,8 @@ class CharmUserView extends SimplePageView<Map> {
             ),
           ),
 
-          if(dto?.level?.isNotEmpty == true) CharmLevelView(level: dto?.level, uid: uid,),
+          // 送礼
+          giveGifft,
           // // 在线
           // if(isPersonRoom && isUserOnMic) TickDownMic(),
           // // 没有在线
