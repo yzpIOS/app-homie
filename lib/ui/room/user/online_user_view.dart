@@ -458,7 +458,7 @@ class CharmUserView extends SimplePageView<Map> {
             child: RoomUserItemView(
               data: dto,
               role: role,
-              showValue: dto?.level,
+              showValue: dto?.charmLevel,
             ),
           ),
 
