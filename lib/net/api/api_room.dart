@@ -82,6 +82,15 @@ class ApiRoom extends ApiBase {
     return _doPost('rank', data: page + data);
   }
 
+  Future charmRankUserList({required PageNum page, required int roomId, required int type}) {
+    final data = {
+      'room_id': roomId,
+      'rank_date_type': type,
+    };
+
+    return _doPost('/charm/rank', data: page + data);
+  }
+
   Future<S_JoinScene?> joinRoom(int id, {String? pwd, int timeout = 16}) async {
     // 发送加入房间的socket
     C_JoinScene c_joinScene = C_JoinScene();

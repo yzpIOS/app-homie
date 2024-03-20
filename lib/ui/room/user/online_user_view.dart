@@ -341,7 +341,7 @@ class CharmUserView extends SimplePageView<Map> {
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);
 
   @override
-  Future fetchPage(PageNum page) => Api.Room.wealthyRankUserList(page: page, roomId: roomId, type: type);
+  Future fetchPage(PageNum page) => Api.Room.charmRankUserList(page: page, roomId: roomId, type: type);
 
   @override
   BaseConfig get config {
@@ -420,7 +420,7 @@ class CharmUserView extends SimplePageView<Map> {
           return;
         }
         GiftSheet.show(
-            GiftSend2UserInRoom(roomId: roomId, uid: roomUid),
+            GiftSend2UserInRoom(roomId: roomId, uid: item["uid"]),
             hasShowUnityView: true
         );
       },
@@ -458,7 +458,7 @@ class CharmUserView extends SimplePageView<Map> {
             child: RoomUserItemView(
               data: dto,
               role: role,
-              showValue: dto?.charmLevel,
+              showValue: item["amount"].toString(),
             ),
           ),
 
