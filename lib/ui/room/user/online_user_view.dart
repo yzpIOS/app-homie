@@ -10,6 +10,7 @@ import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
+import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/user/room_user_sheet.dart';
 import 'package:app/widgets.dart';
@@ -713,10 +714,7 @@ class WealthUserView extends SimplePageView<Map> {
                   if(roomId == null || roomUid == null) {
                     return;
                   }
-                  GiftSheet.show(
-                      GiftSend2UserInRoom(roomId: roomId, uid: roomUid),
-                      hasShowUnityView: true
-                  );
+                  RoomOverlay.showGiftSend(roomId);
                 },
                 child: Container(
                   width: 64,
