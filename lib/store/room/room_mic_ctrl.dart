@@ -6,6 +6,8 @@ import 'package:app/model/api/user_info_dto.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_rtc_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
@@ -363,6 +365,17 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         return;
       }
     }
+
+    // 房主和房管
+    if(RoomManagerCtrl.ins.sceneCtrl2 is RoomCtrl) {
+      RoomCtrl roomCtrl = RoomManagerCtrl.ins.sceneCtrl2 as RoomCtrl;
+      if(roomCtrl.isAdmin(OAuthCtrl.uid) || roomCtrl.isOwner(OAuthCtrl.uid)) {
+        // 管理员自接上麦
+        _doMicUp(no: no, uid: uid);
+        return;
+      }
+    }
+
     if(isFreeMic() || isOneMic(OAuthCtrl.uid)) {
       // 自由麦
       _doMicUp(no: no, uid: uid);
