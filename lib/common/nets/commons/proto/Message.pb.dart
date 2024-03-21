@@ -1033,6 +1033,7 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
   factory S_SyncRoomInfo({
     $core.Iterable<$0.UserInfo>? onlineList,
     $core.Iterable<$0.MikeInfo>? mikes,
+    $core.int? collectStatus,
   }) {
     final $result = create();
     if (onlineList != null) {
@@ -1040,6 +1041,9 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     }
     if (mikes != null) {
       $result.mikes.addAll(mikes);
+    }
+    if (collectStatus != null) {
+      $result.collectStatus = collectStatus;
     }
     return $result;
   }
@@ -1050,6 +1054,7 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_SyncRoomInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..pc<$0.UserInfo>(1, _omitFieldNames ? '' : 'onlineList', $pb.PbFieldType.PM, subBuilder: $0.UserInfo.create)
     ..pc<$0.MikeInfo>(2, _omitFieldNames ? '' : 'mikes', $pb.PbFieldType.PM, subBuilder: $0.MikeInfo.create)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'collectStatus', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1079,6 +1084,15 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<$0.MikeInfo> get mikes => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.int get collectStatus => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set collectStatus($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCollectStatus() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCollectStatus() => clearField(3);
 }
 
 /// 请求切换场景
@@ -1662,6 +1676,7 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     $core.String? uid,
     $core.String? mikeNo,
     $fixnum.Int64? mikeId,
+    $core.String? oldMikeNo,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1679,6 +1694,9 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     if (mikeId != null) {
       $result.mikeId = mikeId;
     }
+    if (oldMikeNo != null) {
+      $result.oldMikeNo = oldMikeNo;
+    }
     return $result;
   }
   S_InviteMikeBroadcast._() : super();
@@ -1691,6 +1709,7 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'uid')
     ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
     ..aInt64(5, _omitFieldNames ? '' : 'mikeId')
+    ..aOS(6, _omitFieldNames ? '' : 'oldMikeNo')
     ..hasRequiredFields = false
   ;
 
@@ -1759,6 +1778,15 @@ class S_InviteMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasMikeId() => $_has(4);
   @$pb.TagNumber(5)
   void clearMikeId() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get oldMikeNo => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set oldMikeNo($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasOldMikeNo() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearOldMikeNo() => clearField(6);
 }
 
 /// 禁言广播
@@ -1953,6 +1981,7 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
+    $core.String? mikeNo,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -1964,6 +1993,9 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
+    if (mikeNo != null) {
+      $result.mikeNo = mikeNo;
+    }
     return $result;
   }
   S_ApplyUpMikeBroadcast._() : super();
@@ -1974,6 +2006,7 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
+    ..aOS(4, _omitFieldNames ? '' : 'mikeNo')
     ..hasRequiredFields = false
   ;
 
@@ -2024,6 +2057,15 @@ class S_ApplyUpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get mikeNo => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set mikeNo($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMikeNo() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMikeNo() => clearField(4);
 }
 
 /// 拒绝上麦
@@ -2032,6 +2074,7 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $fixnum.Int64? roleId,
     $core.String? uid,
+    $core.int? state,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -2043,6 +2086,9 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
+    if (state != null) {
+      $result.state = state;
+    }
     return $result;
   }
   S_RefuseUpMikeBroadcast._() : super();
@@ -2053,6 +2099,7 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..aInt64(2, _omitFieldNames ? '' : 'roleId')
     ..aOS(3, _omitFieldNames ? '' : 'uid')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'state', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -2103,6 +2150,15 @@ class S_RefuseUpMikeBroadcast extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(2);
   @$pb.TagNumber(3)
   void clearUid() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get state => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set state($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasState() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearState() => clearField(4);
 }
 
 /// 房间计数器广播
@@ -2622,6 +2678,8 @@ class S_LiveStopSettlementBroadcast extends $pb.GeneratedMessage {
     $core.int? giftIncome,
     $core.int? onlineTotalNum,
     $core.int? dsNum,
+    $fixnum.Int64? roleId,
+    $core.String? uid,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -2639,6 +2697,12 @@ class S_LiveStopSettlementBroadcast extends $pb.GeneratedMessage {
     if (dsNum != null) {
       $result.dsNum = dsNum;
     }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
     return $result;
   }
   S_LiveStopSettlementBroadcast._() : super();
@@ -2651,6 +2715,8 @@ class S_LiveStopSettlementBroadcast extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'giftIncome', $pb.PbFieldType.O3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'onlineTotalNum', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'dsNum', $pb.PbFieldType.O3)
+    ..aInt64(6, _omitFieldNames ? '' : 'roleId')
+    ..aOS(7, _omitFieldNames ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -2719,6 +2785,103 @@ class S_LiveStopSettlementBroadcast extends $pb.GeneratedMessage {
   $core.bool hasDsNum() => $_has(4);
   @$pb.TagNumber(5)
   void clearDsNum() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get roleId => $_getI64(5);
+  @$pb.TagNumber(6)
+  set roleId($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasRoleId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRoleId() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get uid => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set uid($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasUid() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearUid() => clearField(7);
+}
+
+/// 房间点赞数广播
+class S_LiveLikeBroadcast extends $pb.GeneratedMessage {
+  factory S_LiveLikeBroadcast({
+    $fixnum.Int64? roomId,
+    $core.int? count,
+    $fixnum.Int64? total,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (count != null) {
+      $result.count = count;
+    }
+    if (total != null) {
+      $result.total = total;
+    }
+    return $result;
+  }
+  S_LiveLikeBroadcast._() : super();
+  factory S_LiveLikeBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_LiveLikeBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_LiveLikeBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'count', $pb.PbFieldType.O3)
+    ..aInt64(3, _omitFieldNames ? '' : 'total')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_LiveLikeBroadcast clone() => S_LiveLikeBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_LiveLikeBroadcast copyWith(void Function(S_LiveLikeBroadcast) updates) => super.copyWith((message) => updates(message as S_LiveLikeBroadcast)) as S_LiveLikeBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_LiveLikeBroadcast create() => S_LiveLikeBroadcast._();
+  S_LiveLikeBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_LiveLikeBroadcast> createRepeated() => $pb.PbList<S_LiveLikeBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_LiveLikeBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_LiveLikeBroadcast>(create);
+  static S_LiveLikeBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get count => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set count($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCount() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCount() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get total => $_getI64(2);
+  @$pb.TagNumber(3)
+  set total($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasTotal() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTotal() => clearField(3);
 }
 
 /// 房间聊天信息广播
@@ -3497,8 +3660,6 @@ class S_JoinScene extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearRoomId() => clearField(1);
 
-  ///
-  ///   int64 scene_id = 2; // 场景id
   @$pb.TagNumber(2)
   $1.ErrorCode get code => $_getN(1);
   @$pb.TagNumber(2)
@@ -11201,6 +11362,401 @@ class S_Dialog extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(2)
   $core.List<$core.String> get contents => $_getList(1);
+}
+
+class S_UpdateDesignation extends $pb.GeneratedMessage {
+  factory S_UpdateDesignation({
+    $fixnum.Int64? roleId,
+    $core.String? designationModelId,
+    $core.String? uid,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (designationModelId != null) {
+      $result.designationModelId = designationModelId;
+    }
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    return $result;
+  }
+  S_UpdateDesignation._() : super();
+  factory S_UpdateDesignation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateDesignation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_UpdateDesignation', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roleId')
+    ..aOS(2, _omitFieldNames ? '' : 'designationModelId')
+    ..aOS(3, _omitFieldNames ? '' : 'uid')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateDesignation clone() => S_UpdateDesignation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateDesignation copyWith(void Function(S_UpdateDesignation) updates) => super.copyWith((message) => updates(message as S_UpdateDesignation)) as S_UpdateDesignation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateDesignation create() => S_UpdateDesignation._();
+  S_UpdateDesignation createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateDesignation> createRepeated() => $pb.PbList<S_UpdateDesignation>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateDesignation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateDesignation>(create);
+  static S_UpdateDesignation? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get designationModelId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set designationModelId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDesignationModelId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDesignationModelId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get uid => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set uid($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUid() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUid() => clearField(3);
+}
+
+class C_ChangeDesignation extends $pb.GeneratedMessage {
+  factory C_ChangeDesignation({
+    $fixnum.Int64? designationId,
+    $fixnum.Int64? roomId,
+  }) {
+    final $result = create();
+    if (designationId != null) {
+      $result.designationId = designationId;
+    }
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    return $result;
+  }
+  C_ChangeDesignation._() : super();
+  factory C_ChangeDesignation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_ChangeDesignation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_ChangeDesignation', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'designationId')
+    ..aInt64(2, _omitFieldNames ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_ChangeDesignation clone() => C_ChangeDesignation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_ChangeDesignation copyWith(void Function(C_ChangeDesignation) updates) => super.copyWith((message) => updates(message as C_ChangeDesignation)) as C_ChangeDesignation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_ChangeDesignation create() => C_ChangeDesignation._();
+  C_ChangeDesignation createEmptyInstance() => create();
+  static $pb.PbList<C_ChangeDesignation> createRepeated() => $pb.PbList<C_ChangeDesignation>();
+  @$core.pragma('dart2js:noInline')
+  static C_ChangeDesignation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_ChangeDesignation>(create);
+  static C_ChangeDesignation? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get designationId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set designationId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasDesignationId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearDesignationId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roomId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roomId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomId() => clearField(2);
+}
+
+class S_ChangeDesignation extends $pb.GeneratedMessage {
+  factory S_ChangeDesignation({
+    $1.ErrorCode? code,
+  }) {
+    final $result = create();
+    if (code != null) {
+      $result.code = code;
+    }
+    return $result;
+  }
+  S_ChangeDesignation._() : super();
+  factory S_ChangeDesignation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_ChangeDesignation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_ChangeDesignation', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..e<$1.ErrorCode>(1, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_ChangeDesignation clone() => S_ChangeDesignation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_ChangeDesignation copyWith(void Function(S_ChangeDesignation) updates) => super.copyWith((message) => updates(message as S_ChangeDesignation)) as S_ChangeDesignation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_ChangeDesignation create() => S_ChangeDesignation._();
+  S_ChangeDesignation createEmptyInstance() => create();
+  static $pb.PbList<S_ChangeDesignation> createRepeated() => $pb.PbList<S_ChangeDesignation>();
+  @$core.pragma('dart2js:noInline')
+  static S_ChangeDesignation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_ChangeDesignation>(create);
+  static S_ChangeDesignation? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.ErrorCode get code => $_getN(0);
+  @$pb.TagNumber(1)
+  set code($1.ErrorCode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => clearField(1);
+}
+
+class C_QueryDesignation extends $pb.GeneratedMessage {
+  factory C_QueryDesignation({
+    $core.int? type,
+  }) {
+    final $result = create();
+    if (type != null) {
+      $result.type = type;
+    }
+    return $result;
+  }
+  C_QueryDesignation._() : super();
+  factory C_QueryDesignation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_QueryDesignation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_QueryDesignation', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_QueryDesignation clone() => C_QueryDesignation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_QueryDesignation copyWith(void Function(C_QueryDesignation) updates) => super.copyWith((message) => updates(message as C_QueryDesignation)) as C_QueryDesignation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_QueryDesignation create() => C_QueryDesignation._();
+  C_QueryDesignation createEmptyInstance() => create();
+  static $pb.PbList<C_QueryDesignation> createRepeated() => $pb.PbList<C_QueryDesignation>();
+  @$core.pragma('dart2js:noInline')
+  static C_QueryDesignation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_QueryDesignation>(create);
+  static C_QueryDesignation? _defaultInstance;
+
+  /// 称号枚举值，1：财富称号，2：魅力称号，3：活动称号
+  @$pb.TagNumber(1)
+  $core.int get type => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set type($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+}
+
+class QueryDesignationItem extends $pb.GeneratedMessage {
+  factory QueryDesignationItem({
+    $fixnum.Int64? id,
+    $core.String? name,
+    $core.String? image,
+    $core.bool? isDressUp,
+    $core.bool? isAlreadyOwn,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (image != null) {
+      $result.image = image;
+    }
+    if (isDressUp != null) {
+      $result.isDressUp = isDressUp;
+    }
+    if (isAlreadyOwn != null) {
+      $result.isAlreadyOwn = isAlreadyOwn;
+    }
+    return $result;
+  }
+  QueryDesignationItem._() : super();
+  factory QueryDesignationItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory QueryDesignationItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'QueryDesignationItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'name')
+    ..aOS(3, _omitFieldNames ? '' : 'image')
+    ..aOB(4, _omitFieldNames ? '' : 'isDressUp')
+    ..aOB(5, _omitFieldNames ? '' : 'isAlreadyOwn')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  QueryDesignationItem clone() => QueryDesignationItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  QueryDesignationItem copyWith(void Function(QueryDesignationItem) updates) => super.copyWith((message) => updates(message as QueryDesignationItem)) as QueryDesignationItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static QueryDesignationItem create() => QueryDesignationItem._();
+  QueryDesignationItem createEmptyInstance() => create();
+  static $pb.PbList<QueryDesignationItem> createRepeated() => $pb.PbList<QueryDesignationItem>();
+  @$core.pragma('dart2js:noInline')
+  static QueryDesignationItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<QueryDesignationItem>(create);
+  static QueryDesignationItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get id => $_getI64(0);
+  @$pb.TagNumber(1)
+  set id($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get name => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set name($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get image => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set image($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasImage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearImage() => clearField(3);
+
+  /// 是否已经装扮
+  @$pb.TagNumber(4)
+  $core.bool get isDressUp => $_getBF(3);
+  @$pb.TagNumber(4)
+  set isDressUp($core.bool v) { $_setBool(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasIsDressUp() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIsDressUp() => clearField(4);
+
+  /// 是有拥有
+  @$pb.TagNumber(5)
+  $core.bool get isAlreadyOwn => $_getBF(4);
+  @$pb.TagNumber(5)
+  set isAlreadyOwn($core.bool v) { $_setBool(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasIsAlreadyOwn() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsAlreadyOwn() => clearField(5);
+}
+
+class S_QueryDesignation extends $pb.GeneratedMessage {
+  factory S_QueryDesignation({
+    $core.Iterable<QueryDesignationItem>? items,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    return $result;
+  }
+  S_QueryDesignation._() : super();
+  factory S_QueryDesignation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_QueryDesignation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_QueryDesignation', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<QueryDesignationItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: QueryDesignationItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_QueryDesignation clone() => S_QueryDesignation()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_QueryDesignation copyWith(void Function(S_QueryDesignation) updates) => super.copyWith((message) => updates(message as S_QueryDesignation)) as S_QueryDesignation;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_QueryDesignation create() => S_QueryDesignation._();
+  S_QueryDesignation createEmptyInstance() => create();
+  static $pb.PbList<S_QueryDesignation> createRepeated() => $pb.PbList<S_QueryDesignation>();
+  @$core.pragma('dart2js:noInline')
+  static S_QueryDesignation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_QueryDesignation>(create);
+  static S_QueryDesignation? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<QueryDesignationItem> get items => $_getList(0);
 }
 
 

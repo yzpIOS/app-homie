@@ -225,6 +225,7 @@ const RoleInfo$json = {
     {'1': 'mark', '3': 3, '4': 1, '5': 5, '10': 'mark'},
     {'1': 'attrInfo', '3': 4, '4': 1, '5': 11, '6': '.com.savvy.proto.AttrInfo', '10': 'attrInfo'},
     {'1': 'suitInfo', '3': 5, '4': 1, '5': 11, '6': '.com.savvy.proto.SuitInfo', '10': 'suitInfo'},
+    {'1': 'designation_model_id', '3': 8, '4': 1, '5': 9, '10': 'designationModelId'},
   ],
 };
 
@@ -233,7 +234,8 @@ final $typed_data.Uint8List roleInfoDescriptor = $convert.base64Decode(
     'CghSb2xlSW5mbxIWCgZyb2xlSWQYASABKANSBnJvbGVJZBISCgRuYW1lGAIgASgJUgRuYW1lEh'
     'IKBG1hcmsYAyABKAVSBG1hcmsSNQoIYXR0ckluZm8YBCABKAsyGS5jb20uc2F2dnkucHJvdG8u'
     'QXR0ckluZm9SCGF0dHJJbmZvEjUKCHN1aXRJbmZvGAUgASgLMhkuY29tLnNhdnZ5LnByb3RvLl'
-    'N1aXRJbmZvUghzdWl0SW5mbw==');
+    'N1aXRJbmZvUghzdWl0SW5mbxIwChRkZXNpZ25hdGlvbl9tb2RlbF9pZBgIIAEoCVISZGVzaWdu'
+    'YXRpb25Nb2RlbElk');
 
 @$core.Deprecated('Use roleSceneInfoDescriptor instead')
 const RoleSceneInfo$json = {
@@ -247,6 +249,7 @@ const RoleSceneInfo$json = {
     {'1': 'seatGuid', '3': 6, '4': 1, '5': 9, '10': 'seatGuid'},
     {'1': 'roomId', '3': 7, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'uid', '3': 8, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'designation_model_id', '3': 10, '4': 1, '5': 9, '10': 'designationModelId'},
   ],
 };
 
@@ -257,7 +260,8 @@ final $typed_data.Uint8List roleSceneInfoDescriptor = $convert.base64Decode(
     'bmZvEjUKCHN1aXRJbmZvGAQgASgLMhkuY29tLnNhdnZ5LnByb3RvLlN1aXRJbmZvUghzdWl0SW'
     '5mbxI4CglzdGF0ZUluZm8YBSABKAsyGi5jb20uc2F2dnkucHJvdG8uU3RhdGVJbmZvUglzdGF0'
     'ZUluZm8SGgoIc2VhdEd1aWQYBiABKAlSCHNlYXRHdWlkEhYKBnJvb21JZBgHIAEoA1IGcm9vbU'
-    'lkEhAKA3VpZBgIIAEoCVIDdWlk');
+    'lkEhAKA3VpZBgIIAEoCVIDdWlkEjAKFGRlc2lnbmF0aW9uX21vZGVsX2lkGAogASgJUhJkZXNp'
+    'Z25hdGlvbk1vZGVsSWQ=');
 
 @$core.Deprecated('Use userInfoDescriptor instead')
 const UserInfo$json = {

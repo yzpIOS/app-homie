@@ -31,11 +31,16 @@ class RoomUserItemView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        AvatarView(
-          data.avatar,
-          blur: data.avatarEx,
-          avatarFrameUrl: data.avatar_frame,
-          size: 40
+        SizedBox(
+          width: 50,
+          child: Center(
+            child: AvatarView(
+                data.avatar,
+                blur: data.avatarEx,
+                avatarFrameUrl: data.avatar_frame,
+                size: 40
+            ),
+          ),
         ),
         Spacing.w10,
         Expanded(

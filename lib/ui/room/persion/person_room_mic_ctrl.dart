@@ -48,10 +48,6 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
     on<RefuseUpEvent>((event) {
       micOperate(reRequest: true);
     });
-    // 申请上麦成功
-    on<S_InviteMikeBroadcast>((event) {
-      sendTextNotify("公屏显示你已上麦");
-    });
     // 申请上麦
     on<MicApplyEvent>((event) async {
       UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);

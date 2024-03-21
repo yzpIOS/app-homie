@@ -41,9 +41,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
 
     if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl == false) {
       // 公会直播间
-      data["在线列表"] = _TabViewWidget(widget.roomId, (type) {
-        return OnlineUserView(widget.roomId);
-      });
+      data["在线列表"] = OnlineUserView(widget.roomId);
       data["魅力榜"] = _TabViewWidget(widget.roomId, (type) {
         return CharmUserView(widget.roomId, type);
       });
@@ -346,7 +344,7 @@ class CharmUserView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
     return const ListConfig(
-      divider: Divider(indent: 18 + 70, endIndent: 10),
+      divider: Divider(indent: 65, endIndent: 10),
     );
   }
 
@@ -451,13 +449,17 @@ class CharmUserView extends SimplePageView<Map> {
     Widget child = UserInfoCtrl.use(uid, builder: (dto) {
       return Row(
         children: [
-          Spacing.w12,
-          rank,
-          Spacing.w10,
+          SizedBox(
+            width: 60,
+            child: Center(
+              child: rank,
+            ),
+          ),
           Expanded(
             child: RoomUserItemView(
               data: dto,
               role: role,
+              padding: EdgeInsets.zero,
               showValue: item["amount"].toString(),
             ),
           ),
@@ -510,7 +512,7 @@ class WealthUserView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
     return const ListConfig(
-      divider: Divider(indent: 18 + 70, endIndent: 10),
+      divider: Divider(indent: 65, endIndent: 10),
     );
   }
 
@@ -609,7 +611,7 @@ class WealthUserView extends SimplePageView<Map> {
         children: [
           Container(
             margin: const EdgeInsets.only(left: 2),
-            width: 50,
+            width: 60,
             alignment: Alignment.center,
             child: rank,
           ),

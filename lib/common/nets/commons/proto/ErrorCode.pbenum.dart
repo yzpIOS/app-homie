@@ -108,6 +108,9 @@ class ErrorCode extends $pb.ProtobufEnum {
   static const ErrorCode ROOM_BAN_CHAT = ErrorCode._(16019, _omitEnumNames ? '' : 'ROOM_BAN_CHAT');
   static const ErrorCode ROOM_NOT_STOP_PERMISSION = ErrorCode._(16020, _omitEnumNames ? '' : 'ROOM_NOT_STOP_PERMISSION');
   static const ErrorCode ROOM_INIT_FAIL = ErrorCode._(16021, _omitEnumNames ? '' : 'ROOM_INIT_FAIL');
+  static const ErrorCode ROOM_NO_EXISTED = ErrorCode._(16022, _omitEnumNames ? '' : 'ROOM_NO_EXISTED');
+  static const ErrorCode ROOM_ADMINISTRATOR_NOT_BELONG = ErrorCode._(16023, _omitEnumNames ? '' : 'ROOM_ADMINISTRATOR_NOT_BELONG');
+  static const ErrorCode ROOM_UID_ONLINE_OTHER = ErrorCode._(16024, _omitEnumNames ? '' : 'ROOM_UID_ONLINE_OTHER');
   static const ErrorCode ROOM_MIKE_NOT_EXIST = ErrorCode._(16101, _omitEnumNames ? '' : 'ROOM_MIKE_NOT_EXIST');
   static const ErrorCode ROOM_MIKE_NOT_FOUND = ErrorCode._(16102, _omitEnumNames ? '' : 'ROOM_MIKE_NOT_FOUND');
   static const ErrorCode ROOM_START_MIKE_EXECUTING = ErrorCode._(16103, _omitEnumNames ? '' : 'ROOM_START_MIKE_EXECUTING');
@@ -269,6 +272,9 @@ class ErrorCode extends $pb.ProtobufEnum {
     ROOM_BAN_CHAT,
     ROOM_NOT_STOP_PERMISSION,
     ROOM_INIT_FAIL,
+    ROOM_NO_EXISTED,
+    ROOM_ADMINISTRATOR_NOT_BELONG,
+    ROOM_UID_ONLINE_OTHER,
     ROOM_MIKE_NOT_EXIST,
     ROOM_MIKE_NOT_FOUND,
     ROOM_START_MIKE_EXECUTING,

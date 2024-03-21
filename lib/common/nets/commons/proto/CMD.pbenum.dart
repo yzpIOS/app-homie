@@ -113,7 +113,10 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_BlackBroadcast = CMD._(2250, _omitEnumNames ? '' : 'S_BlackBroadcast');
   static const CMD S_ChatMessageBroadcast = CMD._(2270, _omitEnumNames ? '' : 'S_ChatMessageBroadcast');
   static const CMD S_BanChatBroadcast = CMD._(2271, _omitEnumNames ? '' : 'S_BanChatBroadcast');
+  static const CMD S_MikeSpeakingBroadcast = CMD._(2272, _omitEnumNames ? '' : 'S_MikeSpeakingBroadcast');
   static const CMD S_AdministratorBroadcast = CMD._(2280, _omitEnumNames ? '' : 'S_AdministratorBroadcast');
+  static const CMD S_LiveStopSettlementBroadcast = CMD._(2281, _omitEnumNames ? '' : 'S_LiveStopSettlementBroadcast');
+  static const CMD S_LiveLikeBroadcast = CMD._(2282, _omitEnumNames ? '' : 'S_LiveLikeBroadcast');
   static const CMD C_GiveGiftByRoom = CMD._(3100, _omitEnumNames ? '' : 'C_GiveGiftByRoom');
   static const CMD S_GiveGiftByRoom = CMD._(3101, _omitEnumNames ? '' : 'S_GiveGiftByRoom');
   static const CMD S_UpdateLevel = CMD._(3102, _omitEnumNames ? '' : 'S_UpdateLevel');
@@ -131,6 +134,11 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_UpdateDressUp = CMD._(4102, _omitEnumNames ? '' : 'S_UpdateDressUp');
   static const CMD C_UseProductAndSaveUserCurrentDressUp = CMD._(4103, _omitEnumNames ? '' : 'C_UseProductAndSaveUserCurrentDressUp');
   static const CMD S_UseProductAndSaveUserCurrentDressUp = CMD._(4104, _omitEnumNames ? '' : 'S_UseProductAndSaveUserCurrentDressUp');
+  static const CMD S_UpdateDesignation = CMD._(4105, _omitEnumNames ? '' : 'S_UpdateDesignation');
+  static const CMD C_ChangeDesignation = CMD._(4106, _omitEnumNames ? '' : 'C_ChangeDesignation');
+  static const CMD S_ChangeDesignation = CMD._(4107, _omitEnumNames ? '' : 'S_ChangeDesignation');
+  static const CMD C_QueryDesignation = CMD._(4108, _omitEnumNames ? '' : 'C_QueryDesignation');
+  static const CMD S_QueryDesignation = CMD._(4109, _omitEnumNames ? '' : 'S_QueryDesignation');
   static const CMD S_BulletinBroadcast = CMD._(5000, _omitEnumNames ? '' : 'S_BulletinBroadcast');
   static const CMD C_Robot = CMD._(6661, _omitEnumNames ? '' : 'C_Robot');
   static const CMD S_Robot = CMD._(6662, _omitEnumNames ? '' : 'S_Robot');
@@ -180,6 +188,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_PKContinue = CMD._(20052, _omitEnumNames ? '' : 'S_PKContinue');
   static const CMD C_Move = CMD._(100201, _omitEnumNames ? '' : 'C_Move');
   static const CMD S_Move = CMD._(100202, _omitEnumNames ? '' : 'S_Move');
+  static const CMD S_Dialog = CMD._(210001, _omitEnumNames ? '' : 'S_Dialog');
 
   static const $core.List<CMD> values = <CMD> [
     NONE,
@@ -280,7 +289,10 @@ class CMD extends $pb.ProtobufEnum {
     S_BlackBroadcast,
     S_ChatMessageBroadcast,
     S_BanChatBroadcast,
+    S_MikeSpeakingBroadcast,
     S_AdministratorBroadcast,
+    S_LiveStopSettlementBroadcast,
+    S_LiveLikeBroadcast,
     C_GiveGiftByRoom,
     S_GiveGiftByRoom,
     S_UpdateLevel,
@@ -298,6 +310,11 @@ class CMD extends $pb.ProtobufEnum {
     S_UpdateDressUp,
     C_UseProductAndSaveUserCurrentDressUp,
     S_UseProductAndSaveUserCurrentDressUp,
+    S_UpdateDesignation,
+    C_ChangeDesignation,
+    S_ChangeDesignation,
+    C_QueryDesignation,
+    S_QueryDesignation,
     S_BulletinBroadcast,
     C_Robot,
     S_Robot,
@@ -347,6 +364,7 @@ class CMD extends $pb.ProtobufEnum {
     S_PKContinue,
     C_Move,
     S_Move,
+    S_Dialog,
   ];
 
   static final $core.Map<$core.int, CMD> _byValue = $pb.ProtobufEnum.initByValue(values);

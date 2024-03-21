@@ -114,14 +114,29 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       (_) => doRefresh(),
     );
 
-    //<editor-fold desc="unity req event">
     on<RespUnityEvent>(
       test: (it) => it.code == Unity2AppEnum.UTF_GET_ONMICROPJONE_INFO_GUILD,
       (event) {
         event.complete(unityMicInfoData());
       },
     );
-    //</editor-fold>
+
+
+    // 申请上麦
+    on<MicApplyEvent>((event) async {
+      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
+      if(userInfo == null) {
+        return;
+      }
+      CommonDialog.receiveApplyMicUp(userInfo.showName(), () {
+        // todo 同意后，发送请求
+        Api.Room.micConfirm(mikeId: int.tryParse(event.data?.mikeNo ?? "0") ?? 0, type: 1, isAgree: true, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
+        sendTextNotify("你同意了${userInfo.showName()}上麦请求");
+      }, () {
+        Api.Room.micConfirm(mikeId: int.tryParse(event.data?.mikeNo ?? "0") ?? 0, type: 1, isAgree: false, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
+        sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
+      });
+    });
   }
 
   Future<void> onJoinChannelEventHandle(JoinChannelEvent event) async {
@@ -328,7 +343,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     // 房主上麦
     MicInfo? ownerInfo = roomOwner();
-    if(ownerInfo == null || ownerInfo.nUid == uid) {
+    if(ownerInfo != null && ownerInfo.nUid == uid) {
       _doMicUp(no: no, uid: uid);
       return;
     }
@@ -348,19 +363,27 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         return;
       }
     }
-    if(isFreeMic()) {
+    if(isFreeMic() || isOneMic(OAuthCtrl.uid)) {
       // 自由麦
       _doMicUp(no: no, uid: uid);
     } else {
       // 不在麦上，上麦
       CommonDialog.applyUpMic(() {
-        _doMicUp(no: "", uid: uid);
+        _doMicUp(no: no, uid: uid);
         sendTextNotify("申请成功，等待房主同意");
       }, reRequest);
     }
   }
 
   bool isFreeMic() => false;
+
+  bool isOneMic(UID uid) {
+    bool onMic = false;
+    simpleUserList.forEach((element) {
+        onMic = onMic || element.uid == uid;
+    });
+    return onMic;
+  }
 
   void _doMicUp({required String no, NUID? uid}) {
     simpleTry(

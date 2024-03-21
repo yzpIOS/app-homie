@@ -612,6 +612,7 @@ class RoleInfo extends $pb.GeneratedMessage {
     $core.int? mark,
     AttrInfo? attrInfo,
     SuitInfo? suitInfo,
+    $core.String? designationModelId,
   }) {
     final $result = create();
     if (roleId != null) {
@@ -629,6 +630,9 @@ class RoleInfo extends $pb.GeneratedMessage {
     if (suitInfo != null) {
       $result.suitInfo = suitInfo;
     }
+    if (designationModelId != null) {
+      $result.designationModelId = designationModelId;
+    }
     return $result;
   }
   RoleInfo._() : super();
@@ -641,6 +645,7 @@ class RoleInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'mark', $pb.PbFieldType.O3)
     ..aOM<AttrInfo>(4, _omitFieldNames ? '' : 'attrInfo', protoName: 'attrInfo', subBuilder: AttrInfo.create)
     ..aOM<SuitInfo>(5, _omitFieldNames ? '' : 'suitInfo', protoName: 'suitInfo', subBuilder: SuitInfo.create)
+    ..aOS(8, _omitFieldNames ? '' : 'designationModelId')
     ..hasRequiredFields = false
   ;
 
@@ -713,6 +718,17 @@ class RoleInfo extends $pb.GeneratedMessage {
   void clearSuitInfo() => clearField(5);
   @$pb.TagNumber(5)
   SuitInfo ensureSuitInfo() => $_ensure(4);
+
+  /// 	State state = 6;//行为状态（0无 1上麦 2...）
+  /// 	string uid = 7;
+  @$pb.TagNumber(8)
+  $core.String get designationModelId => $_getSZ(5);
+  @$pb.TagNumber(8)
+  set designationModelId($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasDesignationModelId() => $_has(5);
+  @$pb.TagNumber(8)
+  void clearDesignationModelId() => clearField(8);
 }
 
 /// (场景上角色)玩家场景信息（同步场景信息）
@@ -726,6 +742,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     $core.String? seatGuid,
     $fixnum.Int64? roomId,
     $core.String? uid,
+    $core.String? designationModelId,
   }) {
     final $result = create();
     if (roleId != null) {
@@ -752,6 +769,9 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     if (uid != null) {
       $result.uid = uid;
     }
+    if (designationModelId != null) {
+      $result.designationModelId = designationModelId;
+    }
     return $result;
   }
   RoleSceneInfo._() : super();
@@ -767,6 +787,7 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
     ..aOS(6, _omitFieldNames ? '' : 'seatGuid', protoName: 'seatGuid')
     ..aInt64(7, _omitFieldNames ? '' : 'roomId', protoName: 'roomId')
     ..aOS(8, _omitFieldNames ? '' : 'uid')
+    ..aOS(10, _omitFieldNames ? '' : 'designationModelId')
     ..hasRequiredFields = false
   ;
 
@@ -868,6 +889,15 @@ class RoleSceneInfo extends $pb.GeneratedMessage {
   $core.bool hasUid() => $_has(7);
   @$pb.TagNumber(8)
   void clearUid() => clearField(8);
+
+  @$pb.TagNumber(10)
+  $core.String get designationModelId => $_getSZ(8);
+  @$pb.TagNumber(10)
+  set designationModelId($core.String v) { $_setString(8, v); }
+  @$pb.TagNumber(10)
+  $core.bool hasDesignationModelId() => $_has(8);
+  @$pb.TagNumber(10)
+  void clearDesignationModelId() => clearField(10);
 }
 
 /// 用户信息

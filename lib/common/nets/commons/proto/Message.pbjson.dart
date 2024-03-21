@@ -249,6 +249,7 @@ const S_SyncRoomInfo$json = {
   '2': [
     {'1': 'online_list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.UserInfo', '10': 'onlineList'},
     {'1': 'mikes', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.MikeInfo', '10': 'mikes'},
+    {'1': 'collect_status', '3': 3, '4': 1, '5': 5, '10': 'collectStatus'},
   ],
 };
 
@@ -256,7 +257,7 @@ const S_SyncRoomInfo$json = {
 final $typed_data.Uint8List s_SyncRoomInfoDescriptor = $convert.base64Decode(
     'Cg5TX1N5bmNSb29tSW5mbxI6CgtvbmxpbmVfbGlzdBgBIAMoCzIZLmNvbS5zYXZ2eS5wcm90by'
     '5Vc2VySW5mb1IKb25saW5lTGlzdBIvCgVtaWtlcxgCIAMoCzIZLmNvbS5zYXZ2eS5wcm90by5N'
-    'aWtlSW5mb1IFbWlrZXM=');
+    'aWtlSW5mb1IFbWlrZXMSJQoOY29sbGVjdF9zdGF0dXMYAyABKAVSDWNvbGxlY3RTdGF0dXM=');
 
 @$core.Deprecated('Use s_LiveStartBroadcastDescriptor instead')
 const S_LiveStartBroadcast$json = {
@@ -367,6 +368,7 @@ const S_InviteMikeBroadcast$json = {
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
     {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
     {'1': 'mike_id', '3': 5, '4': 1, '5': 3, '10': 'mikeId'},
+    {'1': 'old_mike_no', '3': 6, '4': 1, '5': 9, '10': 'oldMikeNo'},
   ],
 };
 
@@ -374,7 +376,8 @@ const S_InviteMikeBroadcast$json = {
 final $typed_data.Uint8List s_InviteMikeBroadcastDescriptor = $convert.base64Decode(
     'ChVTX0ludml0ZU1pa2VCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbG'
     'VfaWQYAiABKANSBnJvbGVJZBIQCgN1aWQYAyABKAlSA3VpZBIXCgdtaWtlX25vGAQgASgJUgZt'
-    'aWtlTm8SFwoHbWlrZV9pZBgFIAEoA1IGbWlrZUlk');
+    'aWtlTm8SFwoHbWlrZV9pZBgFIAEoA1IGbWlrZUlkEh4KC29sZF9taWtlX25vGAYgASgJUglvbG'
+    'RNaWtlTm8=');
 
 @$core.Deprecated('Use s_CloseMikeBroadcastDescriptor instead')
 const S_CloseMikeBroadcast$json = {
@@ -416,13 +419,15 @@ const S_ApplyUpMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'mike_no', '3': 4, '4': 1, '5': 9, '10': 'mikeNo'},
   ],
 };
 
 /// Descriptor for `S_ApplyUpMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_ApplyUpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChZTX0FwcGx5VXBNaWtlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIXCgdyb2'
-    'xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQ=');
+    'xlX2lkGAIgASgDUgZyb2xlSWQSEAoDdWlkGAMgASgJUgN1aWQSFwoHbWlrZV9ubxgEIAEoCVIG'
+    'bWlrZU5v');
 
 @$core.Deprecated('Use s_RefuseUpMikeBroadcastDescriptor instead')
 const S_RefuseUpMikeBroadcast$json = {
@@ -431,13 +436,15 @@ const S_RefuseUpMikeBroadcast$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
     {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'state', '3': 4, '4': 1, '5': 5, '10': 'state'},
   ],
 };
 
 /// Descriptor for `S_RefuseUpMikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List s_RefuseUpMikeBroadcastDescriptor = $convert.base64Decode(
     'ChdTX1JlZnVzZVVwTWlrZUJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSFwoHcm'
-    '9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlk');
+    '9sZV9pZBgCIAEoA1IGcm9sZUlkEhAKA3VpZBgDIAEoCVIDdWlkEhQKBXN0YXRlGAQgASgFUgVz'
+    'dGF0ZQ==');
 
 @$core.Deprecated('Use s_AccMikeBroadcastDescriptor instead')
 const S_AccMikeBroadcast$json = {
@@ -535,6 +542,8 @@ const S_LiveStopSettlementBroadcast$json = {
     {'1': 'gift_income', '3': 3, '4': 1, '5': 5, '10': 'giftIncome'},
     {'1': 'online_total_num', '3': 4, '4': 1, '5': 5, '10': 'onlineTotalNum'},
     {'1': 'ds_num', '3': 5, '4': 1, '5': 5, '10': 'dsNum'},
+    {'1': 'role_id', '3': 6, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'uid', '3': 7, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
@@ -543,7 +552,23 @@ final $typed_data.Uint8List s_LiveStopSettlementBroadcastDescriptor = $convert.b
     'Ch1TX0xpdmVTdG9wU2V0dGxlbWVudEJyb2FkY2FzdBIXCgdyb29tX2lkGAEgASgDUgZyb29tSW'
     'QSHQoKbGl2ZV90aW1lcxgCIAEoBVIJbGl2ZVRpbWVzEh8KC2dpZnRfaW5jb21lGAMgASgFUgpn'
     'aWZ0SW5jb21lEigKEG9ubGluZV90b3RhbF9udW0YBCABKAVSDm9ubGluZVRvdGFsTnVtEhUKBm'
-    'RzX251bRgFIAEoBVIFZHNOdW0=');
+    'RzX251bRgFIAEoBVIFZHNOdW0SFwoHcm9sZV9pZBgGIAEoA1IGcm9sZUlkEhAKA3VpZBgHIAEo'
+    'CVIDdWlk');
+
+@$core.Deprecated('Use s_LiveLikeBroadcastDescriptor instead')
+const S_LiveLikeBroadcast$json = {
+  '1': 'S_LiveLikeBroadcast',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'count', '3': 2, '4': 1, '5': 5, '10': 'count'},
+    {'1': 'total', '3': 3, '4': 1, '5': 3, '10': 'total'},
+  ],
+};
+
+/// Descriptor for `S_LiveLikeBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_LiveLikeBroadcastDescriptor = $convert.base64Decode(
+    'ChNTX0xpdmVMaWtlQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIUCgVjb3VudB'
+    'gCIAEoBVIFY291bnQSFAoFdG90YWwYAyABKANSBXRvdGFs');
 
 @$core.Deprecated('Use s_ChatMessageBroadcastDescriptor instead')
 const S_ChatMessageBroadcast$json = {
@@ -2316,4 +2341,90 @@ const S_Dialog$json = {
 final $typed_data.Uint8List s_DialogDescriptor = $convert.base64Decode(
     'CghTX0RpYWxvZxIQCgNpZHMYASADKANSA2lkcxIaCghjb250ZW50cxgCIAMoCVIIY29udGVudH'
     'M=');
+
+@$core.Deprecated('Use s_UpdateDesignationDescriptor instead')
+const S_UpdateDesignation$json = {
+  '1': 'S_UpdateDesignation',
+  '2': [
+    {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'designation_model_id', '3': 2, '4': 1, '5': 9, '10': 'designationModelId'},
+    {'1': 'uid', '3': 3, '4': 1, '5': 9, '10': 'uid'},
+  ],
+};
+
+/// Descriptor for `S_UpdateDesignation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_UpdateDesignationDescriptor = $convert.base64Decode(
+    'ChNTX1VwZGF0ZURlc2lnbmF0aW9uEhcKB3JvbGVfaWQYASABKANSBnJvbGVJZBIwChRkZXNpZ2'
+    '5hdGlvbl9tb2RlbF9pZBgCIAEoCVISZGVzaWduYXRpb25Nb2RlbElkEhAKA3VpZBgDIAEoCVID'
+    'dWlk');
+
+@$core.Deprecated('Use c_ChangeDesignationDescriptor instead')
+const C_ChangeDesignation$json = {
+  '1': 'C_ChangeDesignation',
+  '2': [
+    {'1': 'designation_id', '3': 1, '4': 1, '5': 3, '10': 'designationId'},
+    {'1': 'room_id', '3': 2, '4': 1, '5': 3, '10': 'roomId'},
+  ],
+};
+
+/// Descriptor for `C_ChangeDesignation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_ChangeDesignationDescriptor = $convert.base64Decode(
+    'ChNDX0NoYW5nZURlc2lnbmF0aW9uEiUKDmRlc2lnbmF0aW9uX2lkGAEgASgDUg1kZXNpZ25hdG'
+    'lvbklkEhcKB3Jvb21faWQYAiABKANSBnJvb21JZA==');
+
+@$core.Deprecated('Use s_ChangeDesignationDescriptor instead')
+const S_ChangeDesignation$json = {
+  '1': 'S_ChangeDesignation',
+  '2': [
+    {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
+  ],
+};
+
+/// Descriptor for `S_ChangeDesignation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_ChangeDesignationDescriptor = $convert.base64Decode(
+    'ChNTX0NoYW5nZURlc2lnbmF0aW9uEi4KBGNvZGUYASABKA4yGi5jb20uc2F2dnkucHJvdG8uRX'
+    'Jyb3JDb2RlUgRjb2Rl');
+
+@$core.Deprecated('Use c_QueryDesignationDescriptor instead')
+const C_QueryDesignation$json = {
+  '1': 'C_QueryDesignation',
+  '2': [
+    {'1': 'type', '3': 1, '4': 1, '5': 5, '10': 'type'},
+  ],
+};
+
+/// Descriptor for `C_QueryDesignation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_QueryDesignationDescriptor = $convert.base64Decode(
+    'ChJDX1F1ZXJ5RGVzaWduYXRpb24SEgoEdHlwZRgBIAEoBVIEdHlwZQ==');
+
+@$core.Deprecated('Use queryDesignationItemDescriptor instead')
+const QueryDesignationItem$json = {
+  '1': 'QueryDesignationItem',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 3, '10': 'id'},
+    {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'image', '3': 3, '4': 1, '5': 9, '10': 'image'},
+    {'1': 'is_dress_up', '3': 4, '4': 1, '5': 8, '10': 'isDressUp'},
+    {'1': 'is_already_own', '3': 5, '4': 1, '5': 8, '10': 'isAlreadyOwn'},
+  ],
+};
+
+/// Descriptor for `QueryDesignationItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List queryDesignationItemDescriptor = $convert.base64Decode(
+    'ChRRdWVyeURlc2lnbmF0aW9uSXRlbRIOCgJpZBgBIAEoA1ICaWQSEgoEbmFtZRgCIAEoCVIEbm'
+    'FtZRIUCgVpbWFnZRgDIAEoCVIFaW1hZ2USHgoLaXNfZHJlc3NfdXAYBCABKAhSCWlzRHJlc3NV'
+    'cBIkCg5pc19hbHJlYWR5X293bhgFIAEoCFIMaXNBbHJlYWR5T3du');
+
+@$core.Deprecated('Use s_QueryDesignationDescriptor instead')
+const S_QueryDesignation$json = {
+  '1': 'S_QueryDesignation',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.QueryDesignationItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_QueryDesignation`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_QueryDesignationDescriptor = $convert.base64Decode(
+    'ChJTX1F1ZXJ5RGVzaWduYXRpb24SOwoFaXRlbXMYASADKAsyJS5jb20uc2F2dnkucHJvdG8uUX'
+    'VlcnlEZXNpZ25hdGlvbkl0ZW1SBWl0ZW1z');
 
