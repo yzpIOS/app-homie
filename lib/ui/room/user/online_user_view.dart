@@ -714,7 +714,14 @@ class WealthUserView extends SimplePageView<Map> {
                   if(roomId == null || roomUid == null) {
                     return;
                   }
-                  RoomOverlay.showGiftSend(roomId);
+                  if(RoomManagerCtrl.ins.sceneCtrl2 is PersonRoomCtrl) {
+                    GiftSheet.show(
+                        GiftSend2UserInRoom(roomId: roomId, uid: roomUid),
+                        hasShowUnityView: true
+                    );
+                  } else {
+                    RoomOverlay.showGiftSend(roomId);
+                  }
                 },
                 child: Container(
                   width: 64,
