@@ -1034,6 +1034,8 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     $core.Iterable<$0.UserInfo>? onlineList,
     $core.Iterable<$0.MikeInfo>? mikes,
     $core.int? collectStatus,
+    $core.int? isAdministrator,
+    $core.int? isAnchor,
   }) {
     final $result = create();
     if (onlineList != null) {
@@ -1045,6 +1047,12 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     if (collectStatus != null) {
       $result.collectStatus = collectStatus;
     }
+    if (isAdministrator != null) {
+      $result.isAdministrator = isAdministrator;
+    }
+    if (isAnchor != null) {
+      $result.isAnchor = isAnchor;
+    }
     return $result;
   }
   S_SyncRoomInfo._() : super();
@@ -1055,6 +1063,8 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     ..pc<$0.UserInfo>(1, _omitFieldNames ? '' : 'onlineList', $pb.PbFieldType.PM, subBuilder: $0.UserInfo.create)
     ..pc<$0.MikeInfo>(2, _omitFieldNames ? '' : 'mikes', $pb.PbFieldType.PM, subBuilder: $0.MikeInfo.create)
     ..a<$core.int>(3, _omitFieldNames ? '' : 'collectStatus', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'isAdministrator', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'isAnchor', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -1093,6 +1103,26 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
   $core.bool hasCollectStatus() => $_has(2);
   @$pb.TagNumber(3)
   void clearCollectStatus() => clearField(3);
+
+  /// 管理员状态  1.管理员
+  @$pb.TagNumber(4)
+  $core.int get isAdministrator => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set isAdministrator($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasIsAdministrator() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIsAdministrator() => clearField(4);
+
+  /// 主播状态 1.主播
+  @$pb.TagNumber(5)
+  $core.int get isAnchor => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set isAnchor($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasIsAnchor() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearIsAnchor() => clearField(5);
 }
 
 /// 请求切换场景

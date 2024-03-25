@@ -472,6 +472,9 @@ class RoomCtrl extends SceneCtrl {
   RxBool examineMicRx = RxBool(false);
   RxSet<String> managerRx = RxSet();
 
+  // 是否主播
+  bool isAnchor = false;
+
   // 大厅房间不由自收组麦，只能是普通房间
   // 由于在大厅
   RxBool freeMicRx = RxBool(false);
@@ -508,6 +511,13 @@ class RoomCtrl extends SceneCtrl {
   void onRender(S_SyncRoomInfo? data) {
     followRx.value = roomHttpInfo?['follow_status'] ?? false;
     userCountRx.value = data?.onlineList.length ?? 0;
+
+    isAnchor = data?.isAnchor == 1;
+
+    // 是否管理员
+    if(data?.isAdministrator == 1) {
+      managerRx.add(OAuthCtrl.uid);
+    }
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();

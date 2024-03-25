@@ -250,6 +250,8 @@ const S_SyncRoomInfo$json = {
     {'1': 'online_list', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.UserInfo', '10': 'onlineList'},
     {'1': 'mikes', '3': 2, '4': 3, '5': 11, '6': '.com.savvy.proto.MikeInfo', '10': 'mikes'},
     {'1': 'collect_status', '3': 3, '4': 1, '5': 5, '10': 'collectStatus'},
+    {'1': 'is_administrator', '3': 4, '4': 1, '5': 5, '10': 'isAdministrator'},
+    {'1': 'is_anchor', '3': 5, '4': 1, '5': 5, '10': 'isAnchor'},
   ],
 };
 
@@ -257,7 +259,9 @@ const S_SyncRoomInfo$json = {
 final $typed_data.Uint8List s_SyncRoomInfoDescriptor = $convert.base64Decode(
     'Cg5TX1N5bmNSb29tSW5mbxI6CgtvbmxpbmVfbGlzdBgBIAMoCzIZLmNvbS5zYXZ2eS5wcm90by'
     '5Vc2VySW5mb1IKb25saW5lTGlzdBIvCgVtaWtlcxgCIAMoCzIZLmNvbS5zYXZ2eS5wcm90by5N'
-    'aWtlSW5mb1IFbWlrZXMSJQoOY29sbGVjdF9zdGF0dXMYAyABKAVSDWNvbGxlY3RTdGF0dXM=');
+    'aWtlSW5mb1IFbWlrZXMSJQoOY29sbGVjdF9zdGF0dXMYAyABKAVSDWNvbGxlY3RTdGF0dXMSKQ'
+    'oQaXNfYWRtaW5pc3RyYXRvchgEIAEoBVIPaXNBZG1pbmlzdHJhdG9yEhsKCWlzX2FuY2hvchgF'
+    'IAEoBVIIaXNBbmNob3I=');
 
 @$core.Deprecated('Use s_LiveStartBroadcastDescriptor instead')
 const S_LiveStartBroadcast$json = {

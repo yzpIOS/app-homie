@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
+import 'package:app/shop/dressupdraw/dress_up_draw_main_dialog.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/home/home_activity_banner_view.dart';
@@ -124,7 +125,9 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
           GestureDetector(
             onTap: () {
               if(Env.isDebug) {
-                Get.to(()=> InviteNewMembersActivityPage());
+                DressUpDrawMainDialog.show();
+
+                // Get.to(()=> InviteNewMembersActivityPage());
                 // Get.insertOverlay(BlindGiftMarqueeView());
                 // Get.insertOverlay(CommonGiftMarqueeView());
                 // Get.insertOverlay(ClothGiftMarqueeView());
