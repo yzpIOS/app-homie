@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:tencent_cloud_chat_sdk/models/v2_tim_message_receipt.dart';
 
+import 'package:fixnum/fixnum.dart';
 mixin GetConvMixin {
   abstract final Either<V2TimConversation, ConvCreator> _conv;
 
@@ -105,14 +106,14 @@ abstract class ChatCtrl extends GetxController
       if (userInfo?.nuid != null) {
         /// 获取用户跟随关注信息
         /// follow_status	integer 是否有关注用户 1.是，0.否
-        final followOnlineData = await Api.UserInfo.followOnline(nuid: userInfo?.nuid);
+        final followOnlineData = await Api.UserInfo.followOnline(nuid: Int64(userInfo!.nuid!));
         if (followOnlineData != null) {
           followOnlineRx.value = followOnlineData;
         }
 
         /// 是否在线
         C_RoleOnline c_roleOnline = C_RoleOnline();
-        c_roleOnline.roleIdList.add(userInfo!.nuid!);
+        c_roleOnline.roleIdList.add(Int64(userInfo!.nuid!));
         S_RoleOnline? result = await SocketCtrl.ins.sendByteAsyncServer(
             CMD.C_RoleOnline,
             datas: c_roleOnline.writeToBuffer(),

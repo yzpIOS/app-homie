@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
@@ -89,7 +91,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
           dataRx.add(
             GiftMsgView(
-              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, data: gift),
+              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, data: gift),
             ),
           );
         }
@@ -130,7 +132,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
           if(sendUid != value.uid) {
             dataRx.add(
               BlindBoxGiftOpenMsgView(
-                BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: value.nuid!, users: users, items: dataValue, data: moreGift),
+                BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, items: dataValue, data: moreGift),
               ),
             );
           }

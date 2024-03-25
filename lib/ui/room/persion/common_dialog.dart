@@ -44,12 +44,12 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 个人房：申请上麦
   ///
-  static void applyUpMic(Function confirm, bool reRequest) async {
+  static void applyUpMic(Function confirm, bool reRequest, String contents, String otherContent) async {
     // 再次申请
     if(reRequest) {
       showDialog(context: Get.context!, builder: (context) {
         return CommonDialog(
-          title: "房主拒绝了你的上麦申请",
+          title: otherContent,
           cancel: () {
             confirm.call();
           },
@@ -65,7 +65,7 @@ class CommonDialog extends StatefulWidget {
     // 第一次申请
     showDialog(context: Get.context!, builder: (context) {
       return CommonDialog(
-        title: "向房主申请上麦聊天？",
+        title: contents,
         confirm:  () {
           confirm.call();
         }

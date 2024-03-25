@@ -182,7 +182,7 @@ class ApiRoom extends ApiBase {
   /// type 1 申请 2.邀请
   /// status 1.确认 2.拒绝
   ///
-  Future micConfirm({required int mikeId, required bool isAgree, required int type, NUID? uid, int? roomId}) {
+  Future micConfirm({required int mikeId, required bool isAgree, required int type, int? uid, int? roomId}) {
     final data = {
       'mike_id': mikeId,
       'type': type,

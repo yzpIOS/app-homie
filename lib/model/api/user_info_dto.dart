@@ -13,7 +13,7 @@ part 'user_info_dto.g.dart';
 class UserInfoDto with _$UserInfoDto {
   factory UserInfoDto({
     @JsonKey(name: 'uid') required UID uid,
-    @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
+    @JsonKey(name: 'role_id') int? nuid,
     @JsonKey(name: 'public_id') String? account,
     @JsonKey(name: 'avatar_url') String? avatar,
     @JsonKey(name: 'description') String? desc,

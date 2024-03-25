@@ -418,8 +418,8 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
   }
 
   @override
-  Future<void> micUp({required String no, NUID? uid, bool reRequest = false}) async {
-    super.micUp(no: no, uid: uid,);
+  Future<void> micUp({required String no, NUID? uid, bool reRequest = false, String contents = "向房主申请上麦聊天？", String otherContent = "房主拒绝了你的上麦申请"}) async {
+    super.micUp(no: no, uid: uid, contents: contents, otherContent: otherContent);
   }
 
   @override

@@ -96,7 +96,6 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
       return;
     }
 
-    _loadInfo.addAll(_taskNet.keys);
     for (final uid in task.keys) {
       final completer = _taskNet[uid]!;
 
@@ -105,13 +104,21 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
 
         if (info == null) {
           completer.complete(false);
+
+          _loadInfo.remove(uid);
         } else {
           _getOrCreate(uid)(await _saveToDb(uid, info));
+
+          _loadInfo.add(uid);
 
           completer.complete(true);
         }
       } catch (e, s) {
         errLog(e, s);
+        try {
+          _loadInfo.remove(uid);
+        } catch(e, s) {
+        }
 
         completer.complete(false);
       } finally {

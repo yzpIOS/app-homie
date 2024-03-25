@@ -24,7 +24,7 @@ mixin _$UserInfoDto {
   UID get uid => throw _privateConstructorUsedError;
   @JsonKey(name: 'role_id')
   @MyJsonConverter()
-  Int64? get nuid => throw _privateConstructorUsedError;
+  int? get nuid => throw _privateConstructorUsedError;
   @JsonKey(name: 'public_id')
   String? get account => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
@@ -82,7 +82,7 @@ abstract class $UserInfoDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'uid') UID uid,
-      @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
+      @JsonKey(name: 'role_id') int? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'description') String? desc,
@@ -149,7 +149,7 @@ class _$UserInfoDtoCopyWithImpl<$Res, $Val extends UserInfoDto>
       nuid: freezed == nuid
           ? _value.nuid
           : nuid // ignore: cast_nullable_to_non_nullable
-              as Int64?,
+              as int?,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -236,7 +236,7 @@ abstract class _$$_UserInfoDtoCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'uid') UID uid,
-      @JsonKey(name: 'role_id') @MyJsonConverter() Int64? nuid,
+      @JsonKey(name: 'role_id') int? nuid,
       @JsonKey(name: 'public_id') String? account,
       @JsonKey(name: 'avatar_url') String? avatar,
       @JsonKey(name: 'description') String? desc,
@@ -298,7 +298,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
       nuid: freezed == nuid
           ? _value.nuid
           : nuid // ignore: cast_nullable_to_non_nullable
-              as Int64?,
+              as int?,
       account: freezed == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
@@ -380,7 +380,7 @@ class __$$_UserInfoDtoCopyWithImpl<$Res>
 class _$_UserInfoDto implements _UserInfoDto {
   _$_UserInfoDto(
       {@JsonKey(name: 'uid') required this.uid,
-      @JsonKey(name: 'role_id') @MyJsonConverter() this.nuid,
+      @JsonKey(name: 'role_id') int? this.nuid,
       @JsonKey(name: 'public_id') this.account,
       @JsonKey(name: 'avatar_url') this.avatar,
       @JsonKey(name: 'description') this.desc,
@@ -410,7 +410,7 @@ class _$_UserInfoDto implements _UserInfoDto {
   @override
   @JsonKey(name: 'role_id')
   @MyJsonConverter()
-  final Int64? nuid;
+  final int? nuid;
   @override
   @JsonKey(name: 'public_id')
   final String? account;
@@ -555,7 +555,7 @@ class _$_UserInfoDto implements _UserInfoDto {
 abstract class _UserInfoDto implements UserInfoDto {
   factory _UserInfoDto(
           {@JsonKey(name: 'uid') required final UID uid,
-          @JsonKey(name: 'role_id') @MyJsonConverter() final Int64? nuid,
+          @JsonKey(name: 'role_id') int? nuid,
           @JsonKey(name: 'public_id') final String? account,
           @JsonKey(name: 'avatar_url') final String? avatar,
           @JsonKey(name: 'description') final String? desc,
@@ -591,7 +591,7 @@ abstract class _UserInfoDto implements UserInfoDto {
   @override
   @JsonKey(name: 'role_id')
   @MyJsonConverter()
-  Int64? get nuid;
+  int? get nuid;
   @override
   @JsonKey(name: 'public_id')
   String? get account;

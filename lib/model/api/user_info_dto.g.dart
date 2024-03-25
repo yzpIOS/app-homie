@@ -9,7 +9,7 @@ part of 'user_info_dto.dart';
 _$_UserInfoDto _$$_UserInfoDtoFromJson(Map<String, dynamic> json) =>
     _$_UserInfoDto(
       uid: json['uid'],
-      nuid: const MyJsonConverter().fromJson(json['role_id']),
+      nuid: json['role_id'] as int?,
       account: json['public_id'] as String?,
       avatar: json['avatar_url'] as String?,
       desc: json['description'] as String?,
@@ -33,8 +33,7 @@ _$_UserInfoDto _$$_UserInfoDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_UserInfoDtoToJson(_$_UserInfoDto instance) =>
     <String, dynamic>{
       'uid': instance.uid,
-      'role_id': _$JsonConverterToJson<dynamic, Int64>(
-          instance.nuid, const MyJsonConverter().toJson),
+      'role_id': instance.nuid,
       'public_id': instance.account,
       'avatar_url': instance.avatar,
       'description': instance.desc,

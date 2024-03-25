@@ -338,7 +338,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     });
   }
 
-  void micUp({required String no, NUID? uid, bool reRequest = false}) async {
+  void micUp({required String no, NUID? uid, bool reRequest = false, String contents = "是否申请上麦", String otherContent = "你的上麦申请被拒绝了"}) async {
     if(!(await OAuthCtrl.checkValid())) {
       return Future.value(0);
     }
@@ -384,7 +384,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       CommonDialog.applyUpMic(() {
         _doMicUp(no: no, uid: uid);
         sendTextNotify("申请成功，等待房主同意");
-      }, reRequest);
+      }, reRequest, contents, otherContent);
     }
   }
 
