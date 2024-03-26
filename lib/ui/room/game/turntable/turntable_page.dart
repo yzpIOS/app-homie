@@ -6,6 +6,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
 import 'package:app/ui/room/game/turntable/turntable_record_dialog.dart';
 import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
 import 'package:app/widgets.dart';
@@ -14,19 +15,32 @@ import 'package:flutter/rendering.dart';
 
 class TurntablePage extends StatefulWidget {
 
-  const TurntablePage({super.key});
+  // 抽奖数据
+  Map lotteryData;
+
+  // 奖品列表
+  List items;
+
+  TurntablePage(this.lotteryData, this.items, {super.key});
 
   static Future<void> showDialog() async {
+    // 获取平台游戏
     var lotteries = await Api.Activity.getLotteries();
     if(lotteries == null || lotteries["items"] == null) {
       return;
     }
 
-    var list = await Api.Activity.getLotteryList();
+    // 过滤出转盘
+    var lotteryData = (lotteries["items"] as List).firstWhere((element) => element["type"] == 1);
+    if(lotteryData == null) {
+      return;
+    }
+
+    var list = await Api.Activity.getLotteryList(lotteryData["id"]);
     if(list["items"] == null) {
       return;
     }
-    var dialog = TurntablePage();
+    var dialog = TurntablePage(lotteryData, list["items"]);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -401,12 +415,30 @@ class _TurntablePageState extends State<TurntablePage> {
   ///
   List<Widget> _createPrizeList() {
     return locations.map((e) {
+      // 计算位置
+      int curIndex = locations.indexOf(e);
+
+      if(curIndex < 0 || widget.items == null || curIndex >= widget.items.length) {
+        // 没有数据
+        return Positioned(
+          left: e.left + 26,
+          top: e.top + 75,
+          width: totalWidth,
+          height: totalWidth,
+          child: SizedBox(),
+        );
+      }
+
+      // 获取当前位置
+      var item = widget.items[curIndex];
+
+      // 商品
       return Positioned(
         left: e.left + 26,
-        top: e.top + 75,
-        width: totalWidth,
-        height: totalWidth,
-        child: Image.network("http://images.homieyy.com/image/6330cf3e-584a-4a3e-a8f2-3a49c772f16f"),
+        top: e.top + 72,
+        width: totalWidth + 1,
+        height: totalWidth + 1,
+        child: TurntableItemView(item),
       );
     }).toList();
   }

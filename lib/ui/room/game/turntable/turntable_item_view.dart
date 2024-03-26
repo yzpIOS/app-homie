@@ -6,22 +6,20 @@ import 'package:flutter/material.dart';
 
 class TurntableItemView extends StatelessWidget {
 
+  Map data;
+
+  TurntableItemView(this.data, {super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 66,
-          height: 66,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(IMG.format("room/game/turntable_pic_jlk"))
-            )
-          ),
-          child: bodyView(),
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage(IMG.format("room/game/turntable_pic_jlk"))
         )
-      ],
+      ),
+      child: bodyView(),
     );
   }
 
@@ -49,11 +47,11 @@ class TurntableItemView extends StatelessWidget {
           Positioned(
             left: 0,
             right: 0,
-            top: 6,
+            top: 3,
             child: Image.network(
+              data["image"],
               width: 33,
               height: 33,
-              "http://images.homieyy.com/image/3f7f7f9d-5f79-49b2-85bf-b21f8fbf9122",
             ),
           ),
           Positioned(
@@ -84,7 +82,7 @@ class TurntableItemView extends StatelessWidget {
 
   Widget createGiftName() {
     return Text(
-      "荷塘恋情",
+      data["prize_name"],
       style: TextStyle(
         color: Colors.white,
         fontSize: 10,
@@ -104,14 +102,14 @@ class TurntableItemView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "10",
+          data["price"].toString(),
           style: TextStyle(
             fontSize: 10,
             color: Colors.white,
             fontWeight: FontWeight.normal
           ),
         ),
-        MoneyIcon(type: MoneyType.diamond, size: 13,),
+        MoneyIcon(type: data["currency"] == 0 ? MoneyType.diamond : MoneyType.gold, size: 13,),
       ],
     );
   }

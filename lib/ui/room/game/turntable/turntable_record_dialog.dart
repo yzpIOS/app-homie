@@ -50,7 +50,7 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
         SizedBox(height: 12,),
         // _SimpleRecord(),
 
-        TurntableItemView(),
+        TurntableItemView({}),
         SizedBox(height: 12,),
       ],
     );
@@ -101,7 +101,7 @@ class _SimpleRecord extends SimplePageView<Map> {
   @override
   Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
     // TODO: implement itemBuilder
-    return TurntableItemView();
+    return TurntableItemView({});
   }
 
 }

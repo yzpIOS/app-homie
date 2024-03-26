@@ -80,7 +80,7 @@ class ApiActivity extends ApiBase {
   ///
   /// 获取奖品列表
   ///
-  Future getLotteryList() async {
-    return _doPost("lottery/prize_pool/query");
+  Future getLotteryList(dynamic id) async {
+    return _doPost("lottery/prize_pool/query", data: {"id": id});
   }
 }
