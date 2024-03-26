@@ -255,7 +255,7 @@ class _TurntablePageState extends State<TurntablePage> {
         width: totalWidth * 2 + 7,
         height: totalWidth * 2 + 7,
         decoration: BoxDecoration(
-          border: Border.all(color: Color(0xffFFE3F9),width: 1,),
+          border: Border.all(color: Color(0xffFFE3F9).withAlpha(60),width: 1,),
           borderRadius: BorderRadius.circular(10),
           color: Color(0xffCF93F5),
         ),
