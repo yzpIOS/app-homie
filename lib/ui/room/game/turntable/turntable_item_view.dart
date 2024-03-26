@@ -8,9 +8,12 @@ class TurntableItemView extends StatelessWidget {
 
   Map data;
 
+  // 背景
   String background;
 
-  TurntableItemView(this.data, {super.key, this.background = "turntable_pic_jlk"});
+  bool showNumber;
+
+  TurntableItemView(this.data, {super.key, this.background = "turntable_pic_jlk", this.showNumber = false});
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +39,7 @@ class TurntableItemView extends StatelessWidget {
         createGiftName(),
         // 礼物价格
         createGiftPrize(),
+        SizedBox(height: 1,),
       ],
     );
   }
@@ -43,40 +47,42 @@ class TurntableItemView extends StatelessWidget {
   Widget createGiftImage() {
     return SizedBox(
       width: double.infinity,
-      height: 33,
+      height: 31,
       child: Stack(
         children: [
           Positioned(
             left: 0,
             right: 0,
-            top: 3,
+            top: 0,
             child: Image.network(
               data["image"],
               width: 33,
               height: 33,
             ),
           ),
-          Positioned(
-            right: 2,
-            top: 3.5,
-            child: Container(
-              height: 15,
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 5.0, right: 5.5),
-              decoration: BoxDecoration(
-                  color: Color(0xFFFFD9F2),
-                  borderRadius: BorderRadius.circular(100)
-              ),
-              child: Text(
-                "x10",
-                style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xffFF3291),
-                    fontWeight: FontWeight.normal
+
+          if(showNumber)
+            Positioned(
+              right: 2,
+              top: 3.0,
+              child: Container(
+                height: 15,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 5.0, right: 5.5),
+                decoration: BoxDecoration(
+                    color: Color(0xFFFFD9F2),
+                    borderRadius: BorderRadius.circular(100)
+                ),
+                child: Text(
+                  "x10",
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: Color(0xffFF3291),
+                      fontWeight: FontWeight.normal
+                  ),
                 ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
@@ -102,6 +108,7 @@ class TurntableItemView extends StatelessWidget {
   Widget createGiftPrize() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           data["price"].toString(),
