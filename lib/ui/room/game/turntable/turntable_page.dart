@@ -4,8 +4,10 @@ import 'dart:ui';
 
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
 import 'package:app/ui/room/game/turntable/turntable_record_dialog.dart';
 import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
@@ -263,6 +265,10 @@ class _TurntablePageState extends State<TurntablePage> {
 
             // 充值按钮
             GestureDetector(
+              onTap: () {
+                Get.to(() => RechargePage(hasShowUnityView: false,));
+              },
+              behavior: HitTestBehavior.translucent,
               child: Container(
                 width: 104,
                 height: 39,
@@ -286,19 +292,23 @@ class _TurntablePageState extends State<TurntablePage> {
 
             // 余额
             SizedBox(height: 8,),
-            XRichText(
-              TextSpan(
-                children: [
+            WalletCtrl.use(
+              builder: (it) {
+                return XRichText(
                   TextSpan(
-                    text: '余额:200000 ',
-                    style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold),
-                  ),
-                  WidgetSpan(
-                    alignment: PlaceholderAlignment.middle,
-                    child: MoneyIcon(type: MoneyType.diamond, size: 14),
+                    children: [
+                      TextSpan(
+                        text: '余额:${it[MoneyType.diamond] ?? '--'} ',
+                        style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: MoneyIcon(type: MoneyType.diamond, size: 14),
+                      )
+                    ]
                   )
-                ]
-              )
+                );
+              },
             ),
 
             Expanded(child: SizedBox()),
