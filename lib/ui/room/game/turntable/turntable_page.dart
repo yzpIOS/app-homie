@@ -3,8 +3,10 @@
 import 'dart:ui';
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/room/game/turntable/turntable_record_dialog.dart';
 import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,15 @@ class TurntablePage extends StatefulWidget {
   const TurntablePage({super.key});
 
   static Future<void> showDialog() async {
+    var lotteries = await Api.Activity.getLotteries();
+    if(lotteries == null || lotteries["items"] == null) {
+      return;
+    }
+
+    var list = await Api.Activity.getLotteryList();
+    if(list["items"] == null) {
+      return;
+    }
     var dialog = TurntablePage();
     await Get.dialog(
       dialog,
@@ -339,6 +350,12 @@ class _TurntablePageState extends State<TurntablePage> {
           GestureDetector(
             onTap: () async {
 
+              var dialog = TurntableRecordialog();
+              await Get.dialog(
+                dialog,
+                useSafeArea: false,
+                routeSettings: dialog.toRouteSettings(),
+              );
             },
             behavior: HitTestBehavior.translucent,
             child: Container(

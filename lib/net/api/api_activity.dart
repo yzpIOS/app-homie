@@ -69,4 +69,18 @@ class ApiActivity extends ApiBase {
   Future rollList() async {
     return _doPost("pull_newcomers/red_pkg/rolle_data");
   }
+
+  ///
+  /// 获取列表
+  ///
+  Future getLotteries() async {
+    return _doPost("lottery/query");
+  }
+
+  ///
+  /// 获取奖品列表
+  ///
+  Future getLotteryList() async {
+    return _doPost("lottery/prize_pool/query");
+  }
 }

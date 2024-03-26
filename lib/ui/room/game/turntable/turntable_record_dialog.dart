@@ -1,27 +1,41 @@
 
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
+import 'package:app/widgets.dart';
+import 'package:app/widgets/list/list_config.dart';
+import 'package:app/widgets/list/list_ctrl.dart';
+import 'package:app/widgets/list/simple_list.dart';
 import 'package:flutter/material.dart';
 
-class TurntablePrizeDialog extends StatefulWidget {
+class TurntableRecordialog extends StatefulWidget {
+
+  TurntableRecordialog({super.key});
 
   @override
-  State<StatefulWidget> createState() => _TurntablePrizeDialogState();
+  State<StatefulWidget> createState() => _TurntableRecordDialogState();
 }
 
-class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
+class _TurntableRecordDialogState extends State<TurntableRecordialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Container(
-        width: 312,
-        height: 449,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
-            )
-        ),
-        child: bodyView(),
+      body: Column(
+        children: [
+          Container(
+            width: 312,
+            height: 449,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
+                )
+            ),
+            child: bodyView(),
+          ),
+
+        ],
       ),
     );
   }
@@ -29,7 +43,15 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
   Widget bodyView() {
     return Column(
       children: [
+        SizedBox(height: 27,),
         createTitle(),
+        createTitleEffect(),
+
+        SizedBox(height: 12,),
+        // _SimpleRecord(),
+
+        TurntableItemView(),
+        SizedBox(height: 12,),
       ],
     );
   }
@@ -44,8 +66,42 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
               offset: Offset(1, 0),
               blurRadius: 2,
             )
-          ]
+          ],
+          color: Colors.white
       ),
     );
   }
+
+  Widget createTitleEffect() {
+    return Image.asset(IMG.format("room/game/turntable_pic_guang"));
+  }
+
+}
+
+class _SimpleRecord extends SimplePageView<Map> {
+
+  @override
+  BaseConfig get config {
+    return GridConfig(
+      padding: Pad(horizontal: 20, top: 8, bottom: AppSize.safeBottom),
+      gridDelegate: const XGridDelegate(
+        crossAxisCount: 4,
+        mainAxisSpacing: 26,
+        crossAxisSpacing: 38,
+        fixedHeight: 20 + 16,
+      ),
+    );
+  }
+
+  @override
+  Future fetchPage(PageNum page) {
+    return Future.value([{}, {}]);
+  }
+
+  @override
+  Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
+    // TODO: implement itemBuilder
+    return TurntableItemView();
+  }
+
 }
