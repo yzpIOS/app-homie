@@ -2,7 +2,10 @@
 
 import 'dart:ui';
 
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/common/money_icon.dart';
+import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -77,14 +80,13 @@ class _TurntablePageState extends State<TurntablePage> {
         width: double.infinity,
         height: double.infinity,
         child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Expanded(child: SizedBox()),
+
+            // 转盘界面
             SizedBox(
               width: 326,
-              height: 600,
+              height: 416,
               child: Stack(
                 fit: StackFit.loose,
                 children: [
@@ -95,6 +97,12 @@ class _TurntablePageState extends State<TurntablePage> {
                 ],
               ),
             ),
+
+            // 底部按钮
+            _createBottomButton(),
+
+            // 跳过动画
+            _createAnimationButton(),
 
             Expanded(child: SizedBox()),
           ],
@@ -153,20 +161,21 @@ class _TurntablePageState extends State<TurntablePage> {
 
     return GestureDetector(
       onTap: () {
+        debugPrint("GestureDetector .......");
         curSelectedIndex = index;
         setState(() { });
       },
-      behavior: HitTestBehavior.opaque,
+      behavior: HitTestBehavior.translucent,
       child: Container(
         width: 100,
         height: 66,
         padding: EdgeInsets.only(bottom: 5),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(imagePath),
-                scale: 2
-            )
+          image: DecorationImage(
+            image: AssetImage(imagePath),
+            scale: 2
+          )
         ),
         child: Text(
           label,
@@ -203,6 +212,9 @@ class _TurntablePageState extends State<TurntablePage> {
     );
   }
 
+  ///
+  /// 用户信息
+  ///
   Widget _userInfo() {
     return Positioned(
       left: totalWidth + 26 + 7 + 9,
@@ -220,43 +232,44 @@ class _TurntablePageState extends State<TurntablePage> {
             Expanded(child: SizedBox()),
 
             // 充值按钮
-            Container(
-              width: 104,
-              height: 39,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(39),
-                image: DecorationImage(
-                  image: AssetImage(IMG.format("room/game/turntable_button_cz")),
-                )
-              ),
-              child: Text(
-                "去充值",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14
+            GestureDetector(
+              child: Container(
+                width: 104,
+                height: 39,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(39),
+                  image: DecorationImage(
+                    image: AssetImage(IMG.format("room/game/turntable_button_cz")),
+                  )
+                ),
+                child: Text(
+                  "去充值",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14
+                  ),
                 ),
               ),
             ),
 
             // 余额
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    "剩余紫钻:20000000",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14
-                    ),
+            SizedBox(height: 8,),
+            XRichText(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '余额:200000 ',
+                    style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold),
                   ),
-                ),
-              ],
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: MoneyIcon(type: MoneyType.diamond, size: 14),
+                  )
+                ]
+              )
             ),
-
 
             Expanded(child: SizedBox()),
           ],
@@ -265,6 +278,9 @@ class _TurntablePageState extends State<TurntablePage> {
     );
   }
 
+  ///
+  /// 礼物列表
+  ///
   List<Widget> _createPrizeList() {
     return locations.map((e) {
       return Positioned(
@@ -276,69 +292,113 @@ class _TurntablePageState extends State<TurntablePage> {
       );
     }).toList();
   }
-}
 
-
-class InnerShadow extends SingleChildRenderObjectWidget {
-  const InnerShadow({
-    super.key,
-    this.blur = 10,
-    this.color = Colors.black38,
-    this.offset = const Offset(10, 10),
-    super.child,
-  });
-
-  final double blur;
-  final Color color;
-  final Offset offset;
-
-  @override
-  RenderObject createRenderObject(BuildContext context) {
-    final _RenderInnerShadow renderObject = _RenderInnerShadow();
-    updateRenderObject(context, renderObject);
-    return renderObject;
-  }
-
-  @override
-  void updateRenderObject(
-      BuildContext context, _RenderInnerShadow renderObject) {
-    renderObject
-      ..color = color
-      ..blur = blur
-      ..dx = offset.dx
-      ..dy = offset.dy;
-  }
-}
-
-class _RenderInnerShadow extends RenderProxyBox {
-  late double blur;
-  late Color color;
-  late double dx;
-  late double dy;
-
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    if (child == null) return;
-
-    final Rect rectOuter = offset & size;
-    final Rect rectInner = Rect.fromLTWH(
-      offset.dx,
-      offset.dy,
-      size.width - dx,
-      size.height - dy,
+  ///
+  /// 底部按钮组
+  ///
+  Widget _createBottomButton() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _createSingleBottomButton(
+            "单购",
+            "10紫钻",
+            Color(0xff193883),
+            0
+        ),
+        _createSingleBottomButton(
+            "十连抽",
+            "100紫钻",
+            Color(0xffAB189A),
+            0
+        ),
+        _createSingleBottomButton(
+            "百连抽",
+            "1000紫钻",
+            Color(0xffCB5301),
+            0
+        ),
+      ],
     );
-    final Canvas canvas = context.canvas..saveLayer(rectOuter, Paint());
-    context.paintChild(child!, offset);
-    final Paint shadowPaint = Paint()
-      ..blendMode = BlendMode.srcATop
-      ..imageFilter = ImageFilter.blur(sigmaX: blur, sigmaY: blur)
-      ..colorFilter = ColorFilter.mode(color, BlendMode.srcOut);
+  }
 
-    canvas
-      ..saveLayer(rectOuter, shadowPaint)
-      ..saveLayer(rectInner, Paint())
-      ..translate(dx, dy);
-    context.paintChild(child!, offset);
-    context.canvas..restore()..restore()..restore();
+
+  ///
+  /// 头部tab单个按钮
+  ///
+  Widget _createSingleBottomButton(String label, String prize, Color prizeTxtColor, int selectedIndex) {
+    return GestureDetector(
+      onTap: () {
+        setState(() { });
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: 108,
+        height: 66,
+        transformAlignment: Alignment.center,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(IMG.format("room/game/turntable_$label")),
+                scale: 2
+            )
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // 抽奖类型：单购，十连抽，百连抽
+            Text(
+              label,
+              style: TextStyle(
+                color: prizeTxtColor,
+                fontSize: 16,
+                height: 0.9,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            // 价格
+            SizedBox(height: 2,),
+            Text(
+              prize,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                height: 0.9,
+                fontWeight: FontWeight.normal,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  ///
+  /// 跳过动画
+  ///
+  Widget _createAnimationButton() {
+    return Container(
+      height: 28,
+      width: 128,
+      margin: EdgeInsets.only(top: 10),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: Color(0xffFFD9FB).withAlpha(60),
+        borderRadius: BorderRadius.circular(100),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(IMG.format("room/game/turntable_icon_xz"), width: 17, height: 17,),
+          SizedBox(width: 5,),
+          Text("跳过动画", style: TextStyle(color: Colors.white, fontSize: 14),),
+        ],
+      ),
+    );
   }
 }
