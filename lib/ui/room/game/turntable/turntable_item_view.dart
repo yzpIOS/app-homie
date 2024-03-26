@@ -8,7 +8,9 @@ class TurntableItemView extends StatelessWidget {
 
   Map data;
 
-  TurntableItemView(this.data, {super.key});
+  String background;
+
+  TurntableItemView(this.data, {super.key, this.background = "turntable_pic_jlk"});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class TurntableItemView extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage(IMG.format("room/game/turntable_pic_jlk"))
+            image: AssetImage(IMG.format("room/game/${background}"))
         )
       ),
       child: bodyView(),

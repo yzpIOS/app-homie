@@ -448,7 +448,7 @@ class _TurntablePageState extends State<TurntablePage> {
         top: e.top + 72,
         width: totalWidth + 1,
         height: totalWidth + 1,
-        child: TurntableItemView(item),
+        child: TurntableItemView(item, background: "turntable_pic_xzk",),
       );
     }).toList();
   }
