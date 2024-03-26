@@ -293,7 +293,7 @@ class _TurntablePageState extends State<TurntablePage> {
           // 规则 按钮
           GestureDetector(
             onTap: () async {
-              var dialog = TurntableRuleDialog();
+              var dialog = TurntableRuleDialog("aa");
               await Get.dialog(
                 dialog,
                 useSafeArea: false,
