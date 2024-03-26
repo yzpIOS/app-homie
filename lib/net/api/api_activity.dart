@@ -83,4 +83,11 @@ class ApiActivity extends ApiBase {
   Future getLotteryList(dynamic id) async {
     return _doPost("lottery/prize_pool/query", data: {"id": id});
   }
+
+  ///
+  /// 开始
+  ///
+  Future getStartSpin(dynamic id, int count) async {
+    return _doPost("lottery/use", data: {"id": id, "count": count});
+  }
 }

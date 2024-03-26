@@ -11,7 +11,10 @@ import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
 import 'package:app/ui/room/game/turntable/turntable_record_dialog.dart';
 import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:city_pickers/city_pickers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -57,11 +60,21 @@ class TurntablePage extends StatefulWidget {
 
 class _TurntablePageState extends State<TurntablePage> {
 
+  // 当前的模式
   int curSelectedIndex = 0;
-  
+
+  // 位置列表
   List<EdgeInsets> locations = [];
 
+  // 每个礼物的大小
   double totalWidth = 66.0;
+
+  // 转动值变化处理
+  final ValueNotifier<double> _counter = ValueNotifier<double>(0);
+  // 是否均速运动
+  bool _speedNotChange = false;
+
+  int _resultIndex = -1;
   
   @override
   void initState() {
@@ -217,7 +230,6 @@ class _TurntablePageState extends State<TurntablePage> {
     );
   }
 
-
   Widget _createContentView() {
     return Positioned(
       left: 0,
@@ -234,10 +246,8 @@ class _TurntablePageState extends State<TurntablePage> {
         ),
         child: Stack(
           children: [
-
             _userInfo(),
-
-            ..._createPrizeList(),
+            _createPrizeList(),
           ],
         ),
       ),
@@ -388,22 +398,22 @@ class _TurntablePageState extends State<TurntablePage> {
               margin: EdgeInsets.only(left: 8),
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFFFF97F8),
-                        Color(0xFFFF4CF2),
-                      ]
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0xff890085).withAlpha(30),
-                      offset: Offset(1, 1),
-                      spreadRadius: 1,
-                    )
+                borderRadius: BorderRadius.circular(100),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFFF97F8),
+                    Color(0xFFFF4CF2),
                   ]
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xff890085).withAlpha(30),
+                    offset: Offset(1, 1),
+                    spreadRadius: 1,
+                  )
+                ]
               ),
               child: Text(
                 "中奖记录",
@@ -423,34 +433,51 @@ class _TurntablePageState extends State<TurntablePage> {
   ///
   /// 礼物列表
   ///
-  List<Widget> _createPrizeList() {
-    return locations.map((e) {
-      // 计算位置
-      int curIndex = locations.indexOf(e);
+  Widget _createPrizeList() {
+    return ValueListenableBuilder<double>(
+      valueListenable: _counter,
+      builder: (a1, a2, a3) {
+        return Positioned.fill(
+          child: Stack(
+            children: locations.map((e) {
+              // 计算位置
+              int curIndex = locations.indexOf(e);
 
-      if(curIndex < 0 || widget.items == null || curIndex >= widget.items.length) {
-        // 没有数据
-        return Positioned(
-          left: e.left + 26,
-          top: e.top + 75,
-          width: totalWidth,
-          height: totalWidth,
-          child: SizedBox(),
+              if(curIndex < 0 || widget.items == null || curIndex >= widget.items.length) {
+                // 没有数据
+                return Positioned(
+                  left: e.left + 26,
+                  top: e.top + 75,
+                  width: totalWidth,
+                  height: totalWidth,
+                  child: SizedBox(),
+                );
+              }
+              var selectedIndex = _counter.value.toInt() % widget.items.length;
+
+              // 己经中奖. 停止定时器，不前进
+              if(selectedIndex == _resultIndex && _speedNotChange) {
+                _timer?.cancel();
+              }
+              debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
+
+              // 获取当前位置
+              var item = widget.items[curIndex];
+
+              // 商品
+              return Positioned(
+                left: e.left + 26,
+                top: e.top + 72,
+                width: totalWidth + 1,
+                height: totalWidth + 1,
+                child: TurntableItemView(item, background: selectedIndex == curIndex ? "turntable_pic_xzk" : "turntable_pic_jlk",),
+              );
+            }).toList(),
+          ),
         );
-      }
+      },
+    );
 
-      // 获取当前位置
-      var item = widget.items[curIndex];
-
-      // 商品
-      return Positioned(
-        left: e.left + 26,
-        top: e.top + 72,
-        width: totalWidth + 1,
-        height: totalWidth + 1,
-        child: TurntableItemView(item, background: "turntable_pic_xzk",),
-      );
-    }).toList();
   }
 
   ///
@@ -463,22 +490,22 @@ class _TurntablePageState extends State<TurntablePage> {
       mainAxisSize: MainAxisSize.min,
       children: [
         _createSingleBottomButton(
-            "单购",
-            "10紫钻",
-            Color(0xff193883),
-            0
+          "单购",
+          "10紫钻",
+          Color(0xff193883),
+          1
         ),
         _createSingleBottomButton(
-            "十连抽",
-            "100紫钻",
-            Color(0xffAB189A),
-            0
+          "十连抽",
+          "100紫钻",
+          Color(0xffAB189A),
+          10
         ),
         _createSingleBottomButton(
-            "百连抽",
-            "1000紫钻",
-            Color(0xffCB5301),
-            0
+          "百连抽",
+          "1000紫钻",
+          Color(0xffCB5301),
+          100
         ),
       ],
     );
@@ -491,7 +518,7 @@ class _TurntablePageState extends State<TurntablePage> {
   Widget _createSingleBottomButton(String label, String prize, Color prizeTxtColor, int selectedIndex) {
     return GestureDetector(
       onTap: () {
-        setState(() { });
+        startSpin(selectedIndex);
       },
       behavior: HitTestBehavior.opaque,
       child: Container(
@@ -500,10 +527,10 @@ class _TurntablePageState extends State<TurntablePage> {
         transformAlignment: Alignment.center,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(IMG.format("room/game/turntable_$label")),
-                scale: 2
-            )
+          image: DecorationImage(
+            image: AssetImage(IMG.format("room/game/turntable_$label")),
+            scale: 2
+          )
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -560,5 +587,102 @@ class _TurntablePageState extends State<TurntablePage> {
         ],
       ),
     );
+  }
+
+  Timer? _timer = null;
+  int _startTime = 0;
+
+  ///
+  /// 开始转动
+  ///
+  void startSpin(int selectedIndex) async {
+    _timer?.cancel();
+
+    // 5秒后请求弹窗
+    var result = await Api.Activity.getStartSpin(widget.lotteryData["id"], selectedIndex);
+    // 余额不足，弹窗去充值
+    if(result["11001"] == 1) {
+      showDialog(context: Get.context!, builder: (context) {
+        return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
+
+        });
+      });
+      return;
+    };
+
+    // 奖品列表
+    var itemList = result != null ? result["items"] as List : [];
+    if(itemList.isEmpty) {
+      showToast("数据错误");
+      return;
+    }
+
+    // 查找出价格最大的值
+    Map? maxPrizeValue;
+    itemList.forEach((element) {
+      if(maxPrizeValue == null) {
+        maxPrizeValue = element;
+      } else if(maxPrizeValue!["price"] < element["price"]) {
+        maxPrizeValue = element;
+      }
+    });
+
+
+    // 要转到的位置
+    var targetItem = widget.items.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
+    _resultIndex = widget.items.indexOf(targetItem);
+    if(_resultIndex < 0) {
+      return;
+    }
+    showToast(targetItem["prize_name"]);
+    
+    // 是否是匀速运行
+    _speedNotChange = false;
+    // 更新开始时间
+    _startTime = DateTime.now().millisecondsSinceEpoch;
+    // 定时器
+    _timer = Timer.periodic(Duration(milliseconds: 22), onTimings);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _counter.dispose();
+    locations.clear();
+    _timer?.cancel();
+  }
+
+  int preTime = 0;
+
+  void onTimings(Timer timer) {
+    int curTime = DateTime.now().millisecondsSinceEpoch;
+
+    // 过的时间
+    double seconds = (curTime - _startTime) / 1000.0;
+    debugPrint("startSpin startSpin seconds = ${seconds}");
+
+    // 初始速度
+    double v0 = 15.5;
+    // 加速度
+    double a = 0.5;
+
+    // vt = vo + at;
+    double vt = 15.5 - a * seconds;
+
+    double endSpeed = 1.5;
+
+    if(vt >= endSpeed) {
+      preTime = curTime;
+      _speedNotChange = false;
+      // v0t＋ at2
+      _counter.value = v0 * seconds - 0.5 * a * seconds * seconds;
+    } else {
+      _speedNotChange = true;
+      // 速度等于0时，就均速运运
+      _counter.value = _counter.value + endSpeed * (curTime - preTime) / 1000;
+      preTime = curTime;
+    }
+
+    debugPrint("startSpin startSpin ");
   }
 }
