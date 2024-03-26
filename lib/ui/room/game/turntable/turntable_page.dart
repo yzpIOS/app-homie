@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -92,8 +93,12 @@ class _TurntablePageState extends State<TurntablePage> {
                 children: [
                   // tabBar
                   _createTabBar(),
+
                   // 内容
                   _createContentView(),
+
+                  // 规则，中奖记录
+                  _createRuleAndRecord(),
                 ],
               ),
             ),
@@ -274,6 +279,102 @@ class _TurntablePageState extends State<TurntablePage> {
             Expanded(child: SizedBox()),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _createRuleAndRecord() {
+    return Positioned(
+      left: 11,
+      top: 50,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // 规则 按钮
+          GestureDetector(
+            onTap: () async {
+              var dialog = TurntableRuleDialog();
+              await Get.dialog(
+                dialog,
+                useSafeArea: false,
+                routeSettings: dialog.toRouteSettings(),
+              );
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Container(
+              width: 44,
+              height: 23,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFFFF97F8),
+                        Color(0xFFFF4CF2),
+                      ]
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xff890085).withAlpha(30),
+                      offset: Offset(1, 1),
+                      spreadRadius: 1,
+                    )
+                  ]
+              ),
+              child: Text(
+                "规则",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ),
+
+
+          // 中奖记录 按钮
+          GestureDetector(
+            onTap: () async {
+
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Container(
+              width: 66,
+              height: 23,
+              margin: EdgeInsets.only(left: 8),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFFFF97F8),
+                        Color(0xFFFF4CF2),
+                      ]
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xff890085).withAlpha(30),
+                      offset: Offset(1, 1),
+                      spreadRadius: 1,
+                    )
+                  ]
+              ),
+              child: Text(
+                "中奖记录",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
