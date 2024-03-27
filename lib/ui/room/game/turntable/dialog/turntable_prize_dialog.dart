@@ -11,6 +11,11 @@ class TurntablePrizeDialog extends StatefulWidget {
   TurntablePrizeDialog(this.items, {super.key});
 
   static Future<void> showDialog(List items) async {
+    items.sort((a, b) {
+      int value1 = (a["price"] ?? 0);
+      int value2 = (b["price"] ?? 0);
+      return value2 - value1;
+    });
     var dialog = TurntablePrizeDialog(items);
     await Get.dialog(
       dialog,
