@@ -54,7 +54,7 @@ class TurntableItemView extends StatelessWidget {
             left: 0,
             right: 0,
             top: 0,
-            child: Image.network(
+            child: NetImage(
               data["image"] ?? "",
               width: 33,
               height: 33,

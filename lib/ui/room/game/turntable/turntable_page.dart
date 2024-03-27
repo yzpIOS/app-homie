@@ -652,8 +652,24 @@ class _TurntablePageState extends State<TurntablePage> {
     currentPrizeList = [];
     _timer?.cancel();
 
+    // 不播放动画
+    if(!noPlayAnimation) {
+      _resultIndex = -1;
+      // 是否是匀速运行
+      _speedNotChange = false;
+      // 更新开始时间
+      _startTime = DateTime.now().millisecondsSinceEpoch;
+      // 定时器
+      _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
+    }
+    divideTime = DateTime.now().millisecondsSinceEpoch.toDouble();
+
     // 5秒后请求弹窗
-    simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), showProgress: true, callback: (result) async {
+    simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), callback: (result) async {
+      if(Env.isDebug) {
+        await Future.delayed(Duration(seconds: DateTime.now().millisecondsSinceEpoch % 5 + 2));
+      }
+
       // 余额不足，弹窗去充值
       if(result["11001"] == 1) {
         showDialog(context: Get.context!, builder: (context) {
@@ -669,6 +685,7 @@ class _TurntablePageState extends State<TurntablePage> {
       // 奖品列表
       var windList = result != null ? result["items"] as List : [];
       if(windList.isEmpty) {
+        _timer?.cancel();
         showToast(result["msg"] ?? "数据错误");
         return;
       }
@@ -687,6 +704,7 @@ class _TurntablePageState extends State<TurntablePage> {
 
       // 不播放动画
       if(noPlayAnimation) {
+        _timer?.cancel();
         toOpenWindowDialog();
         return;
       }
@@ -696,19 +714,18 @@ class _TurntablePageState extends State<TurntablePage> {
       var targetItem = prizeItemList.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
       _resultIndex = prizeItemList.indexOf(targetItem);
       if(_resultIndex < 0) {
+        _timer?.cancel();
+        showToast(result["msg"] ?? "数据错误2");
         return;
       }
+
+      divideTime = (DateTime.now().millisecondsSinceEpoch.toDouble() - divideTime) / 1000;
+      // 更新开始时间
+      _startTime = DateTime.now().millisecondsSinceEpoch;
 
       if(Env.isDebug) {
         showToast(targetItem["prize_name"]);
       }
-
-      // 是否是匀速运行
-      _speedNotChange = false;
-      // 更新开始时间
-      _startTime = DateTime.now().millisecondsSinceEpoch;
-      // 定时器
-      _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
 
     });
 
@@ -735,6 +752,7 @@ class _TurntablePageState extends State<TurntablePage> {
   }
 
   int preTime = 0;
+  double divideTime = 0;
 
   void onTimings(Timer timer) {
     int curTime = DateTime.now().millisecondsSinceEpoch;
@@ -745,27 +763,34 @@ class _TurntablePageState extends State<TurntablePage> {
 
     // 初始速度
     double v0 = 16;
-    // 加速度
-    double a = 4.0;
-    // 最后速度
-    double endSpeed = 4.0;
 
-    // vt = vo + at;
-    double vt = v0 - a * seconds;
-
-
-    if(vt > endSpeed) {
-      preTime = curTime;
-      _speedNotChange = false;
+    if(_resultIndex == -1) {
       // v0t＋ at2
-      _counter.value = v0 * seconds - 0.5 * a * seconds * seconds;
+      _counter.value = v0 * seconds;
     } else {
-      _speedNotChange = true;
-      // 速度等于0时，就均速运运
-      _counter.value = _counter.value + endSpeed * (curTime - preTime) / 1000;
-      preTime = curTime;
-    }
+      // 加速度
+      double a = 4.0;
+      // 最后速度
+      double endSpeed = 4.0;
 
+      // vt = vo + at;
+      double vt = v0 - a * seconds;
+
+
+      if(vt > endSpeed) {
+        preTime = curTime;
+        _speedNotChange = false;
+        // v0t＋ at2
+        _counter.value = v0 * seconds - 0.5 * a * seconds * seconds + divideTime * v0;
+
+      } else {
+        _speedNotChange = true;
+        // 速度等于0时，就均速运运
+        _counter.value = _counter.value + endSpeed * (curTime - preTime) / 1000;
+        preTime = curTime;
+      }
+
+    }
     debugPrint("startSpin startSpin ");
   }
 }
