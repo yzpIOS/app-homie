@@ -127,7 +127,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
       currencyName = MoneyType.gold.label;
     }
     return Positioned(
-      top: 20,
+      top: 15,
       child: Column(
         children: [
           // 恭喜获得

@@ -111,13 +111,14 @@ class _TurntablePageState extends State<TurntablePage> {
 
     var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
     modeId = itemList[curSelectedIndex]["id"];
-    requestLottery();
+
+    requestLottery(showLoading: false);
   }
 
   ///
   /// 刷新商品列表
   ///
-  void requestLottery() async {
+  void requestLottery({bool showLoading = true}) async {
     // 获取商品列表
     simpleTry(() => Api.Activity.getLotteryList(modeId), callback: (list) {
       if(list == null || list["items"] == null) {
@@ -126,7 +127,7 @@ class _TurntablePageState extends State<TurntablePage> {
         prizeItemList = list["items"] ?? [];
       }
       setState(() { });
-    });
+    }, showProgress: showLoading);
   }
 
   @override
@@ -178,6 +179,7 @@ class _TurntablePageState extends State<TurntablePage> {
       left: 0,
       right: 0,
       top: 2,
+      height: 66,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -228,6 +230,10 @@ class _TurntablePageState extends State<TurntablePage> {
 
     return GestureDetector(
       onTap: () {
+        // 动画没有播放完
+        if(currentPrizeList.isNotEmpty) {
+          return;
+        }
         debugPrint("GestureDetector .......");
         curSelectedIndex = index;
 
@@ -260,11 +266,10 @@ class _TurntablePageState extends State<TurntablePage> {
     return Positioned(
       left: 0,
       right: 0,
-      top: 30,
+      top: 44,
       child: Container(
         width: 354,
-        height: 397,
-        alignment: Alignment.center,
+        height: 370,
         decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage(IMG.format("room/game/turntable_pic_di")),
@@ -286,7 +291,7 @@ class _TurntablePageState extends State<TurntablePage> {
   Widget _userInfo() {
     return Positioned(
       left: totalWidth + 26 + 7 + 9,
-      top: totalWidth + 75 + 7 + 9,
+      top: totalWidth + 61 + 7 + 9,
       child: Container(
         width: totalWidth * 2 + 7,
         height: totalWidth * 2 + 7,
@@ -357,7 +362,7 @@ class _TurntablePageState extends State<TurntablePage> {
   Widget _createRuleAndRecord() {
     return Positioned(
       left: 11,
-      top: 50,
+      top: 51,
       right: 11,
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -486,7 +491,7 @@ class _TurntablePageState extends State<TurntablePage> {
                 // 没有数据
                 return Positioned(
                   left: e.left + 26,
-                  top: e.top + 75,
+                  top: e.top + 61,
                   width: totalWidth,
                   height: totalWidth,
                   child: SizedBox(),
@@ -507,7 +512,7 @@ class _TurntablePageState extends State<TurntablePage> {
               // 商品
               return Positioned(
                 left: e.left + 26,
-                top: e.top + 72,
+                top: e.top + 58,
                 width: totalWidth + 1,
                 height: totalWidth + 1,
                 child: TurntableItemView(item, background: selectedIndex == curIndex ? "turntable_pic_xzk" : "turntable_pic_jlk",),
