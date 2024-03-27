@@ -729,9 +729,9 @@ class _TurntablePageState extends State<TurntablePage> {
     debugPrint("startSpin startSpin seconds = ${seconds}");
 
     // 初始速度
-    double v0 = 20;
+    double v0 = 17.5;
     // 加速度
-    double a = 3.0;
+    double a = 4.0;
     // 最后速度
     double endSpeed = 1.5;
 
