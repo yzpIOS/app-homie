@@ -43,6 +43,14 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
               child: bodyView(),
             ),
 
+            SizedBox(height: 12,),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              behavior: HitTestBehavior.translucent,
+              child: Image.asset(IMG.format("room/game/turntable_rule_close"), width: 33, height: 33,),
+            ),
           ],
         ),
       ),
