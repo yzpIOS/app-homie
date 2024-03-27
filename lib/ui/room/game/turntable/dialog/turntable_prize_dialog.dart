@@ -46,10 +46,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
             // 价格
             createPrize(),
             // 恭喜
-            Positioned(
-              top: 20,
-              child: Image.asset(IMG.format("room/game/turntable_pic_gx"),width: 266, height: 75,),
-            ),
+            createCongratulations(),
 
             createBottomButton(),
           ],
@@ -101,6 +98,36 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
           Container(
             padding: EdgeInsets.symmetric(vertical: 3, horizontal: 15),
             margin: EdgeInsets.only(top: 150),
+            decoration: BoxDecoration(
+              color: Colors.black.withAlpha(60),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Text(
+              widget.items[index]["prize_name"],
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget createCongratulations() {
+    return Positioned(
+      top: 20,
+      child: Column(
+        children: [
+          // 恭喜获得
+          Image.asset(IMG.format("room/game/turntable_pic_gx"),width: 266, height: 75,),
+
+          // 总价格
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 3, horizontal: 15),
+            margin: EdgeInsets.only(top: 75),
             decoration: BoxDecoration(
               color: Colors.black.withAlpha(60),
               borderRadius: BorderRadius.circular(100),
