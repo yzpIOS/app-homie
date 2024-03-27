@@ -493,11 +493,7 @@ class _TurntablePageState extends State<TurntablePage> {
               // 己经中奖. 停止定时器，不前进
               if(selectedIndex == _resultIndex && _speedNotChange) {
                 _timer?.cancel();
-                // 弹出礼物奖
-                if(Env.isRelease && currentPrizeList.isNotEmpty) {
-                  TurntablePrizeDialog.showDialog(currentPrizeList);
-                }
-                currentPrizeList = [];
+                toOpenWindowDialog();
               }
               debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
 
@@ -681,14 +677,13 @@ class _TurntablePageState extends State<TurntablePage> {
         showToast(targetItem["prize_name"]);
       }
 
-      TurntablePrizeDialog.showDialog(currentPrizeList);
-
       // 是否是匀速运行
       _speedNotChange = false;
       // 更新开始时间
       _startTime = DateTime.now().millisecondsSinceEpoch;
       // 定时器
       _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
+
     });
 
   }
@@ -699,6 +694,18 @@ class _TurntablePageState extends State<TurntablePage> {
     _counter.dispose();
     locations.clear();
     _timer?.cancel();
+  }
+
+
+  void toOpenWindowDialog() {
+    if(currentPrizeList.isEmpty) {
+      return;
+    }
+    var newList = currentPrizeList.toList(growable: true);
+    currentPrizeList = [];
+    delay(10, () {
+      TurntablePrizeDialog.showDialog(newList);
+    });
   }
 
   int preTime = 0;
@@ -714,11 +721,12 @@ class _TurntablePageState extends State<TurntablePage> {
     double v0 = 20;
     // 加速度
     double a = 3.0;
+    // 最后速度
+    double endSpeed = 1.5;
 
     // vt = vo + at;
     double vt = v0 - a * seconds;
 
-    double endSpeed = 1.5;
 
     if(vt >= endSpeed) {
       preTime = curTime;
