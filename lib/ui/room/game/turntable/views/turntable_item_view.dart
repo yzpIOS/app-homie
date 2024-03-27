@@ -74,7 +74,7 @@ class TurntableItemView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100)
                 ),
                 child: Text(
-                  "x10",
+                  "x${data["count"] ?? 0}",
                   style: TextStyle(
                       fontSize: 10,
                       color: Color(0xffFF3291),

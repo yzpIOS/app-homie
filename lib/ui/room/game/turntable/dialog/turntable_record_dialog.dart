@@ -115,7 +115,7 @@ class _SimpleRecord extends SimplePageView<Map> {
   @override
   Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
     // TODO: implement itemBuilder
-    return TurntableItemView(item);
+    return TurntableItemView(item, showNumber: true,);
   }
 
 }

@@ -494,7 +494,7 @@ class _TurntablePageState extends State<TurntablePage> {
               if(selectedIndex == _resultIndex && _speedNotChange) {
                 _timer?.cancel();
                 // 弹出礼物奖
-                if(currentPrizeList.isNotEmpty) {
+                if(Env.isRelease && currentPrizeList.isNotEmpty) {
                   TurntablePrizeDialog.showDialog(currentPrizeList);
                 }
                 currentPrizeList = [];
@@ -680,6 +680,8 @@ class _TurntablePageState extends State<TurntablePage> {
       if(Env.isDebug) {
         showToast(targetItem["prize_name"]);
       }
+
+      TurntablePrizeDialog.showDialog(currentPrizeList);
 
       // 是否是匀速运行
       _speedNotChange = false;
