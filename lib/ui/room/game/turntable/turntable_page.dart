@@ -641,7 +641,7 @@ class _TurntablePageState extends State<TurntablePage> {
     // 更新开始时间
     _startTime = DateTime.now().millisecondsSinceEpoch;
     // 定时器
-    _timer = Timer.periodic(Duration(milliseconds: 22), onTimings);
+    _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
   }
 
   @override
@@ -662,12 +662,12 @@ class _TurntablePageState extends State<TurntablePage> {
     debugPrint("startSpin startSpin seconds = ${seconds}");
 
     // 初始速度
-    double v0 = 15.5;
+    double v0 = 20;
     // 加速度
-    double a = 0.5;
+    double a = 3.0;
 
     // vt = vo + at;
-    double vt = 15.5 - a * seconds;
+    double vt = v0 - a * seconds;
 
     double endSpeed = 1.5;
 
