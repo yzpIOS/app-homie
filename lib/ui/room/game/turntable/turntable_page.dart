@@ -674,6 +674,14 @@ class _TurntablePageState extends State<TurntablePage> {
         }
       });
 
+      currentPrizeList = windList;
+
+      // 不播放动画
+      if(noPlayAnimation) {
+        toOpenWindowDialog();
+        return;
+      }
+
 
       // 要转到的位置
       var targetItem = prizeItemList.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
@@ -682,15 +690,8 @@ class _TurntablePageState extends State<TurntablePage> {
         return;
       }
 
-      currentPrizeList = windList;
       if(Env.isDebug) {
         showToast(targetItem["prize_name"]);
-      }
-
-      // 不播放动画
-      if(noPlayAnimation) {
-        toOpenWindowDialog();
-        return;
       }
 
       // 是否是匀速运行

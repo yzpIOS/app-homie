@@ -41,7 +41,10 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
             // 价格
             createPrize(),
             // 恭喜
-            Image.asset(IMG.format("room/game/turntable_pic_gx")),
+            Positioned(
+              top: 20,
+              child: Image.asset(IMG.format("room/game/turntable_pic_gx"),width: 266, height: 75,),
+            ),
 
             createBottomButton(),
           ],
