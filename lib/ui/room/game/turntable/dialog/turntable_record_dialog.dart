@@ -2,7 +2,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
+import 'package:app/ui/room/game/turntable/views/turntable_item_view.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/list/list_config.dart';
 import 'package:app/widgets/list/list_ctrl.dart';

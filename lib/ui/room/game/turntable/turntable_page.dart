@@ -8,9 +8,10 @@ import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
-import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
-import 'package:app/ui/room/game/turntable/turntable_record_dialog.dart';
-import 'package:app/ui/room/game/turntable/turntable_rule_dialog.dart';
+import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog.dart';
+import 'package:app/ui/room/game/turntable/views/turntable_item_view.dart';
+import 'package:app/ui/room/game/turntable/dialog/turntable_record_dialog.dart';
+import 'package:app/ui/room/game/turntable/dialog/turntable_rule_dialog.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:city_pickers/city_pickers.dart';
@@ -23,10 +24,7 @@ class TurntablePage extends StatefulWidget {
   // 抽奖数据
   Map lotteryData;
 
-  // 奖品列表
-  List items;
-
-  TurntablePage(this.lotteryData, this.items, {super.key});
+  TurntablePage(this.lotteryData, {super.key});
 
   static Future<void> showDialog() async {
     // 获取平台游戏
@@ -41,11 +39,7 @@ class TurntablePage extends StatefulWidget {
       return;
     }
 
-    var list = await Api.Activity.getLotteryList(lotteryData["id"]);
-    if(list["items"] == null) {
-      return;
-    }
-    var dialog = TurntablePage(lotteryData, list["items"]);
+    var dialog = TurntablePage(lotteryData);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -74,7 +68,15 @@ class _TurntablePageState extends State<TurntablePage> {
   // 是否均速运动
   bool _speedNotChange = false;
 
+  // 中奖的位置
   int _resultIndex = -1;
+  // 当前中奖列表
+  List currentPrizeList = [];
+
+  // 奖品列表
+  List prizeItemList = [];
+  dynamic modeId;
+
   
   @override
   void initState() {
@@ -111,6 +113,26 @@ class _TurntablePageState extends State<TurntablePage> {
     locations.add(EdgeInsets.only(left: 9 + (totalWidth + gap) * 0, top: 11 + (totalWidth + gap) * 2));
     // 第十二个
     locations.add(EdgeInsets.only(left: 9 + (totalWidth + gap) * 0, top: 11 + (totalWidth + gap) * 1));
+
+
+    var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
+    modeId = itemList[curSelectedIndex]["id"];
+    requestLottery();
+  }
+
+  ///
+  /// 刷新商品列表
+  ///
+  void requestLottery() async {
+    // 获取商品列表
+    simpleTry(() => Api.Activity.getLotteryList(modeId), callback: (list) {
+      if(list == null || list["items"] == null) {
+        prizeItemList = [];
+      } else {
+        prizeItemList = list["items"] ?? [];
+      }
+      setState(() { });
+    });
   }
 
   @override
@@ -157,6 +179,7 @@ class _TurntablePageState extends State<TurntablePage> {
   }
 
   Widget _createTabBar() {
+    var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
     return Positioned(
       left: 0,
       right: 0,
@@ -164,14 +187,19 @@ class _TurntablePageState extends State<TurntablePage> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // common
-          _createTabBButton("普通模式", 0, curSelectedIndex),
-          // height level
-          _createTabBButton("高级模式", 1, curSelectedIndex),
-          // crazy level
-          _createTabBButton("疯狂模式", 2, curSelectedIndex),
-        ],
+        children: itemList.map((e) {
+          String modeName = "";
+          if(e["mode"] == 1) {
+            modeName = "普通模式";
+          } else if(e["mode"] == 2) {
+            modeName = "高级模式";
+          } else if(e["mode"] == 3) {
+            modeName = "疯狂模式";
+          } else {
+            return SizedBox();
+          }
+          return _createTabBButton(modeName, itemList.indexOf(e), curSelectedIndex);
+        }).toList(),
       ),
     );
   }
@@ -208,7 +236,11 @@ class _TurntablePageState extends State<TurntablePage> {
       onTap: () {
         debugPrint("GestureDetector .......");
         curSelectedIndex = index;
-        setState(() { });
+
+        var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
+        modeId = itemList[curSelectedIndex]["id"];
+
+        requestLottery();
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
@@ -387,8 +419,7 @@ class _TurntablePageState extends State<TurntablePage> {
           // 中奖记录 按钮
           GestureDetector(
             onTap: () async {
-
-              var dialog = TurntableRecordialog(widget.lotteryData["id"]);
+              var dialog = TurntableRecordialog(modeId);
               await Get.dialog(
                 dialog,
                 useSafeArea: false,
@@ -447,7 +478,7 @@ class _TurntablePageState extends State<TurntablePage> {
               // 计算位置
               int curIndex = locations.indexOf(e);
 
-              if(curIndex < 0 || widget.items == null || curIndex >= widget.items.length) {
+              if(curIndex < 0 || curIndex >= prizeItemList.length) {
                 // 没有数据
                 return Positioned(
                   left: e.left + 26,
@@ -457,16 +488,21 @@ class _TurntablePageState extends State<TurntablePage> {
                   child: SizedBox(),
                 );
               }
-              var selectedIndex = _counter.value.toInt() % widget.items.length;
+              var selectedIndex = _counter.value.toInt() % prizeItemList.length;
 
               // 己经中奖. 停止定时器，不前进
               if(selectedIndex == _resultIndex && _speedNotChange) {
                 _timer?.cancel();
+                // 弹出礼物奖
+                if(currentPrizeList.isNotEmpty) {
+                  TurntablePrizeDialog.showDialog(currentPrizeList);
+                }
+                currentPrizeList = [];
               }
               debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
 
               // 获取当前位置
-              var item = widget.items[curIndex];
+              var item = prizeItemList[curIndex];
 
               // 商品
               return Positioned(
@@ -600,52 +636,59 @@ class _TurntablePageState extends State<TurntablePage> {
   /// 开始转动
   ///
   void startSpin(int selectedIndex) async {
+    currentPrizeList = [];
     _timer?.cancel();
 
     // 5秒后请求弹窗
-    var result = await Api.Activity.getStartSpin(widget.lotteryData["id"], selectedIndex);
-    // 余额不足，弹窗去充值
-    if(result["11001"] == 1) {
-      showDialog(context: Get.context!, builder: (context) {
-        return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
+    simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), showProgress: true, callback: (result) async {
+      // 余额不足，弹窗去充值
+      if(result["11001"] == 1) {
+        showDialog(context: Get.context!, builder: (context) {
+          return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
 
+          });
         });
-      });
-      return;
-    };
+        return;
+      };
 
-    // 奖品列表
-    var itemList = result != null ? result["items"] as List : [];
-    if(itemList.isEmpty) {
-      showToast("数据错误");
-      return;
-    }
-
-    // 查找出价格最大的值
-    Map? maxPrizeValue;
-    itemList.forEach((element) {
-      if(maxPrizeValue == null) {
-        maxPrizeValue = element;
-      } else if(maxPrizeValue!["price"] < element["price"]) {
-        maxPrizeValue = element;
+      // 奖品列表
+      var windList = result != null ? result["items"] as List : [];
+      if(windList.isEmpty) {
+        showToast("数据错误");
+        return;
       }
+
+      // 查找出价格最大的值
+      Map? maxPrizeValue;
+      windList.forEach((element) {
+        if(maxPrizeValue == null) {
+          maxPrizeValue = element;
+        } else if(maxPrizeValue!["price"] < element["price"]) {
+          maxPrizeValue = element;
+        }
+      });
+
+
+      // 要转到的位置
+      var targetItem = prizeItemList.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
+      _resultIndex = prizeItemList.indexOf(targetItem);
+      if(_resultIndex < 0) {
+        return;
+      }
+
+      currentPrizeList = windList;
+      if(Env.isDebug) {
+        showToast(targetItem["prize_name"]);
+      }
+
+      // 是否是匀速运行
+      _speedNotChange = false;
+      // 更新开始时间
+      _startTime = DateTime.now().millisecondsSinceEpoch;
+      // 定时器
+      _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
     });
 
-
-    // 要转到的位置
-    var targetItem = widget.items.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
-    _resultIndex = widget.items.indexOf(targetItem);
-    if(_resultIndex < 0) {
-      return;
-    }
-    showToast(targetItem["prize_name"]);
-    
-    // 是否是匀速运行
-    _speedNotChange = false;
-    // 更新开始时间
-    _startTime = DateTime.now().millisecondsSinceEpoch;
-    // 定时器
-    _timer = Timer.periodic(Duration(milliseconds: 10), onTimings);
   }
 
   @override
