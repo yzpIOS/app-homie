@@ -1,4 +1,5 @@
 
+import 'package:app/model/enum/money_type.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/view.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,14 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
   }
 
   Widget createCongratulations() {
+    int currency = widget.items[index]["currency"];
+
+    String currencyName = "";
+    if(currency == MoneyType.diamond.val) {
+      currencyName = MoneyType.diamond.label;
+    } else {
+      currencyName = MoneyType.gold.label;
+    }
     return Positioned(
       top: 20,
       child: Column(
@@ -127,17 +136,16 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> {
           // 总价格
           Container(
             padding: EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-            margin: EdgeInsets.only(top: 75),
             decoration: BoxDecoration(
               color: Colors.black.withAlpha(60),
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              widget.items[index]["prize_name"],
+              "礼物总价值${(widget.items[index]["count"] ?? 0) * (widget.items[index]["price"] ?? 0)}${currencyName}",
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w600,
-                  fontSize: 12
+                  fontSize: 14
               ),
             ),
           )
