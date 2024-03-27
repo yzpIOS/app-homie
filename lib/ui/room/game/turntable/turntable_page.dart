@@ -177,7 +177,7 @@ class _TurntablePageState extends State<TurntablePage> {
     return Positioned(
       left: 0,
       right: 0,
-      top: 0,
+      top: 2,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -358,6 +358,7 @@ class _TurntablePageState extends State<TurntablePage> {
     return Positioned(
       left: 11,
       top: 50,
+      right: 11,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -453,6 +454,15 @@ class _TurntablePageState extends State<TurntablePage> {
                 ),
               ),
             ),
+          ),
+
+          Expanded(child: SizedBox()),
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Image.asset(IMG.format("room/game/turntable_button_close"), width: 21, height: 21,),
           ),
         ],
       ),
