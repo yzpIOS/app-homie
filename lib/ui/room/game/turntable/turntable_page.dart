@@ -77,6 +77,8 @@ class _TurntablePageState extends State<TurntablePage> {
   List prizeItemList = [];
   dynamic modeId;
 
+
+  bool noPlayAnimation = false;
   
   @override
   void initState() {
@@ -605,22 +607,30 @@ class _TurntablePageState extends State<TurntablePage> {
   /// 跳过动画
   ///
   Widget _createAnimationButton() {
-    return Container(
-      height: 28,
-      width: 128,
-      margin: EdgeInsets.only(top: 10),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Color(0xffFFD9FB).withAlpha(60),
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset(IMG.format("room/game/turntable_icon_xz"), width: 17, height: 17,),
-          SizedBox(width: 5,),
-          Text("跳过动画", style: TextStyle(color: Colors.white, fontSize: 14),),
-        ],
+    var image = noPlayAnimation ? "room/game/turntable_icon_xz" : "room/game/turntable_icon_xz2";
+    return GestureDetector(
+      onTap: () {
+        noPlayAnimation = !noPlayAnimation;
+        setState(() { });
+      },
+      behavior: HitTestBehavior.translucent,
+      child: Container(
+        height: 28,
+        width: 128,
+        margin: EdgeInsets.only(top: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: Color(0xffFFD9FB).withAlpha(60),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(IMG.format(image), width: 17, height: 17,),
+            SizedBox(width: 5,),
+            Text("跳过动画", style: TextStyle(color: Colors.white, fontSize: 14),),
+          ],
+        ),
       ),
     );
   }
@@ -641,7 +651,7 @@ class _TurntablePageState extends State<TurntablePage> {
       if(result["11001"] == 1) {
         showDialog(context: Get.context!, builder: (context) {
           return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
-
+            Get.to(() => RechargePage(hasShowUnityView: false,));
           });
         });
         return;
@@ -650,7 +660,7 @@ class _TurntablePageState extends State<TurntablePage> {
       // 奖品列表
       var windList = result != null ? result["items"] as List : [];
       if(windList.isEmpty) {
-        showToast("数据错误");
+        showToast(result["msg"] ?? "数据错误");
         return;
       }
 
@@ -675,6 +685,12 @@ class _TurntablePageState extends State<TurntablePage> {
       currentPrizeList = windList;
       if(Env.isDebug) {
         showToast(targetItem["prize_name"]);
+      }
+
+      // 不播放动画
+      if(noPlayAnimation) {
+        toOpenWindowDialog();
+        return;
       }
 
       // 是否是匀速运行
