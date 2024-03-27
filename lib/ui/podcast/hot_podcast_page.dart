@@ -128,7 +128,6 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
               if(Env.isDebug) {
                 // DressUpDrawMainDialog.show();
                 // Get.to(() => TurntablePage());
-                TurntablePage.showDialog();
 
                 // Get.to(()=> InviteNewMembersActivityPage());
                 // Get.insertOverlay(BlindGiftMarqueeView());

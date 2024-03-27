@@ -99,6 +99,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   /// 记录是否己经加入房间
   bool _hasJoinRoom = false;
 
+  // 抽奖活动入口
+  RxList entry = RxList();
+
   void completeProgress() {
     micPanelRx.value = true;
     chatMsgViewIsShowRx.value = true;
@@ -258,6 +261,11 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // 服务端数据返回
     isRequestBack = true;
 
+    // 获取抽奖列表
+    Api.Activity.getLotteries().then((items) {
+      entry.value = items["items"];
+    });
+
     /// 请求房间系统公告消息数组
     isNotClose();
     Api.Common.systemQuery().then((data) {
@@ -314,6 +322,11 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     // 服务端数据返回
     isRequestBack = true;
+
+    // 获取抽奖列表
+    Api.Activity.getLotteries().then((items) {
+      entry.value = items["items"];
+    });
 
     /// 请求房间系统公告消息数组
     isNotClose();

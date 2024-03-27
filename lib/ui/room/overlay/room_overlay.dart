@@ -19,6 +19,7 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/my/feedback_page.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
+import 'package:app/ui/room/game/turntable/turntable_page.dart';
 import 'package:app/ui/room/overlay/mic_panel_switcher.dart';
 import 'package:app/ui/room/overlay/notice_overlay.dart';
 import 'package:app/ui/room/overlay/room_info_dialog.dart';
@@ -93,6 +94,32 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                   ),
                 ),
               ),
+
+            // 抽奖入口
+            if(controller.entry.isNotEmpty)
+              Positioned(
+                top: 550,
+                right: 10,
+                height: 50 * 4 + 3 * 10,
+                width: 50,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        TurntablePage.showDialog(controller.entry.toList()[index]);
+                      },
+                      behavior: HitTestBehavior.opaque,
+                      child: Image.network(controller.entry.toList()[index]["image"], width: 50, height: 50,),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 10, width: 10,);
+                  },
+                  itemCount: controller.entry.length
+                ),
+              )
             // Positioned(
             //   top: 0,
             //   left: 0,

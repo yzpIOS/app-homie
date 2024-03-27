@@ -26,16 +26,8 @@ class TurntablePage extends StatefulWidget {
 
   TurntablePage(this.lotteryData, {super.key});
 
-  static Future<void> showDialog() async {
-    // 获取平台游戏
-    var lotteries = await Api.Activity.getLotteries();
-    if(lotteries == null || lotteries["items"] == null) {
-      return;
-    }
-
-    // 过滤出转盘
-    var lotteryData = (lotteries["items"] as List).firstWhere((element) => element["type"] == 1);
-    if(lotteryData == null) {
+  static Future<void> showDialog(Map lotteryData) async {
+    if(lotteryData["type"] != 1) {
       return;
     }
 
