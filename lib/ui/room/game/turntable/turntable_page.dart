@@ -393,7 +393,7 @@ class _TurntablePageState extends State<TurntablePage> {
                   boxShadow: [
                     BoxShadow(
                       color: Color(0xff890085).withAlpha(30),
-                      offset: Offset(1, 1),
+                      offset: Offset(0, 1),
                       spreadRadius: 1,
                     )
                   ]
@@ -439,7 +439,7 @@ class _TurntablePageState extends State<TurntablePage> {
                 boxShadow: [
                   BoxShadow(
                     color: Color(0xff890085).withAlpha(30),
-                    offset: Offset(1, 1),
+                    offset: Offset(0, 1),
                     spreadRadius: 1,
                   )
                 ]

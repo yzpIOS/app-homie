@@ -69,10 +69,11 @@ class _TurntableRuleDialogState extends State<TurntableRuleDialog> {
     return Text(
       "活动规则",
       style: TextStyle(
+        letterSpacing: 2,
         shadows: [
           Shadow(
             color: Color(0xff4e0092),
-            offset: Offset(1, 0),
+            offset: Offset(0, 1),
             blurRadius: 2,
           )
         ],
