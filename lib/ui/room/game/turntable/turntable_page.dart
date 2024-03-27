@@ -338,7 +338,11 @@ class _TurntablePageState extends State<TurntablePage> {
           // 规则 按钮
           GestureDetector(
             onTap: () async {
-              var dialog = TurntableRuleDialog("aa");
+              String? rule = widget.lotteryData["rule"];
+              if(rule == null || rule.isEmpty) {
+                return;
+              }
+              var dialog = TurntableRuleDialog(rule);
               await Get.dialog(
                 dialog,
                 useSafeArea: false,
@@ -384,7 +388,7 @@ class _TurntablePageState extends State<TurntablePage> {
           GestureDetector(
             onTap: () async {
 
-              var dialog = TurntableRecordialog();
+              var dialog = TurntableRecordialog(widget.lotteryData["id"]);
               await Get.dialog(
                 dialog,
                 useSafeArea: false,

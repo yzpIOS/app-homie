@@ -55,7 +55,7 @@ class TurntableItemView extends StatelessWidget {
             right: 0,
             top: 0,
             child: Image.network(
-              data["image"],
+              data["image"] ?? "",
               width: 33,
               height: 33,
             ),
@@ -90,7 +90,7 @@ class TurntableItemView extends StatelessWidget {
 
   Widget createGiftName() {
     return Text(
-      data["prize_name"],
+      data["prize_name"] ?? "",
       style: TextStyle(
         color: Colors.white,
         fontSize: 10,

@@ -90,4 +90,11 @@ class ApiActivity extends ApiBase {
   Future getStartSpin(dynamic id, int count) async {
     return _doPost("lottery/use", data: {"id": id, "count": count});
   }
+
+  ///
+  /// 获取记录
+  ///
+  Future getLotteryRecord(dynamic id) async {
+    return _doPost("lottery/user/winning", data: {"id": id});
+  }
 }

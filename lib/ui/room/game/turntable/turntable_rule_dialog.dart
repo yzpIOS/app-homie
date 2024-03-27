@@ -17,21 +17,36 @@ class _TurntableRuleDialogState extends State<TurntableRuleDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
-        children: [
-          Container(
-            width: 312,
-            height: 449,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
-                )
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              width: 312,
+              height: 449,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
+                  )
+              ),
+              child: bodyView(),
             ),
-            child: bodyView(),
-          ),
 
-        ],
+            SizedBox(height: 12,),
+            GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              behavior: HitTestBehavior.translucent,
+              child: Image.asset(IMG.format("room/game/turntable_rule_close"), width: 33, height: 33,),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 
 import 'package:app/common/theme.dart';
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/game/turntable/turntable_item_view.dart';
 import 'package:app/widgets.dart';
@@ -10,7 +11,9 @@ import 'package:flutter/material.dart';
 
 class TurntableRecordialog extends StatefulWidget {
 
-  TurntableRecordialog({super.key});
+  dynamic id;
+
+  TurntableRecordialog(this.id, {super.key});
 
   @override
   State<StatefulWidget> createState() => _TurntableRecordDialogState();
@@ -21,21 +24,27 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Column(
-        children: [
-          Container(
-            width: 312,
-            height: 449,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
-                )
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 312,
+              height: 449,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(IMG.format("room/game/turntable_pic_dialog"))
+                  )
+              ),
+              child: bodyView(),
             ),
-            child: bodyView(),
-          ),
 
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -47,10 +56,11 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
         createTitle(),
         createTitleEffect(),
 
-        SizedBox(height: 12,),
-        // _SimpleRecord(),
+        Expanded(
+          child: _SimpleRecord(widget.id),
+        ),
 
-        TurntableItemView({}),
+        // TurntableItemView({}),
         SizedBox(height: 12,),
       ],
     );
@@ -58,7 +68,7 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
 
   Widget createTitle() {
     return Text(
-      "活动规则",
+      "中奖记录",
       style: TextStyle(
           shadows: [
             Shadow(
@@ -80,28 +90,32 @@ class _TurntableRecordDialogState extends State<TurntableRecordialog> {
 
 class _SimpleRecord extends SimplePageView<Map> {
 
+  dynamic id;
+
+  _SimpleRecord(this.id);
+
   @override
   BaseConfig get config {
     return GridConfig(
-      padding: Pad(horizontal: 20, top: 8, bottom: AppSize.safeBottom),
+      padding: Pad(horizontal: 20, top: 0, bottom: AppSize.safeBottom),
       gridDelegate: const XGridDelegate(
         crossAxisCount: 4,
-        mainAxisSpacing: 26,
-        crossAxisSpacing: 38,
-        fixedHeight: 20 + 16,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        fixedHeight: 0,
       ),
     );
   }
 
   @override
   Future fetchPage(PageNum page) {
-    return Future.value([{}, {}]);
+    return Api.Activity.getLotteryRecord(id);
   }
 
   @override
   Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
     // TODO: implement itemBuilder
-    return TurntableItemView({});
+    return TurntableItemView(item);
   }
 
 }
