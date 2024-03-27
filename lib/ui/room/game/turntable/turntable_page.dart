@@ -649,6 +649,8 @@ class _TurntablePageState extends State<TurntablePage> {
         return;
       };
 
+      await WalletCtrl.ins.doRefresh();
+
       // 奖品列表
       var windList = result != null ? result["items"] as List : [];
       if(windList.isEmpty) {
