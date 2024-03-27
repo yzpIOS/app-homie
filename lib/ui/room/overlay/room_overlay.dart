@@ -111,7 +111,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                         TurntablePage.showDialog(controller.entry.toList()[index]);
                       },
                       behavior: HitTestBehavior.opaque,
-                      child: Image.network(controller.entry.toList()[index]["image"], width: 50, height: 50,),
+                      child: Image.network(controller.entry.toList()[index]["image"], width: 60, height: 60,),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
