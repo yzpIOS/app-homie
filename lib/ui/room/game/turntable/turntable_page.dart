@@ -68,6 +68,7 @@ class _TurntablePageState extends State<TurntablePage> {
   // 奖品列表
   List prizeItemList = [];
   dynamic modeId;
+  int lotteryPrice = 0;
 
 
   bool noPlayAnimation = false;
@@ -111,6 +112,7 @@ class _TurntablePageState extends State<TurntablePage> {
 
     var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
     modeId = itemList[curSelectedIndex]["id"];
+    lotteryPrice = itemList[curSelectedIndex]["lottery_price"];
 
     requestLottery(showLoading: false);
   }
@@ -239,6 +241,7 @@ class _TurntablePageState extends State<TurntablePage> {
 
         var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
         modeId = itemList[curSelectedIndex]["id"];
+        lotteryPrice = itemList[curSelectedIndex]["lottery_price"];
 
         requestLottery();
       },
@@ -530,6 +533,7 @@ class _TurntablePageState extends State<TurntablePage> {
   /// 底部按钮组
   ///
   Widget _createBottomButton() {
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -537,19 +541,19 @@ class _TurntablePageState extends State<TurntablePage> {
       children: [
         _createSingleBottomButton(
           "单购",
-          "10紫钻",
+          "${lotteryPrice}紫钻",
           Color(0xff193883),
           1
         ),
         _createSingleBottomButton(
           "十连抽",
-          "100紫钻",
+          "${lotteryPrice * 10}紫钻",
           Color(0xffAB189A),
           10
         ),
         _createSingleBottomButton(
           "百连抽",
-          "1000紫钻",
+          "${lotteryPrice * 100}紫钻",
           Color(0xffCB5301),
           100
         ),
