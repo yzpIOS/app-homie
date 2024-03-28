@@ -523,7 +523,6 @@ class RoomCtrl extends SceneCtrl {
   @override
   void onRender(S_SyncRoomInfo? data) {
     followRx.value = roomHttpInfo?['follow_status'] ?? false;
-    userCountRx.value = data?.onlineList.length ?? 0;
 
     isAnchor = data?.isAnchor == 1;
 
@@ -701,8 +700,6 @@ class PersonRoomCtrl extends RoomCtrl {
   @override
   void onRender(S_SyncRoomInfo? data) {
     followRx.value = roomHttpInfo?['follow_status'] ?? false;
-    userCountRx.value = data?.onlineList.length ?? 0;
-
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
