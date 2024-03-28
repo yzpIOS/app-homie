@@ -27,7 +27,7 @@ abstract class Env {
   static const version = 10191;
 
   // 房间是否开启unity
-  static const  bool roomUnity3DOpen = false;
+  static const  bool roomUnity3DOpen = true;
 
 
   // vivo, oppo等

@@ -70,6 +70,22 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           ],
           suffixIcon: SmsVerifyView(number: inputs['手机号'.en()]!, tokenRx: tokenRx, type: VerifyCodeEnum.REGISTER_OR_LOGIN),
         ),
+        SizedBox(height: 8,),
+        Align(
+          alignment: Alignment.topRight,
+          child: InkWell(
+            child: Text.rich(
+              TextSpan(
+                style: const TextStyle(fontSize: 15, color: AppPalette.c6),
+                children: [
+                  TextSpan(text: '密码登录'.en(),),
+                  WidgetSpan(child: Image.asset(IMG.format('login/small_arrow'), color: AppPalette.c9, scale: 3), alignment: PlaceholderAlignment.middle),
+                ],
+              ),
+            ),
+            onTap: () => Get.to(() => const LoginPwdPage()),
+          ),
+        ),
         Spacing.h76,
         XText(
           '未注册的手机号验证后将自动登录'.en(),
@@ -86,21 +102,6 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
           onTap: doLogin,
         ),
         Spacing.h12,
-        Align(
-          alignment: Alignment.topRight,
-          child: InkWell(
-            child: Text.rich(
-              TextSpan(
-                style: const TextStyle(fontSize: 12, color: AppPalette.c9),
-                children: [
-                  TextSpan(text: '密码登录'.en(),),
-                  WidgetSpan(child: Image.asset(IMG.format('login/small_arrow'), color: AppPalette.c9, scale: 3), alignment: PlaceholderAlignment.middle),
-                ],
-              ),
-            ),
-            onTap: () => Get.to(() => const LoginPwdPage()),
-          ),
-        ),
       ],
     );
 
