@@ -69,7 +69,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       child: GridView.builder(
         shrinkWrap: true,
         itemCount: items.length,
-        gridDelegate: const XGridDelegate(crossAxisCount: 4),
+        gridDelegate: const XGridDelegate(crossAxisCount: 4, childAspectRatio: 1),
         itemBuilder: (_, i) => itemBuilder(items[i]),
       ),
     );
@@ -78,13 +78,16 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
   Widget itemBuilder(String item) {
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
+        Expanded(child: SizedBox()),
         Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
         Spacing.h2,
         XText(
           item,
           style: const TextStyle(fontSize: 12, color: Colors.black),
         ),
+        Expanded(child: SizedBox()),
       ],
     );
 
