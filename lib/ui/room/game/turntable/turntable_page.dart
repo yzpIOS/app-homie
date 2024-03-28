@@ -666,12 +666,8 @@ class _TurntablePageState extends State<TurntablePage> {
 
     // 5秒后请求弹窗
     simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), callback: (result) async {
-      if(Env.isDebug) {
-        await Future.delayed(Duration(seconds: DateTime.now().millisecondsSinceEpoch % 5 + 2));
-      }
-
       // 余额不足，弹窗去充值
-      if(result["11001"] == 1) {
+      if(result["code"] == 11001) {
         showDialog(context: Get.context!, builder: (context) {
           return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
             Get.to(() => RechargePage(hasShowUnityView: false,));
@@ -726,7 +722,7 @@ class _TurntablePageState extends State<TurntablePage> {
         showToast(targetItem["prize_name"]);
       }
 
-    }, showProgress: noPlayAnimation && selectedIndex >= 100);
+    }, showProgress: noPlayAnimation);
 
   }
 
