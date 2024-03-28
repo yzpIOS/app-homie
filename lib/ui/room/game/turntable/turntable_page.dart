@@ -726,7 +726,7 @@ class _TurntablePageState extends State<TurntablePage> {
         showToast(targetItem["prize_name"]);
       }
 
-    });
+    }, showProgress: noPlayAnimation && selectedIndex >= 100);
 
   }
 
