@@ -104,7 +104,9 @@ Future<void> simpleSub(f, {ValueChanged? callback1, VoidCallback? callback, Stri
   );
 }
 
-Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueChanged<T>? callback, bool showProgress = false}) async {
+typedef CodeCallBack = void Function(int code, dynamic e);
+
+Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueChanged<T>? callback, bool showProgress = false, CodeCallBack? codeCallBack = null}) async {
   try {
     if(showProgress) {
       WaitingCtrl.obj.show();
@@ -130,6 +132,8 @@ Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueC
         call(e);
       }
     }
+
+    codeCallBack?.call(e.code, e);
   } on TimeoutException {
     showToast('操作超时');
   } on CanceledException {
@@ -138,6 +142,7 @@ Future<void> simpleTry<T>(FutureOr<T> Function() body, {WhenErr? whenErr, ValueC
     showToast(e.msg);
   } on NonToastException catch (e) {
   } catch (e, s) {
+    codeCallBack?.call(-1, e);
     errLog(e, s, type: LogType.SIMPLE_TRY);
 
     SentryHelp.sendErr(e, s: s);

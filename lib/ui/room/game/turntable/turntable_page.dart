@@ -306,8 +306,10 @@ class _TurntablePageState extends State<TurntablePage> {
 
             // 充值按钮
             GestureDetector(
-              onTap: () {
-                Get.to(() => RechargePage(hasShowUnityView: false,));
+              onTap: () async {
+                await Get.to(() => RechargePage(hasShowUnityView: false,));
+                // 刷新
+                await WalletCtrl.ins.doRefresh();
               },
               behavior: HitTestBehavior.translucent,
               child: Container(
@@ -648,9 +650,7 @@ class _TurntablePageState extends State<TurntablePage> {
   /// 开始转动
   ///
   void startSpin(int selectedIndex) async {
-    currentPrizeList = [];
-    _timer?.cancel();
-    _timer = null;
+    resetTurnable();
 
     // 不播放动画
     if(!noPlayAnimation) {
@@ -666,22 +666,13 @@ class _TurntablePageState extends State<TurntablePage> {
 
     // 5秒后请求弹窗
     simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), callback: (result) async {
-      // 余额不足，弹窗去充值
-      if(result["code"] == 11001) {
-        showDialog(context: Get.context!, builder: (context) {
-          return CommonDialog(title: "余额不足？", confirmLabel: "去充值", confirm:  () {
-            Get.to(() => RechargePage(hasShowUnityView: false,));
-          });
-        });
-        return;
-      };
 
       await WalletCtrl.ins.doRefresh();
 
       // 奖品列表
       var windList = result != null ? result["items"] as List : [];
       if(windList.isEmpty) {
-        _timer?.cancel();
+        resetTurnable();
         showToast(result["msg"] ?? "数据错误");
         return;
       }
@@ -701,6 +692,7 @@ class _TurntablePageState extends State<TurntablePage> {
       // 不播放动画
       if(noPlayAnimation) {
         toOpenWindowDialog();
+        resetTurnable();
         return;
       }
 
@@ -709,7 +701,8 @@ class _TurntablePageState extends State<TurntablePage> {
       var targetItem = prizeItemList.firstWhereOrNull((element) => element["prize_id"] == maxPrizeValue?["prize_id"]);
       _resultIndex = prizeItemList.indexOf(targetItem);
       if(_resultIndex < 0) {
-        _timer?.cancel();
+        resetTurnable();
+
         showToast(result["msg"] ?? "数据错误2");
         return;
       }
@@ -722,8 +715,34 @@ class _TurntablePageState extends State<TurntablePage> {
         showToast(targetItem["prize_name"]);
       }
 
-    }, showProgress: noPlayAnimation);
+    },
+    codeCallBack: (code, e) {
+      resetTurnable();
+      // 余额不足，弹窗去充值
+      if(code == 11001) {
+        showDialog(context: Get.context!, builder: (context) {
+          return CommonDialog(title: "余额不足", confirmLabel: "去充值", confirm:  () async {
+            await Get.to(() => RechargePage(hasShowUnityView: false,));
 
+            // 刷新
+            await WalletCtrl.ins.doRefresh();
+          });
+        });
+        return;
+      };
+      showToast("操作失败");
+    },
+    showProgress: noPlayAnimation);
+
+  }
+
+  void resetTurnable() {
+    _timer?.cancel();
+    _timer = null;
+    _resultIndex = -1;
+    _speedNotChange = false;
+
+    _counter.value = 0;
   }
 
   @override
