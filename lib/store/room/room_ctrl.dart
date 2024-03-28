@@ -345,6 +345,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       doOnBefore: () => {
         'scene': {
           'scene_id': info['scene_id'],
+          'bg_2d_image': info["bg_2d_image"],
         },
       },
       doOnAfter: () async {
