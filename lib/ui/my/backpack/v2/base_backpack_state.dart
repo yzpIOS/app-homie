@@ -175,5 +175,5 @@ abstract class BaseBackPackState<T extends StatefulWidget> extends State<T> with
   Widget $ActionView(Map<int, DateItem> data);
 }
 
-typedef GoodsApi = Future Function({List categories});
+typedef GoodsApi = Future Function(String paramName,{List categories});
 

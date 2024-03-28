@@ -128,10 +128,13 @@ class ApiDressUp extends ApiBase {
     return _doPost('backpack/use', data: data).then((val) => val['items']);
   }
 
-  Future backpackList2({List? categories = null}) {
+  Future backpackList2(String paramName, {List? categories = null}) {
+    //
+    // if(categories != null)
+    //   "category_id_list": categories,
     return _doPost('backpack/query', data: {
       if(categories != null)
-        "group_id_list": categories,
+        "$paramName": categories,
     }).then((val) => val['items']);
   }
 

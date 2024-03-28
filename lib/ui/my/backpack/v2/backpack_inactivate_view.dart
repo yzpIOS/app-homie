@@ -199,7 +199,7 @@ class InactiveBackPackDataView2 extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: FutureBuilder(
-          future: api(categories: category["category"]),
+          future: api(category["name"] == "衣柜" ? "group_id_list" : "category_id_list", categories: category["category"]),
           builder: (contenxt, snap) {
             if(snap.data == null || (snap.data?.length ?? 0) <= 0) {
               return const TipsView();
