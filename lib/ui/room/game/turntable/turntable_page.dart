@@ -231,7 +231,7 @@ class _TurntablePageState extends State<TurntablePage> {
     return GestureDetector(
       onTap: () {
         // 动画没有播放完
-        if(currentPrizeList.isNotEmpty) {
+        if(currentPrizeList.isNotEmpty || _timer != null) {
           return;
         }
         debugPrint("GestureDetector .......");
@@ -501,7 +501,6 @@ class _TurntablePageState extends State<TurntablePage> {
 
               // 己经中奖. 停止定时器，不前进
               if(selectedIndex == _resultIndex && _speedNotChange) {
-                _timer?.cancel();
                 toOpenWindowDialog();
               }
               debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
@@ -651,6 +650,7 @@ class _TurntablePageState extends State<TurntablePage> {
   void startSpin(int selectedIndex) async {
     currentPrizeList = [];
     _timer?.cancel();
+    _timer = null;
 
     // 不播放动画
     if(!noPlayAnimation) {
@@ -704,7 +704,6 @@ class _TurntablePageState extends State<TurntablePage> {
 
       // 不播放动画
       if(noPlayAnimation) {
-        _timer?.cancel();
         toOpenWindowDialog();
         return;
       }
@@ -737,10 +736,14 @@ class _TurntablePageState extends State<TurntablePage> {
     _counter.dispose();
     locations.clear();
     _timer?.cancel();
+    _timer = null;
   }
 
 
   void toOpenWindowDialog() {
+    _timer?.cancel();
+    _timer = null;
+
     if(currentPrizeList.isEmpty) {
       return;
     }
