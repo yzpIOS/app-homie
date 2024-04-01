@@ -25,6 +25,9 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
 
   late final wardrobeCtrl = Get.find<MyWardrobeCtrl>();
 
+  // 数据列表
+  var dataNotifier = RxList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +38,7 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
           right: 12,
           top: 17
         ),
-        child: _BackpackView$Gift(selectRx),
+        child: _BackpackView$Gift(selectRx, dataNotifier),
       ),
       bottomNavigationBar: $ActionView(),
     );
@@ -47,99 +50,171 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
 
 
     return Obx(() {
-      final agg = <int, num>{};
-
-      if(selectRx.isEmpty) {
-        return SizedBox();
+      // 选中的商品
+      var selectData = selectRx.value;
+      if(selectData.isNotEmpty) {
+        return createSelectedWidget(selectData);
       }
 
-      for (final item in selectRx.values) {
-        final k = item['currency'];
-        final v = item['price'];
-
-        final _v = agg[k];
-
-        if (_v is num) {
-          agg[k] = _v + v;
-        } else {
-          agg[k] = v;
-        }
+      // 所有商品列表
+      var data = dataNotifier.value;
+      if(data.isNotEmpty) {
+        return _createNotSelectValues(data);
       }
 
-      return Container(
-        color: Color(0xFFEBEBFF),
-        height: 88,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // 价格
-            SizedBox(width: 35,),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  XText(
-                    '共${selectRx.length}件商品',
-                    style: const TextStyle(fontWeight: fw$Medium),
-                  ),
-                  Spacing.h4,
-                  XRichText(
-                    TextSpan(
-                      children: [
-                        const TextSpan(text: '总价值'),
-                        ...agg.entries.expand((it) {
-                          final type = MoneyType.fromVal(it.key);
-                          return [
-                            TextSpan(text: '\t${it.value}'),
-                            if (type != null)
-                              WidgetSpan(
-                                child: MoneyIcon(type: type, size: 24),
-                                alignment: PlaceholderAlignment.middle,
-                              ),
-                          ];
-                        })
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                wardrobeCtrl.doGive(
-                  ids: selectRx.keys.toList(),
-                  callback: selectRx.clear,
-                );
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                width: 66,
-                height: 29,
-                decoration: BoxDecoration(
-                  color: Color(0XFFBD7BE5),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                margin: EdgeInsets.only(right: 13),
-                alignment: Alignment.center,
-                child: Text(
-                  "赠送",
-                  style: TextStyle(
-                      fontSize: 13,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+      // 所有数据为空
+      return SizedBox();
     });
   }
 
+  ///
+  /// 选中商品时显示商品的价格
+  ///
+  Widget createSelectedWidget(Map<int, Map> selectRx) {
+    final agg = <int, num>{};
+
+    for (final item in selectRx.values) {
+      final k = item['currency'];
+      final v = item['price'];
+
+      final _v = agg[k];
+
+      if (_v is num) {
+        agg[k] = _v + v;
+      } else {
+        agg[k] = v;
+      }
+    }
+
+    return Container(
+      color: Color(0xFFEBEBFF),
+      height: 88,
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 价格
+          SizedBox(width: 35,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                XText(
+                  '共${selectRx.length}件商品',
+                  style: const TextStyle(fontWeight: fw$Medium),
+                ),
+                Spacing.h4,
+                XRichText(
+                  TextSpan(
+                    children: [
+                      const TextSpan(text: '总价值'),
+                      ...agg.entries.expand((it) {
+                        final type = MoneyType.fromVal(it.key);
+                        return [
+                          TextSpan(text: '\t${it.value}'),
+                          if (type != null)
+                            WidgetSpan(
+                              child: MoneyIcon(type: type, size: 24),
+                              alignment: PlaceholderAlignment.middle,
+                            ),
+                        ];
+                      })
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          GestureDetector(
+            onTap: () {
+              wardrobeCtrl.doGive(
+                ids: selectRx.keys.toList(),
+                callback: selectRx.clear,
+              );
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              width: 66,
+              height: 29,
+              decoration: BoxDecoration(
+                color: Color(0XFFBD7BE5),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              margin: EdgeInsets.only(right: 13),
+              alignment: Alignment.center,
+              child: Text(
+                "赠送",
+                style: TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _createNotSelectValues(List data) {
+    int total = 0;
+    int totalValue = 0;
+    data.forEach((element) {
+      var curCount = element["count"] as int;
+
+      total += curCount;
+      totalValue += (curCount * (element["count"] as int));
+    });
+    return Container(
+      height: 88,
+      margin: EdgeInsets.only(left: 10, right: 10),
+      alignment: Alignment.centerLeft,
+      child: Text.rich(
+          TextSpan(
+              children: [
+                TextSpan(
+                    text: "共",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                TextSpan(
+                    text: "$total",
+                    style: TextStyle(
+                        color: Color(0xffBD7BE5),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                TextSpan(
+                    text: "件商品，总价值",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                TextSpan(
+                    text: "$totalValue",
+                    style: TextStyle(
+                        color: Color(0xffBD7BE5),
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+                WidgetSpan(
+                    child: MoneyIcon(size: 15, type: MoneyType.diamond,)
+                )
+              ]
+          )
+      ),
+    );
+  }
 }
 
 
@@ -149,7 +224,9 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
 
   late RxMap<int, Map> selectRx;
 
-  _BackpackView$Gift(this.selectRx);
+  late RxList items;
+
+  _BackpackView$Gift(this.selectRx, this.items);
 
   @override
   BaseConfig? get config {
@@ -164,7 +241,13 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
   }
 
   @override
-  Future fetch() => Api.Gift.backpack();
+  Future fetch() async {
+    var data = await Api.Gift.backpack();
+    if(data["items"] != null) {
+      items.value = data["items"];
+    }
+    return data;
+  }
 
   @override
   Widget itemBuilder(BuildContext context, Map data, int index) {
