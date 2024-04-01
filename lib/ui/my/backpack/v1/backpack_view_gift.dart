@@ -173,45 +173,62 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
       margin: EdgeInsets.only(left: 10, right: 10),
       alignment: Alignment.centerLeft,
       child: Text.rich(
-          TextSpan(
-              children: [
-                TextSpan(
-                    text: "共",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-                TextSpan(
-                    text: "$total",
-                    style: TextStyle(
-                        color: Color(0xffBD7BE5),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-                TextSpan(
-                    text: "件商品，总价值",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-                TextSpan(
-                    text: "$totalValue",
-                    style: TextStyle(
-                        color: Color(0xffBD7BE5),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold
-                    )
-                ),
-                WidgetSpan(
-                    child: MoneyIcon(size: 15, type: MoneyType.diamond,)
-                )
-              ]
-          )
+        TextSpan(
+          children: [
+            const TextSpan(
+              text: "共",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+            TextSpan(
+              text: "$total",
+              style: const TextStyle(
+                color: Color(0xffBD7BE5),
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+
+            const TextSpan(
+              text: "件商品",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+            const TextSpan(
+              text: " | ",
+              style: TextStyle(
+                color: Color(0xFfBDBBCB),
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+            const TextSpan(
+              text: "总价值",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+            TextSpan(
+              text: "$totalValue",
+              style: const TextStyle(
+                color: Color(0xffBD7BE5),
+                fontSize: 14,
+                fontWeight: FontWeight.bold
+              )
+            ),
+            const WidgetSpan(
+              child: MoneyIcon(size: 15, type: MoneyType.diamond,)
+            )
+          ]
+        )
       ),
     );
   }
