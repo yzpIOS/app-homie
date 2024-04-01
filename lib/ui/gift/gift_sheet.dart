@@ -112,16 +112,19 @@ class GiftSheet extends StatelessWidget {
         Obx(
           () {
             ////  礼物类型货币枚举值，目前：0—2D静态礼物, 1—2D动态礼物, 2—3D礼物，4-抽奖烟花, 5-buff礼物, 6-盲盒礼物
-            return (logic.selectRx() != null && logic.selectRx()?['type'] == 6)
-                ? GestureDetector(
-                    child: SvgView(SVG.$('room/manhe_pic_fc'), width: 145, height: 46.9,),
-                    onTap: () {
-                      int giftId = logic.selectRx()?["id"];
-                      String image = logic.selectRx()?["blind_box_probability_image"] ?? "";
-                      GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId, blinkRateUrl: image);
-                    },
-                  )
-                : const Spacing(height: 46.9, flex: null);
+            if(logic.selectRx() != null && (logic.selectRx()?['type'] == 6 || logic.selectRx()?['type'] ==  7)) {
+              var values = logic.selectRx()?['type'] == 6 ? "room_blind_entry" : "room_magic_planet";
+              return GestureDetector(
+                child: Image.asset(IMG.format('room/$values'), width: 145, height: 46.9,),
+                onTap: () {
+                  int giftId = logic.selectRx()?["id"];
+                  String image = logic.selectRx()?["blind_box_probability_image"] ?? "";
+                  GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId, blinkRateUrl: image);
+                },
+              );
+            }
+
+            return const Spacing(height: 46.9, flex: null);
           }
         ),
         const Spacing(height: 6, flex: null),
