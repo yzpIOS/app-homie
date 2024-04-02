@@ -2432,3 +2432,42 @@ final $typed_data.Uint8List s_QueryDesignationDescriptor = $convert.base64Decode
     'ChJTX1F1ZXJ5RGVzaWduYXRpb24SOwoFaXRlbXMYASADKAsyJS5jb20uc2F2dnkucHJvdG8uUX'
     'VlcnlEZXNpZ25hdGlvbkl0ZW1SBWl0ZW1z');
 
+@$core.Deprecated('Use s_BlindBoxItemDescriptor instead')
+const S_BlindBoxItem$json = {
+  '1': 'S_BlindBoxItem',
+  '2': [
+    {'1': 'gift_id', '3': 1, '4': 1, '5': 3, '10': 'giftId'},
+    {'1': 'cover', '3': 2, '4': 1, '5': 9, '10': 'cover'},
+    {'1': 'price', '3': 3, '4': 1, '5': 3, '10': 'price'},
+    {'1': 'currency', '3': 4, '4': 1, '5': 5, '10': 'currency'},
+    {'1': 'type', '3': 5, '4': 1, '5': 5, '10': 'type'},
+    {'1': 'name', '3': 6, '4': 1, '5': 9, '10': 'name'},
+    {'1': 'count', '3': 7, '4': 1, '5': 5, '10': 'count'},
+  ],
+};
+
+/// Descriptor for `S_BlindBoxItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_BlindBoxItemDescriptor = $convert.base64Decode(
+    'Cg5TX0JsaW5kQm94SXRlbRIXCgdnaWZ0X2lkGAEgASgDUgZnaWZ0SWQSFAoFY292ZXIYAiABKA'
+    'lSBWNvdmVyEhQKBXByaWNlGAMgASgDUgVwcmljZRIaCghjdXJyZW5jeRgEIAEoBVIIY3VycmVu'
+    'Y3kSEgoEdHlwZRgFIAEoBVIEdHlwZRISCgRuYW1lGAYgASgJUgRuYW1lEhQKBWNvdW50GAcgAS'
+    'gFUgVjb3VudA==');
+
+@$core.Deprecated('Use s_BlindBoxDescriptor instead')
+const S_BlindBox$json = {
+  '1': 'S_BlindBox',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.S_BlindBoxItem', '10': 'items'},
+    {'1': 'blind_box_name', '3': 2, '4': 1, '5': 9, '10': 'blindBoxName'},
+    {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
+    {'1': 'blind_box_count', '3': 5, '4': 1, '5': 5, '10': 'blindBoxCount'},
+  ],
+};
+
+/// Descriptor for `S_BlindBox`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_BlindBoxDescriptor = $convert.base64Decode(
+    'CgpTX0JsaW5kQm94EjUKBWl0ZW1zGAEgAygLMh8uY29tLnNhdnZ5LnByb3RvLlNfQmxpbmRCb3'
+    'hJdGVtUgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
+    'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
+    'ABKAVSDWJsaW5kQm94Q291bnQ=');
+

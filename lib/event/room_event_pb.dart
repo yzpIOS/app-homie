@@ -56,6 +56,11 @@ class MicUpEvent extends RoomEvent<S_UpMikeBroadcast> {
   late final int hotCount = 0;
 }
 
+
+// 盲盒事件
+class BlindBoxEvent extends RoomEvent<S_BlindBox> {
+}
+
 // 下麦
 class MicDownEvent extends RoomEvent<S_DownMikeBroadcast> {
   UID? get uid => data?.uid;

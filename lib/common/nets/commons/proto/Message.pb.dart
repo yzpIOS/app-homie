@@ -11789,6 +11789,231 @@ class S_QueryDesignation extends $pb.GeneratedMessage {
   $core.List<QueryDesignationItem> get items => $_getList(0);
 }
 
+class S_BlindBoxItem extends $pb.GeneratedMessage {
+  factory S_BlindBoxItem({
+    $fixnum.Int64? giftId,
+    $core.String? cover,
+    $fixnum.Int64? price,
+    $core.int? currency,
+    $core.int? type,
+    $core.String? name,
+    $core.int? count,
+  }) {
+    final $result = create();
+    if (giftId != null) {
+      $result.giftId = giftId;
+    }
+    if (cover != null) {
+      $result.cover = cover;
+    }
+    if (price != null) {
+      $result.price = price;
+    }
+    if (currency != null) {
+      $result.currency = currency;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    if (name != null) {
+      $result.name = name;
+    }
+    if (count != null) {
+      $result.count = count;
+    }
+    return $result;
+  }
+  S_BlindBoxItem._() : super();
+  factory S_BlindBoxItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_BlindBoxItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_BlindBoxItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'giftId')
+    ..aOS(2, _omitFieldNames ? '' : 'cover')
+    ..aInt64(3, _omitFieldNames ? '' : 'price')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'currency', $pb.PbFieldType.O3)
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
+    ..aOS(6, _omitFieldNames ? '' : 'name')
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'count', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_BlindBoxItem clone() => S_BlindBoxItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_BlindBoxItem copyWith(void Function(S_BlindBoxItem) updates) => super.copyWith((message) => updates(message as S_BlindBoxItem)) as S_BlindBoxItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_BlindBoxItem create() => S_BlindBoxItem._();
+  S_BlindBoxItem createEmptyInstance() => create();
+  static $pb.PbList<S_BlindBoxItem> createRepeated() => $pb.PbList<S_BlindBoxItem>();
+  @$core.pragma('dart2js:noInline')
+  static S_BlindBoxItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_BlindBoxItem>(create);
+  static S_BlindBoxItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get giftId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set giftId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasGiftId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearGiftId() => clearField(1);
+
+  /// 礼物封面url
+  @$pb.TagNumber(2)
+  $core.String get cover => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set cover($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasCover() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearCover() => clearField(2);
+
+  /// 礼物价格
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get price => $_getI64(2);
+  @$pb.TagNumber(3)
+  set price($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPrice() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPrice() => clearField(3);
+
+  /// 货币枚举值，目前：0—砖石, 1—金币
+  @$pb.TagNumber(4)
+  $core.int get currency => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set currency($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasCurrency() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearCurrency() => clearField(4);
+
+  /// 礼物类型货币枚举值，目前：0—2D静态礼物，1—2D动态礼物, 2—3D礼物
+  @$pb.TagNumber(5)
+  $core.int get type => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set type($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasType() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearType() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get name => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set name($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearName() => clearField(6);
+
+  /// 礼物数量
+  @$pb.TagNumber(7)
+  $core.int get count => $_getIZ(6);
+  @$pb.TagNumber(7)
+  set count($core.int v) { $_setSignedInt32(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasCount() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearCount() => clearField(7);
+}
+
+class S_BlindBox extends $pb.GeneratedMessage {
+  factory S_BlindBox({
+    $core.Iterable<S_BlindBoxItem>? items,
+    $core.String? blindBoxName,
+    $core.String? blindBoxCover,
+    $core.int? blindBoxCount,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    if (blindBoxName != null) {
+      $result.blindBoxName = blindBoxName;
+    }
+    if (blindBoxCover != null) {
+      $result.blindBoxCover = blindBoxCover;
+    }
+    if (blindBoxCount != null) {
+      $result.blindBoxCount = blindBoxCount;
+    }
+    return $result;
+  }
+  S_BlindBox._() : super();
+  factory S_BlindBox.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_BlindBox.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_BlindBox', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<S_BlindBoxItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: S_BlindBoxItem.create)
+    ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
+    ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'blindBoxCount', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_BlindBox clone() => S_BlindBox()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_BlindBox copyWith(void Function(S_BlindBox) updates) => super.copyWith((message) => updates(message as S_BlindBox)) as S_BlindBox;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_BlindBox create() => S_BlindBox._();
+  S_BlindBox createEmptyInstance() => create();
+  static $pb.PbList<S_BlindBox> createRepeated() => $pb.PbList<S_BlindBox>();
+  @$core.pragma('dart2js:noInline')
+  static S_BlindBox getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_BlindBox>(create);
+  static S_BlindBox? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<S_BlindBoxItem> get items => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $core.String get blindBoxName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set blindBoxName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBlindBoxName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBlindBoxName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get blindBoxCover => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set blindBoxCover($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBlindBoxCover() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBlindBoxCover() => clearField(3);
+
+  @$pb.TagNumber(5)
+  $core.int get blindBoxCount => $_getIZ(3);
+  @$pb.TagNumber(5)
+  set blindBoxCount($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasBlindBoxCount() => $_has(3);
+  @$pb.TagNumber(5)
+  void clearBlindBoxCount() => clearField(5);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

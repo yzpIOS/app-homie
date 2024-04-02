@@ -20,6 +20,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_MikeSpeakingBroadcast: MikeSpeakingEvent.new,
     // 个人房开麦结算
     CMD.S_LiveStopSettlementBroadcast: LiveStopSettlementEvent.new,
+    // 盲盒
+    CMD.S_BlindBox: BlindBoxEvent.new,
     // 邀请上麦
     CMD.S_InviteMikeBroadcast: InviteMicUpEvent.new,
     // 上麦

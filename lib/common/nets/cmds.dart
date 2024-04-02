@@ -98,6 +98,8 @@ class CMD {
   static const S_MoreGiftPlay = 3111; // 多个礼物播放广播
   static const S_MoreGiftFloatingScreen = 3112; // 多个礼物飘屏广播
 
+  static const S_BlindBox = 3113; // 盲盒结果
+
 
   static const C_SaveUserCurrentDressUp = 4100; // 保存用户当前装扮
   static const S_SaveUserCurrentDressUp = 4101; // 保存用户当前装扮响应

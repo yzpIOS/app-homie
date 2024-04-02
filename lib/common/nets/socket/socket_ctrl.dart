@@ -15,6 +15,7 @@ import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/announcement_message_dialog.dart';
 import 'package:app/ui/my/real_identity_page.dart';
+import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -241,10 +242,30 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     // 公告广播(公告板)
     onDataCmd(CMD.S_BulletinBroadcast, onBulletinBroadcast);
 
+    // 盲盒
+    onDataCmd(CMD.S_BlindBox, _onBlindHandler);
+
     // 连接状态
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     onDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
+  }
+
+  void _onBlindHandler(int cmd, S_BlindBox? event) {
+    if(event == null || event.items.isEmpty == true) {
+      return;
+    }
+    var listItem = [];
+    event.items.forEach((element) {
+      listItem.add({
+        "price": element.price.toInt(),
+        "prize_image": event.blindBoxCover,
+        "count": element.count,
+        "prize_name": event.blindBoxName,
+        "currency": 0,
+      });
+    });
+    TurntablePrizeDialog.showDialog(listItem);
   }
 
   ///
@@ -366,6 +387,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
     _streamSubscription?.cancel();
     _netStateSubscription?.cancel();
+
+    removeOnDataCmd(CMD.S_BlindBox, _onBlindHandler);
 
     removeOnDataCmd(CMD.S_FloatingScreen, onFloatingScreen);
     removeOnDataCmd(CMD.C_PlazaToRoom, onPlazaToRoom);

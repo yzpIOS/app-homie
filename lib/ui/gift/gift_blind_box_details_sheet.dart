@@ -7,15 +7,16 @@ import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
-/// 盲盒
+/// $title
 class GiftBlindBoxDetailsSheet extends StatelessWidget {
   final int price;
   final int giftId;
   final String blinkRateUrl;
-  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20, required this.giftId, required this.blinkRateUrl});
+  final String title;
+  const GiftBlindBoxDetailsSheet._({super.key, this.price = 20, required this.giftId, required this.blinkRateUrl, this.title = "盲盒"});
 
-  static Future show({required int price, required int giftId, required String blinkRateUrl}) {
-    final sheet = GiftBlindBoxDetailsSheet._(price: price, giftId: giftId, blinkRateUrl: blinkRateUrl,);
+  static Future show({required int price, required int giftId, required String blinkRateUrl, required String title}) {
+    final sheet = GiftBlindBoxDetailsSheet._(price: price, giftId: giftId, blinkRateUrl: blinkRateUrl, title: title,);
 
     return OrientationSheet.show(
       child: sheet,
@@ -30,14 +31,14 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = <String, Widget>{
-      '盲盒规则': DelayView(
+      '$title规则': DelayView(
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
           return $BlindBoxRulesView(blinkRateUrl);
         },
       ),
-      '盲盒记录': DelayView(
+      '$title记录': DelayView(
         fadeIn: false,
         keepAlive: true,
         builder: (_) {
@@ -113,7 +114,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
       padding: Pad(horizontal: 15, vertical: 4, bottom: AppSize.safeBottom),
       child: Column(
         children: [
-          const Text.rich(
+          Text.rich(
             TextSpan(
               style: TextStyle(fontSize: 12, color: Colors.black),
               children: [
@@ -121,11 +122,11 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
                   text: '一、玩法说明\n',
                   style: TextStyle(fontSize: 14, fontWeight: fw$Medium),
                 ),
-                TextSpan(text: '1.平台内惊喜盲盒玩法正在逐步开放中，不同用户玩法有所不同。直播间未展示惊喜盲盒玩法的用户，暂时无法参与。\n'),
-                TextSpan(text: '2.被判定为消费异常账号的用户无法参与惊喜盲盒玩法。\n'),
+                TextSpan(text: '1.平台内惊喜$title玩法正在逐步开放中，不同用户玩法有所不同。直播间未展示惊喜$title玩法的用户，暂时无法参与。\n'),
+                TextSpan(text: '2.被判定为消费异常账号的用户无法参与惊喜$title玩法。\n'),
                 TextSpan(text: '3.用户不得以不正当手段或舞弊行为参与本活动，包括但不限于: 第三方代充；利用系统bug或通过机器人软件、蜘蛛软件、爬虫 软件、刷屏软件等任何程序或技术手段参与本活动。\n'),
                 TextSpan(text: '4.用户不得在活动期间违反法律法规、平台规则或本活动规则；如Homie世界发现或有合理理由认为用户存在前述行为，Homie世界有权单方面采取取消参与资格、取消权益、收回已发放权益、封禁相关账号等措施。\n'),
-                TextSpan(text: '5.平台内其他榜单与数值加分按照盲盒实际开出的礼物价值进行积分计算。\n'),
+                TextSpan(text: '5.平台内其他榜单与数值加分按照$title实际开出的礼物价值进行积分计算。\n'),
                 TextSpan(text: '6.本活动与Apple inc无关\n\n'),
                 TextSpan(
                   text: '二、玩法奖励\n',

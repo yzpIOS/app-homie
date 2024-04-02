@@ -14,7 +14,7 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class GiftSheet extends StatelessWidget {
+class GiftSheet extends StatefulWidget {
   static bool isPopUp = false;
 
   final GiftSendLogic logic;
@@ -23,7 +23,9 @@ class GiftSheet extends StatelessWidget {
 
   GiftSheet._({required this.logic, required this.hasShowUnityView});
 
-  final numRx = RxInt(1);
+  @override
+  State<StatefulWidget> createState() => _GiftSheetState(logic, hasShowUnityView);
+
 
   static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
     if(isPopUp) {
@@ -44,17 +46,67 @@ class GiftSheet extends StatelessWidget {
 
     return OrientationSheet.show(
       child: WillPopScope(
-        child: sheet,
-        onWillPop:() {
-          isPopUp = false;
-          debugPrint("debug ...");
-          return Future.value(true);
-        }
+          child: sheet,
+          onWillPop:() {
+            isPopUp = false;
+            debugPrint("debug ...");
+            return Future.value(true);
+          }
       ),
       decoration: null,
       direction: logic.layout.value1,
       constraints: logic.layout.value2,
     );
+  }
+
+}
+
+class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
+
+  final GiftSendLogic logic;
+
+  final bool hasShowUnityView;
+
+  TabController? tabController;
+
+  // 数据列表
+  var dataNotifier = RxList();
+
+
+  final numRx = RxInt(1);
+
+  // 0礼物，1背包
+  final showIndex = RxInt(0);
+  final chooseBagGoods = RxBool(false);
+
+  MyGiftCtrl? myGiftCtrl;
+
+  _GiftSheetState(this.logic, this.hasShowUnityView);
+
+  @override
+  void initState() {
+    super.initState();
+    // 显示礼物
+    int count = logic.useMyGift != UseMyGift.only ? 1 : 0;
+    // 显示背包
+    count = logic.useMyGift != UseMyGift.disable ? count + 1 : count;
+    if(count >= 2) {
+      tabController = TabController(length: count, vsync: this);
+      tabController?.addListener(() {
+        debugPrint("aaa");
+        showIndex.value = tabController?.index ?? 0;
+        if(showIndex.value == 1) {
+          myGiftCtrl?.doRefresh();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    myGiftCtrl?.dispose();
+    myGiftCtrl = null;
   }
 
   @override
@@ -67,7 +119,12 @@ class GiftSheet extends StatelessWidget {
           builder: (_) {
             return GetX<GiftCtrl>(
               initState: (it) => it.controller!.doRefresh(),
-              builder: (it) => _DataView(data: it.autoGet(), selectRx: logic.selectRx),
+              builder: (it) {
+                return _DataView(data: it.autoGet(), selectRx: logic.selectRx, callBack: (data) {
+                  chooseBagGoods.value = false;
+                  logic.selectRx.value = data;
+                },);
+              },
             );
           },
         ),
@@ -78,7 +135,14 @@ class GiftSheet extends StatelessWidget {
           builder: (_) {
             return GetX<MyGiftCtrl>(
               initState: (it) => it.controller!.doRefresh(),
-              builder: (it) => _DataView(data: it.autoGet(), selectRx: logic.selectRx),
+              builder: (it) {
+                myGiftCtrl = it;
+                dataNotifier.value = it.autoGet;
+                return _DataView(data: it.autoGet(), selectRx: logic.selectRx, callBack: (data) {
+                  chooseBagGoods.value = true;
+                  logic.selectRx.value = data;
+                });
+              },
             );
           },
         ),
@@ -112,14 +176,16 @@ class GiftSheet extends StatelessWidget {
         Obx(
           () {
             ////  礼物类型货币枚举值，目前：0—2D静态礼物, 1—2D动态礼物, 2—3D礼物，4-抽奖烟花, 5-buff礼物, 6-盲盒礼物
-            if(logic.selectRx() != null && (logic.selectRx()?['type'] == 6 || logic.selectRx()?['type'] ==  7)) {
+            if(logic.selectRx() != null && (logic.selectRx()?['type'] == 6 || logic.selectRx()?['type'] ==  8)) {
               var values = logic.selectRx()?['type'] == 6 ? "room_blind_entry" : "room_magic_planet";
+              var title = logic.selectRx()?['type'] == 6 ? "盲盒" : "魔法星球";
+
               return GestureDetector(
                 child: Image.asset(IMG.format('room/$values'), width: 145, height: 46.9,),
                 onTap: () {
                   int giftId = logic.selectRx()?["id"];
                   String image = logic.selectRx()?["blind_box_probability_image"] ?? "";
-                  GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId, blinkRateUrl: image);
+                  GiftBlindBoxDetailsSheet.show(price: logic.selectRx()?['price'], giftId: giftId, blinkRateUrl: image, title: title);
                 },
               );
             }
@@ -149,6 +215,7 @@ class GiftSheet extends StatelessWidget {
       child: Row(
         children: [
           TabBar(
+            controller: tabController,
             tabAlignment: TabAlignment.start,
             isScrollable: true,
             indicator: const BoxDecoration(),
@@ -169,6 +236,7 @@ class GiftSheet extends StatelessWidget {
   Widget $PageView(Iterable<Widget> values) {
     return GiftImgState(
       child: TabBarView(
+        controller: tabController,
         children: values.toList(growable: false),
       ),
     );
@@ -270,13 +338,155 @@ class GiftSheet extends StatelessWidget {
       );
     }
 
+    Widget showBagInfo(List data) {
+      int total = 0;
+      int totalValue = 0;
+      data.forEach((element) {
+        var curCount = element["count"] as int;
+
+        total += curCount;
+        totalValue += (curCount * (element["count"] as int));
+      });
+      return Column(
+        children: [
+          Text.rich(
+              TextSpan(
+                children: [
+                  const TextSpan(
+                      text: "共",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold
+                      )
+                  ),
+                  TextSpan(
+                    text: "$total",
+                    style: const TextStyle(
+                      color: Color(0xffBD7BE5),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                  const TextSpan(
+                    text: "件商品",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold
+                    )
+                  ),
+                ]
+              ),
+          ),
+
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: "总价值$totalValue",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold
+                  )
+                ),
+                const WidgetSpan(
+                  child: MoneyIcon(size: 15, type: MoneyType.diamond,)
+                )
+              ]
+            ),
+          ),
+        ],
+      );
+    }
+
+
+    Widget showNotSelectedGoods(List data) {
+      int total = 0;
+      int totalValue = 0;
+      data.forEach((element) {
+        var curCount = element["count"] as int;
+
+        total += curCount;
+        totalValue += (curCount * (element["count"] as int));
+      });
+      return Column(
+        children: [
+          Text.rich(
+            TextSpan(
+                children: [
+                  const TextSpan(
+                      text: "共",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                  TextSpan(
+                      text: "$total",
+                      style: const TextStyle(
+                          color: Color(0xffBD7BE5),
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                  const TextSpan(
+                      text: "件商品",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                ]
+            ),
+          ),
+
+          Text.rich(
+            TextSpan(
+                children: [
+                  TextSpan(
+                      text: "总价值$totalValue",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold
+                      )
+                  ),
+                  const WidgetSpan(
+                      child: MoneyIcon(size: 15, type: MoneyType.diamond,)
+                  )
+                ]
+            ),
+          ),
+        ],
+      );
+    }
+
     return Box(
       height: 50,
       padding: const Pad(horizontal: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          moneyView(),
+          Obx(() {
+            // 背包没有显示物理时，显示总价格
+            var data = dataNotifier.value;
+            if(showIndex.value == 0 || data.isEmpty == true) {
+              // 显示选中的物品的价值
+              return moneyView();
+            }
+            if(chooseBagGoods.value && logic.selectRx.value?.isNotEmpty == true) {
+              // 选中背包商品
+              return showBagInfo([logic.selectRx.value]);
+            } else {
+              // 没有选中背包商品
+              return showNotSelectedGoods(data);
+            }
+          }),
+
           $BottomAction(),
         ],
       ),
@@ -327,7 +537,9 @@ class _DataView extends StatelessWidget {
   final List data;
   final Rxn<Map> selectRx;
 
-  const _DataView({required this.data, required this.selectRx});
+  final CallBack callBack;
+
+  _DataView({required this.data, required this.selectRx, required this.callBack});
 
   static const _ratio = 80 / 62;
   static const _fixedH = 30.0;
@@ -348,16 +560,20 @@ class _DataView extends StatelessWidget {
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       itemCount: data.length,
-      itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx),
+      itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx, callBack: callBack),
     );
   }
 }
+
+typedef CallBack = void Function(Map data);
 
 class _ItemView extends StatelessWidget {
   final Map data;
   final Rxn<Map> selectRx;
 
-  const _ItemView({required this.data, required this.selectRx});
+  final CallBack callBack;
+
+  const _ItemView({required this.data, required this.selectRx, required this.callBack});
 
   @override
   Widget build(BuildContext context) {
@@ -372,7 +588,7 @@ class _ItemView extends StatelessWidget {
     };
 
     return OpacityButton(
-      onTap: () => selectRx(data),
+      onTap: () => callBack.call(data),
       child: LayoutBuilder(
         builder: (_, c) {
           final itemView = $ItemView(c.biggest);

@@ -126,34 +126,6 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
               ],
             ),
           ),
-
-          GestureDetector(
-            onTap: () {
-              wardrobeCtrl.doGive(
-                ids: selectRx.keys.toList(),
-                callback: selectRx.clear,
-              );
-            },
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              width: 66,
-              height: 29,
-              decoration: BoxDecoration(
-                color: Color(0XFFBD7BE5),
-                borderRadius: BorderRadius.circular(100),
-              ),
-              margin: EdgeInsets.only(right: 13),
-              alignment: Alignment.center,
-              child: Text(
-                "赠送",
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -263,7 +235,7 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
   @override
   Future fetch() async {
     var data = await Api.Gift.backpack();
-    if(data["items"] != null) {
+    if(data != null && data["items"] != null) {
       items.value = data["items"];
     }
     return data;
