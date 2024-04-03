@@ -29,7 +29,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     final isRoom = controller is RoomCtrl;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if((controller is PersonRoomCtrl) == false) $MicView(isRoom),
         $SpeakView(),
@@ -39,7 +39,16 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         if (isRoom) _GiftBtn(onItemClick: onItemClick),
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
         if(controller is PersonRoomCtrl) MicOperate(),
-        if (isRoom) _IconBtn(icon: '工具', onItemClick: onItemClick),
+        if (isRoom)
+          GestureDetector(
+            onTap: () {
+              onItemClick.call('工具');
+            },
+            behavior: HitTestBehavior.translucent,
+            child: IconBtnDecor(
+              child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
+            ),
+        ),
       ],
     );
   }
