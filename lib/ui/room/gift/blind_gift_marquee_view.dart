@@ -36,7 +36,7 @@ class BlindGiftMarqueeView extends StatefulWidget {
 class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
 
   double avatarSize = 60;
-  double totalWidth = 288;
+  double totalWidth = AppSize.width - 26;
 
   final controller = MarqueerController();
 
@@ -70,7 +70,7 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
     return Positioned(
       width: avatarSize,
       height: avatarSize,
-      child: Image.network(widget.data.cover),
+      child: Image.network(widget.data.cover, scale: 2,),
     );
   }
 
@@ -124,14 +124,22 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
   }
 
   Widget _createBackground() {
-    return Positioned.fill(
-      left: avatarSize / 2.0,
-
-      child: Container(
-        child: Image.network(
-          widget.data.bannerStyleUrl,
-        ),
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: totalWidth - avatarSize / 2.0 ,
+          height: avatarSize,
+          margin: EdgeInsets.only(left: avatarSize / 2.0),
+          child: Image.network(
+            widget.data.bannerStyleUrl,
+            width: totalWidth - avatarSize / 2.0,
+            height: avatarSize,
+            fit: BoxFit.cover,
+          ),
+        )
+      ],
     );
   }
 
@@ -278,42 +286,43 @@ class _BlindGiftMarqueeViewState extends State<BlindGiftMarqueeView> {
               )
           ),
 
-          Positioned.fill(
-            left: totalWidth - 100,
-            right: 5,
-            child: GestureDetector(
-              onTap: () {
-                // todo 去看看
-                RoomManagerCtrl.ins.toRoomBlind(widget.data.roomId.toInt());
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 51,
-                    height: 20,
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(top: 3),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFF5787),
-                      borderRadius: BorderRadius.circular(100),
+          if(widget.data.guideEntryRoom)
+            Positioned.fill(
+              left: totalWidth - 170,
+              right: 5,
+              child: GestureDetector(
+                onTap: () {
+                  // todo 去看看
+                  RoomManagerCtrl.ins.toRoomBlind(widget.data.roomId.toInt());
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 51,
+                      height: 20,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(top: 3),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFF5787),
+                        borderRadius: BorderRadius.circular(100),
 
-                    ),
-                    child: Text(
-                      "去看看",
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        decoration: TextDecoration.none,
                       ),
-                    ),
-                  )
-                ],
+                      child: Text(
+                        "去看看",
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-          )
+            )
         ],
       ),
     );
