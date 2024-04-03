@@ -164,7 +164,7 @@ class GiftSend2Room extends GiftSendLogic {
     // 删除空数据
     users.removeWhere((element) => element.isEmpty);
 
-    var isSelectBlind = selectRx() != null && selectRx()?['type'] == 6;
+    var isSelectBlind = selectRx() != null && (selectRx()?['type'] == 6 || selectRx()?['type'] == 8);
     if(isSelectBlind) {
       var canSend = await ConfigCtrl.ins.canBlinkBoxSend();
       if(canSend) {
