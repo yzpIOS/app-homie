@@ -430,7 +430,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
         var curCount = element["count"] as int;
 
         total += curCount;
-        totalValue += (curCount * (element["count"] as int));
+        totalValue += (curCount * (element["price"] as int));
       });
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
