@@ -286,6 +286,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
             var items = [1, 10, 66, 188, 520, 999, 1314];
             // 魔法星期不让选数量
             if(logic.selectRx() != null && logic.selectRx()?['type'] ==  8) {
+              numRx.value = 1;
               return Container(
                 width: 30,
                 height: 20,
