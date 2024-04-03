@@ -44,9 +44,14 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             onTap: () {
               onItemClick.call('工具');
             },
-            behavior: HitTestBehavior.translucent,
-            child: IconBtnDecor(
-              child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              width: 32,
+              height: 32,
+              color: Colors.red,
+              child: IconBtnDecor(
+                child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
+              ),
             ),
         ),
       ],
