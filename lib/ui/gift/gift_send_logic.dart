@@ -215,7 +215,7 @@ class GiftSend2Room extends GiftSendLogic {
     return Obx(() {
       var gray = false;
       var config = ConfigCtrl.ins.dataRx;
-      if(selectRx() != null && selectRx()?['type'] == 6) {
+      if(selectRx() != null && (selectRx()?['type'] == 6 || selectRx()?['type'] == 8)) {
         if(config.isEmpty || !ConfigCtrl.ins.canBlinkBoxSend2()) {
           return SizedBox(height: 45,);
         }
