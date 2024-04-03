@@ -71,19 +71,14 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
   /// 选中商品时显示商品的价格
   ///
   Widget createSelectedWidget(Map<int, Map> selectRx) {
-    final agg = <int, num>{};
-
+    int totalCount = 0;
+    int totalPrize = 0;
     for (final item in selectRx.values) {
       final k = item['currency'];
-      final v = item['price'];
+      final v = item['count'] as int;
+      totalCount += v;
 
-      final _v = agg[k];
-
-      if (_v is num) {
-        agg[k] = _v + v;
-      } else {
-        agg[k] = v;
-      }
+      totalPrize += (item['price'] as int) * v;
     }
 
     return Container(
@@ -101,25 +96,18 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 XText(
-                  '共${selectRx.length}件商品',
+                  '共${totalCount}件商品',
                   style: const TextStyle(fontWeight: fw$Medium),
                 ),
                 Spacing.h4,
                 XRichText(
                   TextSpan(
                     children: [
-                      const TextSpan(text: '总价值'),
-                      ...agg.entries.expand((it) {
-                        final type = MoneyType.fromVal(it.key);
-                        return [
-                          TextSpan(text: '\t${it.value}'),
-                          if (type != null)
-                            WidgetSpan(
-                              child: MoneyIcon(type: type, size: 24),
-                              alignment: PlaceholderAlignment.middle,
-                            ),
-                        ];
-                      })
+                      TextSpan(text: '$totalPrize'),
+                      WidgetSpan(
+                        child: MoneyIcon(type: MoneyType.diamond, size: 24),
+                        alignment: PlaceholderAlignment.middle,
+                      ),
                     ],
                   ),
                 ),
