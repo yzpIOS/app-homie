@@ -128,7 +128,7 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
       total += curCount;
       // 只统计紫砖
       if(element["currency"] == MoneyType.diamond.val) {
-        totalValue += (curCount * (element["count"] as int));
+        totalValue += (curCount * (element["price"] as int));
       }
     });
     return Container(
