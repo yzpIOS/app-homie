@@ -259,10 +259,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     event.items.forEach((element) {
       listItem.add({
         "price": element.price.toInt(),
-        "prize_image": event.blindBoxCover,
+        "prize_image": element.cover,
         "count": element.count,
-        "prize_name": event.blindBoxName,
-        "currency": 0,
+        "prize_name": element.name,
+        "currency": element.currency,
       });
     });
     TurntablePrizeDialog.showDialog(listItem);

@@ -278,35 +278,55 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
 
     Widget $BottomAction() {
       Widget $NumView() {
-        const items = [1, 10, 66, 188, 520, 999, 1314];
-
-        PopupMenuItem<int> itemBuilder(int item) {
-          return PopupMenuItem(
-            value: item,
-            child: XText('$item'),
-          );
-        }
 
         return SizedBox(
           width: 65,
           height: 34,
-          child: PopupMenuButton(
-            tooltip: '赠送数量'.en(),
-            onSelected: numRx,
-            itemBuilder: (_) => items.map(itemBuilder).toList(growable: false),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Obx(
-                  () => XText(
-                    '${numRx()}',
-                    style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+          child: Obx(() {
+            var items = [1, 10, 66, 188, 520, 999, 1314];
+            // 魔法星期不让选数量
+            if(logic.selectRx() != null && logic.selectRx()?['type'] ==  8) {
+              return Container(
+                width: 30,
+                height: 20,
+                alignment: Alignment.center,
+                child: Text(
+                  "1",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: fw$Medium,
+                      fontSize: 14
                   ),
                 ),
-                const Icon(Icons.arrow_drop_up_rounded, color: Colors.white),
-              ],
-            ),
-          ),
+              );
+            }
+
+            PopupMenuItem<int> itemBuilder(int item) {
+              return PopupMenuItem(
+                value: item,
+                child: XText('$item'),
+              );
+            }
+
+            return PopupMenuButton(
+              tooltip: '赠送数量'.en(),
+              onSelected: numRx,
+              itemBuilder: (_) => items.map(itemBuilder).toList(growable: false),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Obx(
+                        () => XText(
+                      '${numRx()}',
+                      style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+                    ),
+                  ),
+                  const Icon(Icons.arrow_drop_up_rounded, color: Colors.white),
+                ],
+              ),
+            );
+          }),
         );
       }
 
@@ -348,6 +368,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
         totalValue += (curCount * (element["count"] as int));
       });
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text.rich(
               TextSpan(
@@ -412,6 +433,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
         totalValue += (curCount * (element["count"] as int));
       });
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text.rich(
             TextSpan(
