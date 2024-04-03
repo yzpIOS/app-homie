@@ -48,7 +48,6 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             child: Container(
               width: 32,
               height: 32,
-              color: Colors.red,
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
               ),
