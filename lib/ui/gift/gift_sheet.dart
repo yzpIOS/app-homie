@@ -653,9 +653,16 @@ class _ItemView extends StatelessWidget {
         ),
         if (count is int)
           Positioned(
-            right: 6,
-            bottom: _DataView._fixedH + 6,
-            child: XText('×$count'),
+            left: 6,
+            top: 6,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              decoration: BoxDecoration(
+                color: Color(0xff48438F),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: XText('×$count'),
+            ),
           ),
         Positioned.fill(
           top: imageH,

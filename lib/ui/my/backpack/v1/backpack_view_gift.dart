@@ -53,7 +53,7 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
       // 选中的商品
       var selectData = selectRx.value;
       if(selectData.isNotEmpty) {
-        return createSelectedWidget(selectData);
+        return _createNotSelectValues(selectData.values.toList());
       }
 
       // 所有商品列表
@@ -82,7 +82,6 @@ class _BackpackView$GiftState extends State<BackpackView$Gift> {
     }
 
     return Container(
-      color: Color(0xFFEBEBFF),
       height: 88,
       alignment: Alignment.center,
       child: Row(
@@ -309,7 +308,7 @@ class _BackpackView$Gift extends SimpleDataView<Map>{
       alignment: Alignment.topCenter,
       children: [
         Positioned(top: 17, width: size, height: size, child: imageView),
-        Positioned(left: 1, top: 0, child: countView),
+        Positioned(left: 1, top: 1, child: countView),
         Positioned(left: 0, right: 0, bottom: 0, height: 22, child: nameView),
 
         if(effective_time.isNotEmpty)
