@@ -16,6 +16,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/message/announcement_message_dialog.dart';
 import 'package:app/ui/my/real_identity_page.dart';
 import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog.dart';
+import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog2.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
@@ -272,7 +273,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         "currency": element.currency,
       });
     });
-    TurntablePrizeDialog.showDialog(listItem);
+    TurntablePrizeDialog2.showDialog(listItem);
   }
 
   ///
