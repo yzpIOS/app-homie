@@ -8126,6 +8126,7 @@ class S_MoreGiftPlay extends $pb.GeneratedMessage {
     $core.String? blindBoxName,
     $core.String? blindBoxCover,
     $core.int? blindBoxCount,
+    $core.int? type,
   }) {
     final $result = create();
     if (items != null) {
@@ -8140,6 +8141,9 @@ class S_MoreGiftPlay extends $pb.GeneratedMessage {
     if (blindBoxCount != null) {
       $result.blindBoxCount = blindBoxCount;
     }
+    if (type != null) {
+      $result.type = type;
+    }
     return $result;
   }
   S_MoreGiftPlay._() : super();
@@ -8151,6 +8155,7 @@ class S_MoreGiftPlay extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
     ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'blindBoxCount', $pb.PbFieldType.O3)
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -8204,6 +8209,16 @@ class S_MoreGiftPlay extends $pb.GeneratedMessage {
   $core.bool hasBlindBoxCount() => $_has(3);
   @$pb.TagNumber(5)
   void clearBlindBoxCount() => clearField(5);
+
+  /// 类型，1：盲盒开出，2：直送礼物
+  @$pb.TagNumber(6)
+  $core.int get type => $_getIZ(4);
+  @$pb.TagNumber(6)
+  set type($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasType() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearType() => clearField(6);
 }
 
 class S_FloatingScreen extends $pb.GeneratedMessage {
@@ -8457,6 +8472,7 @@ class S_MoreGiftFloatingScreen extends $pb.GeneratedMessage {
     $core.Iterable<S_FloatingScreen>? items,
     $core.String? blindBoxName,
     $core.String? blindBoxCover,
+    $core.int? type,
   }) {
     final $result = create();
     if (items != null) {
@@ -8468,6 +8484,9 @@ class S_MoreGiftFloatingScreen extends $pb.GeneratedMessage {
     if (blindBoxCover != null) {
       $result.blindBoxCover = blindBoxCover;
     }
+    if (type != null) {
+      $result.type = type;
+    }
     return $result;
   }
   S_MoreGiftFloatingScreen._() : super();
@@ -8478,6 +8497,7 @@ class S_MoreGiftFloatingScreen extends $pb.GeneratedMessage {
     ..pc<S_FloatingScreen>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: S_FloatingScreen.create)
     ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
     ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -8522,6 +8542,16 @@ class S_MoreGiftFloatingScreen extends $pb.GeneratedMessage {
   $core.bool hasBlindBoxCover() => $_has(2);
   @$pb.TagNumber(3)
   void clearBlindBoxCover() => clearField(3);
+
+  /// 类型，1：盲盒开出，2：直送礼物
+  @$pb.TagNumber(4)
+  $core.int get type => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set type($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearType() => clearField(4);
 }
 
 class S_PushPreload extends $pb.GeneratedMessage {
@@ -12012,6 +12042,134 @@ class S_BlindBox extends $pb.GeneratedMessage {
   $core.bool hasBlindBoxCount() => $_has(3);
   @$pb.TagNumber(5)
   void clearBlindBoxCount() => clearField(5);
+}
+
+class C_GiveGiftByOneClick extends $pb.GeneratedMessage {
+  factory C_GiveGiftByOneClick({
+    $fixnum.Int64? roomId,
+    $core.String? acceptUid,
+    $fixnum.Int64? acceptRoleId,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (acceptUid != null) {
+      $result.acceptUid = acceptUid;
+    }
+    if (acceptRoleId != null) {
+      $result.acceptRoleId = acceptRoleId;
+    }
+    return $result;
+  }
+  C_GiveGiftByOneClick._() : super();
+  factory C_GiveGiftByOneClick.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_GiveGiftByOneClick.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_GiveGiftByOneClick', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..aOS(4, _omitFieldNames ? '' : 'acceptUid')
+    ..aInt64(5, _omitFieldNames ? '' : 'acceptRoleId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_GiveGiftByOneClick clone() => C_GiveGiftByOneClick()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_GiveGiftByOneClick copyWith(void Function(C_GiveGiftByOneClick) updates) => super.copyWith((message) => updates(message as C_GiveGiftByOneClick)) as C_GiveGiftByOneClick;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_GiveGiftByOneClick create() => C_GiveGiftByOneClick._();
+  C_GiveGiftByOneClick createEmptyInstance() => create();
+  static $pb.PbList<C_GiveGiftByOneClick> createRepeated() => $pb.PbList<C_GiveGiftByOneClick>();
+  @$core.pragma('dart2js:noInline')
+  static C_GiveGiftByOneClick getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_GiveGiftByOneClick>(create);
+  static C_GiveGiftByOneClick? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(4)
+  $core.String get acceptUid => $_getSZ(1);
+  @$pb.TagNumber(4)
+  set acceptUid($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasAcceptUid() => $_has(1);
+  @$pb.TagNumber(4)
+  void clearAcceptUid() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get acceptRoleId => $_getI64(2);
+  @$pb.TagNumber(5)
+  set acceptRoleId($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAcceptRoleId() => $_has(2);
+  @$pb.TagNumber(5)
+  void clearAcceptRoleId() => clearField(5);
+}
+
+class S_GiveGiftByOneClick extends $pb.GeneratedMessage {
+  factory S_GiveGiftByOneClick({
+    $1.ErrorCode? code,
+  }) {
+    final $result = create();
+    if (code != null) {
+      $result.code = code;
+    }
+    return $result;
+  }
+  S_GiveGiftByOneClick._() : super();
+  factory S_GiveGiftByOneClick.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_GiveGiftByOneClick.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_GiveGiftByOneClick', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..e<$1.ErrorCode>(1, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByOneClick clone() => S_GiveGiftByOneClick()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_GiveGiftByOneClick copyWith(void Function(S_GiveGiftByOneClick) updates) => super.copyWith((message) => updates(message as S_GiveGiftByOneClick)) as S_GiveGiftByOneClick;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByOneClick create() => S_GiveGiftByOneClick._();
+  S_GiveGiftByOneClick createEmptyInstance() => create();
+  static $pb.PbList<S_GiveGiftByOneClick> createRepeated() => $pb.PbList<S_GiveGiftByOneClick>();
+  @$core.pragma('dart2js:noInline')
+  static S_GiveGiftByOneClick getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_GiveGiftByOneClick>(create);
+  static S_GiveGiftByOneClick? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $1.ErrorCode get code => $_getN(0);
+  @$pb.TagNumber(1)
+  set code($1.ErrorCode v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCode() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCode() => clearField(1);
 }
 
 

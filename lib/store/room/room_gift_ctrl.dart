@@ -3,6 +3,8 @@ import 'package:app/store/svga_effect_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
 
+import 'room_manager_ctrl.dart';
+
 class RoomGiftCtrl extends SvgaEffectCtrl with BusGetLifeMixin {
   @override
   void onInit() {

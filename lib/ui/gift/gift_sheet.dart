@@ -8,6 +8,7 @@ import 'package:app/types.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/gift/gift_blind_box_details_sheet.dart';
+import 'package:app/ui/gift/gift_send_all.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/widgets.dart';
@@ -347,6 +348,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
         );
       }
 
+
       return Material(
         type: MaterialType.transparency,
         shape: const XStadiumBorder(
@@ -492,7 +494,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
       height: 50,
       padding: const Pad(horizontal: 20),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Obx(() {
             // 背包没有显示物理时，显示总价格
@@ -510,8 +512,39 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
             }
           }),
 
+          Expanded(child: SizedBox()),
+
+          _sendAll(),
+
           $BottomAction(),
         ],
+      ),
+    );
+  }
+
+
+  Widget _sendAll() {
+    return GestureDetector(
+      onTap: () {
+        GiftSendAll.show();
+      },
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: 80,
+        height: 33,
+        margin: EdgeInsets.only(right: 10),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Color(0xFFBD7CE5),
+            width: 0.5,
+          ),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: XText(
+          '一键赠送'.en(),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ),
     );
   }

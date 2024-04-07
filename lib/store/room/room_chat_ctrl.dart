@@ -6,6 +6,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
 import 'package:flutter/widgets.dart';
 
@@ -75,6 +76,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     /// 礼物消息
     on<GiftEvent>((data) async {
+
       S_GiftPlay? gift = data.data;
       if(gift == null) {
         return;
@@ -83,19 +85,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       if(sendUid == null) {
         return;
       }
-      final ids = data.data?.acceptUidList ?? [];
-
-      final users = await findByUidX({sendUid, ...ids}, useNet: true);
-
-      users.forEach((key, value) {
-        if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
-          dataRx.add(
-            GiftMsgView(
-              GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, data: gift),
-            ),
-          );
-        }
-      });
+      _handleSendGift(sendUid, gift);
     });
 
     /// 多个礼物播放广播（盲盒开出的礼物数组）
@@ -106,6 +96,15 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       }
       final List<S_GiftPlay>? items = data.items;
       if(items == null) {
+        return;
+      }
+
+      // 判断是一键赠送
+      // todo
+      if(moreGift.type == 2) {
+        items.forEach((element) {
+          _handleSendGift(element.sendId, element);
+        });
         return;
       }
 
@@ -138,6 +137,23 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
           }
         });
       });
+    });
+  }
+
+  Future<void> _handleSendGift(UID sendUid, S_GiftPlay gift) async {
+
+    final ids = gift.acceptUidList ?? [];
+
+    final users = await Get.find<UserInfoCtrl>().findByUidX({sendUid, ...ids}, useNet: true);
+
+    users.forEach((key, value) {
+      if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
+        dataRx.add(
+          GiftMsgView(
+            GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, data: gift),
+          ),
+        );
+      }
     });
   }
 }

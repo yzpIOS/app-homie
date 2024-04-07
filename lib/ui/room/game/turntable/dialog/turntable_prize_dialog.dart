@@ -19,7 +19,7 @@ class TurntablePrizeDialog extends StatefulWidget {
 
   List items;
 
-  MovieEntity movieEntity;
+  MovieEntity? movieEntity;
 
   TurntablePrizeDialog(this.items, this.movieEntity, {super.key});
 
@@ -30,8 +30,8 @@ class TurntablePrizeDialog extends StatefulWidget {
       return value2 - value1;
     });
 
-    MovieEntity movieEntity = await SVGAParser.shared.decodeFromAssets('assets/烟花.svga');
-    var dialog = TurntablePrizeDialog(items, movieEntity);
+    // MovieEntity movieEntity = await SVGAParser.shared.decodeFromAssets('assets/烟花.svga');
+    var dialog = TurntablePrizeDialog(items, null);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -52,7 +52,9 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
   @override
   void initState() {
     super.initState();
-    anime = _AnimeHelp(this, widget.movieEntity);
+    if(widget.movieEntity != null) {
+      anime = _AnimeHelp(this, widget.movieEntity!);
+    }
 
     delay(300, () async {
       await anime?.doStart(

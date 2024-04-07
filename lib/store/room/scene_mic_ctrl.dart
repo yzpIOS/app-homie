@@ -28,4 +28,6 @@ abstract class SceneMicCtrl extends GetxController with GetDisposableMixin {
   }
 
   void onRtcInit(RoomRtcCtrl rtc);
+
+  List<MicInfo> get simpleUserList => [];
 }

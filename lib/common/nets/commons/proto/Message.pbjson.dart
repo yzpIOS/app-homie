@@ -1673,6 +1673,7 @@ const S_MoreGiftPlay$json = {
     {'1': 'blind_box_name', '3': 2, '4': 1, '5': 9, '10': 'blindBoxName'},
     {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
     {'1': 'blind_box_count', '3': 5, '4': 1, '5': 5, '10': 'blindBoxCount'},
+    {'1': 'type', '3': 6, '4': 1, '5': 5, '10': 'type'},
   ],
 };
 
@@ -1681,7 +1682,7 @@ final $typed_data.Uint8List s_MoreGiftPlayDescriptor = $convert.base64Decode(
     'Cg5TX01vcmVHaWZ0UGxheRIxCgVpdGVtcxgBIAMoCzIbLmNvbS5zYXZ2eS5wcm90by5TX0dpZn'
     'RQbGF5UgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
     'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
-    'ABKAVSDWJsaW5kQm94Q291bnQ=');
+    'ABKAVSDWJsaW5kQm94Q291bnQSEgoEdHlwZRgGIAEoBVIEdHlwZQ==');
 
 @$core.Deprecated('Use s_FloatingScreenDescriptor instead')
 const S_FloatingScreen$json = {
@@ -1724,6 +1725,7 @@ const S_MoreGiftFloatingScreen$json = {
     {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.S_FloatingScreen', '10': 'items'},
     {'1': 'blind_box_name', '3': 2, '4': 1, '5': 9, '10': 'blindBoxName'},
     {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
+    {'1': 'type', '3': 4, '4': 1, '5': 5, '10': 'type'},
   ],
 };
 
@@ -1731,7 +1733,8 @@ const S_MoreGiftFloatingScreen$json = {
 final $typed_data.Uint8List s_MoreGiftFloatingScreenDescriptor = $convert.base64Decode(
     'ChhTX01vcmVHaWZ0RmxvYXRpbmdTY3JlZW4SNwoFaXRlbXMYASADKAsyIS5jb20uc2F2dnkucH'
     'JvdG8uU19GbG9hdGluZ1NjcmVlblIFaXRlbXMSJAoOYmxpbmRfYm94X25hbWUYAiABKAlSDGJs'
-    'aW5kQm94TmFtZRImCg9ibGluZF9ib3hfY292ZXIYAyABKAlSDWJsaW5kQm94Q292ZXI=');
+    'aW5kQm94TmFtZRImCg9ibGluZF9ib3hfY292ZXIYAyABKAlSDWJsaW5kQm94Q292ZXISEgoEdH'
+    'lwZRgEIAEoBVIEdHlwZQ==');
 
 @$core.Deprecated('Use s_PushPreloadDescriptor instead')
 const S_PushPreload$json = {
@@ -2470,4 +2473,33 @@ final $typed_data.Uint8List s_BlindBoxDescriptor = $convert.base64Decode(
     'hJdGVtUgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
     'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
     'ABKAVSDWJsaW5kQm94Q291bnQ=');
+
+@$core.Deprecated('Use c_GiveGiftByOneClickDescriptor instead')
+const C_GiveGiftByOneClick$json = {
+  '1': 'C_GiveGiftByOneClick',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'accept_uid', '3': 4, '4': 1, '5': 9, '10': 'acceptUid'},
+    {'1': 'accept_role_id', '3': 5, '4': 1, '5': 3, '10': 'acceptRoleId'},
+  ],
+};
+
+/// Descriptor for `C_GiveGiftByOneClick`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_GiveGiftByOneClickDescriptor = $convert.base64Decode(
+    'ChRDX0dpdmVHaWZ0QnlPbmVDbGljaxIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSHQoKYWNjZX'
+    'B0X3VpZBgEIAEoCVIJYWNjZXB0VWlkEiQKDmFjY2VwdF9yb2xlX2lkGAUgASgDUgxhY2NlcHRS'
+    'b2xlSWQ=');
+
+@$core.Deprecated('Use s_GiveGiftByOneClickDescriptor instead')
+const S_GiveGiftByOneClick$json = {
+  '1': 'S_GiveGiftByOneClick',
+  '2': [
+    {'1': 'code', '3': 1, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
+  ],
+};
+
+/// Descriptor for `S_GiveGiftByOneClick`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_GiveGiftByOneClickDescriptor = $convert.base64Decode(
+    'ChRTX0dpdmVHaWZ0QnlPbmVDbGljaxIuCgRjb2RlGAEgASgOMhouY29tLnNhdnZ5LnByb3RvLk'
+    'Vycm9yQ29kZVIEY29kZQ==');
 
