@@ -98,6 +98,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       if(Env.isDebug) {
         xlog("[socket]:uniqueId: uniqueId ${uniqueId}", type: LogType.SOCKET);
       }
+      // todo 写在这里吧??
+      if(cmd == CMD.S_GiftPlay || cmd == CMD.S_MoreGiftPlay) {
+        // 礼物特效关闭了
+        if(RoomManagerCtrl.ins.effectClose.value) {
+          return;
+        }
+      }
       local.getSession(uniqueId)?.sendBytes(cmd, datas: data);
     });
     // 接收到反序列化后的数据

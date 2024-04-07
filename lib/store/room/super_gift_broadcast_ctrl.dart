@@ -29,11 +29,6 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     final ids = data.acceptUidList;
     final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
 
-    // 礼物特效关闭
-    if(RoomManagerCtrl.ins.effectClose.value) {
-      return;
-    }
-
     if(ids.isNotEmpty) {
       for (final uid in ids) {
         if(data.bannerType.toInt() == 1) {

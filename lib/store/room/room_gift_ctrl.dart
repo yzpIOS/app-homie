@@ -19,6 +19,11 @@ class RoomGiftCtrl extends SvgaEffectCtrl with BusGetLifeMixin {
           return;
         }
 
+        // 礼物特效关闭了
+        if(RoomManagerCtrl.ins.effectClose.value) {
+          return;
+        }
+
         //0-2D静态礼物，1-2D动态礼物，2-3D礼物，4-烟花
         switch (data.type) {
           case 0:
