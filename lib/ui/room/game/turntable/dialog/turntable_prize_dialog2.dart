@@ -43,8 +43,9 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
   @override
   void initState() {
     super.initState();
-    if(widget.movieEntity != null)
+    if(widget.movieEntity != null) {
       anime = _AnimeHelp(this, widget.movieEntity!);
+    }
 
     delay(300, () async {
       await anime?.doStart(
@@ -68,10 +69,6 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
-            Positioned(
-              child: Image.asset(IMG.format("room/game/turntable_prize_background")),
-            ),
-
             // 价格
             createPrize(),
             // 恭喜
