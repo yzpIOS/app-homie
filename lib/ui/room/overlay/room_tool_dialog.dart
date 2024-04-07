@@ -62,8 +62,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',
-      if(RoomManagerCtrl.ins.effectClose.value == false) '关闭特效',
-      if(RoomManagerCtrl.ins.effectClose.value == true) '打开特效',
+      '礼物特效',
     ];
 
     return SizedBox(
@@ -78,12 +77,20 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
   }
 
   Widget itemBuilder(String item) {
+    String imageValue = item;
+    if(item == "礼物特效") {
+      if(RoomManagerCtrl.ins.effectClose.value == false) {
+        imageValue = '关闭特效';
+      } else {
+        imageValue = '打开特效';
+      }
+    }
     Widget child = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
         Expanded(child: SizedBox()),
-        Image.asset(IMG.format('room/$item'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
+        Image.asset(IMG.format('room/$imageValue'), width: 34, height: 34, fit: BoxFit.contain, scale: 3),
         Spacing.h2,
         XText(
           item,
@@ -94,7 +101,9 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
     );
 
     child = OpacityButton(
-      onTap: () => Get.back(result: item),
+      onTap: () {
+        Get.back(result: imageValue);
+      },
       child: child,
     );
 
