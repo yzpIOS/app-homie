@@ -87,7 +87,6 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                 // height: 50,
                 width: AppSize.width,
                 child: Box(
-                  padding: const Pad(horizontal: 5),
                   child: Animate(
                     effects: bottomEffect,
                     child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
