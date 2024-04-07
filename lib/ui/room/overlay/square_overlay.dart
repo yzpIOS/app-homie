@@ -42,7 +42,7 @@ class SquareOverlay extends SceneOverlay<SquareCtrl> {
           // ),
           if (controller.bottomBarIsShowRx())
             Positioned(
-              bottom: AppSize.safeBottom > 0 ? AppSize.safeBottom : 15,
+              bottom: (AppSize.safeBottom > 0 ? AppSize.safeBottom : 15) + 20,
               // height: 50,
               width: AppSize.width,
               child: Padding(

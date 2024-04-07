@@ -83,9 +83,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
               ),
             if (controller.bottomBarIsShowRx())
               Positioned(
-                bottom: AppSize.safeBottom > 0 ? AppSize.safeBottom : 15,
+                bottom: (AppSize.safeBottom > 0 ? AppSize.safeBottom : 15) + 20,
                 // height: 50,
-                width: AppSize.width,
+                width: AppSize.width - 10,
+                left: 5,
                 child: Box(
                   child: Animate(
                     effects: bottomEffect,

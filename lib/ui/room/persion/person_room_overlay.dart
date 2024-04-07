@@ -52,7 +52,7 @@ class PersonRoomOverlay extends RoomOverlay {
             // 底部送礼
             if (controller.bottomBarIsShowRx())
               Positioned(
-                bottom: AppSize.safeBottom > 0 ? AppSize.safeBottom : 15,
+                bottom: (AppSize.safeBottom > 0 ? AppSize.safeBottom : 15) + 20,
                 // height: 50,
                 width: AppSize.width,
                 child: Box(
