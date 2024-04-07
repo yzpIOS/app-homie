@@ -384,17 +384,17 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
         mainAxisSize: MainAxisSize.min,
         children: [
           child,
-          Box(
-            alignment: Alignment.topRight,
-            padding: const Pad(right: 10),
-            child: GestureDetector(
-              onTap: controller.micPanelRx.toggle,
-              child: RotatedBox(
-                quarterTurns: 3,
-                child: SvgView(SVG.$('room/麦位显示_0'), color: AppPalette.room),
-              ),
-            ),
-          )
+          // Box(
+          //   alignment: Alignment.topRight,
+          //   padding: const Pad(right: 10),
+          //   child: GestureDetector(
+          //     onTap: controller.micPanelRx.toggle,
+          //     child: RotatedBox(
+          //       quarterTurns: 3,
+          //       child: SvgView(SVG.$('room/麦位显示_0'), color: AppPalette.room),
+          //     ),
+          //   ),
+          // )
         ],
       );
     }
