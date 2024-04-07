@@ -62,6 +62,8 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       // if (Env.isDebug) '切换横竖屏',
       // '自拍',
       '意见反馈',
+      if(RoomManagerCtrl.ins.effectClose.value == false) '关闭特效',
+      if(RoomManagerCtrl.ins.effectClose.value == true) '打开特效',
     ];
 
     return SizedBox(

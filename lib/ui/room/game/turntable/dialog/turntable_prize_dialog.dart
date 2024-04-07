@@ -67,6 +67,10 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
         child: Stack(
           alignment: Alignment.topCenter,
           children: [
+            Positioned(
+              child: Image.asset(IMG.format("room/game/turntable_prize_background")),
+            ),
+
             // 价格
             createPrize(),
             // 恭喜

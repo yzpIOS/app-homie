@@ -1,6 +1,7 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/broadcast/super_gift_view.dart';
 import 'package:app/ui/room/gift/blind_gift_marquee_view.dart';
@@ -27,6 +28,11 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
   void _onGiftEvent(SuperGiftEvent event, S_FloatingScreen data) async {
     final ids = data.acceptUidList;
     final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
+
+    // 礼物特效关闭
+    if(RoomManagerCtrl.ins.effectClose.value) {
+      return;
+    }
 
     if(ids.isNotEmpty) {
       for (final uid in ids) {

@@ -35,7 +35,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         $SpeakView(),
         Expanded(child: SceneOverlayInput(onItemClick: onItemClick)),
         _ConvView(onItemClick: onItemClick),
-        _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
+        // _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
         if (isRoom) _GiftBtn(onItemClick: onItemClick),
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
         if(controller is PersonRoomCtrl) MicOperate(),

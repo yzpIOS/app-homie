@@ -233,6 +233,12 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           Get.back();
         });
         break;
+      case "关闭特效":
+        RoomManagerCtrl.ins.closeEffect();
+        break;
+      case "打开特效":
+        RoomManagerCtrl.ins.openEffect();
+        break;
       default:
         super.onItemClick(action);
     }

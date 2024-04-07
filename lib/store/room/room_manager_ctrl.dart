@@ -331,6 +331,22 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
     SocketCtrl.ins.removeOnDataCmd(CMD.S_LiveStopSettlementBroadcast, handleSettle);
   }
 
+  RxBool effectClose = RxBool(false);
+  void closeEffect() {
+    effectClose.value = true;
+    KvBox.write("gift_effect_close", effectClose.value);
+  }
+
+  void openEffect() {
+    effectClose.value = false;
+    KvBox.write("gift_effect_close", effectClose.value);
+  }
+
+  Future<bool?> isEffectClose() async {
+    effectClose.value = (await KvBox.read<bool?>("gift_effect_close") ?? true);
+    return effectClose.value;
+  }
+
   ///
   /// [changeRoom] 是否个人房主切换房间
   ///
@@ -343,6 +359,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   }) async {
     Future doJoin() async {
       Future<Tuple2<RoomBaseInfo, String?>> api() async {
+        await isEffectClose();
 
         logForDebug("获取房间信息 roomId= ${roomId}");
 
