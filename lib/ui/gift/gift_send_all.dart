@@ -92,6 +92,10 @@ class GiftSendAll extends StatelessWidget {
                       valueNotifier.value = null;
                     }
 
+                    if(valueNotifier.value == null && micInfos.isNotEmpty) {
+                      valueNotifier.value = micInfos.first;
+                    }
+
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
