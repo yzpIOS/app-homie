@@ -524,29 +524,36 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
 
 
   Widget _sendAll() {
-    return GestureDetector(
-      onTap: () {
-        GiftSendAll.show();
-      },
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        width: 80,
-        height: 33,
-        margin: EdgeInsets.only(right: 10),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Color(0xFFBD7CE5),
-            width: 0.5,
+    return Obx(() {
+      if(showIndex.value == 0) {
+        return SizedBox();
+      }
+      return GestureDetector(
+        onTap: () async {
+          await GiftSendAll.show();
+          // 刷新数据
+          myGiftCtrl?.doRefresh();
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          width: 80,
+          height: 33,
+          margin: EdgeInsets.only(right: 10),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Color(0xFFBD7CE5),
+              width: 0.5,
+            ),
+            borderRadius: BorderRadius.circular(100),
           ),
-          borderRadius: BorderRadius.circular(100),
+          child: XText(
+            '一键赠送'.en(),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
         ),
-        child: XText(
-          '一键赠送'.en(),
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-      ),
-    );
+      );
+    });
   }
 
   void doSend() {
