@@ -91,6 +91,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
 
         return _IconBtnSvg(
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
+          padding: Pad(horizontal: 5),
           onItemClick: isEnable ? onItemClick : null,
         );
       },
@@ -102,6 +103,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
       () {
         return _IconBtnSvg(
           icon: '声音_${Rtc.audioRx().intVal}',
+          padding: Pad(horizontal: 5),
           onItemClick: onItemClick,
         );
       },
@@ -188,16 +190,18 @@ class _MicOperateState extends State<MicOperate> {
 class _IconBtnSvg extends StatelessWidget {
   final String? icon;
 
+  Pad padding;
+
   final ValueChanged<String>? onItemClick;
 
-  _IconBtnSvg({this.icon, this.onItemClick}) : super(key: ValueKey(icon));
+  _IconBtnSvg({this.icon, this.onItemClick, this.padding = const Pad(all: 5)}) : super(key: ValueKey(icon));
 
   @override
   Widget build(BuildContext context) {
     return IconBtnSvg(
       icon: icon,
       size: 28,
-      padding: const Pad(all: 5),
+      padding: padding,
       onTap: onItemClick?.let((fn) => () => fn(icon!)),
     );
   }
