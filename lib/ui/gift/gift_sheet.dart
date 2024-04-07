@@ -549,7 +549,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
           ),
           child: XText(
             '一键赠送'.en(),
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.white),
           ),
         ),
       );
