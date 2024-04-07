@@ -29,7 +29,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     final isRoom = controller is RoomCtrl;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if((controller is PersonRoomCtrl) == false) $MicView(isRoom),
         $SpeakView(),
