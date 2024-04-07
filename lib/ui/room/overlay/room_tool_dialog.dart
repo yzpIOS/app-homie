@@ -123,7 +123,13 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
             ),
           ),
         ),
-        Image.asset(IMG.format("close"), width: 14, height: 14,),
+        GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          behavior: HitTestBehavior.opaque,
+          child: Image.asset(IMG.format("close"), width: 24, height: 24,),
+        ),
         SizedBox(width: 10,),
       ],
     );

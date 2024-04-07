@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 class SceneOverlayInput extends StatelessWidget {
   final ValueChanged<String> onItemClick;
 
-  const SceneOverlayInput({super.key, required this.onItemClick});
+  Pad padding;
+
+  SceneOverlayInput({super.key, required this.onItemClick, this.padding = const Pad(all: 5)});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class SceneOverlayInput extends StatelessWidget {
     Widget child = Container(
       height: 28,
       decoration: _decor,
-      margin: const Pad(all: 5),
+      margin: padding,
       padding: const Pad(left: 10),
       alignment: Alignment.centerLeft,
       child: Row(

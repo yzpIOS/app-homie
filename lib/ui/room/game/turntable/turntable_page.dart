@@ -650,10 +650,15 @@ class _TurntablePageState extends State<TurntablePage> {
   Timer? _timer = null;
   int _startTime = 0;
 
+  bool reqBack = true;
+
   ///
   /// 开始转动
   ///
   void startSpin(int selectedIndex) async {
+    if(!reqBack) {
+      return;
+    }
     resetTurnable();
 
     // 不播放动画
@@ -669,7 +674,9 @@ class _TurntablePageState extends State<TurntablePage> {
     divideTime = DateTime.now().millisecondsSinceEpoch.toDouble();
 
     // 5秒后请求弹窗
+    reqBack = false;
     simpleTry(() => Api.Activity.getStartSpin(modeId, selectedIndex), callback: (result) async {
+      reqBack = true;
 
       await WalletCtrl.ins.doRefresh();
 
@@ -721,6 +728,7 @@ class _TurntablePageState extends State<TurntablePage> {
 
     },
     codeCallBack: (code, e) {
+      reqBack = true;
       resetTurnable();
       // 余额不足，弹窗去充值
       if(code == 11001) {

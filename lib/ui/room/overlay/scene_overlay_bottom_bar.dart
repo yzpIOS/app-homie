@@ -27,16 +27,32 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   Widget build(BuildContext context) {
     // final isSquare = controller is SquareCtrl;
     final isRoom = controller is RoomCtrl;
-
+    //
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         if((controller is PersonRoomCtrl) == false) $MicView(isRoom),
         $SpeakView(),
-        Expanded(child: SceneOverlayInput(onItemClick: onItemClick)),
+        Expanded(child: SceneOverlayInput(onItemClick: onItemClick, padding: Pad(horizontal: 5),)),
         _ConvView(onItemClick: onItemClick),
+
         // _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
-        if (isRoom) _GiftBtn(onItemClick: onItemClick),
+        if (isRoom)
+          GestureDetector(
+            onTap: () {
+              onItemClick.call('礼物');
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              width: 28,
+              height: 28,
+              margin: EdgeInsets.only(left: 5),
+              child: IconBtnDecor(
+                child: Image.asset(IMG.format('room/礼物'), width: 28, height: 28),
+              ),
+            ),
+          ),
+
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
         if(controller is PersonRoomCtrl) MicOperate(),
         if (isRoom)
@@ -46,13 +62,14 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             },
             behavior: HitTestBehavior.opaque,
             child: Container(
-              width: 32,
-              height: 32,
+              width: 28,
+              height: 28,
+              margin: EdgeInsets.only(left: 5),
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
               ),
             ),
-        ),
+          ),
       ],
     );
   }
@@ -301,8 +318,10 @@ class _ConvViewState extends State<_ConvView> {
               return Spacing.blank;
             },
           ),
-          _IconBtnSvg(
-            icon: '消息_0',
+          IconBtnSvg(
+            icon: "消息_0",
+            size: 30,
+            onTap: widget.onItemClick.let((fn) => () => fn("消息_0")),
           ),
         ],
       ),
