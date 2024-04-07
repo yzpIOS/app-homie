@@ -41,6 +41,15 @@ class GiftSendAll extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () {
+                Get.back();
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Container(color: Colors.transparent,),
+            ),
+          ),
           Positioned(
             left: 0.0,
             right: 0.0,
