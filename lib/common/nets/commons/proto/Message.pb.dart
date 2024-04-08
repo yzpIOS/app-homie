@@ -11964,6 +11964,7 @@ class S_BlindBox extends $pb.GeneratedMessage {
     $core.String? blindBoxName,
     $core.String? blindBoxCover,
     $core.int? blindBoxCount,
+    $fixnum.Int64? blindBoxId,
   }) {
     final $result = create();
     if (items != null) {
@@ -11978,6 +11979,9 @@ class S_BlindBox extends $pb.GeneratedMessage {
     if (blindBoxCount != null) {
       $result.blindBoxCount = blindBoxCount;
     }
+    if (blindBoxId != null) {
+      $result.blindBoxId = blindBoxId;
+    }
     return $result;
   }
   S_BlindBox._() : super();
@@ -11989,6 +11993,7 @@ class S_BlindBox extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'blindBoxName')
     ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'blindBoxCount', $pb.PbFieldType.O3)
+    ..aInt64(6, _omitFieldNames ? '' : 'blindBoxId')
     ..hasRequiredFields = false
   ;
 
@@ -12042,6 +12047,15 @@ class S_BlindBox extends $pb.GeneratedMessage {
   $core.bool hasBlindBoxCount() => $_has(3);
   @$pb.TagNumber(5)
   void clearBlindBoxCount() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get blindBoxId => $_getI64(4);
+  @$pb.TagNumber(6)
+  set blindBoxId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasBlindBoxId() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearBlindBoxId() => clearField(6);
 }
 
 class C_GiveGiftByOneClick extends $pb.GeneratedMessage {

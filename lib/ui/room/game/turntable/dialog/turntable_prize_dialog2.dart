@@ -1,5 +1,8 @@
 
+import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/model/enum/money_type.dart';
+import 'package:app/net/api.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/view.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +11,13 @@ import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 class TurntablePrizeDialog2 extends StatefulWidget {
 
-  List items;
+  RxList items;
 
   MovieEntity? movieEntity;
 
   TurntablePrizeDialog2(this.items, this.movieEntity, {super.key});
 
-  static Future<void> showDialog(List items) async {
+  static Future<void> showDialog(RxList items) async {
     items.sort((a, b) {
       int value1 = (a["price"] ?? 0);
       int value2 = (b["price"] ?? 0);
@@ -62,29 +65,34 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.center,
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            // 价格
-            createPrize(),
-            // 恭喜
-            createCongratulations(),
-
-            createBottomButton(),
-
-            // 烟花
-            createFireWorks(),
-          ],
-        ),
-      ),
+      body: Obx(() {
+        if(widget.items.isEmpty) {
+          return SizedBox();
+        }
+        var item = widget.items.first;
+        return Container(
+          width: double.infinity,
+          height: double.infinity,
+          alignment: Alignment.center,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              // 价格
+              createPrize(item),
+              // 恭喜
+              createCongratulations(item),
+              // 底部按钮
+              createBottomButton(item),
+              // 烟花
+              createFireWorks(),
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  Widget createPrize() {
+  Widget createPrize(Map item) {
     return Container(
       width: 378,
       height: 386,
@@ -98,7 +106,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
             top: (386 - 165) / 2,
             left: 0,
             right: 0,
-            child: Image.network(widget.items[index]["prize_image"], width: 165, height: 165,),
+            child: Image.network(item["prize_image"], width: 165, height: 165,),
           ),
 
           // 数量
@@ -112,7 +120,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Text(
-                "x${widget.items[index]["count"].toString()}",
+                "x${item["count"].toString()}",
                 style: TextStyle(
                     color: Color(0xffFF3291),
                     fontWeight: FontWeight.w600,
@@ -132,11 +140,11 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              widget.items[index]["prize_name"],
+              item["prize_name"],
               style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 12
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 12
               ),
             ),
           )
@@ -145,8 +153,8 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
     );
   }
 
-  Widget createCongratulations() {
-    int currency = widget.items[index]["currency"];
+  Widget createCongratulations(Map item) {
+    int currency = item["currency"];
 
     String currencyName = "";
     if(currency == MoneyType.diamond.val) {
@@ -169,11 +177,11 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
               borderRadius: BorderRadius.circular(100),
             ),
             child: Text(
-              "礼物总价值${(widget.items[index]["count"] ?? 0) * (widget.items[index]["price"] ?? 0)}${currencyName}",
+              "礼物总价值${(item["count"] ?? 0) * (item["price"] ?? 0)}${currencyName}",
               style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+                fontSize: 14
               ),
             ),
           )
@@ -182,15 +190,32 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
     );
   }
 
-  Widget createBottomButton() {
+  Widget createBottomButton(Map item) {
     return GestureDetector(
-      onTap: () {
-        if(index >= widget.items.length - 1) {
+      onTap: () async {
+        if(SocketCtrl.ins.blindBox == null) {
           Get.back();
           return;
         }
-        index += 1;
-        setState(() { });
+        var sceneCtrl2 = RoomManagerCtrl.ins.sceneCtrl2;
+        if(sceneCtrl2 == null || sceneCtrl2.roomId <= 0) {
+          return;
+        }
+        // 房间号
+        int roomId = sceneCtrl2.roomId;
+        // 礼物id
+        int giftId = item["blindBoxId"];
+
+        int blindBoxCount = item["blindBoxCount"] > 0 ? item["blindBoxCount"] : 1;
+
+        // 发送
+        Api.Gift.sendGift2Room(
+          roomId: roomId,
+          giftId: giftId,
+          count: blindBoxCount,
+          isBackpack: false,
+          uid: [],
+        );
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
@@ -241,6 +266,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
     super.dispose();
     anime?.dispose();
     anime = null;
+    SocketCtrl.ins.blindBox = null;
   }
 }
 

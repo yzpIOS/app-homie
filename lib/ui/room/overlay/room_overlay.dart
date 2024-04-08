@@ -69,7 +69,8 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           children: [
             // 聊天消息视图
             Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 235,
+              top: Get.height - 400,
+              left: 0,
               child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
             ),
             // 横屏右侧视图
@@ -372,14 +373,6 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
       // 麦列表
       child = createMicList(child);
 
-      child = DecoratedBox(
-        decoration: const ShapeDecoration(
-          color: AppPalette.room,
-          shape: XRectangleBorder(borderRadius: AppBorderRadius.b10),
-        ),
-        child: child,
-      );
-
       child = Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -407,10 +400,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
       mainAxisSize: MainAxisSize.min,
       children: [
         child,
-        Padding(
-          padding: const Pad(top: 28, bottom: 10),
-          child: MicUser$Header(myRole: controller.getRole(OAuthCtrl.uid)),
-        ),
+        MicUser$Header(myRole: controller.getRole(OAuthCtrl.uid)),
       ],
     );
   }

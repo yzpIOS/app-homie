@@ -26,7 +26,7 @@ class MicUser$Header extends _MicUserView {
 
   @override
   Widget build(BuildContext context) {
-    final maxMic = controller.maxMic;
+    var maxMic = controller.maxMic;
 
     Widget child = SizedBox(
       height: _MicView.itemH,
@@ -39,42 +39,76 @@ class MicUser$Header extends _MicUserView {
               height: _MicView.itemH,
               child: _ItemView(no: '1', controller: controller, myRole: myRole),
             ),
-          if (maxMic > 1)
-            Positioned(
-              width: _MicView.itemW,
-              height: _MicView.itemH,
-              child: Transform.translate(
-                offset: Offset(_MicView.itemW + 20, 0),
-                child: _ItemView(no: '$maxMic', controller: controller, myRole: myRole, type: 1),
-              ),
-            ),
         ],
       ),
     );
 
-    if (maxMic > 2) {
-      const pad = _MicView.padding;
+    // 计算有多少列
+    var numOfColumn = 4;
+    var column = 0;
+    if(maxMic > 1) {
+      if((maxMic - 1) % numOfColumn == 0) {
+        column = (maxMic - 1) ~/ numOfColumn;
+      } else {
+        column = (maxMic - 1) ~/ numOfColumn + 1;
+      }
+    }
+
+    // 麦位间的间距
+    double gap = (Get.width - _MicView.itemW * 4 - 33 * 2) / 3;
+    const pad = _MicView.padding;
+    var children = <Widget>[];
+
+    for(int index = 0; index < column; index ++) {
+      var count = numOfColumn;
+      if(column - 1 == index) {
+        count = maxMic - index * numOfColumn - 1;
+      }
+      children.add(Container(
+        height: _MicView.itemH,
+        margin: EdgeInsets.only(top: index > 0 ? 10 : 0),
+        child: ListView.separated(
+          padding: pad.copyWith(top: 0, bottom: 0, left: 33),
+          scrollDirection: Axis.horizontal,
+          itemCount: count,
+          addRepaintBoundaries: false,
+          addAutomaticKeepAlives: false,
+          itemBuilder: (_, i) {
+            final no = '${i + (1 + 1) + index * numOfColumn}';
+
+            // 主持位
+            var micMo = i + index * numOfColumn + (1 + 1);
+            if(micMo == maxMic) {
+              return SizedBox(
+                width: _MicView.itemW,
+                height: _MicView.itemH,
+                child: Transform.translate(
+                  offset: const Offset(0, 0),
+                  child: _ItemView(no: '$maxMic', controller: controller, myRole: myRole, type: 1),
+                ),
+              );
+            }
+
+            return _ItemView(no: no, controller: controller, myRole: myRole);
+          },
+          separatorBuilder: (_, i) {
+            return SizedBox(width: gap,);
+          },
+        ),
+      ));
+    }
+
+    if (maxMic > 1) {
 
       child = Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // 第一行
           child,
-          SizedBox(height: pad.horizontal - pad.vertical),
-          SizedBox(
-            height: _MicView.itemH,
-            child: ListView.builder(
-              padding: pad.copyWith(top: 0, bottom: 0),
-              scrollDirection: Axis.horizontal,
-              itemExtent: _MicView.itemW,
-              itemCount: maxMic - 2,
-              addRepaintBoundaries: false,
-              addAutomaticKeepAlives: false,
-              itemBuilder: (_, i) {
-                final no = '${i + (1 + 1)}';
 
-                return _ItemView(no: no, controller: controller, myRole: myRole);
-              },
-            ),
-          ),
+          // 第二行
+          ...children
         ],
       );
     }
@@ -134,15 +168,20 @@ class _ItemView extends StatelessWidget {
   }
 
   Widget $EmptyView(String no) {
+    TextStyle style;
+    String text = '$no号麦';
+    if(type == 0) {
+      style = const TextStyle(fontWeight: fw$Medium, fontSize: 14, color: Colors.white);
+    } else {
+      text = "BOSS";
+      style = const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFFBAF49), fontSize: 14);
+    }
     return _MicView(
       avatar: InkResponse(
         onTap: () => MicUserSheet.show(no),
         child: Image.asset(IMG.format('room/mic/麦位_$type'), scale: 3, fit: BoxFit.contain),
       ),
-      title: XText(
-        '$no 号麦',
-        style: const TextStyle(fontWeight: fw$Medium),
-      ),
+      title: XText( text, style: style),
     );
   }
 
@@ -279,7 +318,7 @@ class _MicView extends StatelessWidget {
               ),
             ),
           ),
-        Positioned(bottom: 10, height: 18, width: itemW, child: Center(child: title)),
+        Positioned(top: _size + 4, width: itemW, child: Center(child: title)),
         if (tips != null) //
           Positioned(
             left: 2,

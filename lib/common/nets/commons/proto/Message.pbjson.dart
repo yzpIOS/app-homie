@@ -2464,6 +2464,7 @@ const S_BlindBox$json = {
     {'1': 'blind_box_name', '3': 2, '4': 1, '5': 9, '10': 'blindBoxName'},
     {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
     {'1': 'blind_box_count', '3': 5, '4': 1, '5': 5, '10': 'blindBoxCount'},
+    {'1': 'blind_box_id', '3': 6, '4': 1, '5': 3, '10': 'blindBoxId'},
   ],
 };
 
@@ -2472,7 +2473,7 @@ final $typed_data.Uint8List s_BlindBoxDescriptor = $convert.base64Decode(
     'CgpTX0JsaW5kQm94EjUKBWl0ZW1zGAEgAygLMh8uY29tLnNhdnZ5LnByb3RvLlNfQmxpbmRCb3'
     'hJdGVtUgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
     'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
-    'ABKAVSDWJsaW5kQm94Q291bnQ=');
+    'ABKAVSDWJsaW5kQm94Q291bnQSIAoMYmxpbmRfYm94X2lkGAYgASgDUgpibGluZEJveElk');
 
 @$core.Deprecated('Use c_GiveGiftByOneClickDescriptor instead')
 const C_GiveGiftByOneClick$json = {

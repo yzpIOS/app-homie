@@ -259,10 +259,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
   }
 
+  // 盲盒处理
+  RxList?  blindBox = null;
+
   void _onBlindHandler(int cmd, S_BlindBox? event) {
     if(event == null || event.items.isEmpty == true) {
       return;
     }
+
     var listItem = [];
     event.items.forEach((element) {
       listItem.add({
@@ -271,9 +275,17 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         "count": element.count,
         "prize_name": element.name,
         "currency": element.currency,
+        "blindBoxId": event.blindBoxId.toInt(),
+        "blindBoxCount": event.blindBoxCount.toInt(),
       });
     });
-    TurntablePrizeDialog2.showDialog(listItem);
+
+    if(blindBox == null) {
+      blindBox = RxList(listItem);
+      TurntablePrizeDialog2.showDialog(blindBox!);
+    } else {
+      blindBox?.value = listItem;
+    }
   }
 
   ///
