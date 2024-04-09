@@ -280,12 +280,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       });
     });
 
-    if(blindBox == null) {
-      blindBox = RxList(listItem);
-      TurntablePrizeDialog2.showDialog(blindBox!);
-    } else {
-      blindBox?.value = listItem;
-    }
+    // if(blindBox == null) {
+    //   blindBox = RxList(listItem);
+    //   TurntablePrizeDialog2.showDialog(blindBox!);
+    // } else {
+    //   blindBox?.value = listItem;
+    // }
+    TurntablePrizeDialog2.showDialog(RxList(listItem));
   }
 
   ///
