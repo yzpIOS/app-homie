@@ -460,4 +460,15 @@ class ApiRoom extends ApiBase {
       "status": status,
     });
   }
+
+  ///
+  /// 热播分类
+  ///
+  Future getCategory() {
+    return _doPost("classify/list");
+  }
+
+  Future getCategoryItemList(PageNum page, dynamic classify_id) {
+    return _doPost("list", data: page + {"classify_id": classify_id});
+  }
 }

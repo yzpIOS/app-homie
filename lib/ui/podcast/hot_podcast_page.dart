@@ -9,6 +9,7 @@ import 'package:app/ui/home/home_play_together.dart';
 import 'package:app/ui/home/home_search_page.dart';
 import 'package:app/ui/my/invite_new_members/invite_new_members_activity_page.dart';
 import 'package:app/ui/podcast/city_room_view.dart';
+import 'package:app/ui/podcast/common_room_view.dart';
 import 'package:app/ui/podcast/create_room_page.dart';
 import 'package:app/ui/podcast/follow_room_view.dart';
 import 'package:app/ui/podcast/hot_room_view.dart';
@@ -33,11 +34,37 @@ class HotPodcastPage extends StatefulWidget {
 }
 
 class _HotPodcastPageState extends State<HotPodcastPage> {
-  final data = const {
+  Map<String, Widget> data = {
     '关注': FollowRoomView(),
     '热播': HotRoomView(),
     '同城': CityRoomView(),
   };
+
+  @override
+  void initState() {
+    super.initState();
+    Api.Room.getCategory().then((value) {
+      _handleItems(value);
+    }).onError((error, stackTrace) {
+      data.clear();
+      _handleEmpty();
+    });
+  }
+
+  void _handleEmpty() {
+    data.clear();
+    data["关注"] = const FollowRoomView();
+    setState(() { });
+  }
+
+  void _handleItems(List items) {
+    data.clear();
+    data["关注"] = const FollowRoomView();
+    items.forEach((element) {
+      data[element["classify_name"]] = CommonRoomView(element["classify_id"]);
+    });
+    setState(() { });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +209,9 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        HomeActivityBannerView(),// 活动banner
+        // HomeActivityBannerView(),// 活动banner
+
+        HomeBannerView(),
         SizedBox(height: 10,),// 距离
         HomePlayTogether(),// 一起玩模块
       ],
