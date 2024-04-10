@@ -170,6 +170,11 @@ class _ItemView extends StatelessWidget {
   Widget $EmptyView(String no) {
     TextStyle style;
     String text = '$no号麦';
+    if(no == "1") {
+      text = '主持';
+    } else {
+      text = '${(int.tryParse(no) ?? 1) - 1}号麦';
+    }
     if(type == 0) {
       style = const TextStyle(fontWeight: FontWeight.normal, fontSize: 14, color: Colors.white);
     } else {
