@@ -98,10 +98,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
             // 抽奖入口
             if(controller.entry.isNotEmpty)
               Positioned(
-                top: 550,
                 right: 10,
                 height: 80,
                 width: 80,
+                bottom: 143,
                 child: ListView.separated(
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
