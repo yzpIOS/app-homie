@@ -89,7 +89,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
         if(widget.items.isEmpty) {
           return SizedBox();
         }
-        var item = widget.items.first;
+        var item = widget.items[index];
         return Container(
           width: double.infinity,
           height: double.infinity,

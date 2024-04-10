@@ -136,7 +136,7 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
       },
     };
 
-    simpleTry<int>(() => widget.giftSendLogic.doSend(data, widget.count),
+    simpleTry<int>(() => widget.giftSendLogic.doSend(data, 1),
         whenErr: whenErr,
         callback: (resp) {
           widget.giftSendLogic.onDone(data, resp);
