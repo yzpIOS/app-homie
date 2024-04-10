@@ -174,7 +174,7 @@ class _ItemView extends StatelessWidget {
       style = const TextStyle(fontWeight: FontWeight.normal, fontSize: 14, color: Colors.white);
     } else {
       text = "BOSS";
-      style = const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFFBAF49), fontSize: 14);
+      style = const TextStyle(fontWeight: FontWeight.w900, color: Color(0xFFFBAF49), fontSize: 14);
     }
     return _MicView(
       avatar: InkResponse(
