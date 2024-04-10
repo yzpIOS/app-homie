@@ -69,7 +69,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           children: [
             // 聊天消息视图
             Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 235,
+              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 265,
               child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
             ),
             // 横屏右侧视图
