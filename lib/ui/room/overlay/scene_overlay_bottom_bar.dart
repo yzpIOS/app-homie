@@ -34,6 +34,8 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         if((controller is PersonRoomCtrl) == false) $MicView(isRoom),
         $SpeakView(),
         Expanded(child: SceneOverlayInput(onItemClick: onItemClick, padding: Pad(horizontal: 5),)),
+
+        SizedBox(width: 5,),
         _ConvView(onItemClick: onItemClick),
 
         // _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
@@ -46,7 +48,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             child: Container(
               width: 28,
               height: 28,
-              margin: EdgeInsets.only(left: 5),
+              margin: EdgeInsets.only(left: 10),
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/礼物'), width: 28, height: 28),
               ),
@@ -64,7 +66,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             child: Container(
               width: 28,
               height: 28,
-              margin: EdgeInsets.only(left: 5),
+              margin: EdgeInsets.only(left: 10),
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
               ),
@@ -322,6 +324,7 @@ class _ConvViewState extends State<_ConvView> {
               return Spacing.blank;
             },
           ),
+          SizedBox(height: 5,),
           IconBtnSvg(
             icon: "消息_0",
             size: 30,

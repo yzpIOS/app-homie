@@ -69,8 +69,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           children: [
             // 聊天消息视图
             Positioned.fill(
-              top: Get.height - 400,
-              left: 0,
+              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 235,
               child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
             ),
             // 横屏右侧视图
@@ -101,8 +100,8 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
               Positioned(
                 top: 550,
                 right: 10,
-                height: 50 * 4 + 3 * 10,
-                width: 50,
+                height: 80 * 4 + 3 * 10,
+                width: 80,
                 child: ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -112,7 +111,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                         TurntablePage.showDialog(controller.entry.toList()[index]);
                       },
                       behavior: HitTestBehavior.opaque,
-                      child: Image.network(controller.entry.toList()[index]["image"], width: 60, height: 60,),
+                      child: Image.network(controller.entry.toList()[index]["image"], width: 80, height: 80,),
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
