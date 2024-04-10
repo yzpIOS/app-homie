@@ -620,7 +620,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
             }
             _preSendTime = curTime;
 
-            if(_totalSendCount >= 3) {
+            if(_totalSendCount >= 2) {
               RenderBox? renderBox = globalKeys[logic.selectRx()?['id'] ?? -1]?.currentContext?.findRenderObject() as RenderBox?;
               Offset? offset = renderBox?.localToGlobal(Offset.zero);
 

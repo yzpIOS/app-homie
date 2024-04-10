@@ -17,7 +17,7 @@ class ContinueMagicBall extends StatefulWidget {
 
   double parentOffset = 0;
 
-  int count = 1;
+  int count = 3;
 
   ContinueMagicBall({
     required this.giftSendLogic,
