@@ -74,7 +74,7 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
         return;
       }
       debugPrint("记录点击次数4444 = ${curTime - _preSendTime}");
-      Get.back();
+      _handleBack();
     });
   }
 
@@ -122,7 +122,7 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
     if(data == null) {
 
       debugPrint("记录点击次数3333");
-      Get.back();
+      _handleBack();
       return;
     }
     final whenErr = {
@@ -148,15 +148,11 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
             setState(() { });
           } else {
             debugPrint("记录点击次数222 = ${curTime - _preSendTime}");
-            Get.back();
+            _handleBack();
           }
           _preSendTime = curTime;
         },
         codeCallBack: (code, e) {
-          if(code != 0) {
-            _preSendTime = 0;
-            _totalSendCount = 0;
-          }
         }
     );
   }
@@ -206,5 +202,15 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
           ),
       ],
     );
+  }
+
+  bool hasCallBack = false;
+
+  void _handleBack() {
+    if(hasCallBack) {
+      return;
+    }
+    hasCallBack = true;
+    Get.back();
   }
 }
