@@ -172,10 +172,9 @@ class CommonDialog extends StatefulWidget {
   ///
   /// 立即使用
   ///
-  static void simpleText(String text) {
+  static void simpleText(String text, {String? okText, Function? confirm}) {
     showDialog(context: Get.context!, builder: (context) {
-      return CommonDialog(title: text, cancelLabel: null, confirm:  () {
-      });
+      return CommonDialog(title: text, cancelLabel: null, confirm:  confirm ?? () {});
     });
   }
 

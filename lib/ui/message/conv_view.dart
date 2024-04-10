@@ -140,7 +140,7 @@ class _ItemView extends StatelessWidget {
                 ctrl.type = type;
                 ctrl.subType = subType;
                 return ctrl;
-              }, needCheckValid: type != TYPE_SYSTEM_MSG);
+              }, data.userID!, needCheckValid: type != TYPE_SYSTEM_MSG);
               break;
             default:
               showToast('当前版本不支持');

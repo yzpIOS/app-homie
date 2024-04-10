@@ -143,7 +143,7 @@ class _ActionView$Friend extends _ActionView {
       width: 60,
       height: 24,
       textStyle: const TextStyle(fontSize: 14, color: AppPalette.primary),
-      onTap: () => ChatPage.to2(() => SingleChatCtrl.fromUid(uid)),
+      onTap: () => ChatPage.to2(() => SingleChatCtrl.fromUid(uid), uid),
     );
   }
 }

@@ -67,7 +67,7 @@ mixin MomentHeader implements IHeaderView<MomentDtoAdapter> {
               width: 60,
               height: 24,
               textStyle: const TextStyle(fontSize: 14, color: AppPalette.primary),
-              onTap: () => ChatPage.to2(() => SingleChatCtrl.fromUid(vm.author)),
+              onTap: () => ChatPage.to2(() => SingleChatCtrl.fromUid(vm.author), vm.author),
             )
           : XTextBtn(
               label: '关注',

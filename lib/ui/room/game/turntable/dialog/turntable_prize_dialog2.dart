@@ -1,4 +1,5 @@
 
+import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/model/enum/money_type.dart';
 import 'package:app/net/api.dart';
@@ -16,6 +17,25 @@ class TurntablePrizeDialog2 extends StatefulWidget {
   MovieEntity? movieEntity;
 
   TurntablePrizeDialog2(this.items, this.movieEntity, {super.key});
+
+  static Future<void> showDialog2(S_BlindBox? event) async {
+    if(event == null) {
+      return;
+    }
+    var listItem = [];
+    event.items.forEach((element) {
+      listItem.add({
+        "price": element.price.toInt(),
+        "prize_image": element.cover,
+        "count": element.count,
+        "prize_name": element.name,
+        "currency": element.currency,
+        "blindBoxId": event.blindBoxId.toInt(),
+        "blindBoxCount": event.blindBoxCount.toInt(),
+      });
+    });
+    showDialog(RxList(listItem));
+  }
 
   static Future<void> showDialog(RxList items) async {
     items.sort((a, b) {
@@ -193,29 +213,12 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
   Widget createBottomButton(Map item) {
     return GestureDetector(
       onTap: () async {
-        if(SocketCtrl.ins.blindBox == null) {
+        if(index >= widget.items.length - 1) {
           Get.back();
           return;
         }
-        var sceneCtrl2 = RoomManagerCtrl.ins.sceneCtrl2;
-        if(sceneCtrl2 == null || sceneCtrl2.roomId <= 0) {
-          return;
-        }
-        // 房间号
-        int roomId = sceneCtrl2.roomId;
-        // 礼物id
-        int giftId = item["blindBoxId"];
-
-        int blindBoxCount = item["blindBoxCount"] > 0 ? item["blindBoxCount"] : 1;
-
-        // 发送
-        Api.Gift.sendGift2Room(
-          roomId: roomId,
-          giftId: giftId,
-          count: blindBoxCount,
-          isBackpack: false,
-          uid: [],
-        );
+        index += 1;
+        setState(() { });
       },
       behavior: HitTestBehavior.translucent,
       child: Container(

@@ -117,6 +117,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_AdministratorBroadcast = CMD._(2280, _omitEnumNames ? '' : 'S_AdministratorBroadcast');
   static const CMD S_LiveStopSettlementBroadcast = CMD._(2281, _omitEnumNames ? '' : 'S_LiveStopSettlementBroadcast');
   static const CMD S_LiveLikeBroadcast = CMD._(2282, _omitEnumNames ? '' : 'S_LiveLikeBroadcast');
+  static const CMD S_BackgroundBroadcast = CMD._(2283, _omitEnumNames ? '' : 'S_BackgroundBroadcast');
   static const CMD C_GiveGiftByRoom = CMD._(3100, _omitEnumNames ? '' : 'C_GiveGiftByRoom');
   static const CMD S_GiveGiftByRoom = CMD._(3101, _omitEnumNames ? '' : 'S_GiveGiftByRoom');
   static const CMD S_UpdateLevel = CMD._(3102, _omitEnumNames ? '' : 'S_UpdateLevel');
@@ -142,6 +143,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_ChangeDesignation = CMD._(4107, _omitEnumNames ? '' : 'S_ChangeDesignation');
   static const CMD C_QueryDesignation = CMD._(4108, _omitEnumNames ? '' : 'C_QueryDesignation');
   static const CMD S_QueryDesignation = CMD._(4109, _omitEnumNames ? '' : 'S_QueryDesignation');
+  static const CMD S_BlindBoxItem = CMD._(4110, _omitEnumNames ? '' : 'S_BlindBoxItem');
   static const CMD S_BulletinBroadcast = CMD._(5000, _omitEnumNames ? '' : 'S_BulletinBroadcast');
   static const CMD C_Robot = CMD._(6661, _omitEnumNames ? '' : 'C_Robot');
   static const CMD S_Robot = CMD._(6662, _omitEnumNames ? '' : 'S_Robot');
@@ -296,6 +298,7 @@ class CMD extends $pb.ProtobufEnum {
     S_AdministratorBroadcast,
     S_LiveStopSettlementBroadcast,
     S_LiveLikeBroadcast,
+    S_BackgroundBroadcast,
     C_GiveGiftByRoom,
     S_GiveGiftByRoom,
     S_UpdateLevel,
@@ -321,6 +324,7 @@ class CMD extends $pb.ProtobufEnum {
     S_ChangeDesignation,
     C_QueryDesignation,
     S_QueryDesignation,
+    S_BlindBoxItem,
     S_BulletinBroadcast,
     C_Robot,
     S_Robot,

@@ -623,6 +623,20 @@ final $typed_data.Uint8List s_MikeSpeakingBroadcastDescriptor = $convert.base64D
     '9sZV9pZBgCIAEoA1IGcm9sZUlkEhYKBnN0YXR1cxgDIAEoBVIGc3RhdHVzEhAKA3VpZBgEIAEo'
     'CVIDdWlk');
 
+@$core.Deprecated('Use s_BackgroundBroadcastDescriptor instead')
+const S_BackgroundBroadcast$json = {
+  '1': 'S_BackgroundBroadcast',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'bg_image', '3': 2, '4': 1, '5': 9, '10': 'bgImage'},
+  ],
+};
+
+/// Descriptor for `S_BackgroundBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_BackgroundBroadcastDescriptor = $convert.base64Decode(
+    'ChVTX0JhY2tncm91bmRCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhkKCGJnX2'
+    'ltYWdlGAIgASgJUgdiZ0ltYWdl');
+
 @$core.Deprecated('Use c_CreateSceneDescriptor instead')
 const C_CreateScene$json = {
   '1': 'C_CreateScene',
@@ -2465,6 +2479,7 @@ const S_BlindBox$json = {
     {'1': 'blind_box_cover', '3': 3, '4': 1, '5': 9, '10': 'blindBoxCover'},
     {'1': 'blind_box_count', '3': 5, '4': 1, '5': 5, '10': 'blindBoxCount'},
     {'1': 'blind_box_id', '3': 6, '4': 1, '5': 3, '10': 'blindBoxId'},
+    {'1': 'blind_box_type', '3': 7, '4': 1, '5': 5, '10': 'blindBoxType'},
   ],
 };
 
@@ -2473,7 +2488,8 @@ final $typed_data.Uint8List s_BlindBoxDescriptor = $convert.base64Decode(
     'CgpTX0JsaW5kQm94EjUKBWl0ZW1zGAEgAygLMh8uY29tLnNhdnZ5LnByb3RvLlNfQmxpbmRCb3'
     'hJdGVtUgVpdGVtcxIkCg5ibGluZF9ib3hfbmFtZRgCIAEoCVIMYmxpbmRCb3hOYW1lEiYKD2Js'
     'aW5kX2JveF9jb3ZlchgDIAEoCVINYmxpbmRCb3hDb3ZlchImCg9ibGluZF9ib3hfY291bnQYBS'
-    'ABKAVSDWJsaW5kQm94Q291bnQSIAoMYmxpbmRfYm94X2lkGAYgASgDUgpibGluZEJveElk');
+    'ABKAVSDWJsaW5kQm94Q291bnQSIAoMYmxpbmRfYm94X2lkGAYgASgDUgpibGluZEJveElkEiQK'
+    'DmJsaW5kX2JveF90eXBlGAcgASgFUgxibGluZEJveFR5cGU=');
 
 @$core.Deprecated('Use c_GiveGiftByOneClickDescriptor instead')
 const C_GiveGiftByOneClick$json = {

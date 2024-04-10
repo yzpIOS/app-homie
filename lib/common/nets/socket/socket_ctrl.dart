@@ -15,6 +15,7 @@ import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/message/announcement_message_dialog.dart';
 import 'package:app/ui/my/real_identity_page.dart';
+import 'package:app/ui/room/game/blind_diamond_toast.dart';
 import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog.dart';
 import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog2.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
@@ -268,71 +269,13 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       return;
     }
 
-    int count = 0;
-    var listItem = [];
-    event.items.forEach((element) {
-      count += (element.count * element.price.toInt());
-      listItem.add({
-        "price": element.price.toInt(),
-        "prize_image": element.cover,
-        "count": element.count,
-        "prize_name": element.name,
-        "currency": element.currency,
-        "blindBoxId": event.blindBoxId.toInt(),
-        "blindBoxCount": event.blindBoxCount.toInt(),
-      });
-    });
-
-    OKToast.showToastWidget(
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
-        decoration: BoxDecoration(
-          color: Color(0xFF656565),
-          borderRadius: BorderRadius.circular(100),
-        ),
-        child: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: "恭喜你获得",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal
-                )
-              ),
-
-              TextSpan(
-                text: "$count",
-                style: TextStyle(
-                  color: Color(0xFFFFDD79),
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal
-                )
-              ),
-
-              TextSpan(
-                text: "紫钻",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal
-                )
-              ),
-            ]
-          )
-        ),
-      )
-
-    );
-
-    // if(blindBox == null) {
-    //   blindBox = RxList(listItem);
-    //   TurntablePrizeDialog2.showDialog(blindBox!);
-    // } else {
-    //   blindBox?.value = listItem;
-    // }
-    // TurntablePrizeDialog2.showDialog(RxList(listItem));
+    if(event.blindBoxType == 8) {
+      // 紫砖, 魔法星球
+      showDiamondToast(event);
+    } else {
+      // 普通物品
+      TurntablePrizeDialog2.showDialog2(event);
+    }
   }
 
   ///

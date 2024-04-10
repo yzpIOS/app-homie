@@ -2,19 +2,25 @@ import 'dart:convert' as convert;
 import 'package:app/3rd/tencent/im.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/message/input/input_view.dart';
 import 'package:app/ui/message/msg_adapter/data/base_adapter.dart';
 import 'package:app/ui/message/msg_adapter/view/base_adapter.dart';
 import 'package:app/ui/message/msg_adapter/view/user_adapter.dart';
+import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+
+import '../../../store/im/conv_manager_ctrl.dart';
+import '../../my/wealth_level_page.dart';
 
 typedef ChatCtrlFactory = ChatCtrl Function();
 
@@ -32,11 +38,41 @@ class ChatPage extends StatelessWidget {
   }
 
 
-  static void to2(ChatCtrlFactory callBack, {bool needCheckValid = true}) async {
+  static void to2(ChatCtrlFactory callBack, UID uid, {bool needCheckValid = true}) async {
     // if(needCheckValid && !(await OAuthCtrl.checkValid())) {
     //   return Future.value(0);
     // }
-    Get.toNamed(routeName, arguments: callBack.call());
+    ChatCtrl chatCtrl = callBack.call();
+
+    if(needCheckValid) {
+      var result = await Api.Common.getImPermission();
+      // 不能聊天，
+      if(result["is_single_chat"] == null || result["is_single_chat"] == false) {
+        int level = int.tryParse(result["level"] ?? "0") ?? 0;
+        if(level >= 10) {
+          showToast("加入公会，可主动私信");
+          return;
+        }
+        // 那么判断有没有消息
+        // 4、用户在不是主播以及财富等级未达到10级的情况下去主动私信，系统会给出
+        // 【你的财富等级未满足10级，暂时未开通主动私信功能，弹窗下方增加一个等级说明，点击即可查看】提示。
+        try {
+          // 待待初始化完成
+          ConvManagerCtrl convManagerCtrl = Get.find<ConvManagerCtrl>();
+          bool hasMessage = await convManagerCtrl.haseMessage(uid);
+          if(hasMessage == false) {
+            CommonDialog.simpleText("你的财富等级未满足10级，暂时未开通主动私信功能", okText: "查看待级", confirm: () {
+              Get.to(() => WealthLevelPage(uid: OAuthCtrl.uid ?? ""));
+            });
+            return;
+          }
+        } catch(e, s) {
+          debugPrint("aa");
+        }
+      }
+    }
+
+    Get.toNamed(routeName, arguments: chatCtrl);
   }
 
   static void replaceChat(ChatCtrl ctrl) {

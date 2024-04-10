@@ -152,4 +152,8 @@ class ApiCommon extends ApiBase {
   Future getBannedUserList({required PageNum page}) {
     return _doPost("feedback/banned/user/list", data: page + {});
   }
+
+  Future getImPermission() async {
+    return _doPost("im/single_chat/auth");
+  }
 }

@@ -304,6 +304,11 @@ class ConvManagerCtrl extends GetxController with GetDisposableMixin {
     }
   }
 
+  Future<bool> haseMessage(UID uid) async {
+    var result = await IM.chat.getC2CHistoryMessageList(userID: uid, count: 2);
+    return result.data?.isNotEmpty ?? false;
+  }
+
   void markConvAsRead(SysConvEnum type) async {
     final data = sysBadgeRx[type];
 

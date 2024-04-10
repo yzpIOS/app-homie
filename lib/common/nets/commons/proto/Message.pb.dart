@@ -3177,6 +3177,70 @@ class S_MikeSpeakingBroadcast extends $pb.GeneratedMessage {
   void clearUid() => clearField(4);
 }
 
+class S_BackgroundBroadcast extends $pb.GeneratedMessage {
+  factory S_BackgroundBroadcast({
+    $fixnum.Int64? roomId,
+    $core.String? bgImage,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (bgImage != null) {
+      $result.bgImage = bgImage;
+    }
+    return $result;
+  }
+  S_BackgroundBroadcast._() : super();
+  factory S_BackgroundBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_BackgroundBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_BackgroundBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..aOS(2, _omitFieldNames ? '' : 'bgImage')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_BackgroundBroadcast clone() => S_BackgroundBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_BackgroundBroadcast copyWith(void Function(S_BackgroundBroadcast) updates) => super.copyWith((message) => updates(message as S_BackgroundBroadcast)) as S_BackgroundBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_BackgroundBroadcast create() => S_BackgroundBroadcast._();
+  S_BackgroundBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_BackgroundBroadcast> createRepeated() => $pb.PbList<S_BackgroundBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_BackgroundBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_BackgroundBroadcast>(create);
+  static S_BackgroundBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get bgImage => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set bgImage($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBgImage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBgImage() => clearField(2);
+}
+
 /// 创建房间场景
 class C_CreateScene extends $pb.GeneratedMessage {
   factory C_CreateScene({
@@ -11965,6 +12029,7 @@ class S_BlindBox extends $pb.GeneratedMessage {
     $core.String? blindBoxCover,
     $core.int? blindBoxCount,
     $fixnum.Int64? blindBoxId,
+    $core.int? blindBoxType,
   }) {
     final $result = create();
     if (items != null) {
@@ -11982,6 +12047,9 @@ class S_BlindBox extends $pb.GeneratedMessage {
     if (blindBoxId != null) {
       $result.blindBoxId = blindBoxId;
     }
+    if (blindBoxType != null) {
+      $result.blindBoxType = blindBoxType;
+    }
     return $result;
   }
   S_BlindBox._() : super();
@@ -11994,6 +12062,7 @@ class S_BlindBox extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'blindBoxCover')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'blindBoxCount', $pb.PbFieldType.O3)
     ..aInt64(6, _omitFieldNames ? '' : 'blindBoxId')
+    ..a<$core.int>(7, _omitFieldNames ? '' : 'blindBoxType', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -12056,6 +12125,15 @@ class S_BlindBox extends $pb.GeneratedMessage {
   $core.bool hasBlindBoxId() => $_has(4);
   @$pb.TagNumber(6)
   void clearBlindBoxId() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.int get blindBoxType => $_getIZ(5);
+  @$pb.TagNumber(7)
+  set blindBoxType($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasBlindBoxType() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearBlindBoxType() => clearField(7);
 }
 
 class C_GiveGiftByOneClick extends $pb.GeneratedMessage {
