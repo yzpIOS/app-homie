@@ -197,6 +197,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
         ),
         const Spacing(height: 6, flex: null),
         Expanded(
+          key: _globalKey,
           child: DecoratedBox(
             decoration: const ShapeDecoration(
               shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
@@ -215,7 +216,6 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
 
   Widget $TabView(Iterable<String> keys) {
     return Padding(
-      key: _globalKey,
       padding: const Pad(left: 10),
       child: Row(
         children: [
@@ -623,10 +623,13 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
             if(_totalSendCount >= 2) {
               RenderBox? renderBox = globalKeys[logic.selectRx()?['id'] ?? -1]?.currentContext?.findRenderObject() as RenderBox?;
               Offset? offset = renderBox?.localToGlobal(Offset.zero);
+              // offset = renderBox?.globalToLocal(offset ?? Offset.zero);
 
-              Offset? giftView = (_globalKey.currentContext?.findRenderObject() as RenderBox?)?.localToGlobal(Offset.zero);
+              Offset? giftViweOffset = (_globalKey.currentContext?.findRenderObject() as RenderBox?)?.localToGlobal(Offset.zero);
 
-              ContinueMagicBall.showBottom(logic, offset, renderBox?.size, giftView?.dy ?? 500, numRx());
+              Size? giftView = (_globalKey.currentContext?.findRenderObject() as RenderBox?)?.size;
+
+              ContinueMagicBall.showBottom(logic, Offset(offset?.dx ?? 10, (offset?.dy ?? 0) - (giftViweOffset?.dy ?? 0)), renderBox?.size, giftView?.height ?? 500, numRx());
               _totalSendCount = 0;
             }
           }

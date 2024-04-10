@@ -6,6 +6,7 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../../tools.dart';
+import '../../common/orientation_sheet.dart';
 import '../../my/wallet/recharge_page.dart';
 
 class ContinueMagicBall extends StatefulWidget {
@@ -31,16 +32,23 @@ class ContinueMagicBall extends StatefulWidget {
   State<StatefulWidget> createState() => _ContinueMagicBall();
 
   static void showBottom(GiftSendLogic giftSendLogic, Offset? offset, Size? size, double parentOffset, int count) {
-    Get.showBottomSheet(
-      ContinueMagicBall(
+    OrientationSheet.show(
+      child: ContinueMagicBall(
         giftSendLogic: giftSendLogic,
         offset: offset ?? Offset(10, Get.height - 150),
         size: size ?? Size(74, 90),
         parentOffset: parentOffset,
       ),
-      bgColor: Colors.transparent,
-      enterBottomSheetDuration: Duration.zero,
+      direction: SheetOrientation.bottom,
+      decoration: null,
+      constraints: BoxConstraints(minHeight: parentOffset, maxHeight: parentOffset),
+      dur: Duration.zero,
     );
+    // Get.showBottomSheet(
+    //   ,
+    //   bgColor: Colors.transparent,
+    //   enterBottomSheetDuration: Duration.zero,
+    // );
   }
 }
 
@@ -80,15 +88,26 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Stack(
+    double position = 0.0;
+    if(widget.offset.dy + widget.size.height > widget.parentOffset) {
+      position = 0;
+    } else if(widget.offset.dy  < - widget.size.height) {
+      position = 0;
+    } else {
+      position = widget.offset.dy;
+    }
+
+    return Container(
+      width: double.infinity,
+      height: widget.parentOffset,
+      color: Colors.black.withAlpha(80),
+      child: Stack(
         children: [
           Positioned(
             width: widget.size.width,
             height: widget.size.height,
             left: widget.offset.dx,
-            top: widget.offset.dy + widget.size.height < widget.parentOffset ? widget.parentOffset : widget.offset.dy,
+            top: position,
             child: GiftItemView(
               data: widget.giftSendLogic.selectRx.value ?? {},
               selectRx: Rxn(widget.giftSendLogic.selectRx.value),

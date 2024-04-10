@@ -43,6 +43,8 @@ class OrientationSheet extends StatelessWidget {
     bool barrierDismissible = true,
     SheetOrientation direction = SheetOrientation.bottom,
     Color bgColor = Colors.white,
+
+    Duration dur = const Duration(milliseconds: 200),
   }) {
     final sheet = OrientationSheet._(
       bgColor: bgColor,
@@ -69,7 +71,6 @@ class OrientationSheet extends StatelessWidget {
         break;
     }
 
-    const dur = Duration(milliseconds: 200);
 
     final route = RawDialogRoute<T>(
       settings: child.toRouteSettings(),
