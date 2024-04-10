@@ -39,16 +39,17 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         _ConvView(onItemClick: onItemClick),
 
         // _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
+        if(isRoom)
+          SizedBox(width: 10,),
         if (isRoom)
           GestureDetector(
             onTap: () {
               onItemClick.call('礼物');
             },
-            behavior: HitTestBehavior.opaque,
+            behavior: HitTestBehavior.translucent,
             child: Container(
               width: 28,
               height: 28,
-              margin: EdgeInsets.only(left: 10),
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/礼物'), width: 28, height: 28),
               ),
@@ -57,6 +58,9 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
 
         // if (isSquare) _IconBtn(icon: '拍照', onItemClick: onItemClick),
         if(controller is PersonRoomCtrl) MicOperate(),
+
+        if(isRoom)
+          SizedBox(width: 10,),
         if (isRoom)
           GestureDetector(
             onTap: () {
@@ -66,7 +70,6 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
             child: Container(
               width: 28,
               height: 28,
-              margin: EdgeInsets.only(left: 10),
               child: IconBtnDecor(
                 child: Image.asset(IMG.format('room/工具'), width: 28, height: 28),
               ),

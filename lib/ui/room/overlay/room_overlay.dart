@@ -100,24 +100,25 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
               Positioned(
                 top: 550,
                 right: 10,
-                height: 80 * 4 + 3 * 10,
+                height: 80,
                 width: 80,
                 child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        TurntablePage.showDialog(controller.entry.toList()[index]);
-                      },
-                      behavior: HitTestBehavior.opaque,
-                      child: Image.network(controller.entry.toList()[index]["image"], width: 80, height: 80,),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 10, width: 10,);
-                  },
-                  itemCount: controller.entry.length
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () {
+                          TurntablePage.showDialog(controller.entry.toList()[index]);
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: Image.network(controller.entry.toList()[index]["image"], width: 80, height: 80,),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(height: 10, width: 10,);
+                    },
+                    itemCount: controller.entry.length
                 ),
               )
             // Positioned(
