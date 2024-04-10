@@ -25,6 +25,7 @@ import 'package:app/env.dart';
 import 'package:app/tools/bus.dart';
 import 'package:get/get.dart';
 import 'package:slugid/slugid.dart';
+import 'package:oktoast/oktoast.dart' as OKToast;
 
 
 
@@ -267,8 +268,10 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       return;
     }
 
+    int count = 0;
     var listItem = [];
     event.items.forEach((element) {
+      count += (element.count * element.price.toInt());
       listItem.add({
         "price": element.price.toInt(),
         "prize_image": element.cover,
@@ -280,13 +283,56 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       });
     });
 
+    OKToast.showToastWidget(
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+        decoration: BoxDecoration(
+          color: Color(0xFF656565),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: "恭喜你获得",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal
+                )
+              ),
+
+              TextSpan(
+                text: "$count",
+                style: TextStyle(
+                  color: Color(0xFFFFDD79),
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal
+                )
+              ),
+
+              TextSpan(
+                text: "紫钻",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal
+                )
+              ),
+            ]
+          )
+        ),
+      )
+
+    );
+
     // if(blindBox == null) {
     //   blindBox = RxList(listItem);
     //   TurntablePrizeDialog2.showDialog(blindBox!);
     // } else {
     //   blindBox?.value = listItem;
     // }
-    TurntablePrizeDialog2.showDialog(RxList(listItem));
+    // TurntablePrizeDialog2.showDialog(RxList(listItem));
   }
 
   ///

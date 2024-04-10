@@ -87,7 +87,7 @@ Future<T> holderProgress<T>(Future<T> f) async {
   }
 }
 
-Future<void> simpleSub(f, {ValueChanged? callback1, VoidCallback? callback, String? msg, WhenErr? whenErr}) {
+Future<void> simpleSub(f, {ValueChanged? callback1, VoidCallback? callback, String? msg, WhenErr? whenErr, CodeCallBack? codeCallBack = null}) {
   return simpleTry(
     whenErr: whenErr,
     () async {

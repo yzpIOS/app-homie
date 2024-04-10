@@ -11,6 +11,7 @@ import 'package:app/ui/gift/gift_blind_box_details_sheet.dart';
 import 'package:app/ui/gift/gift_send_all.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
+import 'package:app/ui/room/game/continue_magic_ball.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -124,7 +125,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
                 return _DataView(data: it.autoGet(), selectRx: logic.selectRx, callBack: (data) {
                   chooseBagGoods.value = false;
                   logic.selectRx.value = data;
-                },);
+                }, globalKeys: globalKeys,);
               },
             );
           },
@@ -210,8 +211,11 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
     return child;
   }
 
+  GlobalKey _globalKey = GlobalKey();
+
   Widget $TabView(Iterable<String> keys) {
     return Padding(
+      key: _globalKey,
       padding: const Pad(left: 10),
       child: Row(
         children: [
@@ -556,6 +560,11 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
     });
   }
 
+  int _preSendTime = 0;
+  int _totalSendCount = 0;
+
+  Map<int ,GlobalKey> globalKeys = {};
+
   void doSend() {
     final count = numRx();
     final data = logic.selectRx();
@@ -584,13 +593,52 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
       simpleSub(
         logic.doSend(data, count),
         whenErr: whenErr,
-        callback1: (resp) => logic.onDone(data, resp),
+        callback1: (resp) {
+          logic.onDone(data, resp);
+        },
+        codeCallBack: (code, e) {
+          _preSendTime = 0;
+          _totalSendCount = 0;
+        }
       );
     } else {
       simpleTry<int>(
         () => logic.doSend(data, count),
         whenErr: whenErr,
-        callback: (resp) => logic.onDone(data, resp),
+        callback: (resp) {
+          // logic.onDone(data, resp);
+
+
+          // 魔法星球
+          if(logic.selectRx()?['type'] ==  8) {
+            var curTime = DateTime.now().millisecondsSinceEpoch;
+            debugPrint("记录点击次数 = ${curTime - _preSendTime}");
+            if(_preSendTime == 0 || curTime - _preSendTime < 1500) {
+              _totalSendCount += 1;
+            } else {
+              _totalSendCount = 0;
+            }
+            _preSendTime = curTime;
+
+            if(_totalSendCount >= 3) {
+              RenderBox? renderBox = globalKeys[logic.selectRx()?['id'] ?? -1]?.currentContext?.findRenderObject() as RenderBox?;
+              Offset? offset = renderBox?.localToGlobal(Offset.zero);
+
+              Offset? giftView = (_globalKey.currentContext?.findRenderObject() as RenderBox?)?.localToGlobal(Offset.zero);
+
+              ContinueMagicBall.showBottom(logic, offset, renderBox?.size, giftView?.dy ?? 500, numRx());
+              _totalSendCount = 0;
+            }
+          }
+
+          logic.onDone(data, resp);
+        },
+        codeCallBack: (code, e) {
+          if(code != 0) {
+            _preSendTime = 0;
+            _totalSendCount = 0;
+          }
+        }
       );
     }
   }
@@ -601,8 +649,9 @@ class _DataView extends StatelessWidget {
   final Rxn<Map> selectRx;
 
   final CallBack callBack;
+  final Map<int ,GlobalKey>? globalKeys;
 
-  _DataView({required this.data, required this.selectRx, required this.callBack});
+  _DataView({required this.data, required this.selectRx, required this.callBack, this.globalKeys});
 
   static const _ratio = 80 / 62;
   static const _fixedH = 30.0;
@@ -623,20 +672,27 @@ class _DataView extends StatelessWidget {
       addRepaintBoundaries: false,
       addAutomaticKeepAlives: false,
       itemCount: data.length,
-      itemBuilder: (_, i) => _ItemView(data: data[i], selectRx: selectRx, callBack: callBack),
+      itemBuilder: (_, i) {
+        GlobalKey? globalKey;
+        if(globalKeys != null) {
+          globalKey = GlobalKey();
+          globalKeys![data[i]["id"]] = globalKey;
+        }
+        return GiftItemView(data: data[i], selectRx: selectRx, callBack: callBack, key: globalKey,);
+      },
     );
   }
 }
 
 typedef CallBack = void Function(Map data);
 
-class _ItemView extends StatelessWidget {
+class GiftItemView extends StatelessWidget {
   final Map data;
   final Rxn<Map> selectRx;
 
   final CallBack callBack;
 
-  const _ItemView({required this.data, required this.selectRx, required this.callBack});
+  const GiftItemView({required this.data, required this.selectRx, required this.callBack, super.key});
 
   @override
   Widget build(BuildContext context) {

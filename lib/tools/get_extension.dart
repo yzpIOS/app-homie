@@ -162,6 +162,7 @@ extension XGet on GetInterface {
     Color bgColor = AppPalette.sheetWhite,
     EdgeInsets safeAreaMinimum = Pad.zero,
     ShapeBorder? shape,
+    Duration? enterBottomSheetDuration,
   }) {
     Widget sheet = child;
 
@@ -178,6 +179,7 @@ extension XGet on GetInterface {
       isDismissible: isDismissible,
       isScrollControlled: isScrollControlled,
       settings: child.toRouteSettings(),
+      enterBottomSheetDuration: enterBottomSheetDuration,
     );
   }
 
