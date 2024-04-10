@@ -171,7 +171,7 @@ class _ItemView extends StatelessWidget {
     TextStyle style;
     String text = '$no号麦';
     if(type == 0) {
-      style = const TextStyle(fontWeight: fw$Medium, fontSize: 14, color: Colors.white);
+      style = const TextStyle(fontWeight: FontWeight.normal, fontSize: 14, color: Colors.white);
     } else {
       text = "BOSS";
       style = const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFFFBAF49), fontSize: 14);
@@ -246,13 +246,17 @@ class _ItemView extends StatelessWidget {
 
     return RepaintBoundary(
       child: _MicView(
-        tag: no == '1' ? '主持' : null,
+        tag: no == '1' ? 'presided' : null,
         mic: $Mic(),
         tips: $HotView(),
         avatar: $Avatar(),
-        title: UserInfoCtrl.use(uid, builder: (it) => XText(it?.showName() ?? '')),
+        title: UserInfoCtrl.use(uid, builder: (it) {
+          return XText(
+            it?.showName() ?? '',
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12, color: Colors.white),);
+        },
       ),
-    );
+    ));
   }
 
   Widget $MicStateView(String state) {
@@ -288,6 +292,13 @@ class _MicView extends StatelessWidget {
       alignment: Alignment.topCenter,
       children: [
         Positioned(width: _size, height: _size, child: avatar),
+        if (tag != null) //
+          Positioned(
+            top: _size - 14,
+            child: IgnorePointer(
+                child: Image.asset(IMG.format("room/presided"), width: 40, height: 14,)
+            ),
+          ),
         if (mic != null) //
           Positioned(
             width: _size,
@@ -298,22 +309,6 @@ class _MicView extends StatelessWidget {
                 child: DefaultTextStyle.merge(
                   style: const TextStyle(fontWeight: fw$Medium),
                   child: mic!,
-                ),
-              ),
-            ),
-          ),
-        if (tag != null) //
-          Positioned(
-            top: _size - 14 * 0.3,
-            child: IgnorePointer(
-              child: Container(
-                width: 30,
-                height: 14,
-                alignment: Alignment.center,
-                decoration: const ShapeDecoration(color: AppPalette.primary, shape: AppShape.a3),
-                child: XText(
-                  tag!,
-                  style: const TextStyle(fontSize: 10, color: Colors.white, fontWeight: fw$Medium),
                 ),
               ),
             ),
