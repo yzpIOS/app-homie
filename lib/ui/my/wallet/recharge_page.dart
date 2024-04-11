@@ -37,7 +37,7 @@ class _RechargePageState extends State<RechargePage> {
   final type = MoneyType.diamond;
 
   late final api = Api.Wallet.rechargeCombo();
-  late final RxBool pactRx = RxBool(true);//是否选中充值及购买协议
+  late final RxBool pactRx = RxBool(false);//是否选中充值及购买协议
 
   ApplePurchase applePurchase = ApplePurchase();
 
