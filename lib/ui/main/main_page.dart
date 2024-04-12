@@ -118,6 +118,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   void onDisconnectCallBack() {
   }
 
+  bool has2NextPage = false;
 
   ///
   /// 当前页面push到其他页面走这里
@@ -126,6 +127,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   void didPushNext() {
     super.didPushNext();
     applePurchase?.dispose();
+    has2NextPage = true;
   }
 
   ///
@@ -134,6 +136,10 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
   @override
   void didPopNext() {
     super.didPopNext();
+    if(has2NextPage) {
+      Bus.fire(LoadScene(sceneName: "forceLoad"));
+    }
+    has2NextPage = false;
   }
 
   @override
