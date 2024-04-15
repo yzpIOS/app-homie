@@ -47,11 +47,9 @@ class _MyModelViewState extends State<MyModelView> {
   @override
   void initState() {
     super.initState();
-    streamSubscription = Bus.on<LoadScene>((event) {
-      if(event.sceneName != "ModelScene") {
-        clothSelectorCtrl.modelSceneUnityLoadComplete = false;
-        setState(() { });
-      }
+    streamSubscription = Bus.on<LoadScene>((event) async {
+      await Future.delayed(const Duration(milliseconds: 1500));
+      setState(() { });
     });
 
     //注册镜头位置监听回调

@@ -182,7 +182,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
             if(userList[index].no == "1") {
               roomOwner = result;
               micInfos[result.roleId] = userList[index];
-            } else if(userList[index].no == "8") {
+            } else if(userList[index].no == "9") {
             } else {
               userInMicList.add(result);
               micInfos[result.roleId] = userList[index];
