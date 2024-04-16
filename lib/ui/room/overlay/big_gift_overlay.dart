@@ -274,7 +274,7 @@ class _BigGiftView extends StatelessWidget {
     );
 
     child = DecoratedBox(
-      decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
+      decoration: ShapeDecoration(shape: XStadiumBorder(), color: Colors.black.withAlpha(204)),
       child: child,
     );
 

@@ -12,12 +12,25 @@ import 'package:flutter/widgets.dart';
 
 import 'package:fixnum/fixnum.dart';
 
+const String type_room = "房间";
+
+const String type_lucky = "幸运";
+
+const String type_world = "世界";
+
 class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   final int roomId;
 
   RoomChatCtrl(this.roomId);
 
   final dataRx = RxList<Widget>();
+
+  RxString selected = RxString(type_room);
+
+  Map dataSet = {
+    type_room: RxList<Widget>(),
+    // "幸运": RxList<Widget>(),
+  };
 
   @override
   void onInit() {
@@ -28,7 +41,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     /// 显示系统公告消息
     on<SystemMsgEvent>((data) {
       data.systemMsgList.forEach((element) {
-        dataRx.add(
+        roomRxList.add(
           SystemMsgView(
             BaseMsgData<String>(data: element),
           ),
@@ -38,7 +51,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     // 本地消息
     on<LocalMsgEvent>((data) {
-      dataRx.add(SimpleTextMsg(data.localMsgData));
+      roomRxList.add(SimpleTextMsg(data.localMsgData));
     });
 
     /// 文本消息
@@ -47,16 +60,22 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       final txt = data.data?.message ?? "";
       final nuid = data.data?.roleId;
 
-      dataRx.add(
+      roomRxList.add(
         TxtMsgView(
           TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
         ),
+      );
+
+      worldList.add(
+          TxtMsgView(
+            TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
+          )
       );
     });
 
     /// xxx进入了房间消息
     on<UserInEvent>((data) {
-      dataRx.add(
+      roomRxList.add(
         UserInMsgView(
           UserInMsgData(uid: data.uid ?? "", nuid: data.data?.roleId ?? Int64(0)),
         ),
@@ -65,7 +84,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     /// 房间公告
     on<NoticeEvent>((data) {
-      dataRx.add(
+      roomRxList.add(
         NoticeMsgView(
           BaseMsgData<String>(data: data.data?.message ?? ""),
         ),
@@ -129,7 +148,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         final users = await findByUidX({sendUid, ...ids}, useNet: true);
         users.forEach((key, value) {
           if(sendUid != value.uid) {
-            dataRx.add(
+            roomRxList.add(
               BlindBoxGiftOpenMsgView(
                 BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, items: dataValue, data: moreGift),
               ),
@@ -138,6 +157,44 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         });
       });
     });
+
+    on<RoomInfoEvent>((data) async {
+      if(data.s_syncRoomInfo?.luckChatChannel == true) {
+        if(!dataSet.containsKey(type_lucky)) {
+          dataSet[type_lucky] = RxList<Widget>();
+        }
+      } else {
+        dataSet.remove(type_lucky);
+      }
+
+      if(data.s_syncRoomInfo?.worldChatChannel == true) {
+        if(!dataSet.containsKey(type_world)) {
+          dataSet[type_world] = RxList<Widget>();
+        }
+      } else {
+        dataSet.remove(type_world);
+      }
+
+      selected.refresh();
+    });
+
+    on<LuckScreenEvent>((data) async {
+      data.data?.items.forEach((gift) {
+        giftRxList.add(
+          LuckMsgView(
+            LuckMsgAdapter(uid: gift.uid, nuid: Int64(0), data: gift),
+          ),
+        );
+        if(giftRxList.length > 200) {
+          giftRxList.removeAt(0);
+        }
+      });
+    });
+  }
+
+
+  void switchType(String type) {
+    selected.value = type;
   }
 
   Future<void> _handleSendGift(UID sendUid, S_GiftPlay gift) async {
@@ -148,12 +205,23 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     users.forEach((key, value) {
       if(sendUid != value.uid && gift.type != 6) {//盲盒礼物不需要显示这条
-        dataRx.add(
-          GiftMsgView(
-            GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, data: gift),
-          ),
-        );
+        // 房间信息
+        roomRxList.add(GiftMsgView(
+          GiftMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, data: gift),
+        ));
       }
     });
+  }
+
+  RxList<Widget> get roomRxList {
+    return dataSet[type_room] ?? RxList.empty();
+  }
+
+  RxList<Widget> get giftRxList {
+    return dataSet[type_lucky] ?? RxList.empty();
+  }
+
+  RxList<Widget> get worldList {
+    return dataSet[type_world] ?? RxList.empty();
   }
 }

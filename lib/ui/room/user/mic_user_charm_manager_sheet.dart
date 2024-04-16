@@ -333,11 +333,12 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     }
     var userList = roomMicCtrl.simpleUserList;
     // 获取在麦上的用户id
-    var userRoleids = userList.where((e) => selectedIds.contains(e.nUid)).map((e) => Int64(e.micId)).toList();
+    var userRoleids = userList.where((e) => selectedIds.contains(e.nUid)).map((e) => e.nUid).toList();
     if(userRoleids.isEmpty) {
+      showToast("请选择清零用户");
       return;
     }
-    await Api.Room.resetHotCount(mics: userRoleids);
+    await Api.Room.resetHotCount(userRoleids);
     // 清理选择的数据
     selectedIds.clear();
     selectedAll.value = false;

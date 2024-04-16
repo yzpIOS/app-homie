@@ -68,8 +68,10 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           alignment: Alignment.center,
           children: [
             // 聊天消息视图
-            Positioned.fill(
-              top: isLandscape || sideMicMode || !showMicPanel || !showMic ? AppSize.safeTop + AppSize.appBar + 26 : AppSize.safeTop + AppSize.appBar + 265,
+            Positioned(
+              bottom: 80,
+              left: 0,
+              right: 0,
               child: controller.chatMsgViewIsShowRx() ? const RoomChatView() : Spacing.blank,
             ),
             // 横屏右侧视图
@@ -332,12 +334,6 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       );
     });
 
-  }
-
-  void _resetHotCount() {
-    simpleSub(
-      Api.Room.resetHotCount(),
-    );
   }
 }
 

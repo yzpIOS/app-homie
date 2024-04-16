@@ -314,14 +314,10 @@ class ApiRoom extends ApiBase {
   /// 清除麦克风热度计数器
   /// https://yapi.pro/project/11739/interface/api/457358
   ///
-  Future resetHotCount({int? micId, List<Int64>? mics}) {
+  Future resetHotCount(List<Int64> roleIds) {
     C_AccMikeClear cAccmikeclear = C_AccMikeClear.create();
-    if(micId != null) {
-      cAccmikeclear.mikeId = Int64(micId ?? 0);
-    }
-    if(mics != null) {
-      cAccmikeclear.mikeIds.addAll(mics);
-    }
+    cAccmikeclear.roleIdList.addAll(roleIds);
+
     SocketCtrl.ins.sendSever(CMD.C_AccMikeClear, message: cAccmikeclear);
     return Future.value(1);
 

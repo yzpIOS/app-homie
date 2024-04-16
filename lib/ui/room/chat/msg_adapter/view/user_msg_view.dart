@@ -185,6 +185,28 @@ class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
   }
 }
 
+
+/// 送普通礼物消息视图  xxx给xxx送出了xxx
+class LuckMsgView extends _UserMsgView<LuckMsgAdapter> {
+  const LuckMsgView(super.vm, {super.key});
+
+  @override
+  InlineSpan richText(special, info) {
+    return TextSpan(
+      children: [
+        const TextSpan(text: '在'),
+        TextSpan(text: vm.gameName, style: const TextStyle(color: AppPalette.colorY),),
+        const TextSpan(text: ' 中 获得了价值'),
+        TextSpan(text: vm.prize.toString(), style: TextStyle(color: Color(0xFF3DF6FF))),
+        const TextSpan(text: '紫砖的'),
+        TextSpan(text: vm.giftName.toString(), style: TextStyle(color: Color(0xFF3DF6FF))),
+        TextSpan(text: ' x${vm.giftCount}'),
+      ],
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+}
+
 /// 盲盒开出了礼物消息视图  xxx送出xxx给xxx，开出xxx
 class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
   const BlindBoxGiftOpenMsgView(super.vm, {super.key});

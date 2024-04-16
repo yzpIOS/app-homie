@@ -64,7 +64,7 @@ class GiftSendAll extends StatelessWidget {
               child: Row(
                 children: [
                   SizedBox(width: 10,),
-                  Obx(() {
+                  Expanded(child: Obx(() {
                     SceneMicCtrl? sceneMicCtrl = RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl();
                     if(sceneMicCtrl is RoomMicCtrl) {
                       micInfos = sceneMicCtrl.dataRx.values.toList();
@@ -107,18 +107,16 @@ class GiftSendAll extends StatelessWidget {
 
                     return ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         return createItem(micInfos[index], avatorSize, index);
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(width: 8.5,);
+                        return SizedBox(width: 7,);
                       },
                       itemCount: micInfos.length
                     );
-                  }),
+                  })),
 
-                  Expanded(child: SizedBox()),
 
                   GestureDetector(
                     onTap: () async {

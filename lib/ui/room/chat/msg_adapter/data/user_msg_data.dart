@@ -30,6 +30,16 @@ class GiftMsgAdapter extends UserMsgData<S_GiftPlay> {
   late final String giftCover = data.cover;
 }
 
+class LuckMsgAdapter extends UserMsgData<LuckScreenItem> {
+
+  LuckMsgAdapter({required super.uid, required super.nuid, required super.data});
+
+  late final int giftCount = data.count;
+  late final String giftName = data.giftName;
+  late final String gameName = data.gameName;
+  late final int prize = data.price;
+}
+
 class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
   final Map<UID, UserInfoDto> users;
   final String acceptUid;

@@ -1036,6 +1036,8 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     $core.int? collectStatus,
     $core.int? isAdministrator,
     $core.int? isAnchor,
+    $core.bool? luckChatChannel,
+    $core.bool? worldChatChannel,
   }) {
     final $result = create();
     if (onlineList != null) {
@@ -1053,6 +1055,12 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     if (isAnchor != null) {
       $result.isAnchor = isAnchor;
     }
+    if (luckChatChannel != null) {
+      $result.luckChatChannel = luckChatChannel;
+    }
+    if (worldChatChannel != null) {
+      $result.worldChatChannel = worldChatChannel;
+    }
     return $result;
   }
   S_SyncRoomInfo._() : super();
@@ -1065,6 +1073,8 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(3, _omitFieldNames ? '' : 'collectStatus', $pb.PbFieldType.O3)
     ..a<$core.int>(4, _omitFieldNames ? '' : 'isAdministrator', $pb.PbFieldType.O3)
     ..a<$core.int>(5, _omitFieldNames ? '' : 'isAnchor', $pb.PbFieldType.O3)
+    ..aOB(6, _omitFieldNames ? '' : 'luckChatChannel')
+    ..aOB(7, _omitFieldNames ? '' : 'worldChatChannel')
     ..hasRequiredFields = false
   ;
 
@@ -1123,6 +1133,26 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
   $core.bool hasIsAnchor() => $_has(4);
   @$pb.TagNumber(5)
   void clearIsAnchor() => clearField(5);
+
+  /// 是否有幸运板块的聊天频道
+  @$pb.TagNumber(6)
+  $core.bool get luckChatChannel => $_getBF(5);
+  @$pb.TagNumber(6)
+  set luckChatChannel($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasLuckChatChannel() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearLuckChatChannel() => clearField(6);
+
+  /// 是否有世界板块的聊天频道
+  @$pb.TagNumber(7)
+  $core.bool get worldChatChannel => $_getBF(6);
+  @$pb.TagNumber(7)
+  set worldChatChannel($core.bool v) { $_setBool(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasWorldChatChannel() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearWorldChatChannel() => clearField(7);
 }
 
 /// 请求切换场景
@@ -4125,15 +4155,11 @@ class C_BanMike extends $pb.GeneratedMessage {
 
 class C_AccMikeClear extends $pb.GeneratedMessage {
   factory C_AccMikeClear({
-    $fixnum.Int64? mikeId,
-    $core.Iterable<$fixnum.Int64>? mikeIds,
+    $core.Iterable<$fixnum.Int64>? roleIdList,
   }) {
     final $result = create();
-    if (mikeId != null) {
-      $result.mikeId = mikeId;
-    }
-    if (mikeIds != null) {
-      $result.mikeIds.addAll(mikeIds);
+    if (roleIdList != null) {
+      $result.roleIdList.addAll(roleIdList);
     }
     return $result;
   }
@@ -4142,8 +4168,7 @@ class C_AccMikeClear extends $pb.GeneratedMessage {
   factory C_AccMikeClear.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_AccMikeClear', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
-    ..aInt64(1, _omitFieldNames ? '' : 'mikeId')
-    ..p<$fixnum.Int64>(2, _omitFieldNames ? '' : 'mikeIds', $pb.PbFieldType.K6)
+    ..p<$fixnum.Int64>(3, _omitFieldNames ? '' : 'roleIdList', $pb.PbFieldType.K6)
     ..hasRequiredFields = false
   ;
 
@@ -4168,17 +4193,10 @@ class C_AccMikeClear extends $pb.GeneratedMessage {
   static C_AccMikeClear getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_AccMikeClear>(create);
   static C_AccMikeClear? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $fixnum.Int64 get mikeId => $_getI64(0);
-  @$pb.TagNumber(1)
-  set mikeId($fixnum.Int64 v) { $_setInt64(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasMikeId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearMikeId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.List<$fixnum.Int64> get mikeIds => $_getList(1);
+  /// int64 mike_id = 1;           // 兼容：1.2.0之前，麦克风id， 不传麦克风id默认清楚房间所有的麦克风计数器
+  /// repeated int64 mike_ids = 2; // 兼容：1.2.0且之后，麦克风id集， 不传麦克风id默认清楚房间所有的麦克风计数器
+  @$pb.TagNumber(3)
+  $core.List<$fixnum.Int64> get roleIdList => $_getList(0);
 }
 
 /// 设置房间公告
@@ -12262,6 +12280,160 @@ class S_GiveGiftByOneClick extends $pb.GeneratedMessage {
   $core.bool hasCode() => $_has(0);
   @$pb.TagNumber(1)
   void clearCode() => clearField(1);
+}
+
+class LuckScreenItem extends $pb.GeneratedMessage {
+  factory LuckScreenItem({
+    $core.String? uid,
+    $core.String? gameName,
+    $core.int? price,
+    $core.String? giftName,
+    $core.int? count,
+  }) {
+    final $result = create();
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (gameName != null) {
+      $result.gameName = gameName;
+    }
+    if (price != null) {
+      $result.price = price;
+    }
+    if (giftName != null) {
+      $result.giftName = giftName;
+    }
+    if (count != null) {
+      $result.count = count;
+    }
+    return $result;
+  }
+  LuckScreenItem._() : super();
+  factory LuckScreenItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LuckScreenItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LuckScreenItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
+    ..aOS(3, _omitFieldNames ? '' : 'gameName')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'price', $pb.PbFieldType.O3)
+    ..aOS(5, _omitFieldNames ? '' : 'giftName')
+    ..a<$core.int>(6, _omitFieldNames ? '' : 'count', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LuckScreenItem clone() => LuckScreenItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LuckScreenItem copyWith(void Function(LuckScreenItem) updates) => super.copyWith((message) => updates(message as LuckScreenItem)) as LuckScreenItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LuckScreenItem create() => LuckScreenItem._();
+  LuckScreenItem createEmptyInstance() => create();
+  static $pb.PbList<LuckScreenItem> createRepeated() => $pb.PbList<LuckScreenItem>();
+  @$core.pragma('dart2js:noInline')
+  static LuckScreenItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LuckScreenItem>(create);
+  static LuckScreenItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  /// 玩法名称
+  @$pb.TagNumber(3)
+  $core.String get gameName => $_getSZ(1);
+  @$pb.TagNumber(3)
+  set gameName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasGameName() => $_has(1);
+  @$pb.TagNumber(3)
+  void clearGameName() => clearField(3);
+
+  /// 礼物价格
+  @$pb.TagNumber(4)
+  $core.int get price => $_getIZ(2);
+  @$pb.TagNumber(4)
+  set price($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPrice() => $_has(2);
+  @$pb.TagNumber(4)
+  void clearPrice() => clearField(4);
+
+  /// 礼物名称
+  @$pb.TagNumber(5)
+  $core.String get giftName => $_getSZ(3);
+  @$pb.TagNumber(5)
+  set giftName($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasGiftName() => $_has(3);
+  @$pb.TagNumber(5)
+  void clearGiftName() => clearField(5);
+
+  /// 礼物数量
+  @$pb.TagNumber(6)
+  $core.int get count => $_getIZ(4);
+  @$pb.TagNumber(6)
+  set count($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasCount() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearCount() => clearField(6);
+}
+
+class S_LuckScreen extends $pb.GeneratedMessage {
+  factory S_LuckScreen({
+    $core.Iterable<LuckScreenItem>? items,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    return $result;
+  }
+  S_LuckScreen._() : super();
+  factory S_LuckScreen.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_LuckScreen.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_LuckScreen', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<LuckScreenItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: LuckScreenItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_LuckScreen clone() => S_LuckScreen()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_LuckScreen copyWith(void Function(S_LuckScreen) updates) => super.copyWith((message) => updates(message as S_LuckScreen)) as S_LuckScreen;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_LuckScreen create() => S_LuckScreen._();
+  S_LuckScreen createEmptyInstance() => create();
+  static $pb.PbList<S_LuckScreen> createRepeated() => $pb.PbList<S_LuckScreen>();
+  @$core.pragma('dart2js:noInline')
+  static S_LuckScreen getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_LuckScreen>(create);
+  static S_LuckScreen? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<LuckScreenItem> get items => $_getList(0);
 }
 
 

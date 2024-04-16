@@ -13,6 +13,12 @@ class EventPb {
   }
 }
 
+class RoomInfoEvent extends EventPb {
+  S_SyncRoomInfo? s_syncRoomInfo;
+
+  RoomInfoEvent(this.s_syncRoomInfo);
+}
+
 abstract class RoomEvent<T extends GeneratedMessage> extends EventPb {
   T? data;
 
@@ -94,6 +100,10 @@ class UserCharmUpEvent extends RoomEvent<S_UpdateCharmLevel> {
 // 等级提升广播（对应mq的16）
 class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
   UID? get uid => data?.uid;
+}
+
+// 幸运广播
+class LuckScreenEvent extends RoomEvent<S_LuckScreen> {
 }
 
 // 礼物播放广播(对应mq的8)

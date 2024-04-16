@@ -46,6 +46,7 @@ class CMD {
   static const C_ChatMessage = 2180; // 房间聊天=======对接完成
 
 
+
   static const C_SetNoticeMessage = 2140; // 设置房间公告
 
   static const C_SetAdministrator = 2152; // 房间设置管理员
@@ -102,6 +103,7 @@ class CMD {
   static const C_GiveGiftByOneClick = 3114; // 直播间一键赠送礼物
   static const S_GiveGiftByOneClick = 3115; // 直播间一键赠送礼物返回值
 
+  static const S_LuckScreen = 3116; // 幸运广播
 
   static const C_SaveUserCurrentDressUp = 4100; // 保存用户当前装扮
   static const S_SaveUserCurrentDressUp = 4101; // 保存用户当前装扮响应

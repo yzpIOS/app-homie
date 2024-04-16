@@ -252,6 +252,8 @@ const S_SyncRoomInfo$json = {
     {'1': 'collect_status', '3': 3, '4': 1, '5': 5, '10': 'collectStatus'},
     {'1': 'is_administrator', '3': 4, '4': 1, '5': 5, '10': 'isAdministrator'},
     {'1': 'is_anchor', '3': 5, '4': 1, '5': 5, '10': 'isAnchor'},
+    {'1': 'luck_chat_channel', '3': 6, '4': 1, '5': 8, '10': 'luckChatChannel'},
+    {'1': 'world_chat_channel', '3': 7, '4': 1, '5': 8, '10': 'worldChatChannel'},
   ],
 };
 
@@ -261,7 +263,8 @@ final $typed_data.Uint8List s_SyncRoomInfoDescriptor = $convert.base64Decode(
     '5Vc2VySW5mb1IKb25saW5lTGlzdBIvCgVtaWtlcxgCIAMoCzIZLmNvbS5zYXZ2eS5wcm90by5N'
     'aWtlSW5mb1IFbWlrZXMSJQoOY29sbGVjdF9zdGF0dXMYAyABKAVSDWNvbGxlY3RTdGF0dXMSKQ'
     'oQaXNfYWRtaW5pc3RyYXRvchgEIAEoBVIPaXNBZG1pbmlzdHJhdG9yEhsKCWlzX2FuY2hvchgF'
-    'IAEoBVIIaXNBbmNob3I=');
+    'IAEoBVIIaXNBbmNob3ISKgoRbHVja19jaGF0X2NoYW5uZWwYBiABKAhSD2x1Y2tDaGF0Q2hhbm'
+    '5lbBIsChJ3b3JsZF9jaGF0X2NoYW5uZWwYByABKAhSEHdvcmxkQ2hhdENoYW5uZWw=');
 
 @$core.Deprecated('Use s_LiveStartBroadcastDescriptor instead')
 const S_LiveStartBroadcast$json = {
@@ -830,15 +833,13 @@ final $typed_data.Uint8List c_BanMikeDescriptor = $convert.base64Decode(
 const C_AccMikeClear$json = {
   '1': 'C_AccMikeClear',
   '2': [
-    {'1': 'mike_id', '3': 1, '4': 1, '5': 3, '10': 'mikeId'},
-    {'1': 'mike_ids', '3': 2, '4': 3, '5': 3, '10': 'mikeIds'},
+    {'1': 'role_id_list', '3': 3, '4': 3, '5': 3, '10': 'roleIdList'},
   ],
 };
 
 /// Descriptor for `C_AccMikeClear`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_AccMikeClearDescriptor = $convert.base64Decode(
-    'Cg5DX0FjY01pa2VDbGVhchIXCgdtaWtlX2lkGAEgASgDUgZtaWtlSWQSGQoIbWlrZV9pZHMYAi'
-    'ADKANSB21pa2VJZHM=');
+    'Cg5DX0FjY01pa2VDbGVhchIgCgxyb2xlX2lkX2xpc3QYAyADKANSCnJvbGVJZExpc3Q=');
 
 @$core.Deprecated('Use c_SetNoticeMessageDescriptor instead')
 const C_SetNoticeMessage$json = {
@@ -2519,4 +2520,35 @@ const S_GiveGiftByOneClick$json = {
 final $typed_data.Uint8List s_GiveGiftByOneClickDescriptor = $convert.base64Decode(
     'ChRTX0dpdmVHaWZ0QnlPbmVDbGljaxIuCgRjb2RlGAEgASgOMhouY29tLnNhdnZ5LnByb3RvLk'
     'Vycm9yQ29kZVIEY29kZQ==');
+
+@$core.Deprecated('Use luckScreenItemDescriptor instead')
+const LuckScreenItem$json = {
+  '1': 'LuckScreenItem',
+  '2': [
+    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'game_name', '3': 3, '4': 1, '5': 9, '10': 'gameName'},
+    {'1': 'price', '3': 4, '4': 1, '5': 5, '10': 'price'},
+    {'1': 'gift_name', '3': 5, '4': 1, '5': 9, '10': 'giftName'},
+    {'1': 'count', '3': 6, '4': 1, '5': 5, '10': 'count'},
+  ],
+};
+
+/// Descriptor for `LuckScreenItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List luckScreenItemDescriptor = $convert.base64Decode(
+    'Cg5MdWNrU2NyZWVuSXRlbRIQCgN1aWQYASABKAlSA3VpZBIbCglnYW1lX25hbWUYAyABKAlSCG'
+    'dhbWVOYW1lEhQKBXByaWNlGAQgASgFUgVwcmljZRIbCglnaWZ0X25hbWUYBSABKAlSCGdpZnRO'
+    'YW1lEhQKBWNvdW50GAYgASgFUgVjb3VudA==');
+
+@$core.Deprecated('Use s_LuckScreenDescriptor instead')
+const S_LuckScreen$json = {
+  '1': 'S_LuckScreen',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.LuckScreenItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_LuckScreen`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_LuckScreenDescriptor = $convert.base64Decode(
+    'CgxTX0x1Y2tTY3JlZW4SNQoFaXRlbXMYASADKAsyHy5jb20uc2F2dnkucHJvdG8uTHVja1Njcm'
+    'Vlbkl0ZW1SBWl0ZW1z');
 

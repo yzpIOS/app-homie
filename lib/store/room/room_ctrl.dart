@@ -102,6 +102,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   // 抽奖活动入口
   RxList entry = RxList();
 
+  // RoomChatCtrl? _roomChatCtrl;
+
   void completeProgress() {
     micPanelRx.value = true;
     chatMsgViewIsShowRx.value = true;
@@ -197,11 +199,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     );
   }
 
+  RoomChatCtrl? _RoomChatCtrl;
+
   @mustCallSuper
   void _bindGet() {
     // bindGet(RoomMsgCtrl(roomId));
     bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
+    debugPrint("aa");
   }
 
   @mustCallSuper
@@ -452,6 +457,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       // 判断是否关闭界面
       isNotClose();
       onRender(s_syncRoomInfo);
+
+      RoomInfoEvent(s_syncRoomInfo).fire();
       logForDebug("通知同步房间结果, s_syncRoomInfo = ${s_syncRoomInfo.toString()}", enMsg: "call synchronise room's message api result");
     } catch(e) {
       RoomManagerCtrl.ins.doNormalState();
