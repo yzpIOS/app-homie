@@ -432,11 +432,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 10251;
+				CURRENT_PROJECT_VERSION = 10252;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.5.5;
-				FLUTTER_BUILD_NUMBER = 10251;
+				FLUTTER_BUILD_NAME = 1.5.6;
+				FLUTTER_BUILD_NUMBER = 10252;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -444,7 +444,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -572,11 +572,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 10251;
+				CURRENT_PROJECT_VERSION = 10252;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.5.5;
-				FLUTTER_BUILD_NUMBER = 10251;
+				FLUTTER_BUILD_NAME = 1.5.6;
+				FLUTTER_BUILD_NUMBER = 10252;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -584,7 +584,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -606,11 +606,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
-				CURRENT_PROJECT_VERSION = 10251;
+				CURRENT_PROJECT_VERSION = 10252;
 				DEVELOPMENT_TEAM = DA39W7YS7R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.5.5;
-				FLUTTER_BUILD_NUMBER = 10251;
+				FLUTTER_BUILD_NAME = 1.5.6;
+				FLUTTER_BUILD_NUMBER = 10252;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Homie世界";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -618,7 +618,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jm.homie.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
