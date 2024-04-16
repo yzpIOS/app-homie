@@ -45,6 +45,7 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
     final level = info.level;
 
     span = TextSpan(
+      style: TextStyle(fontSize: 14),
       children: [
         if (level != null)
           WidgetSpan(
@@ -104,6 +105,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
     final level = info.level;
 
     span = TextSpan(
+      style: TextStyle(fontSize: 14),
       children: [
         if (level != null)
           WidgetSpan(
@@ -180,7 +182,7 @@ class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
         ),
         TextSpan(text: 'x${vm.giftCount}'),
       ],
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white, fontSize: 14),
     );
   }
 }
@@ -202,7 +204,7 @@ class LuckMsgView extends _UserMsgView<LuckMsgAdapter> {
         TextSpan(text: vm.giftName.toString(), style: TextStyle(color: Color(0xFF3DF6FF))),
         TextSpan(text: ' x${vm.giftCount}'),
       ],
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white, fontSize: 14),
     );
   }
 }
@@ -242,7 +244,7 @@ class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
 
     return TextSpan(
       children: children,
-      style: const TextStyle(color: Colors.white),
+      style: const TextStyle(color: Colors.white, fontSize: 14),
     );
   }
 }
