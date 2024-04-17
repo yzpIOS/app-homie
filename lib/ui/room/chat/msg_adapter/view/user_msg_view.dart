@@ -209,6 +209,36 @@ class LuckMsgView extends _UserMsgView<LuckMsgAdapter> {
   }
 }
 
+
+/// 在聊天栏增加全服通告喇叭，***玩家在***房间赠送了**礼物
+class LuckyNotifyMsgView extends BaseMsgView<LuckMsgAdapter> {
+  const LuckyNotifyMsgView(super.vm, {super.key});
+
+  Widget msgView(BuildContext context) {
+    return Row(
+      children: [
+        Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+
+        SizedBox(width: 5,),
+
+        RichText(
+          text: TextSpan(
+            children: [
+              const TextSpan(text: '***', style: TextStyle(color: Color(0xFFFFDD7A))),
+              const TextSpan(text: '玩家在'),
+              const TextSpan(text: '【***】', style: TextStyle(color: Color(0xFFFFDD7A))),
+              const TextSpan(text: '房间赠送了'),
+              TextSpan(text: vm.giftName.toString(), style: TextStyle(color: Color(0xFFFFDD7A))),
+              const TextSpan(text: '礼物'),
+            ],
+            style: const TextStyle(color: Colors.white, fontSize: 14),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 /// 盲盒开出了礼物消息视图  xxx送出xxx给xxx，开出xxx
 class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
   const BlindBoxGiftOpenMsgView(super.vm, {super.key});

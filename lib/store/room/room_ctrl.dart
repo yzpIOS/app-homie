@@ -102,6 +102,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
   // 抽奖活动入口
   RxList entry = RxList();
 
+  bool hasSendMsg = false;
+
   // RoomChatCtrl? _roomChatCtrl;
 
   void completeProgress() {
@@ -184,6 +186,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     super.onClose();
     roomId = 0;
     isDisposed = true;
+
+    RoomChatCtrl.cacheEvents.clear();
     RoomManagerCtrl.ins.needJoinRoom = true;
   }
 
@@ -274,10 +278,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     /// 请求房间系统公告消息数组
     isNotClose();
     Api.Common.systemQuery().then((data) {
+      hasSendMsg = true;
       isNotClose();
       List systemNoticeList = data['system_notice_list'];
       SystemMsgEvent(systemNoticeList).fire();
     });
+
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
@@ -336,6 +342,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     /// 请求房间系统公告消息数组
     isNotClose();
     Api.Common.systemQuery().then((data) {
+      hasSendMsg = true;
       isNotClose();
       List systemNoticeList = data['system_notice_list'];
       SystemMsgEvent(systemNoticeList).fire();
@@ -584,6 +591,23 @@ class RoomCtrl extends SceneCtrl {
         }
       },
     );
+
+    /// 文本消息
+    on<MsgTxtEvent>((data) {
+      RoomChatCtrl.cacheEventItem(data);
+    });
+    // 幸运漂屏
+    on<LuckScreenEvent>((data) async {
+      RoomChatCtrl.cacheEventItem(data);
+    });
+    /// 礼物消息
+    on<GiftEvent>((data) async {
+      RoomChatCtrl.cacheEventItem(data);
+    });
+    /// 多个礼物播放广播（盲盒开出的礼物数组）
+    on<MoreGiftPlayEvent>((data) async {
+      RoomChatCtrl.cacheEventItem(data);
+    });
   }
 
   bool isOwner(UID uid) => roomUid == uid;

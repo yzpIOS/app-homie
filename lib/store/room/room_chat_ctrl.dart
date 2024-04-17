@@ -32,11 +32,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     // "幸运": RxList<Widget>(),
   };
 
+  static List cacheEvents = [];
+
   @override
   void onInit() {
     super.onInit();
-
-    final sendCmd2Unity = Get.find<UnityCtrl>().sendCmd;
 
     /// 显示系统公告消息
     on<SystemMsgEvent>((data) {
@@ -56,21 +56,8 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
     /// 文本消息
     on<MsgTxtEvent>((data) {
-      final uid = data.uid ?? "";
-      final txt = data.data?.message ?? "";
-      final nuid = data.data?.roleId;
-
-      roomRxList.add(
-        TxtMsgView(
-          TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
-        ),
-      );
-
-      worldList.add(
-          TxtMsgView(
-            TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
-          )
-      );
+      handleEvent(data);
+      cacheEventItem(data);
     });
 
     /// xxx进入了房间消息
@@ -91,71 +78,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       );
     });
 
-    final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
-
     /// 礼物消息
     on<GiftEvent>((data) async {
+      handleEvent(data);
 
-      S_GiftPlay? gift = data.data;
-      if(gift == null) {
-        return;
-      }
-      final sendUid = data.uid;
-      if(sendUid == null) {
-        return;
-      }
-      _handleSendGift(sendUid, gift);
+      cacheEventItem(data);
     });
 
     /// 多个礼物播放广播（盲盒开出的礼物数组）
     on<MoreGiftPlayEvent>((data) async {
-      S_MoreGiftPlay? moreGift = data.data;
-      if(moreGift == null) {
-        return;
-      }
-      final List<S_GiftPlay>? items = data.items;
-      if(items == null) {
-        return;
-      }
+      handleEvent(data);
 
-      // 判断是一键赠送
-      // todo
-      if(moreGift.type == 2) {
-        items.forEach((element) {
-          _handleSendGift(element.sendId, element);
-        });
-        return;
-      }
-
-      /// 配置数据，多个人多个礼物
-      var dataMap = <List, List<S_GiftPlay>>{};
-      for(S_GiftPlay gift in items) {
-        final ids = gift.acceptUidList ?? [];
-        if (dataMap.keys.contains(ids)) {
-           var giftArray = dataMap[ids];
-           giftArray?.add(gift);
-           dataMap[ids] = giftArray ?? [];
-        } else {
-          dataMap[ids] = [gift];
-        }
-      }
-
-      /// 生成每个人的礼物消息
-      dataMap.forEach((dataKey, dataValue) async {
-        S_GiftPlay? gift = dataValue.first;
-        final sendUid = gift.sendId;
-        final ids = gift.acceptUidList ?? [];
-        final users = await findByUidX({sendUid, ...ids}, useNet: true);
-        users.forEach((key, value) {
-          if(sendUid != value.uid) {
-            roomRxList.add(
-              BlindBoxGiftOpenMsgView(
-                BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, items: dataValue, data: moreGift),
-              ),
-            );
-          }
-        });
-      });
+      cacheEventItem(data);
     });
 
     on<RoomInfoEvent>((data) async {
@@ -176,9 +110,110 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       }
 
       selected.refresh();
+
+      // 多条消息
+      // cacheEvents.forEach((element) async {
+      //   await Future.delayed(const Duration(milliseconds: 90));
+      //   handleEvent(element);
+      // });
     });
 
     on<LuckScreenEvent>((data) async {
+      handleEvent(data);
+      cacheEventItem(data);
+    });
+  }
+
+
+  void switchType(String type) {
+    selected.value = type;
+  }
+
+
+  Future<void> handleEvent(data) async {
+    // 礼物事件
+    // 礼物事件
+    // 礼物事件
+    if(data is GiftEvent) {
+      S_GiftPlay? gift = data.data;
+      if(gift == null) {
+        return;
+      }
+      final sendUid = data.uid;
+      if(sendUid == null) {
+        return;
+      }
+      _handleSendGift(sendUid, gift);
+      return;
+    }
+
+
+    // 多个礼物播放
+    // 多个礼物播放
+    // 多个礼物播放
+    if(data is MoreGiftPlayEvent) {
+      final findByUidX = Get.find<UserInfoCtrl>().findByUidX;
+
+      S_MoreGiftPlay? moreGift = data.data;
+      if(moreGift == null) {
+        return;
+      }
+      final List<S_GiftPlay>? items = data.items;
+      if(items == null) {
+        return;
+      }
+
+      // 判断是一键赠送
+      // 判断是一键赠送
+      // 判断是一键赠送
+      // todo
+      if(moreGift.type == 2) {
+        items.forEach((element) {
+          _handleSendGift(element.sendId, element);
+        });
+        return;
+      }
+
+      /// 配置数据，多个人多个礼物
+      /// 配置数据，多个人多个礼物
+      /// 配置数据，多个人多个礼物
+      var dataMap = <List, List<S_GiftPlay>>{};
+      for(S_GiftPlay gift in items) {
+        final ids = gift.acceptUidList ?? [];
+        if (dataMap.keys.contains(ids)) {
+          var giftArray = dataMap[ids];
+          giftArray?.add(gift);
+          dataMap[ids] = giftArray ?? [];
+        } else {
+          dataMap[ids] = [gift];
+        }
+      }
+
+      /// 生成每个人的礼物消息
+      /// 生成每个人的礼物消息
+      /// 生成每个人的礼物消息
+      dataMap.forEach((dataKey, dataValue) async {
+        S_GiftPlay? gift = dataValue.first;
+        final sendUid = gift.sendId;
+        final ids = gift.acceptUidList ?? [];
+        final users = await findByUidX({sendUid, ...ids}, useNet: true);
+        users.forEach((key, value) {
+          if(sendUid != value.uid) {
+            roomRxList.add(
+              BlindBoxGiftOpenMsgView(
+                BlindBoxGiftOpenMsgAdapter(uid: sendUid, acceptUid: value.uid, nuid: Int64(value.nuid!), users: users, items: dataValue, data: moreGift),
+              ),
+            );
+          }
+        });
+      });
+      return;
+    }
+
+    // 幸运漂屏
+    // 幸运漂屏
+    // 幸运漂屏
+    if(data is LuckScreenEvent) {
       data.data?.items.forEach((gift) {
         giftRxList.add(
           LuckMsgView(
@@ -189,12 +224,34 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
           giftRxList.removeAt(0);
         }
       });
-    });
-  }
+      return;
+    }
 
+    // 文本消息
+    // 文本消息
+    // 文本消息
+    if(data is MsgTxtEvent) {
+      final uid = data.uid ?? "";
+      final txt = data.data?.message ?? "";
+      final nuid = data.data?.roleId;
 
-  void switchType(String type) {
-    selected.value = type;
+      roomRxList.add(
+        TxtMsgView(
+          TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
+        ),
+      );
+
+      worldList.add(
+          TxtMsgView(
+            TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
+          )
+      );
+      return;
+    }
+
+    // 其它消息
+    // 其它消息
+    // 其它消息
   }
 
   Future<void> _handleSendGift(UID sendUid, S_GiftPlay gift) async {
@@ -212,6 +269,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       }
     });
   }
+
+  static void cacheEventItem(event) {
+    if(cacheEvents.contains(event)) {
+      debugPrint("aa");
+      return;
+    }
+    cacheEvents.add(event);
+    if(cacheEvents.length > 200) {
+      cacheEvents.removeAt(0);
+    }
+  }
+
 
   RxList<Widget> get roomRxList {
     return dataSet[type_room] ?? RxList.empty();
