@@ -277,12 +277,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     /// 请求房间系统公告消息数组
     isNotClose();
-    Api.Common.systemQuery().then((data) {
-      hasSendMsg = true;
-      isNotClose();
-      List systemNoticeList = data['system_notice_list'];
-      SystemMsgEvent(systemNoticeList).fire();
-    });
+    if(!hasSendMsg) {
+      Api.Common.systemQuery().then((data) {
+        hasSendMsg = true;
+        isNotClose();
+        List systemNoticeList = data['system_notice_list'];
+        SystemMsgEvent(systemNoticeList).fire();
+      });
+    }
 
     sceneHudRx(RoomHudState.Normal);
 
@@ -341,12 +343,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     /// 请求房间系统公告消息数组
     isNotClose();
-    Api.Common.systemQuery().then((data) {
-      hasSendMsg = true;
-      isNotClose();
-      List systemNoticeList = data['system_notice_list'];
-      SystemMsgEvent(systemNoticeList).fire();
-    });
+    if(!hasSendMsg) {
+      Api.Common.systemQuery().then((data) {
+        hasSendMsg = true;
+        isNotClose();
+        List systemNoticeList = data['system_notice_list'];
+        SystemMsgEvent(systemNoticeList).fire();
+      });
+    }
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
