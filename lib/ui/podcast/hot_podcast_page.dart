@@ -53,13 +53,13 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
 
   void _handleEmpty() {
     data.clear();
-    data["关注"] = const FollowRoomView();
+    // data["关注"] = const FollowRoomView();
     setState(() { });
   }
 
   void _handleItems(List items) {
     data.clear();
-    data["关注"] = const FollowRoomView();
+    // data["关注"] = const FollowRoomView();
     items.forEach((element) {
       data[element["classify_name"]] = CommonRoomView(element["classify_id"]);
     });
