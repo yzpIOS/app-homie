@@ -53,6 +53,7 @@ class ProtoParse {
     register(CMD.S_PKInviteResult, S_PKInviteResult.fromBuffer);
     register(CMD.S_PKContinue, S_PKContinue.fromBuffer);
     register(CMD.S_LuckScreen, S_LuckScreen.fromBuffer);
+    register(CMD.S_AllScreen, S_AllScreen.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);

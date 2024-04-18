@@ -594,6 +594,19 @@ final $typed_data.Uint8List s_ChatMessageBroadcastDescriptor = $convert.base64De
     'xlX2lkGAIgASgDUgZyb2xlSWQSGAoHbWVzc2FnZRgDIAEoCVIHbWVzc2FnZRIQCgN1aWQYBCAB'
     'KAlSA3VpZA==');
 
+@$core.Deprecated('Use s_WorldChatMessageBroadcastDescriptor instead')
+const S_WorldChatMessageBroadcast$json = {
+  '1': 'S_WorldChatMessageBroadcast',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.WorldChatMessageItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_WorldChatMessageBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_WorldChatMessageBroadcastDescriptor = $convert.base64Decode(
+    'ChtTX1dvcmxkQ2hhdE1lc3NhZ2VCcm9hZGNhc3QSOwoFaXRlbXMYASADKAsyJS5jb20uc2F2dn'
+    'kucHJvdG8uV29ybGRDaGF0TWVzc2FnZUl0ZW1SBWl0ZW1z');
+
 @$core.Deprecated('Use s_BanChatBroadcastDescriptor instead')
 const S_BanChatBroadcast$json = {
   '1': 'S_BanChatBroadcast',
@@ -888,12 +901,14 @@ const C_ChatMessage$json = {
   '1': 'C_ChatMessage',
   '2': [
     {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'type', '3': 2, '4': 1, '5': 5, '10': 'type'},
   ],
 };
 
 /// Descriptor for `C_ChatMessage`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List c_ChatMessageDescriptor = $convert.base64Decode(
-    'Cg1DX0NoYXRNZXNzYWdlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');
+    'Cg1DX0NoYXRNZXNzYWdlEhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2USEgoEdHlwZRgCIAEoBV'
+    'IEdHlwZQ==');
 
 @$core.Deprecated('Use c_BanChatDescriptor instead')
 const C_BanChat$json = {
@@ -2551,4 +2566,35 @@ const S_LuckScreen$json = {
 final $typed_data.Uint8List s_LuckScreenDescriptor = $convert.base64Decode(
     'CgxTX0x1Y2tTY3JlZW4SNQoFaXRlbXMYASADKAsyHy5jb20uc2F2dnkucHJvdG8uTHVja1Njcm'
     'Vlbkl0ZW1SBWl0ZW1z');
+
+@$core.Deprecated('Use allScreenItemDescriptor instead')
+const AllScreenItem$json = {
+  '1': 'AllScreenItem',
+  '2': [
+    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'room_name', '3': 2, '4': 1, '5': 9, '10': 'roomName'},
+    {'1': 'user_name', '3': 3, '4': 1, '5': 9, '10': 'userName'},
+    {'1': 'gift_name', '3': 4, '4': 1, '5': 9, '10': 'giftName'},
+    {'1': 'room_id', '3': 5, '4': 1, '5': 3, '10': 'roomId'},
+  ],
+};
+
+/// Descriptor for `AllScreenItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List allScreenItemDescriptor = $convert.base64Decode(
+    'Cg1BbGxTY3JlZW5JdGVtEhAKA3VpZBgBIAEoCVIDdWlkEhsKCXJvb21fbmFtZRgCIAEoCVIIcm'
+    '9vbU5hbWUSGwoJdXNlcl9uYW1lGAMgASgJUgh1c2VyTmFtZRIbCglnaWZ0X25hbWUYBCABKAlS'
+    'CGdpZnROYW1lEhcKB3Jvb21faWQYBSABKANSBnJvb21JZA==');
+
+@$core.Deprecated('Use s_AllScreenDescriptor instead')
+const S_AllScreen$json = {
+  '1': 'S_AllScreen',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.AllScreenItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_AllScreen`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_AllScreenDescriptor = $convert.base64Decode(
+    'CgtTX0FsbFNjcmVlbhI0CgVpdGVtcxgBIAMoCzIeLmNvbS5zYXZ2eS5wcm90by5BbGxTY3JlZW'
+    '5JdGVtUgVpdGVtcw==');
 

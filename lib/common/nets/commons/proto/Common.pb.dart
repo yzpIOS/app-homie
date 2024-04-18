@@ -2898,6 +2898,102 @@ class SceneSeatInfo extends $pb.GeneratedMessage {
   $core.List<SeatInfo> get list => $_getList(0);
 }
 
+class WorldChatMessageItem extends $pb.GeneratedMessage {
+  factory WorldChatMessageItem({
+    $fixnum.Int64? roleId,
+    $core.int? level,
+    $core.String? message,
+    $core.String? username,
+  }) {
+    final $result = create();
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    if (username != null) {
+      $result.username = username;
+    }
+    return $result;
+  }
+  WorldChatMessageItem._() : super();
+  factory WorldChatMessageItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WorldChatMessageItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WorldChatMessageItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roleId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'level', $pb.PbFieldType.O3)
+    ..aOS(3, _omitFieldNames ? '' : 'message')
+    ..aOS(4, _omitFieldNames ? '' : 'username')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  WorldChatMessageItem clone() => WorldChatMessageItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  WorldChatMessageItem copyWith(void Function(WorldChatMessageItem) updates) => super.copyWith((message) => updates(message as WorldChatMessageItem)) as WorldChatMessageItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static WorldChatMessageItem create() => WorldChatMessageItem._();
+  WorldChatMessageItem createEmptyInstance() => create();
+  static $pb.PbList<WorldChatMessageItem> createRepeated() => $pb.PbList<WorldChatMessageItem>();
+  @$core.pragma('dart2js:noInline')
+  static WorldChatMessageItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WorldChatMessageItem>(create);
+  static WorldChatMessageItem? _defaultInstance;
+
+  /// 用户id
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roleId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roleId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoleId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoleId() => clearField(1);
+
+  /// 用户等级，-1为新人，注册三天内都需要显示新人标签
+  @$pb.TagNumber(2)
+  $core.int get level => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set level($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLevel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLevel() => clearField(2);
+
+  /// 聊天内容
+  @$pb.TagNumber(3)
+  $core.String get message => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set message($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMessage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMessage() => clearField(3);
+
+  /// 用户名字
+  @$pb.TagNumber(4)
+  $core.String get username => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set username($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasUsername() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearUsername() => clearField(4);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

@@ -610,3 +610,20 @@ final $typed_data.Uint8List sceneSeatInfoDescriptor = $convert.base64Decode(
     'Cg1TY2VuZVNlYXRJbmZvEi0KBGxpc3QYASADKAsyGS5jb20uc2F2dnkucHJvdG8uU2VhdEluZm'
     '9SBGxpc3Q=');
 
+@$core.Deprecated('Use worldChatMessageItemDescriptor instead')
+const WorldChatMessageItem$json = {
+  '1': 'WorldChatMessageItem',
+  '2': [
+    {'1': 'role_id', '3': 1, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'level', '3': 2, '4': 1, '5': 5, '10': 'level'},
+    {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'username', '3': 4, '4': 1, '5': 9, '10': 'username'},
+  ],
+};
+
+/// Descriptor for `WorldChatMessageItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List worldChatMessageItemDescriptor = $convert.base64Decode(
+    'ChRXb3JsZENoYXRNZXNzYWdlSXRlbRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSFAoFbGV2ZW'
+    'wYAiABKAVSBWxldmVsEhgKB21lc3NhZ2UYAyABKAlSB21lc3NhZ2USGgoIdXNlcm5hbWUYBCAB'
+    'KAlSCHVzZXJuYW1l');
+

@@ -3037,6 +3037,50 @@ class S_ChatMessageBroadcast extends $pb.GeneratedMessage {
   void clearUid() => clearField(4);
 }
 
+class S_WorldChatMessageBroadcast extends $pb.GeneratedMessage {
+  factory S_WorldChatMessageBroadcast({
+    $core.Iterable<$0.WorldChatMessageItem>? items,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    return $result;
+  }
+  S_WorldChatMessageBroadcast._() : super();
+  factory S_WorldChatMessageBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_WorldChatMessageBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_WorldChatMessageBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<$0.WorldChatMessageItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: $0.WorldChatMessageItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_WorldChatMessageBroadcast clone() => S_WorldChatMessageBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_WorldChatMessageBroadcast copyWith(void Function(S_WorldChatMessageBroadcast) updates) => super.copyWith((message) => updates(message as S_WorldChatMessageBroadcast)) as S_WorldChatMessageBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_WorldChatMessageBroadcast create() => S_WorldChatMessageBroadcast._();
+  S_WorldChatMessageBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_WorldChatMessageBroadcast> createRepeated() => $pb.PbList<S_WorldChatMessageBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_WorldChatMessageBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_WorldChatMessageBroadcast>(create);
+  static S_WorldChatMessageBroadcast? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<$0.WorldChatMessageItem> get items => $_getList(0);
+}
+
 class S_BanChatBroadcast extends $pb.GeneratedMessage {
   factory S_BanChatBroadcast({
     $fixnum.Int64? roomId,
@@ -4415,10 +4459,14 @@ class C_SetBlack extends $pb.GeneratedMessage {
 class C_ChatMessage extends $pb.GeneratedMessage {
   factory C_ChatMessage({
     $core.String? message,
+    $core.int? type,
   }) {
     final $result = create();
     if (message != null) {
       $result.message = message;
+    }
+    if (type != null) {
+      $result.type = type;
     }
     return $result;
   }
@@ -4428,6 +4476,7 @@ class C_ChatMessage extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_ChatMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'message')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
     ..hasRequiredFields = false
   ;
 
@@ -4452,6 +4501,7 @@ class C_ChatMessage extends $pb.GeneratedMessage {
   static C_ChatMessage getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_ChatMessage>(create);
   static C_ChatMessage? _defaultInstance;
 
+  /// 聊天内容
   @$pb.TagNumber(1)
   $core.String get message => $_getSZ(0);
   @$pb.TagNumber(1)
@@ -4460,6 +4510,16 @@ class C_ChatMessage extends $pb.GeneratedMessage {
   $core.bool hasMessage() => $_has(0);
   @$pb.TagNumber(1)
   void clearMessage() => clearField(1);
+
+  /// 聊天类型，1.房间内聊天，2.世界聊天；默认，房间内聊天
+  @$pb.TagNumber(2)
+  $core.int get type => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set type($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearType() => clearField(2);
 }
 
 /// 禁言
@@ -12434,6 +12494,156 @@ class S_LuckScreen extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<LuckScreenItem> get items => $_getList(0);
+}
+
+class AllScreenItem extends $pb.GeneratedMessage {
+  factory AllScreenItem({
+    $core.String? uid,
+    $core.String? roomName,
+    $core.String? userName,
+    $core.String? giftName,
+    $fixnum.Int64? roomId,
+  }) {
+    final $result = create();
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (roomName != null) {
+      $result.roomName = roomName;
+    }
+    if (userName != null) {
+      $result.userName = userName;
+    }
+    if (giftName != null) {
+      $result.giftName = giftName;
+    }
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    return $result;
+  }
+  AllScreenItem._() : super();
+  factory AllScreenItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory AllScreenItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AllScreenItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
+    ..aOS(2, _omitFieldNames ? '' : 'roomName')
+    ..aOS(3, _omitFieldNames ? '' : 'userName')
+    ..aOS(4, _omitFieldNames ? '' : 'giftName')
+    ..aInt64(5, _omitFieldNames ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  AllScreenItem clone() => AllScreenItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  AllScreenItem copyWith(void Function(AllScreenItem) updates) => super.copyWith((message) => updates(message as AllScreenItem)) as AllScreenItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static AllScreenItem create() => AllScreenItem._();
+  AllScreenItem createEmptyInstance() => create();
+  static $pb.PbList<AllScreenItem> createRepeated() => $pb.PbList<AllScreenItem>();
+  @$core.pragma('dart2js:noInline')
+  static AllScreenItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AllScreenItem>(create);
+  static AllScreenItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get roomName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set roomName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomName() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get userName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set userName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasUserName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearUserName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get giftName => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set giftName($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasGiftName() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearGiftName() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get roomId => $_getI64(4);
+  @$pb.TagNumber(5)
+  set roomId($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasRoomId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearRoomId() => clearField(5);
+}
+
+class S_AllScreen extends $pb.GeneratedMessage {
+  factory S_AllScreen({
+    $core.Iterable<AllScreenItem>? items,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    return $result;
+  }
+  S_AllScreen._() : super();
+  factory S_AllScreen.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_AllScreen.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_AllScreen', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<AllScreenItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: AllScreenItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_AllScreen clone() => S_AllScreen()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_AllScreen copyWith(void Function(S_AllScreen) updates) => super.copyWith((message) => updates(message as S_AllScreen)) as S_AllScreen;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_AllScreen create() => S_AllScreen._();
+  S_AllScreen createEmptyInstance() => create();
+  static $pb.PbList<S_AllScreen> createRepeated() => $pb.PbList<S_AllScreen>();
+  @$core.pragma('dart2js:noInline')
+  static S_AllScreen getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_AllScreen>(create);
+  static S_AllScreen? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<AllScreenItem> get items => $_getList(0);
 }
 
 

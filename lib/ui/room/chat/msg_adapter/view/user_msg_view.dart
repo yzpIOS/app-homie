@@ -12,6 +12,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:figma_squircle/figma_squircle.dart';
+
 abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
   const _UserMsgView(super.vm, {super.key});
 
@@ -211,7 +213,7 @@ class LuckMsgView extends _UserMsgView<LuckMsgAdapter> {
 
 
 /// 在聊天栏增加全服通告喇叭，***玩家在***房间赠送了**礼物
-class LuckyNotifyMsgView extends BaseMsgView<LuckMsgAdapter> {
+class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
   const LuckyNotifyMsgView(super.vm, {super.key});
 
   Widget msgView(BuildContext context) {
@@ -224,11 +226,11 @@ class LuckyNotifyMsgView extends BaseMsgView<LuckMsgAdapter> {
         RichText(
           text: TextSpan(
             children: [
-              const TextSpan(text: '***', style: TextStyle(color: Color(0xFFFFDD7A))),
+              TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFFDD7A))),
               const TextSpan(text: '玩家在'),
-              const TextSpan(text: '【***】', style: TextStyle(color: Color(0xFFFFDD7A))),
+              TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFFDD7A))),
               const TextSpan(text: '房间赠送了'),
-              TextSpan(text: vm.giftName.toString(), style: TextStyle(color: Color(0xFFFFDD7A))),
+              TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFFDD7A))),
               const TextSpan(text: '礼物'),
             ],
             style: const TextStyle(color: Colors.white, fontSize: 14),
@@ -256,28 +258,40 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
 
           // 用户头像
           SizedBox(width: 5,),
-          AvatarView(vm.data["avatar_url"], size: 30, avatarFrameUrl: vm.data["avatar_frame"],),
+          GestureDetector(
+            onTap: () {
+              showUserDialog();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: AvatarView(vm.data["avatar_url"], size: 30, avatarFrameUrl: vm.data["avatar_frame"],),
+          ),
 
           SizedBox(width: 5,),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Visibility(
-                visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
-                child: Text(
-                  vm.data.showName(),
-                  style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 14, fontWeight: FontWeight.normal),
+          GestureDetector(
+            onTap: () {
+              showUserDialog();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
+                  child: Text(
+                    vm.data.showName(),
+                    style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 14, fontWeight: FontWeight.normal),
+                  ),
                 ),
-              ),
-              Visibility(
-                visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
-                child: Text(
-                  vm.data["public_id"],
-                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+                Visibility(
+                  visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
+                  child: Text(
+                    "ID:${vm.data["public_id"]}",
+                    style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
 
           SizedBox(width: 5,),
@@ -291,6 +305,10 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
         ],
       ),
     );
+  }
+
+  void showUserDialog() {
+    RoomUserInfoDialog.show(uid: vm.data["uid"], nuid: vm.data["role_id"]);
   }
 }
 

@@ -136,6 +136,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       handleEvent(data);
       cacheEventItem(data);
     });
+
+    on<AllRoomEvent>((data) async {
+      handleEvent(data);
+      cacheEventItem(data);
+    });
   }
 
 
@@ -260,6 +265,19 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
             TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
           )
       );
+      return;
+    }
+
+
+    // 全服信息
+    // 全服信息
+    // 全服信息
+    if(data is AllRoomEvent) {
+      data.data?.items.forEach((element) {
+        roomRxList.add(
+            LuckyNotifyMsgView(AllRoomMsgAdapter(data: element))
+        );
+      });
       return;
     }
 

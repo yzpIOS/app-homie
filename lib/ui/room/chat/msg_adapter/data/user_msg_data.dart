@@ -40,6 +40,11 @@ class LuckMsgAdapter extends UserMsgData<LuckScreenItem> {
   late final int prize = data.price;
 }
 
+class AllRoomMsgAdapter extends BaseMsgData<AllScreenItem> {
+
+  AllRoomMsgAdapter({required super.data});
+}
+
 class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
   final Map<UID, UserInfoDto> users;
   final String acceptUid;

@@ -93,7 +93,7 @@ class _DataView extends GetView<RoomChatCtrl> {
         height: 20,
         margin: EdgeInsets.only(right: 15),
         alignment: Alignment.center,
-        decoration: label == selectedLabel ? null : BoxDecoration(
+        decoration: label != selectedLabel ? null : BoxDecoration(
           color: Colors.black,
           borderRadius: BorderRadius.circular(1000),
         ),

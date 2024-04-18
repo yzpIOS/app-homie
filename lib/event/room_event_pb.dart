@@ -116,6 +116,10 @@ class UserLevelUpEvent extends RoomEvent<S_UpdateLevel> {
 class LuckScreenEvent extends RoomEvent<S_LuckScreen> {
 }
 
+// 全服广播
+class AllRoomEvent extends RoomEvent<S_AllScreen> {
+}
+
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;

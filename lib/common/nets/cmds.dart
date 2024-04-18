@@ -99,6 +99,8 @@ class CMD {
   static const S_MoreGiftPlay = 3111; // 多个礼物播放广播
   static const S_MoreGiftFloatingScreen = 3112; // 多个礼物飘屏广播
 
+  static const S_AllScreen = 3117; // 全服广播
+
   static const S_BlindBox = 3113; // 盲盒结果
   static const C_GiveGiftByOneClick = 3114; // 直播间一键赠送礼物
   static const S_GiveGiftByOneClick = 3115; // 直播间一键赠送礼物返回值

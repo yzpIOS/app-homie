@@ -612,6 +612,10 @@ class RoomCtrl extends SceneCtrl {
     on<MoreGiftPlayEvent>((data) async {
       RoomChatCtrl.cacheEventItem(data);
     });
+    // 进场动画
+    on<AllRoomEvent>((data) async {
+      RoomChatCtrl.cacheEventItem(data);
+    });
   }
 
   bool isOwner(UID uid) => roomUid == uid;

@@ -56,6 +56,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_UpdateCharmLevel: UserCharmUpEvent.new,
     // 幸运广播
     CMD.S_LuckScreen: LuckScreenEvent.new,
+    // 全屏
+    CMD.S_AllScreen: AllRoomEvent.new,
   };
 
   @override
