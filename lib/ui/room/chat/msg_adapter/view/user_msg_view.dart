@@ -1,7 +1,10 @@
+import 'dart:ffi';
+
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/chat/msg_adapter/view/base_msg_view.dart';
@@ -252,6 +255,8 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
       height: 42,
       width: double.infinity,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: [
           SizedBox(width: 4,),
           Image.asset(IMG.format("room/ic_room_new"), width: 16, height: 16,),
@@ -276,6 +281,7 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height: 2,),
                 Visibility(
                   visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
                   child: Text(
@@ -312,7 +318,7 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
   }
 
   void showUserDialog() {
-    RoomUserInfoDialog.show(uid: vm.data["uid"], nuid: vm.data["role_id"]);
+    RoomUserInfoDialog.show(uid: vm.data["uid"], nuid: NUID(vm.data["role_id"]));
   }
 }
 
