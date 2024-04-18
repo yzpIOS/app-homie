@@ -2576,6 +2576,7 @@ const AllScreenItem$json = {
     {'1': 'user_name', '3': 3, '4': 1, '5': 9, '10': 'userName'},
     {'1': 'gift_name', '3': 4, '4': 1, '5': 9, '10': 'giftName'},
     {'1': 'room_id', '3': 5, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'role_id', '3': 6, '4': 1, '5': 3, '10': 'roleId'},
   ],
 };
 
@@ -2583,7 +2584,8 @@ const AllScreenItem$json = {
 final $typed_data.Uint8List allScreenItemDescriptor = $convert.base64Decode(
     'Cg1BbGxTY3JlZW5JdGVtEhAKA3VpZBgBIAEoCVIDdWlkEhsKCXJvb21fbmFtZRgCIAEoCVIIcm'
     '9vbU5hbWUSGwoJdXNlcl9uYW1lGAMgASgJUgh1c2VyTmFtZRIbCglnaWZ0X25hbWUYBCABKAlS'
-    'CGdpZnROYW1lEhcKB3Jvb21faWQYBSABKANSBnJvb21JZA==');
+    'CGdpZnROYW1lEhcKB3Jvb21faWQYBSABKANSBnJvb21JZBIXCgdyb2xlX2lkGAYgASgDUgZyb2'
+    'xlSWQ=');
 
 @$core.Deprecated('Use s_AllScreenDescriptor instead')
 const S_AllScreen$json = {

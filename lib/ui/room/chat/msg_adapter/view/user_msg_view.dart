@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -220,27 +221,56 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
   const LuckyNotifyMsgView(super.vm, {super.key});
 
   Widget msgView(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+    return RichText(
+      text: TextSpan(
+        style: const TextStyle(color: Colors.white, fontSize: 14),
+        children: [
+          WidgetSpan(
+            child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+          ),
 
-        SizedBox(width: 5,),
+          WidgetSpan(child: SizedBox(width: 5,)),
 
-        RichText(
-          text: TextSpan(
+          TextSpan(
             children: [
-              TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFFDD7A))),
+              WidgetSpan(
+                child: GestureDetector(
+                  onTap: () {
+                    showUserDialog();
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: RichText(
+                    text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFFDD7A))),
+                  ),
+                ),
+              ),
               const TextSpan(text: '玩家在'),
-              TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFFDD7A))),
+
+              WidgetSpan(
+                child: GestureDetector(
+                  onTap: () {
+                    debugPrint("click room");
+                    RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
+                  },
+                  behavior: HitTestBehavior.opaque,
+                  child: RichText(
+                    text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFFDD7A))),
+                  ),
+                ),
+              ),
               const TextSpan(text: '房间赠送了'),
               TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFFDD7A))),
               const TextSpan(text: '礼物'),
             ],
             style: const TextStyle(color: Colors.white, fontSize: 14),
           ),
-        ),
-      ],
+        ]
+      ),
     );
+  }
+
+  void showUserDialog() {
+    RoomUserInfoDialog.show(uid: vm.data.uid, nuid: vm.data.roleId);
   }
 }
 

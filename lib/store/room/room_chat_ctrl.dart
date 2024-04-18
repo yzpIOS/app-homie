@@ -145,6 +145,9 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
 
   void switchType(String type) {
+    if(type == type_new) {
+      getNewUserList();
+    }
     selected.value = type;
   }
 
@@ -321,6 +324,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     if(list == null) {
       return;
     }
+    newList.clear();
     (list as List).forEach((element) {
       newList.add(NewUserMsgView(NewUserMsgAdapter(data: element)));
     });

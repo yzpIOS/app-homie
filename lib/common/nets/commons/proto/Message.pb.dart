@@ -12503,6 +12503,7 @@ class AllScreenItem extends $pb.GeneratedMessage {
     $core.String? userName,
     $core.String? giftName,
     $fixnum.Int64? roomId,
+    $fixnum.Int64? roleId,
   }) {
     final $result = create();
     if (uid != null) {
@@ -12520,6 +12521,9 @@ class AllScreenItem extends $pb.GeneratedMessage {
     if (roomId != null) {
       $result.roomId = roomId;
     }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
     return $result;
   }
   AllScreenItem._() : super();
@@ -12532,6 +12536,7 @@ class AllScreenItem extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'userName')
     ..aOS(4, _omitFieldNames ? '' : 'giftName')
     ..aInt64(5, _omitFieldNames ? '' : 'roomId')
+    ..aInt64(6, _omitFieldNames ? '' : 'roleId')
     ..hasRequiredFields = false
   ;
 
@@ -12600,6 +12605,15 @@ class AllScreenItem extends $pb.GeneratedMessage {
   $core.bool hasRoomId() => $_has(4);
   @$pb.TagNumber(5)
   void clearRoomId() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $fixnum.Int64 get roleId => $_getI64(5);
+  @$pb.TagNumber(6)
+  set roleId($fixnum.Int64 v) { $_setInt64(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasRoleId() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRoleId() => clearField(6);
 }
 
 class S_AllScreen extends $pb.GeneratedMessage {
