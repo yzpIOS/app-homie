@@ -253,11 +253,11 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
       width: double.infinity,
       child: Row(
         children: [
-          SizedBox(width: 10,),
+          SizedBox(width: 4,),
           Image.asset(IMG.format("room/ic_room_new"), width: 16, height: 16,),
 
           // 用户头像
-          SizedBox(width: 5,),
+          SizedBox(width: 4,),
           GestureDetector(
             onTap: () {
               showUserDialog();
@@ -266,42 +266,46 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
             child: AvatarView(vm.data["avatar_url"], size: 30, avatarFrameUrl: vm.data["avatar_frame"],),
           ),
 
-          SizedBox(width: 5,),
+          SizedBox(width: 4,),
           GestureDetector(
             onTap: () {
               showUserDialog();
             },
             behavior: HitTestBehavior.opaque,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Visibility(
                   visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
                   child: Text(
                     vm.data.showName(),
-                    style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 14, fontWeight: FontWeight.normal),
+                    style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 13, fontWeight: FontWeight.normal),
                   ),
+                ),
+                Visibility(
+                  visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty &&
+                      vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
+                  child: SizedBox(height: 2,),
                 ),
                 Visibility(
                   visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
                   child: Text(
                     "ID:${vm.data["public_id"]}",
-                    style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
             ),
           ),
 
-          SizedBox(width: 5,),
+          SizedBox(width: 4,),
           Text(
             "刚刚完成了注册",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+            style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
           ),
-          SizedBox(width: 5,),
         ],
       ),
     );
