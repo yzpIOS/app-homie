@@ -55,3 +55,8 @@ class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
 class LocalMsgData extends BaseMsgData<String> {
   LocalMsgData({required super.data});
 }
+
+class NewUserMsgAdapter extends BaseMsgData<Map> {
+
+  NewUserMsgAdapter({required super.data});
+}

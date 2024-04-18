@@ -239,6 +239,61 @@ class LuckyNotifyMsgView extends BaseMsgView<LuckMsgAdapter> {
   }
 }
 
+
+
+/// 在聊天栏增加全服通告喇叭，***玩家在***房间赠送了**礼物
+class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
+  const NewUserMsgView(super.vm, {super.key});
+
+  Widget msgView(BuildContext context) {
+    return SizedBox(
+      height: 42,
+      width: double.infinity,
+      child: Row(
+        children: [
+          SizedBox(width: 10,),
+          Image.asset(IMG.format("room/ic_room_new"), width: 16, height: 16,),
+
+          // 用户头像
+          SizedBox(width: 5,),
+          AvatarView(vm.data["avatar_url"], size: 30, avatarFrameUrl: vm.data["avatar_frame"],),
+
+          SizedBox(width: 5,),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Visibility(
+                visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
+                child: Text(
+                  vm.data.showName(),
+                  style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 14, fontWeight: FontWeight.normal),
+                ),
+              ),
+              Visibility(
+                visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
+                child: Text(
+                  vm.data["public_id"],
+                  style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(width: 5,),
+          Text(
+            "刚刚完成了注册",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.normal),
+          ),
+          SizedBox(width: 5,),
+        ],
+      ),
+    );
+  }
+}
+
 /// 盲盒开出了礼物消息视图  xxx送出xxx给xxx，开出xxx
 class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
   const BlindBoxGiftOpenMsgView(super.vm, {super.key});

@@ -346,4 +346,8 @@ class ApiUserInfo extends ApiBase {
     };
     return _doPost('follow/online', data: data);
   }
+
+  Future getNewList() {
+    return _doPost("online_newcomer/query");
+  }
 }

@@ -45,6 +45,16 @@ class UserInEvent extends UserTotalEvent<S_JoinBroadcast> {
   int? get total => data?.total;
 }
 
+
+// 用户进入房间
+class UserInEvent2 extends UserTotalEvent<S_JoinBroadcast> {
+  UID? get uid => data?.uid;
+
+  NUID? get nuid => data?.roleId;
+
+  int? get total => data?.total;
+}
+
 // 用户退出房间
 class UserOutEvent extends UserTotalEvent<S_LeaveBroadcast> {
   int? get total => data?.total;

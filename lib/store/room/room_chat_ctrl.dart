@@ -18,6 +18,8 @@ const String type_lucky = "幸运";
 
 const String type_world = "世界";
 
+const String type_new = "萌新";
+
 class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   final int roomId;
 
@@ -33,6 +35,8 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   };
 
   static List cacheEvents = [];
+
+  bool firstEnter = true;
 
   @override
   void onInit() {
@@ -61,7 +65,12 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     });
 
     /// xxx进入了房间消息
-    on<UserInEvent>((data) {
+    on<UserInEvent>((data) async {
+      if(firstEnter) {
+        await Future.delayed(const Duration(milliseconds: 1500));
+        UserInEvent2().myFire(data.data);
+        firstEnter = false;
+      }
       roomRxList.add(
         UserInMsgView(
           UserInMsgData(uid: data.uid ?? "", nuid: data.data?.roleId ?? Int64(0)),
@@ -109,13 +118,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         dataSet.remove(type_world);
       }
 
+      // 萌新
+      dataSet[type_new]  = RxList<Widget>();
+
       selected.refresh();
 
       // 多条消息
-      // cacheEvents.forEach((element) async {
-      //   await Future.delayed(const Duration(milliseconds: 90));
-      //   handleEvent(element);
-      // });
+      cacheEvents.forEach((element) async {
+        await Future.delayed(const Duration(milliseconds: 90));
+        handleEvent(element);
+      });
+
+      getNewUserList();
     });
 
     on<LuckScreenEvent>((data) async {
@@ -281,6 +295,19 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     }
   }
 
+  ///
+  /// 新用户
+  ///
+  Future<void> getNewUserList() async {
+    var list = await Api.UserInfo.getNewList().then((value) => (value != null && value["items"] != null) ? value["items"] : null);
+    if(list == null) {
+      return;
+    }
+    (list as List).forEach((element) {
+      newList.add(NewUserMsgView(NewUserMsgAdapter(data: element)));
+    });
+  }
+
 
   RxList<Widget> get roomRxList {
     return dataSet[type_room] ?? RxList.empty();
@@ -293,4 +320,9 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   RxList<Widget> get worldList {
     return dataSet[type_world] ?? RxList.empty();
   }
+
+  RxList<Widget> get newList {
+    return dataSet[type_new] ?? RxList.empty();
+  }
+
 }

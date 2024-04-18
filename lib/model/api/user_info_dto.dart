@@ -58,3 +58,20 @@ extension XUserInfoDto on UserInfoDto {
     return uid;
   }
 }
+
+extension UserInfoOnMap on Map {
+  String showName() {
+    String? tmp;
+
+    tmp = this["remarks_name"];
+    if (tmp != null && tmp.isNotEmpty) return tmp;
+
+    tmp = this["username"];
+    if (tmp != null && tmp.isNotEmpty) return tmp;
+
+    tmp = this["account"];
+    if (tmp != null && tmp.isNotEmpty) return tmp;
+
+    return this["uid"];
+  }
+}
