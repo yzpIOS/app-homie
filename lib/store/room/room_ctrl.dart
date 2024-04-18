@@ -186,7 +186,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     super.onClose();
     roomId = 0;
     isDisposed = true;
-
+    // 切回房间
+    Api.RoomMsg.switchRoom();
     RoomChatCtrl.cacheEvents.clear();
     RoomManagerCtrl.ins.needJoinRoom = true;
   }
@@ -614,6 +615,10 @@ class RoomCtrl extends SceneCtrl {
     });
     // 进场动画
     on<AllRoomEvent>((data) async {
+      RoomChatCtrl.cacheEventItem(data);
+    });
+    // 世界频道
+    on<WorldChatMessageBroadcastEvent>((data) {
       RoomChatCtrl.cacheEventItem(data);
     });
   }

@@ -618,6 +618,7 @@ const WorldChatMessageItem$json = {
     {'1': 'level', '3': 2, '4': 1, '5': 5, '10': 'level'},
     {'1': 'message', '3': 3, '4': 1, '5': 9, '10': 'message'},
     {'1': 'username', '3': 4, '4': 1, '5': 9, '10': 'username'},
+    {'1': 'uid', '3': 5, '4': 1, '5': 9, '10': 'uid'},
   ],
 };
 
@@ -625,5 +626,5 @@ const WorldChatMessageItem$json = {
 final $typed_data.Uint8List worldChatMessageItemDescriptor = $convert.base64Decode(
     'ChRXb3JsZENoYXRNZXNzYWdlSXRlbRIXCgdyb2xlX2lkGAEgASgDUgZyb2xlSWQSFAoFbGV2ZW'
     'wYAiABKAVSBWxldmVsEhgKB21lc3NhZ2UYAyABKAlSB21lc3NhZ2USGgoIdXNlcm5hbWUYBCAB'
-    'KAlSCHVzZXJuYW1l');
+    'KAlSCHVzZXJuYW1lEhAKA3VpZBgFIAEoCVIDdWlk');
 

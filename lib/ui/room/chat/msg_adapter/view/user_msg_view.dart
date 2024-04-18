@@ -1,11 +1,14 @@
 import 'dart:ffi';
 
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
+import 'package:app/ui/common/charm_level_view.dart';
 import 'package:app/ui/common/wealthy_level_view.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/chat/msg_adapter/view/base_msg_view.dart';
@@ -240,7 +243,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                   },
                   behavior: HitTestBehavior.opaque,
                   child: RichText(
-                    text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFFDD7A))),
+                    text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFB7AFF))),
                   ),
                 ),
               ),
@@ -254,12 +257,12 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                   },
                   behavior: HitTestBehavior.opaque,
                   child: RichText(
-                    text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFFDD7A))),
+                    text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
                   ),
                 ),
               ),
               const TextSpan(text: '房间赠送了'),
-              TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFFDD7A))),
+              TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFB7AFF))),
               const TextSpan(text: '礼物'),
             ],
             style: const TextStyle(color: Colors.white, fontSize: 14),
@@ -349,6 +352,67 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
 
   void showUserDialog() {
     RoomUserInfoDialog.show(uid: vm.data["uid"], nuid: NUID(vm.data["role_id"]));
+  }
+}
+
+///
+/// 世界聊天频道
+///
+class WorldMessageView extends BaseMsgView<WorldMsgAdapter> {
+
+  WorldMessageView(super.vm);
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    Widget child = Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // CharmLevelView(level: vm.data.level.toString(), uid: OAuthCtrl.uid,),
+            WealthyLevelView(level: vm.data.level.toString(), uid: vm.data.uid,),
+            SizedBox(width: 4,),
+            Text(
+              vm.data.username,
+              style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 13, fontWeight: FontWeight.normal),
+            )
+          ],
+        ),
+        SizedBox(height: 4,),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          decoration: BoxDecoration(
+              color: AppPalette.room,
+              borderRadius: BorderRadius.circular(6)
+          ),
+          child: Text(
+            vm.data.message,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ),
+        SizedBox(height: 4,),
+      ],
+    );
+
+    return Material(
+      color: Colors.transparent,
+      textStyle: const TextStyle(fontSize: 12, color: Colors.white, height: 1),
+      child: Padding(
+        padding: const Pad(left: 4, right: 8, vertical: 3),
+        child: child,
+      ),
+    );
   }
 }
 

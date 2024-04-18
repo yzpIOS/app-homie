@@ -120,6 +120,10 @@ class LuckScreenEvent extends RoomEvent<S_LuckScreen> {
 class AllRoomEvent extends RoomEvent<S_AllScreen> {
 }
 
+// 世界频道聊天
+class WorldChatMessageBroadcastEvent extends RoomEvent<S_WorldChatMessageBroadcast> {
+}
+
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;

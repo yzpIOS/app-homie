@@ -3,11 +3,13 @@ import 'dart:ffi';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
+import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/room/chat/msg_adapter/index.dart';
+import 'package:app/ui/room/room_page.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:fixnum/fixnum.dart';
@@ -38,9 +40,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
   bool firstEnter = true;
 
+  static bool isDisposed = false;
+
+  @override
+  void onClose() {
+    super.dispose();
+    isDisposed = true;
+  }
+
   @override
   void onInit() {
     super.onInit();
+    isDisposed = false;
 
     /// 显示系统公告消息
     on<SystemMsgEvent>((data) {
@@ -61,7 +72,6 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     /// 文本消息
     on<MsgTxtEvent>((data) {
       handleEvent(data);
-      cacheEventItem(data);
     });
 
     /// xxx进入了房间消息
@@ -90,15 +100,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     /// 礼物消息
     on<GiftEvent>((data) async {
       handleEvent(data);
-
-      cacheEventItem(data);
     });
 
     /// 多个礼物播放广播（盲盒开出的礼物数组）
     on<MoreGiftPlayEvent>((data) async {
       handleEvent(data);
-
-      cacheEventItem(data);
     });
 
     on<RoomInfoEvent>((data) async {
@@ -124,22 +130,24 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       selected.refresh();
 
       // 多条消息
-      cacheEvents.forEach((element) async {
-        await Future.delayed(const Duration(milliseconds: 90));
-        handleEvent(element);
-      });
+      // cacheEvents.forEach((element) async {
+      //   await Future.delayed(const Duration(milliseconds: 90));
+      //   handleEvent(element);
+      // });
 
       getNewUserList();
     });
 
     on<LuckScreenEvent>((data) async {
       handleEvent(data);
-      cacheEventItem(data);
     });
 
     on<AllRoomEvent>((data) async {
       handleEvent(data);
-      cacheEventItem(data);
+    });
+    // 世界频道
+    on<WorldChatMessageBroadcastEvent>((data) {
+      handleEvent(data);
     });
   }
 
@@ -147,6 +155,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   void switchType(String type) {
     if(type == type_new) {
       getNewUserList();
+    }
+    if(type == type_world) {
+      Api.RoomMsg.switchWorld();
+    } else {
+      Api.RoomMsg.switchRoom();
     }
     selected.value = type;
   }
@@ -262,12 +275,6 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
           TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
         ),
       );
-
-      worldList.add(
-          TxtMsgView(
-            TxtMsgData(data: txt, uid: uid, nuid: nuid ?? Int64(0)),
-          )
-      );
       return;
     }
 
@@ -282,6 +289,17 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
         );
       });
       return;
+    }
+
+    // 世界聊天频道
+    // 世界聊天频道
+    // 世界聊天频道
+    if(data is WorldChatMessageBroadcastEvent) {
+      data.data?.items.forEach((element) {
+        worldList.add(
+            WorldMessageView(WorldMsgAdapter(data: element))
+        );
+      });
     }
 
     // 其它消息
@@ -306,6 +324,11 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   }
 
   static void cacheEventItem(event) {
+    debugPrint("房间内不需要缓存信息: ${Get.currentRoute}, roomPage = ${RoomPage.room_name}");
+    // 房间内不需要缓存信息
+    if(!isDisposed) {
+      return;
+    }
     if(cacheEvents.contains(event)) {
       debugPrint("aa");
       return;

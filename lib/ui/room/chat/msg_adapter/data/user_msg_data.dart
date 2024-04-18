@@ -1,3 +1,4 @@
+import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/types.dart';
@@ -64,4 +65,9 @@ class LocalMsgData extends BaseMsgData<String> {
 class NewUserMsgAdapter extends BaseMsgData<Map> {
 
   NewUserMsgAdapter({required super.data});
+}
+
+class WorldMsgAdapter extends BaseMsgData<WorldChatMessageItem> {
+
+  WorldMsgAdapter({required super.data});
 }

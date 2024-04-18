@@ -58,6 +58,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_LuckScreen: LuckScreenEvent.new,
     // 全屏
     CMD.S_AllScreen: AllRoomEvent.new,
+    // 世界频道聊天
+    CMD.S_WorldChatMessageBroadcast: WorldChatMessageBroadcastEvent.new,
   };
 
   @override

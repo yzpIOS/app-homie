@@ -2904,6 +2904,7 @@ class WorldChatMessageItem extends $pb.GeneratedMessage {
     $core.int? level,
     $core.String? message,
     $core.String? username,
+    $core.String? uid,
   }) {
     final $result = create();
     if (roleId != null) {
@@ -2918,6 +2919,9 @@ class WorldChatMessageItem extends $pb.GeneratedMessage {
     if (username != null) {
       $result.username = username;
     }
+    if (uid != null) {
+      $result.uid = uid;
+    }
     return $result;
   }
   WorldChatMessageItem._() : super();
@@ -2929,6 +2933,7 @@ class WorldChatMessageItem extends $pb.GeneratedMessage {
     ..a<$core.int>(2, _omitFieldNames ? '' : 'level', $pb.PbFieldType.O3)
     ..aOS(3, _omitFieldNames ? '' : 'message')
     ..aOS(4, _omitFieldNames ? '' : 'username')
+    ..aOS(5, _omitFieldNames ? '' : 'uid')
     ..hasRequiredFields = false
   ;
 
@@ -2992,6 +2997,16 @@ class WorldChatMessageItem extends $pb.GeneratedMessage {
   $core.bool hasUsername() => $_has(3);
   @$pb.TagNumber(4)
   void clearUsername() => clearField(4);
+
+  /// 用户id
+  @$pb.TagNumber(5)
+  $core.String get uid => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set uid($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUid() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUid() => clearField(5);
 }
 
 

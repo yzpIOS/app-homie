@@ -70,6 +70,8 @@ class CMD {
   static const S_GiftPlay = 3104; // 礼物播放广播(对应mq的8)=======对接完成
   static const S_AdministratorBroadcast = 2280; // 房间设置管理员广播 【对应旧mq类型：9】=======对接完成
 
+  static const S_WorldChatMessageBroadcast = 2284; // 世界聊天广播
+
   static const S_BlackBroadcast = 2250; // 房间黑名单广播【对应旧mq类型：11】=======对接完成
   static const S_CloseMikeBroadcast = 2223; // 禁麦广播 【对应旧mq类型：12】
   static const S_OpenBroadcast = 2224; // 开麦广播 【对应旧mq类型：13】

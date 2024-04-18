@@ -36,6 +36,7 @@ class ByteConverter {
     register(CMD.S_LiveStopBroadcast, S_LiveStopBroadcast.fromBuffer);
     register(CMD.S_ApplyUpMikeBroadcast, S_ApplyUpMikeBroadcast.fromBuffer);
     register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
+    register(CMD.S_WorldChatMessageBroadcast, S_WorldChatMessageBroadcast.fromBuffer);
     register(CMD.S_GiveGiftByRoom, S_GiveGiftByRoom.fromBuffer);
     register(CMD.S_FloatingScreen, S_FloatingScreen.fromBuffer);
     register(CMD.S_MoreGiftFloatingScreen, S_MoreGiftFloatingScreen.fromBuffer);
