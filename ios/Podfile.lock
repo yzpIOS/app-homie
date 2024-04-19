@@ -20,12 +20,6 @@ PODS:
     - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
-  - flutter_mxlogger (0.0.1):
-    - Flutter
-    - MXLogger (= 1.2.9)
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
   - http_proxy (0.0.1):
     - Flutter
   - HydraAsync (2.0.6)
@@ -51,9 +45,6 @@ PODS:
     - Flutter
   - media_kit_video (0.0.1):
     - Flutter
-  - MXLogger (1.2.9):
-    - MXLoggerCore (= 1.2.9)
-  - MXLoggerCore (1.2.9)
   - oaid (0.0.1):
     - Flutter
   - openinstall_flutter_plugin (0.0.1):
@@ -78,7 +69,7 @@ PODS:
     - Flutter
   - sqflite (0.0.3):
     - Flutter
-    - FMDB (>= 2.7.5)
+    - FlutterMacOS
   - tencent_cloud_chat_sdk (5.2.4):
     - Flutter
     - HydraAsync
@@ -128,7 +119,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - flutter_mxlogger (from `.symlinks/plugins/flutter_mxlogger/ios`)
   - http_proxy (from `.symlinks/plugins/http_proxy/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_editor_common (from `.symlinks/plugins/image_editor_common/ios`)
@@ -147,7 +137,7 @@ DEPENDENCIES:
   - record (from `.symlinks/plugins/record/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
-  - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/darwin`)
   - tencent_cloud_chat_sdk (from `.symlinks/plugins/tencent_cloud_chat_sdk/ios`)
   - tencent_kit (from `.symlinks/plugins/tencent_kit/ios`)
   - tencent_trtc_cloud (from `.symlinks/plugins/tencent_trtc_cloud/ios`)
@@ -163,11 +153,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - ffmpeg-kit-ios-https
-    - FMDB
     - HydraAsync
     - libOpenInstallSDK
-    - MXLogger
-    - MXLoggerCore
     - ReachabilitySwift
     - TOCropViewController
     - TXCustomBeautyProcesserPlugin
@@ -191,8 +178,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  flutter_mxlogger:
-    :path: ".symlinks/plugins/flutter_mxlogger/ios"
   http_proxy:
     :path: ".symlinks/plugins/http_proxy/ios"
   image_cropper:
@@ -230,7 +215,7 @@ EXTERNAL SOURCES:
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   sqflite:
-    :path: ".symlinks/plugins/sqflite/ios"
+    :path: ".symlinks/plugins/sqflite/darwin"
   tencent_cloud_chat_sdk:
     :path: ".symlinks/plugins/tencent_cloud_chat_sdk/ios"
   tencent_kit:
@@ -255,7 +240,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wechat_kit/ios"
 
 SPEC CHECKSUMS:
-  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
+  audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   connectivity_plus: 07c49e96d7fc92bc9920617b83238c4d178b446a
   device_info_plus: c6fb39579d0f423935b0c9ce7ee2f44b71b9fce6
   f_unity: 725a49c8f926d6739da3715cb853d815a9df9a84
@@ -264,32 +249,28 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  flutter_mxlogger: 782714d101b4554777c471e08eb2d317eb2534bd
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   http_proxy: 20f129d3e1c70cfdef92530b374c619832027729
   HydraAsync: 8d589bd725b0224f899afafc9a396327405f8063
   image_cropper: a3291c624a953049bc6a02e1f8c8ceb162a24b25
   image_editor_common: d6f6644ae4a6de80481e89fe6d0a8c49e30b4b43
-  in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
+  in_app_purchase_storekit: 9e9931234f0adcf71ae323f8c83785b96030edf1
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   libOpenInstallSDK: 29edb359f1fcf527064ad7daefea480a6965d5f4
   link_kit: d7bfc53a95ba13ef377f4c2dc208015a7902d21e
   media_kit_libs_ios_video: a5fe24bc7875ccd6378a0978c13185e1344651c1
   media_kit_native_event_loop: e6b2ab20cf0746eb1c33be961fcf79667304fa2a
   media_kit_video: 5da63f157170e5bf303bf85453b7ef6971218a2e
-  MXLogger: d8929e6a585854a78ce68cf798522676626125b3
-  MXLoggerCore: 6bc54753a82039774ea6aa1fc68044c2494497b8
   oaid: a606cb40fed91907145c520c5b467b7ab7980785
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   record: cae05d8dd3cdb1dea3511b20e5a5811a1ae00d0d
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
-  sqflite: 31f7eba61e3074736dff8807a9b41581e4f7f15a
+  sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
   tencent_kit: 81ca28c061c5e239043b3a266f9316ab60141e1b
   tencent_trtc_cloud: 8b55aa23005a77db473cdbc13841a4b13b261946
@@ -297,15 +278,15 @@ SPEC CHECKSUMS:
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
   TXIMSDK_Plus_iOS: b665f09489e7d1a35c2dd95a495544d0c2a84f37
   TXLiteAVSDK_Professional: 819f405470d75a7a76d8e267033e705e1979dadd
-  url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
+  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
   video_player_avfoundation: e9e6f9cae7d7a6d9b43519b0aab382bca60fcfd1
   volume_controller: 531ddf792994285c9b17f9d8a7e4dcdd29b3eae9
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
-  webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
+  webview_flutter_wkwebview: 4f3e50f7273d31e5500066ed267e3ae4309c5ae4
   wechat_kit: 72ef5bc9da4a5f40a95f6dab060763d6b7071137
 
-PODFILE CHECKSUM: 805e71e24eb677d7be51c9d87531400367660f19
+PODFILE CHECKSUM: 2a0a8d69863bafb2e052d9d0e2baedd373b5deb2
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
