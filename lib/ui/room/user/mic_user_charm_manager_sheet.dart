@@ -182,7 +182,6 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
             if(userList[index].no == "1") {
               roomOwner = result;
               micInfos[result.roleId] = userList[index];
-            } else if(userList[index].no == "9") {
             } else {
               userInMicList.add(result);
               micInfos[result.roleId] = userList[index];
@@ -333,7 +332,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
     }
     var userList = roomMicCtrl.simpleUserList;
     // 获取在麦上的用户id
-    var userRoleids = userList.where((e) => selectedIds.contains(e.nUid) && e.no != "9").map((e) => e.nUid).toList();
+    var userRoleids = userList.where((e) => selectedIds.contains(e.nUid)).map((e) => e.nUid).toList();
     if(userRoleids.isEmpty) {
       showToast("请选择清零用户");
       return;
