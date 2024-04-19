@@ -225,50 +225,54 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
 
   Widget msgView(BuildContext context) {
     return RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-        style: const TextStyle(color: Colors.white, fontSize: 14),
-        children: [
-          WidgetSpan(
-            child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
-          ),
-
-          WidgetSpan(child: SizedBox(width: 5,)),
-
-          TextSpan(
-            children: [
-              WidgetSpan(
-                child: GestureDetector(
-                  onTap: () {
-                    showUserDialog();
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: RichText(
-                    text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFB7AFF))),
-                  ),
+      text: WidgetSpan(
+        alignment: PlaceholderAlignment.middle,
+        child: RichText(
+          text: TextSpan(
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              children: [
+                WidgetSpan(
+                  child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
                 ),
-              ),
-              const TextSpan(text: '玩家在'),
 
-              WidgetSpan(
-                child: GestureDetector(
-                  onTap: () {
-                    debugPrint("click room");
-                    RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: RichText(
-                    text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
-                  ),
+                WidgetSpan(child: SizedBox(width: 5,)),
+
+                TextSpan(
+                  children: [
+                    WidgetSpan(
+                      child: GestureDetector(
+                        onTap: () {
+                          showUserDialog();
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: RichText(
+                          text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFB7AFF))),
+                        ),
+                      ),
+                    ),
+                    const TextSpan(text: '玩家在'),
+
+                    WidgetSpan(
+                      child: GestureDetector(
+                        onTap: () {
+                          debugPrint("click room");
+                          RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
+                        },
+                        behavior: HitTestBehavior.opaque,
+                        child: RichText(
+                          text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
+                        ),
+                      ),
+                    ),
+                    const TextSpan(text: '房间赠送了'),
+                    TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFB7AFF))),
+                    const TextSpan(text: '礼物'),
+                  ],
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
                 ),
-              ),
-              const TextSpan(text: '房间赠送了'),
-              TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFB7AFF))),
-              const TextSpan(text: '礼物'),
-            ],
-            style: const TextStyle(color: Colors.white, fontSize: 14),
+              ]
           ),
-        ]
+        )
       ),
     );
   }

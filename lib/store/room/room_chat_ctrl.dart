@@ -308,6 +308,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
             WorldMessageView(WorldMsgAdapter(data: element))
         );
       });
+      return;
     }
 
     // 其它消息
