@@ -121,7 +121,6 @@ class HotHistoryUserView extends SimplePageView<Map> {
   BaseConfig get config {
     return ListConfig(
       padding: EdgeInsets.zero,
-      divider: Divider(indent: 65, endIndent: 10),
       needNorMore: false
     );
   }
