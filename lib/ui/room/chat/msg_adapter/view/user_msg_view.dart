@@ -232,14 +232,19 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
               style: const TextStyle(color: Colors.white, fontSize: 14),
               children: [
                 WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
                   child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
                 ),
 
-                WidgetSpan(child: SizedBox(width: 5,)),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: SizedBox(width: 5,)
+                ),
 
                 TextSpan(
                   children: [
                     WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
                       child: GestureDetector(
                         onTap: () {
                           showUserDialog();
@@ -253,6 +258,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                     const TextSpan(text: '玩家在'),
 
                     WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
                       child: GestureDetector(
                         onTap: () {
                           debugPrint("click room");
