@@ -334,7 +334,9 @@ class CharmUserView extends SimplePageView<Map> {
 
   final int type;
 
-  CharmUserView(this.roomId, this.type, {super.key});
+  int maxValues;
+
+  CharmUserView(this.roomId, this.type, {super.key, this.maxValues = -1});
 
   late final _ctrl = sceneCtrl<RoomCtrl>();
   late final myRole = _ctrl.getRole(OAuthCtrl.uid);

@@ -230,7 +230,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
           children: [
             WidgetSpan(
               alignment: PlaceholderAlignment.middle,
-              child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+              child: Image.asset(IMG.format("room/ic_horn"), width: 15, height: 15),
             ),
 
             WidgetSpan(
@@ -248,7 +248,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                     },
                     behavior: HitTestBehavior.opaque,
                     child: RichText(
-                      text: TextSpan(text: vm.data.userName, style: const TextStyle(color: Colors.white, fontSize: 14),),
+                      text: TextSpan(text: vm.data.userName, style: const TextStyle(color: Color(0xFFFB7AFF), fontSize: 14),),
                     ),
                   ),
                 ),

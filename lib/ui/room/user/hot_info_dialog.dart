@@ -23,12 +23,12 @@ class HotInfoDialog extends StatefulWidget {
   ///
   static void userApplyDownMic(int roomId, int roleId, {Offset? anchorPoint}) async {
     showDialog(
+      barrierColor: Colors.transparent,
       context: Get.context!,
       builder: (context) {
         return HotInfoDialog(roomId, roleId, anchorPoint: anchorPoint);
       },
       useSafeArea: false,
-      anchorPoint: anchorPoint,
     );
   }
 }
@@ -70,7 +70,6 @@ class _HotInfoState extends State<HotInfoDialog> {
           Positioned(
             left: parentX + 50 / 2,
             top: widget.anchorPoint?.dy ?? 0,
-            // margin: EdgeInsets.only(left: parentX + 50 / 2, top: widget.anchorPoint?.dy ?? 0),
             child: Image.asset(IMG.format("room/icon_up_arrow"), width: 10, height: 6,),
           ),
           Positioned(
