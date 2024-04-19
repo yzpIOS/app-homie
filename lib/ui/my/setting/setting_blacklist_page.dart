@@ -26,7 +26,7 @@ class _SettingBlackListPageState extends State<SettingBlackListPage> {
 class _DataView extends SimplePageView<String> {
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       divider: Divider(indent: 10, endIndent: 10),
     );
   }

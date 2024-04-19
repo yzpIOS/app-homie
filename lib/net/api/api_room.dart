@@ -467,4 +467,8 @@ class ApiRoom extends ApiBase {
   Future getCategoryItemList(PageNum page, dynamic classify_id) {
     return _doPost("list", data: page + {"classify_id": classify_id});
   }
+
+  Future getHotHistory(PageNum page) {
+    return _doPost("mike/heat/record", data: page + {});
+  }
 }

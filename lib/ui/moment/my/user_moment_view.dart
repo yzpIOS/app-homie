@@ -30,7 +30,7 @@ class UserMomentView extends SimplePageView<Rx<MomentDto>> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       padding: Pad(horizontal: 10, top: 10, bottom: 64),
       divider: Spacing.h20,
     );

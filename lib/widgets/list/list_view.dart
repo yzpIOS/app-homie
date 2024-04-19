@@ -12,18 +12,34 @@ class DataView$Page<CTRL extends PageListCtrl<T>, T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final config = context.read<BaseConfig>();
 
-    Widget child = config.createBy(
-      paging,
-      PagedChildBuilderDelegate(
-        animateTransitions: false,
-        noMoreItemsIndicatorBuilder: (ctx) => ctx.state<DataNoMore>(),
-        noItemsFoundIndicatorBuilder: (ctx) => ctx.state<DataEmpty>(paging.refresh),
-        firstPageProgressIndicatorBuilder: (ctx) => ctx.state<DataLoading>(),
-        newPageProgressIndicatorBuilder: (ctx) => ctx.state<MoreDataLoading>(),
-        firstPageErrorIndicatorBuilder: (ctx) => ctx.dataErrorState(paging.refresh, paging.error),
-        itemBuilder: (ctx, item, i) => itemBuilder(ctx, item, i),
-      ),
-    );
+    Widget child;
+    if(config.needNorMore) {
+
+      child = config.createBy(
+        paging,
+        PagedChildBuilderDelegate(
+          animateTransitions: false,
+          noMoreItemsIndicatorBuilder: (ctx) => ctx.state<DataNoMore>(),
+          noItemsFoundIndicatorBuilder: (ctx) => ctx.state<DataEmpty>(paging.refresh),
+          firstPageProgressIndicatorBuilder: (ctx) => ctx.state<DataLoading>(),
+          newPageProgressIndicatorBuilder: (ctx) => ctx.state<MoreDataLoading>(),
+          firstPageErrorIndicatorBuilder: (ctx) => ctx.dataErrorState(paging.refresh, paging.error),
+          itemBuilder: (ctx, item, i) => itemBuilder(ctx, item, i),
+        ),
+      );
+    } else {
+      child = config.createBy(
+        paging,
+        PagedChildBuilderDelegate(
+          animateTransitions: false,
+          noItemsFoundIndicatorBuilder: (ctx) => ctx.state<DataEmpty>(paging.refresh),
+          firstPageProgressIndicatorBuilder: (ctx) => ctx.state<DataLoading>(),
+          newPageProgressIndicatorBuilder: (ctx) => ctx.state<MoreDataLoading>(),
+          firstPageErrorIndicatorBuilder: (ctx) => ctx.dataErrorState(paging.refresh, paging.error),
+          itemBuilder: (ctx, item, i) => itemBuilder(ctx, item, i),
+        ),
+      );
+    }
 
     if (!config.isSliver) {
       child = XSnapshotWidget(child: child);

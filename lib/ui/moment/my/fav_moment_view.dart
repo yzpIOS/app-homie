@@ -19,7 +19,7 @@ class FavMomentView extends SimplePageView<Rx<MomentDto>> {
   BaseConfig get config {
     const double spacing = 1;
 
-    return const GridConfig(
+    return GridConfig(
       padding: Pad(horizontal: spacing, top: spacing, bottom: 64),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,

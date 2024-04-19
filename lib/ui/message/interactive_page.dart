@@ -94,7 +94,7 @@ class _DataView extends SimplePageView<Item?> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       divider: Divider(indent: 10, endIndent: 10),
     );
   }

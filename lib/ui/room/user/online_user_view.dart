@@ -124,7 +124,7 @@ class OnlineUserView extends SimplePageView<Map> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       divider: Divider(indent: 18 + 70, endIndent: 10),
     );
   }
@@ -344,7 +344,7 @@ class CharmUserView extends SimplePageView<Map> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       divider: Divider(indent: 65, endIndent: 10),
     );
   }
@@ -512,7 +512,7 @@ class WealthUserView extends SimplePageView<Map> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       divider: Divider(indent: 65, endIndent: 10),
     );
   }

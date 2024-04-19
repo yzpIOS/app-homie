@@ -7,12 +7,14 @@ import 'package:provider/provider.dart';
 abstract class BaseConfig with IRefresh {
   final EdgeInsets? padding;
 
-  const BaseConfig({this.padding});
+  bool needNorMore = true;
+
+  BaseConfig({this.padding, this.needNorMore = true});
 
   Widget createBy(PagingController paging, PagedChildBuilderDelegate builder);
 
   // ignore: unnecessary_cast
-  static final defaultProvider = Provider<BaseConfig>.value(value: const ListConfig());
+  static final defaultProvider = Provider<BaseConfig>.value(value: ListConfig());
 }
 
 mixin SliverMixin {
@@ -53,10 +55,11 @@ class SliverListConfig extends BaseConfig with ISliverList, SliverMixin {
   @override
   final double? itemExtent;
 
-  const SliverListConfig({
+  SliverListConfig({
     this.itemExtent,
     this.divider,
     super.padding,
+    super.needNorMore = true,
   });
 
   @override
@@ -96,7 +99,7 @@ class ListConfig extends SliverListConfig with IScroll, RefreshMixin {
   @override
   final isSliver = false;
 
-  const ListConfig({
+  ListConfig({
     this.physics,
     this.scroll,
     this.shrinkWrap,
@@ -104,6 +107,7 @@ class ListConfig extends SliverListConfig with IScroll, RefreshMixin {
     super.divider,
     super.itemExtent,
     super.padding,
+    super.needNorMore = true,
   });
 
   @override
@@ -123,7 +127,7 @@ class ListConfig extends SliverListConfig with IScroll, RefreshMixin {
 class SliverGridConfig extends BaseConfig with SliverMixin {
   final SliverGridDelegate gridDelegate;
 
-  const SliverGridConfig({
+  SliverGridConfig({
     required this.gridDelegate,
     super.padding,
   });
@@ -155,7 +159,7 @@ class GridConfig extends BaseConfig with IScroll, RefreshMixin {
 
   final SliverGridDelegate gridDelegate;
 
-  const GridConfig({
+  GridConfig({
     required this.gridDelegate,
     this.physics,
     this.scroll,
@@ -235,7 +239,7 @@ class GroupedListConfig<T> extends BaseConfig with IScroll, ISliverList, Refresh
   final String Function(T) groupBy;
   final Widget Function(int, String) groupBuilder;
 
-  const GroupedListConfig({
+  GroupedListConfig({
     required this.groupBy,
     this.itemExtent,
     this.divider,

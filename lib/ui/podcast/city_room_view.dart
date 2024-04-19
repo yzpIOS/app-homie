@@ -20,7 +20,7 @@ class _CityRoomViewState extends State<CityRoomView> {
 class _DataView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
-    return const GridConfig(
+    return GridConfig(
       padding: Pad(horizontal: 10, top: 10, bottom: 30),
       gridDelegate: RoomItemView.delegate,
     );

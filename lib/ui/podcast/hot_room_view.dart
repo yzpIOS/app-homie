@@ -53,7 +53,7 @@ class _HotRoomViewState extends State<HotRoomView> with GetStateMixin {
               //     sliver: const HomeBannerView().toSliver(),
               //   ),
               ConfigList(
-                config: const SliverGridConfig(
+                config: SliverGridConfig(
                   padding: Pad(horizontal: 10, top: 10, bottom: 50),
                   gridDelegate: RoomItemView.delegate,
                 ),

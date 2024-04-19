@@ -53,7 +53,7 @@ class _MomentPageState extends State<MomentPage> with SingleTickerProviderStateM
         actions: _actions(),
       ),
       body: ConfigList(
-        config: const ListConfig(
+        config: ListConfig(
           divider: Spacing.h10,
           padding: Pad(bottom: 64),
         ),

@@ -225,6 +225,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
 
   Widget msgView(BuildContext context) {
     return RichText(
+      textAlign: TextAlign.center,
       text: TextSpan(
         style: const TextStyle(color: Colors.white, fontSize: 14),
         children: [

@@ -6,6 +6,7 @@ import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/room/user/hot_info_dialog.dart';
 import 'package:app/ui/room/user/mic_user_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -235,16 +236,34 @@ class _ItemView extends StatelessWidget {
     }
 
     Widget $HotView() {
-      return XRichText(
-        textAlign: TextAlign.center,
-        TextSpan(
-          children: [
-            WidgetSpan(
-              alignment: PlaceholderAlignment.bottom,
-              child: SvgView(SVG.$('room/热度'), width: 12, height: 12),
-            ),
-            TextSpan(text: '${item.hotCount}'),
-          ],
+      GlobalKey globalKey = GlobalKey();
+      return GestureDetector(
+        onTap: () {
+          if(item.hotCount <= 0) {
+            return;
+          }
+          var size = globalKey.currentContext?.findRenderObject()?.paintBounds.size;
+          RenderBox? renderBox = globalKey.currentContext?.findRenderObject() as RenderBox?;
+          // offset.dx , offset.dy 就是控件的左上角坐标
+          var offset = renderBox?.localToGlobal(Offset.zero);
+          var centerBottom = Offset((offset?.dx ?? 0),
+              (offset?.dy ?? 0) + (size?.height ?? 0.0));
+
+          HotInfoDialog.userApplyDownMic(anchorPoint: centerBottom);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: XRichText(
+          key: globalKey,
+          textAlign: TextAlign.center,
+          TextSpan(
+            children: [
+              WidgetSpan(
+                alignment: PlaceholderAlignment.bottom,
+                child: SvgView(SVG.$('room/热度'), width: 12, height: 12),
+              ),
+              TextSpan(text: '${item.hotCount}'),
+            ],
+          ),
         ),
       );
     }

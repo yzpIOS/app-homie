@@ -37,7 +37,7 @@ class UserSelectSheet extends ISheetWidget {
       children: [
         Expanded(
           child: ConfigList(
-            config: const GridConfig(
+            config: GridConfig(
               padding: Pad(horizontal: 20, top: 10, bottom: 10),
               gridDelegate: XGridDelegate(
                 crossAxisCount: 5,

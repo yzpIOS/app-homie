@@ -58,7 +58,7 @@ class _DtaView extends SimplePageView<Map> {
 
   @override
   BaseConfig get config {
-    return const ListConfig(
+    return ListConfig(
       itemExtent: 70,
     );
   }

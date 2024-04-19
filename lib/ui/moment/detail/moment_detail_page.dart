@@ -48,7 +48,7 @@ class _MomentDetailPageState extends State<MomentDetailPage> {
         SliverPadding(
           padding: const Pad(bottom: 64),
           sliver: ConfigList(
-            config: const SliverListConfig(
+            config: SliverListConfig(
               divider: Divider(indent: 10, endIndent: 10),
             ),
             child: ConfigListState(
