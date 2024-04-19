@@ -23,6 +23,7 @@ import 'package:app/ui/intro/room_intro_overlay.dart';
 import 'package:app/ui/login/ad_loading_page.dart';
 import 'package:app/ui/moment/widgets/reply_view.dart';
 import 'package:app/ui/room/overlay/photo_mode_overlay.dart';
+import 'package:app/ui/room/user/hot_info_dialog.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:slugid/slugid.dart';
@@ -96,6 +97,9 @@ class RoomPage extends StatefulWidget {
 
     try {
       await _show();
+
+      HotInfoDialog.overlayEntry?.remove();
+      HotInfoDialog.overlayEntry = null;
 
       mgr.sceneCtrl2?.isDisposed = true;
       if (mgr.sceneCtrl2?.isRequestBack == true && mgr.sceneCtrl.keepState) {

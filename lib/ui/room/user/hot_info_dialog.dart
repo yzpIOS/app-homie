@@ -7,6 +7,8 @@ import '../../../tools.dart';
 
 class HotInfoDialog extends StatefulWidget {
 
+  static OverlayEntry? overlayEntry;
+
   Offset? anchorPoint;
 
   int roomId;
@@ -58,12 +60,13 @@ class _HotInfoState extends State<HotInfoDialog> {
       body: Stack(
         alignment: Alignment.topLeft,
         children: [
-          GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            behavior: HitTestBehavior.opaque,
-            child: Positioned.fill(
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () {
+                HotInfoDialog.overlayEntry?.remove();
+                HotInfoDialog.overlayEntry = null;
+              },
+              behavior: HitTestBehavior.opaque,
               child: Container(color: Colors.transparent,),
             ),
           ),
@@ -113,7 +116,7 @@ class HotHistoryUserView extends SimplePageView<Map> {
 
   @override
   Future fetchPage(PageNum page) {
-    return Api.Room.getHotHistory(PageNum(size: 999), roomId, roleId);
+    return Api.Room.getHotHistory(page, roomId, roleId);
   }
 
   @override
@@ -136,6 +139,8 @@ class HotHistoryUserView extends SimplePageView<Map> {
             flex: 2,
             child: Text(
               item["username"] ?? "",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
               style: TextStyle(
                 color: Color(0xFF282828),
                 fontWeight: FontWeight.normal,
@@ -147,6 +152,8 @@ class HotHistoryUserView extends SimplePageView<Map> {
           Expanded(
             flex: 1,
             child: Text(
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
               (item["number"].toString() ?? "") + (item["number"].toString() ?? ""),
               style: TextStyle(
                 color: Color(0xFF282828),

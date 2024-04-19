@@ -13,6 +13,7 @@ import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
 import 'package:app/ui/room/persion/person_room_overlay.dart';
+import 'package:app/ui/room/user/hot_info_dialog.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/event/event.dart';
@@ -190,6 +191,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     Api.RoomMsg.switchRoom();
     RoomChatCtrl.cacheEvents.clear();
     RoomManagerCtrl.ins.needJoinRoom = true;
+
+    HotInfoDialog.overlayEntry?.remove();
+    HotInfoDialog.overlayEntry = null;
   }
 
   @mustCallSuper

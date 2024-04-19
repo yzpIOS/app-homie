@@ -319,6 +319,7 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 2,),
                 Visibility(
