@@ -70,13 +70,12 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if(view == null) {
+      return const SizedBox();
+    }
     return SizedBox(
       height: 50,
-      child: view?.let(
-        (child) => LayoutBuilder(
-          builder: (_, c) => _AnimateView(onComplete: _doLoop, size: c.biggest, padding: padding, child: child),
-        ),
-      ),
+      child: _AnimateView(onComplete: _doLoop, size: Size(Get.width, 50), padding: padding, child: view!),
     );
   }
 }

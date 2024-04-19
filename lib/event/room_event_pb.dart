@@ -3,14 +3,21 @@ part of 'event.dart';
 class EventPb {
   String get name => '$runtimeType';
 
-  const EventPb();
+  EventPb();
 
-  void fire() => Bus.fire(this);
+  Future<void> fire() async {
+    if(delayFire > 0) {
+      await Future.delayed(Duration(milliseconds: delayFire));
+    }
+    Bus.fire(this);
+  }
 
   @override
   String toString() {
     return '$runtimeType{name:$name}';
   }
+
+  int delayFire = 0;
 }
 
 class RoomInfoEvent extends EventPb {
@@ -43,6 +50,9 @@ class UserInEvent extends UserTotalEvent<S_JoinBroadcast> {
   NUID? get nuid => data?.roleId;
 
   int? get total => data?.total;
+
+  @override
+  int delayFire = 250;
 }
 
 

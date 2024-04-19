@@ -4,6 +4,8 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -77,7 +79,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     /// xxx进入了房间消息
     on<UserInEvent>((data) async {
       if(firstEnter) {
-        await Future.delayed(const Duration(milliseconds: 1500));
+        await Future.delayed(const Duration(milliseconds: 1200));
         UserInEvent2().myFire(data.data);
         firstEnter = false;
       }
@@ -162,6 +164,12 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       Api.RoomMsg.switchRoom();
     }
     selected.value = type;
+
+    // S_JoinBroadcast s_joinBroadcast = S_JoinBroadcast.create();
+    // s_joinBroadcast.roleId = OAuthCtrl.nUid;
+    // s_joinBroadcast.roomId = Int64(RoomManagerCtrl.ins.sceneCtrl.roomId);
+    // s_joinBroadcast.uid = OAuthCtrl.uid;
+    // UserInEvent().myFire(s_joinBroadcast);
   }
 
 
