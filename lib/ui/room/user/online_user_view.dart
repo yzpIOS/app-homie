@@ -347,7 +347,7 @@ class CharmUserView extends SimplePageView<Map> {
   }
 
   @override
-  bool get isSinglePage => maxValues > 0;
+  bool get isSinglePage => true;
 
   @override
   BaseConfig get config {
@@ -522,7 +522,7 @@ class WealthUserView extends SimplePageView<Map> {
   }
 
   @override
-  bool get isSinglePage => maxValues > 0;
+  bool get isSinglePage => true;
 
   @override
   BaseConfig get config {
