@@ -225,60 +225,55 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
 
   Widget msgView(BuildContext context) {
     return RichText(
-      text: WidgetSpan(
-        alignment: PlaceholderAlignment.middle,
-        child: RichText(
-          text: TextSpan(
-              style: const TextStyle(color: Colors.white, fontSize: 14),
+      text: TextSpan(
+          style: const TextStyle(color: Colors.white, fontSize: 14),
+          children: [
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+            ),
+
+            WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: SizedBox(width: 5,)
+            ),
+
+            TextSpan(
               children: [
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: Image.asset(IMG.format("room/ic_horn"), width: 16, height: 16,),
+                  child: GestureDetector(
+                    onTap: () {
+                      showUserDialog();
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: RichText(
+                      text: TextSpan(text: vm.data.userName, style: const TextStyle(color: Colors.white, fontSize: 14),),
+                    ),
+                  ),
                 ),
+                const TextSpan(text: '玩家在', style: const TextStyle(color: Colors.white, fontSize: 14),),
 
                 WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: SizedBox(width: 5,)
-                ),
-
-                TextSpan(
-                  children: [
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: GestureDetector(
-                        onTap: () {
-                          showUserDialog();
-                        },
-                        behavior: HitTestBehavior.opaque,
-                        child: RichText(
-                          text: TextSpan(text: vm.data.userName, style: TextStyle(color: Color(0xFFFB7AFF))),
-                        ),
-                      ),
+                  child: GestureDetector(
+                    onTap: () {
+                      debugPrint("click room");
+                      RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: RichText(
+                      text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
                     ),
-                    const TextSpan(text: '玩家在'),
-
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: GestureDetector(
-                        onTap: () {
-                          debugPrint("click room");
-                          RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
-                        },
-                        behavior: HitTestBehavior.opaque,
-                        child: RichText(
-                          text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
-                        ),
-                      ),
-                    ),
-                    const TextSpan(text: '房间赠送了'),
-                    TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFB7AFF))),
-                    const TextSpan(text: '礼物'),
-                  ],
-                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                  ),
                 ),
-              ]
-          ),
-        )
+                const TextSpan(text: '房间赠送了', style: const TextStyle(color: Colors.white, fontSize: 14),),
+                TextSpan(text: "${vm.data.giftName}", style: TextStyle(color: Color(0xFFFB7AFF), fontSize: 14)),
+                const TextSpan(text: '礼物', style: const TextStyle(color: Colors.white, fontSize: 14),),
+              ],
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+            ),
+          ]
       ),
     );
   }

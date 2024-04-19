@@ -468,7 +468,7 @@ class ApiRoom extends ApiBase {
     return _doPost("list", data: page + {"classify_id": classify_id});
   }
 
-  Future getHotHistory(PageNum page) {
-    return _doPost("mike/heat/record", data: page + {});
+  Future getHotHistory(PageNum page, int room_id, int role_id) {
+    return _doPost("mike/heat/record", data: page + {"room_id": room_id, "role_id": role_id});
   }
 }

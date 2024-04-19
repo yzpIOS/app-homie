@@ -9,7 +9,10 @@ class HotInfoDialog extends StatefulWidget {
 
   Offset? anchorPoint;
 
-  HotInfoDialog({this.anchorPoint});
+  int roomId;
+  int roleId;
+
+  HotInfoDialog(this.roomId, this.roleId, {this.anchorPoint});
 
   @override
   State<StatefulWidget> createState() => _HotInfoState();
@@ -18,11 +21,11 @@ class HotInfoDialog extends StatefulWidget {
   ///
   /// 个人房：确认下麦吗？
   ///
-  static void userApplyDownMic({Offset? anchorPoint}) async {
+  static void userApplyDownMic(int roomId, int roleId, {Offset? anchorPoint}) async {
     showDialog(
       context: Get.context!,
       builder: (context) {
-        return HotInfoDialog(anchorPoint: anchorPoint);
+        return HotInfoDialog(roomId, roleId, anchorPoint: anchorPoint);
       },
       useSafeArea: false,
       anchorPoint: anchorPoint,
@@ -88,7 +91,7 @@ class _HotInfoState extends State<HotInfoDialog> {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: HotHistoryUserView(),
+              child: HotHistoryUserView(widget.roomId, widget.roleId),
             ),
           ),
         ],
@@ -104,9 +107,14 @@ class _HotInfoState extends State<HotInfoDialog> {
 ///
 class HotHistoryUserView extends SimplePageView<Map> {
 
+  int roomId;
+  int roleId;
+
+  HotHistoryUserView(this.roomId, this.roleId);
+
   @override
   Future fetchPage(PageNum page) {
-    return Api.Room.getHotHistory(page);
+    return Api.Room.getHotHistory(PageNum(size: 999), roomId, roleId);
   }
 
   @override
@@ -125,22 +133,27 @@ class HotHistoryUserView extends SimplePageView<Map> {
       margin: EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
-          Text(
-            item["username"] ?? "",
-            style: TextStyle(
-              color: Color(0xFF282828),
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
+          Expanded(
+            flex: 2,
+            child: Text(
+              item["username"] ?? "",
+              style: TextStyle(
+                color: Color(0xFF282828),
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
             ),
           ),
-          Expanded(child: SizedBox()),
           SvgView(SVG.$('room/热度'), width: 12, height: 12),
-          Text(
-            item["number"].toString() ?? "",
-            style: TextStyle(
-              color: Color(0xFF282828),
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
+          Expanded(
+            flex: 1,
+            child: Text(
+              item["number"].toString() ?? "",
+              style: TextStyle(
+                color: Color(0xFF282828),
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
+              ),
             ),
           ),
         ],

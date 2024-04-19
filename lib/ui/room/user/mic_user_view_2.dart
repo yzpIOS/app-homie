@@ -2,6 +2,7 @@ import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/model/enum/room_role_type.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -239,7 +240,8 @@ class _ItemView extends StatelessWidget {
       GlobalKey globalKey = GlobalKey();
       return GestureDetector(
         onTap: () {
-          if(item.hotCount <= 0) {
+          int? roomId = RoomManagerCtrl.ins.sceneCtrl2?.roomId;
+          if(item.hotCount <= 0 || roomId == null) {
             return;
           }
           var size = globalKey.currentContext?.findRenderObject()?.paintBounds.size;
@@ -249,7 +251,7 @@ class _ItemView extends StatelessWidget {
           var centerBottom = Offset((offset?.dx ?? 0),
               (offset?.dy ?? 0) + (size?.height ?? 0.0));
 
-          HotInfoDialog.userApplyDownMic(anchorPoint: centerBottom);
+          HotInfoDialog.userApplyDownMic(roomId, item.nUid.toInt(), anchorPoint: centerBottom);
         },
         behavior: HitTestBehavior.opaque,
         child: XRichText(
