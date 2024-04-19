@@ -213,7 +213,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
 
         HomeBannerView(),
         SizedBox(height: 10,),// 距离
-        HomePlayTogether(),// 一起玩模块
+        // HomePlayTogether(),// 一起玩模块
       ],
     );
   }

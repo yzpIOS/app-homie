@@ -55,49 +55,45 @@ class _HotInfoState extends State<HotInfoDialog> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
-          alignment: Alignment.topLeft,
-          children: [
-            GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              behavior: HitTestBehavior.opaque,
-              child: Positioned.fill(
-                child: Container(color: Colors.transparent,),
-              ),
+      body: Stack(
+        alignment: Alignment.topLeft,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Get.back();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Positioned.fill(
+              child: Container(color: Colors.transparent,),
             ),
-            Positioned(
-              left: parentX + 50 / 2,
-              top: widget.anchorPoint?.dy ?? 0,
-              child: Image.asset(IMG.format("room/icon_up_arrow"), width: 10, height: 6,),
-            ),
-            Positioned(
-              left: contentX,
-              top: (widget.anchorPoint?.dy ?? 0) + 5,
-              child: Container(
-                width: width,
-                height: height,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFFFEFFF3),
-                        Color(0xFFFAFFD1),
-                      ]
-                  ),
-                  borderRadius: BorderRadius.circular(8),
+          ),
+          Positioned(
+            left: parentX + 50 / 2,
+            top: widget.anchorPoint?.dy ?? 0,
+            child: Image.asset(IMG.format("room/icon_up_arrow"), width: 10, height: 6,),
+          ),
+          Positioned(
+            left: contentX,
+            top: (widget.anchorPoint?.dy ?? 0) + 5,
+            child: Container(
+              width: width,
+              height: height,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFFEFFF3),
+                      Color(0xFFFAFFD1),
+                    ]
                 ),
-                child: HotHistoryUserView(widget.roomId, widget.roleId),
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: HotHistoryUserView(widget.roomId, widget.roleId),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -132,6 +128,7 @@ class HotHistoryUserView extends SimplePageView<Map> {
   Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
     return Container(
       height: 20,
+      width: Get.width,
       margin: EdgeInsets.only(bottom: 5),
       child: Row(
         children: [
