@@ -38,7 +38,7 @@ class HotInfoDialog extends StatefulWidget {
 class _HotInfoState extends State<HotInfoDialog> {
   @override
   Widget build(BuildContext context) {
-    double width = 178;
+    double width = 178 * 1.2;
     double height = 164;
 
     // 开始位置
@@ -151,6 +151,7 @@ class HotHistoryUserView extends SimplePageView<Map> {
               ),
             ),
           ),
+          SizedBox(width: 10,),
           SvgView(SVG.$('room/热度'), width: 12, height: 12),
           Expanded(
             flex: 1,
