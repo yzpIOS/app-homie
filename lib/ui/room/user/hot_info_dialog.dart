@@ -148,7 +148,7 @@ class HotHistoryUserView extends SimplePageView<Map> {
           Expanded(
             flex: 1,
             child: Text(
-              item["number"].toString() ?? "",
+              (item["number"].toString() ?? "") + (item["number"].toString() ?? ""),
               style: TextStyle(
                 color: Color(0xFF282828),
                 fontWeight: FontWeight.normal,

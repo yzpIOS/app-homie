@@ -263,7 +263,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                     },
                     behavior: HitTestBehavior.opaque,
                     child: RichText(
-                      text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF))),
+                      text: TextSpan(text: '【${vm.data.roomName}】', style: TextStyle(color: Color(0xFFFB7AFF), fontSize: 14)),
                     ),
                   ),
                 ),
