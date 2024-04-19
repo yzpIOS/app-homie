@@ -63,11 +63,14 @@ class _HotInfoState extends State<HotInfoDialog> {
           Positioned.fill(
             child: GestureDetector(
               onTap: () {
-                HotInfoDialog.overlayEntry?.remove();
-                HotInfoDialog.overlayEntry = null;
+                Get.back();
               },
               behavior: HitTestBehavior.opaque,
-              child: Container(color: Colors.transparent,),
+              child: Container(
+                color: Colors.black.withAlpha(80),
+                width: double.infinity,
+                height: double.infinity,
+              ),
             ),
           ),
           Positioned(

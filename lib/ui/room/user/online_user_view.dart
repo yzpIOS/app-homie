@@ -343,9 +343,6 @@ class CharmUserView extends SimplePageView<Map> {
 
   @override
   Future fetchPage(PageNum page) {
-    if(maxValues > 0) {
-      page = PageNum(size: maxValues);
-    }
     return Api.Room.charmRankUserList(page: page, roomId: roomId, type: type);
   }
 
@@ -516,10 +513,6 @@ class WealthUserView extends SimplePageView<Map> {
   @override
   Future fetchPage(PageNum page) async {
 
-    if(maxValues > 0) {
-      page = PageNum(size: maxValues);
-    }
-
     var result = await Api.Room.wealthyRankUserList(page: page, roomId: roomId, type: type);
 
     if(result is Map && result.containsKey("current_user_item")) {
@@ -527,6 +520,9 @@ class WealthUserView extends SimplePageView<Map> {
     }
     return result;
   }
+
+  @override
+  bool get isSinglePage => maxValues > 0;
 
   @override
   BaseConfig get config {
