@@ -98,7 +98,7 @@ dependencies:
   http_proxy: ^1.2.1
   figma_squircle: ^0.5.3
   flutter_displaymode: ^0.6.0
-  flutter_mxlogger: ^1.2.5+6
+#  flutter_mxlogger: ^1.2.5+6
   stack_trace: ^1.11.0
   flutter_local_notifications: ^14.1.0
   #

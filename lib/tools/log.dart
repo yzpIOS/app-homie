@@ -4,31 +4,31 @@ import 'dart:developer';
 
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
-import 'package:flutter_mxlogger/flutter_mxlogger.dart';
+// import 'package:flutter_mxlogger/flutter_mxlogger.dart';
 import 'package:stack_trace/stack_trace.dart';
 
 typedef CreateLog = String Function();
 
 int _seq = 0;
 late final String _session;
-late final MXLogger _logger;
+// late final MXLogger _logger;
 
 Future<void> loggerInit(String session) async {
-  _session = session;
-
-  _logger = await MXLogger.initialize(
-    nameSpace: 'logs',
-    fileName: Env.appName.toLowerCase(),
-    cryptKey: '0' * 16,
-    iv: '1' * 16,
-    storagePolicy: MXStoragePolicyType.yyyy_MM_dd,
-  );
-
-  _logger
-    ..setEnable(true)
-    ..setConsoleEnable(false)
-    ..setMaxDiskAge(60 * 60 * 24 * 7)
-    ..setMaxDiskSize(1024 * 1024 * 10);
+  // _session = session;
+  //
+  // _logger = await MXLogger.initialize(
+  //   nameSpace: 'logs',
+  //   fileName: Env.appName.toLowerCase(),
+  //   cryptKey: '0' * 16,
+  //   iv: '1' * 16,
+  //   storagePolicy: MXStoragePolicyType.yyyy_MM_dd,
+  // );
+  //
+  // _logger
+  //   ..setEnable(true)
+  //   ..setConsoleEnable(false)
+  //   ..setMaxDiskAge(60 * 60 * 24 * 7)
+  //   ..setMaxDiskSize(1024 * 1024 * 10);
 }
 
 enum LogType {
@@ -120,10 +120,11 @@ void errLog(e, StackTrace? s, {String? message, LogType type = LogType.App}) {
   if (canLog(type)) _print(msg, name: name);
 }
 
-Future<void> removeExpireLogs() => Future.sync(_logger.removeExpireData);
+Future<void> removeExpireLogs() => Future.value();
+// Future<void> removeExpireLogs() => Future.sync(_logger.removeExpireData);
 
 void _log(String msg, {required String name, required int level}) {
-  _logger.log(level, msg, name: name, tag: _session);
+  // _logger.log(level, msg, name: name, tag: _session);
 }
 
 void _print(String msg, {required String name}) {

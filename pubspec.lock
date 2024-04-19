@@ -672,14 +672,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_mxlogger:
-    dependency: "direct main"
-    description:
-      name: flutter_mxlogger
-      sha256: d15607d5cb99df858246f60c7281a8248bdec903f863e7b39b1d23a0c04dd856
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.11+1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
