@@ -87,7 +87,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的任务',
       // '我的称号',
       // '首充礼包',
-      '邀请好友',
+      // '邀请好友',
     ];
 
     Widget itemBuilder(String item) {
