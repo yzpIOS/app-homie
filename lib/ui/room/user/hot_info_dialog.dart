@@ -139,7 +139,7 @@ class HotHistoryUserView extends SimplePageView<Map> {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 1,
             child: Text(
               item["username"] ?? "",
               overflow: TextOverflow.ellipsis,
