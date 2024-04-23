@@ -11,6 +11,7 @@ import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/room/room_mic_ctrl.dart';
 import 'package:app/store/room/scene_mic_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
@@ -56,22 +57,22 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
   void initState() {
     super.initState();
     // 获取房间在线的用户信息
-    delay(100, () async {
-      WaitingCtrl.obj.show();
-      C_OnlineList c_roomEnterComplete = C_OnlineList.create();
-      c_roomEnterComplete.roomIdList.add(Int64(widget.sceneCtrl.roomId ?? 0));
-      s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-          CMD.C_OnlineList,
-          datas: c_roomEnterComplete.writeToBuffer(),
-          resCmd: CMD.S_OnlineList
-      );
-      WaitingCtrl.obj.hidden();
-      if(s_syncRoomInfo?.items.isEmpty == true) {
-        showToast("暂无在麦用户");
-        return;
-      }
-      setState(() { });
-    });
+    // delay(100, () async {
+    //   WaitingCtrl.obj.show();
+    //   C_OnlineList c_roomEnterComplete = C_OnlineList.create();
+    //   c_roomEnterComplete.roomIdList.add(Int64(widget.sceneCtrl.roomId ?? 0));
+    //   s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+    //       CMD.C_OnlineList,
+    //       datas: c_roomEnterComplete.writeToBuffer(),
+    //       resCmd: CMD.S_OnlineList
+    //   );
+    //   WaitingCtrl.obj.hidden();
+    //   if(s_syncRoomInfo?.items.isEmpty == true) {
+    //     showToast("暂无在麦用户");
+    //     return;
+    //   }
+    //   setState(() { });
+    // });
   }
 
   @override
@@ -134,27 +135,24 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
   ///
   Widget createUserList() {
     SceneMicCtrl? roomMicCtrl = widget.sceneCtrl.getRoomMicCtrl();
-    if(s_syncRoomInfo == null || roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+    if(roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
       return const SizedBox();
     }
 
     return Expanded(
       child: Obx(() {
         // 找出的房主的信息
-        Common.RoomUserInfo? roomOwner = null;
+        MicInfo? roomOwner = null;
         // 麦上的用户信息列表
-        List<Common.RoomUserInfo> userInMicList = [];
+        List<MicInfo> userInMicList = [];
         // 获取麦上的用户列表
-        var userList = roomMicCtrl.getOnLineManager();
+        var userList = roomMicCtrl.simpleUserList;
         for(int index = 0; index < userList.length; index ++) {
-          var result = s_syncRoomInfo?.items.firstWhereOrNull((element) => element.roleId == userList[index].nUid);
           // 其它在mic上的用户的信息
-          if(result != null) {
-            if(userList[index] == "1") {
-              roomOwner = result;
-            } else {
-              userInMicList.add(result);
-            }
+          if(userList[index].no == "1") {
+            roomOwner = userList[index];
+          } else {
+            userInMicList.add(userList[index]);
           }
         }
 
@@ -163,7 +161,7 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
             const SizedBox(height: 16,).toSliver(),
             // 房主的显示界面
             if(roomOwner != null)
-              createItem(roomOwner!).toSliver(),
+              createItem(roomOwner).toSliver(),
             if(roomOwner != null)
               const SizedBox(height: 30,).toSliver(),
             // 其它在mike上的用户的信息
@@ -184,10 +182,10 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
     );
   }
 
-  Widget createItem(Common.RoomUserInfo micInfo) {
+  Widget createItem(MicInfo micInfo) {
     // 选中时的圆圈
     Decoration? decoration = null;
-    if(selectedIds.contains(micInfo.roleId)) {
+    if(selectedIds.contains(micInfo.nUid)) {
       decoration = BoxDecoration(
           borderRadius: BorderRadius.circular(1000),
           border: Border.all(color: Color(0xFFC567FF), width: 2)
@@ -196,10 +194,10 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
 
     return GestureDetector(
       onTap: () {
-        if(selectedIds.contains(micInfo.roleId)) {
-          selectedIds.remove(micInfo.roleId);
+        if(selectedIds.contains(micInfo.nUid)) {
+          selectedIds.remove(micInfo.nUid);
         } else {
-          selectedIds.add(micInfo.roleId);
+          selectedIds.add(micInfo.nUid);
         }
         setState(() { });
       },
@@ -217,17 +215,17 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
                 Container(
                   decoration: decoration,
                   child: AsyncAvatar(uid: micInfo.uid, size: 80, onTap: Some(() {
-                    if(selectedIds.contains(micInfo.roleId)) {
-                      selectedIds.remove(micInfo.roleId);
+                    if(selectedIds.contains(micInfo.nUid)) {
+                      selectedIds.remove(micInfo.nUid);
                     } else {
-                      selectedIds.add(micInfo.roleId);
+                      selectedIds.add(micInfo.nUid);
                     }
                     setState(() { });
                   })),
                 ),
 
                 // 选中的状态
-                if(selectedIds.contains(micInfo.roleId))
+                if(selectedIds.contains(micInfo.nUid))
                   Align(
                     alignment: Alignment.center,
                     child: Image.asset(IMG.format("check"), width: 20, height: 20,),
@@ -238,15 +236,17 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
 
           // 名称
           const SizedBox(height: 5,),
-          Text(
-            (micInfo.username ?? ""),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14
-            ),
-          ),
+          UserInfoCtrl.use(micInfo.uid, builder: (dta) {
+            return Text(
+              (dta?.showName() ?? ""),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14
+              ),
+            );
+          }),
         ],
       ),
     );

@@ -185,6 +185,8 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
 
         // 回到前台，通知im
         IM.$.v2TIMOfflinePushManager.doForeground();
+
+        RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl()?.doRefresh();
         break;
       case AppLifecycleState.paused:
         // socket相关的处理

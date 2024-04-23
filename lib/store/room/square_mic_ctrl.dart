@@ -45,4 +45,9 @@ class SquareMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   @override
   void onRtcInit(RoomRtcCtrl rtc) {}
+
+  @override
+  Future<void> doRefresh() {
+    return Future.value();
+  }
 }

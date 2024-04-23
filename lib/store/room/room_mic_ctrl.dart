@@ -371,7 +371,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     if(RoomManagerCtrl.ins.sceneCtrl2 is RoomCtrl) {
       RoomCtrl roomCtrl = RoomManagerCtrl.ins.sceneCtrl2 as RoomCtrl;
       if(roomCtrl.isAdmin(OAuthCtrl.uid) || roomCtrl.isOwner(OAuthCtrl.uid) || roomCtrl.isAnchor == true) {
-        // 管理员自接上麦
+        // 管理员直接上麦
         _doMicUp(no: no, uid: uid);
         return;
       }

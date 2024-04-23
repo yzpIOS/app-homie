@@ -27,6 +27,8 @@ abstract class SceneMicCtrl extends GetxController with GetDisposableMixin {
     onRtcInit(rtcCtrl = bindGet(RoomRtcCtrl()));
   }
 
+  Future<void> doRefresh();
+
   void onRtcInit(RoomRtcCtrl rtc);
 
   List<MicInfo> get simpleUserList => [];
