@@ -273,6 +273,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     final resp = await Api.Room.micList(roomId: roomId);
     onDoRefreshHandle(resp);
     //TODO 处理重连期间自己麦状态改变情况
+    onMikeListUpdate();
   }
 
   Map<String, List<Map<String, UID>>> unityMicInfoData() {
@@ -492,6 +493,17 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     } else {
       assert(false, '数据错误 -> $data $no $uid');
     }
+  }
+
+  ///
+  /// 麦列表更新时调用这里, 此时检查用户是否在麦上，如果没有，那么就关麦
+  ///
+  void onMikeListUpdate() {
+    var curUser = simpleUserList.firstWhereOrNull((element) => element.uid == OAuthCtrl.uid);
+    if(curUser != null) {
+      return;
+    }
+    Rtc.micRx(false);
   }
 
   static Map<String, MicInfo> micDataFrom(data) {

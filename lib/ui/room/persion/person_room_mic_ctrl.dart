@@ -280,6 +280,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
   @override
   void onDoRefreshHandle(resp) {
     micUserList.value = RoomMicCtrl.micDataFrom2(resp);
+    onMikeListUpdate();
   }
 
   ///
