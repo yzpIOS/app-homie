@@ -351,7 +351,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     }
 
 
-    if(!OAuthCtrl.isNameValidate) {
+    if(!OAuthCtrl.isNameValidate && no != "9") {
       String? label = await Get.simpleDialog(msg: "上麦需要进行实名认证", okLabel: "去实名", cancelLabel: "取消");
       if(label != "去实名") {
         return;
