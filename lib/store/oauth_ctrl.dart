@@ -314,9 +314,6 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   static bool get isLogin => _auth != null;
 
   static Future<bool> checkValid() async {
-    if(Env.isDebug) {
-      return Future.value(true);
-    }
     // 更新数据
     if(!OAuthCtrl.isNameValidate) {
       // 没有实名，更新用户信息，防止缓存数据问题

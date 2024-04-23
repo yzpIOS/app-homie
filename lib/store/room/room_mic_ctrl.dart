@@ -340,8 +340,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   }
 
   void micUp({required String no, NUID? uid, bool reRequest = false, String contents = "是否申请上麦", String otherContent = "你的上麦申请被拒绝了"}) async {
-    if(!(await OAuthCtrl.checkValid())) {
-      return Future.value(0);
+    if(no != "9" && !(await OAuthCtrl.checkValid())) {
+      return Future.value();
     }
 
     // 房主上麦
@@ -456,16 +456,18 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     }
 
     // 房主不用判断
-    if(uid != roomUid && no != "9") {
-      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
-      if(userInfo == null) {
-        showToast("无法操作，获取该用户信息异常");
-        return;
-      }
-      // 该用户未实名
-      if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
-        showToast("无法操作，该用户未实名");
-        return;
+    if(uid != roomUid) {
+      if(no != "9") {
+        UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
+        if(userInfo == null) {
+          showToast("无法操作，获取该用户信息异常");
+          return;
+        }
+        // 该用户未实名
+        if(userInfo.realNameType != 1 && userInfo.realNameType != 2) {
+          showToast("无法操作，该用户未实名");
+          return;
+        }
       }
     }
 
