@@ -697,6 +697,22 @@ class RoomCtrl extends SceneCtrl {
                   direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
                 );
                 break;
+              case '关注':
+                simpleSub(
+                  Api.Room.follow(roomId: roomId, doFollow: true),
+                  callback: () {
+                    followRx.value = true;
+                  },
+                );
+                break;
+              case '己关注':
+                simpleSub(
+                  Api.Room.follow(roomId: roomId, doFollow: false),
+                  callback: () {
+                    followRx.value = false;
+                  },
+                );
+                break;
             }
           },
         ),
