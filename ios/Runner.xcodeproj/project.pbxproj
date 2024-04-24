@@ -10,6 +10,7 @@
 		070728A22A57C417008BDA40 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0707289F2A57C3FB008BDA40 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		071CC6A22BC77BB200EFECC3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 071CC6A12BC77BB200EFECC3 /* PrivacyInfo.xcprivacy */; };
 		0741ADCF2BD8A159006A71F1 /* RunInBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0741ADCE2BD8A159006A71F1 /* RunInBackground.mp3 */; };
+		0741ADD22BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */; };
 		078783CF2A615FAA00D451E3 /* NSMutableArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */; };
 		078783D02A615FAA00D451E3 /* NSMutableDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C42A615FAA00D451E3 /* NSMutableDictionary+Safe.m */; };
 		078783D12A615FAA00D451E3 /* NSMutableString+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C92A615FAA00D451E3 /* NSMutableString+Safe.m */; };
@@ -50,6 +51,8 @@
 		0707289F2A57C3FB008BDA40 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		071CC6A12BC77BB200EFECC3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0741ADCE2BD8A159006A71F1 /* RunInBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = RunInBackground.mp3; sourceTree = "<group>"; };
+		0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKeepAliveBackGroundManager.m; sourceTree = "<group>"; };
+		0741ADD12BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKeepAliveBackGroundManager.h; sourceTree = "<group>"; };
 		075A77652A5BF78100BA29F4 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		078783C02A615FAA00D451E3 /* NSMutableString+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Safe.h"; sourceTree = "<group>"; };
 		078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Safe.m"; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				0741ADD12BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.h */,
+				0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */,
 				07BA0B1F2BD7BF5200A481D2 /* XTBackRunningManager.h */,
 				BB9E16DA2B030912001F372E /* pic_homie.png */,
 				BB9E16DB2B030912001F372E /* pic_homie@2x.png */,
@@ -368,6 +373,7 @@
 				078783D22A615FAA00D451E3 /* NSDictionary+Safe.m in Sources */,
 				078783D02A615FAA00D451E3 /* NSMutableDictionary+Safe.m in Sources */,
 				078783D12A615FAA00D451E3 /* NSMutableString+Safe.m in Sources */,
+				0741ADD22BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

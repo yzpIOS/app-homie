@@ -60,17 +60,17 @@ class RoomItemView extends StatelessWidget {
                     ),
                   ),
                   Expanded(child: SizedBox()),
-                  Container(
-                    width: 16,
-                    height: 16,
-                    margin: EdgeInsets.only(right: 5),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withAlpha(80),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Image.asset(IMG.format("room/room_persion"), width: 12, height: 12,),
-                  )
+                  // Container(
+                  //   width: 16,
+                  //   height: 16,
+                  //   margin: EdgeInsets.only(right: 5),
+                  //   alignment: Alignment.center,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.black.withAlpha(80),
+                  //     borderRadius: BorderRadius.circular(100),
+                  //   ),
+                  //   child: Image.asset(IMG.format("room/room_persion"), width: 12, height: 12,),
+                  // )
                 ],
               )
           ],
