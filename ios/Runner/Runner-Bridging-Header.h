@@ -6,3 +6,4 @@
 #import "NSMutableString+Safe.h"
 #import "NSObject+ImpChangeTool.h"
 #import "NSObject+Swizzling.h"
+#import "XTBackRunningManager.h"

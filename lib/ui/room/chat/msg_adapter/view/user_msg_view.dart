@@ -209,7 +209,7 @@ class LuckMsgView extends _UserMsgView<LuckMsgAdapter> {
         TextSpan(text: vm.gameName, style: const TextStyle(color: AppPalette.colorY),),
         const TextSpan(text: ' 中 获得了价值'),
         TextSpan(text: vm.prize.toString(), style: TextStyle(color: Color(0xFF3DF6FF))),
-        const TextSpan(text: '紫砖的'),
+        const TextSpan(text: '紫钻的'),
         TextSpan(text: vm.giftName.toString(), style: TextStyle(color: Color(0xFF3DF6FF))),
         TextSpan(text: ' x${vm.giftCount}'),
       ],
