@@ -15,7 +15,7 @@
 
 
 ///循环时间
-static NSInteger kCirculaDuration = 30;
+static NSInteger kCirculaDuration = 10;
 
 @interface XTBackRunningManager ()<CLLocationManagerDelegate>
 /// 后台任务
@@ -83,7 +83,7 @@ static NSInteger kCirculaDuration = 30;
     NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
     self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
     [self.player prepareToPlay];
-    self.player.volume = 0.0;
+    self.player.volume = 0.4;
     self.player.numberOfLoops = -1; // 循环播放
 }
 

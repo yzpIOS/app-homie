@@ -61,6 +61,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_State = CMD._(261, _omitEnumNames ? '' : 'S_State');
   static const CMD C_ToSeatInfo = CMD._(280, _omitEnumNames ? '' : 'C_ToSeatInfo');
   static const CMD S_SyncSeatInfo = CMD._(281, _omitEnumNames ? '' : 'S_SyncSeatInfo');
+  static const CMD S_TopThree = CMD._(282, _omitEnumNames ? '' : 'S_TopThree');
   static const CMD C_GoToRoom = CMD._(300, _omitEnumNames ? '' : 'C_GoToRoom');
   static const CMD S_GoToRoom = CMD._(301, _omitEnumNames ? '' : 'S_GoToRoom');
   static const CMD C_RoomEnterComplete = CMD._(2000, _omitEnumNames ? '' : 'C_RoomEnterComplete');
@@ -245,6 +246,7 @@ class CMD extends $pb.ProtobufEnum {
     S_State,
     C_ToSeatInfo,
     S_SyncSeatInfo,
+    S_TopThree,
     C_GoToRoom,
     S_GoToRoom,
     C_RoomEnterComplete,

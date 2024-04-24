@@ -45,6 +45,8 @@ import 'package:quiver/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart' as Common;
 
+import '../user/room_user_info_dialog.dart';
+
 class RoomOverlay extends SceneOverlay<RoomCtrl> {
   RoomOverlay({super.key});
 
@@ -406,6 +408,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
       margin: Pad(top: AppSize.safeTop, right: 10),
       height: 44,
       child: Row(
+        mainAxisSize: MainAxisSize.max,
         children: [
           BackButton(color: Colors.white, onPressed: () => onItemClick('最小化')),
           $TitleView(),
@@ -521,36 +524,221 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
   // }
 
   Widget $OnlineView() {
-    Widget child = Obx(() {
-      // final maxUser = controller.maxUser;
-      final userCount = controller.userCountRx();
+    return Obx(() {
+      S_TopThree? topThree = controller.topThree.value;
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 热度值第一名
+          if(topThree != null && topThree.items.isNotEmpty)
+            SizedBox(
+              height: 33,
+              width: 33,
+              child: Stack(
+                children: [
+                  // 头像
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: AsyncAvatar(
+                      uid: topThree.items.first.uid,
+                      size: 24,
+                      side: BorderSide(color: Color(0xFFD9B22F), width: 1),
+                      onTap: Some(() {
+                        RoomUserInfoDialog.show(uid: topThree.items.first.uid, nuid: topThree.items.first.roleId);
+                      }),
+                    ),
+                  ),
+                  // 热度值
+                  Positioned(
+                    left: 2,
+                    right: 2,
+                    bottom: 2,
+                    child: Container(
+                      width: 24,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFD9B22F),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 2,),
+                          SvgView(SVG.$('room/热度'), width: 6, height: 6),
+                          Text(
+                            convert(topThree.items[0].contributionCount.toInt()),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 6,
+                                fontWeight: FontWeight.normal
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
 
-      return XRichText(
-        TextSpan(
-          children: [
-            TextSpan(text: '$userCount'),
-            // if (maxUser > 0) TextSpan(text: '/$maxUser'),
-          ],
-        ),
-        style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+
+
+          // 热度值第二名
+          if(topThree != null && topThree.items.length > 1)
+            SizedBox(width: 3,),
+          if(topThree != null && topThree.items.length > 1)
+            SizedBox(
+              height: 33,
+              width: 33,
+              child: Stack(
+                children: [
+                  // 头像
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: AsyncAvatar(
+                      uid: topThree.items[1].uid,
+                      size: 24,
+                      side: BorderSide(color: Color(0xFF6B98D6), width: 1),
+                      onTap: Some(() {
+                        RoomUserInfoDialog.show(uid: topThree.items[1].uid, nuid: topThree.items[1].roleId);
+                      }),
+                    ),
+                  ),
+                  // 热度值
+                  Positioned(
+                    left: 2,
+                    right: 2,
+                    bottom: 2,
+                    child: Container(
+                      width: 24,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF6B98D6),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 2,),
+                          SvgView(SVG.$('room/热度'), width: 6, height: 6),
+                          Text(
+                            convert(topThree.items[1].contributionCount.toInt()),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 6,
+                                fontWeight: FontWeight.normal
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+
+
+          // 热度值第三名
+          if(topThree != null && topThree.items.length > 2)
+            SizedBox(width: 3,),
+          if(topThree != null && topThree.items.length > 2)
+            SizedBox(
+              height: 33,
+              width: 33,
+              child: Stack(
+                children: [
+                  // 头像
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    child: AsyncAvatar(
+                      uid: topThree.items[2].uid,
+                      size: 24,
+                      side: BorderSide(color: Color(0xFFB76E4D), width: 1),
+                      onTap: Some(() {
+                        RoomUserInfoDialog.show(uid: topThree.items[2].uid, nuid: topThree.items[2].roleId);
+                      }),
+                    ),
+                  ),
+                  // 热度值
+                  Positioned(
+                    left: 2,
+                    right: 2,
+                    bottom: 2,
+                    child: Container(
+                      width: 24,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFB76E4D),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: 2,),
+                          SvgView(SVG.$('room/热度'), width: 6, height: 6),
+                          Text(
+                            convert(topThree.items[2].contributionCount.toInt()),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 6,
+                                fontWeight: FontWeight.normal
+                            ),
+                          ),
+                          SizedBox(width: 2,),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+
+          // 在线人数
+          SizedBox(width: 10,),
+          GestureDetector(
+            onTap: () {
+              onItemClick('用户');
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              height: 26,
+              decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
+              constraints: const BoxConstraints(minWidth: 26),
+              padding: const Pad(horizontal: 6),
+              alignment: Alignment.center,
+              child: Obx(() {
+                // final maxUser = controller.maxUser;
+                final userCount = controller.userCountRx();
+
+                return XRichText(
+                  TextSpan(
+                    children: [
+                      TextSpan(text: '$userCount'),
+                      // if (maxUser > 0) TextSpan(text: '/$maxUser'),
+                    ],
+                  ),
+                  style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+                );
+              }),
+            ),
+          )
+        ],
       );
     });
+  }
 
-    child = Container(
-      height: 26,
-      decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
-      constraints: const BoxConstraints(minWidth: 26),
-      padding: const Pad(horizontal: 6),
-      alignment: Alignment.center,
-      child: child,
-    );
-
-    child = InkResponse(
-      onTap: () => onItemClick('用户'),
-      child: child,
-    );
-
-    return child;
+  String convert(int value) {
+    return value.toString();
   }
 }
 

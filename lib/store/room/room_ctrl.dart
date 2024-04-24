@@ -152,6 +152,21 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     doOnReady();
 
     Get.find<RoomManagerCtrl>().sceneCtrl = this;
+
+    SocketCtrl.ins.onDataCmd(CMD.S_TopThree, onReceiveTopThree);
+  }
+
+  Rx<S_TopThree?> topThree = Rx(null);
+
+  // 排行榜数据变化
+  void onReceiveTopThree(int cmd, S_TopThree? data) {
+    topThree.value = data;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    SocketCtrl.ins.removeOnDataCmd(CMD.S_TopThree, onReceiveTopThree);
   }
 
   ///

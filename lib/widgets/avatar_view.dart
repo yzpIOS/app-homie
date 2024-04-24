@@ -46,6 +46,7 @@ class AsyncAvatar extends StatelessWidget {
           isShowOnline: isShowOnline,
           avatarFrameUrl: userFrame ? it?.avatar_frame : "",
           avatarFrameSize: avatarFrameSize,
+          userFrame: userFrame,
         ),
       ),
     );
@@ -61,6 +62,8 @@ class AvatarView extends StatelessWidget {
   final bool isShowOnline;
   final int avatarFrameSize;
 
+  final bool userFrame;
+
   const AvatarView(this.url, {
     super.key,
     this.blur,
@@ -68,6 +71,7 @@ class AvatarView extends StatelessWidget {
     this.side = BorderSide.none, this.isShowOnline = false,
     this.avatarFrameSize = 8,
     this.avatarFrameUrl = null,
+    this.userFrame = true,
   });
 
   @override
@@ -79,6 +83,7 @@ class AvatarView extends StatelessWidget {
       blur: blur,
       size: size,
       shape: CircleBorder(side: side),
+      userFrame: userFrame,
     );
 
     // return child;
@@ -119,6 +124,9 @@ class _Avatar extends StatelessWidget {
   final ShapeBorder shape;
   final int avatarFrameSize;
 
+
+  final bool userFrame;
+
   const _Avatar({
     this.url,
     this.blur,
@@ -126,6 +134,7 @@ class _Avatar extends StatelessWidget {
     required this.shape,
     this.avatarFrameSize = 8,
     this.avatarFrameUrl = null,
+    this.userFrame = true,
   });
 
   @override
@@ -146,7 +155,7 @@ class _Avatar extends StatelessWidget {
     );
 
     // 加头像框
-    if(avatarFrameUrl?.isNotEmpty == true) {
+    if(userFrame) {
       Widget avatarFrame = avatarFrameUrl?.isNotEmpty == true ?
         NetImage(avatarFrameUrl, blur: blur, width: size, height: size, fit: BoxFit.cover) : SizedBox();
       child = Stack(

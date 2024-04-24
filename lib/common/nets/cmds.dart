@@ -13,6 +13,8 @@ class CMD {
   static const C_GoToRoom = 300; //靠近建筑后，请求播放直播间语音
   static const S_GoToRoom = 301; //下发直播间相关信息
 
+  static const S_TopThree = 282; // 房间贡献榜前三广播
+
   // 创建房间场景
   static const C_RoomEnterComplete = 2000; // 房间加载完成后通知后端可以同步信息，同步初始化信息到 S_SyncRoomInfo
   static const S_SyncRoomInfo = 2001; 			// 同步房间初始化信息数据

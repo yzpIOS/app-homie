@@ -12660,6 +12660,129 @@ class S_AllScreen extends $pb.GeneratedMessage {
   $core.List<AllScreenItem> get items => $_getList(0);
 }
 
+class TopThreeItem extends $pb.GeneratedMessage {
+  factory TopThreeItem({
+    $core.String? uid,
+    $fixnum.Int64? roleId,
+    $fixnum.Int64? contributionCount,
+  }) {
+    final $result = create();
+    if (uid != null) {
+      $result.uid = uid;
+    }
+    if (roleId != null) {
+      $result.roleId = roleId;
+    }
+    if (contributionCount != null) {
+      $result.contributionCount = contributionCount;
+    }
+    return $result;
+  }
+  TopThreeItem._() : super();
+  factory TopThreeItem.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory TopThreeItem.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TopThreeItem', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'uid')
+    ..aInt64(2, _omitFieldNames ? '' : 'roleId')
+    ..aInt64(3, _omitFieldNames ? '' : 'contributionCount')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  TopThreeItem clone() => TopThreeItem()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  TopThreeItem copyWith(void Function(TopThreeItem) updates) => super.copyWith((message) => updates(message as TopThreeItem)) as TopThreeItem;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static TopThreeItem create() => TopThreeItem._();
+  TopThreeItem createEmptyInstance() => create();
+  static $pb.PbList<TopThreeItem> createRepeated() => $pb.PbList<TopThreeItem>();
+  @$core.pragma('dart2js:noInline')
+  static TopThreeItem getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TopThreeItem>(create);
+  static TopThreeItem? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get uid => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set uid($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUid() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUid() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get roleId => $_getI64(1);
+  @$pb.TagNumber(2)
+  set roleId($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoleId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoleId() => clearField(2);
+
+  /// 贡献值（送礼价值）
+  @$pb.TagNumber(3)
+  $fixnum.Int64 get contributionCount => $_getI64(2);
+  @$pb.TagNumber(3)
+  set contributionCount($fixnum.Int64 v) { $_setInt64(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasContributionCount() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearContributionCount() => clearField(3);
+}
+
+class S_TopThree extends $pb.GeneratedMessage {
+  factory S_TopThree({
+    $core.Iterable<TopThreeItem>? items,
+  }) {
+    final $result = create();
+    if (items != null) {
+      $result.items.addAll(items);
+    }
+    return $result;
+  }
+  S_TopThree._() : super();
+  factory S_TopThree.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_TopThree.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_TopThree', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..pc<TopThreeItem>(1, _omitFieldNames ? '' : 'items', $pb.PbFieldType.PM, subBuilder: TopThreeItem.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_TopThree clone() => S_TopThree()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_TopThree copyWith(void Function(S_TopThree) updates) => super.copyWith((message) => updates(message as S_TopThree)) as S_TopThree;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_TopThree create() => S_TopThree._();
+  S_TopThree createEmptyInstance() => create();
+  static $pb.PbList<S_TopThree> createRepeated() => $pb.PbList<S_TopThree>();
+  @$core.pragma('dart2js:noInline')
+  static S_TopThree getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_TopThree>(create);
+  static S_TopThree? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<TopThreeItem> get items => $_getList(0);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

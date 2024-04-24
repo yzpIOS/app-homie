@@ -2600,3 +2600,31 @@ final $typed_data.Uint8List s_AllScreenDescriptor = $convert.base64Decode(
     'CgtTX0FsbFNjcmVlbhI0CgVpdGVtcxgBIAMoCzIeLmNvbS5zYXZ2eS5wcm90by5BbGxTY3JlZW'
     '5JdGVtUgVpdGVtcw==');
 
+@$core.Deprecated('Use topThreeItemDescriptor instead')
+const TopThreeItem$json = {
+  '1': 'TopThreeItem',
+  '2': [
+    {'1': 'uid', '3': 1, '4': 1, '5': 9, '10': 'uid'},
+    {'1': 'role_id', '3': 2, '4': 1, '5': 3, '10': 'roleId'},
+    {'1': 'contribution_count', '3': 3, '4': 1, '5': 3, '10': 'contributionCount'},
+  ],
+};
+
+/// Descriptor for `TopThreeItem`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List topThreeItemDescriptor = $convert.base64Decode(
+    'CgxUb3BUaHJlZUl0ZW0SEAoDdWlkGAEgASgJUgN1aWQSFwoHcm9sZV9pZBgCIAEoA1IGcm9sZU'
+    'lkEi0KEmNvbnRyaWJ1dGlvbl9jb3VudBgDIAEoA1IRY29udHJpYnV0aW9uQ291bnQ=');
+
+@$core.Deprecated('Use s_TopThreeDescriptor instead')
+const S_TopThree$json = {
+  '1': 'S_TopThree',
+  '2': [
+    {'1': 'items', '3': 1, '4': 3, '5': 11, '6': '.com.savvy.proto.TopThreeItem', '10': 'items'},
+  ],
+};
+
+/// Descriptor for `S_TopThree`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_TopThreeDescriptor = $convert.base64Decode(
+    'CgpTX1RvcFRocmVlEjMKBWl0ZW1zGAEgAygLMh0uY29tLnNhdnZ5LnByb3RvLlRvcFRocmVlSX'
+    'RlbVIFaXRlbXM=');
+
