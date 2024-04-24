@@ -17,7 +17,7 @@ import AppTrackingTransparency//适配iOS14
         //主程要求启动页多停留几秒
           sleep(2);
           
-//          XTBackRunningManager.share();
+          XTBackRunningManager.share();
 
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)

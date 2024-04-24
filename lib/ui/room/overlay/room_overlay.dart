@@ -458,12 +458,12 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                   children: [
                     XText(
                       '${controller.info['room_name']}',
-                      overflow: TextOverflow.fade,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
                     ),
                     XText(
                       'ID:${controller.info['room_no']}',
-                      overflow: TextOverflow.fade,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: fw$Medium),
                     ),
                   ],

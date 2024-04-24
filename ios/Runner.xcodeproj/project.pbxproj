@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		070728A22A57C417008BDA40 /* UnityFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0707289F2A57C3FB008BDA40 /* UnityFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		071CC6A22BC77BB200EFECC3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 071CC6A12BC77BB200EFECC3 /* PrivacyInfo.xcprivacy */; };
-		0741ADCF2BD8A159006A71F1 /* RunInBackground.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0741ADCE2BD8A159006A71F1 /* RunInBackground.mp3 */; };
 		0741ADD22BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */; };
+		0741ADD42BD8D742006A71F1 /* live_empty_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0741ADD32BD8D741006A71F1 /* live_empty_music.mp3 */; };
 		078783CF2A615FAA00D451E3 /* NSMutableArray+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */; };
 		078783D02A615FAA00D451E3 /* NSMutableDictionary+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C42A615FAA00D451E3 /* NSMutableDictionary+Safe.m */; };
 		078783D12A615FAA00D451E3 /* NSMutableString+Safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 078783C92A615FAA00D451E3 /* NSMutableString+Safe.m */; };
@@ -50,9 +50,9 @@
 /* Begin PBXFileReference section */
 		0707289F2A57C3FB008BDA40 /* UnityFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = UnityFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		071CC6A12BC77BB200EFECC3 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		0741ADCE2BD8A159006A71F1 /* RunInBackground.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = RunInBackground.mp3; sourceTree = "<group>"; };
 		0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLKeepAliveBackGroundManager.m; sourceTree = "<group>"; };
 		0741ADD12BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLKeepAliveBackGroundManager.h; sourceTree = "<group>"; };
+		0741ADD32BD8D741006A71F1 /* live_empty_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = live_empty_music.mp3; sourceTree = "<group>"; };
 		075A77652A5BF78100BA29F4 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		078783C02A615FAA00D451E3 /* NSMutableString+Safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableString+Safe.h"; sourceTree = "<group>"; };
 		078783C12A615FAA00D451E3 /* NSMutableArray+Safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Safe.m"; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
-				0741ADCE2BD8A159006A71F1 /* RunInBackground.mp3 */,
+				0741ADD32BD8D741006A71F1 /* live_empty_music.mp3 */,
 				071CC6A12BC77BB200EFECC3 /* PrivacyInfo.xcprivacy */,
 				07AD02D42BA1BF3F00A1B58C /* Runner.xcworkspace */,
 				9740EEB11CF90186004384FC /* Flutter */,
@@ -188,7 +188,6 @@
 			children = (
 				0741ADD12BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.h */,
 				0741ADD02BD8B56F006A71F1 /* SLKeepAliveBackGroundManager.m */,
-				07BA0B1F2BD7BF5200A481D2 /* XTBackRunningManager.h */,
 				BB9E16DA2B030912001F372E /* pic_homie.png */,
 				BB9E16DB2B030912001F372E /* pic_homie@2x.png */,
 				BB9E16D92B030911001F372E /* pic_homie@3x.png */,
@@ -202,6 +201,7 @@
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
+				07BA0B1F2BD7BF5200A481D2 /* XTBackRunningManager.h */,
 				07BA0B202BD7BFB600A481D2 /* XTBackRunningManager.m */,
 			);
 			path = Runner;
@@ -270,12 +270,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0741ADD42BD8D742006A71F1 /* live_empty_music.mp3 in Resources */,
 				BB9E16DE2B030912001F372E /* pic_homie@2x.png in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				071CC6A22BC77BB200EFECC3 /* PrivacyInfo.xcprivacy in Resources */,
 				BB9E16DC2B030912001F372E /* pic_homie@3x.png in Resources */,
-				0741ADCF2BD8A159006A71F1 /* RunInBackground.mp3 in Resources */,
 				07AD02D52BA1BF3F00A1B58C /* Runner.xcworkspace in Resources */,
 				BBF03FE42B0233B3002E45EE /* CustomLaunchScreen.storyboard in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,

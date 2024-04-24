@@ -11,13 +11,31 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import <AVFoundation/AVFoundation.h>
+
+
+
+///循环时间
+static NSInteger kCirculaDuration = 30;
+
 @interface XTBackRunningManager ()<CLLocationManagerDelegate>
-@property (nonatomic,assign) UIBackgroundTaskIdentifier backgroundTaskIdentifier;
-@property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+/// 后台任务
+@property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
+/// 后台播放
+@property (nonatomic,strong) AVAudioPlayer *player;
+/// 定时器
+@property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) dispatch_queue_t queue;
+
 @end
 
-@implementation XTBackRunningManager
+
+
+@implementation XTBackRunningManager {
+    CFRunLoopRef _runloopRef;
+}
+
+
 + (instancetype)shareManager {
     static XTBackRunningManager *manager = nil;
     static dispatch_once_t onceToken;
@@ -30,9 +48,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // 获取定位权限
-        [self.locationManager requestAlwaysAuthorization];
-        [self.locationManager requestWhenInUseAuthorization];
+        [self setup];
+        [self addNoti];
     }
     return self;
 }
@@ -45,135 +62,107 @@
 
 - (void)appWillEnterForeground {
     NSLog(@"%@ appWillEnterForeground",NSStringFromClass([self class]));
-    [self stopBackRuning];
+    [self stopKeepRunAlive];
 }
 
 - (void)appDidEnterBackground {
     NSLog(@"%@ appDidEnterBackground",NSStringFromClass([self class]));
-    [self startBackRuning];
+    [self startKeepAlive];
 }
 
-- (void)startBackRuning {
-    NSLog(@"%@ startBackRuning",NSStringFromClass([self class]));
-    self.backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
-        self.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
-        [self startDoTask];
-    }];
 
-}
-- (void)stopBackRuning {
-    NSLog(@"%@ stopBackRuning",NSStringFromClass([self class]));
-    if (self.backgroundTaskIdentifier) {
-        [[UIApplication sharedApplication] endBackgroundTask:self.backgroundTaskIdentifier];
-        self.backgroundTaskIdentifier = UIBackgroundTaskInvalid;
-    }
-    
-    [self stopDoTask];
+
+- (void)setup {
+    self.queue = dispatch_queue_create("com.audio.background", NULL);
+    [self setupAudioSession];
+    [self setupPlayer];
 }
 
-- (void)startDoTask {
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startDoTask) object:nil];
-    
-    [self doTask];
-    
-    [self performSelector:@selector(startDoTask) withObject:nil afterDelay:10];
-
+- (void)setupPlayer {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"live_empty_music" ofType:@"mp3"];
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    [self.player prepareToPlay];
+    self.player.volume = 0.0;
+    self.player.numberOfLoops = -1; // 循环播放
 }
 
-- (void)doTask {
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedAlways) {
-        // 用户允许持续定位，使用定位保活
-        [self locationTask];
-    }else {
-        [self playTask];
-    }
-    
-}
-
-- (void)stopDoTask {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(startDoTask) object:nil];
-}
-
-#pragma mark - Pravite -
-
-- (void)locationTask {
-    [self.locationManager requestLocation];
-    NSLog(@"%@ locationTask",NSStringFromClass([self class]));
-}
-
-- (void)playTask {
-    [self setAudioPlaySession];
-    [self playSound];
-    NSLog(@"%@ playTask",NSStringFromClass([self class]));
-}
-
-- (void)setAudioPlaySession {
+- (void)setupAudioSession {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
-    if([NSThread mainThread]){
-        [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
-        [audioSession setActive:YES error:nil];
-    }else{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
-            [audioSession setActive:YES error:nil];
-        });
+    [[AVAudioSession sharedInstance] setMode:AVAudioSessionModeDefault error:nil];
+    
+    NSString *route = [[[[[AVAudioSession sharedInstance] currentRoute] outputs] objectAtIndex:0] portType];
+    
+    if ([route isEqualToString:AVAudioSessionPortHeadphones] ||
+        [route isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
+        [route isEqualToString:AVAudioSessionPortBluetoothLE] ||
+        [route isEqualToString:AVAudioSessionPortBluetoothHFP]) {
+        if (@available(iOS 10.0, *)) {
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
+                                             withOptions:(AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionAllowBluetooth | AVAudioSessionCategoryOptionAllowBluetoothA2DP | AVAudioSessionCategoryOptionDefaultToSpeaker)
+                                                   error:nil];
+        } else {
+            // Fallback on earlier versions
+        }
+    } else {
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord
+                                         withOptions:(AVAudioSessionCategoryOptionMixWithOthers | AVAudioSessionCategoryOptionDefaultToSpeaker)
+                                               error:nil];
+    }
+    NSError *error = nil;
+    [audioSession setActive:YES error:&error];
+    if (error) {
+        NSLog(@"Error activating AVAudioSession: %@", error);
     }
 }
 
-- (void)playSound
-{
-    if (!self.audioPlayer) {
-        // 播放文件
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"RunInBackground" ofType:@"mp3"];
-        NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:filePath];
-        if (!fileURL) {
-            NSLog(@"playEmptyAudio 找不到播放文件");
-        }
-        
-        // 0.0~1.0,默认为1.0
-        NSError *error = nil;
-        self.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
-        self.audioPlayer.volume = 0.0;
-        // 循环播放 保活在后台导航时 容易不生效
-//        self.audioPlayer.numberOfLoops = -1;
-//        [self.audioPlayer prepareToPlay];
-    }
-    [self.audioPlayer play];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.audioPlayer pause];
-        self.audioPlayer = nil;
+/// 启动后台运行
+- (void)startKeepAlive {
+    [self.player play];
+    [self applyforBackgroundTask];
+    dispatch_async(self.queue, ^{
+        self.timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:kCirculaDuration target:self selector:@selector(startAudioPlay) userInfo:nil repeats:YES];
+        self->_runloopRef = CFRunLoopGetCurrent();
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+        CFRunLoopRun();
     });
 }
 
-#pragma mark - property -
-- (CLLocationManager *)locationManager {
-    if (!_locationManager) {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        [_locationManager setAllowsBackgroundLocationUpdates:YES];
-        [_locationManager requestAlwaysAuthorization];
-        [_locationManager requestWhenInUseAuthorization];
+- (void)stopKeepRunAlive {
+    if (self.timer) {
+        CFRunLoopStop(_runloopRef);
+        [self.timer invalidate];
+        self.timer = nil;
+        [self.player stop];
     }
-    return _locationManager;
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager
-     didUpdateLocations:(NSArray<CLLocation *> *)locations {
-}
-
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error {
     
-}
-
-- (void) locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    NSLog(@"playEmptyAudio 找不到播放文件");
-    if(status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusAuthorizedWhenInUse) {
-        [self addNoti];
+    if (self.bgTask) {
+        [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
+        self.bgTask = UIBackgroundTaskInvalid;
     }
 }
+
+///  申请后台
+- (void)applyforBackgroundTask {
+    self.bgTask =[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
+            self.bgTask = UIBackgroundTaskInvalid;
+        });
+    }];
+}
+
+- (void)startAudioPlay {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([[UIApplication sharedApplication] backgroundTimeRemaining] < 31.0) {
+            [self.player play];
+            [self applyforBackgroundTask];
+        } else {
+            
+        }
+        [self.player stop];
+    });
+}
+
+
 @end
