@@ -464,6 +464,10 @@ class ApiRoom extends ApiBase {
     return _doPost("classify/list");
   }
 
+  Future getContribute(int room_id) {
+    return _doPost("top/contribution", data: {"room_id": room_id});
+  }
+
   Future getCategoryItemList(PageNum page, dynamic classify_id) {
     return _doPost("list", data: page + {"classify_id": classify_id});
   }

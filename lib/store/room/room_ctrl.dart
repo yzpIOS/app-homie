@@ -154,6 +154,25 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     Get.find<RoomManagerCtrl>().sceneCtrl = this;
 
     SocketCtrl.ins.onDataCmd(CMD.S_TopThree, onReceiveTopThree);
+
+
+    Api.Room.getContribute(roomId).then((value) {
+      if(topThree.value != null) {
+        return;
+      }
+      if(value is Map && value["items"] != null) {
+        S_TopThree three = S_TopThree.create();
+        var list = (value["items"] as List);
+        for(var index = 0; index < list.length; index ++) {
+          TopThreeItem topThreeItem = TopThreeItem.create();
+          topThreeItem.roleId = Int64(list[index]["role_id"]);
+          topThreeItem.uid = list[index]["uid"];
+          topThreeItem.contributionCount = Int64(list[index]["contribution_count"]);
+          three.items.add(topThreeItem);
+        }
+        topThree.value = three;
+      }
+    });
   }
 
   Rx<S_TopThree?> topThree = Rx(null);
