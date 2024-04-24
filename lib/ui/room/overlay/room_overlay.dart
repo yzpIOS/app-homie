@@ -413,19 +413,6 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
           BackButton(color: Colors.white, onPressed: () => onItemClick('最小化')),
           $TitleView(),
           Spacing.w4,
-          Obx(
-            () => PortalModal(
-              visible: controller.noticePanelRx(),
-              onDismiss: () => controller.noticePanelRx(false),
-              modal: const NoticeOverlay(),
-              child: IconBtnSvg(
-                icon: '公告',
-                size: 28,
-                padding: const Pad(all: 5),
-                onTap: () => onItemClick('公告'),
-              ),
-            ),
-          ),
           Spacing.w4,
           // $QualityView(),
           Spacing.exp,
@@ -440,62 +427,67 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
   }
 
   Widget $TitleView() {
-    return IntrinsicWidth(
-      child: InkResponse(
-        onTap: RoomInfoDialog.show,
-        child: Container(
-          height: 38,
-          width: 144,
-          decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
-          padding: const Pad(horizontal: 6),
-          alignment: Alignment.centerLeft,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(width: 10,),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    XText(
-                      '${controller.info['room_name']}',
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
-                    ),
-                    XText(
-                      'ID:${controller.info['room_no']}',
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: fw$Medium),
-                    ),
-                  ],
-                ),
-              ),
-
-              Obx(() {
-                return GestureDetector(
-                  onTap: () {
-                    onItemClick.call(controller.followRx.value == true ? '己关注' : '关注');
-                  },
-                  behavior: HitTestBehavior.opaque,
-                  child: Container(
-                    width: 52,
-                    height: 26,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Color(0xFFFF00D2),
-                      borderRadius: BorderRadius.circular(1000),
-                    ),
-                    child: XText(
-                        controller.followRx.value == true ? '己关注' : '关注',
-                        overflow: TextOverflow.fade,
-                        style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)
-                    ),
+    return PortalModal(
+      visible: controller.noticePanelRx(),
+      onDismiss: () => controller.noticePanelRx(false),
+      modal: const NoticeOverlay(),
+      child: IntrinsicWidth(
+        child: InkResponse(
+          onTap: RoomInfoDialog.show,
+          child: Container(
+            height: 38,
+            width: 144,
+            decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
+            padding: const Pad(horizontal: 6),
+            alignment: Alignment.centerLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      XText(
+                        '${controller.info['room_name']}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+                      ),
+                      XText(
+                        'ID:${controller.info['room_no']}',
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: fw$Medium),
+                      ),
+                    ],
                   ),
-                );
-              })
-            ],
+                ),
+
+                Obx(() {
+                  return GestureDetector(
+                    onTap: () {
+                      onItemClick.call(controller.followRx.value == true ? '己关注' : '关注');
+                    },
+                    behavior: HitTestBehavior.opaque,
+                    child: Container(
+                      width: 52,
+                      height: 26,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFF00D2),
+                        borderRadius: BorderRadius.circular(1000),
+                      ),
+                      child: XText(
+                          controller.followRx.value == true ? '己关注' : '关注',
+                          overflow: TextOverflow.fade,
+                          style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)
+                      ),
+                    ),
+                  );
+                })
+              ],
+            ),
           ),
         ),
       ),
@@ -533,7 +525,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
           if(topThree != null && topThree.items.isNotEmpty)
             SizedBox(
               height: 33,
-              width: 33,
+              width: 36,
               child: Stack(
                 children: [
                   // 头像
@@ -543,6 +535,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                     child: AsyncAvatar(
                       uid: topThree.items.first.uid,
                       size: 24,
+                      avatarFrameSize: 6,
                       side: BorderSide(color: Color(0xFFD9B22F), width: 1),
                       onTap: Some(() {
                         RoomUserInfoDialog.show(uid: topThree.items.first.uid, nuid: topThree.items.first.roleId);
@@ -551,11 +544,11 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                   ),
                   // 热度值
                   Positioned(
-                    left: 2,
-                    right: 2,
+                    left: 0,
+                    right: 0,
                     bottom: 2,
                     child: Container(
-                      width: 24,
+                      width: double.infinity,
                       height: 10,
                       decoration: BoxDecoration(
                         color: Color(0xFFD9B22F),
@@ -565,7 +558,6 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(width: 2,),
                           SvgView(SVG.$('room/热度'), width: 6, height: 6),
                           Text(
                             convert(topThree.items[0].contributionCount.toInt()),
@@ -575,7 +567,6 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                                 fontWeight: FontWeight.normal
                             ),
                           ),
-                          SizedBox(width: 2,),
                         ],
                       ),
                     ),
@@ -592,7 +583,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
           if(topThree != null && topThree.items.length > 1)
             SizedBox(
               height: 33,
-              width: 33,
+              width: 36,
               child: Stack(
                 children: [
                   // 头像
@@ -602,6 +593,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                     child: AsyncAvatar(
                       uid: topThree.items[1].uid,
                       size: 24,
+                      avatarFrameSize: 6,
                       side: BorderSide(color: Color(0xFF6B98D6), width: 1),
                       onTap: Some(() {
                         RoomUserInfoDialog.show(uid: topThree.items[1].uid, nuid: topThree.items[1].roleId);
@@ -651,7 +643,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
           if(topThree != null && topThree.items.length > 2)
             SizedBox(
               height: 33,
-              width: 33,
+              width: 36,
               child: Stack(
                 children: [
                   // 头像
@@ -661,6 +653,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                     child: AsyncAvatar(
                       uid: topThree.items[2].uid,
                       size: 24,
+                      avatarFrameSize: 6,
                       side: BorderSide(color: Color(0xFFB76E4D), width: 1),
                       onTap: Some(() {
                         RoomUserInfoDialog.show(uid: topThree.items[2].uid, nuid: topThree.items[2].roleId);
