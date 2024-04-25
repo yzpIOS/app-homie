@@ -13,7 +13,8 @@ AppBar xAppBar({
   PreferredSizeWidget? bottom,
   automaticallyImplyLeading =  true,
   ShapeBorder? shape,
-
+  TextStyle? titleTextStyle,
+  IconThemeData? iconTheme,
 }) {
   List<Widget>? _actions;
 
@@ -63,6 +64,7 @@ AppBar xAppBar({
   return AppBar(
     actions: _actions,
     title: _title,
+    titleTextStyle: titleTextStyle,
     flexibleSpace: _flexibleSpace,
     foregroundColor: _foregroundColor,
     backgroundColor: bgColor,
@@ -71,6 +73,7 @@ AppBar xAppBar({
     bottom: bottom,
     automaticallyImplyLeading: automaticallyImplyLeading,
     shape: shape,
+    iconTheme: iconTheme,
   );
 }
 

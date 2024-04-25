@@ -3,6 +3,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -22,34 +23,78 @@ class _RevenuePageState extends State<RevenuePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD89BFE),
-      appBar: xAppBar(title: '我的收益', bgColor: Colors.transparent),
       body: Stack(
         children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            child: AspectRatio(
+              aspectRatio: 375.0 / 210.0,
+              child: Image.asset(IMG.format("my/pic_sy"), width: Get.width, height: 210),
+            ),
+          ),
+
+          Positioned(
+            left: 0,
+            right: 0,
+            child: xAppBar(
+
+              title: Text(
+                '我的收益',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0),
+              iconTheme: IconThemeData(
+                color: Colors.black, //修改颜色
+              ),
+            ),
+          ),
+
+
           const Positioned.fill(
-            top: 138,
+            top: 210,
             child: Box(color: Colors.white),
           ),
           Positioned(
-            top: 25,
+            top: 108,
             left: 20,
             right: 20,
-            height: 179,
+            height: 159,
             child: Obx(() {
               refresh.value;
               return $TotalView();
             }),
           ),
           const Positioned(
-            top: 230,
+            top: 280,
             left: 10,
             child: XText(
               '收益明细',
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC188E7)),
+            ),
+          ),
+
+          Positioned(
+            top: 280,
+            right: 10,
+            child: GestureDetector(
+              onTap: () {
+                DiamondDetailFilterSheet.show(defValue: "全部");
+              },
+              behavior: HitTestBehavior.opaque,
+              child: XText(
+                '筛选',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+              ),
             ),
           ),
           Positioned.fill(
-            top: 255,
+            top: 308,
             child: _DataView(
               callBack: () async {
                 await WalletCtrl.ins.doRefresh();
@@ -116,6 +161,7 @@ class _DataView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
     return ListConfig(
+      padding: EdgeInsets.zero,
       divider: Divider(indent: 10, endIndent: 10),
     );
   }
