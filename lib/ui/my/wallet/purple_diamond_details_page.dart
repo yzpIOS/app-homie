@@ -1,6 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,25 @@ class _PurpleDiamondDetailsPageState extends State<PurpleDiamondDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(title: '紫钻明细'),
+      appBar: xAppBar(
+        title: '紫钻明细',
+        actions: [
+          GestureDetector(
+            onTap: () {
+              DiamondDetailFilterSheet.show();
+            },
+            behavior: HitTestBehavior.opaque,
+            child: Text(
+              "筛选",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14
+              ),
+            ),
+          )
+        ]
+      ),
       body: DefaultTabController(
         length: tabs.length,
         child: Column(
@@ -111,17 +130,24 @@ class _ItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Box(
-      height: 62,
+      height: 72,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                XText(
-                  data['name'] ?? '-',
-                  style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Medium),
+                Row(
+                  children: [
+                    XText(
+                      data['name'] ?? '-',
+                      style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Medium),
+                    ),
+                    SizedBox(width: 3,),
+                    Image.asset(IMG.format(data['type'] == 1 ? "my/ic_income" :"my/ic_cost"), width: 32, height: 18,)
+                  ],
                 ),
                 Spacing.h4,
                 XText(
