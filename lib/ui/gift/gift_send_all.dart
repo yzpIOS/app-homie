@@ -88,7 +88,7 @@ class GiftSendAll extends StatelessWidget {
                       return (int.tryParse(a.no) ?? 0) - (int.tryParse(b.no) ?? 0);
                     });
                     // 把房主添加到第一位
-                    if(owner != null) {
+                    if(owner != null && owner.uid != OAuthCtrl.uid) {
                       micInfos.insert(0, owner);
                     }
 
