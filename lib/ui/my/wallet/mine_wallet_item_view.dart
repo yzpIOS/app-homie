@@ -4,10 +4,10 @@ import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
-class MyWalletItemView2 extends StatelessWidget {
+class MineWalletItemView extends StatelessWidget {
   final Map data;
 
-  const MyWalletItemView2({required this.data});
+  const MineWalletItemView({required this.data});
 
   @override
   Widget build(BuildContext context) {

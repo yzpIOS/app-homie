@@ -1,7 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/my/wallet/MyWalletItemView2.dart';
+import 'package:app/ui/my/wallet/mine_wallet_item_view.dart';
 import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -162,6 +162,6 @@ class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPag
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
-    return MyWalletItemView2(data: item);
+    return MineWalletItemView(data: item);
   }
 }

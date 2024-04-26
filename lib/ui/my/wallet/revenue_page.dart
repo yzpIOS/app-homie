@@ -3,8 +3,8 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
-import 'package:app/ui/my/wallet/MyHomietemView2.dart';
-import 'package:app/ui/my/wallet/MyWalletItemView2.dart';
+import 'package:app/ui/my/wallet/mine_homie_item_view.dart';
+import 'package:app/ui/my/wallet/mine_wallet_item_view.dart';
 import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -250,14 +250,14 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
     if(item["send_avatar_url"] == null && item["product_url"] == null) {
-      return MyWalletItemView2(data: {
+      return MineWalletItemView(data: {
         "type": item["type"],
         "name": item["text"],
         "created_at": item["created_at"],
         "amount": item["amount"],
       });
     } else {
-      return MyHomietemView2(item: item);
+      return MineHomieItemView(item: item);
     }
   }
 }

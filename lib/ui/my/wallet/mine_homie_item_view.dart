@@ -4,10 +4,10 @@ import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
-class MyHomietemView2 extends StatelessWidget {
+class MineHomieItemView extends StatelessWidget {
   final Map item;
 
-  const MyHomietemView2({required this.item});
+  const MineHomieItemView({required this.item});
 
   @override
   Widget build(BuildContext context) {
