@@ -15,6 +15,8 @@ class PurpleDiamondDetailsPage extends StatefulWidget {
 class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPage> {
 
   String curFilter = "全部";
+  
+  ValueNotifier<dynamic> totalAmount = ValueNotifier("");
 
   final tabs = {
     '全部': null,
@@ -42,7 +44,17 @@ class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPag
   }
 
   @override
-  Future fetchPage(PageNum page) => Api.Finance.diamondDetail(type: type, page: page);
+  Future fetchPage(PageNum page) async {
+    var result = await Api.Finance.diamondDetail(type: type, page: page);
+    
+    if(result is Map && result.containsKey("total_amount")) {
+      totalAmount.value = result["total_amount"];
+    } else {
+      totalAmount.value = "0";
+    }
+
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,44 +108,50 @@ class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPag
   }
 
   Widget createTotalAmount() {
-    return Container(
-      height: 60,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFF000000).withAlpha(25),
-            offset: Offset(0.0, -2),
-            blurRadius: 4,
-            spreadRadius: 1,
-          )
-        ]
-      ),
-      child: Row(
-        children: [
-          SizedBox(width: 10,),
-          Expanded(
-            child: Text(
-              "总额：",
-              style: TextStyle(
-                color: Color(0xFFC05EFB),
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+    return ValueListenableBuilder(
+        valueListenable: totalAmount,
+        builder: (a, b, c) {
+          return Container(
+            height: 80,
+            padding: EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF000000).withAlpha(25),
+                    offset: Offset(0.0, -2),
+                    blurRadius: 4,
+                    spreadRadius: 1,
+                  )
+                ]
             ),
-          ),
-          Text(
-            "20000",
-            style: TextStyle(
-              color: Color(0xFFC05EFB),
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
+            child: Row(
+              children: [
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Text(
+                    "总额：",
+                    style: TextStyle(
+                      color: Color(0xFFC05EFB),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  b.toString(),
+                  style: TextStyle(
+                    color: Color(0xFFC05EFB),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 10,),
+              ],
             ),
-          ),
-          SizedBox(width: 10,),
-        ],
-      ),
+          );
+        }
     );
   }
 
