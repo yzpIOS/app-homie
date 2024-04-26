@@ -2,7 +2,7 @@
 ////  SLKeepAliveBackGroundManager.h
 ////  SangoLive
 ////
-////  Created by 杨瑞琪 on 2023/7/10.
+////  Created by  on 2023/7/10.
 ////  Copyright © 2023 Sango. All rights reserved.
 ////
 //
