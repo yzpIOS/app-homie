@@ -22,6 +22,8 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
 
   final type = MoneyType.diamond;
 
+  ValueNotifier<dynamic> totalAmount = ValueNotifier("");
+
   String curFilter = "全部";
   int? curType = null;
   final tabs = {
@@ -116,6 +118,56 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
           ),
         ],
       ),
+      bottomNavigationBar: createTotalAmount(),
+    );
+  }
+
+
+  Widget createTotalAmount() {
+    return ValueListenableBuilder(
+        valueListenable: totalAmount,
+        builder: (a, b, c) {
+          return Container(
+            height: 80,
+            padding: EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF000000).withAlpha(25),
+                    offset: Offset(0.0, -2),
+                    blurRadius: 4,
+                    spreadRadius: 1,
+                  )
+                ]
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Text(
+                    "总额：",
+                    style: TextStyle(
+                      color: Color(0xFFC05EFB),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  b.toString(),
+                  style: TextStyle(
+                    color: Color(0xFFC05EFB),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 10,),
+              ],
+            ),
+          );
+        }
     );
   }
 
@@ -179,7 +231,17 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
       await WalletCtrl.ins.doRefresh();
       refresh.value = !refresh.value;
     }
-    return Api.Finance.record(type: curType, page: page);
+
+    var result = await Api.Finance.record(type: curType, page: page);
+
+    // 总价格
+    if(result is Map && result.containsKey("total_amount")) {
+      totalAmount.value = result["total_amount"];
+    } else {
+      totalAmount.value = "0";
+    }
+
+    return result;
   }
 
   @override
