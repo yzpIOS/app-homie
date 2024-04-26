@@ -9,101 +9,29 @@ class PurpleDiamondDetailsPage extends StatefulWidget {
   const PurpleDiamondDetailsPage({super.key});
 
   @override
-  State<PurpleDiamondDetailsPage> createState() => _PurpleDiamondDetailsPageState();
+  State<PurpleDiamondDetailsPage> createState() => _DetailsListViewState();
 }
 
-class _PurpleDiamondDetailsPageState extends State<PurpleDiamondDetailsPage> {
+class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPage> {
+
+  String curFilter = "全部";
+
   final tabs = {
-    '全部': _DetailsListView(),
-    '收入': _DetailsListView(type: 1,),
-    '支出': _DetailsListView(type: 2,),
+    '全部': null,
+    '赠送': 1,
+    '充值': 2,
+    '支出': 3,
   };
 
-  @override
-  void initState() {
-    super.initState();
+  int? type;//1：收入，2：支出(不传，默认是全部)
 
-  }
+  _DetailsListViewState({this.type});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: xAppBar(
-        title: '紫钻明细',
-        actions: [
-          GestureDetector(
-            onTap: () {
-              DiamondDetailFilterSheet.show();
-            },
-            behavior: HitTestBehavior.opaque,
-            child: Text(
-              "筛选",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14
-              ),
-            ),
-          )
-        ]
-      ),
-      body: DefaultTabController(
-        length: tabs.length,
-        child: Column(
-          children: [
-            $TabBar(),
-            Expanded(
-              child: ConfigListState(
-                buildNoMoreView: ([_]) => const Box(
-                  height: 40,
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Spacing(height: 15, flex: null,),
-                      XText(
-                        '最多展示6个月的数据',
-                        style: TextStyle(fontSize: 11, color: AppPalette.colorA9),
-                      ),
-                    ],
-                  )
-                ),
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: tabs.values.toList(growable: false),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  void didUpdateWidget(covariant PurpleDiamondDetailsPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    controller.doRefresh();
   }
-
-  Widget $TabBar() {
-    Widget child = TabBar(
-      tabAlignment: TabAlignment.center,
-      isScrollable: true,
-      labelPadding: const Pad(horizontal: 31),
-      labelStyle: const TextStyle(fontSize: 16, color: AppPalette.primary, fontWeight: fw$SemiBold),
-      unselectedLabelStyle: const TextStyle(fontSize: 16, color: AppPalette.appBarForegroundColorDark, fontWeight: fw$Regular),
-      indicatorSize: TabBarIndicatorSize.label,
-      tabs: tabs.keys.map((it) => Tab(text: it, height: 28)).toList(growable: false),
-    );
-
-    return Material(
-      color: Colors.white,
-      child: Box(
-        height: 42,
-        alignment: Alignment.center,
-        child: child,
-      ),
-    );
-  }
-}
-
-class _DetailsListView extends SimplePageView<Map> {
-  final int? type;//1：收入，2：支出(不传，默认是全部)
-  _DetailsListView({this.type});
 
   @override
   BaseConfig get config {
@@ -117,15 +45,108 @@ class _DetailsListView extends SimplePageView<Map> {
   Future fetchPage(PageNum page) => Api.Finance.diamondDetail(type: type, page: page);
 
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: xAppBar(
+          title: '紫钻明细',
+          actions: [
+            GestureDetector(
+              onTap: () async {
+                String? newFilter = await DiamondDetailFilterSheet.show(tabs.keys.toList(), defValue: curFilter);
+                if(newFilter != null) {
+                  curFilter = newFilter;
+                  type = tabs[curFilter];
+                  controller.doRefresh();
+                }
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Text(
+                "筛选",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    fontSize: 14
+                ),
+              ),
+            )
+          ]
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 10,),
+          Padding(
+            padding: EdgeInsets.only(left: 12),
+            child: Text(
+              curFilter,
+              style: TextStyle(
+                  color: Color(0xFFBD7CE5),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16
+              ),
+            ),
+          ),
+          Expanded(
+            child: super.build(context),
+          ),
+        ],
+      ),
+      bottomNavigationBar: createTotalAmount(),
+    );
+  }
+
+  Widget createTotalAmount() {
+    return Container(
+      height: 60,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFF000000).withAlpha(25),
+            offset: Offset(0.0, -2),
+            blurRadius: 4,
+            spreadRadius: 1,
+          )
+        ]
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 10,),
+          Expanded(
+            child: Text(
+              "总额：",
+              style: TextStyle(
+                color: Color(0xFFC05EFB),
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Text(
+            "20000",
+            style: TextStyle(
+              color: Color(0xFFC05EFB),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(width: 10,),
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
-    return _ItemView(data: item);
+    return MyItemView2(data: item);
   }
 }
 
-class _ItemView extends StatelessWidget {
+class MyItemView2 extends StatelessWidget {
   final Map data;
 
-  const _ItemView({required this.data});
+  const MyItemView2({required this.data});
 
   @override
   Widget build(BuildContext context) {

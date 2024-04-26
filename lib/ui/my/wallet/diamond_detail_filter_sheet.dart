@@ -7,13 +7,17 @@ import 'package:flutter/material.dart';
 
 import '../../../tools.dart';
 
+
 class DiamondDetailFilterSheet extends StatelessWidget {
+
 
   ValueNotifier<String> valueNotifier;
 
-  DiamondDetailFilterSheet(this.valueNotifier);
+  List<String> items;
 
-  static Future<String?> show({String defValue = "全部"}) {
+  DiamondDetailFilterSheet(this.items, this.valueNotifier);
+
+  static Future<String?> show(List<String> newFilters, {String defValue = "全部"}) {
     const decor = ShapeDecoration(
         shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
         color: Colors.white
@@ -21,7 +25,7 @@ class DiamondDetailFilterSheet extends StatelessWidget {
 
     return OrientationSheet.show<String>(
       barrierColor: Colors.black.withAlpha(150),
-      child: DiamondDetailFilterSheet(ValueNotifier(defValue)),
+      child: DiamondDetailFilterSheet(newFilters, ValueNotifier(defValue)),
       bgColor: Colors.transparent,
       minHeight: 0,
       decoration: decor,
@@ -100,7 +104,6 @@ class DiamondDetailFilterSheet extends StatelessWidget {
   }
 
   Widget createGridView() {
-    var items = ["全部", "赠送", "充值", "支出"];
     return ValueListenableBuilder(
       valueListenable: valueNotifier,
       builder: (BuildContext context, String value, Widget? child) {

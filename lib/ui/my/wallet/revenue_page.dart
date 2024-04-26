@@ -20,6 +20,15 @@ class _RevenuePageState extends State<RevenuePage> {
 
   final type = MoneyType.diamond;
 
+
+  final tabs = {
+    '全部': null,
+    '收入': 1,
+    '兑换': 2,
+    '提现': 2,
+    '用户退款': 2,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +48,6 @@ class _RevenuePageState extends State<RevenuePage> {
             left: 0,
             right: 0,
             child: xAppBar(
-
               title: Text(
                 '我的收益',
                 style: TextStyle(
@@ -84,7 +92,7 @@ class _RevenuePageState extends State<RevenuePage> {
             right: 10,
             child: GestureDetector(
               onTap: () {
-                DiamondDetailFilterSheet.show(defValue: "全部");
+                DiamondDetailFilterSheet.show(tabs.keys.toList(), defValue: "全部");
               },
               behavior: HitTestBehavior.opaque,
               child: XText(
