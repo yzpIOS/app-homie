@@ -124,6 +124,9 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
 
 
   Widget createTotalAmount() {
+    if(curFilter == "全部") {
+      return const SizedBox();
+    }
     return ValueListenableBuilder(
         valueListenable: totalAmount,
         builder: (a, b, c) {
