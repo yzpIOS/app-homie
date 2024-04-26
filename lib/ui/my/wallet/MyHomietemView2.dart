@@ -28,7 +28,7 @@ class MyHomietemView2 extends StatelessWidget {
                 children: [
                   Flexible(
                     child: XText(
-                      '${item['send_user_name']}赠送了您${item['product_name']}',
+                      '${item['text']}',
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 12, color: AppPalette.c9),
                     ),

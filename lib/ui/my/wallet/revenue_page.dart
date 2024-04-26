@@ -187,7 +187,7 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
     if(item["send_avatar_url"] == null && item["product_url"] == null) {
       return MyWalletItemView2(data: {
         "type": item["type"],
-        "name": item["product_name"],
+        "name": item["text"],
         "created_at": item["created_at"],
         "amount": item["amount"],
       });
