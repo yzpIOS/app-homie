@@ -3,6 +3,8 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/my/wallet/MyHomietemView2.dart';
+import 'package:app/ui/my/wallet/MyWalletItemView2.dart';
 import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -14,19 +16,20 @@ class RevenuePage extends StatefulWidget {
   State<RevenuePage> createState() => _RevenuePageState();
 }
 
-class _RevenuePageState extends State<RevenuePage> {
+class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
   final selectRx = Rxn<Map>();
   final refresh = RxBool(false);
 
   final type = MoneyType.diamond;
 
-
+  String curFilter = "全部";
+  int? curType = null;
   final tabs = {
     '全部': null,
     '收入': 1,
     '兑换': 2,
-    '提现': 2,
-    '用户退款': 2,
+    '提现': 3,
+    '用户退款': 4,
   };
 
   @override
@@ -78,11 +81,11 @@ class _RevenuePageState extends State<RevenuePage> {
               return $TotalView();
             }),
           ),
-          const Positioned(
+          Positioned(
             top: 280,
             left: 10,
             child: XText(
-              '收益明细',
+              curFilter,
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC188E7)),
             ),
           ),
@@ -91,8 +94,14 @@ class _RevenuePageState extends State<RevenuePage> {
             top: 280,
             right: 10,
             child: GestureDetector(
-              onTap: () {
-                DiamondDetailFilterSheet.show(tabs.keys.toList(), defValue: "全部");
+              onTap: () async {
+                String? newFilter = await DiamondDetailFilterSheet.show(tabs.keys.toList(), defValue: curFilter);
+                if(newFilter != null) {
+                  curFilter = newFilter;
+                  curType = tabs[curFilter];
+                  controller.doRefresh();
+                  setState(() { });
+                }
               },
               behavior: HitTestBehavior.opaque,
               child: XText(
@@ -103,12 +112,7 @@ class _RevenuePageState extends State<RevenuePage> {
           ),
           Positioned.fill(
             top: 308,
-            child: _DataView(
-              callBack: () async {
-                await WalletCtrl.ins.doRefresh();
-                refresh.value = !refresh.value;
-              },
-            ),
+            child: super.build(context),
           ),
         ],
       ),
@@ -160,11 +164,6 @@ class _RevenuePageState extends State<RevenuePage> {
 
     return child;
   }
-}
-
-class _DataView extends SimplePageView<Map> {
-
-  Function? callBack;
 
   @override
   BaseConfig get config {
@@ -174,91 +173,27 @@ class _DataView extends SimplePageView<Map> {
     );
   }
 
-  _DataView({this.callBack});
-
   @override
-  Future fetchPage(PageNum page) {
+  Future fetchPage(PageNum page) async {
     if(page.firstPage()) {
-      callBack?.call();
+      await WalletCtrl.ins.doRefresh();
+      refresh.value = !refresh.value;
     }
-    return Api.Finance.record(page: page);
+    return Api.Finance.record(type: curType, page: page);
   }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
-    Widget child = Row(
-      children: [
-        Spacing.w20,
-        UserHomeWrap(
-          uid: item['send_uid'],
-          child: AvatarView(item['send_avatar_url'], size: 40),
-        ),
-        Spacing.w10,
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              XText(
-                '${item['send_user_name']}赠送了您${item['product_name']}',
-                style: const TextStyle(fontSize: 12, color: AppPalette.c9),
-              ),
-              Spacing.h10,
-              XText(
-                TimeFormat.yMMMMdHms.formatEpoch(item['created_at']),
-                style: const TextStyle(fontSize: 10, color: AppPalette.cc),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: 42,
-          height: 42,
-          clipBehavior: Clip.hardEdge,
-          decoration: const ShapeDecoration(shape: AppShape.a4, color: Color(0xFFF5F5F5)),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 1,
-                left: 1,
-                right: 1,
-                bottom: 1,
-                child: GiftImgState(
-                  child: NetImage(item['product_url'], width: 40, height: 40),
-                ),
-              ),
-              Positioned(
-                right: 4,
-                bottom: 2,
-                child: IntrinsicWidth(
-                  child: Container(
-                    constraints: BoxConstraints.tight(const Size.square(10)).copyWith(maxWidth: 20),
-                    alignment: Alignment.center,
-                    decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFFE4848)),
-                    child: XText(
-                      '${item['count']}',
-                      style: const TextStyle(fontSize: 7, color: Colors.white, fontWeight: fw$Medium),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Box(
-          width: 77,
-          padding: const Pad(horizontal: 8),
-          alignment: Alignment.center,
-          child: XText(
-            '+${item['amount']}',
-            style: const TextStyle(fontSize: 12, color: Color(0xFFFE4848)),
-          ),
-        ),
-      ],
-    );
-
-    child = Box(height: 82, child: child);
-
-    return child;
+    if(item["send_avatar_url"] == null && item["product_url"] == null) {
+      return MyWalletItemView2(data: {
+        "type": item["type"],
+        "name": item["product_name"],
+        "created_at": item["created_at"],
+        "amount": item["amount"],
+      });
+    } else {
+      return MyHomietemView2(item: item);
+    }
   }
 }
+

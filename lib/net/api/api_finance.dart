@@ -3,8 +3,9 @@ part of '../api.dart';
 class ApiFinance extends ApiBase {
   const ApiFinance(super.path);
 
-  Future record({required PageNum page}) {
+  Future record({int? type, required PageNum page}) {
     final data = <String, dynamic>{
+      if (type != null) 'type' : type,//1:收入，2：兑换，3：提现，4：用户退款
       'created_at_order_by': 2,
     };
 
