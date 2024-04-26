@@ -69,6 +69,7 @@ class _DetailsListViewState extends SimplePageState<Map, PurpleDiamondDetailsPag
                   curFilter = newFilter;
                   type = tabs[curFilter];
                   controller.doRefresh();
+                  setState(() { });
                 }
               },
               behavior: HitTestBehavior.opaque,
