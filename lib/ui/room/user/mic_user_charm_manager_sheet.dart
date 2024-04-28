@@ -300,7 +300,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
             children: [
               SvgView(SVG.$('room/热度'), width: 12, height: 12),
               Text(
-                micInfo?.hotCount != null ? micInfo!.hotCount.toString(): "0",
+                roomUserInfo.hotCount.toString(),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12,
