@@ -85,7 +85,7 @@ PODS:
     - TXLiteAVSDK_Professional (~> 11.7.15343)
   - TOCropViewController (2.6.1)
   - TXCustomBeautyProcesserPlugin (1.0.2)
-  - TXIMSDK_Plus_iOS (7.9.5680)
+  - TXIMSDK_Plus_iOS (7.9.5666)
   - TXLiteAVSDK_Professional (11.7.15343):
     - TXLiteAVSDK_Professional/Professional (= 11.7.15343)
   - TXLiteAVSDK_Professional/Professional (11.7.15343)
@@ -276,7 +276,7 @@ SPEC CHECKSUMS:
   tencent_trtc_cloud: e45d4582e6feebce7436a5098f3fa73ebf9dbe32
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
-  TXIMSDK_Plus_iOS: aa7dc7bf2273c9c90839d3ba8e93aacef4fea03e
+  TXIMSDK_Plus_iOS: c1304bbd65784fa736e96b09a298262d6fcc9412
   TXLiteAVSDK_Professional: 5d3a68e6c02aee961a58df8c886a635849473aa0
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe

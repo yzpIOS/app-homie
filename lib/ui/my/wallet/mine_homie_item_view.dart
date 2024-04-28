@@ -13,7 +13,7 @@ class MineHomieItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget child = Row(
       children: [
-        Spacing.w20,
+        Spacing.w8,
         UserHomeWrap(
           uid: item['send_uid'],
           child: AvatarView(item['send_avatar_url'], size: 40),
@@ -69,7 +69,7 @@ class MineHomieItemView extends StatelessWidget {
                   child: Container(
                     constraints: BoxConstraints.tight(const Size.square(10)).copyWith(maxWidth: 20),
                     alignment: Alignment.center,
-                    decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFFE4848)),
+                    decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFF2CDFB9)),
                     child: XText(
                       '${item['count']}',
                       style: const TextStyle(fontSize: 7, color: Colors.white, fontWeight: fw$Medium),
@@ -80,15 +80,14 @@ class MineHomieItemView extends StatelessWidget {
             ],
           ),
         ),
-        Box(
-          width: 77,
-          padding: const Pad(horizontal: 8),
-          alignment: Alignment.center,
-          child: XText(
-            '+${item['amount']}',
-            style: const TextStyle(fontSize: 12, color: Color(0xFFFE4848)),
-          ),
+
+        Spacing.w16,
+        XText(
+          item['amount'] != null ? '${item['type'] == 1 ? '+' : '-'}${item['amount'].toString()}' : '-',
+          style: TextStyle(fontSize: 15, color: Color(item['type'] == 1 ? 0xFFFE4848 : 0xFF1FB95D)),
         ),
+
+        Spacing.w10,
       ],
     );
 

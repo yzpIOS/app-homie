@@ -91,19 +91,19 @@ class _RechargePageState extends State<RechargePage> {
             top: AppSize.appBar + AppSize.safeTop,
             child: Column(
               children: [
-                Padding(
-                  padding: const Pad(horizontal: 8,),
-                  child: OpacityButton(
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        XText('紫钻明细', style: TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$Regular),),
-                        RightArrowIcon(color: Color(0xFFFF0000),),
-                      ],
-                    ),
-                    onTap: () => Get.to(const PurpleDiamondDetailsPage()),
-                  ),
-                ),
+                // Padding(
+                //   padding: const Pad(horizontal: 8,),
+                //   child: OpacityButton(
+                //     child: const Row(
+                //       mainAxisAlignment: MainAxisAlignment.end,
+                //       children: [
+                //         XText('紫钻明细', style: TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$Regular),),
+                //         RightArrowIcon(color: Color(0xFFFF0000),),
+                //       ],
+                //     ),
+                //     onTap: () => Get.to(const PurpleDiamondDetailsPage()),
+                //   ),
+                // ),
                 Box(
                   padding: const Pad(horizontal: 10, top: 8, bottom: 20),
                   child: MoneyCard(
