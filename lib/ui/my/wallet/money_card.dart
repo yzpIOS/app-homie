@@ -108,9 +108,9 @@ class MoneyCard extends StatelessWidget {
                   children: [
                     XText(
                       '${detail}',
-                      style: const TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$SemiBold),
+                      style: TextStyle(fontSize: 12, color: textColor, fontWeight: fw$SemiBold),
                     ),
-                    Image.asset(IMG.format("my/icon_right"), width: 14, height: 14,),
+                    Image.asset(IMG.format("my/icon_right"), width: 14, height: 14, color: textColor,),
                   ],
                 ),
               ),

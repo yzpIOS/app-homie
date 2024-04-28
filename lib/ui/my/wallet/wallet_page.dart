@@ -61,6 +61,7 @@ class _WalletPageState extends State<WalletPage> {
                         type: MoneyType.gold,
                         tips: '用于购买服装或道具等',
                         action: '兑换',
+                        detail: "黄钻明细",
                         onItemClick: onItemClick,
                       ),
                     ],
@@ -183,6 +184,9 @@ class _WalletPageState extends State<WalletPage> {
         Get.to(() => const RevenuePage());
         break;
       case '紫钻明细':
+        Get.to(() => const PurpleDiamondDetailsPage());
+        break;
+      case '黄钻明细':
         Get.to(() => const PurpleDiamondDetailsPage());
         break;
     }
