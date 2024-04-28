@@ -427,71 +427,75 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
   }
 
   Widget $TitleView() {
-    return PortalModal(
-      visible: controller.noticePanelRx(),
-      onDismiss: () => controller.noticePanelRx(false),
-      modal: const NoticeOverlay(),
-      child: IntrinsicWidth(
-        child: InkResponse(
-          onTap: RoomInfoDialog.show,
-          child: Container(
-            height: 38,
-            width: 144,
-            decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
-            padding: const Pad(horizontal: 6),
-            alignment: Alignment.centerLeft,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      XText(
-                        '${controller.info['room_name']}',
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
-                      ),
-                      XText(
-                        'ID:${controller.info['room_no']}',
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: fw$Medium),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Obx(() {
-                  return GestureDetector(
-                    onTap: () {
-                      onItemClick.call(controller.followRx.value == true ? '己关注' : '关注');
-                    },
-                    behavior: HitTestBehavior.opaque,
-                    child: Container(
-                      width: 52,
-                      height: 26,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFFF00D2),
-                        borderRadius: BorderRadius.circular(1000),
-                      ),
-                      child: XText(
-                          controller.followRx.value == true ? '己关注' : '关注',
-                          overflow: TextOverflow.fade,
-                          style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)
-                      ),
+    return Obx(() {
+      return PortalModal(
+        visible: controller.noticePanelRx(),
+        onDismiss: () {
+          controller.noticePanelRx(false);
+        },
+        modal: const NoticeOverlay(),
+        child: IntrinsicWidth(
+          child: InkResponse(
+            onTap: RoomInfoDialog.show,
+            child: Container(
+              height: 38,
+              width: 144,
+              decoration: const ShapeDecoration(shape: XStadiumBorder(), color: AppPalette.room),
+              padding: const Pad(horizontal: 6),
+              alignment: Alignment.centerLeft,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(width: 10,),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        XText(
+                          '${controller.info['room_name']}',
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+                        ),
+                        XText(
+                          'ID:${controller.info['room_no']}',
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(fontSize: 10, color: Color(0xFFCCCCCC), fontWeight: fw$Medium),
+                        ),
+                      ],
                     ),
-                  );
-                })
-              ],
+                  ),
+
+                  Obx(() {
+                    return GestureDetector(
+                      onTap: () {
+                        onItemClick.call(controller.followRx.value == true ? '己关注' : '关注');
+                      },
+                      behavior: HitTestBehavior.opaque,
+                      child: Container(
+                        width: 52,
+                        height: 26,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFFF00D2),
+                          borderRadius: BorderRadius.circular(1000),
+                        ),
+                        child: XText(
+                            controller.followRx.value == true ? '己关注' : '关注',
+                            overflow: TextOverflow.fade,
+                            style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.bold)
+                        ),
+                      ),
+                    );
+                  })
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   // Widget $QualityView() {
