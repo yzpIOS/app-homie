@@ -20,4 +20,11 @@ class ApiFinance extends ApiBase {
 
     return _doPost('diamond/detail', data: page + data);
   }
+
+  Future goldDetail({int? type, required PageNum page}) {
+    final data = <String, dynamic>{
+      if (type != null) 'type' : type,//查询类型，1：收入，2：支出(不传，默认是全部)
+    };
+    return _doPost("gold_coin/detail", data: data);
+  }
 }

@@ -3,6 +3,7 @@ import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/my/wallet/exchange_page.dart';
+import 'package:app/ui/my/wallet/gold_diamond_details_page.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
 import 'package:app/ui/my/wallet/purple_diamond_details_page.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
@@ -187,7 +188,7 @@ class _WalletPageState extends State<WalletPage> {
         Get.to(() => const PurpleDiamondDetailsPage());
         break;
       case '黄钻明细':
-        Get.to(() => const PurpleDiamondDetailsPage());
+        Get.to(() => const GoldDiamondDetailsPage());
         break;
     }
   }
