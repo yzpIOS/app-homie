@@ -273,6 +273,8 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
 
   late TabController  controller;
 
+  int _curIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -283,6 +285,10 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
     data["月榜"] = widget.viewManufacture.call(3, 20);
 
     controller = TabController(vsync: this, length: data.length);;
+    controller.addListener(() {
+      _curIndex = controller.index;
+      setState(() { });
+    });
   }
 
   @override
@@ -297,8 +303,8 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
         child: Stack(
           children: [
             Positioned(
-              left: 45,
-              right: 45,
+              left: 50,
+              right: 50,
               top: 0,
               child: Container(
                 decoration: BoxDecoration(
@@ -315,6 +321,7 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
                   fontSize: 12,
                   height: 26,
                   kItemHeight: 26,
+                  labelPadding: 12,
                   decoration: MyUnderlineTabIndicator(
                     borderRadius: BorderRadius.circular(100),
                     insets: EdgeInsets.symmetric(horizontal: 8),
