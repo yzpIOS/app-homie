@@ -36,6 +36,8 @@ class _GiftWallViewState extends State<GiftWallView> {
         height: 153 * (AppSize.width / 375),
         margin: const EdgeInsets.only(left: 5, right: 5),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // 标题
             Container(

@@ -191,11 +191,11 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
             return Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+                const MoneyIcon(type: MoneyType.homie, size: 34, variant: 1),
                 XText(
                   '${data ?? '--'}',
                   style: const TextStyle(fontSize: 30, color: AppPalette.primary, fontWeight: fw$Medium),
                 ),
-                const MoneyIcon(type: MoneyType.homie, size: 34, variant: 1),
               ],
             );
           },

@@ -30,7 +30,7 @@ class MineHomieItemView extends StatelessWidget {
                     child: XText(
                       '${item['text']}',
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12, color: AppPalette.c9),
+                      style: const TextStyle(fontSize: 14, color: Colors.black),
                     ),
                   ),
                   SizedBox(width: 3,),
@@ -40,7 +40,7 @@ class MineHomieItemView extends StatelessWidget {
               Spacing.h10,
               XText(
                 TimeFormat.yMMMMdHms.formatEpoch(item['created_at']),
-                style: const TextStyle(fontSize: 10, color: AppPalette.cc),
+                style: const TextStyle(fontSize: 14, color: Colors.black),
               ),
             ],
           ),
