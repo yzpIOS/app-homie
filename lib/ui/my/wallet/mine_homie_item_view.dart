@@ -40,7 +40,7 @@ class MineHomieItemView extends StatelessWidget {
               Spacing.h10,
               XText(
                 TimeFormat.yMMMMdHms.formatEpoch(item['created_at']),
-                style: const TextStyle(fontSize: 14, color: Colors.black),
+                style: const TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
               ),
             ],
           ),

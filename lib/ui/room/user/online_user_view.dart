@@ -12,6 +12,7 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/persion/person_room_mic_ctrl.dart';
+import 'package:app/ui/room/user/rank_rule_dialog.dart';
 import 'package:app/ui/room/user/room_user_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/my_tab_indicator.dart';
@@ -297,22 +298,43 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
             color: Color(0XFFBD7CE5).withAlpha(26),
             borderRadius: BorderRadius.circular(100)
         ),
-        child: xAppBar$TabBar(
-          data.keys,
-          controller: controller,
-          alignment: Alignment.center,
-          needPadding: false,
-          needDownLine: false,
-          isScrollable: false,
-          fontSize: 12,
-          height: 26,
-          kItemHeight: 26,
-          labelPadding: 20,
-          decoration: MyUnderlineTabIndicator(
-            borderRadius: BorderRadius.circular(100),
-            insets: EdgeInsets.symmetric(horizontal: 8),
-          ),
-          labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              child: xAppBar$TabBar(
+                data.keys,
+                controller: controller,
+                alignment: Alignment.center,
+                needPadding: false,
+                needDownLine: false,
+                isScrollable: false,
+                fontSize: 12,
+                height: 26,
+                kItemHeight: 26,
+                labelPadding: 20,
+                decoration: MyUnderlineTabIndicator(
+                  borderRadius: BorderRadius.circular(100),
+                  insets: EdgeInsets.symmetric(horizontal: 8),
+                ),
+                labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
+              ),
+            ),
+
+            Positioned(
+              right: 0,
+              top: 0,
+              child: GestureDetector(
+                onTap: () {
+                  RankRuleDialog.showDialog2();
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Image.asset(IMG.format("room/icon_sm"), width: 18, height: 18,),
+              ),
+            )
+          ],
         ),
       ),
       body: TabBarView(
