@@ -158,9 +158,8 @@ static NSInteger kCirculaDuration = 10;
             [self.player play];
             [self applyforBackgroundTask];
         } else {
-            
+            [self.player stop];
         }
-        [self.player stop];
     });
 }
 

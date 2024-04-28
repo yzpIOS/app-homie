@@ -30,6 +30,7 @@
 		BB9E16DC2B030912001F372E /* pic_homie@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9E16D92B030911001F372E /* pic_homie@3x.png */; };
 		BB9E16DD2B030912001F372E /* pic_homie.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9E16DA2B030912001F372E /* pic_homie.png */; };
 		BB9E16DE2B030912001F372E /* pic_homie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB9E16DB2B030912001F372E /* pic_homie@2x.png */; };
+		BBD85EB32BDB80D400AEFD27 /* BackgroudTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD85EB22BDB80D400AEFD27 /* BackgroudTaskManager.swift */; };
 		BBF03FE42B0233B3002E45EE /* CustomLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBF03FE32B0233B3002E45EE /* CustomLaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +91,7 @@
 		BB9E16D92B030911001F372E /* pic_homie@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_homie@3x.png"; sourceTree = "<group>"; };
 		BB9E16DA2B030912001F372E /* pic_homie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pic_homie.png; sourceTree = "<group>"; };
 		BB9E16DB2B030912001F372E /* pic_homie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pic_homie@2x.png"; sourceTree = "<group>"; };
+		BBD85EB22BDB80D400AEFD27 /* BackgroudTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroudTaskManager.swift; sourceTree = "<group>"; };
 		BBF03FE32B0233B3002E45EE /* CustomLaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomLaunchScreen.storyboard; sourceTree = "<group>"; };
 		DF76DEF8D111C9B2072016B7 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		E235971B66653647542E608F /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				07BA0B1F2BD7BF5200A481D2 /* XTBackRunningManager.h */,
 				07BA0B202BD7BFB600A481D2 /* XTBackRunningManager.m */,
+				BBD85EB22BDB80D400AEFD27 /* BackgroudTaskManager.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				18DBABD18D437DCB88245BFB /* [CP] Embed Pods Frameworks */,
+				47B168278D07370361CA400F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -319,6 +323,23 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
+		47B168278D07370361CA400F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9740EEB61CF901F6004384FC /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -368,6 +389,7 @@
 				078783D42A615FAB00D451E3 /* NSArray+Safe.m in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				078783D52A615FAB00D451E3 /* NSObject+ImpChangeTool.m in Sources */,
+				BBD85EB32BDB80D400AEFD27 /* BackgroudTaskManager.swift in Sources */,
 				078783D32A615FAB00D451E3 /* NSObject+Swizzling.m in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				078783D22A615FAA00D451E3 /* NSDictionary+Safe.m in Sources */,

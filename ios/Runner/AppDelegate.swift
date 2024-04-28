@@ -16,8 +16,7 @@ import AppTrackingTransparency//适配iOS14
         //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
         //主程要求启动页多停留几秒
           sleep(2);
-          
-//          XTBackRunningManager.share();
+          BackgroudTaskManager.sharedManager.setup();
 
         GeneratedPluginRegistrant.register(with: self)
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
