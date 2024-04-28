@@ -276,8 +276,8 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    data["昨日榜"] = widget.viewManufacture.call(4, -1);
     data["日榜"] = widget.viewManufacture.call(1, -1);
+    data["昨日榜"] = widget.viewManufacture.call(4, -1);
     data["上周榜"] = widget.viewManufacture.call(5, 20);
     data["周榜"] = widget.viewManufacture.call(2, 20);
     data["月榜"] = widget.viewManufacture.call(3, 20);
