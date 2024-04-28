@@ -85,7 +85,7 @@ class MineHomieItemView extends StatelessWidget {
           padding: const Pad(horizontal: 8),
           alignment: Alignment.center,
           child: XText(
-            '+${item['amount']}',
+            item['amount'] != null ? '${item['type'] == 1 ? '+' : '-'}${item['amount'].toString()}' : '-',
             style: const TextStyle(fontSize: 12, color: Color(0xFFFE4848)),
           ),
         ),
