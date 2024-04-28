@@ -9,9 +9,18 @@ class MoneyCard extends StatelessWidget {
   final MoneyType type;
   final String tips;
   final String? action;
+  final String? detail;
   final ValueChanged<String>? onItemClick;
 
-  const MoneyCard({super.key, required this.type, required this.tips, this.action, this.onItemClick});
+  const MoneyCard({
+    super.key,
+    required this.type,
+    required this.tips,
+    this.action,
+    this.onItemClick,
+
+    this.detail,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +90,52 @@ class MoneyCard extends StatelessWidget {
       children: [
         MoneyIcon(type: type, size: 51,),
         Expanded(child: child),
-        if (action != null)
+
+        if (action != null && detail != null)
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 5,),
+              GestureDetector(
+                onTap: () {
+                  if(onItemClick != null) {
+                    onItemClick!(detail!);
+                  }
+                },
+                behavior: HitTestBehavior.opaque,
+                child: Row(
+                  children: [
+                    XText(
+                      '${detail}',
+                      style: const TextStyle(fontSize: 12, color: Color(0xFFFF0000), fontWeight: fw$SemiBold),
+                    ),
+                    Image.asset(IMG.format("my/icon_right"), width: 14, height: 14,),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 23,),
+
+              OpacityButton(
+                onTap: onItemClick == null ? null : () => onItemClick!(action!),
+                child: DecoratedBox(
+                  decoration: _decor,
+                  child: Box(
+                    width: 60,
+                    height: 32,
+                    alignment: Alignment.center,
+                    child: XText(
+                      action!,
+                      style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$SemiBold),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+
+        if(action != null && detail == null)
           OpacityButton(
             onTap: onItemClick == null ? null : () => onItemClick!(action!),
             child: DecoratedBox(
@@ -96,7 +150,7 @@ class MoneyCard extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          )
       ].separator(Spacing.w10).toList(growable: false),
     );
 

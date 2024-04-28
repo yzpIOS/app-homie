@@ -4,6 +4,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/my/wallet/exchange_page.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
+import 'package:app/ui/my/wallet/purple_diamond_details_page.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/ui/my/wallet/revenue_page.dart';
 import 'package:app/widgets.dart';
@@ -52,6 +53,7 @@ class _WalletPageState extends State<WalletPage> {
                         type: MoneyType.diamond,
                         tips: '用于直播间内礼物打赏',
                         action: '充值',
+                        detail: "紫钻明细",
                         onItemClick: onItemClick,
                       ),
                       Spacing.h10,
@@ -179,6 +181,9 @@ class _WalletPageState extends State<WalletPage> {
         break;
       case '我的收益':
         Get.to(() => const RevenuePage());
+        break;
+      case '紫钻明细':
+        Get.to(() => const PurpleDiamondDetailsPage());
         break;
     }
   }

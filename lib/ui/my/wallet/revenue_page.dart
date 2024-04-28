@@ -3,6 +3,9 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/ui/my/wallet/mine_homie_item_view.dart';
+import 'package:app/ui/my/wallet/mine_wallet_item_view.dart';
+import 'package:app/ui/my/wallet/diamond_detail_filter_sheet.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -13,52 +16,161 @@ class RevenuePage extends StatefulWidget {
   State<RevenuePage> createState() => _RevenuePageState();
 }
 
-class _RevenuePageState extends State<RevenuePage> {
+class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
   final selectRx = Rxn<Map>();
   final refresh = RxBool(false);
 
   final type = MoneyType.diamond;
 
+  ValueNotifier<dynamic> totalAmount = ValueNotifier("");
+
+  String curFilter = "全部";
+  int? curType = null;
+  final tabs = {
+    '全部': null,
+    '收入': 1,
+    '兑换': 2,
+    '提现': 3,
+    '用户退款': 4,
+  };
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFD89BFE),
-      appBar: xAppBar(title: '我的收益', bgColor: Colors.transparent),
       body: Stack(
         children: [
+          Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            child: AspectRatio(
+              aspectRatio: 375.0 / 210.0,
+              child: Image.asset(IMG.format("my/pic_sy"), width: Get.width, height: 210),
+            ),
+          ),
+
+          Positioned(
+            left: 0,
+            right: 0,
+            child: xAppBar(
+              title: Text(
+                '我的收益',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0),
+              iconTheme: IconThemeData(
+                color: Colors.black, //修改颜色
+              ),
+            ),
+          ),
+
+
           const Positioned.fill(
-            top: 138,
+            top: 210,
             child: Box(color: Colors.white),
           ),
           Positioned(
-            top: 25,
+            top: 108,
             left: 20,
             right: 20,
-            height: 179,
+            height: 159,
             child: Obx(() {
               refresh.value;
               return $TotalView();
             }),
           ),
-          const Positioned(
-            top: 230,
+          Positioned(
+            top: 280,
             left: 10,
             child: XText(
-              '收益明细',
-              style: TextStyle(fontSize: 14, color: Colors.black),
+              curFilter,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Color(0xFFC188E7)),
+            ),
+          ),
+
+          Positioned(
+            top: 280,
+            right: 10,
+            child: GestureDetector(
+              onTap: () async {
+                String? newFilter = await DiamondDetailFilterSheet.show(tabs.keys.toList(), defValue: curFilter);
+                if(newFilter != null) {
+                  curFilter = newFilter;
+                  curType = tabs[curFilter];
+                  controller.doRefresh();
+                  setState(() { });
+                }
+              },
+              behavior: HitTestBehavior.opaque,
+              child: XText(
+                '筛选',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+              ),
             ),
           ),
           Positioned.fill(
-            top: 255,
-            child: _DataView(
-              callBack: () async {
-                await WalletCtrl.ins.doRefresh();
-                refresh.value = !refresh.value;
-              },
-            ),
+            top: 308,
+            child: super.build(context),
           ),
         ],
       ),
+      bottomNavigationBar: createTotalAmount(),
+    );
+  }
+
+
+  Widget createTotalAmount() {
+    if(curFilter == "全部") {
+      return const SizedBox();
+    }
+    return ValueListenableBuilder(
+        valueListenable: totalAmount,
+        builder: (a, b, c) {
+          return Container(
+            height: 80,
+            padding: EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xFF000000).withAlpha(25),
+                    offset: Offset(0.0, -2),
+                    blurRadius: 4,
+                    spreadRadius: 1,
+                  )
+                ]
+            ),
+            child: Row(
+              children: [
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Text(
+                    "总额：",
+                    style: TextStyle(
+                      color: Color(0xFFC05EFB),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Text(
+                  b.toString(),
+                  style: TextStyle(
+                    color: Color(0xFFC05EFB),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(width: 10,),
+              ],
+            ),
+          );
+        }
     );
   }
 
@@ -107,104 +219,46 @@ class _RevenuePageState extends State<RevenuePage> {
 
     return child;
   }
-}
-
-class _DataView extends SimplePageView<Map> {
-
-  Function? callBack;
 
   @override
   BaseConfig get config {
     return ListConfig(
+      padding: EdgeInsets.zero,
       divider: Divider(indent: 10, endIndent: 10),
     );
   }
 
-  _DataView({this.callBack});
-
   @override
-  Future fetchPage(PageNum page) {
+  Future fetchPage(PageNum page) async {
     if(page.firstPage()) {
-      callBack?.call();
+      await WalletCtrl.ins.doRefresh();
+      refresh.value = !refresh.value;
     }
-    return Api.Finance.record(page: page);
+
+    var result = await Api.Finance.record(type: curType, page: page);
+
+    // 总价格
+    if(result is Map && result.containsKey("total_amount")) {
+      totalAmount.value = result["total_amount"];
+    } else {
+      totalAmount.value = "0";
+    }
+
+    return result;
   }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
-    Widget child = Row(
-      children: [
-        Spacing.w20,
-        UserHomeWrap(
-          uid: item['send_uid'],
-          child: AvatarView(item['send_avatar_url'], size: 40),
-        ),
-        Spacing.w10,
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              XText(
-                '${item['send_user_name']}赠送了您${item['product_name']}',
-                style: const TextStyle(fontSize: 12, color: AppPalette.c9),
-              ),
-              Spacing.h10,
-              XText(
-                TimeFormat.yMMMMdHms.formatEpoch(item['created_at']),
-                style: const TextStyle(fontSize: 10, color: AppPalette.cc),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: 42,
-          height: 42,
-          clipBehavior: Clip.hardEdge,
-          decoration: const ShapeDecoration(shape: AppShape.a4, color: Color(0xFFF5F5F5)),
-          child: Stack(
-            children: [
-              Positioned(
-                top: 1,
-                left: 1,
-                right: 1,
-                bottom: 1,
-                child: GiftImgState(
-                  child: NetImage(item['product_url'], width: 40, height: 40),
-                ),
-              ),
-              Positioned(
-                right: 4,
-                bottom: 2,
-                child: IntrinsicWidth(
-                  child: Container(
-                    constraints: BoxConstraints.tight(const Size.square(10)).copyWith(maxWidth: 20),
-                    alignment: Alignment.center,
-                    decoration: const ShapeDecoration(shape: XStadiumBorder(), color: Color(0xFFFE4848)),
-                    child: XText(
-                      '${item['count']}',
-                      style: const TextStyle(fontSize: 7, color: Colors.white, fontWeight: fw$Medium),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Box(
-          width: 77,
-          padding: const Pad(horizontal: 8),
-          alignment: Alignment.center,
-          child: XText(
-            '+${item['amount']}',
-            style: const TextStyle(fontSize: 12, color: Color(0xFFFE4848)),
-          ),
-        ),
-      ],
-    );
-
-    child = Box(height: 82, child: child);
-
-    return child;
+    if(item["send_avatar_url"] == null && item["product_url"] == null) {
+      return MineWalletItemView(data: {
+        "type": item["type"],
+        "name": item["text"],
+        "created_at": item["created_at"],
+        "amount": item["amount"],
+      });
+    } else {
+      return MineHomieItemView(item: item);
+    }
   }
 }
+
