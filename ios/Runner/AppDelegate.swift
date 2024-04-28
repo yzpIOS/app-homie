@@ -16,14 +16,22 @@ import AppTrackingTransparency//适配iOS14
         //InitUnityIntegrationWithOptions(argc: CommandLine.argc, argv: CommandLine.unsafeArgv, launchOptions)
         //主程要求启动页多停留几秒
           sleep(2);
-          BackgroudTaskManager.sharedManager.setup();
+//          BackgroudTaskManager.sharedManager.setup();
+          
 
         GeneratedPluginRegistrant.register(with: self)
+          
+//          XTBackRunningManager.share();
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
       }
     
     override func applicationDidEnterBackground(_ application: UIApplication) {
         UnityFramework.getInstance().pause(true);
+        AppBackgroundTaskManager.shared.startBackgroundTask(app: application)
+    }
+    
+    override func applicationWillEnterForeground(_ application: UIApplication) {
+        AppBackgroundTaskManager.shared.stopBackgroundTask()
     }
     
     override func applicationDidBecomeActive(_ application: UIApplication) {
