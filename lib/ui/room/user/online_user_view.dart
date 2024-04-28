@@ -292,40 +292,41 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
       title: '房间成员',
       needDivider: false,
       titleWidget: Container(
-        width: 350,
-        height: 26,
-        decoration: BoxDecoration(
-            color: Color(0XFFBD7CE5).withAlpha(26),
-            borderRadius: BorderRadius.circular(100)
-        ),
+        width: Get.width,
+        height: 30,
         child: Stack(
           children: [
             Positioned(
-              left: 0,
-              right: 0,
+              left: 45,
+              right: 45,
               top: 0,
-              child: xAppBar$TabBar(
-                data.keys,
-                controller: controller,
-                alignment: Alignment.center,
-                needPadding: false,
-                needDownLine: false,
-                isScrollable: false,
-                fontSize: 12,
-                height: 26,
-                kItemHeight: 26,
-                labelPadding: 20,
-                decoration: MyUnderlineTabIndicator(
-                  borderRadius: BorderRadius.circular(100),
-                  insets: EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Color(0XFFBD7CE5).withAlpha(26),
+                    borderRadius: BorderRadius.circular(100)
                 ),
-                labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
+                child: xAppBar$TabBar(
+                  data.keys,
+                  controller: controller,
+                  alignment: Alignment.center,
+                  needPadding: false,
+                  needDownLine: false,
+                  isScrollable: false,
+                  fontSize: 12,
+                  height: 26,
+                  kItemHeight: 26,
+                  decoration: MyUnderlineTabIndicator(
+                    borderRadius: BorderRadius.circular(100),
+                    insets: EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                  labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
+                ),
               ),
             ),
 
             Positioned(
-              right: 0,
-              top: 0,
+              right: 18,
+              top: 4,
               child: GestureDetector(
                 onTap: () {
                   RankRuleDialog.showDialog2();
