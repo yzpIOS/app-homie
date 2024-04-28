@@ -42,7 +42,7 @@ class MineWalletItemView extends StatelessWidget {
           // const Expanded(child: Spacing.blank),
           XText(
             data['amount'] != null ? '${data['type'] == 1 ? '+' : '-'}${data['amount'].toString()}' : '-',
-            style: const TextStyle(fontSize: 15, color: AppPalette.txtDark, fontWeight: fw$SemiBold),
+            style: TextStyle(fontSize: 15, color: Color(data['type'] == 1 ? 0xFFFE4848 : 0xFF1FB95D)),
           ),
         ],
       ),

@@ -251,12 +251,15 @@ class _RevenuePageState extends SimplePageState<Map, RevenuePage> {
   Widget itemBuilder(BuildContext context, Map item, int index) {
     if((item["send_avatar_url"] == null || item["send_avatar_url"].toString().isEmpty) &&
         (item["product_url"] == null || item["product_url"].toString().isEmpty)) {
-      return MineWalletItemView(data: {
-        "type": item["type"],
-        "name": item["text"],
-        "created_at": item["created_at"],
-        "amount": item["amount"],
-      });
+      return Container(
+        margin: EdgeInsets.only(left: 10, right: 10),
+        child: MineWalletItemView(data: {
+          "type": item["type"],
+          "name": item["text"],
+          "created_at": item["created_at"],
+          "amount": item["amount"],
+        }),
+      );
     } else {
       return MineHomieItemView(item: item);
     }
