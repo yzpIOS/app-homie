@@ -294,6 +294,29 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
   @override
   Widget build(BuildContext context) {
 
+    var children = <Widget>[];
+    var items = data.keys.toList();
+    for(int index = 0; index < items.length; index ++) {
+      children.add(
+        Container(
+          width: 57,
+          height: 26,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            color: controller.index == index ? Color(0xFFBD7CE6) : null,
+          ),
+          child: Text(
+            items[index],
+            style: TextStyle(
+                color: controller.index == index ? Colors.white : Color(0xFF666666),
+                fontSize: 12
+            ),
+          ),
+        )
+      );
+    }
+
     return OrientationSheet.scaffold(
       title: '房间成员',
       needDivider: false,
@@ -303,30 +326,22 @@ class _TabViewState extends State<_TabViewWidget> with SingleTickerProviderState
         child: Stack(
           children: [
             Positioned(
-              left: 50,
-              right: 50,
+              left: (Get.width - 57 * 5) / 2,
+              right: (Get.width - 57 * 5) / 2,
               top: 0,
               child: Container(
+                width: 57 * 5,
                 decoration: BoxDecoration(
                     color: Color(0XFFBD7CE5).withAlpha(26),
                     borderRadius: BorderRadius.circular(100)
                 ),
-                child: xAppBar$TabBar(
-                  data.keys,
+                child: TabBar(
+                  isScrollable: true,
                   controller: controller,
-                  alignment: Alignment.center,
-                  needPadding: false,
-                  needDownLine: false,
-                  isScrollable: false,
-                  fontSize: 12,
-                  height: 26,
-                  kItemHeight: 26,
-                  labelPadding: 12,
-                  decoration: MyUnderlineTabIndicator(
-                    borderRadius: BorderRadius.circular(100),
-                    insets: EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                  labelColor:const Tuple2(Colors.white, Color(0XFF666666)),
+                  indicatorColor: Colors.white,
+                  labelPadding: EdgeInsets.symmetric(horizontal: 0),
+                  indicator: BoxDecoration(),
+                  tabs: children,
                 ),
               ),
             ),
