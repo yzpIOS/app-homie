@@ -498,7 +498,8 @@ class CharmUserView extends SimplePageView<Map> {
           ),
 
           // 送礼
-          giveGifft,
+          if(uid != OAuthCtrl.uid)
+            giveGifft,
           // // 在线
           // if(isPersonRoom && isUserOnMic) TickDownMic(),
           // // 没有在线
