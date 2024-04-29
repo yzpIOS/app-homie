@@ -338,7 +338,7 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
                   visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
                   child: Text(
                     "ID:${vm.data["public_id"]}",
-                    style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
+                    style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
