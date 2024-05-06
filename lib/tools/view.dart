@@ -27,6 +27,21 @@ extension XColor on Color {
 
     return MaterialColor(value, swatch);
   }
+
+  /// 常规(如果使用自定义字体，则不需要设置字重了)
+  TextStyle pt(double size, {FontWeight? fontWeight}) => TextStyle(
+    color: this,
+    fontSize: size,
+    fontWeight: fontWeight,
+  );
+
+  /// 中等
+  TextStyle ptM(double size) =>
+      pt(size, fontWeight: FontWeight.w500);
+
+  /// 加粗
+  TextStyle ptB(double size) =>
+      pt(size, fontWeight: FontWeight.bold);
 }
 
 extension XBuildContext on BuildContext {

@@ -12,6 +12,7 @@ import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/decorate/decorate_shop_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/guild_center/guild_center_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -185,6 +186,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '我的背包':
         Get.to(() => const BackpackPage());
         break;
+      case '公会中心':
+        Get.to(() => const GuildCenterPage());
         break;
       case '我的任务':
         SignDialog.show(isManual: true);
