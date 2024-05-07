@@ -13,6 +13,7 @@ import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/decorate/decorate_shop_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/guild_center/guild_center_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -112,6 +113,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的装扮',
       '我的背包',
       '我的任务',
+      '公会中心'
       // '我的称号',
       // '首充礼包',
       // '邀请好友',
@@ -119,31 +121,32 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
     Widget itemBuilder(String item) {
       Widget child = Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(IMG.format('my/$item'), width: 50, height: 50, fit: BoxFit.cover, scale: 1),
+          const SizedBox(height: 12,),
+          Image.asset(IMG.format('my/$item'), width: 56, height: 56, fit: BoxFit.contain, scale: 3),
+          const SizedBox(height: 4,),
           XText(
             item,
-            style: const TextStyle(fontSize: 15, color: Colors.black),
+            style: const TextStyle(fontSize: 14, color: Colors.black,fontWeight: fw$Medium,height: 1),
           ),
         ],
       );
-
       child = InkWell(
         child: child,
         onTap: () => onItemClick(item),
       );
-
       return child;
     }
 
     return GridView(
-      padding: const Pad(vertical: 5,),
+      padding: const Pad(bottom: 10),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        mainAxisExtent: 100,
+        mainAxisExtent: 86,
       ),
       children: items.map(itemBuilder).toList(growable: false),
     );
@@ -210,6 +213,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '我的背包':
         Get.to(() => const BackpackPage());
         break;
+      case '公会中心':
+        Get.to(() => const GuildCenterPage());
         break;
       case '我的任务':
         SignDialog.show(isManual: true);
