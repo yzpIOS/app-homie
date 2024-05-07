@@ -16,7 +16,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   final UID uid;
   final Map? init;
   final Rx<MyInfoDto> dataRx;
-
+  late final userDataRx = Rxn<Map>();
   final UserLazyBox _box;
 
 
@@ -59,6 +59,8 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
   Future<void> doRefresh() async {
     final result = _dataRebuild(await Api.UserInfo.myInfo());
+
+    Api.UserInfo.charmLevel(uid).then((it) => userDataRx(it));
 
     UserInfoCtrl.doUpdate(uid, rebuild: (val) {
       return val.copyWith(

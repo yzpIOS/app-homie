@@ -6,17 +6,30 @@ import 'package:app/types.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+// import '../../store/oauth_ctrl.dart';
+// import '../../store/room/room_ctrl.dart';
+// import '../moment/report/moment_report_page.dart';
+// import '../room/user/room_user_info_dialog.dart';
+
+
+import 'package:app/net/api.dart';
+import 'package:app/store/im/chat_ctrl.dart';
+import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
+
+import '../moment/report/moment_report_page.dart';
 class OrientationSheet extends StatelessWidget {
   final Widget sheet;
   final Decoration? decoration;
   final BoxConstraints? constraints;
-
+ // final UID uid;
   final Color bgColor;
 
   const OrientationSheet._({
     required this.sheet,
     this.constraints,
     this.decoration,
+   //  required this.uid,
     this.bgColor = Colors.white
   });
 
@@ -31,6 +44,68 @@ class OrientationSheet extends StatelessWidget {
     );
   }
 
+  Widget $ReportView() {
+    return InkResponse(
+      onTap: () => onItemClick('举报'),
+      child: Padding(
+        padding: const Pad(all: 10),
+        child: SvgView(SVG.$('common/举报')),
+      ),
+    );
+  }
+
+  void onItemClick(String action) async {
+    final ctrl = sceneCtrl();
+
+    switch (action) {
+      case '关注':
+      //   doFollow(true);
+        break;
+      case '已关注':
+      //  doFollow(false);
+        break;
+      case '@TA':
+
+        break;
+      case '私聊':
+
+        break;
+      case '送礼物':
+        break;
+      case '举报':
+
+        final canManage = ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
+
+        final items = {
+          '举报': () => Get.to(() => const MomentReportPage(type: 2, id: '')),
+          if (canManage && !ctrl.getRole('').isManager) //
+            '加入黑名单': () => ctrl.setBlock(uid:'', isAdd: true)
+        };
+
+
+        switch (items.length) {
+          case 0:
+            break;
+          case 1:
+            items.values.single();
+            break;
+          default:
+            Get.showSheet(items.entries, toTitle: (it) => Tuple2(it.key, null)) //
+                .onNotNull((val) => val.value());
+        }
+
+        break;
+      case '下麦':
+
+        break;
+      case '上麦':
+
+        break;
+
+    }
+  }
+
+
   static Future<T?> show<T extends Object?>({
     required Widget child,
     double? minHeight,
@@ -43,11 +118,12 @@ class OrientationSheet extends StatelessWidget {
     bool barrierDismissible = true,
     SheetOrientation direction = SheetOrientation.bottom,
     Color bgColor = Colors.white,
-
+    // String uid = '',
     Duration dur = const Duration(milliseconds: 200),
   }) {
     final sheet = OrientationSheet._(
       bgColor: bgColor,
+      // uid: uid,
       constraints: constraints ?? (minHeight?.let((it) => _boxConstraints.copyWith(minHeight: it)) ?? _boxConstraints),
       decoration: decoration,
       sheet: child,
@@ -124,6 +200,8 @@ class OrientationSheet extends StatelessWidget {
     return child;
   }
 
+
+
   static Widget scaffold({required String title, required Widget body, TextStyle? textStyle, Widget? titleWidget, bool needDivider = true}) {
     Widget child = titleWidget ?? DefaultTextStyle(
       style: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: fw$Medium),
@@ -133,11 +211,18 @@ class OrientationSheet extends StatelessWidget {
     child = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Box(
-          height: 42,
-          alignment: Alignment.center,
-          child: child,
-        ),
+          // Row(
+          //   children: [
+              Box(
+                height: 42,
+                alignment: Alignment.center,
+                child: child,
+              ),
+          //
+          //     $ReportView()
+          //   ],
+          // ),
+
         if(needDivider)
           const Divider(indent: 10, endIndent: 10, color: Color(0x80CCCCCC)),
         Flexible(child: body),
@@ -147,6 +232,7 @@ class OrientationSheet extends StatelessWidget {
     return child;
   }
 }
+
 
 enum SheetOrientation {
   left,

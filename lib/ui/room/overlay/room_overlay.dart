@@ -425,12 +425,14 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
       ),
     );
   }
-
+/// 在这里记住了
   Widget $TitleView() {
     return Obx(() {
+      S_TopThree? topThree = controller.topThree.value;
       return PortalModal(
         visible: controller.noticePanelRx(),
         onDismiss: () {
+         // print('3333');
           controller.noticePanelRx(false);
         },
         modal: const NoticeOverlay(),
@@ -518,7 +520,7 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
   //     return Icon(Icons.wifi, size: 16, color: color);
   //   });
   // }
-
+   /// 334343
   Widget $OnlineView() {
     return Obx(() {
       S_TopThree? topThree = controller.topThree.value;

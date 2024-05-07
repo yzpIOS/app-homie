@@ -12,6 +12,8 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../moment/report/moment_report_page.dart';
+
 class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   const RoomInfoDialog._();
 
@@ -23,7 +25,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     );
 
     OrientationSheet.show(
-      child: const RoomInfoDialog._(),
+      child:  RoomInfoDialog._(),
       decoration: decor,
       direction: Get.isLandscape ? SheetOrientation.left : SheetOrientation.bottom,
     );
@@ -31,10 +33,29 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationSheet.scaffold(
-      title: '房间详情',
+    return  Stack(
+      children: [
+    OrientationSheet.scaffold(
+    title: '房间详情',
       textStyle: const TextStyle(color: Colors.white),
       body: $Body(),
+    ),
+        Positioned(
+            top: 0,
+            right: 10,
+            child:$ReportView()
+        ),
+      ],
+    );
+  }
+
+  Widget $ReportView() {
+    return InkResponse(
+      onTap: () => onItemClick('举报'),
+      child: Padding(
+        padding: const Pad(all: 10),
+        child: SvgView(SVG.$('common/举报')),
+      ),
     );
   }
 
@@ -141,6 +162,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   }
 
   void onItemClick(String action) {
+    final ctrl = sceneCtrl();
+    final data = controller.info;
     switch (action) {
       case '分享房间':
         Share.share(RouteUtil.generateShareRoom(controller.roomId), subject: '房间分享');
@@ -155,6 +178,28 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
             controller.followRx(b);
           },
         );
+        break;
+
+      case '举报':
+        final canManage = ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
+
+        final items = {
+          '举报': () => Get.to(() =>  MomentReportPage(type: 2, id: data['uid'])),
+          if (canManage && !ctrl.getRole(data['uid']).isManager) //
+            '加入黑名单': () => ctrl.setBlock(uid:data['uid'], isAdd: true)
+        };
+
+        switch (items.length) {
+          case 0:
+            break;
+          case 1:
+            items.values.single();
+            break;
+          default:
+            Get.showSheet(items.entries, toTitle: (it) => Tuple2(it.key, null)) //
+                .onNotNull((val) => val.value());
+        }
+
         break;
     }
   }

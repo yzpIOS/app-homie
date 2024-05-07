@@ -12,8 +12,10 @@ class OtherDetailsInfoView extends StatelessWidget {
   final String? ageShow;
   final String? starSign;
   final String? location;
+  final String? charmLevel;
 
-  const OtherDetailsInfoView({super.key, required this.uid, this.level, this.ageShow, this.starSign, this.location});
+  const OtherDetailsInfoView({super.key, required this.uid, this.level, this.ageShow, this.starSign, this.location,this.charmLevel});
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +46,7 @@ class OtherDetailsInfoView extends StatelessWidget {
         //   ),
         // ],
         if (level != null) WealthyLevelView(level: level!, height: 20, uid: uid),
+        if (level != null) WealthyLevelView(charmLevel: charmLevel,num: 1, height: 20, uid: uid), /// 魅力等级
         if (ageShow != null && ageShow!.isNotEmpty) $OneItemView('${ageShow!}岁'),
         if (starSign != null && starSign!.isNotEmpty) $OneItemView(starSign!),
         if (location != null && location!.isNotEmpty) $OneItemView(location!),

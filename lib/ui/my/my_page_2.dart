@@ -4,6 +4,7 @@ import 'package:app/model/api/my_info_dto.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
+import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/v1/backpack_page.dart';
 import 'package:app/ui/my/backpack/v2/backpack_page2.dart';
@@ -27,6 +28,9 @@ import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
 import 'package:app/ui/my/openliveroom/open_live_room_page.dart';
 
+import '../../model/api/user_info_dto.dart';
+import '../../net/api.dart';
+import '../home/home_banner_view.dart';
 import 'invite_new_members/invite_new_members_activity_page.dart';
 
 class MyPage2 extends StatefulWidget {
@@ -38,6 +42,7 @@ class MyPage2 extends StatefulWidget {
 
 class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +51,22 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
     // 请求数据刷新界面
     on<UserInfoRefreshEvent>(
       (_) => Get.find<MyInfoCtrl>().doRefresh(),
+    );
+
+
+  }
+
+  Widget $SquareView() {
+    return  const Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // HomeActivityBannerView(),// 活动banner
+
+        HomeBannerView(),
+        SizedBox(height: 10,),// 距离
+        // HomePlayTogether(),// 一起玩模块
+      ],
     );
   }
 
@@ -63,12 +84,15 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
               children: [
                 Obx((){
                   Rx<MyInfoDto> dataRx = Get.find<MyInfoCtrl>().dataRx;
-                  return _HeaderView(myInfoDto: dataRx.value,);
+                  Rxn<Map> userDataRx = Get.find<MyInfoCtrl>().userDataRx;
+                 var charmLevel = userDataRx()?["charm_level"];
+                  return _HeaderView(myInfoDto: dataRx.value,charmLevel: charmLevel);
                 }),
                 divider,
                 _Action1(),
-                divider,
+                $SquareView(),
                 _Action2(),
+                const SizedBox(height: 30),
               ],
             ),
           ),
@@ -76,6 +100,9 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       ),
     );
   }
+
+
+
 
   Widget _Action1() {
     final items = [
@@ -94,7 +121,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       Widget child = Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.asset(IMG.format('my/$item'), width: 70, height: 70, fit: BoxFit.contain, scale: 3),
+          Image.asset(IMG.format('my/$item'), width: 50, height: 50, fit: BoxFit.cover, scale: 1),
           XText(
             item,
             style: const TextStyle(fontSize: 15, color: Colors.black),
@@ -116,7 +143,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        mainAxisExtent: 115,
+        mainAxisExtent: 100,
       ),
       children: items.map(itemBuilder).toList(growable: false),
     );
@@ -232,7 +259,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
 class _HeaderView extends StatelessWidget {
   MyInfoDto? myInfoDto;
-  _HeaderView({required this.myInfoDto});
+  String? charmLevel;
+  _HeaderView({required this.myInfoDto,this.charmLevel});
 
   static double bgHeight = AppSize.width / 375 * 221.5;
 
@@ -354,7 +382,7 @@ class _HeaderView extends StatelessWidget {
                     style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                   ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: data.uid, level: data.level, ageShow: data.ageShow, starSign: data.starSign, location: data.location,),
+                OtherDetailsInfoView(uid: data.uid, level: data.level,charmLevel: charmLevel, ageShow: data.ageShow, starSign: data.starSign, location: data.location),
                 // SizedBox(
                 //   height: 20,
                 //   child: UidView(uid: data.uid, account: data.account, level: data.level),

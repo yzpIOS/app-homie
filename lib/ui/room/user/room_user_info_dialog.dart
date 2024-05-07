@@ -84,9 +84,13 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
-          if (!isSelf) Positioned(top: 0, left: 0, child: $ReportView()),
+        //  if (!isSelf) Positioned(top: 0, left: 0, child: $ReportView()),
           Positioned(top: -30, child: $Avatar()),
-
+          if (!isSelf) Positioned(
+            top: 0,
+            right: 10,
+              child:$ReportView()
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
