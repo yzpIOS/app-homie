@@ -13,7 +13,6 @@ class MyGuildCenterPage extends StatelessWidget {
     return GetBuilder<MyGuildCenterController>(
         init: MyGuildCenterController(),
         builder: (MyGuildCenterController controller) {
-
           return Column(
             children: [
               Spacing.h18,
@@ -62,7 +61,7 @@ class MyGuildCenterPage extends StatelessWidget {
                   children: [
                     Text(
                       "公会名称",
-                      style: const TextStyle(fontSize: 16, color: Colors.black,height: 1.5),
+                      style: const TextStyle(fontSize: 16, color: Color(0xFF000000),height: 1.5),
                     ),
                     Spacing.w4,
                     Image.asset(IMG.format('my/guild_center_level_1'),
@@ -70,7 +69,7 @@ class MyGuildCenterPage extends StatelessWidget {
                   ],
                 ),
                 Text("ID:1234567",
-                    style: const TextStyle(fontSize: 12, color: Colors.grey,height: 1.5)),
+                    style: const TextStyle(fontSize: 12, color: Color(0xFF999999),height: 1.5)),
                 Row(
                   children: [
                     Image.asset(IMG.format('my/guild_center_user_count'),
@@ -78,7 +77,7 @@ class MyGuildCenterPage extends StatelessWidget {
                     Spacing.w4,
                     Text("1111",
                         style:
-                            const TextStyle(fontSize: 12, color: Colors.black,height: 1.5)),
+                            const TextStyle(fontSize: 12, color: Color(0xFF000000),height: 1.5)),
                   ],
                   mainAxisAlignment: MainAxisAlignment.start,
                 )
@@ -100,12 +99,12 @@ class MyGuildCenterPage extends StatelessWidget {
             Spacing.w20,
             Text(
               "我的收益分成",
-              style: Colors.black.ptB(14),
+              style: Color(0xFF000000).ptB(14),
             ),
             const Spacing(),
             Text(
               "63%",
-              style: Colors.black.pt(14),
+              style: Color(0xFF000000).pt(14),
             ),
             Spacing.w20,
           ],
@@ -125,7 +124,7 @@ class MyGuildCenterPage extends StatelessWidget {
             Spacing.w20,
             Text(
               "公会流水",
-              style: Colors.black.ptB(14),
+              style: Color(0xFF000000).ptB(14),
             ),
             const Spacing(),
             Image.asset(
@@ -151,7 +150,7 @@ class MyGuildCenterPage extends StatelessWidget {
             Spacing.w20,
             Text(
               "主播列表",
-              style: Colors.black.ptB(14),
+              style: Color(0xFF000000).ptB(14),
             ),
             const Spacing(),
             Container(

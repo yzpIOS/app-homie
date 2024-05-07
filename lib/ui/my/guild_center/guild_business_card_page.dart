@@ -34,7 +34,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                   top: 0,
                   height: 202 + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
-                  child: _buildBusinessCard(),
+                  child: _buildBusinessCard(controller),
                 ),
                 Positioned(
                   left: 0,
@@ -51,7 +51,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   }
 
   /// 公会名片
-  Widget _buildBusinessCard() {
+  Widget _buildBusinessCard(GuildBusinessCardController controller) {
     return SizedBox(
       height: 202 + Get.statusBarHeight,
       width: Get.width,
@@ -80,80 +80,85 @@ class GuildBusinessCardPage extends StatelessWidget {
             ),
           ),
           Spacing.h20,
-          SizedBox(
-            height: 60,
-            width: Get.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Spacing.w10,
-                CachedNetworkImage(
-                  imageUrl:
-                      'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                  width: 60,
-                  height: 60,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.contain,
+          GestureDetector(
+            onTap: () {
+              controller.clickRoomInfo();
+            },
+            child: SizedBox(
+              height: 60,
+              width: Get.width,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Spacing.w10,
+                  CachedNetworkImage(
+                    imageUrl:
+                        'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                    width: 60,
+                    height: 60,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-                Spacing.w10,
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "公会名称",
-                            style: const TextStyle(
-                                fontSize: 16, color: Colors.white, height: 1.5),
-                          ),
-                          Spacing.w4,
-                          Image.asset(IMG.format('my/guild_center_level_1'),
-                              width: 53, height: 17, scale: 3),
-                        ],
-                      ),
-                      Text("ID:1234567",
-                          style: const TextStyle(
-                              fontSize: 12, color: Colors.white, height: 1.5)),
-                      Row(
-                        children: [
-                          Image.asset(
-                            IMG.format('my/guild_center_user_count'),
-                            width: 14,
-                            height: 14,
-                            scale: 3,
-                            color: Colors.white,
-                          ),
-                          Spacing.w4,
-                          Text("1111",
+                  Spacing.w10,
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "公会名称",
                               style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                  height: 1.5)),
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.start,
-                      )
-                    ],
+                                  fontSize: 16, color: Colors.white, height: 1.5),
+                            ),
+                            Spacing.w4,
+                            Image.asset(IMG.format('my/guild_center_level_1'),
+                                width: 53, height: 17, scale: 3),
+                          ],
+                        ),
+                        Text("ID:1234567",
+                            style: const TextStyle(
+                                fontSize: 12, color: Colors.white, height: 1.5)),
+                        Row(
+                          children: [
+                            Image.asset(
+                              IMG.format('my/guild_center_user_count'),
+                              width: 14,
+                              height: 14,
+                              scale: 3,
+                              color: Colors.white,
+                            ),
+                            Spacing.w4,
+                            Text("1111",
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white,
+                                    height: 1.5)),
+                          ],
+                          mainAxisAlignment: MainAxisAlignment.start,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Image.asset(
-                  IMG.format("wode_icon_right"),
-                  width: 24,
-                  height: 24,
-                  color: Colors.white,
-                ),
-                Spacing.w10,
-              ],
+                  Image.asset(
+                    IMG.format("wode_icon_right"),
+                    width: 24,
+                    height: 24,
+                    color: Colors.white,
+                  ),
+                  Spacing.w10,
+                ],
+              ),
             ),
           )
         ],
@@ -192,7 +197,7 @@ class GuildBusinessCardPage extends StatelessWidget {
       child: Text("公会房间(${controller.roomList.length})",
           style: TextStyle(
               fontSize: 14,
-              color: Colors.black,
+              color: Color(0xFF000000),
               fontWeight: fw$Bold,
               height: 1.5)),
     );
@@ -251,7 +256,7 @@ class GuildBusinessCardPage extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Color(0xFF000000).withOpacity(0.1),
                 offset: Offset(0.0, 2.0), //阴影y轴偏移量
                 blurRadius: 4, //阴影模糊程度
                 spreadRadius: 1 //阴影扩散程度
@@ -301,7 +306,7 @@ class GuildBusinessCardPage extends StatelessWidget {
             Center(
               child: Text(
                 "男女免费相亲",
-                style: Colors.black.ptB(14).copyWith(height: 1.5),
+                style: Color(0xFF000000).ptB(14).copyWith(height: 1.5),
               ),
             ),
             Spacing.h10,
@@ -311,7 +316,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Spacing.w10,
                 Text(
                   "ID:1234567",
-                  style: Colors.grey.pt(12).copyWith(height: 1.5),
+                  style: Color(0xFF999999).pt(12).copyWith(height: 1.5),
                 ),
                 const Spacing(),
                 Row(
@@ -324,7 +329,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                     ),
                     Text(
                       "12345",
-                      style: Colors.grey.pt(12).copyWith(height: 1.5),
+                      style: Color(0xFF999999).pt(12).copyWith(height: 1.5),
                     ),
                   ],
                 ),
