@@ -68,7 +68,7 @@ class GuildInformationPage extends StatelessWidget {
                     Text(
                       "公会名称",
                       style: const TextStyle(
-                          fontSize: 16, color: Color(0xFF000000), height: 1.5),
+                          fontSize: 16, color: Color(0xFF000000)),
                     ),
                     Spacing.w4,
                     Image.asset(IMG.format('my/guild_center_level_1'),
@@ -80,8 +80,7 @@ class GuildInformationPage extends StatelessWidget {
                     const Text("ID:1234567",
                         style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF999999),
-                            height: 1.5)),
+                            color: Color(0xFF999999))),
                     Spacing.w2,
                     GestureDetector(
                       onTap: () {},
@@ -95,7 +94,7 @@ class GuildInformationPage extends StatelessWidget {
                 ),
                 const Text("创建时间:2024.3.28",
                     style: TextStyle(
-                        fontSize: 12, color: Color(0xFF999999), height: 1.5)),
+                        fontSize: 12, color: Color(0xFF999999))),
               ],
             ),
           ),
@@ -117,7 +116,7 @@ class GuildInformationPage extends StatelessWidget {
                   fontSize: 14,
                   color: Color(0xFF000000),
                   fontWeight: fw$Bold,
-                  height: 1.5)),
+                  )),
           const Spacing(),
           CachedNetworkImage(
             imageUrl:
@@ -139,7 +138,7 @@ class GuildInformationPage extends StatelessWidget {
           Spacing.w4,
           const Text("叮叮猫",
               style: TextStyle(
-                  fontSize: 14, color: Color(0xFF000000), height: 1.5)),
+                  fontSize: 14, color: Color(0xFF000000),)),
           Image.asset(
             IMG.format("wode_icon_right"),
             width: 20,
@@ -165,7 +164,7 @@ class GuildInformationPage extends StatelessWidget {
                   fontSize: 14,
                   color: Color(0xFF000000),
                   fontWeight: fw$Bold,
-                  height: 1.5),
+                  ),
             ),
             Spacing.h10,
             Text(
@@ -173,7 +172,7 @@ class GuildInformationPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 color: Color(0xFF999999),
-                height: 1.5,
+
               ),
             ),
           ],

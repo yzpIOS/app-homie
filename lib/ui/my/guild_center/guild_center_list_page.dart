@@ -115,7 +115,7 @@ class GuildCenterListPage extends StatelessWidget {
                     children: [
                       Text(
                         "公会名称",
-                        style: const TextStyle(fontSize: 16, color: Color(0xFF000000),height: 1.5),
+                        style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
                       ),
                       Spacing.w4,
                       index + 1 < 6
@@ -130,11 +130,11 @@ class GuildCenterListPage extends StatelessWidget {
                   Row(
                     children: [
                       Text("ID:1234567",
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF999999),height: 1.5)),
+                          style: const TextStyle(fontSize: 12, color: Color(0xFF999999),)),
                       Spacing(),
                       Text(
                         "贡献值：10.3W",
-                        style: const TextStyle(fontSize: 14, color: Color(0xFF000000),height: 1.5),
+                        style: const TextStyle(fontSize: 14, color: Color(0xFF000000),),
                       ),
                     ],
                   ),
@@ -144,7 +144,7 @@ class GuildCenterListPage extends StatelessWidget {
                           width: 14, height: 14, scale: 3),
                       Spacing.w4,
                       Text("1111",
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF000000),height: 1.5)),
+                          style: const TextStyle(fontSize: 12, color: Color(0xFF000000))),
                     ],
                     mainAxisAlignment: MainAxisAlignment.start,
                   )

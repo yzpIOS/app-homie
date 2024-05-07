@@ -65,11 +65,16 @@ class GuildBusinessCardPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Spacing.w10,
-                Image.asset(
-                  IMG.format("icon_back_baise"),
-                  fit: BoxFit.cover,
-                  width: 24,
-                  height: 24,
+                GestureDetector(
+                  onTap: (){
+                    controller.clickBack();
+                  },
+                  child: Image.asset(
+                    IMG.format("icon_back_baise"),
+                    fit: BoxFit.cover,
+                    width: 24,
+                    height: 24,
+                  ),
                 ),
                 const Spacing(),
                 Text("公会名片", style: Colors.white.ptB(18)),
@@ -119,16 +124,26 @@ class GuildBusinessCardPage extends StatelessWidget {
                             Text(
                               "公会名称",
                               style: const TextStyle(
-                                  fontSize: 16, color: Colors.white, height: 1.5),
+                                  fontSize: 16, color: Colors.white,),
                             ),
                             Spacing.w4,
-                            Image.asset(IMG.format('my/guild_center_level_1'),
-                                width: 53, height: 17, scale: 3),
+                            GestureDetector(
+                              onTap: (){
+                                RenderBox? renderBox = controller.anchorKey.currentContext?.findRenderObject() as RenderBox?;
+                                //获得控件正下方的坐标
+                                var offset = renderBox?.localToGlobal(Offset(0.0, renderBox.size.height));
+                                if(offset != null){
+                                  controller.clickGuildLevel(anchorPoint: offset!,level: 0);
+                                }
+                              },
+                              child: Image.asset(IMG.format('my/guild_center_level_1'),
+                                  width: 53, height: 17, scale: 3,key: controller.anchorKey,),
+                            ),
                           ],
                         ),
                         Text("ID:1234567",
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.white, height: 1.5)),
+                                fontSize: 12, color: Colors.white,)),
                         Row(
                           children: [
                             Image.asset(
@@ -143,7 +158,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                                 style: const TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
-                                    height: 1.5)),
+                                    )),
                           ],
                           mainAxisAlignment: MainAxisAlignment.start,
                         )
@@ -199,7 +214,7 @@ class GuildBusinessCardPage extends StatelessWidget {
               fontSize: 14,
               color: Color(0xFF000000),
               fontWeight: fw$Bold,
-              height: 1.5)),
+              )),
     );
   }
 
@@ -280,7 +295,7 @@ class GuildBusinessCardPage extends StatelessWidget {
               ),
               child: Text(item,
                   style: const TextStyle(
-                      fontSize: 10, color: Colors.white, height: 1.5)),
+                      fontSize: 10, color: Colors.white, )),
             ),
             Spacing.h2,
             Center(
@@ -306,7 +321,7 @@ class GuildBusinessCardPage extends StatelessWidget {
             Center(
               child: Text(
                 "男女免费相亲",
-                style: Color(0xFF000000).ptB(14).copyWith(height: 1.5),
+                style: Color(0xFF000000).ptB(14),
               ),
             ),
             Spacing.h10,
@@ -316,7 +331,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Spacing.w10,
                 Text(
                   "ID:1234567",
-                  style: Color(0xFF999999).pt(12).copyWith(height: 1.5),
+                  style: Color(0xFF999999).pt(12),
                 ),
                 const Spacing(),
                 Row(
@@ -329,7 +344,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                     ),
                     Text(
                       "12345",
-                      style: Color(0xFF999999).pt(12).copyWith(height: 1.5),
+                      style: Color(0xFF999999).pt(12),
                     ),
                   ],
                 ),
