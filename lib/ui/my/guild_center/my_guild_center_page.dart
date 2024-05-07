@@ -13,6 +13,7 @@ class MyGuildCenterPage extends StatelessWidget {
     return GetBuilder<MyGuildCenterController>(
         init: MyGuildCenterController(),
         builder: (MyGuildCenterController controller) {
+
           return Column(
             children: [
               Spacing.h18,
