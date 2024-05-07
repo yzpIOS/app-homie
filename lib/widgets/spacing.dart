@@ -29,6 +29,7 @@ class Spacing extends StatelessWidget {
   static const w10 = _WSpacing(10);
   static const w12 = _WSpacing(12);
   static const w16 = _WSpacing(16);
+  static const w18 = _WSpacing(18);
   static const w20 = _WSpacing(20);
   static const w32 = _WSpacing(32);
   static const w40 = _WSpacing(40);
@@ -40,6 +41,7 @@ class Spacing extends StatelessWidget {
   static const h10 = _HSpacing(10);
   static const h12 = _HSpacing(12);
   static const h16 = _HSpacing(16);
+  static const h18 = _HSpacing(18);
   static const h20 = _HSpacing(20);
   static const h22 = _HSpacing(22);
   static const h30 = _HSpacing(30);

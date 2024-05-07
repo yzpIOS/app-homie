@@ -3,6 +3,7 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+/// 公会中心页面
 class GuildCenterPage extends StatelessWidget {
   const GuildCenterPage({super.key});
 
@@ -23,7 +24,6 @@ class GuildCenterPage extends StatelessWidget {
         );
         }
     );
-
   }
 
 }

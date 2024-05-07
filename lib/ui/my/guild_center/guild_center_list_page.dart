@@ -5,10 +5,12 @@ import 'package:app/widgets/editable_text.dart';
 import 'package:app/widgets/icon_text_button.dart';
 import 'package:app/widgets/spacing.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+/// 公会榜单页面
 class GuildCenterListPage extends StatelessWidget {
   const GuildCenterListPage({super.key});
 
@@ -18,6 +20,7 @@ class GuildCenterListPage extends StatelessWidget {
         init: GuildCenterListController(),
         builder: (GuildCenterListController controller) {
           return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Padding(
                 padding: Pad(left: 20, top: 10),
@@ -69,7 +72,8 @@ class GuildCenterListPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacing.w20,
-          SizedBox(
+          Container(
+            alignment: Alignment.center,
               height: 30,
               width: 30,
               child: index + 1 < 4
@@ -83,28 +87,39 @@ class GuildCenterListPage extends StatelessWidget {
                       ),
                     )),
           Spacing.w4,
-          Image.network(
-            "https://bkimg.cdn.bcebos.com/pic/c83d70cf3bc79f3d068c6661b6a1cd11728b2976",
+          CachedNetworkImage(
+            imageUrl: 'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
             width: 60,
             height: 60,
-            fit: BoxFit.contain,
+            imageBuilder: (context, imageProvider) => Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            placeholder: (context, url) => CircularProgressIndicator(),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           Spacing.w10,
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   children: [
                     Text(
                       "公会名称",
-                      style: const TextStyle(fontSize: 16, color: Colors.black),
+                      style: const TextStyle(fontSize: 16, color: Colors.black,height: 1.5),
                     ),
+                    Spacing.w4,
                     index + 1 < 6
                         ? Image.asset(
                         IMG.format('my/guild_center_level_${index + 1}'),
-                        width: 24,
-                        height: 24,
+                        width: 53,
+                        height: 17,
                         scale: 3)
                         : const SizedBox(),
                   ],
@@ -112,21 +127,23 @@ class GuildCenterListPage extends StatelessWidget {
                 Row(
                   children: [
                     Text("ID:1234567",
-                        style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                        style: const TextStyle(fontSize: 12, color: Colors.grey,height: 1.5)),
                     Spacing(),
                     Text(
                       "贡献值：10.3W",
-                      style: const TextStyle(fontSize: 14, color: Colors.black),
+                      style: const TextStyle(fontSize: 14, color: Colors.black,height: 1.5),
                     ),
                   ],
                 ),
-                IconTextButton(
-                  onPressed: () {},
-                  text: "1111",
-                  icon: Image.asset(IMG.format('my/guild_center_user_count'),
-                      width: 14, height: 14, scale: 3),
-                  spacing: 4,
-                  textStyle: Colors.white.ptB(14),
+                Row(
+                  children: [
+                    Image.asset(IMG.format('my/guild_center_user_count'),
+                        width: 14, height: 14, scale: 3),
+                    Spacing.w4,
+                    Text("1111",
+                        style: const TextStyle(fontSize: 12, color: Colors.black,height: 1.5)),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.start,
                 )
               ],
             ),
