@@ -133,7 +133,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                                 //获得控件正下方的坐标
                                 var offset = renderBox?.localToGlobal(Offset(0.0, renderBox.size.height));
                                 if(offset != null){
-                                  controller.clickGuildLevel(anchorPoint: offset!,level: 0);
+                                  controller.clickGuildLevel(anchorPoint: offset!,level: 2);
                                 }
                               },
                               child: Image.asset(IMG.format('my/guild_center_level_1'),
