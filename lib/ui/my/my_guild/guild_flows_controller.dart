@@ -19,7 +19,7 @@ class GuildFlowsController extends GetxController {
       endDate: DateTime(DateTime.now().year+2, 1, 1),
       title: '起始时间',
       onSelected: (DateTime date) {
-        // MsgUtil.toast(date.toString());
+        searchStartTime.value = '${date.year}-${date.month}-${date.day}';
       },
     );
   }
@@ -31,9 +31,9 @@ class GuildFlowsController extends GetxController {
       startDate: DateTime(DateTime.now().year-2, 1, 1),
       selectedDate: DateTime.now(),
       endDate: DateTime(DateTime.now().year+2, 1, 1),
-      title: '结束时间',
+      title: '终止时间',
       onSelected: (DateTime date) {
-        // MsgUtil.toast(date.toString());
+        searchEndTime.value = '${date.year}-${date.month}-${date.day}';
       },
     );
   }

@@ -79,21 +79,21 @@ class GuildFlowsPage extends StatelessWidget {
             textAlign: TextAlign.center,
           )),
           Spacing.w10,
-          Text(
-                  controller.searchStartTime.isNotEmpty
-                      ? controller.searchStartTime.value
-                      : "起始时间",
-                  style: controller.searchStartTime.isNotEmpty
-                      ? const Color(0xFF000000).pt(12)
-                      : const Color(0xFF999999).pt(12))
+          Obx(() => Text(
+              controller.searchStartTime.isNotEmpty
+                  ? controller.searchStartTime.value
+                  : "起始时间",
+              style: controller.searchStartTime.isNotEmpty
+                  ? const Color(0xFF000000).pt(12)
+                  : const Color(0xFF999999).pt(12))
               .toBtn(
-                  height: 32,
-                  width: 80,
-                  radius: 4,
-                  bg: const Color(0xFFFBF5FF),
-                  onTap: () {
-                    controller.clickSearchStartTime();
-                  }),
+              height: 32,
+              width: 80,
+              radius: 4,
+              bg: const Color(0xFFFBF5FF),
+              onTap: () {
+                controller.clickSearchStartTime();
+              })),
           Spacing.w2,
           Container(
             width: 10,
@@ -101,21 +101,21 @@ class GuildFlowsPage extends StatelessWidget {
             color: const Color(0xFFCCCCCC),
           ),
           Spacing.w2,
-          Text(
-                  controller.searchEndTime.isNotEmpty
-                      ? controller.searchEndTime.value
-                      : "终止时间",
-                  style: controller.searchEndTime.isNotEmpty
-                      ? const Color(0xFF000000).pt(12)
-                      : const Color(0xFF999999).pt(12))
+          Obx(() => Text(
+              controller.searchEndTime.isNotEmpty
+                  ? controller.searchEndTime.value
+                  : "终止时间",
+              style: controller.searchEndTime.isNotEmpty
+                  ? const Color(0xFF000000).pt(12)
+                  : const Color(0xFF999999).pt(12))
               .toBtn(
-                  height: 32,
-                  width: 80,
-                  radius: 4,
-                  bg: const Color(0xFFFBF5FF),
-                  onTap: () {
-                    controller.clickSearchEndTime();
-                  }),
+              height: 32,
+              width: 80,
+              radius: 4,
+              bg: const Color(0xFFFBF5FF),
+              onTap: () {
+                controller.clickSearchEndTime();
+              })),
           Spacing.w10,
           Text("搜索", style: Colors.white.pt(14)).toBtn(
               width: 54,
