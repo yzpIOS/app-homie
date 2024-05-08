@@ -18,7 +18,7 @@ class GuildLevelDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GetBuilder<GuildLevelDialogController>(
+    return GetBuilder<GuildLevelDialogController>(
         init: GuildLevelDialogController(),
         builder: (GuildLevelDialogController controller) {
           return Scaffold(

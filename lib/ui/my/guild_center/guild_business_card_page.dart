@@ -239,7 +239,9 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 加入公会widget
   Widget _joinGuildWidget(GuildBusinessCardController controller){
     return GestureDetector(
-      onTap: (){},
+      onTap: (){
+        controller.clickApplyJoinGuild();
+      },
       child: Container(
         padding: const Pad(top: 10, bottom: 2),
         alignment: Alignment.center,
@@ -271,8 +273,8 @@ class GuildBusinessCardPage extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           boxShadow: [
             BoxShadow(
-                color: Color(0xFF000000).withOpacity(0.1),
-                offset: Offset(0.0, 2.0), //阴影y轴偏移量
+                color: const Color(0xFF000000).withOpacity(0.1),
+                offset:const Offset(0.0, 2.0), //阴影y轴偏移量
                 blurRadius: 4, //阴影模糊程度
                 spreadRadius: 1 //阴影扩散程度
                 )
