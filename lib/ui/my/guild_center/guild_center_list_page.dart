@@ -3,6 +3,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_center_list_controller.dart';
 import 'package:app/widgets/editable_text.dart';
 import 'package:app/widgets/icon_text_button.dart';
+import 'package:app/widgets/image/network_cache_image.dart';
 import 'package:app/widgets/spacing.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -90,21 +91,13 @@ class GuildCenterListPage extends StatelessWidget {
                         ),
                       )),
             Spacing.w4,
-            CachedNetworkImage(
-              imageUrl: 'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-              width: 60,
-              height: 60,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(
-                    image: imageProvider,
-                    fit: BoxFit.contain,
-                  ),
-                ),
-              ),
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: const NetImage(
+                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.contain),
             ),
             Spacing.w10,
             Expanded(

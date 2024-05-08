@@ -25,7 +25,9 @@ class GuildBusinessCardPage extends StatelessWidget {
                   top: 0,
                   height: 202 + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
-                  child: const BlurredNetworkImage(
+                  child: BlurredNetworkImage(
+                      height: 202 + MediaQueryData.fromView(window).padding.top,
+                      width: Get.width,
                       imageUrl:
                           'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF'),
                 ),
@@ -66,7 +68,7 @@ class GuildBusinessCardPage extends StatelessWidget {
               children: [
                 Spacing.w10,
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     controller.clickBack();
                   },
                   child: Image.asset(
@@ -96,22 +98,13 @@ class GuildBusinessCardPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Spacing.w10,
-                  CachedNetworkImage(
-                    imageUrl:
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: const NetImage(
                         'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                    width: 60,
-                    height: 60,
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    placeholder: (context, url) => CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.contain),
                   ),
                   Spacing.w10,
                   Expanded(
@@ -124,26 +117,39 @@ class GuildBusinessCardPage extends StatelessWidget {
                             Text(
                               "公会名称",
                               style: const TextStyle(
-                                  fontSize: 16, color: Colors.white,),
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
                             ),
                             Spacing.w4,
                             GestureDetector(
-                              onTap: (){
-                                RenderBox? renderBox = controller.anchorKey.currentContext?.findRenderObject() as RenderBox?;
+                              onTap: () {
+                                RenderBox? renderBox = controller
+                                    .anchorKey.currentContext
+                                    ?.findRenderObject() as RenderBox?;
                                 //获得控件正下方的坐标
-                                var offset = renderBox?.localToGlobal(Offset(0.0, renderBox.size.height));
-                                if(offset != null){
-                                  controller.clickGuildLevel(anchorPoint: offset!,level: 2);
+                                var offset = renderBox?.localToGlobal(
+                                    Offset(0.0, renderBox.size.height));
+                                if (offset != null) {
+                                  controller.clickGuildLevel(
+                                      anchorPoint: offset!, level: 2);
                                 }
                               },
-                              child: Image.asset(IMG.format('my/guild_center_level_1'),
-                                  width: 53, height: 17, scale: 3,key: controller.anchorKey,),
+                              child: Image.asset(
+                                IMG.format('my/guild_center_level_1'),
+                                width: 53,
+                                height: 17,
+                                scale: 3,
+                                key: controller.anchorKey,
+                              ),
                             ),
                           ],
                         ),
                         Text("ID:1234567",
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.white,)),
+                              fontSize: 12,
+                              color: Colors.white,
+                            )),
                         Row(
                           children: [
                             Image.asset(
@@ -156,9 +162,9 @@ class GuildBusinessCardPage extends StatelessWidget {
                             Spacing.w4,
                             Text("1111",
                                 style: const TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    )),
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                )),
                           ],
                           mainAxisAlignment: MainAxisAlignment.start,
                         )
@@ -206,23 +212,23 @@ class GuildBusinessCardPage extends StatelessWidget {
   }
 
   /// 头部widget
-  Widget _headerWidget(GuildBusinessCardController controller){
-    return  Padding(
+  Widget _headerWidget(GuildBusinessCardController controller) {
+    return Padding(
       padding: Pad(left: 15, top: 15, bottom: 5),
       child: Text("公会房间(${controller.roomList.length})",
           style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF000000),
-              fontWeight: fw$Bold,
-              )),
+            fontSize: 14,
+            color: Color(0xFF000000),
+            fontWeight: fw$Bold,
+          )),
     );
   }
 
   /// 房间列表widget
-  Widget _roomGridViewWidget(GuildBusinessCardController controller){
+  Widget _roomGridViewWidget(GuildBusinessCardController controller) {
     return Expanded(
       child: GridView(
-        padding: const Pad(horizontal: 20,bottom: 10,top: 5),
+        padding: const Pad(horizontal: 20, bottom: 10, top: 5),
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -231,15 +237,15 @@ class GuildBusinessCardPage extends StatelessWidget {
           crossAxisSpacing: 22,
         ),
         children:
-        controller.roomList.map(_roomItemBuilder).toList(growable: false),
+            controller.roomList.map(_roomItemBuilder).toList(growable: false),
       ),
     );
   }
 
   /// 加入公会widget
-  Widget _joinGuildWidget(GuildBusinessCardController controller){
+  Widget _joinGuildWidget(GuildBusinessCardController controller) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         controller.clickApplyJoinGuild();
       },
       child: Container(
@@ -256,7 +262,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   }
 
   /// 安全底部widget
-  Widget _safeBottomWidget(){
+  Widget _safeBottomWidget() {
     return SizedBox(
       height: MediaQueryData.fromView(window).padding.bottom,
     );
@@ -274,7 +280,7 @@ class GuildBusinessCardPage extends StatelessWidget {
           boxShadow: [
             BoxShadow(
                 color: const Color(0xFF000000).withOpacity(0.1),
-                offset:const Offset(0.0, 2.0), //阴影y轴偏移量
+                offset: const Offset(0.0, 2.0), //阴影y轴偏移量
                 blurRadius: 4, //阴影模糊程度
                 spreadRadius: 1 //阴影扩散程度
                 )
@@ -297,26 +303,19 @@ class GuildBusinessCardPage extends StatelessWidget {
               ),
               child: Text(item,
                   style: const TextStyle(
-                      fontSize: 10, color: Colors.white, )),
+                    fontSize: 10,
+                    color: Colors.white,
+                  )),
             ),
             Spacing.h2,
             Center(
-              child: CachedNetworkImage(
-                imageUrl:
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(30),
+                child: const NetImage(
                     'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                width: 60,
-                height: 60,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                ),
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                    width: 60,
+                    height: 60,
+                    fit: BoxFit.contain),
               ),
             ),
             Spacing.h10,

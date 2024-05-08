@@ -34,22 +34,13 @@ class MyGuildCenterPage extends StatelessWidget {
         height: 60,
         child: Row(children: [
           Spacing.w20,
-          CachedNetworkImage(
-            imageUrl:
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: const NetImage(
                 'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-            width: 60,
-            height: 60,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+                width: 60,
+                height: 60,
+                fit: BoxFit.contain),
           ),
           Spacing.w10,
           Expanded(

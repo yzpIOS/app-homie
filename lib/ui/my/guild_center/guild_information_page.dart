@@ -40,22 +40,13 @@ class GuildInformationPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacing.w20,
-          CachedNetworkImage(
-            imageUrl:
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: const NetImage(
                 'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-            width: 60,
-            height: 60,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+                width: 60,
+                height: 60,
+                fit: BoxFit.contain),
           ),
           Spacing.w10,
           Expanded(
@@ -118,22 +109,13 @@ class GuildInformationPage extends StatelessWidget {
                   fontWeight: fw$Bold,
                   )),
           const Spacing(),
-          CachedNetworkImage(
-            imageUrl:
+          ClipRRect(
+            borderRadius: BorderRadius.circular(13),
+            child: const NetImage(
                 'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-            width: 26,
-            height: 26,
-            imageBuilder: (context, imageProvider) => Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(13.0),
-                image: DecorationImage(
-                  image: imageProvider,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
+                width: 26,
+                height: 26,
+                fit: BoxFit.contain),
           ),
           Spacing.w4,
           const Text("叮叮猫",
