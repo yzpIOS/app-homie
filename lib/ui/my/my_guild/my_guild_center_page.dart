@@ -1,5 +1,6 @@
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
-import 'package:app/ui/my/guild_center/my_guild_center_controller.dart';
+import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,11 @@ class MyGuildCenterPage extends StatelessWidget {
           return Column(
             children: [
               Spacing.h18,
-              _buildHeader(),
+              _buildHeader(controller),
               Spacing.h30,
               _buildMyProfitSharingItem(),
               Spacing.h10,
-              _buildGuildFlowsItem(),
+              _buildGuildFlowsItem(controller),
               Spacing.h10,
               _buildAnchorListItem()
             ],
@@ -29,7 +30,7 @@ class MyGuildCenterPage extends StatelessWidget {
   }
 
   /// 头部
-  Widget _buildHeader() {
+  Widget _buildHeader(MyGuildCenterController controller) {
     return SizedBox(
         height: 60,
         child: Row(children: [
@@ -55,8 +56,23 @@ class MyGuildCenterPage extends StatelessWidget {
                       style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
                     ),
                     Spacing.w4,
-                    Image.asset(IMG.format('my/guild_center_level_1'),
-                        width: 53, height: 17, scale: 3)
+                    GestureDetector(
+                      onTapDown:(TapDownDetails details) {
+                        var tapPosition = details.globalPosition;
+                        if (tapPosition != null) {
+                          tapPosition = tapPosition -
+                              const Offset(22, -5);
+                          Get.find<UserCtrl>().clickGuildLevel(
+                              anchorPoint: tapPosition!, level: 2);
+                        }
+                      },
+                      child: Image.asset(
+                        IMG.format('my/guild_center_level_1'),
+                        width: 53,
+                        height: 17,
+                        scale: 3,
+                      ),
+                    ),
                   ],
                 ),
                 Text("ID:1234567",
@@ -120,9 +136,12 @@ class MyGuildCenterPage extends StatelessWidget {
   }
 
   /// 公会流水
-  Widget _buildGuildFlowsItem() {
+  Widget _buildGuildFlowsItem(MyGuildCenterController controller) {
     return GestureDetector(
-      onTap: () {},
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        controller.clickGuildFlows();
+      },
       child: SizedBox(
         height: 50,
         child: Row(
@@ -148,6 +167,7 @@ class MyGuildCenterPage extends StatelessWidget {
   /// 主播列表
   Widget _buildAnchorListItem() {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {},
       child: SizedBox(
         height: 50,

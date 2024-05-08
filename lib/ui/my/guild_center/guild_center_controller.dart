@@ -1,6 +1,6 @@
 
 import 'package:app/ui/my/guild_center/guild_center_list_page.dart';
-import 'package:app/ui/my/guild_center/my_guild_center_page.dart';
+import 'package:app/ui/my/my_guild/my_guild_center_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 

@@ -1,0 +1,205 @@
+import 'package:app/tools.dart';
+import 'package:app/tools/text_extension.dart';
+import 'package:app/ui/my/my_guild/guild_flows_controller.dart';
+import 'package:app/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+
+/// 公会流水页面
+class GuildFlowsPage extends StatelessWidget {
+  const GuildFlowsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<GuildFlowsController>(
+        init: GuildFlowsController(),
+        builder: (GuildFlowsController controller) {
+          return Scaffold(
+            appBar: xAppBar(title: '公会流水'),
+            body: Column(
+              children: [
+                Spacing.h10,
+                _searchWidget(controller),
+                Spacing.h16,
+                _headerWidget(),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _itemWidget(controller,index);
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
+  /// 搜索
+  Widget _searchWidget(GuildFlowsController controller) {
+    return Container(
+      height: 32,
+      padding: const Pad(horizontal: 10),
+      child: Row(
+        children: [
+          Expanded(
+              child: TextField(
+            controller: controller.searchRoomIdController,
+            decoration: const InputDecoration(
+              hintText: '请输入房间ID',
+              border: InputBorder.none,
+              //去掉输入框的下滑线
+              contentPadding: EdgeInsets.all(0),
+              //解决文字无法居中
+              fillColor: Color(0xFFFBF5FF),
+              filled: true,
+              hintStyle: TextStyle(fontSize: 12, color: Color(0xFF999999)),
+              labelStyle: TextStyle(fontSize: 12, color: Color(0xFF000000)),
+              enabledBorder: OutlineInputBorder(
+                /*边角*/
+                borderRadius: BorderRadius.all(
+                  Radius.circular(17),
+                ),
+                gapPadding: 0,
+                borderSide: BorderSide(
+                  color: Color(0xFFFBF5FF),
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(17),
+                ),
+                gapPadding: 0,
+                borderSide: BorderSide(
+                  color: Color(0xFFFBF5FF),
+                ),
+              ),
+            ),
+            textAlign: TextAlign.center,
+          )),
+          Spacing.w10,
+          Text(
+                  controller.searchStartTime.isNotEmpty
+                      ? controller.searchStartTime.value
+                      : "起始时间",
+                  style: controller.searchStartTime.isNotEmpty
+                      ? const Color(0xFF000000).pt(12)
+                      : const Color(0xFF999999).pt(12))
+              .toBtn(
+                  height: 32,
+                  width: 80,
+                  radius: 4,
+                  bg: const Color(0xFFFBF5FF),
+                  onTap: () {
+                    controller.clickSearchStartTime();
+                  }),
+          Spacing.w2,
+          Container(
+            width: 10,
+            height: 1,
+            color: const Color(0xFFCCCCCC),
+          ),
+          Spacing.w2,
+          Text(
+                  controller.searchEndTime.isNotEmpty
+                      ? controller.searchEndTime.value
+                      : "终止时间",
+                  style: controller.searchEndTime.isNotEmpty
+                      ? const Color(0xFF000000).pt(12)
+                      : const Color(0xFF999999).pt(12))
+              .toBtn(
+                  height: 32,
+                  width: 80,
+                  radius: 4,
+                  bg: const Color(0xFFFBF5FF),
+                  onTap: () {
+                    controller.clickSearchEndTime();
+                  }),
+          Spacing.w10,
+          Text("搜索", style: Colors.white.pt(14)).toBtn(
+              width: 54,
+              height: 28,
+              radius: 16,
+              bg: const Color(0xFFC05EFB),
+              onTap: () {
+                controller.clickSearch();
+              }),
+        ],
+      ),
+    );
+  }
+
+  /// 列表头
+  Widget _headerWidget() {
+    return Container(
+        height: 20,
+        padding: const Pad(horizontal: 10),
+        child: Row(
+          children: [
+            Expanded(child: Center(child: Text("房间名称", style: const Color(0xFF000000).ptB(14)))),
+            Spacing.w10,
+            Container(
+              width: 80,
+              alignment: Alignment.center,
+              child: Text("房间ID", style:const Color(0xFF000000).ptB(14)),
+            ),
+            Spacing.w2,
+            Container(
+              width: 10,
+              height: 1,
+              color: Colors.transparent,
+            ),
+            Spacing.w2,
+            Container(
+              width: 80,
+              alignment: Alignment.center,
+              child: Text("流水", style:const Color(0xFF000000).ptB(14)),
+            ),
+            Spacing.w10,
+            Container(
+              width: 54,
+              alignment: Alignment.center,
+              child: Text("详情", style:const Color(0xFF000000).ptB(14)),
+            ),
+          ],
+        ));
+  }
+
+  /// 列表项
+  Widget _itemWidget(GuildFlowsController controller,int index) {
+    return Container(
+        height: 40,
+        margin: const Pad(top: 10,horizontal: 10),
+        // padding: const Pad(horizontal: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: const Color(0xFFF5F5F5),
+        ),
+        child: Row(
+          children: [
+            Expanded(child: Center(child: Text('叮叮猫${index+1}', style: const Color(0xFF000000).pt(14)))),
+            Spacing.w10,
+            Container(
+              width: 80,
+              alignment: Alignment.center,
+              child: Text("1234567${index+1}", style:const Color(0xFF000000).pt(14)),
+            ),
+            Spacing.w2,
+            Container(
+              width: 10,
+              height: 1,
+              color: Colors.transparent,
+            ),
+            Spacing.w2,
+            Container(
+              width: 80,
+              alignment: Alignment.center,
+              child: Text("9999999${index+1}", style:const Color(0xFF000000).pt(14)),
+            ),
+            Spacing.w10,
+            Text("详情", style:const Color(0xFFC05EFB).pt(14)).toBtn(width: 54, height: 30, onTap: () {}),
+          ],
+        ));
+  }
+}

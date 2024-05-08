@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:app/common/theme.dart';
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
 import 'package:app/widgets.dart';
@@ -88,6 +89,7 @@ class GuildBusinessCardPage extends StatelessWidget {
           ),
           Spacing.h20,
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               controller.clickRoomInfo();
             },
@@ -123,16 +125,13 @@ class GuildBusinessCardPage extends StatelessWidget {
                             ),
                             Spacing.w4,
                             GestureDetector(
-                              onTap: () {
-                                RenderBox? renderBox = controller
-                                    .anchorKey.currentContext
-                                    ?.findRenderObject() as RenderBox?;
-                                //获得控件正下方的坐标
-                                var offset = renderBox?.localToGlobal(
-                                    Offset(0.0, renderBox.size.height));
-                                if (offset != null) {
-                                  controller.clickGuildLevel(
-                                      anchorPoint: offset!, level: 2);
+                              onTapDown:(TapDownDetails details) {
+                                var tapPosition = details.globalPosition;
+                                if (tapPosition != null) {
+                                  tapPosition = tapPosition -
+                                      const Offset(22, -5);
+                                  Get.find<UserCtrl>().clickGuildLevel(
+                                      anchorPoint: tapPosition!, level: 2);
                                 }
                               },
                               child: Image.asset(
@@ -140,7 +139,6 @@ class GuildBusinessCardPage extends StatelessWidget {
                                 width: 53,
                                 height: 17,
                                 scale: 3,
-                                key: controller.anchorKey,
                               ),
                             ),
                           ],
@@ -197,24 +195,28 @@ class GuildBusinessCardPage extends StatelessWidget {
 
   /// 房间列表
   Widget _roomContainer(GuildBusinessCardController controller) {
-    return Container(
-      height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
-      width: Get.width,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
+    return GestureDetector(
+      onTap: (){},
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
+        width: Get.width,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _headerWidget(controller),
-          _roomGridViewWidget(controller),
-          _joinGuildWidget(controller),
-          _safeBottomWidget(),
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _headerWidget(controller),
+            _roomGridViewWidget(controller),
+            _joinGuildWidget(controller),
+            _safeBottomWidget(),
+          ],
+        ),
       ),
     );
   }

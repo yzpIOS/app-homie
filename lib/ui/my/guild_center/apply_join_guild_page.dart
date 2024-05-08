@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_controller.dart';
@@ -65,16 +66,13 @@ class ApplyJoinGuildPage extends StatelessWidget {
                       ),
                       Spacing.w4,
                       GestureDetector(
-                        onTap: () {
-                          RenderBox? renderBox = controller
-                              .anchorKey.currentContext
-                              ?.findRenderObject() as RenderBox?;
-                          //获得控件正下方的坐标
-                          var offset = renderBox?.localToGlobal(
-                              Offset(0.0, renderBox.size.height));
-                          if (offset != null) {
-                            controller.clickGuildLevel(
-                                anchorPoint: offset!, level: 2);
+                        onTapDown:(TapDownDetails details) {
+                          var tapPosition = details.globalPosition;
+                          if (tapPosition != null) {
+                            tapPosition = tapPosition -
+                                const Offset(22, -5);
+                            Get.find<UserCtrl>().clickGuildLevel(
+                                anchorPoint: tapPosition!, level: 2);
                           }
                         },
                         child: Image.asset(
@@ -82,7 +80,6 @@ class ApplyJoinGuildPage extends StatelessWidget {
                           width: 53,
                           height: 17,
                           scale: 3,
-                          key: controller.anchorKey,
                         ),
                       ),
                     ],

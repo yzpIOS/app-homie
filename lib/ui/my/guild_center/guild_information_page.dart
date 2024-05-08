@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_information_controller.dart';
 import 'package:app/widgets.dart';
@@ -20,7 +21,7 @@ class GuildInformationPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Spacing.h20,
-                _headerWidget(),
+                _headerWidget(controller),
                 Spacing.h30,
                 _guildPresidentWidget(controller),
                 Spacing.h20,
@@ -32,7 +33,7 @@ class GuildInformationPage extends StatelessWidget {
   }
 
   /// 头部
-  Widget _headerWidget() {
+  Widget _headerWidget(GuildInformationController controller) {
     return SizedBox(
       height: 60,
       width: Get.width,
@@ -62,8 +63,24 @@ class GuildInformationPage extends StatelessWidget {
                           fontSize: 16, color: Color(0xFF000000)),
                     ),
                     Spacing.w4,
-                    Image.asset(IMG.format('my/guild_center_level_1'),
-                        width: 53, height: 17, scale: 3),
+                    GestureDetector(
+                      onTapDown:(TapDownDetails details) {
+                        var tapPosition = details.globalPosition;
+                        if (tapPosition != null) {
+                          tapPosition = tapPosition -
+                              const Offset(22, -5);
+                          Get.find<UserCtrl>().clickGuildLevel(
+                              anchorPoint: tapPosition!, level: 2);
+                        }
+                      },
+                      child: Image.asset(
+                        IMG.format('my/guild_center_level_1'),
+                        width: 53,
+                        height: 17,
+                        scale: 3,
+                      ),
+                    ),
+
                   ],
                 ),
                 Row(
@@ -97,37 +114,41 @@ class GuildInformationPage extends StatelessWidget {
 
  /// 公会会长
   Widget _guildPresidentWidget(GuildInformationController controller) {
-    return Container(
-      height: 50,
-      padding: const Pad(horizontal: 20),
-      child: Row(
-        children: [
-          const Text("公会会长",
-              style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF000000),
-                  fontWeight: fw$Bold,
-                  )),
-          const Spacing(),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(13),
-            child: const NetImage(
-                'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                width: 26,
-                height: 26,
-                fit: BoxFit.contain),
-          ),
-          Spacing.w4,
-          const Text("叮叮猫",
-              style: TextStyle(
-                  fontSize: 14, color: Color(0xFF000000),)),
-          Image.asset(
-            IMG.format("wode_icon_right"),
-            width: 20,
-            height: 20,
-            color: Color(0xFF999999),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () {},
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        height: 50,
+        padding: const Pad(horizontal: 20),
+        child: Row(
+          children: [
+            const Text("公会会长",
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF000000),
+                    fontWeight: fw$Bold,
+                    )),
+            const Spacing(),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(13),
+              child: const NetImage(
+                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                  width: 26,
+                  height: 26,
+                  fit: BoxFit.contain),
+            ),
+            Spacing.w4,
+            const Text("叮叮猫",
+                style: TextStyle(
+                    fontSize: 14, color: Color(0xFF000000),)),
+            Image.asset(
+              IMG.format("wode_icon_right"),
+              width: 20,
+              height: 20,
+              color: Color(0xFF999999),
+            ),
+          ],
+        ),
       ),
     );
   }

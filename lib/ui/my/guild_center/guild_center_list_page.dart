@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_center_list_controller.dart';
 import 'package:app/widgets/editable_text.dart';
@@ -69,6 +70,7 @@ class GuildCenterListPage extends StatelessWidget {
   /// 列表项
   Widget _itemWidget(GuildCenterListController controller, int index) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => controller.clickItem(index),
       child: SizedBox(
         height: 80,
@@ -104,6 +106,7 @@ class GuildCenterListPage extends StatelessWidget {
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -113,11 +116,23 @@ class GuildCenterListPage extends StatelessWidget {
                       ),
                       Spacing.w4,
                       index + 1 < 6
-                          ? Image.asset(
+                          ? GestureDetector(
+                        onTapDown:(TapDownDetails details) {
+                          var tapPosition = details.globalPosition;
+                          if (tapPosition != null) {
+                            tapPosition = tapPosition -
+                                const Offset(22, -5);
+                            Get.find<UserCtrl>().clickGuildLevel(
+                                anchorPoint: tapPosition!, level: 2);
+                          }
+                        },
+                        child: Image.asset(
                           IMG.format('my/guild_center_level_${index + 1}'),
                           width: 53,
                           height: 17,
-                          scale: 3)
+                          scale: 3,
+                        ),
+                      )
                           : const SizedBox(),
                     ],
                   ),

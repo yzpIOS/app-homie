@@ -26,36 +26,8 @@ class GuildBusinessCardController extends GetxController {
     '男神'
   ];
 
-  final List<GuildLevelInfoModel> guildLevelInfoModelList =
-      <GuildLevelInfoModel>[
-    GuildLevelInfoModel(
-        levelString: '1星公会',
-        fireString: '自然月音浪(火力)≥0紫钻',
-        userCountString: '自然月有效主播人数≥10人',
-        levelImageName: 'my/guild_center_level_star_1'),
-        GuildLevelInfoModel(
-            levelString: '2星公会',
-            fireString: '自然月音浪(火力)≥5百万紫钻',
-            userCountString: '自然月有效主播人数≥20人',
-            levelImageName: 'my/guild_center_level_star_2'),
-        GuildLevelInfoModel(
-            levelString: '3星公会',
-            fireString: '自然月音浪(火力)≥2千万紫钻',
-            userCountString: '自然月有效主播人数≥30人',
-            levelImageName: 'my/guild_center_level_star_3'),
-        GuildLevelInfoModel(
-            levelString: '4星公会',
-            fireString: '自然月音浪(火力)≥5千万紫钻',
-            userCountString: '自然月有效主播人数≥50人',
-            levelImageName: 'my/guild_center_level_star_4'),
-        GuildLevelInfoModel(
-            levelString: '5星公会',
-            fireString: '自然月音浪(火力)≥1亿紫钻',
-            userCountString: '自然月有效主播人数≥100人',
-            levelImageName: 'my/guild_center_level_star_5'),
-  ];
 
-  final GlobalKey anchorKey = GlobalKey();
+
 
   /// 点击房间信息
   void clickRoomInfo() {
@@ -65,22 +37,6 @@ class GuildBusinessCardController extends GetxController {
   /// 点击返回
   void clickBack() {
     Get.back();
-  }
-
-  /// 点击公会等级
-  void clickGuildLevel({required Offset anchorPoint,required int level}) {
-    showDialog(
-      barrierColor: Colors.transparent,
-      context: Get.context!,
-      builder: (context) {
-        if(level < guildLevelInfoModelList.length) {
-          return GuildLevelDialog(showAnchorPoint: anchorPoint, guildLevelInfoModel: guildLevelInfoModelList[level],);
-        }else{
-          return GuildLevelDialog(showAnchorPoint: anchorPoint, guildLevelInfoModel: guildLevelInfoModelList.last,);
-        }
-      },
-      useSafeArea: false,
-    );
   }
 
   /// 点击申请加入公会
