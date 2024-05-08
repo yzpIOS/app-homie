@@ -459,10 +459,10 @@ packages:
     dependency: "direct main"
     description:
       name: extended_text_field
-      sha256: e5ac4c24dfc9c542d0d4b9fbd6cb73add2ebf1ee3ecbd62514fead79aa49a894
+      sha256: "15f5d1e503c1b94cc3bba38168d60be4f4029a20813b9364b5ae7c3cf59d4fe3"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "12.2.0"
+    version: "12.1.1"
   extended_text_library:
     dependency: transitive
     description:
