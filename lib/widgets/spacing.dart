@@ -52,6 +52,7 @@ class Spacing extends StatelessWidget {
   static const h43 = _HSpacing(43);
   static const h50 = _HSpacing(50);
   static const h54 = _HSpacing(54);
+  static const h70 = _HSpacing(70);
   static const h76 = _HSpacing(76);
   static const h96 = _HSpacing(96);
 }

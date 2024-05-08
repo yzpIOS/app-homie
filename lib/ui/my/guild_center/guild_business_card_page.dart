@@ -150,24 +150,32 @@ class GuildBusinessCardPage extends StatelessWidget {
                               fontSize: 12,
                               color: Colors.white,
                             )),
-                        Row(
-                          children: [
-                            Image.asset(
-                              IMG.format('my/guild_center_user_count'),
-                              width: 14,
-                              height: 14,
-                              scale: 3,
-                              color: Colors.white,
-                            ),
-                            Spacing.w4,
-                            Text("1111",
-                                style: const TextStyle(
+                        XRichText(
+                          TextSpan(
+                            children: [
+                              WidgetSpan(
+                                child: Padding(
+                                  padding:const Pad(right: 4),
+                                  child: Image.asset(
+                                    IMG.format('my/guild_center_user_count'),
+                                    width: 14,
+                                    height: 14,
+                                    scale: 3,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                alignment: PlaceholderAlignment.middle,
+                              ),
+                              const TextSpan(
+                                text: '1111',
+                                style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.white,
-                                )),
-                          ],
-                          mainAxisAlignment: MainAxisAlignment.start,
-                        )
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
