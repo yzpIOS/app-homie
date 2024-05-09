@@ -2,7 +2,6 @@ import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// 我的公会页面

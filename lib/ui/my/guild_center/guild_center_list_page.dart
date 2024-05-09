@@ -1,19 +1,14 @@
 import 'dart:ui';
-
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_center_list_controller.dart';
 import 'package:app/widgets/editable_text.dart';
-import 'package:app/widgets/icon_text_button.dart';
 import 'package:app/widgets/image/network_cache_image.dart';
 import 'package:app/widgets/spacing.dart';
 import 'package:app/widgets/text.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 /// 公会榜单页面
 class GuildCenterListPage extends StatelessWidget {

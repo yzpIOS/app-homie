@@ -4,8 +4,6 @@ import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/flow_details_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 /// 流水详情页面
 class FlowDetailsPage extends StatelessWidget {

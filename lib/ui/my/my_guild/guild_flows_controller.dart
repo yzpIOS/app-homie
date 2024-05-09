@@ -3,7 +3,6 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/flow_details_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 /// 公会流水控制器
 class GuildFlowsController extends GetxController {

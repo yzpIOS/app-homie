@@ -4,9 +4,7 @@ import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_controller.dart';
 import 'package:app/widgets.dart';
-import 'package:app/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 /// 申请加入公会页面
 class ApplyJoinGuildPage extends StatelessWidget {

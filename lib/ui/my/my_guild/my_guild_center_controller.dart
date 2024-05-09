@@ -2,8 +2,6 @@
 import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/anchor_list_page.dart';
 import 'package:app/ui/my/my_guild/guild_flows_page.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 /// 我的公会控制器
 class MyGuildCenterController extends GetxController {

@@ -1,11 +1,9 @@
 import 'dart:ui';
-
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/guild_flows_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 /// 公会流水页面
 class GuildFlowsPage extends StatelessWidget {

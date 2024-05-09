@@ -5,7 +5,6 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/blurred_network_image.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// 公会名片页面

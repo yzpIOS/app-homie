@@ -1,13 +1,7 @@
-import 'package:app/store/oauth_ctrl.dart';
+
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
-import 'package:app/ui/my/guild_center/guild_level_dialog.dart';
-import 'package:app/ui/my/guild_center/guild_level_info_model.dart';
-import 'package:app/ui/my/real_identity_1_page.dart';
-import 'package:app/ui/room/persion/common_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 /// 公会名片控制器
 class GuildBusinessCardController extends GetxController {

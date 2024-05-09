@@ -1,7 +1,5 @@
 import 'package:app/tools.dart';
-import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 /// 公会等级介绍弹窗
 class GuildLevelIntroduceDialog extends StatelessWidget {

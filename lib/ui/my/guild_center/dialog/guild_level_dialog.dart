@@ -1,10 +1,9 @@
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
-import 'package:app/ui/my/guild_center/guild_level_dialog_controller.dart';
-import 'package:app/ui/my/guild_center/guild_level_info_model.dart';
+import 'package:app/ui/my/guild_center/dialog/guild_level_dialog_controller.dart';
+import 'package:app/ui/my/guild_center/model/guild_level_info_model.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 /// 公会等级弹窗
 class GuildLevelDialog extends StatelessWidget {

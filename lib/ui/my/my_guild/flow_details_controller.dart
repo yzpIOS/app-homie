@@ -1,6 +1,5 @@
 import 'package:app/tools.dart';
 import 'package:app/widgets/custom_date_picker.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 /// 流水详情
 class FlowDetailsController extends GetxController {
