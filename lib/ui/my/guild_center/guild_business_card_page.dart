@@ -29,6 +29,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                   child: BlurredNetworkImage(
                       height: 202 + MediaQueryData.fromView(window).padding.top,
                       width: Get.width,
+                      blurSigma: 10,
                       imageUrl:
                           'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF'),
                 ),
@@ -88,107 +89,112 @@ class GuildBusinessCardPage extends StatelessWidget {
             ),
           ),
           Spacing.h20,
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.clickRoomInfo();
-            },
-            child: SizedBox(
-              height: 60,
-              width: Get.width,
-              child: Row(
+          _buildGuildInfoWidget(controller),
+        ],
+      ),
+    );
+  }
+
+  /// 公会信息
+  Widget _buildGuildInfoWidget(GuildBusinessCardController controller){
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        controller.clickRoomInfo();
+      },
+      child: SizedBox(
+        height: 60,
+        width: Get.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacing.w10,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: const NetImage(
+                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.contain),
+            ),
+            Spacing.w10,
+            Expanded(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Spacing.w10,
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: const NetImage(
-                        'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.contain),
-                  ),
-                  Spacing.w10,
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "公会名称",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Spacing.w4,
-                            GestureDetector(
-                              onTapDown:(TapDownDetails details) {
-                                var tapPosition = details.globalPosition;
-                                if (tapPosition != null) {
-                                  tapPosition = tapPosition -
-                                      const Offset(22, -5);
-                                  Get.find<UserCtrl>().clickGuildLevel(
-                                      anchorPoint: tapPosition!, level: 2);
-                                }
-                              },
-                              child: Image.asset(
-                                IMG.format('my/guild_center_level_1'),
-                                width: 53,
-                                height: 17,
-                                scale: 3,
-                              ),
-                            ),
-                          ],
+                  Row(
+                    children: [
+                      Text(
+                        "公会名称",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
                         ),
-                        Text("ID:1234567",
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                            )),
-                        XRichText(
-                          TextSpan(
-                            children: [
-                              WidgetSpan(
-                                child: Padding(
-                                  padding:const Pad(right: 4),
-                                  child: Image.asset(
-                                    IMG.format('my/guild_center_user_count'),
-                                    width: 14,
-                                    height: 14,
-                                    scale: 3,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                alignment: PlaceholderAlignment.middle,
-                              ),
-                              const TextSpan(
-                                text: '1111',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
+                      ),
+                      Spacing.w4,
+                      GestureDetector(
+                        onTapDown:(TapDownDetails details) {
+                          var tapPosition = details.globalPosition;
+                          if (tapPosition != null) {
+                            tapPosition = tapPosition -
+                                const Offset(22, -5);
+                            Get.find<UserCtrl>().clickGuildLevel(
+                                anchorPoint: tapPosition!, level: 2);
+                          }
+                        },
+                        child: Image.asset(
+                          IMG.format('my/guild_center_level_1'),
+                          width: 53,
+                          height: 17,
+                          scale: 3,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Text("ID:1234567",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFFDDDDDD),
+                      )),
+                  XRichText(
+                    TextSpan(
+                      children: [
+                        WidgetSpan(
+                          child: Padding(
+                            padding:const Pad(right: 4),
+                            child: Image.asset(
+                              IMG.format('my/guild_center_user_count'),
+                              width: 14,
+                              height: 14,
+                              scale: 3,
+                              color: Color(0xFFDDDDDD),
+                            ),
+                          ),
+                          alignment: PlaceholderAlignment.middle,
+                        ),
+                        const TextSpan(
+                          text: '1111',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Color(0xFFDDDDDD),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Image.asset(
-                    IMG.format("wode_icon_right"),
-                    width: 24,
-                    height: 24,
-                    color: Colors.white,
-                  ),
-                  Spacing.w10,
                 ],
               ),
             ),
-          )
-        ],
+            Image.asset(
+              IMG.format("wode_icon_right"),
+              width: 24,
+              height: 24,
+              color: Colors.white,
+            ),
+            Spacing.w10,
+          ],
+        ),
       ),
     );
   }
@@ -202,7 +208,7 @@ class GuildBusinessCardPage extends StatelessWidget {
         height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
         width: Get.width,
         decoration: const BoxDecoration(
-          color: Colors.white,
+          color: Color(0xFFF5F5F5),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -345,19 +351,24 @@ class GuildBusinessCardPage extends StatelessWidget {
                   style: Color(0xFF999999).pt(12),
                 ),
                 const Spacing(),
-                Row(
-                  children: [
-                    Image.asset(
-                      IMG.format('my/guild_center_room_hot_icon'),
-                      width: 12,
-                      height: 12,
-                      scale: 3,
-                    ),
-                    Text(
-                      "12345",
-                      style: Color(0xFF999999).pt(12),
-                    ),
-                  ],
+                XRichText(
+                  TextSpan(
+                    children: [
+                      WidgetSpan(
+                        child: Image.asset(
+                          IMG.format('my/guild_center_room_hot_icon'),
+                          width: 12,
+                          height: 12,
+                          scale: 3,
+                        ),
+                        alignment: PlaceholderAlignment.middle,
+                      ),
+                      TextSpan(
+                        text: '12345',
+                        style: Color(0xFF999999).pt(12),
+                      ),
+                    ],
+                  ),
                 ),
                 Spacing.w10,
               ],
