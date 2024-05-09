@@ -16,7 +16,7 @@ class GuildLevelIntroduceDialog extends StatelessWidget {
         children: [
           Positioned.fill(
             child: Container(
-              color: Colors.black.withAlpha(80),
+              color: Color(0xFF000000).withOpacity(0.6),
               width: double.infinity,
               height: double.infinity,
             ),
