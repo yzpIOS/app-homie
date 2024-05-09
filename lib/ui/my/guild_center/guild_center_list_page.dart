@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
@@ -54,13 +56,13 @@ class GuildCenterListPage extends StatelessWidget {
                   shrinkWrap:true,
                   controller: controller.scrollController,
                   itemCount: controller.dataList.length,
-                  padding: const EdgeInsets.only(
-                    bottom: 16,
-                  ),
                   itemBuilder: (BuildContext context, int index) {
                     return _itemWidget(controller, index);
                   },
                 ),
+              ),
+              SizedBox(
+                height: MediaQueryData.fromView(window).padding.bottom,
               ),
             ],
           );
@@ -72,20 +74,22 @@ class GuildCenterListPage extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => controller.clickItem(index),
-      child: SizedBox(
+      child: Container(
         height: 80,
-        width: Get.width,
+        margin: const Pad(horizontal: 10,top: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+          color:const Color(0xFFF6F9FF),),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacing.w20,
+            Spacing.w10,
             Container(
               alignment: Alignment.center,
                 height: 30,
                 width: 30,
                 child: index + 1 < 4
                     ? Image.asset(IMG.format('my/guild_center_index_${index + 1}'),
-                        width: 24, height: 24, scale: 3)
+                        width: 30, height: 30)
                     : Text(
                         '${index + 1}',
                         style: const TextStyle(
@@ -176,7 +180,7 @@ class GuildCenterListPage extends StatelessWidget {
                 ],
               ),
             ),
-            Spacing.w20,
+            Spacing.w10,
           ],
         ),
       ),

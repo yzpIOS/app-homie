@@ -12,7 +12,7 @@ class GuildCenterListController extends GetxController {
   final textController = TextEditingController();
   final keywordRx = RxnString();
   final ScrollController scrollController = ScrollController();
-  final List dataList = ['','','','','',''].obs;
+  final List dataList = ['','','','','','','','','','','',''].obs;
 
   /// 点击列表项
   void clickItem(int index) {
