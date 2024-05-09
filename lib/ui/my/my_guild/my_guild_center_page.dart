@@ -14,111 +14,122 @@ class MyGuildCenterPage extends StatelessWidget {
     return GetBuilder<MyGuildCenterController>(
         init: MyGuildCenterController(),
         builder: (MyGuildCenterController controller) {
-          return Column(
-            children: [
-              Spacing.h18,
-              _buildHeader(controller),
-              Spacing.h30,
-              _buildMyProfitSharingItem(),
-              Spacing.h10,
-              _buildGuildFlowsItem(controller),
-              Spacing.h10,
-              _buildAnchorListItem(controller)
-            ],
+          return ColoredBox(
+            color:const Color(0xFFF5F5F5),
+            child: Column(
+              children: [
+                _buildHeader(controller),
+                _buildMyProfitSharingItem(),
+                _buildGuildFlowsItem(controller),
+                _buildAnchorListItem(controller)
+              ],
+            ),
           );
         });
   }
 
   /// 头部
   Widget _buildHeader(MyGuildCenterController controller) {
-    return SizedBox(
-        height: 60,
-        child: Row(children: [
-          Spacing.w20,
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: const NetImage(
-                'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                width: 60,
-                height: 60,
-                fit: BoxFit.contain),
-          ),
-          Spacing.w10,
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "公会名称",
-                      style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
-                    ),
-                    Spacing.w4,
-                    GestureDetector(
-                      onTapDown:(TapDownDetails details) {
-                        var tapPosition = details.globalPosition;
-                        if (tapPosition != null) {
-                          tapPosition = tapPosition -
-                              const Offset(22, -5);
-                          Get.find<UserCtrl>().clickGuildLevel(
-                              anchorPoint: tapPosition!, level: 2);
-                        }
-                      },
-                      child: Image.asset(
-                        IMG.format('my/guild_center_level_1'),
-                        width: 53,
-                        height: 17,
-                        scale: 3,
-                      ),
-                    ),
-                  ],
+    return ColoredBox(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Spacing.h18,
+          SizedBox(
+              height: 60,
+              child: Row(children: [
+                Spacing.w20,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: const NetImage(
+                      'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.contain),
                 ),
-                Text("ID:1234567",
-                    style: const TextStyle(fontSize: 12, color: Color(0xFF999999),)),
-                XRichText(
-                  TextSpan(
+                Spacing.w10,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WidgetSpan(
-                        child: Padding(
-                          padding:const Pad(right: 4),
-                          child: Image.asset(
-                            IMG.format('my/guild_center_user_count'),
-                            width: 14,
-                            height: 14,
-                            scale: 3,
-                            color: Color(0xFF999999),
+                      Row(
+                        children: [
+                          Text(
+                            "公会名称",
+                            style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
                           ),
-                        ),
-                        alignment: PlaceholderAlignment.middle,
+                          Spacing.w4,
+                          GestureDetector(
+                            onTapDown:(TapDownDetails details) {
+                              var tapPosition = details.globalPosition;
+                              if (tapPosition != null) {
+                                tapPosition = tapPosition -
+                                    const Offset(22, -5);
+                                Get.find<UserCtrl>().clickGuildLevel(
+                                    anchorPoint: tapPosition!, level: 2);
+                              }
+                            },
+                            child: Image.asset(
+                              IMG.format('my/guild_center_level_1'),
+                              width: 53,
+                              height: 17,
+                              scale: 3,
+                            ),
+                          ),
+                        ],
                       ),
-                      const TextSpan(
-                        text: '1111',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF999999),
+                      Text("ID:1234567",
+                          style: const TextStyle(fontSize: 12, color: Color(0xFF999999),)),
+                      XRichText(
+                        TextSpan(
+                          children: [
+                            WidgetSpan(
+                              child: Padding(
+                                padding:const Pad(right: 4),
+                                child: Image.asset(
+                                  IMG.format('my/guild_center_user_count'),
+                                  width: 14,
+                                  height: 14,
+                                  scale: 3,
+                                  color: Color(0xFF999999),
+                                ),
+                              ),
+                              alignment: PlaceholderAlignment.middle,
+                            ),
+                            const TextSpan(
+                              text: '1111',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xFF999999),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Spacing.w20,
-        ]));
+                Spacing.w20,
+              ]),),
+          Spacing.h20,
+        ],
+      ),
+    );
   }
 
   /// 我的收益分成
   Widget _buildMyProfitSharingItem() {
     return GestureDetector(
       onTap: () {},
-      child: SizedBox(
+      child: Container(
         height: 50,
+        margin: const Pad(horizontal: 10,top: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+          color: Colors.white,),
         child: Row(
           children: [
-            Spacing.w20,
+            Spacing.w10,
             Text(
               "我的收益分成",
               style: Color(0xFF000000).ptB(14),
@@ -128,7 +139,7 @@ class MyGuildCenterPage extends StatelessWidget {
               "63%",
               style: Color(0xFF000000).pt(14),
             ),
-            Spacing.w20,
+            Spacing.w10,
           ],
         ),
       ),
@@ -142,11 +153,14 @@ class MyGuildCenterPage extends StatelessWidget {
       onTap: () {
         controller.clickGuildFlows();
       },
-      child: SizedBox(
+      child: Container(
         height: 50,
+        margin: const Pad(horizontal: 10,top: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+          color: Colors.white,),
         child: Row(
           children: [
-            Spacing.w20,
+            Spacing.w10,
             Text(
               "公会流水",
               style: Color(0xFF000000).ptB(14),
@@ -157,7 +171,7 @@ class MyGuildCenterPage extends StatelessWidget {
               width: 24,
               height: 24,
             ),
-            Spacing.w20,
+            Spacing.w10,
           ],
         ),
       ),
@@ -171,11 +185,14 @@ class MyGuildCenterPage extends StatelessWidget {
       onTap: () {
         controller.clickAnchorList();
       },
-      child: SizedBox(
+      child: Container(
         height: 50,
+        margin: const Pad(horizontal: 10,top: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+          color: Colors.white,),
         child: Row(
           children: [
-            Spacing.w20,
+            Spacing.w10,
             Text(
               "主播列表",
               style: Color(0xFF000000).ptB(14),
@@ -189,13 +206,13 @@ class MyGuildCenterPage extends StatelessWidget {
                     right: Radius.circular(10.0), // 右圆角
                   )
               ),
-              padding: const Pad(horizontal: 4),
+              padding: const Pad(horizontal: 4,vertical: 2),
               child: Text(
                 "99+",
                 style: Colors.white.pt(10),
               ),
             ),
-            Spacing.w20,
+            Spacing.w10,
           ],
         ),
       ),
