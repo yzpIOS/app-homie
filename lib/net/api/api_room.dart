@@ -310,6 +310,25 @@ class ApiRoom extends ApiBase {
     return _doPost('get-notice', data: data);
   }
 
+  Future screen({required int roomId}) {
+    final data = {
+      'room_id': roomId,
+    };
+
+    return _doPost('clear/screen', data: data);
+  }
+
+  Future chat({required int roomId, required NUID roleId,required int status}) {
+    final data = {
+      'room_id': roomId,
+      'role_id': roleId.toInt(),
+       'status': status,
+    };
+
+    print('data = $data');
+    return _doPost('ban/chat', data: data);
+  }
+
   ///
   /// 清除麦克风热度计数器
   /// https://yapi.pro/project/11739/interface/api/457358
@@ -330,6 +349,8 @@ class ApiRoom extends ApiBase {
 
     return _doPost('mike/hots', data: data);
   }
+
+
 
   Future follow({required int roomId, required bool doFollow}) {
     final data = {

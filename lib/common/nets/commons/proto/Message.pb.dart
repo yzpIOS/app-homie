@@ -3081,6 +3081,73 @@ class S_WorldChatMessageBroadcast extends $pb.GeneratedMessage {
   $core.List<$0.WorldChatMessageItem> get items => $_getList(0);
 }
 
+/// 清除公屏广播
+class S_ClearScreenBroadcast extends $pb.GeneratedMessage {
+  factory S_ClearScreenBroadcast({
+    $fixnum.Int64? roomId,
+    $core.int? status,
+  }) {
+    final $result = create();
+    if (roomId != null) {
+      $result.roomId = roomId;
+    }
+    if (status != null) {
+      $result.status = status;
+    }
+    return $result;
+  }
+  S_ClearScreenBroadcast._() : super();
+  factory S_ClearScreenBroadcast.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_ClearScreenBroadcast.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_ClearScreenBroadcast', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'roomId')
+    ..a<$core.int>(2, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_ClearScreenBroadcast clone() => S_ClearScreenBroadcast()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_ClearScreenBroadcast copyWith(void Function(S_ClearScreenBroadcast) updates) => super.copyWith((message) => updates(message as S_ClearScreenBroadcast)) as S_ClearScreenBroadcast;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_ClearScreenBroadcast create() => S_ClearScreenBroadcast._();
+  S_ClearScreenBroadcast createEmptyInstance() => create();
+  static $pb.PbList<S_ClearScreenBroadcast> createRepeated() => $pb.PbList<S_ClearScreenBroadcast>();
+  @$core.pragma('dart2js:noInline')
+  static S_ClearScreenBroadcast getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_ClearScreenBroadcast>(create);
+  static S_ClearScreenBroadcast? _defaultInstance;
+
+  /// 房间id
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get roomId => $_getI64(0);
+  @$pb.TagNumber(1)
+  set roomId($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+
+  /// 1.清除房间公屏， 2.清除世界公屏
+  @$pb.TagNumber(2)
+  $core.int get status => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set status($core.int v) { $_setSignedInt32(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasStatus() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearStatus() => clearField(2);
+}
+
 class S_BanChatBroadcast extends $pb.GeneratedMessage {
   factory S_BanChatBroadcast({
     $fixnum.Int64? roomId,

@@ -151,7 +151,12 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
     on<WorldChatMessageBroadcastEvent>((data) {
       handleEvent(data);
     });
-  }
+
+    on<ClearScreenBroadcastEvent>((data) {
+      handleEvent(data);
+    });
+
+     }
 
 
   void switchType(String type) {
@@ -308,6 +313,26 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
             WorldMessageView(WorldMsgAdapter(data: element))
         );
       });
+      return;
+    }
+    // 清屏通知
+    // 清屏通知
+    // 清屏通知
+    if(data is ClearScreenBroadcastEvent) {
+      // data.data?.items.forEach((element) {
+      //   worldList.add(
+      //       WorldMessageView(WorldMsgAdapter(data: element))
+      //   );
+      // });
+
+      roomRxList.forEach((e) {
+        if(e is SystemMsgView){
+
+        }else{
+           roomRxList.remove(e);
+        }
+      });
+      print('来了吧444444444');
       return;
     }
 

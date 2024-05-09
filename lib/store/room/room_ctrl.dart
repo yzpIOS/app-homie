@@ -660,6 +660,11 @@ class RoomCtrl extends SceneCtrl {
     on<WorldChatMessageBroadcastEvent>((data) {
       RoomChatCtrl.cacheEventItem(data);
     });
+
+    // 清屏
+    on<S_ClearScreenBroadcast>((data) {
+      RoomChatCtrl.cacheEventItem(data);
+    });
   }
 
   bool isOwner(UID uid) => roomUid == uid;

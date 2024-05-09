@@ -62,14 +62,14 @@ class ConfigCtrl extends AsyncMapCtrl {
 
   /// 版本更新
   void versionQuery() {
-    simpleTry(
-      () => Api.Common.versionQuery(),
-      callback: (resp) {
-        if (resp != null && resp is Map && resp.isNotEmpty) {
-          Get.dialog(VersionUpdatingDialog(versionData: resp), barrierDismissible: false);
-        }
-      }
-    );
+    // simpleTry(
+    //   () => Api.Common.versionQuery(),
+    //   callback: (resp) {
+    //     if (resp != null && resp is Map && resp.isNotEmpty) {
+    //       Get.dialog(VersionUpdatingDialog(versionData: resp), barrierDismissible: false);
+    //     }
+    //   }
+    // );
   }
 
   Future<bool> canBlinkBoxSend() async {

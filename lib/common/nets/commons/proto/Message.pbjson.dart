@@ -607,6 +607,20 @@ final $typed_data.Uint8List s_WorldChatMessageBroadcastDescriptor = $convert.bas
     'ChtTX1dvcmxkQ2hhdE1lc3NhZ2VCcm9hZGNhc3QSOwoFaXRlbXMYASADKAsyJS5jb20uc2F2dn'
     'kucHJvdG8uV29ybGRDaGF0TWVzc2FnZUl0ZW1SBWl0ZW1z');
 
+@$core.Deprecated('Use s_ClearScreenBroadcastDescriptor instead')
+const S_ClearScreenBroadcast$json = {
+  '1': 'S_ClearScreenBroadcast',
+  '2': [
+    {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
+    {'1': 'status', '3': 2, '4': 1, '5': 5, '10': 'status'},
+  ],
+};
+
+/// Descriptor for `S_ClearScreenBroadcast`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_ClearScreenBroadcastDescriptor = $convert.base64Decode(
+    'ChZTX0NsZWFyU2NyZWVuQnJvYWRjYXN0EhcKB3Jvb21faWQYASABKANSBnJvb21JZBIWCgZzdG'
+    'F0dXMYAiABKAVSBnN0YXR1cw==');
+
 @$core.Deprecated('Use s_BanChatBroadcastDescriptor instead')
 const S_BanChatBroadcast$json = {
   '1': 'S_BanChatBroadcast',

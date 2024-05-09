@@ -63,6 +63,7 @@ class RoomToolDialog extends SceneOverlay<RoomCtrl> {
       // '自拍',
       '意见反馈',
       '礼物特效',
+      if(isOwner || isManager)'清理公屏'
     ];
 
     return SizedBox(

@@ -244,6 +244,13 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       case "打开特效":
         RoomManagerCtrl.ins.openEffect();
         break;
+      case "清理公屏":
+        // RoomManagerCtrl.ins.openEffect();
+      Api.Room.screen(roomId: roomId).then((value) => {
+        print('reslt:$value')
+      });
+
+        break;
       default:
         super.onItemClick(action);
     }

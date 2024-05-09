@@ -91,7 +91,7 @@ class _DataView extends GetView<RoomChatCtrl> {
       child: Container(
         width: 38,
         height: 20,
-        margin: EdgeInsets.only(right: 15),
+        margin: const EdgeInsets.only(right: 15),
         alignment: Alignment.center,
         decoration: label != selectedLabel ? null : BoxDecoration(
           color: Colors.black,

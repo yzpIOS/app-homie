@@ -61,13 +61,15 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      children: [
+      Column(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(height: 17,),
-        Text(
+        const Text(
           "房间成员",
           style: TextStyle(
               color: Colors.black,
@@ -104,7 +106,32 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
           ),
         )
       ],
+    ),
+        Positioned(
+          top: 15,
+          right: 10,
+            child: GestureDetector(
+              onTap: (){
+              },
+          child: Container(
+            width: 80.0, // 椭圆的宽度
+            height: 30.0, // 椭圆的高度
+            decoration: BoxDecoration(
+              color: Colors.white, // 容器的背景颜色
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: AppPalette.primary, // 边框颜色
+                width: 1.0, // 边框宽度
+              ),
+            ),
+            child: const Center(
+              child: Text('全员禁麦',style: TextStyle(color: AppPalette.primary),
+            ),
+          )
+        )))
+      ]
     );
+
   }
 }
 
@@ -142,6 +169,7 @@ class OnlineUserView extends SimplePageView<Map> {
     /// 管理员能对普通用户进行“封禁”操作
     var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
+    RxBool isSelectChat = true.obs;
 
     // 是否在个人直播间
     var isPersonRoom = _ctrl is PersonRoomCtrl;
@@ -151,6 +179,57 @@ class OnlineUserView extends SimplePageView<Map> {
     if(isPersonRoom) {
       personRoomMicCtrl = ((_ctrl as PersonRoomCtrl?)?.getRoomMicCtrl() as PersonRoomMicCtrl?);
       isUserOnMic = personRoomMicCtrl?.isUserOnMic(uid) ?? false;
+    }
+
+    /// 禁言或禁言中
+    Widget GagOrGag() {
+      return Obx(() => isSelectChat.value == true ?  XTextBtn(
+        label: '禁言',
+        width: 48,
+        height: 24,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: ()  {
+          print('来了啊啊 nuid = $nuid');
+          simpleTry(
+                () =>  Api.Room.chat(roomId: roomId, roleId: nuid, status: 1),
+            callback: (data) {
+                  print('data1231:$data');
+                  if(data['code'] == 0){
+                    isSelectChat.value = false;
+                  }else{
+
+                  }
+            });
+
+          // controller.updateItem(index, item);
+
+        },
+      ) : XTextBtn(
+        label: '禁言中',
+        width: 48,
+        height: 24,
+        color: AppPalette.tips,
+        textStyle: const TextStyle(fontSize: 14, color: Colors.white),
+        onTap: () async {
+          simpleTry(
+                  () =>  Api.Room.chat(roomId: roomId, roleId: nuid, status: 2),
+              callback: (data) {
+                print('data1231:$data');
+                if(data['code'] == 0){
+                  isSelectChat.value = true;
+                }else{
+
+                }
+              });
+          print('来了啊啊22');
+          // await Api.Room.chat(roomId: roomId, roleId: nuid, status: 2).then((val)=>
+          //     print('value2222: $val')
+          // );
+          // // controller.updateItem(index, item);
+
+        },
+      )
+      );
     }
 
     /// 添加或移除管理员
@@ -232,6 +311,8 @@ class OnlineUserView extends SimplePageView<Map> {
             );
           }),
         ),
+        if (isShowEditManagerAction) GagOrGag(),
+        Spacing.w6,
         if (isShowEditManagerAction) $EditManagerView(),
         Spacing.w6,
         if (isShowEditBlackListAction) $EditBlackListView(),

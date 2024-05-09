@@ -134,6 +134,10 @@ class AllRoomEvent extends RoomEvent<S_AllScreen> {
 class WorldChatMessageBroadcastEvent extends RoomEvent<S_WorldChatMessageBroadcast> {
 }
 
+//  清除公屏广播
+class ClearScreenBroadcastEvent extends RoomEvent<S_ClearScreenBroadcast> {
+}
+
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;

@@ -120,6 +120,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_LiveLikeBroadcast = CMD._(2282, _omitEnumNames ? '' : 'S_LiveLikeBroadcast');
   static const CMD S_BackgroundBroadcast = CMD._(2283, _omitEnumNames ? '' : 'S_BackgroundBroadcast');
   static const CMD S_WorldChatMessageBroadcast = CMD._(2284, _omitEnumNames ? '' : 'S_WorldChatMessageBroadcast');
+  static const CMD S_ClearScreenBroadcast = CMD._(2285, _omitEnumNames ? '' : 'S_ClearScreenBroadcast');
   static const CMD C_GiveGiftByRoom = CMD._(3100, _omitEnumNames ? '' : 'C_GiveGiftByRoom');
   static const CMD S_GiveGiftByRoom = CMD._(3101, _omitEnumNames ? '' : 'S_GiveGiftByRoom');
   static const CMD S_UpdateLevel = CMD._(3102, _omitEnumNames ? '' : 'S_UpdateLevel');
@@ -305,6 +306,7 @@ class CMD extends $pb.ProtobufEnum {
     S_LiveLikeBroadcast,
     S_BackgroundBroadcast,
     S_WorldChatMessageBroadcast,
+    S_ClearScreenBroadcast,
     C_GiveGiftByRoom,
     S_GiveGiftByRoom,
     S_UpdateLevel,

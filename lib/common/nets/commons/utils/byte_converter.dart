@@ -63,6 +63,7 @@ class ByteConverter {
     register(CMD.S_LuckScreen, S_LuckScreen.fromBuffer);
     register(CMD.S_AllScreen, S_AllScreen.fromBuffer);
     register(CMD.S_TopThree, S_TopThree.fromBuffer);
+    register(CMD.S_ClearScreenBroadcast, S_ClearScreenBroadcast.fromBuffer);
 
     // 客户端间的通信协仪
     register(BaseClient.CONNECT_VARIFY, C_Verify.fromBuffer);
