@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/guild_flows_controller.dart';
@@ -24,12 +26,13 @@ class GuildFlowsPage extends StatelessWidget {
                 _headerWidget(),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: 2,
                     itemBuilder: (BuildContext context, int index) {
                       return _itemWidget(controller,index);
                     },
                   ),
                 ),
+                _bottomWidget(),
               ],
             ),
           );
@@ -201,5 +204,26 @@ class GuildFlowsPage extends StatelessWidget {
             Text("详情", style:const Color(0xFFC05EFB).pt(14)).toBtn(width: 54, height: 30, onTap: () {}),
           ],
         ));
+  }
+
+  Widget _bottomWidget() {
+    return Column(children: [
+      Container(height: 1,color: Color(0xFFF5F5F5),padding: const Pad(horizontal: 10),),
+      Spacing.h16,
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Spacing.w20,
+          Text("总流水：", style: const Color(0xFFC05EFB).ptB(16)),
+          const Spacing(),
+          Text("123456789", style: const Color(0xFFC05EFB).ptB(16)),
+          Spacing.w20,
+        ],
+      ),
+      Spacing.h16,
+      SizedBox(
+      height: MediaQueryData.fromView(window).padding.bottom,
+    )
+    ],);
   }
 }
