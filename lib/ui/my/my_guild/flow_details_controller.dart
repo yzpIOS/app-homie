@@ -1,13 +1,9 @@
-
 import 'package:app/tools.dart';
-import 'package:app/ui/my/my_guild/flow_details_page.dart';
-import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-/// 公会流水控制器
-class GuildFlowsController extends GetxController {
-  final TextEditingController searchRoomIdController = TextEditingController();
+/// 流水详情
+class FlowDetailsController extends GetxController {
   final searchStartTime = ''.obs;
   final searchEndTime = ''.obs;
 
@@ -41,12 +37,5 @@ class GuildFlowsController extends GetxController {
 
   /// 点击搜索
   void clickSearch(){
-
   }
-
-  /// 点击流水详情
-  void clickFlowDetail(int index){
-    Get.to(()=>const FlowDetailsPage());
-  }
-
 }

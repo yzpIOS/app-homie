@@ -210,8 +210,12 @@ class GuildFlowsPage extends StatelessWidget {
                 style: const Color(0xFF000000).pt(14)),
           ),
           Spacing.w10,
-          Text("详情", style: const Color(0xFFC05EFB).pt(14))
-              .toBtn(width: 54, height: 30, onTap: () {}),
+          Text("详情", style: const Color(0xFFC05EFB).pt(14)).toBtn(
+              width: 54,
+              height: 30,
+              onTap: () {
+                controller.clickFlowDetail(index);
+              }),
         ],
       ),
     );
@@ -221,14 +225,15 @@ class GuildFlowsPage extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius:const BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
         boxShadow: [
           BoxShadow(
               color: const Color(0xFF000000).withOpacity(0.1),
               offset: const Offset(0.0, -2.0), //阴影y轴偏移量
               blurRadius: 4, //阴影模糊程度
               spreadRadius: 1 //阴影扩散程度
-          )
+              )
         ],
       ),
       child: Column(
