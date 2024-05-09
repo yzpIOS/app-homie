@@ -6,9 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 /// 公会中心控制器
 class GuildCenterController extends GetxController {
-
   late Map <String, Widget> tabs = {};
-
   @override
   void onInit() {
     super.onInit();

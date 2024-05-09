@@ -8,21 +8,36 @@ class BlurredNetworkImage extends StatelessWidget {
   final double blurSigma;
   final double width;
   final double height;
-  const BlurredNetworkImage( {required this.imageUrl,required this.width,required this.height, super.key, this.blurSigma = 5.0});
+
+  const BlurredNetworkImage(
+      {required this.imageUrl,
+      required this.width,
+      required this.height,
+      super.key,
+      this.blurSigma = 5.0});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Positioned.fill(
-          child:NetImage(imageUrl, width: width, height: height, fit: BoxFit.cover),
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
-          child: Container(
-            decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+        if (imageUrl.isNotEmpty) ...[
+          Positioned.fill(
+            child: NetImage(imageUrl,
+                width: width, height: height, fit: BoxFit.cover),
           ),
-        ),
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white.withOpacity(0.1)),
+            ),
+          ),
+        ],
+        if (imageUrl.isEmpty)
+          const Positioned.fill(
+            child: ColoredBox(
+              color: Color(0xFF999999),
+            ),
+          )
       ],
     );
   }

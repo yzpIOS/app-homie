@@ -2,11 +2,14 @@ import 'dart:ui';
 import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/tools/num_utils.dart';
 import 'package:app/ui/my/guild_center/guild_center_list_controller.dart';
+import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/widgets/editable_text.dart';
 import 'package:app/widgets/image/network_cache_image.dart';
 import 'package:app/widgets/spacing.dart';
 import 'package:app/widgets/text.dart';
+import 'package:app/widgets/tips_view.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -46,18 +49,23 @@ class GuildCenterListPage extends StatelessWidget {
                   onSubmitted: controller.keywordRx,
                 ),
               ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap:true,
-                  controller: controller.scrollController,
-                  itemCount: controller.dataList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _itemWidget(controller, index);
-                  },
-                ),
-              ),
+              Obx(() {
+                return Expanded(
+                  child: controller.dataList.isNotEmpty ? ListView.builder(
+                    shrinkWrap: true,
+                    controller: controller.scrollController,
+                    itemCount: controller.dataList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return _itemWidget(controller, index);
+                    },
+                  ) : const TipsView(),
+                );
+              }),
               SizedBox(
-                height: MediaQueryData.fromView(window).padding.bottom,
+                height: MediaQueryData
+                    .fromView(window)
+                    .padding
+                    .bottom,
               ),
             ],
           );
@@ -66,37 +74,42 @@ class GuildCenterListPage extends StatelessWidget {
 
   /// 列表项
   Widget _itemWidget(GuildCenterListController controller, int index) {
+    final GuildModel guildModel = controller.dataList[index];
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () => controller.clickItem(index),
       child: Container(
         height: 80,
-        margin: const Pad(horizontal: 10,top: 10),
+        margin: const Pad(horizontal: 10, top: 10),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-          color:const Color(0xFFF6F9FF),),
+          color: const Color(0xFFF6F9FF),),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacing.w10,
             Container(
-              alignment: Alignment.center,
+                alignment: Alignment.center,
                 height: 30,
                 width: 30,
                 child: index + 1 < 4
-                    ? Image.asset(IMG.format('my/guild_center_index_${index + 1}'),
-                        width: 30, height: 30)
+                    ? Image.asset(
+                    IMG.format('my/guild_center_index_${index + 1}'),
+                    width: 30, height: 30)
                     : Text(
-                        '${index + 1}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xFF000000),
-                        ),
-                      )),
+                  '${index + 1}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFF000000),
+                  ),
+                )),
             Spacing.w4,
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: const NetImage(
-                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+              child: NetImage(
+                  guildModel.icon,
+                  placeholderImage: Image.asset(
+                      IMG.format('my/guild_center_normal_icon'),
+                      width: 60, height: 60),
                   width: 60,
                   height: 60,
                   fit: BoxFit.contain),
@@ -110,23 +123,26 @@ class GuildCenterListPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "公会名称",
-                        style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
+                        guildModel.guildName ?? '',
+                        style: const TextStyle(
+                          fontSize: 16, color: Color(0xFF000000),),
                       ),
                       Spacing.w4,
-                      index + 1 < 6
+                      guildModel.level != null && guildModel.level! > 0
                           ? GestureDetector(
-                        onTapDown:(TapDownDetails details) {
+                        onTapDown: (TapDownDetails details) {
                           var tapPosition = details.globalPosition;
                           if (tapPosition != null) {
                             tapPosition = tapPosition -
                                 const Offset(22, -5);
                             Get.find<UserCtrl>().clickGuildLevel(
-                                anchorPoint: tapPosition!, level: 2);
+                                anchorPoint: tapPosition!,
+                                level: guildModel.level!);
                           }
                         },
                         child: Image.asset(
-                          IMG.format('my/guild_center_level_${index + 1}'),
+                          IMG.format('my/guild_center_level_${guildModel
+                              .level! + 1}'),
                           width: 53,
                           height: 17,
                           scale: 3,
@@ -137,12 +153,14 @@ class GuildCenterListPage extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("ID:1234567",
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF999999),)),
-                      Spacing(),
+                      Text("ID:${guildModel.guildNo}",
+                          style: const TextStyle(
+                            fontSize: 12, color: Color(0xFF999999),)),
+                      const Spacing(),
                       Text(
-                        "贡献值：10.3W",
-                        style: const TextStyle(fontSize: 14, color: Color(0xFF000000),),
+                        "贡献值：${NumberUtils.instance.formatNumber(guildModel.value ?? 0)}",
+                        style: const TextStyle(
+                          fontSize: 14, color: Color(0xFF000000),),
                       ),
                     ],
                   ),
@@ -151,20 +169,20 @@ class GuildCenterListPage extends StatelessWidget {
                       children: [
                         WidgetSpan(
                           child: Padding(
-                            padding:const Pad(right: 4),
+                            padding: const Pad(right: 4),
                             child: Image.asset(
                               IMG.format('my/guild_center_user_count'),
                               width: 14,
                               height: 14,
                               scale: 3,
-                              color: Color(0xFF999999),
+                              color: const Color(0xFF999999),
                             ),
                           ),
                           alignment: PlaceholderAlignment.middle,
                         ),
-                        const TextSpan(
-                          text: '1111',
-                          style: TextStyle(
+                        TextSpan(
+                          text: '${guildModel.anchorNum}',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Color(0xFF999999),
                           ),

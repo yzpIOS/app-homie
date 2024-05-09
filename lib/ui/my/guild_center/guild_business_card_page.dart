@@ -3,18 +3,21 @@ import 'package:app/common/theme.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
+import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/blurred_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// 公会名片页面
 class GuildBusinessCardPage extends StatelessWidget {
-  const GuildBusinessCardPage({super.key});
+  final GuildModel guildModel;
+
+  const GuildBusinessCardPage({super.key, required this.guildModel});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GuildBusinessCardController>(
-        init: GuildBusinessCardController(),
+        init: GuildBusinessCardController(guildModel: guildModel),
         builder: (GuildBusinessCardController controller) {
           return Scaffold(
             body: Stack(
@@ -29,8 +32,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                       height: 202 + MediaQueryData.fromView(window).padding.top,
                       width: Get.width,
                       blurSigma: 10,
-                      imageUrl:
-                          'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF'),
+                      imageUrl: guildModel.icon ?? ""),
                 ),
                 Positioned(
                   left: 0,
@@ -95,7 +97,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   }
 
   /// 公会信息
-  Widget _buildGuildInfoWidget(GuildBusinessCardController controller){
+  Widget _buildGuildInfoWidget(GuildBusinessCardController controller) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -110,11 +112,16 @@ class GuildBusinessCardPage extends StatelessWidget {
             Spacing.w10,
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: const NetImage(
-                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                  width: 60,
-                  height: 60,
-                  fit: BoxFit.contain),
+              child: NetImage(
+                guildModel.icon ?? "",
+                placeholderImage: Image.asset(
+                    IMG.format('my/guild_center_normal_icon'),
+                    width: 60,
+                    height: 60),
+                width: 60,
+                height: 60,
+                fit: BoxFit.contain,
+              ),
             ),
             Spacing.w10,
             Expanded(
@@ -125,33 +132,37 @@ class GuildBusinessCardPage extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "公会名称",
+                        guildModel.guildName ?? "",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white,
                         ),
                       ),
                       Spacing.w4,
-                      GestureDetector(
-                        onTapDown:(TapDownDetails details) {
-                          var tapPosition = details.globalPosition;
-                          if (tapPosition != null) {
-                            tapPosition = tapPosition -
-                                const Offset(22, -5);
-                            Get.find<UserCtrl>().clickGuildLevel(
-                                anchorPoint: tapPosition!, level: 2);
-                          }
-                        },
-                        child: Image.asset(
-                          IMG.format('my/guild_center_level_1'),
-                          width: 53,
-                          height: 17,
-                          scale: 3,
-                        ),
-                      ),
+                      guildModel.level != null && guildModel.level! > 0
+                          ? GestureDetector(
+                              onTapDown: (TapDownDetails details) {
+                                var tapPosition = details.globalPosition;
+                                if (tapPosition != null) {
+                                  tapPosition =
+                                      tapPosition - const Offset(22, -5);
+                                  Get.find<UserCtrl>().clickGuildLevel(
+                                      anchorPoint: tapPosition!,
+                                      level: guildModel.level! + 1);
+                                }
+                              },
+                              child: Image.asset(
+                                IMG.format(
+                                    'my/guild_center_level_${guildModel.level! + 1}'),
+                                width: 53,
+                                height: 17,
+                                scale: 3,
+                              ),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
-                  Text("ID:1234567",
+                  Text("ID:${guildModel.guildNo}",
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xFFDDDDDD),
@@ -161,20 +172,20 @@ class GuildBusinessCardPage extends StatelessWidget {
                       children: [
                         WidgetSpan(
                           child: Padding(
-                            padding:const Pad(right: 4),
+                            padding: const Pad(right: 4),
                             child: Image.asset(
                               IMG.format('my/guild_center_user_count'),
                               width: 14,
                               height: 14,
                               scale: 3,
-                              color: Color(0xFFDDDDDD),
+                              color: const Color(0xFFDDDDDD),
                             ),
                           ),
                           alignment: PlaceholderAlignment.middle,
                         ),
-                        const TextSpan(
-                          text: '1111',
-                          style: TextStyle(
+                        TextSpan(
+                          text: '${guildModel.anchorNum ?? '0'}',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Color(0xFFDDDDDD),
                           ),
@@ -201,10 +212,11 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 房间列表
   Widget _roomContainer(GuildBusinessCardController controller) {
     return GestureDetector(
-      onTap: (){},
+      onTap: () {},
       behavior: HitTestBehavior.opaque,
       child: Container(
-        height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
+        height:
+            Get.height - (144 + MediaQueryData.fromView(window).padding.top),
         width: Get.width,
         decoration: const BoxDecoration(
           color: Color(0xFFF5F5F5),

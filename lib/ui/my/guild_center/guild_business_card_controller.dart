@@ -2,9 +2,12 @@
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
+import 'package:app/ui/my/guild_center/model/guild_model.dart';
 
 /// 公会名片控制器
 class GuildBusinessCardController extends GetxController {
+  final GuildModel guildModel;
+  GuildBusinessCardController({required this.guildModel});
   final List<String> roomList = <String>[
     '相亲',
     '男神',
@@ -19,9 +22,6 @@ class GuildBusinessCardController extends GetxController {
     '相亲',
     '男神'
   ];
-
-
-
 
   /// 点击房间信息
   void clickRoomInfo() {
