@@ -166,7 +166,7 @@ class GuildFlowsPage extends StatelessWidget {
               child: Text("详情", style:const Color(0xFF000000).ptB(14)),
             ),
           ],
-        ));
+        ),);
   }
 
   /// 列表项
@@ -203,7 +203,7 @@ class GuildFlowsPage extends StatelessWidget {
             Spacing.w10,
             Text("详情", style:const Color(0xFFC05EFB).pt(14)).toBtn(width: 54, height: 30, onTap: () {}),
           ],
-        ));
+        ),);
   }
 
   Widget _bottomWidget() {

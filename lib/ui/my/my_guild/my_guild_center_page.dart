@@ -23,7 +23,7 @@ class MyGuildCenterPage extends StatelessWidget {
               Spacing.h10,
               _buildGuildFlowsItem(controller),
               Spacing.h10,
-              _buildAnchorListItem()
+              _buildAnchorListItem(controller)
             ],
           );
         });
@@ -165,10 +165,12 @@ class MyGuildCenterPage extends StatelessWidget {
   }
 
   /// 主播列表
-  Widget _buildAnchorListItem() {
+  Widget _buildAnchorListItem(MyGuildCenterController controller) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {},
+      onTap: () {
+        controller.clickAnchorList();
+      },
       child: SizedBox(
         height: 50,
         child: Row(
