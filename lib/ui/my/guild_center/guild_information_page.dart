@@ -17,16 +17,16 @@ class GuildInformationPage extends StatelessWidget {
       body: GetBuilder<GuildInformationController>(
           init: GuildInformationController(),
           builder: (GuildInformationController controller) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Spacing.h20,
-                _headerWidget(controller),
-                Spacing.h30,
-                _guildPresidentWidget(controller),
-                Spacing.h20,
-                _guildIntroduceWidget(),
-              ],
+            return ColoredBox(
+              color:const Color(0xFFF5F5F5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _headerWidget(controller),
+                  _guildPresidentWidget(controller),
+                  _guildIntroduceWidget(),
+                ],
+              ),
             );
           }),
     );
@@ -34,79 +34,87 @@ class GuildInformationPage extends StatelessWidget {
 
   /// 头部
   Widget _headerWidget(GuildInformationController controller) {
-    return SizedBox(
-      height: 60,
-      width: Get.width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+    return ColoredBox(
+      color: Colors.white,
+      child: Column(
         children: [
-          Spacing.w20,
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: const NetImage(
-                'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
-                width: 60,
-                height: 60,
-                fit: BoxFit.contain),
-          ),
-          Spacing.w10,
-          Expanded(
-            child: Column(
+          Spacing.h20,
+          SizedBox(
+            height: 60,
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "公会名称",
-                      style: const TextStyle(
-                          fontSize: 16, color: Color(0xFF000000)),
-                    ),
-                    Spacing.w4,
-                    GestureDetector(
-                      onTapDown:(TapDownDetails details) {
-                        var tapPosition = details.globalPosition;
-                        if (tapPosition != null) {
-                          tapPosition = tapPosition -
-                              const Offset(22, -5);
-                          Get.find<UserCtrl>().clickGuildLevel(
-                              anchorPoint: tapPosition!, level: 2);
-                        }
-                      },
-                      child: Image.asset(
-                        IMG.format('my/guild_center_level_1'),
-                        width: 53,
-                        height: 17,
-                        scale: 3,
-                      ),
-                    ),
+                Spacing.w20,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: const NetImage(
+                      'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.contain),
+                ),
+                Spacing.w10,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            "公会名称",
+                            style: const TextStyle(
+                                fontSize: 16, color: Color(0xFF000000)),
+                          ),
+                          Spacing.w4,
+                          GestureDetector(
+                            onTapDown:(TapDownDetails details) {
+                              var tapPosition = details.globalPosition;
+                              if (tapPosition != null) {
+                                tapPosition = tapPosition -
+                                    const Offset(22, -5);
+                                Get.find<UserCtrl>().clickGuildLevel(
+                                    anchorPoint: tapPosition!, level: 2);
+                              }
+                            },
+                            child: Image.asset(
+                              IMG.format('my/guild_center_level_1'),
+                              width: 53,
+                              height: 17,
+                              scale: 3,
+                            ),
+                          ),
 
-                  ],
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Text("ID:1234567",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF999999))),
+                          Spacing.w2,
+                          GestureDetector(
+                            onTap: () {},
+                            child: Image.asset(
+                                IMG.format('my/guild_center_copy_id_icon'),
+                                width: 14,
+                                height: 14,
+                                scale: 3),
+                          ),
+                        ],
+                      ),
+                      const Text("创建时间:2024.3.28",
+                          style: TextStyle(
+                              fontSize: 12, color: Color(0xFF999999))),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    const Text("ID:1234567",
-                        style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF999999))),
-                    Spacing.w2,
-                    GestureDetector(
-                      onTap: () {},
-                      child: Image.asset(
-                          IMG.format('my/guild_center_copy_id_icon'),
-                          width: 14,
-                          height: 14,
-                          scale: 3),
-                    ),
-                  ],
-                ),
-                const Text("创建时间:2024.3.28",
-                    style: TextStyle(
-                        fontSize: 12, color: Color(0xFF999999))),
+                Spacing.w20,
               ],
             ),
           ),
-          Spacing.w20,
+          Spacing.h20,
         ],
       ),
     );
@@ -119,7 +127,10 @@ class GuildInformationPage extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 50,
-        padding: const Pad(horizontal: 20),
+        margin: const Pad(horizontal: 10,top: 10),
+        padding: const Pad(horizontal: 10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+          color: Colors.white,),
         child: Row(
           children: [
             const Text("公会会长",
@@ -155,12 +166,16 @@ class GuildInformationPage extends StatelessWidget {
 
   /// 公会介绍
   Widget _guildIntroduceWidget() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+    return Container(
+      margin: const Pad(horizontal: 10,top: 10),
+      padding: const Pad(horizontal: 10),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+        color: Colors.white,),
       child: Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Spacing.h10,
             Text(
               "公会简介",
               style: TextStyle(
@@ -175,9 +190,9 @@ class GuildInformationPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14,
                 color: Color(0xFF999999),
-
               ),
             ),
+            Spacing.h10,
           ],
         ),
       ),

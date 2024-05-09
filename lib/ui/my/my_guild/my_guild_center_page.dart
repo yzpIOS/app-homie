@@ -34,7 +34,7 @@ class MyGuildCenterPage extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
-          Spacing.h18,
+          Spacing.h20,
           SizedBox(
               height: 60,
               child: Row(children: [
