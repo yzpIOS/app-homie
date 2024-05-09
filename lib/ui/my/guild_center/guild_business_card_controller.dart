@@ -1,27 +1,32 @@
 
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
+import 'package:app/ui/room/model/room_info_model.dart';
 
 /// 公会名片控制器
 class GuildBusinessCardController extends GetxController {
   final GuildModel guildModel;
   GuildBusinessCardController({required this.guildModel});
-  final List<String> roomList = <String>[
-    '相亲',
-    '男神',
-    '女神',
-    '点唱',
-    '相亲',
-    '男神',
-    '相亲',
-    '男神',
-    '女神',
-    '点唱',
-    '相亲',
-    '男神'
-  ];
+  final List<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadData();
+  }
+
+  void loadData() async {
+    final List itemList = await Api.Room.getGuildRoomList(guildModel.guildNo ?? "");
+    final List<RoomInfoModel> roomInfoModelList = [];
+    for (final Map item in itemList){
+      final roomInfoModel = RoomInfoModel.fromJson(item);
+      roomInfoModelList.add(roomInfoModel);
+    }
+    roomList.addAll(roomInfoModelList);
+  }
 
   /// 点击房间信息
   void clickRoomInfo() {
