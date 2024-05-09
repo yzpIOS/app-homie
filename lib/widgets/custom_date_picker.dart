@@ -250,11 +250,11 @@ class _DatePickerState extends State<CustomDatePicker> {
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width - 32,
-                  height: itemExtent - 8,
+                  width: MediaQuery.of(context).size.width - 2 * 20,
+                  height: itemExtent,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF1F1F1),
-                    borderRadius: BorderRadius.circular(12),
+                    color: const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
                 Positioned(

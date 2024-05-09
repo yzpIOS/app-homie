@@ -26,12 +26,13 @@ class GuildFlowsPage extends StatelessWidget {
                 _headerWidget(),
                 Expanded(
                   child: ListView.builder(
-                    itemCount: 2,
+                    itemCount: 15,
                     itemBuilder: (BuildContext context, int index) {
-                      return _itemWidget(controller,index);
+                      return _itemWidget(controller, index);
                     },
                   ),
                 ),
+                Spacing.h2,
                 _bottomWidget(),
               ],
             ),
@@ -83,20 +84,20 @@ class GuildFlowsPage extends StatelessWidget {
           )),
           Spacing.w10,
           Obx(() => Text(
-              controller.searchStartTime.isNotEmpty
-                  ? controller.searchStartTime.value
-                  : "起始时间",
-              style: controller.searchStartTime.isNotEmpty
-                  ? const Color(0xFF000000).pt(12)
-                  : const Color(0xFF999999).pt(12))
+                  controller.searchStartTime.isNotEmpty
+                      ? controller.searchStartTime.value
+                      : "起始时间",
+                  style: controller.searchStartTime.isNotEmpty
+                      ? const Color(0xFF000000).pt(12)
+                      : const Color(0xFF999999).pt(12))
               .toBtn(
-              height: 32,
-              width: 80,
-              radius: 4,
-              bg: const Color(0xFFFBF5FF),
-              onTap: () {
-                controller.clickSearchStartTime();
-              })),
+                  height: 32,
+                  width: 80,
+                  radius: 4,
+                  bg: const Color(0xFFFBF5FF),
+                  onTap: () {
+                    controller.clickSearchStartTime();
+                  })),
           Spacing.w2,
           Container(
             width: 10,
@@ -105,20 +106,20 @@ class GuildFlowsPage extends StatelessWidget {
           ),
           Spacing.w2,
           Obx(() => Text(
-              controller.searchEndTime.isNotEmpty
-                  ? controller.searchEndTime.value
-                  : "终止时间",
-              style: controller.searchEndTime.isNotEmpty
-                  ? const Color(0xFF000000).pt(12)
-                  : const Color(0xFF999999).pt(12))
+                  controller.searchEndTime.isNotEmpty
+                      ? controller.searchEndTime.value
+                      : "终止时间",
+                  style: controller.searchEndTime.isNotEmpty
+                      ? const Color(0xFF000000).pt(12)
+                      : const Color(0xFF999999).pt(12))
               .toBtn(
-              height: 32,
-              width: 80,
-              radius: 4,
-              bg: const Color(0xFFFBF5FF),
-              onTap: () {
-                controller.clickSearchEndTime();
-              })),
+                  height: 32,
+                  width: 80,
+                  radius: 4,
+                  bg: const Color(0xFFFBF5FF),
+                  onTap: () {
+                    controller.clickSearchEndTime();
+                  })),
           Spacing.w10,
           Text("搜索", style: Colors.white.pt(14)).toBtn(
               width: 54,
@@ -136,94 +137,119 @@ class GuildFlowsPage extends StatelessWidget {
   /// 列表头
   Widget _headerWidget() {
     return Container(
-        height: 20,
-        padding: const Pad(horizontal: 10),
-        child: Row(
-          children: [
-            Expanded(child: Center(child: Text("房间名称", style: const Color(0xFF000000).ptB(14)))),
-            Spacing.w10,
-            Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: Text("房间ID", style:const Color(0xFF000000).ptB(14)),
-            ),
-            Spacing.w2,
-            Container(
-              width: 10,
-              height: 1,
-              color: Colors.transparent,
-            ),
-            Spacing.w2,
-            Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: Text("流水", style:const Color(0xFF000000).ptB(14)),
-            ),
-            Spacing.w10,
-            Container(
-              width: 54,
-              alignment: Alignment.center,
-              child: Text("详情", style:const Color(0xFF000000).ptB(14)),
-            ),
-          ],
-        ),);
+      height: 20,
+      padding: const Pad(horizontal: 10),
+      child: Row(
+        children: [
+          Expanded(
+              child: Center(
+                  child: Text("房间名称", style: const Color(0xFF000000).ptB(14)))),
+          Spacing.w10,
+          Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text("房间ID", style: const Color(0xFF000000).ptB(14)),
+          ),
+          Spacing.w2,
+          Container(
+            width: 10,
+            height: 1,
+            color: Colors.transparent,
+          ),
+          Spacing.w2,
+          Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text("流水", style: const Color(0xFF000000).ptB(14)),
+          ),
+          Spacing.w10,
+          Container(
+            width: 54,
+            alignment: Alignment.center,
+            child: Text("详情", style: const Color(0xFF000000).ptB(14)),
+          ),
+        ],
+      ),
+    );
   }
 
   /// 列表项
-  Widget _itemWidget(GuildFlowsController controller,int index) {
+  Widget _itemWidget(GuildFlowsController controller, int index) {
     return Container(
-        height: 40,
-        margin: const Pad(top: 10,horizontal: 10),
-        // padding: const Pad(horizontal: 10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: const Color(0xFFF5F5F5),
-        ),
-        child: Row(
-          children: [
-            Expanded(child: Center(child: Text('叮叮猫${index+1}', style: const Color(0xFF000000).pt(14)))),
-            Spacing.w10,
-            Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: Text("1234567${index+1}", style:const Color(0xFF000000).pt(14)),
-            ),
-            Spacing.w2,
-            Container(
-              width: 10,
-              height: 1,
-              color: Colors.transparent,
-            ),
-            Spacing.w2,
-            Container(
-              width: 80,
-              alignment: Alignment.center,
-              child: Text("9999999${index+1}", style:const Color(0xFF000000).pt(14)),
-            ),
-            Spacing.w10,
-            Text("详情", style:const Color(0xFFC05EFB).pt(14)).toBtn(width: 54, height: 30, onTap: () {}),
-          ],
-        ),);
+      height: 40,
+      margin: const Pad(top: 10, horizontal: 10),
+      // padding: const Pad(horizontal: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: const Color(0xFFF5F5F5),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+              child: Center(
+                  child: Text('叮叮猫${index + 1}',
+                      style: const Color(0xFF000000).pt(14)))),
+          Spacing.w10,
+          Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text("1234567${index + 1}",
+                style: const Color(0xFF000000).pt(14)),
+          ),
+          Spacing.w2,
+          Container(
+            width: 10,
+            height: 1,
+            color: Colors.transparent,
+          ),
+          Spacing.w2,
+          Container(
+            width: 80,
+            alignment: Alignment.center,
+            child: Text("9999999${index + 1}",
+                style: const Color(0xFF000000).pt(14)),
+          ),
+          Spacing.w10,
+          Text("详情", style: const Color(0xFFC05EFB).pt(14))
+              .toBtn(width: 54, height: 30, onTap: () {}),
+        ],
+      ),
+    );
   }
 
   Widget _bottomWidget() {
-    return Column(children: [
-      Container(height: 1,color: Color(0xFFF5F5F5),padding: const Pad(horizontal: 10),),
-      Spacing.h16,
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Spacing.w20,
-          Text("总流水：", style: const Color(0xFFC05EFB).ptB(16)),
-          const Spacing(),
-          Text("123456789", style: const Color(0xFFC05EFB).ptB(16)),
-          Spacing.w20,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius:const BorderRadius.only(topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+        boxShadow: [
+          BoxShadow(
+              color: const Color(0xFF000000).withOpacity(0.1),
+              offset: const Offset(0.0, -2.0), //阴影y轴偏移量
+              blurRadius: 4, //阴影模糊程度
+              spreadRadius: 1 //阴影扩散程度
+          )
         ],
       ),
-      Spacing.h16,
-      SizedBox(
-      height: MediaQueryData.fromView(window).padding.bottom,
-    )
-    ],);
+      child: Column(
+        children: [
+          Spacing.h16,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Spacing.w20,
+              Text("总流水：", style: const Color(0xFFC05EFB).ptB(16)),
+              const Spacing(),
+              Text("123456789", style: const Color(0xFFC05EFB).ptB(16)),
+              Spacing.w20,
+            ],
+          ),
+          Spacing.h16,
+          SizedBox(
+            height: MediaQueryData.fromView(window).padding.bottom,
+          ),
+        ],
+      ),
+    );
   }
 }
