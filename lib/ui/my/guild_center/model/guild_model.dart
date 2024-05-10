@@ -11,8 +11,9 @@ class GuildModel {
   String? createAt;
   String? masterUid;
   String? masterUsername;
-  String? anchorLedgerRatio;
+  String? anchorLedgerRatio;//我的收益分成比例
   String? masterAvatar;
+  int? anchorType;//0.不属于该公会，1.会长 2.主播 3.厅长
 
   GuildModel(
       {this.guildNo,
@@ -27,7 +28,8 @@ class GuildModel {
         this.masterUid,
         this.masterUsername,
         this.anchorLedgerRatio,
-        this.masterAvatar
+        this.masterAvatar,
+        this.anchorType
         });
 
   GuildModel.fromJson(Map<dynamic, dynamic> json) {
@@ -44,6 +46,7 @@ class GuildModel {
     masterUsername = json['master_username'];
     anchorLedgerRatio = json['anchor_ledger_ratio'];
     masterAvatar = json['master_avatar'];
+    anchorType = json['anchor_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -61,6 +64,7 @@ class GuildModel {
     data['master_username'] = masterUsername;
     data['anchor_ledger_ratio'] = anchorLedgerRatio;
     data['master_avatar'] = masterAvatar;
+    data['anchor_type'] = anchorType;
     return data;
   }
 }

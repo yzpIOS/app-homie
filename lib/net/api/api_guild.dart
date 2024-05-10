@@ -8,10 +8,10 @@ class ApiGuild extends ApiBase {
     return _doPost('rank/list', data: page + {});
   }
 
-  /// 检查用户是否加入公会
-  Future checkUserIsExistGuild({required String guildNumber}) {
-    return _doPost('current/role', data:guildNumber.isNotEmpty ? {"guild_no": guildNumber} : {});
-  }
+  // /// 检查用户是否加入公会
+  // Future checkUserIsExistGuild({required String guildNumber}) {
+  //   return _doPost('current/role', data:guildNumber.isNotEmpty ? {"guild_no": guildNumber} : {});
+  // }
 
   /// 公会详情
   Future getGuildInfo({required String guildNumber}) {

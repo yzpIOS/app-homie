@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 class GuildBusinessCardPage extends StatelessWidget {
   /// 公会信息
   final GuildModel guildModel;
+
   const GuildBusinessCardPage({super.key, required this.guildModel});
 
   @override
@@ -218,8 +219,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 房间列表
   Widget _roomContainer(GuildBusinessCardController controller) {
     return Container(
-      height:
-          Get.height - (144 + MediaQueryData.fromView(window).padding.top),
+      height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
       width: Get.width,
       decoration: const BoxDecoration(
         color: Color(0xFFF5F5F5),
@@ -233,12 +233,11 @@ class GuildBusinessCardPage extends StatelessWidget {
         children: [
           _headerWidget(controller),
           _roomGridViewWidget(controller),
-          Obx(() {
-            return controller.checkExistGuild.value == true &&
-                    controller.userIsExistGuild.value == false
-                ? _joinGuildWidget(controller)
-                : const SizedBox(height: 1,);
-          }),
+          guildModel.anchorType == null || guildModel.anchorType! < 1
+              ? _joinGuildWidget(controller)
+              : const SizedBox(
+                  height: 1,
+                ),
           _safeBottomWidget(),
         ],
       ),

@@ -5,7 +5,6 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
-import 'package:app/ui/my/guild_center/model/guild_role_model.dart';
 import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
@@ -21,17 +20,10 @@ class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
   /// 公会房间列表
   final List<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
 
-  /// 是否检查过用户是否加入公会
-  final checkExistGuild = false.obs;
-
-  /// 用户是否加入公会
-  final userIsExistGuild = false.obs;
-
   @override
   void onInit() {
     super.onInit();
     loadData();
-    checkUserIsExistGuild();
   }
 
   /// 加载数据
@@ -51,24 +43,6 @@ class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
               roomList.addAll(roomInfoModelList);
             }
           });
-    });
-  }
-
-  /// 检查用户是否加入公会
-  void checkUserIsExistGuild() {
-    Future.delayed(const Duration(microseconds:400),(){
-      simpleTry(
-              () => Api.Guild.checkUserIsExistGuild(
-              guildNumber: guildModel.guildNo ?? ""), callback: (resp) {
-        checkExistGuild.value = true;
-        if (resp != null && resp is Map && resp.isNotEmpty) {
-          final guildRoleModel = GuildRoleModel.fromJson(resp);
-          userIsExistGuild.value =
-              guildRoleModel.anchorType != null && guildRoleModel.anchorType! > 0;
-        } else {
-          userIsExistGuild.value = false;
-        }
-      });
     });
   }
 

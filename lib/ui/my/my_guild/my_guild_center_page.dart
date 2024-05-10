@@ -1,17 +1,19 @@
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 /// 我的公会页面
 class MyGuildCenterPage extends StatelessWidget {
-  const MyGuildCenterPage({super.key});
+  final GuildModel guildModel;
+  const MyGuildCenterPage({super.key,required this.guildModel});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<MyGuildCenterController>(
-        init: MyGuildCenterController(),
+        init: MyGuildCenterController(guildModel: guildModel),
         builder: (MyGuildCenterController controller) {
           return ColoredBox(
             color:const Color(0xFFF5F5F5),
@@ -19,8 +21,8 @@ class MyGuildCenterPage extends StatelessWidget {
               children: [
                 _buildHeader(controller),
                 _buildMyProfitSharingItem(),
-                _buildGuildFlowsItem(controller),
-                _buildAnchorListItem(controller)
+                if(guildModel.anchorType != null && guildModel.anchorType! == 1) _buildGuildFlowsItem(controller),
+                if(guildModel.anchorType != null && guildModel.anchorType! == 1) _buildAnchorListItem(controller)
               ],
             ),
           );
@@ -40,8 +42,12 @@ class MyGuildCenterPage extends StatelessWidget {
                 Spacing.w20,
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: const NetImage(
-                      'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                  child: NetImage(
+                      guildModel.icon,
+                      placeholderImage: Image.asset(
+                          IMG.format('my/guild_center_normal_icon'),
+                          width: 60,
+                          height: 60),
                       width: 60,
                       height: 60,
                       fit: BoxFit.contain),
@@ -56,7 +62,7 @@ class MyGuildCenterPage extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              "公会名称",
+                              guildModel.guildName ?? '',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF000000),
@@ -66,26 +72,30 @@ class MyGuildCenterPage extends StatelessWidget {
                             ),
                           ),
                           Spacing.w4,
-                          GestureDetector(
-                            onTapDown:(TapDownDetails details) {
+                          guildModel.level != null && guildModel.level! > 0
+                              ? GestureDetector(
+                            onTapDown: (TapDownDetails details) {
                               var tapPosition = details.globalPosition;
                               if (tapPosition != null) {
-                                tapPosition = tapPosition -
-                                    const Offset(22, -5);
+                                tapPosition =
+                                    tapPosition - const Offset(22, -5);
                                 Get.find<UserCtrl>().clickGuildLevel(
-                                    anchorPoint: tapPosition!, level: 2);
+                                    anchorPoint: tapPosition!,
+                                    level: guildModel.level!);
                               }
                             },
                             child: Image.asset(
-                              IMG.format('my/guild_center_level_1'),
+                              IMG.format(
+                                  'my/guild_center_level_${guildModel.level! + 1}'),
                               width: 53,
                               height: 17,
                               scale: 3,
                             ),
-                          ),
+                          )
+                              : const SizedBox(),
                         ],
                       ),
-                      Text("ID:1234567",
+                      Text("ID:${guildModel.guildNo}",
                           style: const TextStyle(fontSize: 12, color: Color(0xFF999999),)),
                       XRichText(
                         TextSpan(
@@ -98,14 +108,14 @@ class MyGuildCenterPage extends StatelessWidget {
                                   width: 14,
                                   height: 14,
                                   scale: 3,
-                                  color: Color(0xFF999999),
+                                  color:const Color(0xFF999999),
                                 ),
                               ),
                               alignment: PlaceholderAlignment.middle,
                             ),
-                            const TextSpan(
-                              text: '1111',
-                              style: TextStyle(
+                            TextSpan(
+                              text: '${guildModel.anchorNum ?? 0}',
+                              style:const TextStyle(
                                 fontSize: 12,
                                 color: Color(0xFF999999),
                               ),
@@ -126,28 +136,25 @@ class MyGuildCenterPage extends StatelessWidget {
 
   /// 我的收益分成
   Widget _buildMyProfitSharingItem() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 50,
-        margin: const Pad(horizontal: 10,top: 10),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
-          color: Colors.white,),
-        child: Row(
-          children: [
-            Spacing.w10,
-            Text(
-              "我的收益分成",
-              style: Color(0xFF000000).ptB(14),
-            ),
-            const Spacing(),
-            Text(
-              "63%",
-              style: Color(0xFF000000).pt(14),
-            ),
-            Spacing.w10,
-          ],
-        ),
+    return Container(
+      height: 50,
+      margin: const Pad(horizontal: 10,top: 10),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
+        color: Colors.white,),
+      child: Row(
+        children: [
+          Spacing.w10,
+          Text(
+            "我的收益分成",
+            style:const Color(0xFF000000).ptB(14),
+          ),
+          const Spacing(),
+          Text(
+            guildModel.anchorLedgerRatio ?? '',
+            style:const Color(0xFF000000).pt(14),
+          ),
+          Spacing.w10,
+        ],
       ),
     );
   }
@@ -169,7 +176,7 @@ class MyGuildCenterPage extends StatelessWidget {
             Spacing.w10,
             Text(
               "公会流水",
-              style: Color(0xFF000000).ptB(14),
+              style:const Color(0xFF000000).ptB(14),
             ),
             const Spacing(),
             Image.asset(
@@ -201,7 +208,7 @@ class MyGuildCenterPage extends StatelessWidget {
             Spacing.w10,
             Text(
               "主播列表",
-              style: Color(0xFF000000).ptB(14),
+              style:const Color(0xFF000000).ptB(14),
             ),
             const Spacing(),
             Container(
@@ -214,7 +221,7 @@ class MyGuildCenterPage extends StatelessWidget {
               ),
               padding: const Pad(horizontal: 4,vertical: 2),
               child: Text(
-                "99+",
+                guildModel.anchorNum! > 99 ? "99+" : "${guildModel.anchorNum}",
                 style: Colors.white.pt(10),
               ),
             ),
