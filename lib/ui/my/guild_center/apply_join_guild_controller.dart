@@ -36,8 +36,15 @@ class ApplyJoinGuildController extends GetxController {
   }
 
   /// 点击申请加入公会
-  void clickApplyJoinGuild() async {
-    final result = await Api.Guild.applyJoinGuild(guildNumber: guildNumber);
-    print(result);
+  void clickApplyJoinGuild() {
+    Future.delayed(const Duration(microseconds:200),(){
+      simpleTry(
+              () => Api.Guild.applyJoinGuild(guildNumber: guildNumber),
+          showProgress: true,
+          callback: (resp) {
+                showToast("申请成功");
+                Get.back();
+          });
+    });
   }
 }

@@ -20,6 +20,6 @@ class ApiGuild extends ApiBase {
 
   /// 申请加入公会
   Future applyJoinGuild({required String guildNumber}) {
-    return _doPost('join/apply', data: {"guild_no": guildNumber});
+    return _doPost('apply/join', data: {"guild_no": guildNumber});
   }
 }

@@ -233,7 +233,9 @@ class ApplyJoinGuildPage extends StatelessWidget {
                 height: 38,
                 radius: 21,
                 colors: const [Color(0xFFE3B5FF), Color(0xFFBA4EFB)],
-                onTap: () {}),
+                onTap: () {
+                  controller.clickApplyJoinGuild();
+                }),
           ),
           Spacing.h4,
           Center(
