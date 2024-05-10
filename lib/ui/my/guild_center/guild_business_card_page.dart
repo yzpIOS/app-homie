@@ -133,11 +133,15 @@ class GuildBusinessCardPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Text(
-                        guildModel.guildName ?? "",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
+                      Expanded(
+                        child: Text(
+                          guildModel.guildName ?? "",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Spacing.w4,

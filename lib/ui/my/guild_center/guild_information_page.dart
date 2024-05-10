@@ -71,10 +71,16 @@ class GuildInformationPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            controller.guildModel.value.guildName ?? '',
-                            style: const TextStyle(
-                                fontSize: 16, color: Color(0xFF000000)),
+                          Expanded(
+                            child: Text(
+                              controller.guildModel.value.guildName ?? '',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF000000),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Spacing.w4,
                           controller.guildModel.value.level != null &&
@@ -162,11 +168,8 @@ class GuildInformationPage extends StatelessWidget {
             const Spacing(),
             ClipRRect(
               borderRadius: BorderRadius.circular(13),
-              child:  NetImage(
-                  controller.guildModel.value.masterAvatar ?? '',
-                  width: 26,
-                  height: 26,
-                  fit: BoxFit.contain),
+              child: NetImage(controller.guildModel.value.masterAvatar ?? '',
+                  width: 26, height: 26, fit: BoxFit.contain),
             ),
             Spacing.w4,
             Text(controller.guildModel.value.masterUsername ?? '',

@@ -68,11 +68,15 @@ class ApplyJoinGuildPage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              controller.guildModel.value.guildName ?? '',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Color(0xFF000000),
+                            Expanded(
+                              child: Text(
+                                controller.guildModel.value.guildName ?? '',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xFF000000),
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             Spacing.w4,

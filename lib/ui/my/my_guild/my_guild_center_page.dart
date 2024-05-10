@@ -54,9 +54,16 @@ class MyGuildCenterPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            "公会名称",
-                            style: const TextStyle(fontSize: 16, color: Color(0xFF000000),),
+                          Expanded(
+                            child: Text(
+                              "公会名称",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF000000),
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                           Spacing.w4,
                           GestureDetector(

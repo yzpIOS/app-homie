@@ -17,6 +17,22 @@ class GuildLevelDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double rightMargin = 25.0;
+    double leftInset = 15.0;
+    double imageX = 0;
+    double imageW = 214.0;
+    double maxWidth = Get.width;
+    if(showAnchorPoint.dx < leftInset){
+      //最小值
+      imageX = 0;
+    }else{
+      if((showAnchorPoint.dx - leftInset) + imageW + rightMargin > maxWidth){
+        //最大值
+        imageX = maxWidth - imageW - rightMargin;
+      }else{
+        imageX = showAnchorPoint.dx - leftInset;
+      }
+    }
     return GetBuilder<GuildLevelDialogController>(
         init: GuildLevelDialogController(),
         builder: (GuildLevelDialogController controller) {
@@ -39,11 +55,11 @@ class GuildLevelDialog extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  left: showAnchorPoint.dx - 15,
+                  left: imageX,
                   top: (showAnchorPoint.dy ?? 0) + 5,
                   child: Container(
-                    width: 214,
-                    height: 221,
+                    width: imageW,
+                    height: 215,
                     decoration: BoxDecoration(
                         image: DecorationImage(
                           image: AssetImage(
