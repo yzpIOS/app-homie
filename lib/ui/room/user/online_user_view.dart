@@ -125,7 +125,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
               ),
             ),
             child: const Center(
-              child: Text('全员禁麦',style: TextStyle(color: AppPalette.primary),
+              child: Text('全员禁言',style: TextStyle(color: AppPalette.primary),
             ),
           )
         )))
@@ -181,6 +181,9 @@ class OnlineUserView extends SimplePageView<Map> {
       isUserOnMic = personRoomMicCtrl?.isUserOnMic(uid) ?? false;
     }
 
+
+    ///
+
     /// 禁言或禁言中
     Widget GagOrGag() {
       return Obx(() => isSelectChat.value == true ?  XTextBtn(
@@ -231,6 +234,8 @@ class OnlineUserView extends SimplePageView<Map> {
       )
       );
     }
+
+
 
     /// 添加或移除管理员
     Widget $EditManagerView() {
@@ -301,6 +306,7 @@ class OnlineUserView extends SimplePageView<Map> {
 
     Widget child = Row(
       children: [
+
         Spacing.w10,
         Expanded(
           child: UserInfoCtrl.use(uid, builder: (dto) {

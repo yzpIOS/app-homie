@@ -325,14 +325,19 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       //   );
       // });
 
-      roomRxList.forEach((e) {
-        if(e is SystemMsgView){
+      // roomRxList.forEach((e) {
+      //   print('roomRxList:$roomRxList');
+      //   if(e is SystemMsgView){
+      //
+      //   }else{
+      //     print('roomRxList222:$e');
+      //      roomRxList.remove(e);
+      //   }
+      // });
 
-        }else{
-           roomRxList.remove(e);
-        }
-      });
-      print('来了吧444444444');
+      // 遍历删除除了SystemMsgView以外的其他类型的Widget
+      roomRxList.removeWhere((widget) => widget is! SystemMsgView);
+    //  print('来了吧444444444');
       return;
     }
 
