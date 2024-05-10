@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:app/common/theme.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
@@ -212,34 +213,30 @@ class GuildBusinessCardPage extends StatelessWidget {
 
   /// 房间列表
   Widget _roomContainer(GuildBusinessCardController controller) {
-    return GestureDetector(
-      onTap: () {},
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-        height:
-            Get.height - (144 + MediaQueryData.fromView(window).padding.top),
-        width: Get.width,
-        decoration: const BoxDecoration(
-          color: Color(0xFFF5F5F5),
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
+    return Container(
+      height:
+          Get.height - (144 + MediaQueryData.fromView(window).padding.top),
+      width: Get.width,
+      decoration: const BoxDecoration(
+        color: Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _headerWidget(controller),
-            _roomGridViewWidget(controller),
-            Obx(() {
-              return controller.checkExistGuild.value == true &&
-                      controller.userIsExistGuild.value == false
-                  ? _joinGuildWidget(controller)
-                  : const SizedBox(height: 1,);
-            }),
-            _safeBottomWidget(),
-          ],
-        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _headerWidget(controller),
+          _roomGridViewWidget(controller),
+          Obx(() {
+            return controller.checkExistGuild.value == true &&
+                    controller.userIsExistGuild.value == false
+                ? _joinGuildWidget(controller)
+                : const SizedBox(height: 1,);
+          }),
+          _safeBottomWidget(),
+        ],
       ),
     );
   }
@@ -308,7 +305,9 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 房间item
   Widget _roomItemBuilder(RoomInfoModel roomInfoModel) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Get.find<RoomManagerCtrl>().toRoom(roomId: roomInfoModel.roomId ?? 0);
+      },
       child: Container(
         height: 147,
         decoration: BoxDecoration(

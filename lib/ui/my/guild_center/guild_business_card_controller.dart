@@ -1,5 +1,6 @@
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
@@ -8,7 +9,6 @@ import 'package:app/ui/my/guild_center/model/guild_role_model.dart';
 import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
-import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 /// 公会名片控制器

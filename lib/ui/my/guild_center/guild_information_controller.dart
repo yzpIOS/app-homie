@@ -1,7 +1,9 @@
 
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/types.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
+import 'package:app/ui/my/user_home_page.dart';
 
 /// 公会信息控制器
 class GuildInformationController extends GetxController {
@@ -38,5 +40,11 @@ class GuildInformationController extends GetxController {
   /// 点击复制
   void clickCopy() {
     copyTxt(guildModel.value.guildNo ?? '');
+  }
+
+  /// 点击公会主
+  void clickGuildMaster(){
+    UID uid = '${guildModel.value.masterUid ?? 0}';
+    Get.to(() => UserHomePage(uid: uid,));
   }
 }

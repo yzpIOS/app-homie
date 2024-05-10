@@ -139,7 +139,9 @@ class GuildInformationPage extends StatelessWidget {
   /// 公会会长
   Widget _guildPresidentWidget(GuildInformationController controller) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        controller.clickGuildMaster();
+      },
       behavior: HitTestBehavior.opaque,
       child: Container(
         height: 50,
