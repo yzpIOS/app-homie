@@ -1,6 +1,8 @@
 
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/flow_details_page.dart';
+import 'package:app/ui/my/my_guild/model/guild_flow_model.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
 
@@ -12,6 +14,31 @@ class GuildFlowsController extends GetxController {
   final searchStartTime = ''.obs;
   /// 搜索结束时间
   final searchEndTime = ''.obs;
+  /// 数据列表
+  final List<GuildFlowModel> dataList = <GuildFlowModel>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadData();
+  }
+
+  /// 加载数据
+  void loadData(){
+    Future.delayed(const Duration(microseconds: 200),(){
+      simpleTry(
+              () => Api.Guild.guildFlowList(page: const PageNum()),showProgress: true, callback: (result) {
+        if(result != null && result is List){
+          final List<GuildFlowModel> flowList = [];
+          for (final Map item in result){
+            final guildModel = GuildFlowModel.fromJson(item);
+            flowList.add(guildModel);
+          }
+          dataList.addAll(flowList);
+        }
+      });
+    });
+  }
 
   /// 点击开始时间
   void clickSearchStartTime(){
