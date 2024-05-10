@@ -56,7 +56,7 @@ class GuildBusinessCardController extends GetxController {
 
   /// 点击房间信息
   void clickRoomInfo() {
-    Get.to(() => const GuildInformationPage());
+    Get.to(() => GuildInformationPage(guildNumber: guildModel.guildNo ?? '',));
   }
 
   /// 点击返回

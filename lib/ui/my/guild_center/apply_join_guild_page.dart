@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 class ApplyJoinGuildPage extends StatelessWidget {
   /// 公会号
   final String guildNumber;
-
   const ApplyJoinGuildPage({super.key, required this.guildNumber});
 
   @override
