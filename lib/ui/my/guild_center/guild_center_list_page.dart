@@ -50,22 +50,23 @@ class GuildCenterListPage extends StatelessWidget {
                 ),
               ),
               Obx(() {
-                return Expanded(
-                  child: controller.dataList.isNotEmpty ? ListView.builder(
-                    shrinkWrap: true,
-                    controller: controller.scrollController,
-                    itemCount: controller.dataList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _itemWidget(controller, index);
-                    },
-                  ) : const TipsView(),
-                );
+                return controller.loadedData.value == true
+                    ? Expanded(
+                        child: controller.dataList.isNotEmpty
+                            ? ListView.builder(
+                                shrinkWrap: true,
+                                controller: controller.scrollController,
+                                itemCount: controller.dataList.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return _itemWidget(controller, index);
+                                },
+                              )
+                            : const TipsView(),
+                      )
+                    : const SizedBox();
               }),
               SizedBox(
-                height: MediaQueryData
-                    .fromView(window)
-                    .padding
-                    .bottom,
+                height: MediaQueryData.fromView(window).padding.bottom,
               ),
             ],
           );
@@ -81,8 +82,10 @@ class GuildCenterListPage extends StatelessWidget {
       child: Container(
         height: 80,
         margin: const Pad(horizontal: 10, top: 10),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-          color: const Color(0xFFF6F9FF),),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: const Color(0xFFF6F9FF),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -93,23 +96,24 @@ class GuildCenterListPage extends StatelessWidget {
                 width: 30,
                 child: index + 1 < 4
                     ? Image.asset(
-                    IMG.format('my/guild_center_index_${index + 1}'),
-                    width: 30, height: 30)
+                        IMG.format('my/guild_center_index_${index + 1}'),
+                        width: 30,
+                        height: 30)
                     : Text(
-                  '${index + 1}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF000000),
-                  ),
-                )),
+                        '${index + 1}',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF000000),
+                        ),
+                      )),
             Spacing.w4,
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: NetImage(
-                  guildModel.icon,
+              child: NetImage(guildModel.icon,
                   placeholderImage: Image.asset(
                       IMG.format('my/guild_center_normal_icon'),
-                      width: 60, height: 60),
+                      width: 60,
+                      height: 60),
                   width: 60,
                   height: 60,
                   fit: BoxFit.contain),
@@ -125,29 +129,31 @@ class GuildCenterListPage extends StatelessWidget {
                       Text(
                         guildModel.guildName ?? '',
                         style: const TextStyle(
-                          fontSize: 16, color: Color(0xFF000000),),
+                          fontSize: 16,
+                          color: Color(0xFF000000),
+                        ),
                       ),
                       Spacing.w4,
                       guildModel.level != null && guildModel.level! > 0
                           ? GestureDetector(
-                        onTapDown: (TapDownDetails details) {
-                          var tapPosition = details.globalPosition;
-                          if (tapPosition != null) {
-                            tapPosition = tapPosition -
-                                const Offset(22, -5);
-                            Get.find<UserCtrl>().clickGuildLevel(
-                                anchorPoint: tapPosition!,
-                                level: guildModel.level!);
-                          }
-                        },
-                        child: Image.asset(
-                          IMG.format('my/guild_center_level_${guildModel
-                              .level! + 1}'),
-                          width: 53,
-                          height: 17,
-                          scale: 3,
-                        ),
-                      )
+                              onTapDown: (TapDownDetails details) {
+                                var tapPosition = details.globalPosition;
+                                if (tapPosition != null) {
+                                  tapPosition =
+                                      tapPosition - const Offset(22, -5);
+                                  Get.find<UserCtrl>().clickGuildLevel(
+                                      anchorPoint: tapPosition!,
+                                      level: guildModel.level!);
+                                }
+                              },
+                              child: Image.asset(
+                                IMG.format(
+                                    'my/guild_center_level_${guildModel.level! + 1}'),
+                                width: 53,
+                                height: 17,
+                                scale: 3,
+                              ),
+                            )
                           : const SizedBox(),
                     ],
                   ),
@@ -155,12 +161,16 @@ class GuildCenterListPage extends StatelessWidget {
                     children: [
                       Text("ID:${guildModel.guildNo}",
                           style: const TextStyle(
-                            fontSize: 12, color: Color(0xFF999999),)),
+                            fontSize: 12,
+                            color: Color(0xFF999999),
+                          )),
                       const Spacing(),
                       Text(
                         "贡献值：${NumberUtils.instance.formatNumber(guildModel.value ?? 0)}",
                         style: const TextStyle(
-                          fontSize: 14, color: Color(0xFF000000),),
+                          fontSize: 14,
+                          color: Color(0xFF000000),
+                        ),
                       ),
                     ],
                   ),

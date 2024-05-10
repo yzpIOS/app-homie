@@ -1,3 +1,4 @@
+/// 公会信息
 class GuildModel {
   String? guildNo;
   String? icon;

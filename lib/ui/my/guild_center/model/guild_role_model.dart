@@ -1,3 +1,4 @@
+/// 公会角色
 class GuildRoleModel {
   String? guildNo;
   String? anchorLedgerRatio;

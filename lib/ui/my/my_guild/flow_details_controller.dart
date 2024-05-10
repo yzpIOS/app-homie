@@ -3,7 +3,9 @@ import 'package:app/widgets/custom_date_picker.dart';
 
 /// 流水详情
 class FlowDetailsController extends GetxController {
+  /// 搜索开始时间
   final searchStartTime = ''.obs;
+  /// 搜索结束时间
   final searchEndTime = ''.obs;
 
   /// 点击开始时间

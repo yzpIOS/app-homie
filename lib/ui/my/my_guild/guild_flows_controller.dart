@@ -6,8 +6,11 @@ import 'package:app/widgets/custom_date_picker.dart';
 
 /// 公会流水控制器
 class GuildFlowsController extends GetxController {
+  /// 搜索房间号
   final TextEditingController searchRoomIdController = TextEditingController();
+  /// 搜索开始时间
   final searchStartTime = ''.obs;
+  /// 搜索结束时间
   final searchEndTime = ''.obs;
 
   /// 点击开始时间

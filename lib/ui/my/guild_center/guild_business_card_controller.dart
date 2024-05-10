@@ -13,10 +13,14 @@ import 'package:flutter/material.dart';
 
 /// 公会名片控制器
 class GuildBusinessCardController extends GetxController {
+  /// 公会信息
   final GuildModel guildModel;
   GuildBusinessCardController({required this.guildModel});
+  /// 公会房间列表
   final List<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
+  /// 是否检查过用户是否加入公会
   final checkExistGuild = false.obs;
+  /// 用户是否加入公会
   final userIsExistGuild = false.obs;
 
   @override

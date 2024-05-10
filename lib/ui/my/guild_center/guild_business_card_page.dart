@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 
 /// 公会名片页面
 class GuildBusinessCardPage extends StatelessWidget {
+  /// 公会信息
   final GuildModel guildModel;
-
   const GuildBusinessCardPage({super.key, required this.guildModel});
 
   @override

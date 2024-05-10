@@ -7,10 +7,16 @@ import 'package:flutter/material.dart';
 
 /// 公会中心列表控制器
 class GuildCenterListController extends GetxController {
+  /// 搜索框控制器
   final textController = TextEditingController();
+  /// 搜索关键字
   final keywordRx = RxnString();
+  /// 滚动控制器
   final ScrollController scrollController = ScrollController();
+  /// 数据列表
   final List<GuildModel> dataList = <GuildModel>[].obs;
+  /// 是否加载数据
+  final loadedData = false.obs;
 
   @override
   void onInit() {
@@ -18,8 +24,10 @@ class GuildCenterListController extends GetxController {
     loadData();
   }
 
+  /// 加载数据
   void loadData() async {
     final List itemList = await Api.Guild.guildRankList(page: const PageNum());
+    loadedData.value = true;
     final List<GuildModel> guildList = [];
     for (final Map item in itemList){
       final guildModel = GuildModel.fromJson(item);
