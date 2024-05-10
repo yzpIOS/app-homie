@@ -81,7 +81,7 @@ class GuildBusinessCardController extends GetxController {
         });
       });
     }else{
-      Get.to(() => const ApplyJoinGuildPage());
+      Get.to(() => ApplyJoinGuildPage(guildNumber: guildModel.guildNo ?? '',));
     }
   }
 }

@@ -8,23 +8,30 @@ import 'package:flutter/material.dart';
 
 /// 申请加入公会页面
 class ApplyJoinGuildPage extends StatelessWidget {
-  const ApplyJoinGuildPage({super.key});
+  /// 公会号
+  final String guildNumber;
+
+  const ApplyJoinGuildPage({super.key, required this.guildNumber});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ApplyJoinGuildController>(
-        init: ApplyJoinGuildController(),
+        init: ApplyJoinGuildController(guildNumber: guildNumber),
         builder: (ApplyJoinGuildController controller) {
           return Scaffold(
             appBar: xAppBar(title: '申请加入'),
             body: ColoredBox(
-              color:const Color(0xFFF5F5F5),
-              child: Column(
-                children: [
-                  _headerWidget(controller),
-                  _giftSharingWidget(controller),
-                ],
-              ),
+              color: const Color(0xFFF5F5F5),
+              child: Obx(() {
+                return controller.loadedData.value == true
+                    ? Column(
+                        children: [
+                          _headerWidget(controller),
+                          _giftSharingWidget(controller),
+                        ],
+                      )
+                    : const SizedBox();
+              }),
             ),
           );
         });
@@ -45,8 +52,11 @@ class ApplyJoinGuildPage extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: const NetImage(
-                        'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                    child: NetImage(controller.guildModel.value.icon ?? '',
+                        placeholderImage: Image.asset(
+                            IMG.format('my/guild_center_normal_icon'),
+                            width: 60,
+                            height: 60),
                         width: 60,
                         height: 60,
                         fit: BoxFit.contain),
@@ -60,37 +70,43 @@ class ApplyJoinGuildPage extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              "公会名称",
+                              controller.guildModel.value.guildName ?? '',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFF000000),
                               ),
                             ),
                             Spacing.w4,
-                            GestureDetector(
-                              onTapDown:(TapDownDetails details) {
-                                var tapPosition = details.globalPosition;
-                                if (tapPosition != null) {
-                                  tapPosition = tapPosition -
-                                      const Offset(22, -5);
-                                  Get.find<UserCtrl>().clickGuildLevel(
-                                      anchorPoint: tapPosition!, level: 2);
-                                }
-                              },
-                              child: Image.asset(
-                                IMG.format('my/guild_center_level_1'),
-                                width: 53,
-                                height: 17,
-                                scale: 3,
-                              ),
-                            ),
+                            controller.guildModel.value.level != null &&
+                                    controller.guildModel.value.level! > 0
+                                ? GestureDetector(
+                                    onTapDown: (TapDownDetails details) {
+                                      var tapPosition = details.globalPosition;
+                                      if (tapPosition != null) {
+                                        tapPosition =
+                                            tapPosition - const Offset(22, -5);
+                                        Get.find<UserCtrl>().clickGuildLevel(
+                                            anchorPoint: tapPosition!,
+                                            level: controller
+                                                .guildModel.value.level!);
+                                      }
+                                    },
+                                    child: Image.asset(
+                                      IMG.format(
+                                          'my/guild_center_level_${controller.guildModel.value.level!}'),
+                                      width: 53,
+                                      height: 17,
+                                      scale: 3,
+                                    ),
+                                  )
+                                : const SizedBox(),
                           ],
                         ),
                         Spacing.h2,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text("ID:1234567",
+                            Text("ID:${controller.guildModel.value.guildNo}",
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: Color(0xFF999999),
@@ -99,7 +115,7 @@ class ApplyJoinGuildPage extends StatelessWidget {
                             Container(
                               width: 1,
                               height: 6,
-                              color: Color(0xFFCCCCCC),
+                              color: const Color(0xFFCCCCCC),
                             ),
                             Spacing.w6,
                             XRichText(
@@ -107,20 +123,22 @@ class ApplyJoinGuildPage extends StatelessWidget {
                                 children: [
                                   WidgetSpan(
                                     child: Padding(
-                                      padding:const Pad(right: 4),
+                                      padding: const Pad(right: 4),
                                       child: Image.asset(
-                                        IMG.format('my/guild_center_user_count'),
+                                        IMG.format(
+                                            'my/guild_center_user_count'),
                                         width: 14,
                                         height: 14,
                                         scale: 3,
-                                        color: Color(0xFF999999),
+                                        color: const Color(0xFF999999),
                                       ),
                                     ),
                                     alignment: PlaceholderAlignment.middle,
                                   ),
-                                  const TextSpan(
-                                    text: '1111',
-                                    style: TextStyle(
+                                  TextSpan(
+                                    text:
+                                        '${controller.guildModel.value.anchorNum ?? 0}',
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       color: Color(0xFF999999),
                                     ),
@@ -131,7 +149,7 @@ class ApplyJoinGuildPage extends StatelessWidget {
                           ],
                         ),
                         Spacing.h2,
-                        Text("创建时间:2024.3.28",
+                        Text('创建时间:${controller.guildModel.value.createAt}',
                             style: const TextStyle(
                               fontSize: 12,
                               color: Color(0xFF999999),
@@ -150,9 +168,11 @@ class ApplyJoinGuildPage extends StatelessWidget {
   /// 收益分成
   Widget _giftSharingWidget(ApplyJoinGuildController controller) {
     return Container(
-      margin: const Pad(horizontal: 10,top: 10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),
-        color: Colors.white,),
+      margin: const Pad(horizontal: 10, top: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        color: Colors.white,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -187,13 +207,13 @@ class ApplyJoinGuildPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Row(
               children: [
-                Text("礼物抽佣比例",
-                    style: const TextStyle(
+                const Text("礼物抽佣比例",
+                    style: TextStyle(
                       fontSize: 14,
                       color: Color(0xFF000000),
                     )),
-                Spacing(),
-                Text("40%",
+                const Spacing(),
+                Text(controller.guildModel.value.anchorLedgerRatio ?? '',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Color(0xFF000000),

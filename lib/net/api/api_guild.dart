@@ -16,4 +16,11 @@ class ApiGuild extends ApiBase {
   }) {
     return _doPost('current/role', data:  {"guild_no":guildNumber});
   }
+
+  /// 公会详情
+  Future getGuildInfo({
+    required String guildNumber
+  }) {
+    return _doPost('detail', data:  {"guild_no":guildNumber});
+  }
 }

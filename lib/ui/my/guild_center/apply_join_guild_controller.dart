@@ -1,8 +1,29 @@
 
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:app/ui/my/guild_center/model/guild_model.dart';
 
 /// 申请加入公会控制器
 class ApplyJoinGuildController extends GetxController {
+  /// 公会编号
+  final String guildNumber;
+  ApplyJoinGuildController({required this.guildNumber});
+  /// 是否加载数据
+  final loadedData = false.obs;
+  /// 公会信息
+  final guildModel = GuildModel().obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadData();
+  }
+
+  /// 加载数据
+  void loadData() async {
+    final result = await Api.Guild.getGuildInfo(guildNumber: guildNumber);
+    loadedData.value = true;
+    final model = GuildModel.fromJson(result);
+    guildModel.value = model;
+  }
 }
