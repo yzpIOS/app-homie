@@ -25,15 +25,22 @@ class GuildCenterListController extends GetxController {
   }
 
   /// 加载数据
-  void loadData() async {
-    final List itemList = await Api.Guild.guildRankList(page: const PageNum());
-    loadedData.value = true;
-    final List<GuildModel> guildList = [];
-    for (final Map item in itemList){
-      final guildModel = GuildModel.fromJson(item);
-      guildList.add(guildModel);
-    }
-    dataList.addAll(guildList);
+  void loadData() {
+    Future.delayed(const Duration(microseconds: 200), () {
+      simpleTry(
+              () => Api.Guild.guildRankList(page: const PageNum()),showProgress: true, callback: (result) {
+        loadedData.value = true;
+        if(result != null && result is List){
+          final List<GuildModel> guildList = [];
+          for (final Map item in result){
+            final guildModel = GuildModel.fromJson(item);
+            guildList.add(guildModel);
+          }
+          dataList.addAll(guildList);
+        }
+      });
+    });
+
   }
 
   /// 点击列表项

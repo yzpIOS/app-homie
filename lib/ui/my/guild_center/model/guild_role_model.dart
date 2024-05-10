@@ -6,7 +6,7 @@ class GuildRoleModel {
 
   GuildRoleModel({this.guildNo, this.anchorLedgerRatio, this.anchorType});
 
-  GuildRoleModel.fromJson(Map<String, dynamic> json) {
+  GuildRoleModel.fromJson(Map<dynamic, dynamic> json) {
     guildNo = json['guild_no'];
     anchorLedgerRatio = json['anchor_ledger_ratio'];
     anchorType = json['anchor_type'];

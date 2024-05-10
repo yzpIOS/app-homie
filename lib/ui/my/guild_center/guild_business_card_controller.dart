@@ -1,4 +1,3 @@
-
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
@@ -9,17 +8,22 @@ import 'package:app/ui/my/guild_center/model/guild_role_model.dart';
 import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
+import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 /// 公会名片控制器
-class GuildBusinessCardController extends GetxController {
+class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
   /// 公会信息
   final GuildModel guildModel;
+
   GuildBusinessCardController({required this.guildModel});
+
   /// 公会房间列表
   final List<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
+
   /// 是否检查过用户是否加入公会
   final checkExistGuild = false.obs;
+
   /// 用户是否加入公会
   final userIsExistGuild = false.obs;
 
@@ -31,32 +35,48 @@ class GuildBusinessCardController extends GetxController {
   }
 
   /// 加载数据
-  void loadData() async {
-    final List itemList = await Api.Room.getGuildRoomList(guildModel.guildNo ?? "");
-    final List<RoomInfoModel> roomInfoModelList = [];
-    for (final Map item in itemList){
-      final roomInfoModel = RoomInfoModel.fromJson(item);
-      roomInfoModelList.add(roomInfoModel);
-    }
-    roomList.addAll(roomInfoModelList);
+  void loadData() {
+    Future.delayed(const Duration(microseconds:200),(){
+      simpleTry(
+              () => Api.Room.getGuildRoomList(guildModel.guildNo ?? ""),
+          showProgress: true,
+          callback: (resp) {
+            if (resp != null && resp is List) {
+              final List itemList = resp;
+              final List<RoomInfoModel> roomInfoModelList = [];
+              for (final Map item in itemList) {
+                final roomInfoModel = RoomInfoModel.fromJson(item);
+                roomInfoModelList.add(roomInfoModel);
+              }
+              roomList.addAll(roomInfoModelList);
+            }
+          });
+    });
   }
 
   /// 检查用户是否加入公会
-  void checkUserIsExistGuild(){
-    Api.Guild.checkUserIsExistGuild(guildNumber: guildModel.guildNo ?? "").then((value) {
-      checkExistGuild.value = true;
-      if(value != null){
-        final guildRoleModel = GuildRoleModel.fromJson(value);
-        userIsExistGuild.value = guildRoleModel.anchorType != null && guildRoleModel.anchorType! > 0;
-      }else{
-        userIsExistGuild.value = false;
-      }
+  void checkUserIsExistGuild() {
+    Future.delayed(const Duration(microseconds:400),(){
+      simpleTry(
+              () => Api.Guild.checkUserIsExistGuild(
+              guildNumber: guildModel.guildNo ?? ""), callback: (resp) {
+        checkExistGuild.value = true;
+        if (resp != null && resp is Map && resp.isNotEmpty) {
+          final guildRoleModel = GuildRoleModel.fromJson(resp);
+          userIsExistGuild.value =
+              guildRoleModel.anchorType != null && guildRoleModel.anchorType! > 0;
+        } else {
+          userIsExistGuild.value = false;
+        }
+      });
     });
   }
 
   /// 点击房间信息
   void clickRoomInfo() {
-    Get.to(() => GuildInformationPage(guildNumber: guildModel.guildNo ?? '',));
+    Get.to(() => GuildInformationPage(
+          guildNumber: guildModel.guildNo ?? '',
+        ));
   }
 
   /// 点击返回
@@ -66,22 +86,29 @@ class GuildBusinessCardController extends GetxController {
 
   /// 点击申请加入公会
   void clickApplyJoinGuild() {
-    if(!OAuthCtrl.isNameValidate){
+    if (!OAuthCtrl.isNameValidate) {
       // 未实名，就去实名
-      showDialog(context: Get.context!, builder: (context) {
-        return CommonDialog(title: "申请公会需实名认证",confirmLabel: "去实名", confirm:  () async {
-          // 未认证，去认证
-          await Get.to(() => const RealIdentity1Page());
-          // 更新用户数据
-          await OAuthCtrl.ins.udpateUserInfo();
-          // 未实名，直接返回
-          if(!OAuthCtrl.isNameValidate) {
-            return;
-          }
-        });
-      });
-    }else{
-      Get.to(() => ApplyJoinGuildPage(guildNumber: guildModel.guildNo ?? '',));
+      showDialog(
+          context: Get.context!,
+          builder: (context) {
+            return CommonDialog(
+                title: "申请公会需实名认证",
+                confirmLabel: "去实名",
+                confirm: () async {
+                  // 未认证，去认证
+                  await Get.to(() => const RealIdentity1Page());
+                  // 更新用户数据
+                  await OAuthCtrl.ins.udpateUserInfo();
+                  // 未实名，直接返回
+                  if (!OAuthCtrl.isNameValidate) {
+                    return;
+                  }
+                });
+          });
+    } else {
+      Get.to(() => ApplyJoinGuildPage(
+            guildNumber: guildModel.guildNo ?? '',
+          ));
     }
   }
 }

@@ -20,10 +20,24 @@ class ApplyJoinGuildController extends GetxController {
   }
 
   /// 加载数据
-  void loadData() async {
-    final result = await Api.Guild.getGuildInfo(guildNumber: guildNumber);
-    loadedData.value = true;
-    final model = GuildModel.fromJson(result);
-    guildModel.value = model;
+  void loadData() {
+    Future.delayed(const Duration(microseconds:200),(){
+      simpleTry(
+              () => Api.Guild.getGuildInfo(guildNumber: guildNumber),
+          showProgress: true,
+          callback: (resp) {
+            loadedData.value = true;
+            if (resp != null && resp is Map) {
+              final model = GuildModel.fromJson(resp);
+              guildModel.value = model;
+            }
+          });
+    });
+  }
+
+  /// 点击申请加入公会
+  void clickApplyJoinGuild() async {
+    final result = await Api.Guild.applyJoinGuild(guildNumber: guildNumber);
+    print(result);
   }
 }
