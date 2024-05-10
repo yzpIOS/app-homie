@@ -44,7 +44,6 @@ class GuildInformationController extends GetxController {
 
   /// 点击公会主
   void clickGuildMaster(){
-    UID uid = '${guildModel.value.masterUid ?? 0}';
-    Get.to(() => UserHomePage(uid: uid,));
+    Get.to(() => UserHomePage(uid: guildModel.value.masterUid ?? "0",));
   }
 }

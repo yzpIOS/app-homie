@@ -9,7 +9,7 @@ class GuildModel {
   int? value;
   int? rank;
   String? createAt;
-  int? masterUid;
+  String? masterUid;
   String? masterUsername;
   String? anchorLedgerRatio;
   String? masterAvatar;
@@ -27,7 +27,8 @@ class GuildModel {
         this.masterUid,
         this.masterUsername,
         this.anchorLedgerRatio,
-        this.masterAvatar});
+        this.masterAvatar
+        });
 
   GuildModel.fromJson(Map<dynamic, dynamic> json) {
     guildNo = json['guild_no'];
