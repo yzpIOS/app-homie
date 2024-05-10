@@ -160,8 +160,8 @@ class GuildInformationPage extends StatelessWidget {
             const Spacing(),
             ClipRRect(
               borderRadius: BorderRadius.circular(13),
-              child: const NetImage(
-                  'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+              child:  NetImage(
+                  controller.guildModel.value.masterAvatar ?? '',
                   width: 26,
                   height: 26,
                   fit: BoxFit.contain),
@@ -189,7 +189,6 @@ class GuildInformationPage extends StatelessWidget {
     return Container(
       width: Get.width - 2 * 10,
       margin: const Pad(horizontal: 10, top: 10),
-      // padding: const Pad(horizontal: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         color: Colors.white,

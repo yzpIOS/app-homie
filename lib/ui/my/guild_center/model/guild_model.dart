@@ -12,6 +12,7 @@ class GuildModel {
   int? masterUid;
   String? masterUsername;
   String? anchorLedgerRatio;
+  String? masterAvatar;
 
   GuildModel(
       {this.guildNo,
@@ -25,7 +26,8 @@ class GuildModel {
         this.createAt,
         this.masterUid,
         this.masterUsername,
-        this.anchorLedgerRatio});
+        this.anchorLedgerRatio,
+        this.masterAvatar});
 
   GuildModel.fromJson(Map<dynamic, dynamic> json) {
     guildNo = json['guild_no'];
@@ -40,6 +42,7 @@ class GuildModel {
     masterUid = json['master_uid'];
     masterUsername = json['master_username'];
     anchorLedgerRatio = json['anchor_ledger_ratio'];
+    masterAvatar = json['master_avatar'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,6 +59,7 @@ class GuildModel {
     data['master_uid'] = masterUid;
     data['master_username'] = masterUsername;
     data['anchor_ledger_ratio'] = anchorLedgerRatio;
+    data['master_avatar'] = masterAvatar;
     return data;
   }
 }
