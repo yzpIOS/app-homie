@@ -122,7 +122,7 @@ class InviteNewMembersShareQrcodeImageDialog extends StatelessWidget {
                             )
                         ),
                         TextSpan(
-                            text: '我是，邀请你一起畅游Homie世界，感受次时代社交~',
+                            text: '我是，邀请你一起畅游Homie语音，感受次时代社交~',
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,

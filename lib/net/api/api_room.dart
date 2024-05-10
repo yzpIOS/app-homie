@@ -446,7 +446,7 @@ class ApiRoom extends ApiBase {
   /// [status] 1.开麦 2.闭麦
   /// [role_id_list] 角色id组，不传默认是全员闭麦
   ///
-  Future speaking(int roomId, int status, {List<String>? role_id_list}) {
+  Future speaking(int roomId, int status, {List<int>? role_id_list}) {
     final data = {
       'room_id': roomId,
       'status': status,

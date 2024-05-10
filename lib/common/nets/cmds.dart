@@ -47,7 +47,7 @@ class CMD {
 
   static const C_ChatMessage = 2180; // 房间聊天=======对接完成
 
-
+  // static const S_BanChatBroadcast = 2271; // 房间禁麦广播
 
   static const C_SetNoticeMessage = 2140; // 设置房间公告
 

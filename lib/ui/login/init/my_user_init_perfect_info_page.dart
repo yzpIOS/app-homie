@@ -62,7 +62,7 @@ class _MyUserInitPerfectInfoPageState extends State<MyUserInitPerfectInfoPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('嗨，欢迎来到HOMIE世界~', style: TextStyle(fontSize: 22, color: AppPalette.primary, fontWeight: fw$SemiBold),),
+                    const Text('嗨，欢迎来到Homie语音~', style: TextStyle(fontSize: 22, color: AppPalette.primary, fontWeight: fw$SemiBold),),
                     const Spacing(height: 10, flex: null,),
                     const Text('有头像的小伙伴容易获得关注哦~', style: TextStyle(fontSize: 14, color: AppPalette.c9, fontWeight: fw$Regular),),
                     const Spacing(height: 50, flex: null,),

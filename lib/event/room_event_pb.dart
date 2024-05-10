@@ -33,6 +33,7 @@ abstract class RoomEvent<T extends GeneratedMessage> extends EventPb {
 
   NUID? get nuid => null;
 
+  int? get status => null;
   void myFire(T? msg) {
     data = msg;
     fire();
@@ -138,6 +139,10 @@ class WorldChatMessageBroadcastEvent extends RoomEvent<S_WorldChatMessageBroadca
 class ClearScreenBroadcastEvent extends RoomEvent<S_ClearScreenBroadcast> {
 }
 
+//  清除公屏广播
+class BanChatBroadcast extends RoomEvent<S_BanChatBroadcast> {
+}
+
 // 礼物播放广播(对应mq的8)
 class GiftEvent extends RoomEvent<S_GiftPlay> {
   UID? get uid => data?.sendId;
@@ -234,6 +239,9 @@ class MikeSpeakingEvent extends RoomEvent<S_MikeSpeakingBroadcast> {
 
   @override
   NUID? get nuid => data?.roomId;
+
+   @override
+   int? get status => data?.status;
 }
 
 // 个人房开麦结算

@@ -88,7 +88,7 @@ class CommonShareSheet extends StatelessWidget {
           shareType: 1,
           scene: (action == '微信好友') ? WechatScene.kSession : WechatScene.kTimeline,
           webpageUrl: 'https://app.web.homieyy.com?inviteId=${userDt0.account}',
-          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',
+          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie语音，感受次时代社交~',
           thumbData: iconBytes,
         ));
         break;
@@ -98,7 +98,7 @@ class CommonShareSheet extends StatelessWidget {
           shareType: 1,
           scene:  (action == 'QQ好友') ? TencentScene.kScene_QQ : TencentScene.kScene_QZone,
           webpageUrl: 'http://www.sina.com',
-          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie世界，感受次时代社交~',)
+          title: '我是${Get.find<MyInfoCtrl>().dataRx().nickName}，邀请你一起畅游Homie语音，感受次时代社交~',)
         );
         break;
       case '生成二维码':

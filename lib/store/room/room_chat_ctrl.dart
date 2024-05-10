@@ -156,6 +156,13 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       handleEvent(data);
     });
 
+    on<MikeSpeakingEvent>((data) {
+      // handleEvent(data);
+      print('禁麦通知：$data');
+        ///  int32 status = 3; // 1.禁麦 2.开麦
+      print('data.status：${data.status}');
+    });
+
      }
 
 

@@ -22,6 +22,8 @@ import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/user/room_user_item_view.dart';
 import 'package:fixnum/fixnum.dart';
 
+import '../../../3rd/tencent/rtc.dart';
+
 class OnlineUserPage extends StatefulWidget {
   final int roomId;
 
@@ -36,7 +38,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
   final data = <String, Widget>{};
 
   late TabController  controller;
-
+  RxBool result = true.obs;
   @override
   void initState() {
     super.initState();
@@ -58,6 +60,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
 
     controller = TabController(vsync: this, length: data.length);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -110,25 +113,69 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
         Positioned(
           top: 15,
           right: 10,
-            child: GestureDetector(
-              onTap: (){
-              },
-          child: Container(
-            width: 80.0, // 椭圆的宽度
-            height: 30.0, // 椭圆的高度
-            decoration: BoxDecoration(
-              color: Colors.white, // 容器的背景颜色
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                color: AppPalette.primary, // 边框颜色
-                width: 1.0, // 边框宽度
-              ),
-            ),
-            child: const Center(
-              child: Text('全员禁言',style: TextStyle(color: AppPalette.primary),
-            ),
-          )
-        )))
+            child: Obx(() => result.value == true ? GestureDetector(
+                onTap: (){
+                  simpleTry(
+                          () =>  Api.Room.chat(roomId: widget.roomId, roleId: Int64(0), status: 1),
+                      callback: (data) {
+                        print('data1231:$data');
+                        // if(data['code'] == 0){
+                        //  isSelectChat.value = false;
+                        // }else{
+                        //
+                        // }
+                        result.value = false;
+                      });
+                },
+                child: Container(
+                    width: 80.0, // 椭圆的宽度
+                    height: 30.0, // 椭圆的高度
+                    decoration: BoxDecoration(
+                      color: Colors.white, // 容器的背景颜色
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: AppPalette.primary, // 边框颜色
+                        width: 1.0, // 边框宽度
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text('全员禁言',style: TextStyle(color: AppPalette.primary),
+                      ),
+                    )
+                )): GestureDetector(
+                onTap: (){
+                  simpleTry(
+                          () =>  Api.Room.chat(roomId: widget.roomId, roleId: Int64(0), status: 2),
+                      callback: (data) {
+                        print('data1231:$data');
+                        // if(data['code'] == 0){
+                        //  isSelectChat.value = false;
+                        // }else{
+                        //
+                        // }
+                        result.value = true;
+                      });
+                },
+                child: Container(
+                    width: 80.0, // 椭圆的宽度
+                    height: 30.0, // 椭圆的高度
+                    decoration: BoxDecoration(
+                      color: Colors.white, // 容器的背景颜色
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: AppPalette.tips, // 边框颜色
+                        width: 1.0, // 边框宽度
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text('全员禁言中',style: TextStyle(color: AppPalette.tips),
+                      ),
+                    )
+                ))
+
+            )
+
+        )
       ]
     );
 
@@ -170,6 +217,7 @@ class OnlineUserView extends SimplePageView<Map> {
     var isShowEditManagerAction = (myRole.isOwner && !dataUserIsSelf && !dataUserIsOwner);
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
     RxBool isSelectChat = true.obs;
+    RxBool isSelectMike = true.obs;
 
     // 是否在个人直播间
     var isPersonRoom = _ctrl is PersonRoomCtrl;
@@ -197,11 +245,11 @@ class OnlineUserView extends SimplePageView<Map> {
                 () =>  Api.Room.chat(roomId: roomId, roleId: nuid, status: 1),
             callback: (data) {
                   print('data1231:$data');
-                  if(data['code'] == 0){
+                  // if(data['code'] == 0){
                     isSelectChat.value = false;
-                  }else{
-
-                  }
+                  // }else{
+                  //
+                  // }
             });
 
           // controller.updateItem(index, item);
@@ -218,11 +266,11 @@ class OnlineUserView extends SimplePageView<Map> {
                   () =>  Api.Room.chat(roomId: roomId, roleId: nuid, status: 2),
               callback: (data) {
                 print('data1231:$data');
-                if(data['code'] == 0){
+                // if(data['code'] == 0){
                   isSelectChat.value = true;
-                }else{
-
-                }
+                // }else{
+                //
+                // }
               });
           print('来了啊啊22');
           // await Api.Room.chat(roomId: roomId, roleId: nuid, status: 2).then((val)=>
@@ -235,7 +283,45 @@ class OnlineUserView extends SimplePageView<Map> {
       );
     }
 
+    /// 点击开关麦
+    Widget OpenOrCloseMike(){
+      return  Obx(() => isSelectMike.value == true ? GestureDetector(
+        onTap: (){
+          List<int>? roleIdList = [];
+          roleIdList.add(nuid.toInt());
+          simpleTry(
+                  () => Api.Room.speaking(roomId, 1,role_id_list:roleIdList),
+              callback: (t) {
+                 Rtc.status.value = 1;
+                 isSelectMike.value = false;
+              }
+          );
+         // Api.Room.micMute(roleId: nuid, isMute: false);
 
+        },
+        child: Container(
+          child:  Image.asset(IMG.format('room/mic/kaimai'), width: 20, height: 20, fit: BoxFit.contain),
+        ),
+      ):GestureDetector(
+        onTap: (){
+          // Api.Room.micMute(roleId: nuid, isMute: true);
+          // isSelectMike.value = true;
+          List<int>? roleIdList = [];
+          roleIdList.add(nuid.toInt());
+          simpleTry(
+                  () => Api.Room.speaking(roomId, 2,role_id_list:roleIdList),
+              callback: (t) {
+                Rtc.status.value = 0;
+                isSelectMike.value = true;
+              }
+          );
+        },
+        child: Container(
+          child:  Image.asset(IMG.format('room/mic/bimai'), width: 20, height: 20, fit: BoxFit.contain),
+        ),
+      )
+      );
+    }
 
     /// 添加或移除管理员
     Widget $EditManagerView() {
@@ -306,14 +392,15 @@ class OnlineUserView extends SimplePageView<Map> {
 
     Widget child = Row(
       children: [
-
-        Spacing.w10,
+        Spacing.w6,
+        if (isShowEditManagerAction) OpenOrCloseMike(),
+        // Spacing.w6,
         Expanded(
           child: UserInfoCtrl.use(uid, builder: (dto) {
             return RoomUserItemView(
               data: dto,
               role: role,
-              padding: const Pad(left: 10, right: 20),
+              padding: const Pad(left: 5, right: 10),
             );
           }),
         ),

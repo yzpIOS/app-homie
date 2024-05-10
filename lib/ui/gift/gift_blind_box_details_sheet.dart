@@ -125,7 +125,7 @@ class GiftBlindBoxDetailsSheet extends StatelessWidget {
                 TextSpan(text: '1.平台内惊喜$title玩法正在逐步开放中，不同用户玩法有所不同。直播间未展示惊喜$title玩法的用户，暂时无法参与。\n'),
                 TextSpan(text: '2.被判定为消费异常账号的用户无法参与惊喜$title玩法。\n'),
                 TextSpan(text: '3.用户不得以不正当手段或舞弊行为参与本活动，包括但不限于: 第三方代充；利用系统bug或通过机器人软件、蜘蛛软件、爬虫 软件、刷屏软件等任何程序或技术手段参与本活动。\n'),
-                TextSpan(text: '4.用户不得在活动期间违反法律法规、平台规则或本活动规则；如Homie世界发现或有合理理由认为用户存在前述行为，Homie世界有权单方面采取取消参与资格、取消权益、收回已发放权益、封禁相关账号等措施。\n'),
+                TextSpan(text: '4.用户不得在活动期间违反法律法规、平台规则或本活动规则；如Homie语音发现或有合理理由认为用户存在前述行为，Homie语音有权单方面采取取消参与资格、取消权益、收回已发放权益、封禁相关账号等措施。\n'),
                 TextSpan(text: '5.平台内其他榜单与数值加分按照$title实际开出的礼物价值进行积分计算。\n'),
                 TextSpan(text: '6.本活动与Apple inc无关\n\n'),
                 TextSpan(
