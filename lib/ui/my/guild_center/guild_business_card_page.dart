@@ -27,16 +27,10 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Positioned(
                   left: 0,
                   top: 0,
-                  height: 202 + MediaQueryData
-                      .fromView(window)
-                      .padding
-                      .top,
+                  height: 202 + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
                   child: BlurredNetworkImage(
-                      height: 202 + MediaQueryData
-                          .fromView(window)
-                          .padding
-                          .top,
+                      height: 202 + MediaQueryData.fromView(window).padding.top,
                       width: Get.width,
                       blurSigma: 10,
                       imageUrl: guildModel.icon ?? ""),
@@ -44,24 +38,15 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Positioned(
                   left: 0,
                   top: 0,
-                  height: 202 + MediaQueryData
-                      .fromView(window)
-                      .padding
-                      .top,
+                  height: 202 + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
                   child: _buildBusinessCard(controller),
                 ),
                 Positioned(
                   left: 0,
-                  top: 144 + MediaQueryData
-                      .fromView(window)
-                      .padding
-                      .top,
+                  top: 144 + MediaQueryData.fromView(window).padding.top,
                   height: Get.height -
-                      (144 + MediaQueryData
-                          .fromView(window)
-                          .padding
-                          .top),
+                      (144 + MediaQueryData.fromView(window).padding.top),
                   width: Get.width,
                   child: _roomContainer(controller),
                 ),
@@ -79,10 +64,7 @@ class GuildBusinessCardPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(height: MediaQueryData
-              .fromView(window)
-              .padding
-              .top),
+          SizedBox(height: MediaQueryData.fromView(window).padding.top),
           SizedBox(
             height: 44,
             child: Row(
@@ -160,24 +142,24 @@ class GuildBusinessCardPage extends StatelessWidget {
                       Spacing.w4,
                       guildModel.level != null && guildModel.level! > 0
                           ? GestureDetector(
-                        onTapDown: (TapDownDetails details) {
-                          var tapPosition = details.globalPosition;
-                          if (tapPosition != null) {
-                            tapPosition =
-                                tapPosition - const Offset(22, -5);
-                            Get.find<UserCtrl>().clickGuildLevel(
-                                anchorPoint: tapPosition!,
-                                level: guildModel.level! + 1);
-                          }
-                        },
-                        child: Image.asset(
-                          IMG.format(
-                              'my/guild_center_level_${guildModel.level! + 1}'),
-                          width: 53,
-                          height: 17,
-                          scale: 3,
-                        ),
-                      )
+                              onTapDown: (TapDownDetails details) {
+                                var tapPosition = details.globalPosition;
+                                if (tapPosition != null) {
+                                  tapPosition =
+                                      tapPosition - const Offset(22, -5);
+                                  Get.find<UserCtrl>().clickGuildLevel(
+                                      anchorPoint: tapPosition!,
+                                      level: guildModel.level! + 1);
+                                }
+                              },
+                              child: Image.asset(
+                                IMG.format(
+                                    'my/guild_center_level_${guildModel.level! + 1}'),
+                                width: 53,
+                                height: 17,
+                                scale: 3,
+                              ),
+                            )
                           : const SizedBox(),
                     ],
                   ),
@@ -235,10 +217,7 @@ class GuildBusinessCardPage extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         height:
-        Get.height - (144 + MediaQueryData
-            .fromView(window)
-            .padding
-            .top),
+            Get.height - (144 + MediaQueryData.fromView(window).padding.top),
         width: Get.width,
         decoration: const BoxDecoration(
           color: Color(0xFFF5F5F5),
@@ -252,7 +231,12 @@ class GuildBusinessCardPage extends StatelessWidget {
           children: [
             _headerWidget(controller),
             _roomGridViewWidget(controller),
-            _joinGuildWidget(controller),
+            Obx(() {
+              return controller.checkExistGuild.value == true &&
+                      controller.userIsExistGuild.value == false
+                  ? _joinGuildWidget(controller)
+                  : const SizedBox(height: 1,);
+            }),
             _safeBottomWidget(),
           ],
         ),
@@ -263,13 +247,15 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 头部widget
   Widget _headerWidget(GuildBusinessCardController controller) {
     return Padding(
-      padding:const Pad(left: 15, top: 15, bottom: 5),
-      child: Text("公会房间(${controller.roomList.length})",
-          style:const TextStyle(
-            fontSize: 14,
-            color: Color(0xFF000000),
-            fontWeight: fw$Bold,
-          )),
+      padding: const Pad(left: 15, top: 15, bottom: 5),
+      child: Obx(() {
+        return Text("公会房间(${controller.roomList.length})",
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF000000),
+              fontWeight: fw$Bold,
+            ));
+      }),
     );
   }
 
@@ -287,7 +273,7 @@ class GuildBusinessCardPage extends StatelessWidget {
             crossAxisSpacing: 22,
           ),
           children:
-          controller.roomList.map(_roomItemBuilder).toList(growable: false),
+              controller.roomList.map(_roomItemBuilder).toList(growable: false),
         ),
       );
     });
@@ -315,10 +301,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 安全底部widget
   Widget _safeBottomWidget() {
     return SizedBox(
-      height: MediaQueryData
-          .fromView(window)
-          .padding
-          .bottom,
+      height: MediaQueryData.fromView(window).padding.bottom,
     );
   }
 
@@ -337,47 +320,49 @@ class GuildBusinessCardPage extends StatelessWidget {
                 offset: const Offset(0.0, 2.0), //阴影y轴偏移量
                 blurRadius: 4, //阴影模糊程度
                 spreadRadius: 1 //阴影扩散程度
-            )
+                )
           ],
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            (roomInfoModel.classifyName != null && roomInfoModel.classifyName!.isNotEmpty) ?
-            Container(
-              padding: const Pad(vertical: 1, horizontal: 7),
-              margin: const Pad(left: 3, top: 3),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFFFFBBAC), Color(0xFFFF7154)],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              ),
-              child: Text(roomInfoModel.classifyName ?? "",
-                  style: const TextStyle(
-                    fontSize: 10,
-                    color: Colors.white,
-                  )),
-            ) : const SizedBox(width: 34,height: 16,),
+            (roomInfoModel.classifyName != null &&
+                    roomInfoModel.classifyName!.isNotEmpty)
+                ? Container(
+                    padding: const Pad(vertical: 1, horizontal: 7),
+                    margin: const Pad(left: 3, top: 3),
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Color(0xFFFFBBAC), Color(0xFFFF7154)],
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                    ),
+                    child: Text(roomInfoModel.classifyName ?? "",
+                        style: const TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
+                        )),
+                  )
+                : const SizedBox(
+                    width: 34,
+                    height: 16,
+                  ),
             Spacing.h2,
             Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child:  NetImage(
-                    roomInfoModel.image,
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.contain),
+                child: NetImage(roomInfoModel.image,
+                    width: 60, height: 60, fit: BoxFit.contain),
               ),
             ),
             Spacing.h10,
             Center(
               child: Text(
                 roomInfoModel.roomName ?? "",
-                style:const Color(0xFF000000).ptB(14),
+                style: const Color(0xFF000000).ptB(14),
               ),
             ),
             Spacing.h10,
@@ -387,7 +372,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Spacing.w10,
                 Text(
                   "ID:${roomInfoModel.roomId}",
-                  style:const Color(0xFF999999).pt(12),
+                  style: const Color(0xFF999999).pt(12),
                 ),
                 const Spacing(),
                 XRichText(
@@ -404,7 +389,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                       ),
                       TextSpan(
                         text: '${roomInfoModel.hotValue ?? 0}',
-                        style:const Color(0xFF999999).pt(12),
+                        style: const Color(0xFF999999).pt(12),
                       ),
                     ],
                   ),
