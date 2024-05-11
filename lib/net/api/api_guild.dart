@@ -71,4 +71,14 @@ class ApiGuild extends ApiBase {
   Future guildAnchorApplyList({required PageNum page}) {
     return _doPost('apply/list', data: page + {});
   }
+
+  /// 处理公会主播申请
+  Future handleGuildAnchorApply({required String userId,required bool isAgree}) {
+    final Map map = {};
+    map['status'] = isAgree ? 1 : 2;
+    if(userId.isNotEmpty){
+      map['public_id'] = userId;
+    }
+    return _doPost('apply/examine', data: map);
+  }
 }

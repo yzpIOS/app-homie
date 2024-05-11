@@ -103,7 +103,7 @@ class AnchorApplyListPage extends StatelessWidget {
                 Text(anchorModel.username ?? "",
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Color(0xFF0000000),
+                      color:Color(0xFF000000),
                     )),
                 Spacing.h2,
                 Text(
@@ -126,7 +126,9 @@ class AnchorApplyListPage extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
-            onTap: (){}
+            onTap: (){
+              controller.clickRefuse(index);
+            }
           ),
           Spacing.w10,
           Text("同意", style: Colors.white.pt(14)).toBtn(
@@ -138,7 +140,9 @@ class AnchorApplyListPage extends StatelessWidget {
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),
-              onTap: (){}
+              onTap: (){
+                controller.clickAgree(index);
+              }
           ),
         ],
       ),

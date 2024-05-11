@@ -52,11 +52,23 @@ class AnchorApplyListController extends GetxController {
   /// 点击拒绝
   void clickRefuse(int index){
     final anchorModel = dataList[index];
+    handleApply(index: index, userId: anchorModel.publicId ?? '', isAgree: false);
   }
 
   /// 点击同意
   void clickAgree(int index){
     final anchorModel = dataList[index];
+    handleApply(index: index, userId: anchorModel.publicId ?? '', isAgree: true);
+  }
 
+  /// 处理申请
+  void handleApply({required int index, required String userId,required bool isAgree}){
+    Future.delayed(const Duration(microseconds: 200),(){
+      simpleTry(
+              () => Api.Guild.handleGuildAnchorApply(userId: userId,isAgree: isAgree),showProgress: true, callback: (result) {
+        showToast("处理成功");
+        dataList.removeAt(index);
+      });
+    });
   }
 }
