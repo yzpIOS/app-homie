@@ -11,6 +11,7 @@ import 'package:app/widgets/spacing.dart';
 import 'package:app/widgets/text.dart';
 import 'package:app/widgets/tips_view.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 
 /// 公会榜单页面
@@ -35,6 +36,7 @@ class GuildCenterListPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: XInputView(
                   controller: controller.textController,
+                  focusNode: controller.keywordFocus,
                   height: 32,
                   autofocus: false,
                   hintText: '搜索公会名称/ID',
@@ -46,20 +48,48 @@ class GuildCenterListPage extends StatelessWidget {
                     child: const Icon(Icons.search_rounded,
                         size: 18, color: AppPalette.c9),
                   ),
-                  onSubmitted: controller.keywordRx,
+                  onSubmitted: (value){
+                    controller.clickSearch();
+                  },
                 ),
               ),
               Obx(() {
                 return controller.loadedData.value == true
                     ? Expanded(
                         child: controller.dataList.isNotEmpty
-                            ? ListView.builder(
-                                shrinkWrap: true,
-                                controller: controller.scrollController,
-                                itemCount: controller.dataList.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return _itemWidget(controller, index);
-                                },
+                            ? EasyRefresh(
+                                controller: controller.easyRefreshController,
+                                onLoad: controller.loadMoreData,
+                                //自定义样式
+                                footer: ClassicFooter(
+                                    noMoreText: '没有更多数据了',
+                                    textStyle: const Color(0xFF999999).pt(14),
+                                    dragText: "",
+                                    armedText: "",
+                                    readyText: "",
+                                    processingText: "",
+                                    processedText: "",
+                                    noMoreIcon: const SizedBox.shrink(),
+                                    failedIcon: null,
+                                    failedText: "",
+                                    messageText: "",
+                                    messageStyle:
+                                        const Color(0xFF999999).pt(14),
+                                    succeededIcon: null,
+                                    showMessage: false,
+                                    pullIconBuilder: null,
+                                    iconDimension: 0,
+                                    spacing: 0,
+                                    iconTheme: null),
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  controller: controller.scrollController,
+                                  itemCount: controller.dataList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return _itemWidget(controller, index);
+                                  },
+                                ),
                               )
                             : const TipsView(),
                       )
@@ -128,7 +158,7 @@ class GuildCenterListPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                         guildModel.guildName ?? '',
+                          guildModel.guildName ?? '',
                           style: const TextStyle(
                             fontSize: 16,
                             color: Color(0xFF000000),

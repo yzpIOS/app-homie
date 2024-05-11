@@ -334,13 +334,13 @@ class GuildBusinessCardPage extends StatelessWidget {
                 ? Container(
                     padding: const Pad(vertical: 1, horizontal: 7),
                     margin: const Pad(left: 3, top: 3),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
-                        colors: [Color(0xFFFFBBAC), Color(0xFFFF7154)],
+                        colors:roomInfoModel.classifyIconColorList,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                      borderRadius:const BorderRadius.all(Radius.circular(8.0)),
                     ),
                     child: Text(roomInfoModel.classifyName ?? "",
                         style: const TextStyle(
