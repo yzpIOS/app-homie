@@ -61,4 +61,9 @@ class ApiGuild extends ApiBase {
       return _doPost('room/statistics', data: page + map);
     }
   }
+
+  /// 公会主播列表
+  Future guildAnchorList({required PageNum page}) {
+    return _doPost('anchor/list', data: page + {});
+  }
 }

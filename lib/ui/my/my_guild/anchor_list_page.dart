@@ -2,7 +2,9 @@ import 'dart:ui';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/anchor_list_controller.dart';
+import 'package:app/ui/my/my_guild/model/anchor_model.dart';
 import 'package:app/widgets.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 
 /// 主播列表页面
@@ -26,12 +28,42 @@ class AnchorListPage extends StatelessWidget {
                 Spacing.h6,
                 _headerWidget(),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 2,
-                    itemBuilder: (BuildContext context, int index) {
-                      return _itemWidget(controller, index);
-                    },
-                  ),
+                    child:
+                    EasyRefresh(
+                      controller: controller.easyRefreshController,
+                      onLoad: controller.loadMoreData,
+                      //自定义样式
+                      footer: ClassicFooter(
+                          noMoreText: '没有更多数据了',
+                          textStyle: const Color(0xFF999999).pt(14),
+                          dragText: "",
+                          armedText: "",
+                          readyText: "",
+                          processingText: "",
+                          processedText: "",
+                          noMoreIcon: const SizedBox.shrink(),
+                          failedIcon: null,
+                          failedText: "",
+                          messageText: "",
+                          messageStyle: const Color(0xFF999999).pt(14),
+                          succeededIcon: null,
+                          showMessage: false,
+                          pullIconBuilder: null,
+                          iconDimension: 0,
+                          spacing: 0,
+                          iconTheme: null
+                      ),
+                      child: Obx(() {
+                        return ListView.builder(
+                          // shrinkWrap: true,
+                          controller: controller.scrollController,
+                          itemCount: controller.dataList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _itemWidget(controller, index);
+                          },
+                        );
+                      }),
+                    )
                 ),
                 _bottomWidget(),
               ],
@@ -81,6 +113,7 @@ class AnchorListPage extends StatelessWidget {
 
   /// 列表项
   Widget _itemWidget(AnchorListController controller, int index) {
+    final AnchorModel anchorModel = controller.dataList[index];
     return Column(
       children: [
         Container(
@@ -91,8 +124,8 @@ class AnchorListPage extends StatelessWidget {
               Spacing.w20,
               ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: const NetImage(
-                    'https://t7.baidu.com/it/u=1595072465,3644073269&fm=193&f=GIF',
+                child: NetImage(
+                    anchorModel.avatarUrl ?? '',
                     width: 30,
                     height: 30,
                     fit: BoxFit.contain),
@@ -100,20 +133,20 @@ class AnchorListPage extends StatelessWidget {
               Spacing.w2,
               Expanded(
                   child: Center(
-                      child: Text("叮叮猫${index + 1}",
+                      child: Text(anchorModel.username ?? '',
                           style: const Color(0xFF000000).pt(14)))),
               Spacing.w2,
               Container(
                 width: 80,
                 alignment: Alignment.center,
-                child: Text("1234567", style: const Color(0xFF000000).pt(14)),
+                child: Text('${anchorModel.roleId ?? ''}', style: const Color(0xFF000000).pt(14)),
               ),
               Spacing.w2,
               Container(
                 width: 90,
                 alignment: Alignment.center,
                 child:
-                    Text("2024-12-19", style: const Color(0xFF000000).pt(14)),
+                    Text(anchorModel.intoTimeString, style: const Color(0xFF000000).pt(14)),
               ),
               Spacing.w10,
             ],
