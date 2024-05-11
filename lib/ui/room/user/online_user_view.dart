@@ -218,6 +218,8 @@ class OnlineUserView extends SimplePageView<Map> {
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
     RxBool isSelectChat = true.obs;
     RxBool isSelectMike = true.obs;
+    var hasMike = item['mike_status'] != 0;
+    isSelectMike.value = item['mike_status'] == 1;
 
     // 是否在个人直播间
     var isPersonRoom = _ctrl is PersonRoomCtrl;
@@ -399,7 +401,7 @@ class OnlineUserView extends SimplePageView<Map> {
     Widget child = Row(
       children: [
         Spacing.w6,
-        if (isShowEditManagerAction) OpenOrCloseMike(),
+        if (isShowEditManagerAction && hasMike == true) OpenOrCloseMike(),
         // Spacing.w6,
         Expanded(
           child: UserInfoCtrl.use(uid, builder: (dto) {
