@@ -18,15 +18,20 @@ import 'package:flutter/material.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/ui/room/overlay/scene_overlay_input.dart';
 
+import '../../../store/room/room_chat_ctrl.dart';
+
 class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   final ValueChanged<String> onItemClick;
 
   SceneOverlayBottomBar({super.key, required this.onItemClick});
 
+
+
   @override
   Widget build(BuildContext context) {
     // final isSquare = controller is SquareCtrl;
     final isRoom = controller is RoomCtrl;
+
     //
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -93,11 +98,12 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     return Obx(
       () {
         final isEnable = (isRoom && freeMicRx && canSpeak(myUid)) || (manInHallNearByRoom?.isTrue ?? false);
-
+        int? status = RoomChatCtrl.status.value;
+        print('123status = $status');
         return _IconBtnSvg(
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
           padding: Pad(horizontal: 5),
-          onItemClick: isEnable ? onItemClick : null,
+          onItemClick: isEnable && status != 1 ? onItemClick : null,
         );
       },
     );
@@ -106,15 +112,20 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
   Widget $SpeakView() {
     return Obx(
       () {
-        return _IconBtnSvg(
+
+        return  _IconBtnSvg(
           icon: '声音_${Rtc.audioRx().intVal}',
           padding: Pad(horizontal: 5),
-          onItemClick: onItemClick,
+          onItemClick:onItemClick,
         );
       },
     );
   }
 }
+
+
+
+
 
 class MicOperate extends StatefulWidget {
 

@@ -5,6 +5,7 @@ import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -15,6 +16,8 @@ import 'package:app/ui/room/room_page.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:fixnum/fixnum.dart';
+
+import '../../3rd/tencent/rtc.dart';
 
 const String type_room = "房间";
 
@@ -41,7 +44,8 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   static List cacheEvents = [];
 
   bool firstEnter = true;
-
+   // int? status = 2;
+   static final status = 0.obs;
   static bool isDisposed = false;
 
   @override
@@ -160,7 +164,18 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       // handleEvent(data);
       print('禁麦通知：$data');
         ///  int32 status = 3; // 1.禁麦 2.开麦
-      print('data.status：${data.status}');
+      var uid = data.uid;
+      status.value = data.status!;
+      print('status.value = ${status.value}');
+      late final _ctrl = sceneCtrl<RoomCtrl>();
+      final role = _ctrl.getRole(uid!);
+      final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
+      print('dataUserIsOwner: $dataUserIsOwner');
+      if(OAuthCtrl.uid == data.uid && !dataUserIsOwner){
+        print('测试来了吗222');
+        Rtc.micSwitch();
+      }
+
     });
 
      }

@@ -287,12 +287,15 @@ class OnlineUserView extends SimplePageView<Map> {
     Widget OpenOrCloseMike(){
       return  Obx(() => isSelectMike.value == true ? GestureDetector(
         onTap: (){
+          /// 点击了禁麦
+          print('点击了禁麦');
           List<int>? roleIdList = [];
           roleIdList.add(nuid.toInt());
           simpleTry(
                   () => Api.Room.speaking(roomId, 1,role_id_list:roleIdList),
               callback: (t) {
-                 Rtc.status.value = 1;
+              //   Rtc.status.value = 1;
+             //   Rtc.micSwitch();
                  isSelectMike.value = false;
               }
           );
@@ -306,12 +309,15 @@ class OnlineUserView extends SimplePageView<Map> {
         onTap: (){
           // Api.Room.micMute(roleId: nuid, isMute: true);
           // isSelectMike.value = true;
+          /// 点击了开麦
+          print('点击了开麦');
           List<int>? roleIdList = [];
           roleIdList.add(nuid.toInt());
           simpleTry(
                   () => Api.Room.speaking(roomId, 2,role_id_list:roleIdList),
               callback: (t) {
-                Rtc.status.value = 0;
+                // Rtc.status.value = 0;
+            //    Rtc.micSwitch();
                 isSelectMike.value = true;
               }
           );
