@@ -1,12 +1,67 @@
+import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/my/my_guild/model/guild_room_flow_model.dart';
+import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 
 /// 流水详情
 class FlowDetailsController extends GetxController {
+  /// 房间号
+  final String roomNumber;
+  FlowDetailsController({required this.roomNumber});
+  final totalAmount = 0.obs;
   /// 搜索开始时间
   final searchStartTime = ''.obs;
+  /// 搜索开始时间戳
+  int searchStartTimeStamp = 0;
   /// 搜索结束时间
   final searchEndTime = ''.obs;
+  /// 搜索结束时间戳
+  int searchEndTimeStamp = 0;
+  /// 数据列表
+  RxList<GuildRoomFlowModel> dataList = <GuildRoomFlowModel>[].obs;
+  /// 刷新控制器
+  final EasyRefreshController easyRefreshController = EasyRefreshController(
+    controlFinishRefresh: false,
+    controlFinishLoad: true,
+  );
+  /// 滚动控制器
+  final ScrollController scrollController = ScrollController();
+  /// 分页
+  PageNum pageNum = const PageNum();
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadData();
+  }
+
+  /// 加载数据
+  void loadData(){
+    Future.delayed(const Duration(microseconds: 200),(){
+      simpleTry(
+              () => Api.Guild.guildRoomFlowList(page: pageNum,roomNo: roomNumber, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp),showProgress: true, callback: (result) {
+        if(result != null && result is Map){
+          final List items = result['items'];
+          totalAmount.value = result['total_amount'];
+          final List<GuildRoomFlowModel> flowList = [];
+          for (final Map item in items){
+            final guildModel = GuildRoomFlowModel.fromJson(item);
+            flowList.add(guildModel);
+          }
+          dataList.addAll(flowList);
+          easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
+        }
+      });
+    });
+  }
+
+  /// 加载更多
+  void loadMoreData(){
+    pageNum.nextPage();
+    loadData();
+  }
 
   /// 点击开始时间
   void clickSearchStartTime(){
@@ -38,5 +93,8 @@ class FlowDetailsController extends GetxController {
 
   /// 点击搜索
   void clickSearch(){
+    dataList.clear();
+    pageNum = const PageNum();
+    loadData();
   }
 }

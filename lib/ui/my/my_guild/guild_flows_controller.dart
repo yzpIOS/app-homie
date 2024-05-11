@@ -106,7 +106,7 @@ class GuildFlowsController extends GetxController {
   /// 点击流水详情
   void clickFlowDetail(int index){
     searchRoomIdFocus.unfocus();
-    Get.to(()=>const FlowDetailsPage());
+    final GuildFlowModel model = dataList[index];
+    Get.to(()=>FlowDetailsPage(roomNumber: model.roomNo ?? '0',));
   }
-
 }
