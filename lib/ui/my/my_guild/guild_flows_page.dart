@@ -4,6 +4,8 @@ import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/guild_flows_controller.dart';
 import 'package:app/ui/my/my_guild/model/guild_flow_model.dart';
 import 'package:app/widgets.dart';
+import 'package:easy_refresh/easy_refresh.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// 公会流水页面
@@ -24,14 +26,42 @@ class GuildFlowsPage extends StatelessWidget {
                 Spacing.h16,
                 _headerWidget(),
                 Expanded(
-                  child: Obx(() {
-                    return ListView.builder(
-                      itemCount: controller.dataList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _itemWidget(controller, index);
-                      },
-                    );
-                  }),
+                    child:
+                    EasyRefresh(
+                      controller: controller.easyRefreshController,
+                      onLoad: controller.loadMoreData,
+                      //自定义样式
+                      footer: ClassicFooter(
+                          noMoreText: '没有更多数据了',
+                          textStyle: const Color(0xFF999999).pt(14),
+                          dragText: "",
+                          armedText: "",
+                          readyText: "",
+                          processingText: "",
+                          processedText: "",
+                          noMoreIcon: const SizedBox.shrink(),
+                          failedIcon: null,
+                          failedText: "",
+                          messageText: "",
+                          messageStyle: const Color(0xFF999999).pt(14),
+                          succeededIcon: null,
+                          showMessage: false,
+                          pullIconBuilder: null,
+                          iconDimension: 0,
+                          spacing: 0,
+                          iconTheme: null
+                      ),
+                      child: Obx(() {
+                        return ListView.builder(
+                          // shrinkWrap: true,
+                          controller: controller.scrollController,
+                          itemCount: controller.dataList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return _itemWidget(controller, index);
+                          },
+                        );
+                      }),
+                    )
                 ),
                 Spacing.h2,
                 _bottomWidget(),
@@ -51,6 +81,8 @@ class GuildFlowsPage extends StatelessWidget {
           Expanded(
               child: TextField(
                 controller: controller.searchRoomIdController,
+                keyboardType: TextInputType.number,
+                focusNode: controller.searchRoomIdFocus,
                 decoration: const InputDecoration(
                   hintText: '请输入房间ID',
                   border: InputBorder.none,

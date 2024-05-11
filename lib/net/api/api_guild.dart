@@ -19,14 +19,22 @@ class ApiGuild extends ApiBase {
   }
 
   /// 公会流水列表
-  Future guildFlowList({required PageNum page,String? startTime,String? endTime}) {
-    final Map map = {};
-    if(startTime != null && startTime.isNotEmpty){
-      map['start_time'] = startTime;
+  Future guildFlowList({required PageNum page,int? startTimeStamp,int? endTimeStamp,String? roomNo}) {
+    if(startTimeStamp != null && startTimeStamp! > 0 && endTimeStamp != null && endTimeStamp! > 0 && endTimeStamp < startTimeStamp){
+      showToast("结束时间不能早于起始时间");
+      return Future.value();
+    }else{
+      final Map map = {};
+      if(startTimeStamp != null && startTimeStamp! > 0){
+        map['start_time'] = startTimeStamp;
+      }
+      if(endTimeStamp != null && endTimeStamp! > 0){
+        map['end_time'] = endTimeStamp;
+      }
+      if(roomNo != null && roomNo.isNotEmpty){
+        map['room_no'] = roomNo;
+      }
+      return _doPost('statistics', data: page + map);
     }
-    if(endTime != null && endTime.isNotEmpty){
-      map['end_time'] = endTime;
-    }
-    return _doPost('statistics', data: page + map);
   }
 }

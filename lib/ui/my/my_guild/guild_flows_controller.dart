@@ -5,17 +5,33 @@ import 'package:app/ui/my/my_guild/flow_details_page.dart';
 import 'package:app/ui/my/my_guild/model/guild_flow_model.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 
 /// 公会流水控制器
 class GuildFlowsController extends GetxController {
   /// 搜索房间号
   final TextEditingController searchRoomIdController = TextEditingController();
+  /// 搜索房间号焦点
+  FocusNode searchRoomIdFocus = FocusNode();
   /// 搜索开始时间
   final searchStartTime = ''.obs;
+  /// 搜索开始时间戳
+  int searchStartTimeStamp = 0;
   /// 搜索结束时间
   final searchEndTime = ''.obs;
+  /// 搜索结束时间戳
+  int searchEndTimeStamp = 0;
   /// 数据列表
-  final List<GuildFlowModel> dataList = <GuildFlowModel>[].obs;
+  RxList<GuildFlowModel> dataList = <GuildFlowModel>[].obs;
+  /// 刷新控制器
+  final EasyRefreshController easyRefreshController = EasyRefreshController(
+    controlFinishRefresh: false,
+    controlFinishLoad: true,
+  );
+  /// 滚动控制器
+  final ScrollController scrollController = ScrollController();
+  /// 分页
+  PageNum pageNum = const PageNum();
 
   @override
   void onInit() {
@@ -27,7 +43,7 @@ class GuildFlowsController extends GetxController {
   void loadData(){
     Future.delayed(const Duration(microseconds: 200),(){
       simpleTry(
-              () => Api.Guild.guildFlowList(page: const PageNum()),showProgress: true, callback: (result) {
+              () => Api.Guild.guildFlowList(page: pageNum, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp,roomNo: searchRoomIdController.text),showProgress: true, callback: (result) {
         if(result != null && result is List){
           final List<GuildFlowModel> flowList = [];
           for (final Map item in result){
@@ -35,13 +51,21 @@ class GuildFlowsController extends GetxController {
             flowList.add(guildModel);
           }
           dataList.addAll(flowList);
+          easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
         }
       });
     });
   }
 
+  /// 加载更多
+  void loadMoreData(){
+    pageNum.nextPage();
+    loadData();
+  }
+
   /// 点击开始时间
   void clickSearchStartTime(){
+    searchRoomIdFocus.unfocus();
     CustomDatePicker.show(
       Get.context!,
       startDate: DateTime(DateTime.now().year-2, 1, 1),
@@ -50,12 +74,14 @@ class GuildFlowsController extends GetxController {
       title: '起始时间',
       onSelected: (DateTime date) {
         searchStartTime.value = '${date.year}-${date.month}-${date.day}';
+        searchStartTimeStamp = date.millisecondsSinceEpoch;
       },
     );
   }
 
   /// 点击结束时间
   void clickSearchEndTime(){
+    searchRoomIdFocus.unfocus();
     CustomDatePicker.show(
       Get.context!,
       startDate: DateTime(DateTime.now().year-2, 1, 1),
@@ -64,17 +90,22 @@ class GuildFlowsController extends GetxController {
       title: '终止时间',
       onSelected: (DateTime date) {
         searchEndTime.value = '${date.year}-${date.month}-${date.day}';
+        searchEndTimeStamp = date.millisecondsSinceEpoch;
       },
     );
   }
 
   /// 点击搜索
   void clickSearch(){
-
+    searchRoomIdFocus.unfocus();
+    dataList.clear();
+    pageNum = const PageNum();
+    loadData();
   }
 
   /// 点击流水详情
   void clickFlowDetail(int index){
+    searchRoomIdFocus.unfocus();
     Get.to(()=>const FlowDetailsPage());
   }
 

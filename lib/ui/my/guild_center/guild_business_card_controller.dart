@@ -18,7 +18,7 @@ class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
   GuildBusinessCardController({required this.guildModel});
 
   /// 公会房间列表
-  final List<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
+  RxList<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
 
   @override
   void onInit() {

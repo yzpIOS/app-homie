@@ -14,7 +14,7 @@ class GuildCenterListController extends GetxController {
   /// 滚动控制器
   final ScrollController scrollController = ScrollController();
   /// 数据列表
-  final List<GuildModel> dataList = <GuildModel>[].obs;
+  RxList<GuildModel> dataList = <GuildModel>[].obs;
   /// 是否加载数据
   final loadedData = false.obs;
 
