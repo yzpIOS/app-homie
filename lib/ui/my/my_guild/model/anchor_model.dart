@@ -4,6 +4,7 @@ class AnchorModel {
   int? roleId;
   String? username;
   String? avatarUrl;
+  String? avatar;
   int? sex;
   String? phone;
   int? intoTime;
@@ -16,6 +17,7 @@ class AnchorModel {
       {this.roleId,
         this.username,
         this.avatarUrl,
+        this.avatar,
         this.sex,
         this.phone,
         this.intoTime,
@@ -28,6 +30,7 @@ class AnchorModel {
     roleId = json['role_id'];
     username = json['username'];
     avatarUrl = json['avatar_url'];
+    avatar = json['avatar'];
     sex = json['sex'];
     phone = json['phone'];
     intoTime = json['into_time'];
@@ -42,6 +45,7 @@ class AnchorModel {
     data['role_id'] = roleId;
     data['username'] = username;
     data['avatar_url'] = avatarUrl;
+    data['avatar'] = avatar;
     data['sex'] = sex;
     data['phone'] = phone;
     data['into_time'] = intoTime;

@@ -66,4 +66,9 @@ class ApiGuild extends ApiBase {
   Future guildAnchorList({required PageNum page}) {
     return _doPost('anchor/list', data: page + {});
   }
+
+  /// 公会主播申请列表
+  Future guildAnchorApplyList({required PageNum page}) {
+    return _doPost('apply/list', data: page + {});
+  }
 }

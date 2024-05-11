@@ -42,7 +42,7 @@ class ApplyJoinGuildController extends GetxController {
               () => Api.Guild.applyJoinGuild(guildNumber: guildNumber),
           showProgress: true,
           callback: (resp) {
-                showToast("申请成功");
+                showToast("你已申请加入${guildModel.value.guildName}公会，等待会长审批");
                 Get.back();
           });
     });
