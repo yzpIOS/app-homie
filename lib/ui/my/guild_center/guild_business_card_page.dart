@@ -378,7 +378,7 @@ class GuildBusinessCardPage extends StatelessWidget {
               children: [
                 Spacing.w10,
                 Text(
-                  "ID:${roomInfoModel.roomId}",
+                  "ID:${roomInfoModel.roomNo}",
                   style: const Color(0xFF999999).pt(12),
                 ),
                 const Spacing(),
