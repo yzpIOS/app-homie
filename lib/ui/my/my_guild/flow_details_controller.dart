@@ -43,15 +43,19 @@ class FlowDetailsController extends GetxController {
       simpleTry(
               () => Api.Guild.guildRoomFlowList(page: pageNum,roomNo: roomNumber, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp),showProgress: true, callback: (result) {
         if(result != null && result is Map){
-          final List items = result['items'];
-          totalAmount.value = result['total_amount'];
-          final List<GuildRoomFlowModel> flowList = [];
-          for (final Map item in items){
-            final guildModel = GuildRoomFlowModel.fromJson(item);
-            flowList.add(guildModel);
+          totalAmount.value = result['total_amount'] ?? 0;
+          if(result['items'] is List){
+            final List items = result['items'];
+            final List<GuildRoomFlowModel> flowList = [];
+            for (final Map item in items){
+              final guildModel = GuildRoomFlowModel.fromJson(item);
+              flowList.add(guildModel);
+            }
+            dataList.addAll(flowList);
+            easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
+          }else{
+            easyRefreshController.finishLoad(IndicatorResult.noMore);
           }
-          dataList.addAll(flowList);
-          easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
         }
       });
     });

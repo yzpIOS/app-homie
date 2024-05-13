@@ -39,7 +39,7 @@ class GuildFlowsPage extends StatelessWidget {
                           readyText: "",
                           processingText: "",
                           processedText: "",
-                          noMoreIcon: const SizedBox.shrink(),
+                          noMoreIcon: const SizedBox(),
                           failedIcon: null,
                           failedText: "",
                           messageText: "",
@@ -49,11 +49,11 @@ class GuildFlowsPage extends StatelessWidget {
                           pullIconBuilder: null,
                           iconDimension: 0,
                           spacing: 0,
-                          iconTheme: null
+                          iconTheme: null,
                       ),
                       child: Obx(() {
                         return ListView.builder(
-                          // shrinkWrap: true,
+                          shrinkWrap: true,
                           controller: controller.scrollController,
                           itemCount: controller.dataList.length,
                           itemBuilder: (BuildContext context, int index) {

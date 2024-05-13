@@ -249,7 +249,7 @@ class GuildBusinessCardPage extends StatelessWidget {
     return Padding(
       padding: const Pad(left: 15, top: 15, bottom: 5),
       child: Obx(() {
-        return Text("公会房间(${controller.roomList.length})",
+        return Text(controller.roomList.isNotEmpty ? "公会房间(${controller.roomList.length})" : "公会房间",
             style: const TextStyle(
               fontSize: 14,
               color: Color(0xFF000000),

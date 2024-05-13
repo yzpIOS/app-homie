@@ -35,9 +35,6 @@ class GuildFlowsController extends GetxController {
   /// 总金额
   final totalAmount = 0.obs;
 
-  var canLoadMore = true;
-
-
   @override
   void onInit() {
     super.onInit();
@@ -46,28 +43,26 @@ class GuildFlowsController extends GetxController {
 
   /// 加载数据
   void loadData(){
-    if(canLoadMore){
-      Future.delayed(const Duration(microseconds: 200),(){
-        simpleTry(
-                () => Api.Guild.guildFlowList(page: pageNum, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp,roomNo: searchRoomIdController.text),showProgress: true, callback: (result) {
-          if(result != null && result is Map){
+    Future.delayed(const Duration(microseconds: 200),(){
+      simpleTry(
+              () => Api.Guild.guildFlowList(page: pageNum, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp,roomNo: searchRoomIdController.text),showProgress: true, callback: (result) {
+        if(result != null && result is Map){
+          totalAmount.value = result['total_amount'] ?? 0;
+          if(result['items'] is List){
             final List items = result['items'];
-            totalAmount.value = result['total_amount'];
             final List<GuildFlowModel> flowList = [];
             for (final Map item in items){
               final guildModel = GuildFlowModel.fromJson(item);
               flowList.add(guildModel);
             }
             dataList.addAll(flowList);
-            canLoadMore = flowList.length >= pageNum.size;
-            easyRefreshController.finishLoad(canLoadMore ? IndicatorResult.success : IndicatorResult.noMore);
-            // easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
+            easyRefreshController.finishLoad(flowList.length >= pageNum.size ? IndicatorResult.success : IndicatorResult.noMore);
+          }else{
+            easyRefreshController.finishLoad(IndicatorResult.noMore);
           }
-        });
+        }
       });
-    }else{
-      easyRefreshController.finishLoad(IndicatorResult.noMore);
-    }
+    });
   }
 
   /// 加载更多
