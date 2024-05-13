@@ -139,7 +139,7 @@ mixin BaseClient {
   /// 唤起回调
   ///
   void riseOnData(int curCmd, GeneratedMessage? generatedMessage) {
-    debugPrint("riseOnData接收, cmd= $curCmd, data = ${generatedMessage?.toString()}");
+   // debugPrint("riseOnData接收, cmd= $curCmd, data = ${generatedMessage?.toString()}");
 
     // 唤起回调, 全局的数据监听
     for(int index = 0; index < _onReceive.length; index ++) {

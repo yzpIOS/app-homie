@@ -45,7 +45,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
 
   bool firstEnter = true;
    // int? status = 2;
-   static final status = 0.obs;
+   static RxInt status = 0.obs;
   static bool isDisposed = false;
 
   @override
@@ -164,16 +164,25 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       // handleEvent(data);
       print('禁麦通知：$data');
         ///  int32 status = 3; // 1.禁麦 2.开麦
-      var uid = data.uid;
-      status.value = data.status!;
-      print('status.value = ${status.value}');
-      late final _ctrl = sceneCtrl<RoomCtrl>();
-      final role = _ctrl.getRole(uid!);
-      final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
-      print('dataUserIsOwner: $dataUserIsOwner');
-      if(OAuthCtrl.uid == data.uid && !dataUserIsOwner){
+       var uid = data.uid;
+       var statusq = data.status;
+       print('status.value = ${status.value}');
+      // late final _ctrl = sceneCtrl<RoomCtrl>();
+      // final role = _ctrl.getRole(uid!);
+      // final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
+      // print('dataUserIsOwner: $dataUserIsOwner');
+      if(OAuthCtrl.uid == uid){
         print('测试来了吗222');
-        Rtc.micSwitch();
+       // Rtc.micSwitch();
+        if(statusq == 1){
+          Rtc.micRx.value = false;
+          status.value = 1;
+        }else{
+          Rtc.micRx.value = true;
+          status.value = 2;
+        }
+
+
       }
 
     });

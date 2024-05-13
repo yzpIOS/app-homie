@@ -298,7 +298,7 @@ class OnlineUserView extends SimplePageView<Map> {
               callback: (t) {
               //   Rtc.status.value = 1;
              //   Rtc.micSwitch();
-                 isSelectMike.value = false;
+               isSelectMike.value = false;
               }
           );
          // Api.Room.micMute(roleId: nuid, isMute: false);
@@ -319,7 +319,7 @@ class OnlineUserView extends SimplePageView<Map> {
                   () => Api.Room.speaking(roomId, 2,role_id_list:roleIdList),
               callback: (t) {
                 // Rtc.status.value = 0;
-            //    Rtc.micSwitch();
+            // Rtc.micSwitch();
                 isSelectMike.value = true;
               }
           );

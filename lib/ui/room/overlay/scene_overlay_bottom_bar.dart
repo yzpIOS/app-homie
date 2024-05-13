@@ -104,6 +104,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
           icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
           padding: Pad(horizontal: 5),
           onItemClick: isEnable && status != 1 ? onItemClick : null,
+         // onItemClick: isEnable ? onItemClick : null,
         );
       },
     );
