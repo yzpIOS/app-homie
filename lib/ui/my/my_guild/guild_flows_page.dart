@@ -64,7 +64,7 @@ class GuildFlowsPage extends StatelessWidget {
                     )
                 ),
                 Spacing.h2,
-                _bottomWidget(),
+                _bottomWidget(controller),
               ],
             ),
           );
@@ -258,7 +258,7 @@ class GuildFlowsPage extends StatelessWidget {
   }
 
   /// 底部
-  Widget _bottomWidget() {
+  Widget _bottomWidget(GuildFlowsController controller) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -282,7 +282,10 @@ class GuildFlowsPage extends StatelessWidget {
               Spacing.w20,
               Text("总流水：", style: const Color(0xFFC05EFB).ptB(16)),
               const Spacing(),
-              Text("123456789", style: const Color(0xFFC05EFB).ptB(16)),
+              Obx(() {
+                return Text(
+                    controller.totalAmount.string, style: const Color(0xFFC05EFB).ptB(16));
+              }),
               Spacing.w20,
             ],
           ),

@@ -32,6 +32,11 @@ class GuildFlowsController extends GetxController {
   final ScrollController scrollController = ScrollController();
   /// 分页
   PageNum pageNum = const PageNum();
+  /// 总金额
+  final totalAmount = 0.obs;
+
+  var canLoadMore = true;
+
 
   @override
   void onInit() {
@@ -41,20 +46,28 @@ class GuildFlowsController extends GetxController {
 
   /// 加载数据
   void loadData(){
-    Future.delayed(const Duration(microseconds: 200),(){
-      simpleTry(
-              () => Api.Guild.guildFlowList(page: pageNum, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp,roomNo: searchRoomIdController.text),showProgress: true, callback: (result) {
-        if(result != null && result is List){
-          final List<GuildFlowModel> flowList = [];
-          for (final Map item in result){
-            final guildModel = GuildFlowModel.fromJson(item);
-            flowList.add(guildModel);
+    if(canLoadMore){
+      Future.delayed(const Duration(microseconds: 200),(){
+        simpleTry(
+                () => Api.Guild.guildFlowList(page: pageNum, startTimeStamp: searchStartTimeStamp, endTimeStamp: searchEndTimeStamp,roomNo: searchRoomIdController.text),showProgress: true, callback: (result) {
+          if(result != null && result is Map){
+            final List items = result['items'];
+            totalAmount.value = result['total_amount'];
+            final List<GuildFlowModel> flowList = [];
+            for (final Map item in items){
+              final guildModel = GuildFlowModel.fromJson(item);
+              flowList.add(guildModel);
+            }
+            dataList.addAll(flowList);
+            canLoadMore = flowList.length >= pageNum.size;
+            easyRefreshController.finishLoad(canLoadMore ? IndicatorResult.success : IndicatorResult.noMore);
+            // easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
           }
-          dataList.addAll(flowList);
-          easyRefreshController.finishLoad(flowList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
-        }
+        });
       });
-    });
+    }else{
+      easyRefreshController.finishLoad(IndicatorResult.noMore);
+    }
   }
 
   /// 加载更多
