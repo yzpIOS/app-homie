@@ -218,7 +218,7 @@ class OnlineUserView extends SimplePageView<Map> {
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
     RxBool isSelectChat = true.obs;
     RxBool isSelectMike = true.obs;
-    var hasMike = item['mike_status'] != 0;
+    var hasMike = item['mike_status'] != 0 || item['mike_status'] != 2;
     isSelectMike.value = item['mike_status'] == 1;
 
     // 是否在个人直播间

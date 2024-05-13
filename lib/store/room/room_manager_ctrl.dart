@@ -11,6 +11,7 @@ import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
+import 'package:app/store/room/room_chat_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/gift/gift_send_logic.dart';
@@ -488,7 +489,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           // 个人房
           toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 2) {
-          // 公会房
+
           toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 3) {
           // 广场

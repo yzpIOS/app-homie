@@ -221,6 +221,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     super.onClose();
     roomId = 0;
     isDisposed = true;
+    RoomChatCtrl.status.value = 0; // 退出房间清空状态
     // 切回房间
     Api.RoomMsg.switchRoom();
     RoomChatCtrl.cacheEvents.clear();
@@ -576,6 +577,14 @@ class RoomCtrl extends SceneCtrl {
         Get.find<MyGiftCtrl>().doPreCache();
       },
     );
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    // 公会房
+    RoomChatCtrl.status.value = 0; // 退出房间清空状态
   }
 
   @override

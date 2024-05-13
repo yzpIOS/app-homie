@@ -18,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:fixnum/fixnum.dart';
 
+import '../../../store/room/room_chat_ctrl.dart';
+
 abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
   late final roomId = controller.roomId;
 
@@ -68,7 +70,6 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         break;
       case '退出':
         controller.keepState = false;
-
         Get.back();
         break;
       case '最小化':

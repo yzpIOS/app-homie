@@ -230,7 +230,7 @@ class _ItemView extends StatelessWidget {
                 } else {
                   isOpen = Rtc.openMicRx.contains(uid);
                 }
-
+                print('isOpen=&$isOpen');
                 return isOpen ? Spacing.blank : $MicStateView('闭麦');
               },
             );
