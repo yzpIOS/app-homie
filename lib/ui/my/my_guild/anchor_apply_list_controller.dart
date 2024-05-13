@@ -1,4 +1,5 @@
 
+import 'package:app/event/event.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/model/anchor_model.dart';
@@ -67,6 +68,7 @@ class AnchorApplyListController extends GetxController {
       simpleTry(
               () => Api.Guild.handleGuildAnchorApply(userId: userId,isAgree: isAgree),showProgress: true, callback: (result) {
         showToast("处理成功");
+        const HandleGuildAnchorApplyEvent().fire();
         dataList.removeAt(index);
       });
     });

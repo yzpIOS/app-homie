@@ -18,10 +18,12 @@ class AnchorListPage extends StatelessWidget {
         builder: (AnchorListController controller) {
           return Scaffold(
             appBar: xAppBar(title: '主播列表', actions: [
-              Text("申请(99+)", style: const Color(0xFF000000).pt(14)).toBtn(
+              Obx(() {
+                return Text(controller.anchorApplyCount.value > 0 ? "申请(${controller.anchorApplyCount.value > 99 ? '99+' : controller.anchorApplyCount.value})" : "申请", style: const Color(0xFF000000).pt(14));
+              }).toBtn(
                   onTap: () {
-                controller.clickAnchorApplyList();
-              }),
+                    controller.clickAnchorApplyList();
+                  }),
             ]),
             body: Column(
               children: [
@@ -29,6 +31,7 @@ class AnchorListPage extends StatelessWidget {
                 _headerWidget(),
                 Expanded(
                     child:
+
                     EasyRefresh(
                       controller: controller.easyRefreshController,
                       onLoad: controller.loadMoreData,
@@ -139,14 +142,16 @@ class AnchorListPage extends StatelessWidget {
               Container(
                 width: 80,
                 alignment: Alignment.center,
-                child: Text('${anchorModel.roleId ?? ''}', style: const Color(0xFF000000).pt(14)),
+                child: Text('${anchorModel.roleId ?? ''}',
+                    style: const Color(0xFF000000).pt(14)),
               ),
               Spacing.w2,
               Container(
                 width: 90,
                 alignment: Alignment.center,
                 child:
-                    Text(anchorModel.intoTimeString, style: const Color(0xFF000000).pt(14)),
+                Text(anchorModel.intoTimeString,
+                    style: const Color(0xFF000000).pt(14)),
               ),
               Spacing.w10,
             ],
@@ -165,7 +170,10 @@ class AnchorListPage extends StatelessWidget {
   /// 底部
   Widget _bottomWidget() {
     return SizedBox(
-      height: MediaQueryData.fromView(window).padding.bottom,
+      height: MediaQueryData
+          .fromView(window)
+          .padding
+          .bottom,
     );
   }
 }

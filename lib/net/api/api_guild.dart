@@ -81,4 +81,9 @@ class ApiGuild extends ApiBase {
     }
     return _doPost('apply/examine', data: map);
   }
+
+  /// 公会主播申请数量
+  Future getGuildAnchorApplyCount() {
+    return _doPost('apply/total', data: {});
+  }
 }
