@@ -5,7 +5,7 @@ import 'package:app/ui/my/my_guild/flow_details_page.dart';
 import 'package:app/ui/my/my_guild/model/guild_flow_model.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/custom_date_picker.dart';
-import 'package:easy_refresh/easy_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 公会流水控制器
 class GuildFlowsController extends GetxController {
@@ -24,10 +24,8 @@ class GuildFlowsController extends GetxController {
   /// 数据列表
   RxList<GuildFlowModel> dataList = <GuildFlowModel>[].obs;
   /// 刷新控制器
-  final EasyRefreshController easyRefreshController = EasyRefreshController(
-    controlFinishRefresh: false,
-    controlFinishLoad: true,
-  );
+  RefreshController refreshController =
+  RefreshController(initialRefresh: false);
   /// 滚动控制器
   final ScrollController scrollController = ScrollController();
   /// 分页
@@ -56,9 +54,9 @@ class GuildFlowsController extends GetxController {
               flowList.add(guildModel);
             }
             dataList.addAll(flowList);
-            easyRefreshController.finishLoad(flowList.length >= pageNum.size ? IndicatorResult.success : IndicatorResult.noMore);
+            flowList.length >= pageNum.size ? refreshController.loadComplete() : refreshController.loadNoData();
           }else{
-            easyRefreshController.finishLoad(IndicatorResult.noMore);
+            refreshController.loadNoData();
           }
         }
       });

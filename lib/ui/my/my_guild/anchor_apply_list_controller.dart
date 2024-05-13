@@ -4,17 +4,15 @@ import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/my_guild/model/anchor_model.dart';
 import 'package:app/widgets.dart';
-import 'package:easy_refresh/easy_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 主播申请列表控制器
 class AnchorApplyListController extends GetxController {
   /// 数据列表
   RxList<AnchorModel> dataList = <AnchorModel>[].obs;
   /// 刷新控制器
-  final EasyRefreshController easyRefreshController = EasyRefreshController(
-    controlFinishRefresh: false,
-    controlFinishLoad: true,
-  );
+  RefreshController refreshController =
+  RefreshController(initialRefresh: false);
   /// 滚动控制器
   final ScrollController scrollController = ScrollController();
   /// 分页
@@ -38,7 +36,7 @@ class AnchorApplyListController extends GetxController {
             anchorModelList.add(anchorModel);
           }
           dataList.addAll(anchorModelList);
-          easyRefreshController.finishLoad(anchorModelList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
+          anchorModelList.length >= pageNum.size ? refreshController.loadComplete() : refreshController.loadNoData();
         }
       });
     });

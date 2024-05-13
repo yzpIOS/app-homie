@@ -1,11 +1,12 @@
 import 'dart:ui';
+import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/my/my_guild/anchor_list_controller.dart';
 import 'package:app/ui/my/my_guild/model/anchor_model.dart';
 import 'package:app/widgets.dart';
-import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 主播列表页面
 class AnchorListPage extends StatelessWidget {
@@ -31,34 +32,31 @@ class AnchorListPage extends StatelessWidget {
                 _headerWidget(),
                 Expanded(
                     child:
-
-                    EasyRefresh(
-                      controller: controller.easyRefreshController,
-                      onLoad: controller.loadMoreData,
-                      //自定义样式
-                      footer: ClassicFooter(
-                          noMoreText: '没有更多数据了',
-                          textStyle: const Color(0xFF999999).pt(14),
-                          dragText: "",
-                          armedText: "",
-                          readyText: "",
-                          processingText: "",
-                          processedText: "",
-                          noMoreIcon: const SizedBox.shrink(),
-                          failedIcon: null,
-                          failedText: "",
-                          messageText: "",
-                          messageStyle: const Color(0xFF999999).pt(14),
-                          succeededIcon: null,
-                          showMessage: false,
-                          pullIconBuilder: null,
-                          iconDimension: 0,
-                          spacing: 0,
-                          iconTheme: null
+                    SmartRefresher(
+                      enablePullDown: false,
+                      enablePullUp: true,
+                      header: null,
+                      footer: CustomFooter(
+                        builder: (BuildContext context,LoadStatus? mode){
+                          if(mode == LoadStatus.noMore){
+                            return const Box(
+                              height: 32,
+                              alignment: Alignment.center,
+                              child: Text(
+                                '---- 没有更多了 ----',
+                                style: TextStyle(fontSize: 14, color: AppPalette.tips),
+                              ),
+                            );
+                          }else{
+                            return const SizedBox();
+                          }
+                        },
                       ),
+                      controller: controller.refreshController,
+                      onLoading: controller.loadMoreData,
                       child: Obx(() {
                         return ListView.builder(
-                          // shrinkWrap: true,
+                          shrinkWrap: true,
                           controller: controller.scrollController,
                           itemCount: controller.dataList.length,
                           itemBuilder: (BuildContext context, int index) {
@@ -66,7 +64,7 @@ class AnchorListPage extends StatelessWidget {
                           },
                         );
                       }),
-                    )
+                    ),
                 ),
                 _bottomWidget(),
               ],

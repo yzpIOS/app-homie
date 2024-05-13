@@ -3,7 +3,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_page.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/widgets.dart';
-import 'package:easy_refresh/easy_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 /// 公会中心列表控制器
 class GuildCenterListController extends GetxController {
@@ -16,10 +16,8 @@ class GuildCenterListController extends GetxController {
   /// 是否加载数据
   final loadedData = false.obs;
   /// 刷新控制器
-  final EasyRefreshController easyRefreshController = EasyRefreshController(
-    controlFinishRefresh: false,
-    controlFinishLoad: true,
-  );
+  RefreshController refreshController =
+  RefreshController(initialRefresh: false);
   /// 滚动控制器
   final ScrollController scrollController = ScrollController();
   /// 分页
@@ -44,7 +42,7 @@ class GuildCenterListController extends GetxController {
             guildList.add(guildModel);
           }
           dataList.addAll(guildList);
-          easyRefreshController.finishLoad(guildList.length < pageNum.size ? IndicatorResult.noMore : IndicatorResult.success);
+          guildList.length >= pageNum.size ? refreshController.loadComplete() : refreshController.loadNoData();
         }
       });
     });
