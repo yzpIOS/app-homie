@@ -64,3 +64,7 @@ class UserBlackEvent extends Event {
 class HandleGuildAnchorApplyEvent extends Event {
   const HandleGuildAnchorApplyEvent();
 }
+
+class AgreeGuildAnchorApplyEvent extends Event {
+  const AgreeGuildAnchorApplyEvent();
+}

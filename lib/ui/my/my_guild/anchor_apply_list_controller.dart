@@ -67,6 +67,9 @@ class AnchorApplyListController extends GetxController {
               () => Api.Guild.handleGuildAnchorApply(userId: userId,isAgree: isAgree),showProgress: true, callback: (result) {
         showToast("处理成功");
         const HandleGuildAnchorApplyEvent().fire();
+        if(isAgree){
+          const AgreeGuildAnchorApplyEvent().fire();
+        }
         dataList.removeAt(index);
       });
     });

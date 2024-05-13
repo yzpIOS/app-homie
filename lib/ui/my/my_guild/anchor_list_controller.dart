@@ -26,7 +26,6 @@ class AnchorListController extends GetxController with BusGetLifeMixin{
     super.onInit();
     loadData();
     loadGuildAnchorApplyCount();
-
     /// 处理公会主播申请事件
     on<HandleGuildAnchorApplyEvent>(
           (_) {
@@ -38,6 +37,12 @@ class AnchorListController extends GetxController with BusGetLifeMixin{
             anchorApplyCount.value = count;
           },
     );
+    /// 处理公会主播同意事件
+    on(<AgreeGuildAnchorApplyEvent>(event) {
+      pageNum = const PageNum();
+      dataList.clear();
+      loadData();
+    });
   }
 
   /// 加载数据
