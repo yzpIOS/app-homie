@@ -18,7 +18,12 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   @override
   void onInit() {
     super.onInit();
-    loadGuildAnchorApplyCount();
+
+    if(guildModel.anchorType != null &&
+        guildModel.anchorType! == 1){
+      /// 会长身份
+      loadGuildAnchorApplyCount();
+    }
 
     /// 处理公会主播申请事件
     on<HandleGuildAnchorApplyEvent>(
