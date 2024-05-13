@@ -3,6 +3,7 @@ import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/apply_join_guild_page.dart';
+import 'package:app/ui/my/guild_center/guild_center_page_controller.dart';
 import 'package:app/ui/my/guild_center/guild_information_page.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/real_identity_1_page.dart';
@@ -14,15 +15,16 @@ import 'package:flutter/material.dart';
 class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
   /// 公会信息
   final GuildModel guildModel;
-
   GuildBusinessCardController({required this.guildModel});
-
   /// 公会房间列表
   RxList<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
+  /// 用户是否加入公会
+  bool userIsExistGuild = false;
 
   @override
   void onInit() {
     super.onInit();
+    userIsExistGuild = Get.find<GuildCenterPageController>().userIsExistGuild.value;
     loadData();
   }
 

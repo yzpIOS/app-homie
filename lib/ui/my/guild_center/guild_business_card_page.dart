@@ -238,7 +238,7 @@ class GuildBusinessCardPage extends StatelessWidget {
         children: [
           _headerWidget(controller),
           _roomGridViewWidget(controller),
-          guildModel.anchorType == null || guildModel.anchorType! < 1
+          controller.userIsExistGuild == false && (guildModel.anchorType == null || guildModel.anchorType! < 1)
               ? _joinGuildWidget(controller)
               : const SizedBox(
                   height: 1,

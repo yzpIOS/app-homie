@@ -220,7 +220,11 @@ class MyGuildCenterPage extends StatelessWidget {
             const Spacing(),
             Obx(() {
               if (controller.anchorApplyCount.value == 0) {
-                return const SizedBox();
+                return Image.asset(
+                  IMG.format("wode_icon_right"),
+                  width: 24,
+                  height: 24,
+                );
               }else if(controller.anchorApplyCount.value >= 10){
                 return Container(
                   decoration: const BoxDecoration(

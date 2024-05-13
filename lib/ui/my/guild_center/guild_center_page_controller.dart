@@ -6,7 +6,7 @@ import 'package:app/ui/my/my_guild/my_guild_center_page.dart';
 import 'package:flutter/material.dart';
 
 /// 公会中心控制器
-class GuildCenterController extends GetxController {
+class GuildCenterPageController extends GetxController {
   /// tabs
   late Map<String, Widget> tabs = {};
 

@@ -10,9 +10,9 @@ class GuildCenterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GuildCenterController>(
-        init: GuildCenterController(),
-        builder: (GuildCenterController controller) {
+    return GetBuilder<GuildCenterPageController>(
+        init: GuildCenterPageController(),
+        builder: (GuildCenterPageController controller) {
           return Obx(() {
             return controller.checkExistGuild.value == true
                 ? DefaultTabController(
