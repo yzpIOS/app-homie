@@ -17,6 +17,11 @@ class GuildBusinessCardPage extends StatelessWidget {
 
   const GuildBusinessCardPage({super.key, required this.guildModel});
 
+  /// 名片高度
+  final double businessCardHeight = 202.0;
+  /// 房间容器距离顶部距离
+  final double roomContainerTopMargin = 144.0;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GuildBusinessCardController>(
@@ -29,10 +34,10 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Positioned(
                   left: 0,
                   top: 0,
-                  height: 202 + MediaQueryData.fromView(window).padding.top,
+                  height: businessCardHeight + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
                   child: BlurredNetworkImage(
-                      height: 202 + MediaQueryData.fromView(window).padding.top,
+                      height: businessCardHeight + MediaQueryData.fromView(window).padding.top,
                       width: Get.width,
                       blurSigma: 10,
                       imageUrl: guildModel.icon ?? ""),
@@ -40,15 +45,15 @@ class GuildBusinessCardPage extends StatelessWidget {
                 Positioned(
                   left: 0,
                   top: 0,
-                  height: 202 + MediaQueryData.fromView(window).padding.top,
+                  height: businessCardHeight + MediaQueryData.fromView(window).padding.top,
                   width: Get.width,
                   child: _buildBusinessCard(controller),
                 ),
                 Positioned(
                   left: 0,
-                  top: 144 + MediaQueryData.fromView(window).padding.top,
+                  top: roomContainerTopMargin + MediaQueryData.fromView(window).padding.top,
                   height: Get.height -
-                      (144 + MediaQueryData.fromView(window).padding.top),
+                      (roomContainerTopMargin + MediaQueryData.fromView(window).padding.top),
                   width: Get.width,
                   child: _roomContainer(controller),
                 ),
@@ -61,7 +66,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 公会名片
   Widget _buildBusinessCard(GuildBusinessCardController controller) {
     return SizedBox(
-      height: 202 + Get.statusBarHeight,
+      height: businessCardHeight + Get.statusBarHeight,
       width: Get.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -219,7 +224,7 @@ class GuildBusinessCardPage extends StatelessWidget {
   /// 房间列表
   Widget _roomContainer(GuildBusinessCardController controller) {
     return Container(
-      height: Get.height - (144 + MediaQueryData.fromView(window).padding.top),
+      height: Get.height - (roomContainerTopMargin + MediaQueryData.fromView(window).padding.top),
       width: Get.width,
       decoration: const BoxDecoration(
         color: Color(0xFFF5F5F5),
