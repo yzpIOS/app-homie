@@ -107,8 +107,8 @@ extension XText on Widget {
         gradient: linearGradient ??
             LinearGradient(
               colors: colors!,
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
         border: border,
         borderRadius: borderRadius,

@@ -1,9 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:ffi';
+
 import 'dart:io';
 import 'dart:convert' as converter;
-
 import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
@@ -40,6 +39,7 @@ part 'api/api_user_info.dart';
 part 'api/api_wallet.dart';
 part 'api/base.dart';
 part 'api/api_data.dart';
+part 'api/api_guild.dart';
 
 final Api = _Api._();
 
@@ -61,6 +61,6 @@ class _Api extends ApiBase {
   late final Shop = ApiShop('$_path/v1/dress_up');
   late final ShoppingCart = ApiShoppingCart('$_path/v1/dress_up/shopping_cart');
   late final Activity = ApiActivity('$_path/v1/activity');
-
+  late final Guild = ApiGuild('$_path/v1/guild');
   late final Data = ApiData();
 }

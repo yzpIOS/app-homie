@@ -13,6 +13,7 @@ import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/decorate/decorate_shop_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/guild_center/guild_center_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -112,6 +113,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的装扮',
       '我的背包',
       '我的任务',
+      '公会中心'
       // '我的称号',
       // '首充礼包',
       // '邀请好友',
@@ -214,6 +216,9 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       case '我的任务':
         SignDialog.show(isManual: true);
         // Get.to(() => const TaskCenterPage());
+        break;
+      case '公会中心':
+        Get.to(() => const GuildCenterPage());
         break;
       case '我的称号':
         Get.to(() => const MyTitlePage());

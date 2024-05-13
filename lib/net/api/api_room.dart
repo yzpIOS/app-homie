@@ -496,4 +496,9 @@ class ApiRoom extends ApiBase {
   Future getHotHistory(PageNum page, int room_id, int role_id) {
     return _doPost("mike/heat/record", data: page + {"room_id": room_id, "role_id": role_id});
   }
+
+  /// 获取公会房间列表
+  Future getGuildRoomList(String guildNumber) {
+    return _doPost("list", data: {"guild_no": guildNumber});
+  }
 }

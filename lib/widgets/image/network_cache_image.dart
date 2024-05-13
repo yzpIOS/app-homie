@@ -13,6 +13,7 @@ class NetImage extends StatelessWidget {
   final ImageUrlToProvider toProvider;
   final Color? color;
   final BlendMode? blendMode;
+  final Image? placeholderImage;
 
   const NetImage(
     this.url, {
@@ -25,12 +26,19 @@ class NetImage extends StatelessWidget {
     this.blendMode,
     this.fit = BoxFit.contain,
     this.toProvider = const ImageToThumb(),
+    this.placeholderImage,
   }) : assert(url != 'null');
 
   @override
   Widget build(BuildContext context) {
     final url = this.url;
-    if (url == null || url.isEmpty) return _imgErr(context);
+    if (url == null || url.isEmpty) {
+      if (placeholderImage != null) {
+        return placeholderImage!;
+      } else {
+        return _imgErr(context);
+      }
+    }
 
     try {
       final uri = Uri.parse(url);
@@ -81,7 +89,8 @@ class NetImage extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: ctx.state<ImgErr>(Tuple3<String?, Object, StackTrace?>(blur, '', null)),
+      child: ctx
+          .state<ImgErr>(Tuple3<String?, Object, StackTrace?>(blur, '', null)),
     );
   }
 }
