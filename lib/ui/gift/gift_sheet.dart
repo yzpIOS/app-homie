@@ -29,14 +29,14 @@ class GiftSheet extends StatefulWidget {
   State<StatefulWidget> createState() => _GiftSheetState(logic, hasShowUnityView);
 
 
-  static Future show(GiftSendLogic logic, {bool hasShowUnityView = false}) {
+  static Future show({required GiftSendLogic giftSendLogic,bool hasShowUnityView = false}) {
     if(isPopUp) {
       return Future.value(null);
     }
     // 配置请求礼物列表类型 true房间礼物列表  false普通礼物列表
     Get.find<GiftCtrl>().hasShowUnityView = hasShowUnityView;
 
-    final sheet = GiftSheet._(logic: logic, hasShowUnityView: hasShowUnityView);
+    final sheet = GiftSheet._(logic: giftSendLogic, hasShowUnityView: hasShowUnityView);
 
     // 刷新金币
     WalletCtrl.ins.doRefresh();
@@ -56,8 +56,8 @@ class GiftSheet extends StatefulWidget {
           }
       ),
       decoration: null,
-      direction: logic.layout.value1,
-      constraints: logic.layout.value2,
+      direction: giftSendLogic.layout.value1,
+      constraints: giftSendLogic.layout.value2,
     );
   }
 

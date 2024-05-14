@@ -153,9 +153,8 @@ class GiftSend2Room extends GiftSendLogic {
   final List<GiftSend2RoomEntity> users;
   final RxList<GiftSend2RoomEntity> userRx;
 
-  GiftSend2Room({required this.roomId, required this.users})
-      : userRx = RxList(users),
-        super(useMyGift: UseMyGift.enable);
+  GiftSend2Room({required this.roomId, required this.users,required super.useMyGift})
+      : userRx = RxList(users);
 
   @override
   Future<int> doSend(Map data, int count) async {
@@ -381,7 +380,7 @@ class GiftSend2Room extends GiftSendLogic {
 }
 
 class GiftSend2UserInRoom extends GiftSend2Room {
-  GiftSend2UserInRoom({required super.roomId, required UID uid})
+  GiftSend2UserInRoom({required super.roomId, required UID uid,required super.useMyGift})
       : super(users: [GiftSend2RoomEntity(uid: uid, no: '', userType: 0)]);
 
   @override

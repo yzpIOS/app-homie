@@ -463,7 +463,7 @@ class ChatMsgSender extends MsgSender with TxtSender, ImageSender, GiftSender, C
 
   @override
   void sendGift() {
-    GiftSheet.show(GiftSend2ImUser(_conv.userId!));
+    GiftSheet.show(giftSendLogic:GiftSend2ImUser(_conv.userId!));
   }
 }
 

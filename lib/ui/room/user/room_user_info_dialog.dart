@@ -34,12 +34,22 @@ class RoomUserInfoDialog extends StatefulWidget {
   final NUID nuid;
   final TxtMsgData? msg;
   final SceneCtrl sceneCtrl;
+
   // 麦位,
   final String micNo;
 
-  const RoomUserInfoDialog._({required this.uid, required this.nuid, required this.sceneCtrl, this.msg, required this.micNo});
+  const RoomUserInfoDialog._(
+      {required this.uid,
+      required this.nuid,
+      required this.sceneCtrl,
+      this.msg,
+      required this.micNo});
 
-  static void show({required UID uid, required NUID nuid, TxtMsgData? msg, String micNo = ""}) {
+  static void show(
+      {required UID uid,
+      required NUID nuid,
+      TxtMsgData? msg,
+      String micNo = ""}) {
     final sceneCtrl = Get.find<RoomManagerCtrl>().sceneCtrl;
 
     const decor = ShapeDecoration(
@@ -48,7 +58,8 @@ class RoomUserInfoDialog extends StatefulWidget {
     );
 
     OrientationSheet.show(
-      child: RoomUserInfoDialog._(uid: uid, nuid: nuid, sceneCtrl: sceneCtrl, msg: msg, micNo: micNo),
+      child: RoomUserInfoDialog._(
+          uid: uid, nuid: nuid, sceneCtrl: sceneCtrl, msg: msg, micNo: micNo),
       decoration: decor,
       minHeight: 0,
     );
@@ -59,7 +70,6 @@ class RoomUserInfoDialog extends StatefulWidget {
 }
 
 class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
-
   static const String CHARM_LEVEL = "粉丝团";
   static const String GIFT_WALL = "礼物墙";
   static const String DECORATE_WALL = "装饰墙";
@@ -85,39 +95,45 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         clipBehavior: Clip.none,
         alignment: Alignment.center,
         children: [
-        //  if (!isSelf) Positioned(top: 0, left: 0, child: $ReportView()),
+          //  if (!isSelf) Positioned(top: 0, left: 0, child: $ReportView()),
           Positioned(top: -30, child: $Avatar()),
-          if (!isSelf) Positioned(
-            top: 0,
-            right: 10,
-              child:$ReportView()
-          ),
+          if (!isSelf) Positioned(top: 0, right: 10, child: $ReportView()),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 60,),
+              const SizedBox(
+                height: 60,
+              ),
               UserInfoCtrl.use(
                 uid,
                 builder: (it) => Column(
-                  children: [$NickView(it), Spacing.h4, $LabelView(it), Spacing.h8, $DescView()],
+                  children: [
+                    $NickView(it),
+                    Spacing.h4,
+                    $LabelView(it),
+                    Spacing.h8,
+                    $DescView()
+                  ],
                 ),
               ),
 
               // 礼物墙，装饰墙，魅力等级
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               createLevel(),
 
               const Expanded(child: SizedBox()),
               // 查看其它用户的信息；私聊等按钮
-              if (!isSelf)
-                $ActionView().horizonMargin(left: 20, right: 20),
+              if (!isSelf) $ActionView().horizonMargin(left: 20, right: 20),
 
               // 查看自己的信息：下麦和送礼
-              if (isSelf)
-                selfAction(),
+              if (isSelf) selfAction(),
 
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
             ],
           ),
         ],
@@ -135,7 +151,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   Widget $NickView(UserInfoModel? info) {
     return XText(
       info?.showName ?? '',
-      style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
+      style: const TextStyle(
+          fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
     );
   }
 
@@ -178,18 +195,24 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
 
     return Obx(() {
       var level = dataRx.containsKey("level") ? dataRx["level"] : info?.level;
-      var charmLevel = dataRx.containsKey("charm_level") ? dataRx["charm_level"] : info?.charmLevel;
+      var charmLevel = dataRx.containsKey("charm_level")
+          ? dataRx["charm_level"]
+          : info?.charmLevel;
       return DefaultTextStyle(
         style: const TextStyle(fontSize: 10, color: AppPalette.cc),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             WealthyLevelView(level: level, uid: info?.uid, height: itemH),
-            CharmLevelView(level: charmLevel, uid: info?.uid, height: itemH + 3),
+            CharmLevelView(
+                level: charmLevel, uid: info?.uid, height: itemH + 3),
             if (gender != null)
               itemWrap(
-                SvgView(SVG.$('common/性别_${gender.code}'), width: 16, height: 16),
-                color: gender == GenderEnum.male ? const Color(0xFF6A83FF) : const Color(0xFFFF6594),
+                SvgView(SVG.$('common/性别_${gender.code}'),
+                    width: 16, height: 16),
+                color: gender == GenderEnum.male
+                    ? const Color(0xFF6A83FF)
+                    : const Color(0xFFFF6594),
               ),
             itemWrap($IdView(info))
           ].separator(Spacing.w4).toList(growable: false),
@@ -227,7 +250,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
             TextSpan(text: 'ID:${id ?? ''}'),
             WidgetSpan(
               alignment: PlaceholderAlignment.middle,
-              child: SvgView(SVG.$('common/复制'), color: AppPalette.cc, width: 16, height: 16),
+              child: SvgView(SVG.$('common/复制'),
+                  color: AppPalette.cc, width: 16, height: 16),
             ),
           ],
         ),
@@ -254,7 +278,9 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(width: 28,),
+          const SizedBox(
+            width: 28,
+          ),
           // 礼物墙
           GestureDetector(
             onTap: () {
@@ -262,7 +288,11 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
             },
             child: Stack(
               children: [
-                Image.asset(IMG.format("room/room_gift_entry"), width: itemHeight, height: itemWidth,),
+                Image.asset(
+                  IMG.format("room/room_gift_entry"),
+                  width: itemHeight,
+                  height: itemWidth,
+                ),
                 const Positioned(
                   top: 5,
                   left: 5,
@@ -290,14 +320,20 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
           ),
 
           // 装饰墙
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           GestureDetector(
             onTap: () {
               onItemClick(DECORATE_WALL);
             },
             child: Stack(
               children: [
-                Image.asset(IMG.format("room/room_decorate_entry"), width: itemHeight, height: itemWidth,),
+                Image.asset(
+                  IMG.format("room/room_decorate_entry"),
+                  width: itemHeight,
+                  height: itemWidth,
+                ),
                 const Positioned(
                   top: 5,
                   left: 5,
@@ -325,14 +361,20 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
           ),
 
           // 魅力
-          const SizedBox(width: 10,),
+          const SizedBox(
+            width: 10,
+          ),
           GestureDetector(
             onTap: () {
               onItemClick(CHARM_LEVEL);
             },
             child: Stack(
               children: [
-                Image.asset(IMG.format("room/room_charm_entry"), width: itemHeight, height: itemWidth,),
+                Image.asset(
+                  IMG.format("room/room_charm_entry"),
+                  width: itemHeight,
+                  height: itemWidth,
+                ),
                 const Positioned(
                   top: 5,
                   left: 5,
@@ -347,7 +389,9 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
               ],
             ),
           ),
-          const SizedBox(width: 28,),
+          const SizedBox(
+            width: 28,
+          ),
         ],
       );
     });
@@ -386,23 +430,34 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
 
   Widget selfAction() {
     SceneMicCtrl? roomMicCtrl = sceneCtrl.getRoomMicCtrl();
-    if(roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+    if (roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
       return const SizedBox();
     }
     return Obx(() {
-      var mineMic = roomMicCtrl.simpleUserList.firstWhereOrNull((e) => e.uid == OAuthCtrl.uid);
+      var mineMic = roomMicCtrl.simpleUserList
+          .firstWhereOrNull((e) => e.uid == OAuthCtrl.uid);
       return Row(
         children: [
           const Expanded(child: SizedBox()),
           // 下麦
-          if(mineMic != null)
-            SizedBox(width: 80, height: 34, child: $Btn2('下麦'),),
+          if (mineMic != null)
+            SizedBox(
+              width: 80,
+              height: 34,
+              child: $Btn2('下麦'),
+            ),
 
           // 不可以给自己送礼，怕涉及赌博
-          if(!OAuthCtrl.isSelf(widget.uid))
-            const SizedBox(width: 10,),
-          if(!OAuthCtrl.isSelf(widget.uid))
-            SizedBox(width: 80, height: 34, child: $Btn2('送礼物'),),
+          if (!OAuthCtrl.isSelf(widget.uid))
+            const SizedBox(
+              width: 10,
+            ),
+          if (!OAuthCtrl.isSelf(widget.uid))
+            SizedBox(
+              width: 80,
+              height: 34,
+              child: $Btn2('送礼物'),
+            ),
           // 自己给自己送物
           const Expanded(child: SizedBox()),
         ],
@@ -414,7 +469,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     return XOutlinedBtn(
       label: title,
       side: const BorderSide(color: Colors.white),
-      textStyle: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+      textStyle: const TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
       onTap: () => onItemClick(title),
     );
   }
@@ -422,7 +478,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   Widget $Btn2(String title) {
     return XTextBtn(
       label: title,
-      textStyle: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+      textStyle: const TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
       onTap: () => onItemClick(title),
     );
   }
@@ -451,19 +508,28 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
         break;
       case '送礼物':
         Get.back();
-
+        RoomCtrl? roomCtrl = Get.find<RoomManagerCtrl>().sceneCtrl as RoomCtrl?;
+        if (roomCtrl == null) {
+          return;
+        }
         GiftSheet.show(
-          GiftSend2UserInRoom(roomId: ctrl.roomId, uid: uid),
-          hasShowUnityView: true
-        );
+            giftSendLogic: GiftSend2UserInRoom(
+              roomId: ctrl.roomId,
+              uid: uid,
+              useMyGift: roomCtrl.openBackpack.value
+                  ? UseMyGift.enable
+                  : UseMyGift.disable,
+            ),
+            hasShowUnityView: true);
         break;
       case '举报':
-        final canManage = ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
+        final canManage =
+            ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
 
         final items = {
           '举报': () => Get.to(() => MomentReportPage(type: 2, id: uid)),
           if (canManage && !ctrl.getRole(uid).isManager) //
-            '加入黑名单': () => ctrl.setBlock(uid:widget.uid, isAdd: true)
+            '加入黑名单': () => ctrl.setBlock(uid: widget.uid, isAdd: true)
         };
 
         switch (items.length) {
@@ -473,33 +539,38 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
             items.values.single();
             break;
           default:
-            Get.showSheet(items.entries, toTitle: (it) => Tuple2(it.key, null)) //
+            Get.showSheet(items.entries,
+                    toTitle: (it) => Tuple2(it.key, null)) //
                 .onNotNull((val) => val.value());
         }
 
         break;
       case '下麦':
         try {
-          if(micCtrl is PersonRoomMicCtrl) {
+          if (micCtrl is PersonRoomMicCtrl) {
             (micCtrl as PersonRoomMicCtrl).micDow(no: "", alert: "");
           } else {
             Api.Room.micDown(uid: widget.nuid);
           }
-        } catch(e, s) {
-        }
+        } catch (e, s) {}
         break;
       case '上麦':
         try {
-          if(micCtrl is RoomMicCtrl) {
+          if (micCtrl is RoomMicCtrl) {
             (micCtrl as RoomMicCtrl).micUp(no: widget.micNo, uid: widget.nuid);
           } else {
-            Api.Room.micUp(roomId: widget.sceneCtrl.roomId,uid: widget.nuid, no: widget.micNo);
+            Api.Room.micUp(
+                roomId: widget.sceneCtrl.roomId,
+                uid: widget.nuid,
+                no: widget.micNo);
           }
-        } catch(e, s) {
-        }
+        } catch (e, s) {}
         break;
       case GIFT_WALL:
-        Get.to(() => UserGiftWallDialog(uid: widget.uid, nuid: widget.nuid,));
+        Get.to(() => UserGiftWallDialog(
+              uid: widget.uid,
+              nuid: widget.nuid,
+            ));
         break;
       case CHARM_LEVEL:
         showToast("敬请期待");
