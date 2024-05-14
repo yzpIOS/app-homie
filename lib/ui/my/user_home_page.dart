@@ -330,7 +330,7 @@ class _InfoView extends StatelessWidget {
                     style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                   ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: uid, level: data?.level, ageShow: data?.ageShow, starSign: data?.starSign, location: data?.location,),
+                OtherDetailsInfoView(uid: uid, level: data?.level,charmLevel: data?.charmLevel, ageShow: data?.ageShow, starSign: data?.starSign, location: data?.location,),
               ],
             ),
           ),
