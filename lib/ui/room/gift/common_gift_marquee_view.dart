@@ -1,6 +1,7 @@
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -17,7 +18,7 @@ import 'package:marqueer/marqueer.dart';
 class CommonGiftMarqueeView extends StatefulWidget {
 
   final UID acceptUid;
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final S_FloatingScreen data;
 
   CommonGiftMarqueeView({super.key,required this.data, required this.acceptUid, required this.users});
@@ -178,7 +179,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                       height: 18,
                       width: 18,
                       margin: EdgeInsets.only(left: 5),
-                      child: AvatarView(sender?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                      child: AvatarView(sender?.avatarUrl ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                     )
                   ],
                 );
@@ -186,7 +187,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
 
               // 发送人的：名字
               if(index == 2) {
-                String text = sender?.showName() ?? "";
+                String text = sender?.showName ?? "";
                 var style = const TextStyle(
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,
@@ -249,7 +250,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
                       height: 18,
                       width: 18,
                       margin: EdgeInsets.only(left: 2),
-                      child: AvatarView(receiver?.avatar ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
+                      child: AvatarView(receiver?.avatarUrl ?? "", size: 18, side: BorderSide(color: Colors.white, width: 1),),
                     )
                   ],
                 );
@@ -257,7 +258,7 @@ class _CommonGiftMarqueeViewState extends State<CommonGiftMarqueeView> {
 
               if(index == 5) {
                 // 接收人的：名字
-                String text = receiver?.showName() ?? "";
+                String text = receiver?.showName ?? "";
                 var style = const TextStyle(
                   color: Color(0xFFFED85B),
                   fontWeight: FontWeight.bold,

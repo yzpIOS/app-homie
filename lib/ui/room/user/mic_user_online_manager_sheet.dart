@@ -238,7 +238,7 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
           const SizedBox(height: 5,),
           UserInfoCtrl.use(micInfo.uid, builder: (dta) {
             return Text(
-              (dta?.showName() ?? ""),
+              (dta?.showName ?? ""),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

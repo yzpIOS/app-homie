@@ -1,4 +1,5 @@
 import 'package:app/event/event.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -134,7 +135,7 @@ class _WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget builder(UserInfoDto? data) {
+    Widget builder(UserInfoModel? data) {
       final _level = data?.level;
       bool isSpecial = false;
       String bgImageName = '';
@@ -175,7 +176,7 @@ class _WelcomeView extends StatelessWidget {
             child: Padding(
               padding: const Pad(horizontal: 3,),
               child: XText(
-                  data?.showName() ?? '--',
+                  data?.showName ?? '--',
                   overflow: TextOverflow.fade,
               ),
             ),
@@ -185,7 +186,7 @@ class _WelcomeView extends StatelessWidget {
       );
 
 
-      if(data?.approach_special_effect?.isNotEmpty == true) {
+      if(data?.approachSpecialEffect?.isNotEmpty == true) {
         _boxHeight = 69.6;
         _boxWidth = 180;
 
@@ -203,7 +204,7 @@ class _WelcomeView extends StatelessWidget {
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(data?.approach_special_effect ?? "", scale: 1),
+              image: NetworkImage(data?.approachSpecialEffect ?? "", scale: 1),
             )
           ),
           padding: EdgeInsets.only(left: 56, top: 2),
@@ -258,7 +259,7 @@ class _WelcomeView extends StatelessWidget {
     //         Flexible(
     //           child: Padding(
     //             padding: const Pad(horizontal: 3),
-    //             child: XText(it?.showName() ?? '--', overflow: TextOverflow.fade),
+    //             child: XText(it?.showName ?? '--', overflow: TextOverflow.fade),
     //           ),
     //         ),
     //         const Text('来了'),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -91,7 +92,7 @@ class _LevelPageState extends State<CharmLevelPage> {
     return child;
   }
 
-  Widget $HeaderView(UserInfoDto? info) {
+  Widget $HeaderView(UserInfoModel? info) {
     Widget $Indicator(double percent) {
       return LinearPercentIndicator(
         animation: true,
@@ -161,10 +162,10 @@ class _LevelPageState extends State<CharmLevelPage> {
         Positioned(
           top: 20,
           child: AvatarView(
-            info?.avatar,
-            blur: info?.avatarEx,
+            info?.avatarUrl,
+            blur: info?.avatarExtra,
             size: 70,
-            avatarFrameUrl: info?.avatar_frame,
+            avatarFrameUrl: info?.avatarFrame,
             avatarFrameSize: 12,
           ),
         ),

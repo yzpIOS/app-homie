@@ -152,8 +152,8 @@ class _ItemView extends StatelessWidget {
       uid,
       builder: (it) {
         Widget child = AvatarView(
-          it?.avatar,
-          blur: it?.avatarEx,
+          it?.avatarUrl,
+          blur: it?.avatarExtra,
           side: selectRx() == uid ? const BorderSide(width: 2, color: AppPalette.primary) : BorderSide.none,
         );
 
@@ -162,7 +162,7 @@ class _ItemView extends StatelessWidget {
           children: [
             AspectRatio(aspectRatio: 1, child: child),
             XText(
-              it?.showName() ?? '',
+              it?.showName ?? '',
               style: const TextStyle(fontSize: 12, color: Colors.black),
             ),
           ],

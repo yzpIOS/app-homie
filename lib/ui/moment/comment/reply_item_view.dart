@@ -43,7 +43,7 @@ class _ReplyItemViewState extends State<ReplyItemView> with MomentActionMixin {
                 if (replyUid.isNotEmpty) ...[
                   const TextSpan(text: '回复 '),
                   TextSpan(
-                    text: it[replyUid]?.showName(),
+                    text: it[replyUid]?.showName,
                     style: const TextStyle(color: AppPalette.primary),
                   ),
                   const TextSpan(text: ' '),
@@ -64,7 +64,7 @@ class _ReplyItemViewState extends State<ReplyItemView> with MomentActionMixin {
             children: [
               Spacing.h10,
               XText(
-                it[authorUid]?.showName() ?? '',
+                it[authorUid]?.showName ?? '',
                 style: const TextStyle(fontSize: 12, color: AppPalette.c6),
               ),
               Spacing.h4,

@@ -165,7 +165,7 @@ class PersonRoomHeader extends CommonRoomHeader {
 
           const SizedBox(height: 5,),
           Text(
-            info?.showName() ?? "",
+            info?.showName ?? "",
             style: TextStyle(
                 fontSize: 12,
                 color: Colors.white,
@@ -206,7 +206,7 @@ class PersonRoomHeader extends CommonRoomHeader {
           if(micInfo == null) {
             return const SizedBox();
           }
-          return UserInfoCtrl.use(micInfo.uid, builder: (userInfoDto) {
+          return UserInfoCtrl.use(micInfo.uid, builder: (UserInfoModel) {
             return SizedBox(
               width: 46 + 20,
               child: Column(
@@ -255,7 +255,7 @@ class PersonRoomHeader extends CommonRoomHeader {
                   // 麦上用户
                   const SizedBox(height: 6,),
                   Text(
-                      userInfoDto?.showName() ?? "",
+                      UserInfoModel?.showName ?? "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

@@ -292,7 +292,7 @@ class GuildBusinessCardPage extends StatelessWidget {
         controller.clickApplyJoinGuild();
       },
       child: Container(
-        padding: const Pad(top: 10, bottom: 2),
+        padding: const Pad(top: 10, bottom: 20),
         alignment: Alignment.center,
         child: Image.asset(
           IMG.format('my/guild_center_apply_join_icon'),

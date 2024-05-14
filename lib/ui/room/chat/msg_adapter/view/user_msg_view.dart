@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -24,7 +25,7 @@ import 'package:figma_squircle/figma_squircle.dart';
 abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
   const _UserMsgView(super.vm, {super.key});
 
-  InlineSpan richText(SpecialTextSpanBuilder? special, UserInfoDto info);
+  InlineSpan richText(SpecialTextSpanBuilder? special, UserInfoModel info);
 
   static const _spacer = WidgetSpan(child: Spacing(width: 5, flex: null));
 
@@ -38,14 +39,14 @@ abstract class _UserMsgView<T extends UserMsgData> extends BaseMsgView<T> {
     );
   }
 
-  Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
+  Widget builder(SpecialTextSpanBuilder? special, UserInfoModel info) {
 
     void showUserDialog() {
       RoomUserInfoDialog.show(uid: vm.uid, nuid: vm.nuid, msg: vm.typeIf<TxtMsgData>());
     }
 
     InlineSpan span = TextSpan(
-      text: info.showName(),
+      text: info.showName,
       style: const TextStyle(color: AppPalette.colorY),
       recognizer: TapGestureRecognizer() //
         ..onTap = showUserDialog,
@@ -85,7 +86,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   @override
   Widget build(BuildContext context) {
     return UserInfoCtrl.use(vm.uid, forceUseNet: true, builder: (dto) {
-      if(dto == null || dto.chat_bubble == null || dto.chat_bubble?.isEmpty == true) {
+      if(dto == null || dto.chatBubble == null || dto.chatBubble?.isEmpty == true) {
         return super.build(context);
       }
       final special = context.watch<SpecialTextSpanBuilder?>();
@@ -94,9 +95,9 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   }
 
   @override
-  Widget builder(SpecialTextSpanBuilder? special, UserInfoDto info) {
+  Widget builder(SpecialTextSpanBuilder? special, UserInfoModel info) {
     // 没有头像框
-    if(info.chat_bubble == null || info.chat_bubble?.isEmpty == true) {
+    if(info.chatBubble == null || info.chatBubble?.isEmpty == true) {
       return super.builder(special, info);
     }
 
@@ -105,7 +106,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
     }
 
     InlineSpan span = TextSpan(
-      text: info.showName(),
+      text: info.showName,
       style: const TextStyle(color: AppPalette.colorY),
       recognizer: TapGestureRecognizer() //
         ..onTap = showUserDialog,
@@ -138,7 +139,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
       children: [
         NineImage(
           //imageProvider 图像处理
-          imageProvider: NetworkImage(info.chat_bubble ?? ""),
+          imageProvider: NetworkImage(info.chatBubble ?? ""),
           // imageProvider: AssetImage("assets/img/chat/chat_box_2.9.png"),
           //内容填充区域ß
           child: RichText(text: span),
@@ -152,7 +153,7 @@ class TxtMsgView extends _UserMsgView<TxtMsgData> {
   InlineSpan richText(special, info, {bool plusTxt = false}) {
     var txt = vm.data;
 
-    if(((txt.length ?? 0) + info.showName().length < 9) && plusTxt) {
+    if(((txt.length ?? 0) + info.showName.length < 9) && plusTxt) {
       txt += "        ";
     }
 
@@ -181,7 +182,7 @@ class GiftMsgView extends _UserMsgView<GiftMsgAdapter> {
     return TextSpan(
       children: [
         const TextSpan(text: '给 '),
-        TextSpan(text: vm.users[vm.acceptUid]?.showName() ?? '--', style: const TextStyle(color: AppPalette.colorY),),
+        TextSpan(text: vm.users[vm.acceptUid]?.showName ?? '--', style: const TextStyle(color: AppPalette.colorY),),
         const TextSpan(text: ' 送出了'),
         WidgetSpan(
           alignment: PlaceholderAlignment.middle,
@@ -323,14 +324,14 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
               children: [
                 SizedBox(height: 2,),
                 Visibility(
-                  visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty,
+                  visible: vm.data.showName != null && vm.data.showName.toString().isNotEmpty,
                   child: Text(
                     vm.data.showName(),
                     style: TextStyle(color: Color(0xFFFFDD7A), fontSize: 13, fontWeight: FontWeight.normal),
                   ),
                 ),
                 Visibility(
-                  visible: vm.data.showName() != null && vm.data.showName().toString().isNotEmpty &&
+                  visible: vm.data.showName != null && vm.data.showName.toString().isNotEmpty &&
                       vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
                   child: SizedBox(height: 2,),
                 ),
@@ -433,7 +434,7 @@ class BlindBoxGiftOpenMsgView extends _UserMsgView<BlindBoxGiftOpenMsgAdapter> {
       const TextSpan(text: '送出'),
       TextSpan(text: '${vm.blindBoxName ?? '--'}x${vm.blindBoxCount}', style: const TextStyle(color: AppPalette.colorY)),
       const TextSpan(text: '给'),
-      TextSpan(text: '${vm.users[vm.acceptUid]?.showName() ?? '--'}，', style: const TextStyle(color: AppPalette.colorY)),
+      TextSpan(text: '${vm.users[vm.acceptUid]?.showName ?? '--'}，', style: const TextStyle(color: AppPalette.colorY)),
       const TextSpan(text: '开出'),
     ];
     for(var i = 0; i < vm.items.length; i ++) {

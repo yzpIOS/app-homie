@@ -1,6 +1,7 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -191,7 +192,7 @@ class _BigGiftView extends StatelessWidget {
   final NUID nuid;
 
   final UID acceptUid;
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final S_GiftPlay data;
   final String? blindBoxName;//盲盒名称
 
@@ -207,7 +208,7 @@ class _BigGiftView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         XText(
-          user?.showName() ?? '--',
+          user?.showName ?? '--',
           overflow: TextOverflow.fade,
           style: const TextStyle(fontSize: 12),
         ),
@@ -216,7 +217,7 @@ class _BigGiftView extends StatelessWidget {
             text: '送',
             children: [
               TextSpan(
-                text: blindBoxName ?? users[acceptUid]?.showName() ?? '--',
+                text: blindBoxName ?? users[acceptUid]?.showName ?? '--',
                 style: const TextStyle(color: AppPalette.colorY),
               ),
               if (blindBoxName != null) const TextSpan(text: '开出'),
@@ -234,7 +235,7 @@ class _BigGiftView extends StatelessWidget {
       children: [
         OpacityButton(
           onTap: () => RoomUserInfoDialog.show(uid: uid, nuid: nuid),
-          child: AvatarView(user?.avatar, blur: user?.avatarEx, size: 30),
+          child: AvatarView(user?.avatarUrl, blur: user?.avatarExtra, size: 30),
         ),
         Expanded(
           child: Padding(

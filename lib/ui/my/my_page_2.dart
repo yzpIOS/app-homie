@@ -1,10 +1,8 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/api/my_info_dto.dart';
-import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
-import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/v1/backpack_page.dart';
 import 'package:app/ui/my/backpack/v2/backpack_page2.dart';
@@ -23,14 +21,10 @@ import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';
 import 'package:app/ui/room/room_fav_page.dart';
 import 'package:app/ui/task/my_sign_view.dart';
-import 'package:app/ui/task/task_center_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
 import 'package:app/ui/my/openliveroom/open_live_room_page.dart';
-
-import '../../model/api/user_info_dto.dart';
-import '../../net/api.dart';
 import '../home/home_banner_view.dart';
 import 'invite_new_members/invite_new_members_activity_page.dart';
 

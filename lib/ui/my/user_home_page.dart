@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
@@ -233,8 +234,8 @@ class _InfoView extends StatelessWidget {
       }
     }
 
-    Widget builder(UserInfoDto? data) {
-      final avatar = data?.avatar;
+    Widget builder(UserInfoModel? data) {
+      final avatar = data?.avatarUrl;
 
       final onTap = avatar == null
           ? null
@@ -249,7 +250,7 @@ class _InfoView extends StatelessWidget {
 
       Widget myNickView() {
         Widget childView = XText(
-          data?.showName() ?? '',
+          data?.showName ?? '',
           style: const TextStyle(fontSize: 15, color: Colors.white, fontWeight: fw$Bold),
         );
 
@@ -304,8 +305,8 @@ class _InfoView extends StatelessWidget {
             onTap: onTap,
             child: AvatarView(
               avatar,
-              blur: data?.avatarEx,
-              avatarFrameUrl: data?.avatar_frame,
+              blur: data?.avatarExtra,
+              avatarFrameUrl: data?.avatarFrame,
               size: 70,
               avatarFrameSize: 16,
               side: const BorderSide(width: 2, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),
@@ -318,7 +319,7 @@ class _InfoView extends StatelessWidget {
               children: [
                 const Spacing(height: 3, flex: null,),
                 myNickView(),
-                // NickView(nickName: data?.showName(), gender: data?.gender),
+                // NickView(nickName: data?.showName, gender: data?.gender),
                 const Spacing(height: 10, flex: null,),
                 UidView(uid: uid, account: data?.account, level: data?.level),
                 const Spacing(height: 6, flex: null,),

@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
@@ -131,9 +132,9 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     return child;
   }
 
-  Widget $NickView(UserInfoDto? info) {
+  Widget $NickView(UserInfoModel? info) {
     return XText(
-      info?.showName() ?? '',
+      info?.showName ?? '',
       style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: fw$Medium),
     );
   }
@@ -156,7 +157,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
     );
   }
 
-  Widget $LabelView(UserInfoDto? info) {
+  Widget $LabelView(UserInfoModel? info) {
     const double itemH = 17;
     final gender = info?.gender;
 
@@ -214,7 +215,7 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
   //   );
   // }
 
-  Widget $IdView(UserInfoDto? info) {
+  Widget $IdView(UserInfoModel? info) {
     final id = info?.account;
 
     return OpacityButton(

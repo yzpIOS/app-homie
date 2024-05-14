@@ -287,7 +287,7 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
           const SizedBox(height: 5,),
           UserInfoCtrl.use(roomUserInfo.uid, builder: (dto) {
             return Text(
-              (dto?.showName() ?? ""),
+              (dto?.showName ?? ""),
               style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14

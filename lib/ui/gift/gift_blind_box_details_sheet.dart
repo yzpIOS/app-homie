@@ -347,7 +347,7 @@ class _SubListDataView extends SimpleDataView<Map> {
             child: UserInfoCtrl.use(
               uid,
               builder: (it) => XText(
-                it?.showName() ?? '',
+                it?.showName ?? '',
                 style: const TextStyle(fontSize: 12, color: Colors.black),
               ),
             ),

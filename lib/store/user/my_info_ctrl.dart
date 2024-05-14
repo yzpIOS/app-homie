@@ -63,20 +63,19 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     Api.UserInfo.charmLevel(uid).then((it) => userDataRx(it));
 
     UserInfoCtrl.doUpdate(uid, rebuild: (val) {
-      return val.copyWith(
-        account: result.account,
-        avatar: result.avatar,
-        avatarEx: result.avatarEx,
-        nickName: result.nickName,
-        level: result.level,
-        ageShow: result.ageShow,
-        starSign: result.starSign,
-        location: result.location,
-        avatar_frame: result.avatar_frame,
-        voice_party_background: result.voice_party_background,
-        approach_special_effect: result.approach_special_effect,
-        chat_bubble: result.chat_bubble,
-      );
+      val.account = result.account;
+      val.avatarUrl = result.avatar;
+      val.avatarExtra = result.avatarEx;
+      val.nickName = result.nickName;
+      val.level = result.level;
+      val.ageShow = result.ageShow;
+      val.starSign = result.starSign;
+      val.location = result.location;
+      val.avatarFrame = result.avatar_frame;
+      val.voicePartyBackground = result.voice_party_background;
+      val.approachSpecialEffect = result.approach_special_effect;
+      val.chatBubble = result.chat_bubble;
+      return val;
     });
     dataRx.value = result;
   }
@@ -150,7 +149,12 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
         UserInfoCtrl.doUpdate(
           uid,
-          rebuild: (val) => val.copyWith(avatar: it.value2, avatarEx: it.value3),
+          rebuild: (val)
+        {
+          val.avatarUrl = it.value2;
+          val.avatarExtra = it.value3;
+          return val;
+        }
         );
 
         _saveToBox();
@@ -178,7 +182,11 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     dataRx.rebuild((val) => val.copyWith(nickName: nickName));
     UserInfoCtrl.doUpdate(
       uid,
-      rebuild: (val) => val.copyWith(nickName: nickName),
+      rebuild: (val)
+    {
+      val.nickName = nickName;
+      return val;
+    }
     );
     _saveToBox();
   }
@@ -191,7 +199,10 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     _doUpdate(
       Api.UserInfo.setInfo(desc: data),
       restore: (val) => val.copyWith(desc: _tmp),
-      updateCommon: (val) => val.copyWith(desc: data),
+      updateCommon: (val){
+        val.desc = data;
+        return val;
+      },
     );
   }
 
@@ -203,7 +214,10 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     _doUpdate(
       Api.UserInfo.setInfo(gender: data),
       restore: (val) => val.copyWith(gender: _tmp),
-      updateCommon: (val) => val.copyWith(gender: data),
+      updateCommon: (val){
+        val.gender = data;
+        return val;
+      },
     );
   }
 
@@ -218,7 +232,11 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     await _doUpdate(
       Api.UserInfo.setInfo(birth: data, starSign: starSign),
       restore: (val) => val.copyWith(birthDay: _tmp, starSign: _tmpStarSign),
-      updateCommon: (val) => val.copyWith(birthDay: data, starSign: starSign),
+      updateCommon: (val){
+        val.birthDay = data;
+        val.starSign = starSign;
+        return val;
+      },
     );
 
     // 请求数据刷新界面(刷新年龄)
@@ -233,7 +251,10 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     _doUpdate(
       Api.UserInfo.setInfo(location: data),
       restore: (val) => val.copyWith(location: _tmp),
-      updateCommon: (val) => val.copyWith(location: data),
+      updateCommon: (val){
+        val.location = data;
+        return val;
+      },
     );
   }
 

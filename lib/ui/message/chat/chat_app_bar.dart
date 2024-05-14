@@ -160,7 +160,10 @@ class ChatAppBar$User extends _AppBar {
                     callback: () {
                       UserInfoCtrl.doUpdate(
                         uid,
-                        rebuild: (val) => val.copyWith(remarkName: name ?? ""),
+                        rebuild: (val){
+                          val.remarkName = name ?? "";
+                          return val;
+                        },
                       );
                     },
                   );
@@ -172,7 +175,7 @@ class ChatAppBar$User extends _AppBar {
                   Flexible(
                     child: UserInfoCtrl.use(
                       uid,
-                      builder: (it) => XText(it?.showName() ?? ''),
+                      builder: (it) => XText(it?.showName ?? ''),
                     ),
                   ),
                   SvgView(SVG.$('chat/备注'), width: 24, height: 24),

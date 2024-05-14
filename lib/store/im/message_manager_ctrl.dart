@@ -135,7 +135,7 @@ mixin class _MsgNotifyMixin {
 
           _showImLocalNotify(
             id: uidIntVal,
-            title: info?.showName() ?? msg.nickName ?? msg.sender ?? '',
+            title: info?.showName ?? msg.nickName ?? msg.sender ?? '',
             body: msg.simpleMsg,
           );
         }
