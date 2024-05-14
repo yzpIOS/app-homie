@@ -67,4 +67,16 @@ class GuildModel {
     data['anchor_type'] = anchorType;
     return data;
   }
+
+  String get showGuildName {
+    if(guildName == null){
+      return "";
+    }else{
+      if(guildName!.length > 10){
+        return "${guildName!.substring(0,10)}...";
+      }else{
+        return guildName ?? '';
+      }
+    }
+  }
 }

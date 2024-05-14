@@ -5,6 +5,7 @@ import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
+import 'package:app/ui/my/guild_center/widget/guild_name_and_level_widget.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/blurred_network_image.dart';
@@ -137,43 +138,10 @@ class GuildBusinessCardPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          guildModel.guildName ?? "",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Spacing.w4,
-                      guildModel.level != null && guildModel.level! > 0
-                          ? GestureDetector(
-                              onTapDown: (TapDownDetails details) {
-                                var tapPosition = details.globalPosition;
-                                if (tapPosition != null) {
-                                  tapPosition =
-                                      tapPosition - const Offset(22, -5);
-                                  Get.find<UserCtrl>().clickGuildLevel(
-                                      anchorPoint: tapPosition!,
-                                      level: guildModel.level! + 1);
-                                }
-                              },
-                              child: Image.asset(
-                                IMG.format(
-                                    'my/guild_center_level_${guildModel.level! + 1}'),
-                                width: 53,
-                                height: 17,
-                                scale: 3,
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
-                  ),
+                  GuildNameAndLevelWidget(guildModel: guildModel,textStyle: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),),
                   Spacing.h1,
                   Text("ID:${guildModel.guildNo}",
                       style: const TextStyle(

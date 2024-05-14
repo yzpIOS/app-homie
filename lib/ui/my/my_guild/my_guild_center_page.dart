@@ -1,6 +1,7 @@
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
+import 'package:app/ui/my/guild_center/widget/guild_name_and_level_widget.dart';
 import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -63,44 +64,7 @@ class MyGuildCenterPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            guildModel.guildName ?? '',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Color(0xFF000000),
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Spacing.w4,
-                        guildModel.level != null && guildModel.level! > 0
-                            ? GestureDetector(
-                          onTapDown: (TapDownDetails details) {
-                            var tapPosition = details.globalPosition;
-                            if (tapPosition != null) {
-                              tapPosition =
-                                  tapPosition - const Offset(22, -5);
-                              Get.find<UserCtrl>().clickGuildLevel(
-                                  anchorPoint: tapPosition!,
-                                  level: guildModel.level!);
-                            }
-                          },
-                          child: Image.asset(
-                            IMG.format(
-                                'my/guild_center_level_${guildModel.level! +
-                                    1}'),
-                            width: 53,
-                            height: 17,
-                            scale: 3,
-                          ),
-                        )
-                            : const SizedBox(),
-                      ],
-                    ),
+                    GuildNameAndLevelWidget(guildModel: guildModel),
                     Spacing.h1,
                     Text("ID:${guildModel.guildNo}",
                         style: const TextStyle(
