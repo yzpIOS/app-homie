@@ -552,6 +552,9 @@ class RoomCtrl extends SceneCtrl {
   RxBool freeMicRx = RxBool(false);
 
   RxBool followRx = RxBool(false);
+  /// 背包开关
+  RxBool openBackpack = RxBool(false);
+
   RxInt userCountRx = RxInt(0);
 
   RoomCtrl({required super.info, required super.pwd, required super.overlay})
@@ -590,7 +593,7 @@ class RoomCtrl extends SceneCtrl {
   @override
   void onRender(S_SyncRoomInfo? data) {
     followRx.value = roomHttpInfo?['follow_status'] ?? false;
-
+    openBackpack.value = roomHttpInfo?['open_backpack'] ?? false;
     isAnchor = data?.isAnchor == 1;
 
     // 是否管理员

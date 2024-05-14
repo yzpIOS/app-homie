@@ -15,9 +15,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   final UID uid;
   final Map? init;
   final Rx<UserInfoModel> dataRx;
-  late final userDataRx = Rxn<Map>();
   final UserLazyBox _box;
-
   final modeUnityLoadStatus = RxBool(false);
 
   MyInfoCtrl(this._box, {required this.uid, this.init})
@@ -26,9 +24,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   @override
   void onInit() {
     super.onInit();
-
     _initByBox(init);
-
     doRefresh();
   }
 
@@ -58,9 +54,6 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
   Future<void> doRefresh() async {
     final result = _dataRebuild(await Api.UserInfo.myInfo());
-
-    Api.UserInfo.charmLevel(uid).then((it) => userDataRx(it));
-
     UserInfoCtrl.doUpdate(uid, rebuild: (val) {
       val.account = result.account;
       val.avatarUrl = result.avatarUrl;

@@ -79,12 +79,13 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
               children: [
                 Obx((){
                   Rx<UserInfoModel> dataRx = Get.find<MyInfoCtrl>().dataRx;
-                  Rxn<Map> userDataRx = Get.find<MyInfoCtrl>().userDataRx;
-                 var charmLevel = userDataRx()?["charm_level"];
-                  return _HeaderView(myInfoDto: dataRx.value,charmLevel: charmLevel);
+                  return _HeaderView(myInfoDto: dataRx.value);
                 }),
                 divider,
-                _Action1(),
+                Obx((){
+                  Rx<UserInfoModel> dataRx = Get.find<MyInfoCtrl>().dataRx;
+                  return _Action1(dataRx.value);
+                }),
                 $SquareView(),
                 _Action2(),
                 const SizedBox(height: 30),
@@ -96,22 +97,35 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
     );
   }
 
-
-
-
-  Widget _Action1() {
-    final items = [
-      // '开直播',
-      '装扮商城',
-      '我的钱包',
-      '我的装扮',
-      '我的背包',
-      '我的任务',
-      '公会中心'
-      // '我的称号',
-      // '首充礼包',
-      // '邀请好友',
-    ];
+  Widget _Action1(UserInfoModel? myInfoDto) {
+    List <String>items = [];
+    if(myInfoDto != null && myInfoDto.openBackpack != null && myInfoDto.openBackpack == true){
+      items = [
+        // '开直播',
+        '装扮商城',
+        '我的钱包',
+        '我的装扮',
+        '我的背包',
+        '我的任务',
+        '公会中心'
+        // '我的称号',
+        // '首充礼包',
+        // '邀请好友',
+      ];
+    }else{
+      items = [
+        // '开直播',
+        '装扮商城',
+        '我的钱包',
+        '我的装扮',
+       // '我的背包',
+        '我的任务',
+        '公会中心'
+        // '我的称号',
+        // '首充礼包',
+        // '邀请好友',
+      ];
+    }
 
     Widget itemBuilder(String item) {
       Widget child = Column(
@@ -258,8 +272,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 
 class _HeaderView extends StatelessWidget {
   UserInfoModel? myInfoDto;
-  String? charmLevel;
-  _HeaderView({required this.myInfoDto,this.charmLevel});
+  _HeaderView({required this.myInfoDto});
 
   static double bgHeight = AppSize.width / 375 * 221.5;
 
@@ -381,7 +394,7 @@ class _HeaderView extends StatelessWidget {
                     style: const TextStyle(fontSize: 11, color: AppPalette.color71, fontWeight: fw$Regular),
                   ),
                 const Spacing(height: 6, flex: null,),
-                OtherDetailsInfoView(uid: data.uid, level: data.level,charmLevel: charmLevel, ageShow: data.ageShow, starSign: data.starSign, location: data.location),
+                OtherDetailsInfoView(uid: data.uid, level: data.level,charmLevel: data.charmLevel, ageShow: data.ageShow, starSign: data.starSign, location: data.location),
                 // SizedBox(
                 //   height: 20,
                 //   child: UidView(uid: data.uid, account: data.account, level: data.level),

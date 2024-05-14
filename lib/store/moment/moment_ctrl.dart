@@ -78,7 +78,7 @@ extension XRxMomentDto on Rx<MomentDto> {
       );
     });
 
-    GiftSheet.show(logic);
+    GiftSheet.show(giftSendLogic:logic);
   }
 
   void doLike() {
