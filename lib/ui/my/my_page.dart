@@ -159,7 +159,7 @@
 //   }
 //
 //   Widget $UserView() {
-//     Widget builder(MyInfoDto data) {
+//     Widget builder(UserInfoModel data) {
 //       return Row(
 //         children: [
 //           AvatarView(

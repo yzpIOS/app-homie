@@ -1,4 +1,5 @@
 
+import 'package:app/model/api/user_address_model.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/types.dart';
 
@@ -6,10 +7,10 @@ class UserInfoModel {
   late UID uid;
   int? nuid;
   String? nickName;
-  late GenderEnum gender;
+  GenderEnum? gender;
   String? avatarUrl;
   String? account;
-  String? addr;
+  UserAddressModel? address;
   String? desc;
   String? level;
   int? growthValue;
@@ -19,7 +20,7 @@ class UserInfoModel {
   int? realNameType;
   int? fansCount;
   int? followCount;
-  int? accessUserCount;
+  int? accessCount;
   String? charmLevel;
   String? remarkName;
   int? charmGrowthValue;
@@ -36,10 +37,10 @@ class UserInfoModel {
   UserInfoModel(
       {required this.uid,
         this.nickName,
-       required this.gender,
+        this.gender,
         this.avatarUrl,
         this.account,
-        this.addr,
+        this.address,
         this.desc,
         this.level,
         this.growthValue,
@@ -49,7 +50,7 @@ class UserInfoModel {
         this.realNameType,
         this.fansCount,
         this.followCount,
-        this.accessUserCount,
+        this.accessCount,
         this.charmLevel,
         this.remarkName,
         this.charmGrowthValue,
@@ -70,7 +71,7 @@ class UserInfoModel {
     gender = GenderEnum.fromCode(json['sex'] ?? 0)! ;
     avatarUrl = json['avatar_url'];
     account = json['public_id'];
-    addr = json['addr'];
+    address = json['addr'] != null ? UserAddressModel.fromJson(json['addr']) : null;
     desc = json['description'];
     level = json['level'];
     growthValue = json['growth_value'];
@@ -81,7 +82,7 @@ class UserInfoModel {
     realNameType = json['real_name_type'];
     fansCount = json['fans_count'];
     followCount = json['follow_count'];
-    accessUserCount = json['access_user_count'];
+    accessCount = json['access_user_count'];
     charmLevel = json['charm_level'];
     remarkName = json['remarks_name'];
     charmGrowthValue = json['charm_growth_value'];
@@ -103,7 +104,7 @@ class UserInfoModel {
     gender = GenderEnum.fromCode(json['sex'] ?? 0)! ;
     avatarUrl = json['avatar_url'];
     account = json['public_id'];
-    addr = json['addr'];
+    address = json['addr'] != null ? UserAddressModel.fromJson(json['addr']) : null;
     desc = json['description'];
     level = json['level'];
     growthValue = json['growth_value'];
@@ -114,7 +115,7 @@ class UserInfoModel {
     realNameType = json['real_name_type'];
     fansCount = json['fans_count'];
     followCount = json['follow_count'];
-    accessUserCount = json['access_user_count'];
+    accessCount = json['access_user_count'];
     charmLevel = json['charm_level'];
     remarkName = json['remarks_name'];
     charmGrowthValue = json['charm_growth_value'];
@@ -134,10 +135,10 @@ class UserInfoModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['uid'] = this.uid;
     data['username'] = this.nickName;
-    data['sex'] = this.gender.code;
+    data['sex'] = this.gender != null ? this.gender!.code : 0;
     data['avatar_url'] = this.avatarUrl;
     data['public_id'] = this.account;
-    data['addr'] = this.addr;
+    data['addr'] = this.address?.toJson();
     data['description'] = this.desc;
     data['level'] = this.level;
     data['growth_value'] = this.growthValue;
@@ -147,7 +148,7 @@ class UserInfoModel {
     data['real_name_type'] = this.realNameType;
     data['fans_count'] = this.fansCount;
     data['follow_count'] = this.followCount;
-    data['access_user_count'] = this.accessUserCount;
+    data['access_user_count'] = this.accessCount;
     data['charm_level'] = this.charmLevel;
     data['remarks_name'] = this.remarkName;
     data['charm_growth_value'] = this.charmGrowthValue;

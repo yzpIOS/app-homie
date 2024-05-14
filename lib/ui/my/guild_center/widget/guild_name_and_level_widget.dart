@@ -44,7 +44,7 @@ class GuildNameAndLevelWidget extends StatelessWidget {
           },
           child: Image.asset(
             IMG.format(
-                'my/guild_center_level_${min(guildModel.level! + 1, 5)}'),
+                'my/guild_center_level_${min(guildModel.level!, 5)}'),
             width: 53,
             height: 17,
             scale: 3,

@@ -154,7 +154,7 @@ abstract class UserMsg<T extends MsgAdapter> extends BaseMsgAdapter<T> {
         child,
         Spacing.w4,
         MyInfoCtrl.use(
-          builder: (it) => AvatarView(it.avatar, blur: it.avatarEx, size: 40),
+          builder: (it) => AvatarView(it.avatarUrl, blur: it.avatarExtra, size: 40),
         ),
       ],
     );
