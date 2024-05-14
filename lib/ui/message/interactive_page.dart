@@ -136,7 +136,7 @@ abstract class _ItemView extends StatelessWidget {
         UserInfoCtrl.use(
           uid,
           builder: (it) => XText(
-            it?.showName() ?? '',
+            it?.showName ?? '',
             style: const TextStyle(fontSize: 14, color: AppPalette.c3, fontWeight: fw$Medium),
           ),
         ),

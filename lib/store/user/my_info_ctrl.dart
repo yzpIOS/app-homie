@@ -1,9 +1,8 @@
 import 'dart:io';
-
 import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:app/exception.dart';
-import 'package:app/model/api/my_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/model/enum/gender_enum.dart';
 import 'package:app/model/local_attach.dart';
 import 'package:app/net/api.dart';
@@ -15,14 +14,14 @@ import 'package:app/widgets.dart';
 class MyInfoCtrl extends GetxController with GetDisposableMixin {
   final UID uid;
   final Map? init;
-  final Rx<MyInfoDto> dataRx;
+  final Rx<UserInfoModel> dataRx;
   late final userDataRx = Rxn<Map>();
   final UserLazyBox _box;
 
-
   final modeUnityLoadStatus = RxBool(false);
 
-  MyInfoCtrl(this._box, {required this.uid, this.init}) : dataRx = Rx(MyInfoDto(uid: uid));
+  MyInfoCtrl(this._box, {required this.uid, this.init})
+      : dataRx = Rx(UserInfoModel(uid: uid));
 
   @override
   void onInit() {
@@ -43,7 +42,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
       if (info is Map) {
         dataRx(
-          MyInfoDto.fromJson(info.cast()),
+          UserInfoModel.fromJson(info.cast()),
         );
       }
 
@@ -63,26 +62,25 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     Api.UserInfo.charmLevel(uid).then((it) => userDataRx(it));
 
     UserInfoCtrl.doUpdate(uid, rebuild: (val) {
-      return val.copyWith(
-        account: result.account,
-        avatar: result.avatar,
-        avatarEx: result.avatarEx,
-        nickName: result.nickName,
-        level: result.level,
-        ageShow: result.ageShow,
-        starSign: result.starSign,
-        location: result.location,
-        avatar_frame: result.avatar_frame,
-        voice_party_background: result.voice_party_background,
-        approach_special_effect: result.approach_special_effect,
-        chat_bubble: result.chat_bubble,
-      );
+      val.account = result.account;
+      val.avatarUrl = result.avatarUrl;
+      val.avatarExtra = result.avatarExtra;
+      val.nickName = result.nickName;
+      val.level = result.level;
+      val.ageShow = result.ageShow;
+      val.starSign = result.starSign;
+      val.location = result.location;
+      val.avatarFrame = result.avatarFrame;
+      val.voicePartyBackground = result.voicePartyBackground;
+      val.approachSpecialEffect = result.approachSpecialEffect;
+      val.chatBubble = result.chatBubble;
+      return val;
     });
     dataRx.value = result;
   }
 
-  MyInfoDto _dataRebuild(Map json) {
-    final data = MyInfoDto.fromJson(json.cast());
+  UserInfoModel _dataRebuild(Map json) {
+    final data = UserInfoModel.fromJson(json.cast());
 
     return dataRx.rebuild(
       (it) {
@@ -93,7 +91,7 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     );
   }
 
-  static Widget use({required final Widget Function(MyInfoDto) builder}) {
+  static Widget use({required final Widget Function(UserInfoModel) builder}) {
     return GetX<MyInfoCtrl>(
       builder: (it) {
         try {
@@ -108,7 +106,9 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   }
 
 //<editor-fold desc="Api">
-  _doUpdate(Future api, {required MyInfoDto Function(MyInfoDto) restore, UserRebuild? updateCommon}) async {
+  _doUpdate(Future api,
+      {required UserInfoModel Function(UserInfoModel) restore,
+      UserRebuild? updateCommon}) async {
     try {
       await api;
 
@@ -146,12 +146,17 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
       callback1: (resp) {
         final it = (resp as Tuple4);
 
-        dataRx.rebuild((val) => val.copyWith(avatar: it.value2, avatarEx: it.value3));
+        dataRx.rebuild((val) {
+          val.avatarUrl = it.value2;
+          val.avatarExtra = it.value3;
+          return val;
+        });
 
-        UserInfoCtrl.doUpdate(
-          uid,
-          rebuild: (val) => val.copyWith(avatar: it.value2, avatarEx: it.value3),
-        );
+        UserInfoCtrl.doUpdate(uid, rebuild: (val) {
+          val.avatarUrl = it.value2;
+          val.avatarExtra = it.value3;
+          return val;
+        });
 
         _saveToBox();
       },
@@ -163,47 +168,66 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   ///
   void updateNick(String nickName) async {
     var result = await Api.UserInfo.setInfo2(nickName);
-    if(result != ErrorCode.Ok) {
-      if(result == ErrorCode.USER_NAME_MORE_THAN_MAX_LEN) {
+    if (result != ErrorCode.Ok) {
+      if (result == ErrorCode.USER_NAME_MORE_THAN_MAX_LEN) {
         showToast("用户名称超过最大长度");
-      } else if(result == ErrorCode.SUSPECTED_SENSITIVE_WORD) {
+      } else if (result == ErrorCode.SUSPECTED_SENSITIVE_WORD) {
         showToast("内容涉及敏感词");
-      } else if(result == ErrorCode.USER_NAME_IS_EXIST) {
+      } else if (result == ErrorCode.USER_NAME_IS_EXIST) {
         showToast("用户名称已存在");
       } else {
         showToast("修改失败");
       }
       return;
     }
-    dataRx.rebuild((val) => val.copyWith(nickName: nickName));
-    UserInfoCtrl.doUpdate(
-      uid,
-      rebuild: (val) => val.copyWith(nickName: nickName),
-    );
+    dataRx.rebuild((val) {
+      val.nickName = nickName;
+      return val;
+    });
+    UserInfoCtrl.doUpdate(uid, rebuild: (val) {
+      val.nickName = nickName;
+      return val;
+    });
     _saveToBox();
   }
 
   void updateDesc(String data) async {
     final _tmp = dataRx().desc;
-
-    dataRx.rebuild((val) => val.copyWith(desc: data));
+    dataRx.rebuild((val) {
+      val.desc = data;
+      return val;
+    });
 
     _doUpdate(
       Api.UserInfo.setInfo(desc: data),
-      restore: (val) => val.copyWith(desc: _tmp),
-      updateCommon: (val) => val.copyWith(desc: data),
+      restore: (val) {
+        val.desc = _tmp;
+        return val;
+      },
+      updateCommon: (val) {
+        val.desc = data;
+        return val;
+      },
     );
   }
 
   void updateGender(GenderEnum data) async {
     final _tmp = dataRx().gender;
-
-    dataRx.rebuild((val) => val.copyWith(gender: data));
+    dataRx.rebuild((val) {
+      val.gender = data;
+      return val;
+    });
 
     _doUpdate(
       Api.UserInfo.setInfo(gender: data),
-      restore: (val) => val.copyWith(gender: _tmp),
-      updateCommon: (val) => val.copyWith(gender: data),
+      restore: (val) {
+        val.gender = _tmp;
+        return val;
+      },
+      updateCommon: (val) {
+        val.gender = data;
+        return val;
+      },
     );
   }
 
@@ -212,13 +236,24 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
     final _tmp = dataRx().birthDay;
     final _tmpStarSign = dataRx().starSign;
     final starSign = getConstellation(data);
-
-    dataRx.rebuild((val) => val.copyWith(birthDay: data, starSign: starSign));
+    dataRx.rebuild((val) {
+      val.birthDay = data;
+      val.starSign = starSign;
+      return val;
+    });
 
     await _doUpdate(
       Api.UserInfo.setInfo(birth: data, starSign: starSign),
-      restore: (val) => val.copyWith(birthDay: _tmp, starSign: _tmpStarSign),
-      updateCommon: (val) => val.copyWith(birthDay: data, starSign: starSign),
+      restore: (val) {
+        val.birthDay = _tmp;
+        val.starSign = _tmpStarSign;
+        return val;
+      },
+      updateCommon: (val) {
+        val.birthDay = data;
+        val.starSign = starSign;
+        return val;
+      },
     );
 
     // 请求数据刷新界面(刷新年龄)
@@ -228,12 +263,21 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
   // 更新地区
   void updateLocation(String data) async {
     final _tmp = dataRx().location;
-    dataRx.rebuild((val) => val.copyWith(location: data));
+    dataRx.rebuild((val) {
+      val.location = data;
+      return val;
+    });
 
     _doUpdate(
       Api.UserInfo.setInfo(location: data),
-      restore: (val) => val.copyWith(location: _tmp),
-      updateCommon: (val) => val.copyWith(location: data),
+      restore: (val) {
+        val.location = _tmp;
+        return val;
+      },
+      updateCommon: (val) {
+        val.location = data;
+        return val;
+      },
     );
   }
 
@@ -247,12 +291,17 @@ class MyInfoCtrl extends GetxController with GetDisposableMixin {
 
   void updateLotteryWinning(bool isShow) async {
     final _tmp = dataRx().showWinningLottery;
-
-    dataRx.rebuild((val) => val.copyWith(showWinningLottery: isShow));
+    dataRx.rebuild((val) {
+      val.showWinningLottery = isShow;
+      return val;
+    });
 
     _doUpdate(
       Api.UserInfo.showWinningLottery(isShow),
-      restore: (val) => val.copyWith(showWinningLottery: _tmp),
+      restore: (val) {
+        val.showWinningLottery = _tmp;
+        return val;
+      },
     );
   }
 

@@ -181,7 +181,7 @@ class _ItemView extends StatelessWidget {
     if (!data.isSysConv) {
       switch (data.type) {
         case ConversationType.V2TIM_C2C:
-          return UserInfoCtrl.use(data.userID!, builder: (it) => XText(it?.showName() ?? ''));
+          return UserInfoCtrl.use(data.userID!, builder: (it) => XText(it?.showName ?? ''));
         case ConversationType.V2TIM_GROUP:
           break;
         case ConversationType.CONVERSATION_TYPE_INVALID:

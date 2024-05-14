@@ -1,6 +1,6 @@
 
 import 'package:app/common/theme.dart';
-import 'package:app/model/api/user_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -131,8 +131,8 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
   }
 
   Widget $UserView() {
-    Widget builder(UserInfoDto? data) {
-      final avatar = data?.avatar;
+    Widget builder(UserInfoModel? data) {
+      final avatar = data?.avatarUrl;
 
       final onTap = avatar == null
           ? null
@@ -151,8 +151,8 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
             onTap: onTap,
             child: AvatarView(
               avatar,
-              blur: data?.avatarEx,
-              avatarFrameUrl: data?.avatar_frame,
+              blur: data?.avatarExtra,
+              avatarFrameUrl: data?.avatarFrame,
               size: 70,
               avatarFrameSize: 16,
               side: const BorderSide(color: Colors.white, width: 1),
@@ -164,7 +164,7 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                NickView(nickName: data?.showName()),
+                NickView(nickName: data?.showName),
                 SizedBox(height: 5,),
                 Container(
                   decoration: BoxDecoration(

@@ -33,7 +33,7 @@ class _DataView extends SimplePageView<Map> {
   Widget itemBuilder(BuildContext context, Map item, int index) {
     return UserInfoCtrl.use(item['uid'], builder: (it) {
       return TileView(
-        data: TileDataAdapter2(title: it?.showName() ?? '', leading: it?.avatar ?? ''),
+        data: TileDataAdapter2(title: it?.showName ?? '', leading: it?.avatarUrl ?? ''),
         onTapOver: Some(
           () => Get.back(result: item),
         ),

@@ -136,6 +136,8 @@ dependencies:
 
   image_pixels: ^3.0.1
 
+  pull_to_refresh: ^2.0.0
+
 link_kit:
   deep_link: homie:///
 

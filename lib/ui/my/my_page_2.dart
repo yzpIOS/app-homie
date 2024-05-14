@@ -1,10 +1,8 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
-import 'package:app/model/api/my_info_dto.dart';
-import 'package:app/store/cloth_selector_ctrl.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
-import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/backpack/v1/backpack_page.dart';
 import 'package:app/ui/my/backpack/v2/backpack_page2.dart';
@@ -13,6 +11,7 @@ import 'package:app/ui/my/connect_page.dart';
 import 'package:app/ui/my/decorate/decorate_shop_page.dart';
 import 'package:app/ui/my/friend/access_agg_page.dart';
 import 'package:app/ui/my/friend/friend_page.dart';
+import 'package:app/ui/my/guild_center/guild_center_page.dart';
 import 'package:app/ui/my/my_moment_page.dart';
 import 'package:app/ui/my/real_identity_2_page.dart';
 import 'package:app/ui/my/real_identity_page.dart';
@@ -22,14 +21,10 @@ import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/ui/my/wallet/wallet_page.dart';
 import 'package:app/ui/room/room_fav_page.dart';
 import 'package:app/ui/task/my_sign_view.dart';
-import 'package:app/ui/task/task_center_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
 import 'package:app/ui/my/openliveroom/open_live_room_page.dart';
-
-import '../../model/api/user_info_dto.dart';
-import '../../net/api.dart';
 import '../home/home_banner_view.dart';
 import 'invite_new_members/invite_new_members_activity_page.dart';
 
@@ -83,7 +78,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
             child: Column(
               children: [
                 Obx((){
-                  Rx<MyInfoDto> dataRx = Get.find<MyInfoCtrl>().dataRx;
+                  Rx<UserInfoModel> dataRx = Get.find<MyInfoCtrl>().dataRx;
                   Rxn<Map> userDataRx = Get.find<MyInfoCtrl>().userDataRx;
                  var charmLevel = userDataRx()?["charm_level"];
                   return _HeaderView(myInfoDto: dataRx.value,charmLevel: charmLevel);
@@ -112,6 +107,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
       '我的装扮',
       '我的背包',
       '我的任务',
+      '公会中心'
       // '我的称号',
       // '首充礼包',
       // '邀请好友',
@@ -215,6 +211,9 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         SignDialog.show(isManual: true);
         // Get.to(() => const TaskCenterPage());
         break;
+      case '公会中心':
+        Get.to(() => const GuildCenterPage());
+        break;
       case '我的称号':
         Get.to(() => const MyTitlePage());
         break;
@@ -258,7 +257,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
 }
 
 class _HeaderView extends StatelessWidget {
-  MyInfoDto? myInfoDto;
+  UserInfoModel? myInfoDto;
   String? charmLevel;
   _HeaderView({required this.myInfoDto,this.charmLevel});
 
@@ -328,7 +327,7 @@ class _HeaderView extends StatelessWidget {
   }
 
   Widget $UserView() {
-    Widget builder(MyInfoDto data) {
+    Widget builder(UserInfoModel data) {
       Widget myNickView() {
         Widget nickView = XText(
           data.nickName ?? '',
@@ -356,9 +355,9 @@ class _HeaderView extends StatelessWidget {
           OpacityButton(
             onTap: () => Get.to(() => UserHomePage(uid: data.uid ?? "")),
             child: AvatarView(
-              data.avatar,
-              blur: data.avatarEx,
-              avatarFrameUrl: data.avatar_frame,
+              data.avatarUrl,
+              blur: data.avatarExtra,
+              avatarFrameUrl: data.avatarFrame,
               size: 70,
               avatarFrameSize: 16,
               side: const BorderSide(width: 2, color: Colors.white, strokeAlign: BorderSide.strokeAlignCenter),

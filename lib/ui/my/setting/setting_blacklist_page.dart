@@ -46,13 +46,13 @@ class _DataView extends SimplePageView<String> {
             contentPadding: const Pad(vertical: 7, horizontal: 10),
             onTap: toUserPage(uid),
             leading: AvatarView(
-              it?.avatar,
-              blur: it?.avatarEx,
+              it?.avatarUrl,
+              blur: it?.avatarExtra,
               size: 50,
-              avatarFrameUrl: it?.avatar_frame,
+              avatarFrameUrl: it?.avatarFrame,
             ),
             title: Text(
-              it?.showName() ?? '',
+              it?.showName ?? '',
               style: const TextStyle(fontSize: 14, color: AppPalette.c3),
             ),
             //trailing: action?.let((fn) => fn(uid, data, setState)),

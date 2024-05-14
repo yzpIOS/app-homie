@@ -71,7 +71,7 @@ class _DownMicSettleState extends State<DownMicSettleDialog> {
         const SizedBox(height: 5,),
         UserInfoCtrl.use(OAuthCtrl.uid, builder: (userInfo) {
           return Text(
-            userInfo?.showName() ?? "",
+            userInfo?.showName ?? "",
             style: const TextStyle(
               fontSize: 14,
               color: Colors.black,

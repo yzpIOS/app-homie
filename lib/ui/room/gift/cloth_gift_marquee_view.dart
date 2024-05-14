@@ -1,6 +1,6 @@
 
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
-import 'package:app/model/api/user_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
@@ -17,7 +17,7 @@ class ClothGiftMarqueeView extends StatefulWidget {
   String? blinkUrl;
 
   final UID acceptUid;
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final S_FloatingScreen data;
 
   ClothGiftMarqueeView({
@@ -102,7 +102,7 @@ class _ClothGiftMarqueeViewState extends State<ClothGiftMarqueeView> {
                 itemCount: 4,
                 itemBuilder: (context, index) {
                   if(index == 0) {
-                    String text = user?.showName() ?? "";
+                    String text = user?.showName ?? "";
                     var style = const TextStyle(
                       color: Color(0xFFFED85B),
                       fontWeight: FontWeight.bold,

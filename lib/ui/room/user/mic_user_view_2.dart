@@ -278,7 +278,7 @@ class _ItemView extends StatelessWidget {
         avatar: $Avatar(),
         title: UserInfoCtrl.use(uid, builder: (it) {
           return XText(
-            it?.showName() ?? '',
+            it?.showName ?? '',
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 12, color: Colors.white),);
         },
       ),

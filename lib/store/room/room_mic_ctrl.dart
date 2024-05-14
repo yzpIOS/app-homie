@@ -2,7 +2,7 @@ import 'package:app/3rd/tencent/rtc.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
-import 'package:app/model/api/user_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
@@ -126,17 +126,17 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     // 申请上麦
     on<MicApplyEvent>((event) async {
-      UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
+      UserInfoModel? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
       if(userInfo == null) {
         return;
       }
-      CommonDialog.receiveApplyMicUp(userInfo.showName(), () {
+      CommonDialog.receiveApplyMicUp(userInfo.showName, () {
         // todo 同意后，发送请求
         Api.Room.micConfirm(mikeId: int.tryParse(event.data?.mikeNo ?? "0") ?? 0, type: 1, isAgree: true, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
-        sendTextNotify("你同意了${userInfo.showName()}上麦请求");
+        sendTextNotify("你同意了${userInfo.showName}上麦请求");
       }, () {
         Api.Room.micConfirm(mikeId: int.tryParse(event.data?.mikeNo ?? "0") ?? 0, type: 1, isAgree: false, uid: userInfo.nuid, roomId: event.data?.roomId.toInt());
-        sendTextNotify("你拒绝了${userInfo.showName()}上麦请求");
+        sendTextNotify("你拒绝了${userInfo.showName}上麦请求");
       });
     });
   }
@@ -458,7 +458,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     // 房主不用判断
     if(uid != roomUid) {
       if(no != "9") {
-        UserInfoDto? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
+        UserInfoModel? userInfo = await UserInfoCtrl.ins.findByUidOrNull2(uid, forceUseNet: true);
         if(userInfo == null) {
           showToast("无法操作，获取该用户信息异常");
           return;

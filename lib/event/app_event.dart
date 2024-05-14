@@ -60,3 +60,11 @@ class UserBlackEvent extends Event {
 
   UserBlackEvent({required this.userId});
 }
+
+class HandleGuildAnchorApplyEvent extends Event {
+  const HandleGuildAnchorApplyEvent();
+}
+
+class AgreeGuildAnchorApplyEvent extends Event {
+  const AgreeGuildAnchorApplyEvent();
+}

@@ -68,7 +68,7 @@ class _CommentItemViewState extends State<CommentItemView> with MomentActionMixi
           author,
           builder: (it) {
             return XText(
-              it?.showName() ?? '',
+              it?.showName ?? '',
               style: const TextStyle(fontSize: 12, color: AppPalette.c6),
             );
           },

@@ -76,7 +76,7 @@
 //     final uid = item.uid;
 //     final isSelf = OAuthCtrl.isSelf(uid);
 //
-//     Widget builder(UserInfoDto? info) {
+//     Widget builder(UserInfoModel? info) {
 //       final action = //
 //           isSelf
 //               ? $SelfAction(no)

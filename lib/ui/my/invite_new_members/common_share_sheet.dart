@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:app/3rd/tencent/qq.dart';
 import 'package:app/3rd/tencent/wx.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -76,7 +77,7 @@ class CommonShareSheet extends StatelessWidget {
       case '微信好友':
       case '朋友圈':
 
-        UserInfoDto? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
+        UserInfoModel? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
         if(userDt0 == null) {
           return;
         }
@@ -105,7 +106,7 @@ class CommonShareSheet extends StatelessWidget {
         InviteNewMembersShareQrcodeImageDialog.show();
         break;
       case '复制链接':
-        UserInfoDto? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
+        UserInfoModel? userDt0 = await UserInfoCtrl.ins.findByUidOrNull(OAuthCtrl.uid, useNet: true);
         if(userDt0 == null) {
           return;
         }

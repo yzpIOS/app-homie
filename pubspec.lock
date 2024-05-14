@@ -888,10 +888,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_editor
-      sha256: "6401a431ef1e988e35a8b19ff02cb7d31bd881fd7db0d39261ac8236683ef1c1"
+      sha256: "81e4c6ccfd4ff242a89695347113bb90b62b89bab70e97cdd5625c85887a86e3"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.4.0"
+    version: "1.5.0"
   image_editor_common:
     dependency: transitive
     description:
@@ -904,10 +904,10 @@ packages:
     dependency: transitive
     description:
       name: image_editor_ohos
-      sha256: "55c08871814efdd19b3927327b5913649dd1ea36e0a83aa77ab668dad3160dcc"
+      sha256: aee8fa1490fedbb98583dfaebb4162c295abeb0044e94f2eb2ad52ae419e6f6e
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   image_editor_platform_interface:
     dependency: transitive
     description:
@@ -1498,6 +1498,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.2.3"
+  pull_to_refresh:
+    dependency: "direct main"
+    description:
+      name: pull_to_refresh
+      sha256: bbadd5a931837b57739cf08736bea63167e284e71fb23b218c8c9a6e042aad12
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   quiver:
     dependency: transitive
     description:
@@ -1907,10 +1915,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_macos
-      sha256: b7244901ea3cf489c5335bdacda07264a6e960b1c1b1a9f91e4bc371d9e68234
+      sha256: "9a1a42d5d2d95400c795b2914c36fdcb525870c752569438e4ebb09a2b5d90de"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.1.0"
+    version: "3.2.0"
   url_launcher_platform_interface:
     dependency: transitive
     description:

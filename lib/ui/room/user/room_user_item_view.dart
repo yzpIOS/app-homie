@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/model/enum/room_role_type.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/types.dart';
@@ -12,7 +13,7 @@ class RoomUserItemView extends StatelessWidget {
 
   RoomRoleType? role;
 
-  UserInfoDto? data;
+  UserInfoModel? data;
 
   String? showValue;
 
@@ -27,7 +28,7 @@ class RoomUserItemView extends StatelessWidget {
     );
   }
 
-  Widget itemBuilder(UserInfoDto data) {
+  Widget itemBuilder(UserInfoModel data) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -35,9 +36,9 @@ class RoomUserItemView extends StatelessWidget {
           width: 50,
           child: Center(
             child: AvatarView(
-                data.avatar,
-                blur: data.avatarEx,
-                avatarFrameUrl: data.avatar_frame,
+                data.avatarUrl,
+                blur: data.avatarExtra,
+                avatarFrameUrl: data.avatarFrame,
                 size: 40
             ),
           ),
@@ -49,7 +50,7 @@ class RoomUserItemView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                data.showName(),
+                data.showName,
                 style: const TextStyle(fontSize: 14, color: Colors.black, fontWeight: fw$Medium),
               ),
               Spacing.h4,

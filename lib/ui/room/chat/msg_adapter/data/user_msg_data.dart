@@ -1,5 +1,6 @@
 import 'package:app/common/nets/commons/proto/Common.pb.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/types.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/base_msg_data.dart';
@@ -21,7 +22,7 @@ class UserInMsgData extends UserMsgData<void> {
 }
 
 class GiftMsgAdapter extends UserMsgData<S_GiftPlay> {
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final String acceptUid;
 
   GiftMsgAdapter({required super.uid, required this.acceptUid, required super.nuid, required this.users, required super.data});
@@ -47,7 +48,7 @@ class AllRoomMsgAdapter extends BaseMsgData<AllScreenItem> {
 }
 
 class BlindBoxGiftOpenMsgAdapter extends UserMsgData<S_MoreGiftPlay> {
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final String acceptUid;
   final List<S_GiftPlay> items;
 

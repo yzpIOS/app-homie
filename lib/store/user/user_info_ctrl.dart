@@ -1,14 +1,13 @@
 import 'package:app/event/event.dart';
-import 'package:app/model/api/user_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
 import 'package:app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:synchronized/extension.dart';
 
-export 'package:app/model/api/user_info_dto.dart';
 
-typedef UserRebuild = UserInfoDto Function(UserInfoDto);
+typedef UserRebuild = UserInfoModel Function(UserInfoModel);
 
 class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, BusGetLifeMixin {
   @override
@@ -22,7 +21,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return Get.find<UserInfoCtrl>();
   }
 
-  final _cache = <String, Rxn<UserInfoDto>>{};
+  final _cache = <String, Rxn<UserInfoModel>>{};
 
   final _task = <UID, Future<bool>>{};
   final _taskDb = <UID, Future<bool>>{};
@@ -38,7 +37,8 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
         doUpdate(
           event.uid ?? "",
           rebuild: (val) {
-            return val.copyWith(level: event.data?.level.toString());
+            val.level = event.data?.level.toString();
+            return val;
           },
         );
       },
@@ -50,7 +50,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
           doUpdate(
             element.uid,
             rebuild: (val) {
-              val.copyWith(charmLevel: element.charmLevel.toString());
+              val.charmLevel = element.charmLevel.toString();
               return val;
             },
           );
@@ -59,8 +59,8 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     );
   }
 
-  Rxn<UserInfoDto> _getOrCreate(UID uid) {
-    return _cache.putIfAbsent(uid, () => Rxn<UserInfoDto>());
+  Rxn<UserInfoModel> _getOrCreate(UID uid) {
+    return _cache.putIfAbsent(uid, () => Rxn<UserInfoModel>());
   }
 
   Future<Map<UID, Completer<bool>>> _pullBatch() {
@@ -79,12 +79,12 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
 
     _taskNet.addAll(task);
 
-    late final Map<UID, UserInfoDto> items;
+    late final Map<UID, UserInfoModel> items;
 
     try {
       items = //
           await Api.UserInfo.simple(task.keys.toList(growable: false)) //
-              .then((it) => it.map((k, v) => MapEntry(k, UserInfoDto.fromApi(k, v))));
+              .then((it) => it.map((k, v) => MapEntry(k, UserInfoModel.fromApiJson(userUid: k, json: v))));
 
     } catch (e, s) {
       errLog(e, s);
@@ -157,7 +157,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
         final result = await box.use((box) => box.get(uid));
 
         if (result != null) {
-          _getOrCreate(uid)(UserInfoDto.fromJson(result.cast()));
+          _getOrCreate(uid)(UserInfoModel.fromJson(result.cast()));
 
           return true;
         }
@@ -171,13 +171,13 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     });
   }
 
-  Future<UserInfoDto> _saveToDb(UID uid, UserInfoDto data) async {
+  Future<UserInfoModel> _saveToDb(UID uid, UserInfoModel data) async {
     await box.use((box) => box.put(uid, data.toJson()));
 
     return data;
   }
 
-  Rxn<UserInfoDto> simpleFetch(UID uid, {bool refresh = false, forceUseNet = false}) {
+  Rxn<UserInfoModel> simpleFetch(UID uid, {bool refresh = false, forceUseNet = false}) {
     final rxVal = _getOrCreate(uid);
 
     if (rxVal.isNull() || refresh || forceUseNet) _loadByDbOrNet(uid, true, forceUseNet: forceUseNet);
@@ -201,17 +201,17 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return (_taskNet[uid] ?? _batchTask.putIfAbsent(uid, _subTask)).future;
   }
 
-  Future<UserInfoDto> findByUid(UID uid) async {
+  Future<UserInfoModel> findByUid(UID uid) async {
     return await findByUidOrNull(uid, useNet: true) ?? (throw 'Err');
   }
 
-  Future<UserInfoDto?> findByUidOrNull(UID uid, {required bool useNet}) async {
+  Future<UserInfoModel?> findByUidOrNull(UID uid, {required bool useNet}) async {
     final rxVal = _getOrCreate(uid);
 
     return rxVal() ?? (await _loadByDbOrNet(uid, useNet) ? rxVal() : null);
   }
 
-  Future<UserInfoDto?> findByUidOrNull2(UID uid, {required bool forceUseNet}) async {
+  Future<UserInfoModel?> findByUidOrNull2(UID uid, {required bool forceUseNet}) async {
     if(_cache.containsKey(uid)) {
       _cache.remove(uid);
     }
@@ -221,7 +221,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return await _loadByDbOrNet(uid, forceUseNet) ? rxVal() : null;
   }
 
-  Future<Map<UID, UserInfoDto>> findByUidX(Iterable<UID> uid, {required bool useNet}) async {
+  Future<Map<UID, UserInfoModel>> findByUidX(Iterable<UID> uid, {required bool useNet}) async {
     return {
       for (final item in await Future.wait(uid.map((it) => findByUidOrNull(it, useNet: useNet))))
         if (item != null) item.uid: item,
@@ -244,7 +244,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     return Get.find<UserInfoCtrl>()._doUpdate(uid, rebuild: rebuild);
   }
 
-  static Widget use(UID uid, {required Widget Function(UserInfoDto?) builder, bool refresh = false, bool forceUseNet = false}) {
+  static Widget use(UID uid, {required Widget Function(UserInfoModel?) builder, bool refresh = false, bool forceUseNet = false}) {
     assert(uid != '${null}');
 
     final rxVal = Get.find<UserInfoCtrl>().simpleFetch(uid, refresh: refresh, forceUseNet: forceUseNet);
@@ -255,7 +255,7 @@ class UserInfoCtrl extends GetxController with UserLazyBoxDisposableMixin<Map>, 
     );
   }
 
-  static Widget useX(Set<UID> ids, {required Widget Function(Map<UID, UserInfoDto?>) builder}) {
+  static Widget useX(Set<UID> ids, {required Widget Function(Map<UID, UserInfoModel?>) builder}) {
     final ctrl = Get.find<UserInfoCtrl>();
 
     return Builder(

@@ -171,7 +171,7 @@ class _ItemView extends StatelessWidget {
               XText('房主:$homeowner'),
               // UserInfoCtrl.use(
               //   data['uid'] ?? '',
-              //   builder: (it) => XText('房主:${it?.showName() ?? ''}'),
+              //   builder: (it) => XText('房主:${it?.showName ?? ''}'),
               // ),
           ],
         ),

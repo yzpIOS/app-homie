@@ -1,7 +1,7 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
-import 'package:app/model/api/user_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
@@ -11,7 +11,7 @@ import 'package:app/widgets.dart';
 
 class SuperGiftView extends StatelessWidget {
   final UID acceptUid;
-  final Map<UID, UserInfoDto> users;
+  final Map<UID, UserInfoModel> users;
   final S_FloatingScreen data;
 
   SuperGiftView({required this.data, required this.acceptUid, required this.users}) : super(key: UniqueKey());
@@ -23,11 +23,11 @@ class SuperGiftView extends StatelessWidget {
     Widget child = XRichText(
       TextSpan(
         children: [
-          TextSpan(text: user?.showName() ?? '--'),
+          TextSpan(text: user?.showName ?? '--'),
           const TextSpan(text: '在'),
           TextSpan(text: data.roomName),
           const TextSpan(text: '直播间赠送'),
-          TextSpan(text: users[acceptUid]?.showName() ?? '--'),
+          TextSpan(text: users[acceptUid]?.showName ?? '--'),
         ],
       ),
       overflow: TextOverflow.fade,
@@ -60,7 +60,7 @@ class SuperGiftView extends StatelessWidget {
         Positioned(
           top: 8,
           left: 28,
-          child: AvatarView(user?.avatar, blur: user?.avatarEx, size: 30),
+          child: AvatarView(user?.avatarUrl, blur: user?.avatarExtra, size: 30),
         ),
         Positioned(
           top: 6,

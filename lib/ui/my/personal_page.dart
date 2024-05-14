@@ -1,5 +1,5 @@
 import 'package:app/common/theme.dart';
-import 'package:app/model/api/my_info_dto.dart';
+import 'package:app/model/api/user_info_model.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/common/x_input_page.dart';
@@ -25,7 +25,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
     );
   }
 
-  Widget $BodyView(MyInfoDto data) {
+  Widget $BodyView(UserInfoModel data) {
     String? tempBirthDay;
     final birthDay = data.birthDay;
     if (birthDay != null) {
@@ -155,7 +155,7 @@ class PersonalPage extends GetView<MyInfoCtrl> {
     );
   }
 
-  Box $AvatarView(MyInfoDto data) {
+  Box $AvatarView(UserInfoModel data) {
     return Box(
       height: 140,
       alignment: Alignment.center,
@@ -164,10 +164,10 @@ class PersonalPage extends GetView<MyInfoCtrl> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AvatarView(
-                data.avatar,
-                blur: data.avatarEx,
+                data.avatarUrl,
+                blur: data.avatarExtra,
                 size: 82.6,
-              avatarFrameUrl: data.avatar_frame,
+              avatarFrameUrl: data.avatarFrame,
               avatarFrameSize: 16,
             ),
             Spacing.h10,
