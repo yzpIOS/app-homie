@@ -49,7 +49,8 @@ class OrientationSheet extends StatelessWidget {
       onTap: () => onItemClick('举报'),
       child: Padding(
         padding: const Pad(all: 10),
-        child: SvgView(SVG.$('common/举报')),
+        // child: SvgView(SVG.$('common/举报')),
+        child: Image.asset(IMG.format('room/举报'), scale: 3),
       ),
     );
   }

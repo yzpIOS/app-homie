@@ -144,7 +144,8 @@ class _RoomUserInfoDialogState extends State<RoomUserInfoDialog> {
       onTap: () => onItemClick('举报'),
       child: Padding(
         padding: const Pad(all: 10),
-        child: SvgView(SVG.$('common/举报')),
+        child: Image.asset(IMG.format('room/举报'), scale: 3),
+        // child: SvgView(SVG.$('common/举报')),
       ),
     );
   }

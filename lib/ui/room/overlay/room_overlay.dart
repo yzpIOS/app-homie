@@ -432,6 +432,85 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
       ),
     );
   }
+
+  _buyFlash() => Get.bottomSheet(
+    Container(
+      color: Colors.white,
+      width: 500,
+      height: 448,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.topCenter,
+        children: [
+          // Positioned(
+          //     left: 10,
+          //     top: -30,
+          //     child: Container(width: 60,height: 60,color: Colors.red,)),
+
+          // Container(
+          //   height: 60,
+          //   margin: EdgeInsets.only(left: 10),
+          //   child: Container(
+          //     width: 60,
+          //     height: 60,
+          //     color: Colors.green,
+          //   )
+          // ),
+
+          // const Column(
+          //   children: [
+          //     Row(
+          //       children: [
+          //         Text('恋爱告急',style: TextStyle(color: Colors.black),),
+          //         SizedBox(width: 10,),
+          //         SelectableText(
+          //           // 'ID:${data['room_no'] ?? data['room_id']}',
+          //           '我我我我我我',
+          //           style: TextStyle(fontSize: 12, color: AppPalette.cc),
+          //         ),
+          //       ],
+          //     ),
+          //
+          //     Row(
+          //       children: [
+          //         Text('恋爱告急',style: TextStyle(color: Colors.black),),
+          //         SizedBox(width: 10,),
+          //         SelectableText(
+          //           '我我我我我我',
+          //           style: TextStyle(fontSize: 12, color: AppPalette.cc),
+          //         ),
+          //       ],
+          //     )
+          //   ],
+          // ),
+
+          Container(
+            height: 250,
+            color: Colors.blue[100],
+            child: Center(
+              child: Text(
+                'This is a bottom sheet',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: -50, // 偏移量的一半，假设头像大小是100
+            child: CircleAvatar(
+              radius: 50, // 头像的半径
+              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+            ),
+          ),
+        ],
+      )
+
+    ),
+    isScrollControlled: true,
+    backgroundColor: Colors.white,
+  );
+
+
 /// 在这里记住了
   Widget $TitleView() {
     return Obx(() {
@@ -445,7 +524,10 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
         modal: const NoticeOverlay(),
         child: IntrinsicWidth(
           child: InkResponse(
-            onTap: RoomInfoDialog.show,
+             onTap: RoomInfoDialog.show,
+            // onTap: (){
+            //   _buyFlash();
+            // },
             child: Container(
               height: 38,
               width: 144,
