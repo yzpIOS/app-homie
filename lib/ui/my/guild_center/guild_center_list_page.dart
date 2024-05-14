@@ -45,8 +45,8 @@ class GuildCenterListPage extends StatelessWidget {
                     width: 24,
                     height: 24,
                     margin: const Pad(left: 10, right: 5, top: 2),
-                    child: const Icon(Icons.search_rounded,
-                        size: 18, color: AppPalette.c9),
+                    child: Image.asset(IMG.format('my/icon_search_grey'),
+                        width: 24, height: 24),
                   ),
                   onSubmitted: (value) {
                     controller.clickSearch();
@@ -194,6 +194,7 @@ class GuildCenterListPage extends StatelessWidget {
                           : const SizedBox(),
                     ],
                   ),
+                  Spacing.h1,
                   Row(
                     children: [
                       Text("ID:${guildModel.guildNo}",
@@ -211,6 +212,7 @@ class GuildCenterListPage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  Spacing.h1,
                   XRichText(
                     TextSpan(
                       children: [

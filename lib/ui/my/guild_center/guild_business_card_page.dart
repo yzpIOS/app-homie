@@ -174,11 +174,13 @@ class GuildBusinessCardPage extends StatelessWidget {
                           : const SizedBox(),
                     ],
                   ),
+                  Spacing.h1,
                   Text("ID:${guildModel.guildNo}",
                       style: const TextStyle(
                         fontSize: 12,
                         color: Color(0xFFDDDDDD),
                       )),
+                  Spacing.h1,
                   XRichText(
                     TextSpan(
                       children: [
@@ -209,10 +211,9 @@ class GuildBusinessCardPage extends StatelessWidget {
               ),
             ),
             Image.asset(
-              IMG.format("wode_icon_right"),
+              IMG.format("my/icon_right_white"),
               width: 24,
               height: 24,
-              color: Colors.white,
             ),
             Spacing.w10,
           ],
@@ -369,7 +370,7 @@ class GuildBusinessCardPage extends StatelessWidget {
             Center(
               child: Text(
                 roomInfoModel.roomName ?? "",
-                style: const Color(0xFF000000).ptB(14),
+                style: const Color(0xFF000000).ptB(14).copyWith(height: 1.5),
               ),
             ),
             Spacing.h10,
@@ -388,9 +389,8 @@ class GuildBusinessCardPage extends StatelessWidget {
                       WidgetSpan(
                         child: Image.asset(
                           IMG.format('my/guild_center_room_hot_icon'),
-                          width: 12,
-                          height: 12,
-                          scale: 3,
+                          width: 14,
+                          height: 14,
                         ),
                         alignment: PlaceholderAlignment.middle,
                       ),

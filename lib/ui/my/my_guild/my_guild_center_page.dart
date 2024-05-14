@@ -101,9 +101,11 @@ class MyGuildCenterPage extends StatelessWidget {
                             : const SizedBox(),
                       ],
                     ),
+                    Spacing.h1,
                     Text("ID:${guildModel.guildNo}",
                         style: const TextStyle(
                           fontSize: 12, color: Color(0xFF999999),)),
+                    Spacing.h1,
                     XRichText(
                       TextSpan(
                         children: [

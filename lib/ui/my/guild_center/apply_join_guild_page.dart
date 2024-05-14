@@ -105,7 +105,7 @@ class ApplyJoinGuildPage extends StatelessWidget {
                                 : const SizedBox(),
                           ],
                         ),
-                        Spacing.h2,
+                        Spacing.h1,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -151,7 +151,7 @@ class ApplyJoinGuildPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Spacing.h2,
+                        Spacing.h1,
                         Text('创建时间:${controller.guildModel.value.createAt}',
                             style: const TextStyle(
                               fontSize: 12,

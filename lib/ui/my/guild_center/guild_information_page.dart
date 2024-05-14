@@ -108,6 +108,7 @@ class GuildInformationPage extends StatelessWidget {
                               : const SizedBox(),
                         ],
                       ),
+                      Spacing.h1,
                       Row(
                         children: [
                           Text("ID:${controller.guildModel.value.guildNo}",
@@ -126,6 +127,7 @@ class GuildInformationPage extends StatelessWidget {
                           ),
                         ],
                       ),
+                      Spacing.h1,
                       Text("创建时间:${controller.guildModel.value.createAt}",
                           style: const TextStyle(
                               fontSize: 12, color: Color(0xFF999999))),
