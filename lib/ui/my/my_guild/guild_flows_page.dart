@@ -228,7 +228,7 @@ class GuildFlowsPage extends StatelessWidget {
           Container(
             width: 80,
             alignment: Alignment.center,
-            child: Text('${guildFlowModel.roomId ?? ''}',
+            child: Text(guildFlowModel.roomNo ?? '',
                 style: const Color(0xFF000000).pt(14)),
           ),
           Spacing.w2,
