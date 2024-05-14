@@ -39,6 +39,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
 
   late TabController  controller;
   RxBool result = true.obs;
+  late bool isOwner;
   @override
   void initState() {
     super.initState();
@@ -57,7 +58,18 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
       data["在线列表"] = OnlineUserView(widget.roomId);
       data["财富榜"] = WealthUserView(widget.roomId, 1, -1);
     }
-
+    // final uid = item['uid'];//用户字符id
+    // final nuid = Int64(item['role_id']);//角色id
+    // final role = _ctrl.getRole(uid);
+    // final dataUserIsSelf = OAuthCtrl.isSelf(uid);//这条数据用户是否是我本人
+    // final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
+    // final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
+    //
+    // final myRole = controller.getRole(OAuthCtrl.uid);
+    late final _ctrl = sceneCtrl<RoomCtrl>();
+    late final myRole = _ctrl.getRole(OAuthCtrl.uid);
+     isOwner = myRole.isOwner;
+ //   final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
     controller = TabController(vsync: this, length: data.length);
   }
 
@@ -110,7 +122,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
         )
       ],
     ),
-        Positioned(
+        isOwner == true ? Positioned(
           top: 15,
           right: 10,
             child: Obx(() => result.value == true ? GestureDetector(
@@ -175,7 +187,7 @@ class _OnlineUserPageState extends State<OnlineUserPage> with SingleTickerProvid
 
             )
 
-        )
+        ):Container()
       ]
     );
 
@@ -206,6 +218,7 @@ class OnlineUserView extends SimplePageView<Map> {
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
+   // Rtc.openMicRx.clear();
     final uid = item['uid'];//用户字符id
     final nuid = Int64(item['role_id']);//角色id
     final role = _ctrl.getRole(uid);
@@ -218,7 +231,8 @@ class OnlineUserView extends SimplePageView<Map> {
     var isShowEditBlackListAction = (myRole.isManager && !dataUserIsSelf && !dataUserIsOwner && myRole != role);
     RxBool isSelectChat = true.obs;
     RxBool isSelectMike = true.obs;
-    var hasMike = item['mike_status'] != 0 || item['mike_status'] != 2;
+    var hasMike = item['mike_status'] != 0;
+    // || item['mike_status'] != 2;
     isSelectMike.value = item['mike_status'] == 1;
 
     // 是否在个人直播间
@@ -285,6 +299,39 @@ class OnlineUserView extends SimplePageView<Map> {
       );
     }
 
+
+    // if(item['mike_status'] == 1){
+      //   if(item['uid'] == OAuthCtrl.uid){
+
+
+      // Obx(() =>
+      // bool isOpen = Rtc.openMicRx.contains(uid);
+    // if(Rtc.micRx.value == true){// 关着麦
+    //
+    //   }
+    // print('uid=$uid');
+  //  print('isOpen1111=$isOpen'));
+
+    print('uid=&$uid');
+    bool isOpen = Rtc.openMicRx.contains(uid);
+    // }
+    print('isOpen=&$isOpen');
+   //  Obx(
+   //  () {
+   //  final bool isOpen;
+   //  // if (isSelf) {
+   //  // isOpen = Rtc.micRx();
+   //  // } else {
+   //  print('uid=&$uid');
+   //  isOpen = Rtc.openMicRx.contains(uid);
+   // // }
+   //  print('isOpen=&$isOpen');
+   //  // return isOpen ? Spacing.blank : $MicStateView('闭麦');
+   //  return Container();
+   //  },
+   //  );
+
+  //  }
     /// 点击开关麦
     Widget OpenOrCloseMike(){
       return  Obx(() => isSelectMike.value == true ? GestureDetector(
@@ -305,8 +352,9 @@ class OnlineUserView extends SimplePageView<Map> {
 
         },
         child: Container(
-          child:  Image.asset(IMG.format('room/mic/kaimai'), width: 20, height: 20, fit: BoxFit.contain),
-        ),
+          child: Image.asset(IMG.format('room/mic/kaimai'),width: 25, height: 20, fit: BoxFit.contain)
+        )
+
       ):GestureDetector(
         onTap: (){
           // Api.Room.micMute(roleId: nuid, isMute: true);
@@ -325,7 +373,7 @@ class OnlineUserView extends SimplePageView<Map> {
           );
         },
         child: Container(
-          child:  Image.asset(IMG.format('room/mic/bimai'), width: 20, height: 20, fit: BoxFit.contain),
+          child:  Image.asset(IMG.format('room/mic/bimai'), width: 25, height: 20, fit: BoxFit.contain),
         ),
       )
       );
@@ -408,7 +456,7 @@ class OnlineUserView extends SimplePageView<Map> {
             return RoomUserItemView(
               data: dto,
               role: role,
-              padding: const Pad(left: 5, right: 10),
+              padding: const Pad(left: 0, right: 10),
             );
           }),
         ),
