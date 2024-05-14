@@ -39,6 +39,7 @@ class _OnlineUserPageState extends State<OnlineUserPage>
 
   late TabController controller;
   RxBool result = true.obs;
+  late bool isOwner;
 
   @override
   void initState() {
@@ -66,7 +67,18 @@ class _OnlineUserPageState extends State<OnlineUserPage>
       data["在线列表"] = OnlineUserView(widget.roomId);
       data["财富榜"] = WealthUserView(widget.roomId, 1, -1);
     }
-
+    // final uid = item['uid'];//用户字符id
+    // final nuid = Int64(item['role_id']);//角色id
+    // final role = _ctrl.getRole(uid);
+    // final dataUserIsSelf = OAuthCtrl.isSelf(uid);//这条数据用户是否是我本人
+    // final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
+    // final dataUserIsManager = role.isManager;//这条数据用户是否是管理员
+    //
+    // final myRole = controller.getRole(OAuthCtrl.uid);
+    late final _ctrl = sceneCtrl<RoomCtrl>();
+    late final myRole = _ctrl.getRole(OAuthCtrl.uid);
+    isOwner = myRole.isOwner;
+    //   final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
     controller = TabController(vsync: this, length: data.length);
   }
 
@@ -78,7 +90,7 @@ class _OnlineUserPageState extends State<OnlineUserPage>
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 17,
           ),
           const Text(
@@ -87,10 +99,10 @@ class _OnlineUserPageState extends State<OnlineUserPage>
                 color: Colors.black, fontWeight: FontWeight.w700, fontSize: 18),
           ),
           Container(
-            color: Color(0XFFE4E7EE),
+            color:const Color(0XFFE4E7EE),
             width: double.infinity,
             height: 1,
-            margin: EdgeInsets.only(top: 17),
+            margin:const EdgeInsets.only(top: 17),
           ),
           Expanded(
             child: OrientationSheet.scaffold(
@@ -113,76 +125,78 @@ class _OnlineUserPageState extends State<OnlineUserPage>
           )
         ],
       ),
-      Positioned(
-          top: 15,
-          right: 10,
-          child: Obx(() => result.value == true
-              ? GestureDetector(
-                  onTap: () {
-                    simpleTry(
-                        () => Api.Room.chat(
-                            roomId: widget.roomId,
-                            roleId: Int64(0),
-                            status: 1), callback: (data) {
-                      print('data1231:$data');
-                      // if(data['code'] == 0){
-                      //  isSelectChat.value = false;
-                      // }else{
-                      //
-                      // }
-                      result.value = false;
-                    });
-                  },
-                  child: Container(
-                      width: 80.0, // 椭圆的宽度
-                      height: 30.0, // 椭圆的高度
-                      decoration: BoxDecoration(
-                        color: Colors.white, // 容器的背景颜色
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: AppPalette.primary, // 边框颜色
-                          width: 1.0, // 边框宽度
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '全员禁言',
-                          style: TextStyle(color: AppPalette.primary),
-                        ),
-                      )))
-              : GestureDetector(
-                  onTap: () {
-                    simpleTry(
-                        () => Api.Room.chat(
-                            roomId: widget.roomId,
-                            roleId: Int64(0),
-                            status: 2), callback: (data) {
-                      print('data1231:$data');
-                      // if(data['code'] == 0){
-                      //  isSelectChat.value = false;
-                      // }else{
-                      //
-                      // }
-                      result.value = true;
-                    });
-                  },
-                  child: Container(
-                      width: 80.0, // 椭圆的宽度
-                      height: 30.0, // 椭圆的高度
-                      decoration: BoxDecoration(
-                        color: Colors.white, // 容器的背景颜色
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: AppPalette.tips, // 边框颜色
-                          width: 1.0, // 边框宽度
-                        ),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          '全员禁言中',
-                          style: TextStyle(color: AppPalette.tips),
-                        ),
-                      )))))
+      isOwner == true
+          ? Positioned(
+              top: 15,
+              right: 10,
+              child: Obx(() => result.value == true
+                  ? GestureDetector(
+                      onTap: () {
+                        simpleTry(
+                            () => Api.Room.chat(
+                                roomId: widget.roomId,
+                                roleId: Int64(0),
+                                status: 1), callback: (data) {
+                          print('data1231:$data');
+                          // if(data['code'] == 0){
+                          //  isSelectChat.value = false;
+                          // }else{
+                          //
+                          // }
+                          result.value = false;
+                        });
+                      },
+                      child: Container(
+                          width: 80.0, // 椭圆的宽度
+                          height: 30.0, // 椭圆的高度
+                          decoration: BoxDecoration(
+                            color: Colors.white, // 容器的背景颜色
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: AppPalette.primary, // 边框颜色
+                              width: 1.0, // 边框宽度
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '全员禁言',
+                              style: TextStyle(color: AppPalette.primary),
+                            ),
+                          )))
+                  : GestureDetector(
+                      onTap: () {
+                        simpleTry(
+                            () => Api.Room.chat(
+                                roomId: widget.roomId,
+                                roleId: Int64(0),
+                                status: 2), callback: (data) {
+                          print('data1231:$data');
+                          // if(data['code'] == 0){
+                          //  isSelectChat.value = false;
+                          // }else{
+                          //
+                          // }
+                          result.value = true;
+                        });
+                      },
+                      child: Container(
+                          width: 80.0, // 椭圆的宽度
+                          height: 30.0, // 椭圆的高度
+                          decoration: BoxDecoration(
+                            color: Colors.white, // 容器的背景颜色
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: AppPalette.tips, // 边框颜色
+                              width: 1.0, // 边框宽度
+                            ),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              '全员禁言中',
+                              style: TextStyle(color: AppPalette.tips),
+                            ),
+                          )))))
+          : Container()
     ]);
   }
 }
@@ -205,12 +219,13 @@ class OnlineUserView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
     return ListConfig(
-      divider: Divider(indent: 18 + 70, endIndent: 10),
+      divider:const Divider(indent: 18 + 70, endIndent: 10),
     );
   }
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
+    // Rtc.openMicRx.clear();
     final uid = item['uid']; //用户字符id
     final nuid = Int64(item['role_id']); //角色id
     final role = _ctrl.getRole(uid);
@@ -227,7 +242,8 @@ class OnlineUserView extends SimplePageView<Map> {
         myRole != role);
     RxBool isSelectChat = true.obs;
     RxBool isSelectMike = true.obs;
-    var hasMike = item['mike_status'] != 0 || item['mike_status'] != 2;
+    var hasMike = item['mike_status'] != 0;
+    // || item['mike_status'] != 2;
     isSelectMike.value = item['mike_status'] == 1;
 
     // 是否在个人直播间
@@ -295,6 +311,37 @@ class OnlineUserView extends SimplePageView<Map> {
             ));
     }
 
+    // if(item['mike_status'] == 1){
+    //   if(item['uid'] == OAuthCtrl.uid){
+
+    // Obx(() =>
+    // bool isOpen = Rtc.openMicRx.contains(uid);
+    // if(Rtc.micRx.value == true){// 关着麦
+    //
+    //   }
+    // print('uid=$uid');
+    //  print('isOpen1111=$isOpen'));
+
+    print('uid=&$uid');
+    bool isOpen = Rtc.openMicRx.contains(uid);
+    // }
+    print('isOpen=&$isOpen');
+    //  Obx(
+    //  () {
+    //  final bool isOpen;
+    //  // if (isSelf) {
+    //  // isOpen = Rtc.micRx();
+    //  // } else {
+    //  print('uid=&$uid');
+    //  isOpen = Rtc.openMicRx.contains(uid);
+    // // }
+    //  print('isOpen=&$isOpen');
+    //  // return isOpen ? Spacing.blank : $MicStateView('闭麦');
+    //  return Container();
+    //  },
+    //  );
+
+    //  }
     /// 点击开关麦
     Widget OpenOrCloseMike() {
       return Obx(() => isSelectMike.value == true
@@ -314,11 +361,8 @@ class OnlineUserView extends SimplePageView<Map> {
                 });
                 // Api.Room.micMute(roleId: nuid, isMute: false);
               },
-              child: Container(
-                child: Image.asset(IMG.format('room/mic/kaimai'),
-                    width: 20, height: 20, fit: BoxFit.contain),
-              ),
-            )
+              child: Image.asset(IMG.format('room/mic/kaimai'),
+                  width: 25, height: 20, fit: BoxFit.contain))
           : GestureDetector(
               onTap: () {
                 // Api.Room.micMute(roleId: nuid, isMute: true);
@@ -336,10 +380,8 @@ class OnlineUserView extends SimplePageView<Map> {
                   isSelectMike.value = true;
                 });
               },
-              child: Container(
-                child: Image.asset(IMG.format('room/mic/bimai'),
-                    width: 20, height: 20, fit: BoxFit.contain),
-              ),
+              child: Image.asset(IMG.format('room/mic/bimai'),
+                  width: 25, height: 20, fit: BoxFit.contain),
             ));
     }
 
@@ -424,7 +466,7 @@ class OnlineUserView extends SimplePageView<Map> {
             return RoomUserItemView(
               data: dto,
               role: role,
-              padding: const Pad(left: 5, right: 10),
+              padding: const Pad(left: 0, right: 10),
             );
           }),
         ),
@@ -487,7 +529,7 @@ class _TabViewState extends State<_TabViewWidget>
     data["月榜"] = widget.viewManufacture.call(3, 20);
 
     controller = TabController(vsync: this, length: data.length);
-
+    ;
     controller.addListener(() {
       _curIndex = controller.index;
       setState(() {});
@@ -664,7 +706,7 @@ class CharmUserView extends SimplePageView<Map> {
       rank = Text(
         "${index + 1}",
         textAlign: TextAlign.center,
-        style: const TextStyle(
+        style:const TextStyle(
           color: Colors.black,
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -683,6 +725,7 @@ class CharmUserView extends SimplePageView<Map> {
         if (roomCtrl == null) {
           return;
         }
+
         GiftSheet.show(
             giftSendLogic: GiftSend2UserInRoom(
               roomId: roomId,
@@ -784,7 +827,7 @@ class WealthUserView extends SimplePageView<Map> {
   @override
   BaseConfig get config {
     return ListConfig(
-      divider:const Divider(indent: 65, endIndent: 10),
+      divider: const Divider(indent: 65, endIndent: 10),
     );
   }
 
@@ -875,7 +918,7 @@ class WealthUserView extends SimplePageView<Map> {
         textAlign: TextAlign.center,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
-        style:const TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 18,
           fontWeight: FontWeight.bold,
@@ -930,11 +973,11 @@ class WealthUserView extends SimplePageView<Map> {
     final role = _ctrl.getRole(uid);
 
     // 是否上榜
-    final isRank = item?["is_rank"] ?? false;
+    final is_rank = item?["is_rank"] ?? false;
 
     // 下一个等级的数据
     int? nextValue;
-    if (isRank) {
+    if (is_rank) {
       // 己上榜
       nextValue = item?["next_amount"] ?? 0;
     } else {
@@ -945,7 +988,7 @@ class WealthUserView extends SimplePageView<Map> {
     // 排名
     var rankValue = item.containsKey("rank") ? item["rank"] : 0;
     Widget? rank;
-    if (rankValue > 0 && isRank) {
+    if (rankValue > 0 && is_rank) {
       if (rankValue <= 3) {
         rank = Image.asset(
           IMG.format("room/rank_$rankValue"),
@@ -958,7 +1001,7 @@ class WealthUserView extends SimplePageView<Map> {
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style:const TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -1039,7 +1082,7 @@ class WealthUserView extends SimplePageView<Map> {
                 ),
               if (rankValue > 1)
                 Text(
-                  isRank
+                  is_rank
                       ? "距离前一名还需：${item?["next_amount"] ?? 0}"
                       : "距离上榜还需：${item?["next_amount"] ?? 0}",
                   style: const TextStyle(
