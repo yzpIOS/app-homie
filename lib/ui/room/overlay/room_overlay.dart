@@ -3,6 +3,7 @@ import 'package:app/common/nets/cmds.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
+import 'package:app/model/activity_info_model.dart';
 import 'package:app/model/enum/person_mic_status.dart';
 import 'package:app/model/enum/room_state.dart';
 import 'package:app/net/api.dart';
@@ -104,39 +105,9 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                 ),
               ),
 
-            // 抽奖入口
-            if (controller.entry.isNotEmpty)
-              Positioned(
-                right: 10,
-                height: 80,
-                width: 80,
-                bottom: 143,
-                child: ListView.separated(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          TurntablePage.showDialog(
-                              controller.entry.toList()[index]);
-                        },
-                        behavior: HitTestBehavior.opaque,
-                        child: Image.network(
-                          controller.entry.toList()[index]["image"],
-                          width: 80,
-                          height: 80,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 10,
-                        width: 10,
-                      );
-                    },
-                    itemCount: controller.entry.length),
-              )
+            // 转盘入口
+            if (controller.activityList.isNotEmpty && controller.showTurntableActivity.value == true) turntableActivityEnterWidget()
+
             // Positioned(
             //   top: 0,
             //   left: 0,
@@ -173,6 +144,28 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
           ],
         );
       },
+    );
+  }
+
+  /// 转盘入口
+  Widget turntableActivityEnterWidget(){
+    final ActivityInfoModel infoModel = controller.activityList.firstWhere((element) => element.type != null && element.type == 1);
+    return Positioned(
+      right: 10,
+      height: 80,
+      width: 80,
+      bottom: 143,
+      child: GestureDetector(
+        onTap: () {
+          TurntablePage.showDialog(infoModel);
+        },
+        behavior: HitTestBehavior.opaque,
+        child: Image.network(
+          infoModel.image ?? '',
+          width: 80,
+          height: 80,
+        ),
+      ),
     );
   }
 

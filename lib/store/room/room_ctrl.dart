@@ -6,6 +6,7 @@ import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
+import 'package:app/model/activity_info_model.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
@@ -99,9 +100,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   /// 记录是否己经加入房间
   bool _hasJoinRoom = false;
-
-  // 抽奖活动入口
-  RxList entry = RxList();
+  /// 活动入口数组
+  final activityList = <ActivityInfoModel>[].obs;
+  /// 是否显示转盘活动
+  final showTurntableActivity = false.obs;
+  /// 是否显示水果机活动
+  final showFruitMachineActivity = false.obs;
 
   bool hasSendMsg = false;
 
@@ -311,8 +315,24 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     isRequestBack = true;
 
     // 获取抽奖列表
-    Api.Activity.getLotteries().then((items) {
-      entry.value = items["items"];
+    Api.Activity.getLotteries().then((result) {
+      if(result["items"] != null && result["items"] is List){
+        final List items = result["items"];
+        final List<ActivityInfoModel> modelList = [];
+        for(int i = 0; i < items.length; i ++) {
+          final Map item = items[i];
+          final ActivityInfoModel infoModel = ActivityInfoModel.fromJson(item);
+          if(infoModel.type != null && infoModel.type == 1){
+            showTurntableActivity.value = true;
+          }else if(infoModel.type != null && infoModel.type == 2){
+            showFruitMachineActivity.value = true;
+          }
+          modelList.add(infoModel);
+        }
+        activityList.addAll(modelList);
+      }else{
+        activityList.clear();
+      }
     });
 
     /// 请求房间系统公告消息数组
@@ -377,8 +397,24 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     isRequestBack = true;
 
     // 获取抽奖列表
-    Api.Activity.getLotteries().then((items) {
-      entry.value = items["items"];
+    Api.Activity.getLotteries().then((result) {
+      if(result["items"] != null && result["items"] is List){
+        final List items = result["items"];
+        final List<ActivityInfoModel> modelList = [];
+        for(int i = 0; i < items.length; i ++) {
+          final Map item = items[i];
+          final ActivityInfoModel infoModel = ActivityInfoModel.fromJson(item);
+          if(infoModel.type != null && infoModel.type == 1){
+            showTurntableActivity.value = true;
+          }else if(infoModel.type != null && infoModel.type == 2){
+            showFruitMachineActivity.value = true;
+          }
+          modelList.add(infoModel);
+        }
+        activityList.addAll(modelList);
+      }else{
+        activityList.clear();
+      }
     });
 
     /// 请求房间系统公告消息数组

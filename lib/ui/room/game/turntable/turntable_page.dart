@@ -1,8 +1,7 @@
 
 
-import 'dart:ui';
-
 import 'package:app/common/theme.dart';
+import 'package:app/model/activity_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
@@ -14,24 +13,20 @@ import 'package:app/ui/room/game/turntable/dialog/turntable_record_dialog.dart';
 import 'package:app/ui/room/game/turntable/dialog/turntable_rule_dialog.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
-import 'package:city_pickers/city_pickers.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class TurntablePage extends StatefulWidget {
 
-  // 抽奖数据
-  Map lotteryData;
+  ActivityInfoModel infoModel;
 
-  TurntablePage(this.lotteryData, {super.key});
+  TurntablePage({required this.infoModel, super.key});
 
-  static Future<void> showDialog(Map lotteryData) async {
-    if(lotteryData["type"] != 1) {
+  static Future<void> showDialog(ActivityInfoModel infoModel) async {
+    if(infoModel.type != 1) {
       return;
     }
 
-    var dialog = TurntablePage(lotteryData);
+    var dialog = TurntablePage(infoModel:infoModel);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -110,9 +105,9 @@ class _TurntablePageState extends State<TurntablePage> {
     locations.add(EdgeInsets.only(left: 9 + (totalWidth + gap) * 0, top: 11 + (totalWidth + gap) * 1));
 
 
-    var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
-    modeId = itemList[curSelectedIndex]["id"];
-    lotteryPrice = itemList[curSelectedIndex]["lottery_price"];
+    var itemList = widget.infoModel.lotteryItemList ?? [];
+    modeId = itemList[curSelectedIndex].id;
+    lotteryPrice = itemList[curSelectedIndex].lotteryPrice ?? 0;
 
     requestLottery(showLoading: false);
   }
@@ -176,7 +171,7 @@ class _TurntablePageState extends State<TurntablePage> {
   }
 
   Widget _createTabBar() {
-    var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
+    var itemList = widget.infoModel.lotteryItemList ?? [];
     return Positioned(
       left: 0,
       right: 0,
@@ -187,14 +182,14 @@ class _TurntablePageState extends State<TurntablePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: itemList.map((e) {
           String modeName = "";
-          if(e["mode"] == 1) {
+          if(e.mode == 1) {
             modeName = "普通模式";
-          } else if(e["mode"] == 2) {
+          } else if(e.mode == 2) {
             modeName = "高级模式";
-          } else if(e["mode"] == 3) {
+          } else if(e.mode == 3) {
             modeName = "疯狂模式";
           } else {
-            return SizedBox();
+            return const SizedBox();
           }
           return _createTabBButton(modeName, itemList.indexOf(e), curSelectedIndex);
         }).toList(),
@@ -217,13 +212,13 @@ class _TurntablePageState extends State<TurntablePage> {
     // 文字样式
     TextStyle style;
     if(index == selectedIndex) {
-      style = TextStyle(
+      style = const TextStyle(
         color: Color(0xffA953AB),
         fontSize: 16,
         fontWeight: FontWeight.bold,
       );
     } else {
-      style = TextStyle(
+      style = const TextStyle(
         color: Color(0xffC98FD7),
         fontSize: 14,
         fontWeight: FontWeight.normal,
@@ -239,17 +234,16 @@ class _TurntablePageState extends State<TurntablePage> {
         debugPrint("GestureDetector .......");
         curSelectedIndex = index;
 
-        var itemList = widget.lotteryData["lottery_item_list"] as List ?? [];
-        modeId = itemList[curSelectedIndex]["id"];
-        lotteryPrice = itemList[curSelectedIndex]["lottery_price"];
-
+        var itemList = widget.infoModel.lotteryItemList ?? [];
+        modeId = itemList[curSelectedIndex].id;
+        lotteryPrice = itemList[curSelectedIndex].lotteryPrice ?? 0;
         requestLottery();
       },
       behavior: HitTestBehavior.translucent,
       child: Container(
         width: 100,
         height: 66,
-        padding: EdgeInsets.only(bottom: 5),
+        padding:const EdgeInsets.only(bottom: 5),
         alignment: Alignment.center,
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -375,11 +369,10 @@ class _TurntablePageState extends State<TurntablePage> {
           // 规则 按钮
           GestureDetector(
             onTap: () async {
-              String? rule = widget.lotteryData["rule"];
-              if(rule == null || rule.isEmpty) {
+              if(widget.infoModel.rule == null || widget.infoModel.rule!.isEmpty) {
                 return;
               }
-              var dialog = TurntableRuleDialog(rule);
+              var dialog = TurntableRuleDialog(widget.infoModel.rule ?? "");
               await Get.dialog(
                 dialog,
                 useSafeArea: false,
@@ -393,7 +386,7 @@ class _TurntablePageState extends State<TurntablePage> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  gradient: LinearGradient(
+                  gradient:const LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
@@ -403,13 +396,13 @@ class _TurntablePageState extends State<TurntablePage> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xff890085).withAlpha(30),
-                      offset: Offset(0, 1),
+                      color:const Color(0xff890085).withAlpha(30),
+                      offset:const Offset(0, 1),
                       spreadRadius: 1,
                     )
                   ]
               ),
-              child: Text(
+              child:const Text(
                 "规则",
                 style: TextStyle(
                   fontSize: 12,
