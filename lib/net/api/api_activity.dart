@@ -97,4 +97,9 @@ class ApiActivity extends ApiBase {
   Future getLotteryRecord(dynamic id) async {
     return _doPost("lottery/user/winning", data: {"id": id});
   }
+
+  /// 获取水果机奖品列表
+  Future getFruitMachineLotteryList() async {
+    return _doPost("lottery/fruit_machine/prize_pool/query", data: {});
+  }
 }

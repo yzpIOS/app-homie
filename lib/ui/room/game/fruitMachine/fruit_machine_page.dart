@@ -1,5 +1,6 @@
 import 'package:app/common/theme.dart';
 import 'package:app/model/activity_info_model.dart';
+import 'package:app/model/activity_lottery_model.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
@@ -99,71 +100,50 @@ class FruitMachinePage extends StatelessWidget {
                           margin: const Pad(horizontal: 12),
                           height: 55,
                           width: 342,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: <Widget>[
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                              Container(
-                                width: 55,
-                                height: 55,
-                                margin: const Pad(left: 10),
-                                decoration: BoxDecoration(
-                                  color:const Color(0xFF894693).withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color:const Color(0xFFECCAF2), width: 1.0),
-                                ),
-                              ),
-                            ],
-                          ),
+                          child: Obx(() {
+                            return ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.currentShowLotteryList
+                                  .length,
+                              itemExtent: 55,
+                              itemBuilder: (context, index) {
+                                final ActivityLotteryModel activityLotteryModel = controller
+                                    .currentShowLotteryList[index];
+                                return Container(
+                                  width: 55,
+                                  height: 55,
+                                  margin: const Pad(left: 10),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFF894693).withOpacity(
+                                        0.2),
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                        color: const Color(0xFFECCAF2),
+                                        width: 1.0),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Spacing.h4,
+                                      NetImage(
+                                          activityLotteryModel.image, width: 33,
+                                          height: 33,
+                                          fit: BoxFit.contain),
+                                      Spacing.h2,
+                                      Text(
+                                        '${activityLotteryModel.probability != null && activityLotteryModel.probability! > 0 ? activityLotteryModel.probability! /10.0 : 0}%',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                          height: 1
+                                        ),
+                                        maxLines: 1,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }),
                         ),
                         Spacing.h32,
                         Row(
@@ -241,8 +221,9 @@ class FruitMachinePage extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage(IMG.format("room/game/fruit_machine_button_icon")),
-        )),
+              image: AssetImage(
+                  IMG.format("room/game/fruit_machine_button_icon")),
+            )),
         child: Text(
           isRecord ? "记录" : "规则",
           style: Colors.white.ptB(12),
@@ -277,10 +258,9 @@ class FruitMachinePage extends StatelessWidget {
   }
 
   /// 创建菜单按钮
-  Widget _createMenuButton(
-      {required FruitMachineController controller,
-      required String label,
-      required int index}) {
+  Widget _createMenuButton({required FruitMachineController controller,
+    required String label,
+    required int index}) {
     final bool menuSelect = index == controller.menuSelectIndex.value;
     final String imagePath = IMG.format(menuSelect
         ? "room/game/fruit_machine_menu_selected_icon"
@@ -302,7 +282,7 @@ class FruitMachinePage extends StatelessWidget {
         margin: const Pad(horizontal: 7.5),
         alignment: Alignment.center,
         decoration:
-            BoxDecoration(image: DecorationImage(image: AssetImage(imagePath))),
+        BoxDecoration(image: DecorationImage(image: AssetImage(imagePath))),
         child: Text(
           label,
           style: style,
@@ -323,7 +303,7 @@ class FruitMachinePage extends StatelessWidget {
             prizeLabel: "${controller.lotteryPrice.value}紫钻",
             prizeTxtColor: const Color(0xFF9A3200),
             imagePath:
-                IMG.format("room/game/fruit_machine_button_rotate_once_icon"),
+            IMG.format("room/game/fruit_machine_button_rotate_once_icon"),
             count: 1),
         Spacing.w6,
         _createSingleBottomButton(
@@ -331,7 +311,7 @@ class FruitMachinePage extends StatelessWidget {
             prizeLabel: "${controller.lotteryPrice.value * 10}紫钻",
             prizeTxtColor: const Color(0xFF990072),
             imagePath:
-                IMG.format("room/game/fruit_machine_button_rotate_ten_icon"),
+            IMG.format("room/game/fruit_machine_button_rotate_ten_icon"),
             count: 10),
         Spacing.w6,
         _createSingleBottomButton(
@@ -346,12 +326,11 @@ class FruitMachinePage extends StatelessWidget {
   }
 
   /// 单个按钮
-  Widget _createSingleBottomButton(
-      {required FruitMachineController controller,
-      required String prizeLabel,
-      required Color prizeTxtColor,
-      required String imagePath,
-      required int count}) {
+  Widget _createSingleBottomButton({required FruitMachineController controller,
+    required String prizeLabel,
+    required Color prizeTxtColor,
+    required String imagePath,
+    required int count}) {
     return GestureDetector(
       onTap: () {
         controller.startSpin(count: count);
@@ -365,8 +344,8 @@ class FruitMachinePage extends StatelessWidget {
         alignment: Alignment.center,
         decoration: BoxDecoration(
             image: DecorationImage(
-          image: AssetImage(imagePath),
-        )),
+              image: AssetImage(imagePath),
+            )),
         child: Text(
           prizeLabel,
           style: TextStyle(
