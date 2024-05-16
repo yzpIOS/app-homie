@@ -459,10 +459,10 @@ packages:
     dependency: "direct main"
     description:
       name: extended_text_field
-      sha256: "15f5d1e503c1b94cc3bba38168d60be4f4029a20813b9364b5ae7c3cf59d4fe3"
+      sha256: e5ac4c24dfc9c542d0d4b9fbd6cb73add2ebf1ee3ecbd62514fead79aa49a894
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "12.1.1"
+    version: "12.2.0"
   extended_text_library:
     dependency: transitive
     description:
@@ -729,10 +729,10 @@ packages:
     dependency: "direct dev"
     description:
       name: freezed
-      sha256: "91bce569d4805ea5bad6619a3e8690df8ad062a235165af4c0c5d928dda15eaf"
+      sha256: a434911f643466d78462625df76fd9eb13e57348ff43fe1f77bbe909522c67a1
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.1"
+    version: "2.5.2"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -848,10 +848,10 @@ packages:
     dependency: "direct main"
     description:
       name: http_proxy
-      sha256: "7d5bc7ad1b0c6d0cfb5da97c5bfe302082f93d32cf5c67d484d1a4085b3ffa58"
+      sha256: "08d9f1652acdc11d977e1593de112b093f1fbc7c81153b9abfaf34b2ca011b51"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.1"
+    version: "1.2.2"
   image:
     dependency: transitive
     description:
@@ -888,26 +888,26 @@ packages:
     dependency: "direct main"
     description:
       name: image_editor
-      sha256: "81e4c6ccfd4ff242a89695347113bb90b62b89bab70e97cdd5625c85887a86e3"
+      sha256: "0fe70befea0dbaf24a7cacc32c28311a65118f66637997ad072e9063f59efdd8"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   image_editor_common:
     dependency: transitive
     description:
       name: image_editor_common
-      sha256: "03a6a85608ffe4e7de5b1f042ac09859110b5b5ddc74a91e206d3084db27fe9b"
+      sha256: d141c0847148a7da573a5be5ca02e70d381e61cb6484ebef52a230ca1d6c56ab
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   image_editor_ohos:
     dependency: transitive
     description:
       name: image_editor_ohos
-      sha256: aee8fa1490fedbb98583dfaebb4162c295abeb0044e94f2eb2ad52ae419e6f6e
+      sha256: "06756859586d5acefec6e3b4f356f9b1ce05ef09213bcb9a0ce1680ecea2d054"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.0.7"
+    version: "0.0.9"
   image_editor_platform_interface:
     dependency: transitive
     description:
@@ -944,10 +944,10 @@ packages:
     dependency: transitive
     description:
       name: in_app_purchase_android
-      sha256: "25b4bc74d4d990c18a889ea9486cb9029285955f38ca81ff335c8936edf9e66d"
+      sha256: bc4e58e8bd9f1027ca869f419737773bdf80ad36074037fa8ed81e5ca15dc655
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.3.5"
+    version: "0.3.5+1"
   in_app_purchase_platform_interface:
     dependency: transitive
     description:

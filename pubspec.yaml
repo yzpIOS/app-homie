@@ -175,6 +175,8 @@ dependency_overrides:
     path: ./plugin/photo_manager-2.8.1
   extended_image:
     path: ./plugin/extended_image-8.0.2
+
+
 flutter:
 
   uses-material-design: true

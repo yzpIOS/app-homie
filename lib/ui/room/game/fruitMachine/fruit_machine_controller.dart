@@ -5,6 +5,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
+import 'package:app/ui/room/game/fruitMachine/roll_slot_controller.dart';
 
 /// 水果机
 class FruitMachineController extends GetxController {
@@ -26,6 +27,12 @@ class FruitMachineController extends GetxController {
   final crazyLotteryList = <ActivityLotteryModel>[].obs;
   /// 当前展示奖品列表
   final currentShowLotteryList = <ActivityLotteryModel>[].obs;
+  /// 当前展示奖品图片列表
+  final currentShowLotteryImageUrlList = <String>[].obs;
+
+  final leftRollSlotController = RollSlotController(secondsBeforeStop: 10);
+  final centerRollSlotController = RollSlotController(secondsBeforeStop: 10);
+  final rightRollSlotController = RollSlotController(secondsBeforeStop: 10);
 
   @override
   void onInit() {
@@ -52,6 +59,7 @@ class FruitMachineController extends GetxController {
          crazyLotteryList.value = list.map((e) => ActivityLotteryModel.fromJson(e)).toList();
         }
         menuSelectIndex.value = 0;
+        currentShowLotteryImageUrlList.value = normalLotteryList.map((e) => e.image ?? '').toList();
         currentShowLotteryList.value = normalLotteryList;
       }
     },);
@@ -87,6 +95,9 @@ class FruitMachineController extends GetxController {
     var itemList = activityInfoModel.lotteryItemList ?? [];
     modeId.value = itemList[index].id ?? 0;
     lotteryPrice.value = itemList[index].lotteryPrice ?? 0;
+    final List<ActivityLotteryModel> list = index == 0 ? normalLotteryList : index == 1 ? advancedLotteryList : crazyLotteryList;
+    currentShowLotteryImageUrlList.value = list.map((e) => e.image ?? '').toList();
+    currentShowLotteryList.value = list;
   }
 
   /// 点击跳过动画
