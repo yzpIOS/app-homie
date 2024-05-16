@@ -65,7 +65,7 @@ class AnchorListController extends GetxController with BusGetLifeMixin{
 
   /// 加载更多
   void loadMoreData(){
-    pageNum.nextPage();
+    pageNum = pageNum.nextPage();
     loadData();
   }
 

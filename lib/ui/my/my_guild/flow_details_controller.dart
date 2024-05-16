@@ -61,7 +61,7 @@ class FlowDetailsController extends GetxController {
 
   /// 加载更多
   void loadMoreData(){
-    pageNum.nextPage();
+    pageNum = pageNum.nextPage();
     loadData();
   }
 
