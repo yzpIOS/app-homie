@@ -21,8 +21,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-      // color: Color(0xCC333333),
-      color: Colors.white,
+       color: Color(0xCC333333),
+    //  color: Colors.white,
     );
 
     OrientationSheet.show(
@@ -37,82 +37,83 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     final data = controller.info;
     final notice = controller.noticeRx();
     const divider = Divider(height: 5, thickness: 5, color: AppPalette.colorEB);
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.centerLeft,
-          children: [
-            Container(
-              height: 60,
-              color: Colors.white,
-              // child: const Center(
-              //   child: Text(
-              //     'This is a bottom sheet',
-              //     style: TextStyle(fontSize: 20),
-              //   ),
-              // ),
-            ),
-
-            Positioned(
-              top: -30,
-              left: 10,
-              // right: 10,
-              child: ClipRRect(
-                borderRadius: AppBorderRadius.a10,
-                child: NetImage(data['image'], width: 60, height: 60),
-              ),
-
-            ),
-
-            Positioned(
-                top: 10,
-                left: 80,
-                child:  topViewWidget()
-            ),
-
-            Positioned(
-                top: 0,
-                right: 10,
-                child:$ReportView()
-            ),
-            // const Positioned(
-            //   top: -50, // 偏移量的一半，假设头像大小是100
-            //   left: 10,
-            //   child: CircleAvatar(
-            //     radius: 50, // 头像的半径
-            //     backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-            //   ),
-            // ),
-          ],
-        ),
-        // 其他内容，可以在这里添加更多的部件
-        divider,
-        Text('房间详情'),
-        // $Body()
-       Container(
-         margin: EdgeInsets.only(left: 10),
-         child: Text('【房间公告】'),
-         alignment: Alignment.centerLeft,
-       ),
-    Container(
-        margin: EdgeInsets.only(left: 10),
-        alignment: Alignment.centerLeft,
-      child:  SingleChildScrollView(
-        padding: const Pad(horizontal: 10),
-        child: Text(
-          notice.isEmpty ? '目前暂无公告。' : notice,
-          style: const TextStyle(fontSize: 12, color: AppPalette.cc,),
-          textAlign: TextAlign.left,
-        ),
-      )
-    )
-
-
-      ],
-    );
+    return
+    //   Column(
+    //   mainAxisSize: MainAxisSize.min,
+    //   mainAxisAlignment: MainAxisAlignment.start,
+    //   children: [
+    //     Stack(
+    //       clipBehavior: Clip.none,
+    //       alignment: Alignment.centerLeft,
+    //       children: [
+    //         Container(
+    //           height: 60,
+    //           color: Colors.white,
+    //           // child: const Center(
+    //           //   child: Text(
+    //           //     'This is a bottom sheet',
+    //           //     style: TextStyle(fontSize: 20),
+    //           //   ),
+    //           // ),
+    //         ),
+    //
+    //         Positioned(
+    //           top: -30,
+    //           left: 10,
+    //           // right: 10,
+    //           child: ClipRRect(
+    //             borderRadius: AppBorderRadius.a10,
+    //             child: NetImage(data['image'], width: 60, height: 60),
+    //           ),
+    //
+    //         ),
+    //
+    //         Positioned(
+    //             top: 10,
+    //             left: 80,
+    //             child:  topViewWidget()
+    //         ),
+    //
+    //         Positioned(
+    //             top: 0,
+    //             right: 10,
+    //             child:$ReportView()
+    //         ),
+    //         // const Positioned(
+    //         //   top: -50, // 偏移量的一半，假设头像大小是100
+    //         //   left: 10,
+    //         //   child: CircleAvatar(
+    //         //     radius: 50, // 头像的半径
+    //         //     backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+    //         //   ),
+    //         // ),
+    //       ],
+    //     ),
+    //     // 其他内容，可以在这里添加更多的部件
+    //     divider,
+    //     Text('房间详情'),
+    //     // $Body()
+    //    Container(
+    //      margin: EdgeInsets.only(left: 10),
+    //      child: Text('【房间公告】'),
+    //      alignment: Alignment.centerLeft,
+    //    ),
+    // Container(
+    //     margin: EdgeInsets.only(left: 10),
+    //     alignment: Alignment.centerLeft,
+    //   child:  SingleChildScrollView(
+    //     padding: const Pad(horizontal: 10),
+    //     child: Text(
+    //       notice.isEmpty ? '目前暂无公告。' : notice,
+    //       style: const TextStyle(fontSize: 12, color: AppPalette.cc,),
+    //       textAlign: TextAlign.left,
+    //     ),
+    //   )
+    // )
+    //
+    //
+    //   ],
+    // );
         titleWidget();
 
   }
@@ -125,28 +126,28 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
       clipBehavior: Clip.none,
        alignment: Alignment.topCenter,
       children: [
-        // OrientationSheet.scaffold(
-        // title: '房间详情',
-        //   textStyle: const TextStyle(color: Colors.white),
-        //   body: $Body(),
+        OrientationSheet.scaffold(
+        title: '房间详情',
+          textStyle: const TextStyle(color: Colors.white),
+          body: $Body(),
+        ),
+        // Positioned(
+        //   top: -30,
+        //   left: 10,
+        //   // right: 10,
+        //   child: ClipRRect(
+        //     borderRadius: AppBorderRadius.a10,
+        //     child: NetImage(data['image'], width: 60, height: 60),
+        //   ),
+        //
         // ),
-        Positioned(
-          top: -30,
-          left: 10,
-          // right: 10,
-          child: ClipRRect(
-            borderRadius: AppBorderRadius.a10,
-            child: NetImage(data['image'], width: 60, height: 60),
-          ),
 
-        ),
-
-        Positioned(
-            top: 10,
-            left: 80,
-            child:  topViewWidget()
-        ),
-
+        // Positioned(
+        //     top: 10,
+        //     left: 80,
+        //     child:  topViewWidget()
+        // ),
+        //
         Positioned(
             top: 0,
             right: 10,
