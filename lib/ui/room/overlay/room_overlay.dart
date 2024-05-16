@@ -20,7 +20,6 @@ import 'package:app/ui/gift/gift_send_logic.dart';
 import 'package:app/ui/gift/gift_sheet.dart';
 import 'package:app/ui/my/feedback_page.dart';
 import 'package:app/ui/room/chat/room_msg_view.dart';
-import 'package:app/ui/room/game/fruitMachine/fruit_machine_page.dart';
 import 'package:app/ui/room/game/turntable/turntable_page.dart';
 import 'package:app/ui/room/overlay/mic_panel_switcher.dart';
 import 'package:app/ui/room/overlay/notice_overlay.dart';
@@ -36,7 +35,6 @@ import 'package:app/ui/room/user/mic_user_view_2.dart';
 import 'package:app/ui/room/user/online_user_view.dart';
 import 'package:app/ui/room/user/room_admin_page.dart';
 import 'package:app/ui/room/user/room_block_page.dart';
-import 'package:app/ui/room/widgets/icon_button_svg.dart';
 import 'package:app/ui/room/widgets/portal_modal.dart';
 import 'package:app/ui/room/widgets/room_get_widget.dart';
 import 'package:app/widgets.dart';
@@ -110,10 +108,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
             if (controller.activityList.isNotEmpty &&
                 controller.showTurntableActivity.value == true)
               turntableActivityEnterWidget(),
-            // 水果机入口
-            if (controller.activityList.isNotEmpty &&
-                controller.showFruitMachineActivity.value == true)
-              fruitMachineActivityEnterWidget(),
+
 
             // Positioned(
             //   top: 0,
@@ -166,34 +161,6 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       child: GestureDetector(
         onTap: () {
           TurntablePage.showDialog(infoModel);
-        },
-        behavior: HitTestBehavior.opaque,
-        child: Image.network(
-          infoModel.image ?? '',
-          width: 60,
-          height: 60,
-        ),
-      ),
-    );
-  }
-
-  /// 水果机入口
-  Widget fruitMachineActivityEnterWidget() {
-    final ActivityInfoModel infoModel = controller.activityList
-        .firstWhere((element) => element.type != null && element.type == 2);
-    return Positioned(
-      right: 10,
-      height: 60,
-      width: 60,
-      bottom: 213,
-      child: GestureDetector(
-        onTap: () {
-          Get.dialog(
-            FruitMachinePage(
-              activityInfoModel: infoModel,
-            ),
-            useSafeArea: false,
-          );
         },
         behavior: HitTestBehavior.opaque,
         child: Image.network(
