@@ -18,24 +18,26 @@ class RollSlotWidget extends StatelessWidget {
     return SizedBox(
       height: 260,
       width: 90,
-      child: RollSlot(
-          itemExtend: 57.5,
-          rollSlotController: rollSlotController,
-          children: prizesList.map(
-            (e) {
-              return Container(
-                color: Colors.transparent,
-                padding: const Pad(vertical: 10),
-                alignment: Alignment.center,
-                child: NetImage(
-                  e,
-                  width: 37.5,
-                  height: 37.5,
-                  fit: BoxFit.contain,
-                ),
-              );
-            },
-          ).toList()),
+      child: IgnorePointer(
+        child: RollSlot(
+            itemExtend: 57.5,
+            rollSlotController: rollSlotController,
+            children: prizesList.map(
+              (e) {
+                return Container(
+                  color: Colors.transparent,
+                  padding: const Pad(vertical: 10),
+                  alignment: Alignment.center,
+                  child: NetImage(
+                    e,
+                    width: 37.5,
+                    height: 37.5,
+                    fit: BoxFit.contain,
+                  ),
+                );
+              },
+            ).toList()),
+      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/wallet/recharge_page.dart';
+import 'package:app/ui/room/game/fruitMachine/fruit_machine_record_dialog.dart';
 import 'package:app/ui/room/game/fruitMachine/roll_slot_controller.dart';
 import 'package:app/ui/room/game/turntable/dialog/turntable_prize_dialog.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
@@ -96,7 +97,12 @@ class FruitMachineController extends GetxController {
   void clickRule() {}
 
   /// 点击记录
-  void clickRecord() {}
+  void clickRecord() {
+    Get.dialog(
+      FruitMachineRecordDialog(modeId:modeId.value),
+      useSafeArea: false,
+    );
+  }
 
   /// 点击菜单
   void changeMenu(int index) {
