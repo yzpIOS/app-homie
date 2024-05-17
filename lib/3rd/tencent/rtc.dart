@@ -23,7 +23,10 @@ class Rtc {
   static final netQualityRx = RxInt(0);
 
   // 麦状态，1禁麦
-  static final status = RxInt(0);
+  static late final status = RxInt(0);
+  //RxInt mike_status = 0.obs;
+  /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+  static late final mike_status = RxInt(0);
 
   static late final TRTCCloud _rtcClient;
 
@@ -121,6 +124,7 @@ class Rtc {
     await _enableMic(micRx.value);
     await _enableAudio(audioRx.value);
     await _enableVideo(videoRx.value);
+    // await _enableVideo(mike_status.value);
 
     micRx.listen(_enableMic);
     audioRx.listen(_enableAudio);
@@ -195,6 +199,7 @@ class Rtc {
     speakRx.clear();
     openMicRx.clear();
     status(0);
+    mike_status(0);
 
     switch (args) {
       case 0: //主动调用 exitRoom 退房
@@ -293,6 +298,12 @@ class Rtc {
     }
 
     micRx.toggle();
+
+    if(micRx.value == true){
+      Rtc.mike_status.value = 1;
+    }else{
+      Rtc.mike_status.value = 3;
+    }
   }
 
   static Future<void> switchRole(int role) async {

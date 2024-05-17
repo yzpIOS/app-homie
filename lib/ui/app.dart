@@ -26,7 +26,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
-
+import 'package:app/common/theme.dart';
+// import '../common/common.dart';
+import 'package:app/common/common.dart';
 import 'login/ad_loading_page.dart';
 
 class App extends StatefulWidget {
@@ -68,7 +70,11 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    Widget child = GetMaterialApp(
+    Widget child = ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => GetMaterialApp(
       title: appInfo.appName,
       showPerformanceOverlay: false,
       checkerboardOffscreenLayers: false,
@@ -86,6 +92,7 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       ],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       navigatorObservers: [AppNavObserver.routeObserver],
+    )
     );
 
     child = Stack(
