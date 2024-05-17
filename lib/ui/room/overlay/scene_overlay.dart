@@ -51,6 +51,7 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
         break;
       case '麦克风_0':
       case '麦克风_1':
+      case '麦克风_禁用':
         Rtc.micSwitch();
         break;
       case '消息_0':

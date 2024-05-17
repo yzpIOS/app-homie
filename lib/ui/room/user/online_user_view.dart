@@ -241,10 +241,10 @@ class OnlineUserView extends SimplePageView<Map> {
         !dataUserIsOwner &&
         myRole != role);
     RxBool isSelectChat = true.obs;
-    RxBool isSelectMike = true.obs;
+    RxInt mikeStatus = 0.obs;/// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
     var hasMike = item['mike_status'] != 0;
     // || item['mike_status'] != 2;
-    isSelectMike.value = item['mike_status'] == 1;
+    mikeStatus.value = item['mike_status'];
 
     // 是否在个人直播间
     var isPersonRoom = _ctrl is PersonRoomCtrl;
@@ -322,10 +322,14 @@ class OnlineUserView extends SimplePageView<Map> {
     // print('uid=$uid');
     //  print('isOpen1111=$isOpen'));
 
-    print('uid=&$uid');
+    // print('uid=&$uid');
     bool isOpen = Rtc.openMicRx.contains(uid);
-    // }
-    print('isOpen=&$isOpen');
+    if(isOpen == false){
+      mikeStatus.value = 3;
+    }
+
+    // print('isOpen=&$isOpen');
+  //  int isJinMaiStatus = Rtc.status.value;
     //  Obx(
     //  () {
     //  final bool isOpen;
@@ -342,47 +346,87 @@ class OnlineUserView extends SimplePageView<Map> {
     //  );
 
     //  }
-    /// 点击开关麦
+
     Widget OpenOrCloseMike() {
-      return Obx(() => isSelectMike.value == true
+      return Obx(() =>
+      mikeStatus.value == 3
           ? GestureDetector(
-              onTap: () {
-                /// 点击了禁麦
-                print('点击了禁麦');
-                List<int>? roleIdList = [];
-                roleIdList.add(nuid.toInt());
-                simpleTry(
+          onTap: () {
+            /// 点击了禁麦
+            print('点击了闭麦');
+
+            List<int>? roleIdList = [];
+            roleIdList.add(nuid.toInt());
+            simpleTry(
                     () =>
-                        Api.Room.speaking(roomId, 1, role_id_list: roleIdList),
-                    callback: (t) {
-                  //   Rtc.status.value = 1;
-                  //   Rtc.micSwitch();
-                  isSelectMike.value = false;
+                    Api.Room.speaking(roomId, 2, role_id_list: roleIdList),
+                callback: (t) {
+               //   Rtc.status.value = 4;
+                  mikeStatus.value = 4;
                 });
-                // Api.Room.micMute(roleId: nuid, isMute: false);
-              },
-              child: Image.asset(IMG.format('room/mic/kaimai'),
-                  width: 25, height: 20, fit: BoxFit.contain))
-          : GestureDetector(
-              onTap: () {
-                // Api.Room.micMute(roleId: nuid, isMute: true);
-                // isSelectMike.value = true;
-                /// 点击了开麦
-                print('点击了开麦');
-                List<int>? roleIdList = [];
-                roleIdList.add(nuid.toInt());
-                simpleTry(
+              // mike_status.value = 4;
+             // Rtc.status.value = 1;
+          //  }
+
+            // Api.Room.micMute(roleId: nuid, isMute: false);
+          },
+          child: Image.asset(IMG.format('room/mic/麦位_闭麦'),
+              width: 25, height: 20, fit: BoxFit.contain)
+      )
+          : mikeStatus.value == 4?
+      GestureDetector(
+        onTap: () {
+          // bool isOpen = Rtc.openMicRx.contains(uid);
+          if(isOpen == true){
+            /// 点击了开麦
+            print('点击了开麦');
+            List<int>? roleIdList = [];
+            roleIdList.add(nuid.toInt());
+            simpleTry(
                     () =>
-                        Api.Room.speaking(roomId, 2, role_id_list: roleIdList),
-                    callback: (t) {
+                    Api.Room.speaking(roomId, 1, role_id_list: roleIdList),
+                callback: (t) {
                   // Rtc.status.value = 0;
                   // Rtc.micSwitch();
-                  isSelectMike.value = true;
+               //   Rtc.status.value = 1;
+                  mikeStatus.value = 1;
                 });
-              },
-              child: Image.asset(IMG.format('room/mic/bimai'),
-                  width: 25, height: 20, fit: BoxFit.contain),
-            ));
+          }else{
+
+            //   isJinMaiStatus = 1;
+            mikeStatus.value = 3;
+          }
+
+        }, //
+        child:Image.asset(IMG.format('room/mic/bimai'),
+            width: 25, height: 20, fit: BoxFit.contain),
+      ) : GestureDetector(
+        onTap: () {
+          // bool isOpen = Rtc.openMicRx.contains(uid);
+          if(isOpen == true){
+            /// 点击了开麦
+            print('点击了禁麦');
+            List<int>? roleIdList = [];
+            roleIdList.add(nuid.toInt());
+            simpleTry(
+                    () =>
+                    Api.Room.speaking(roomId, 2, role_id_list: roleIdList),
+                callback: (t) {
+                  mikeStatus.value = 4;
+                });
+          }
+          else{
+
+            //   isJinMaiStatus = 1;
+            mikeStatus.value = 3;
+          }
+
+        }, //
+        child:Image.asset(IMG.format('room/mic/kaimai'),
+            width: 25, height: 20, fit: BoxFit.contain),
+      )
+
+      ) ;
     }
 
     /// 添加或移除管理员

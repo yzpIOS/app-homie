@@ -97,6 +97,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
          child: Text('【房间公告】'),
          alignment: Alignment.centerLeft,
        ),
+
     Container(
         margin: EdgeInsets.only(left: 10),
         alignment: Alignment.centerLeft,
@@ -108,8 +109,17 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
           textAlign: TextAlign.left,
         ),
       )
-    )
+    ),
 
+   // Row(
+   //  mainAxisAlignment: MainAxisAlignment.center,
+   //  children: [
+      Positioned(
+          bottom: 20,
+          child: $Btn(action: '分享房间'),)
+    // Obx(() => $Btn(action: controller.followRx() ? '已关注' : '关注房间')),
+    // ],
+    // )
 
       ],
     );
@@ -308,7 +318,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
     child = DecoratedBox(
       decoration: const ShapeDecoration(
-        shape: XStadiumBorder(side: BorderSide(color: Colors.white)),
+        shape: XStadiumBorder(side: BorderSide(color: AppPalette.primary)),
       ),
       child: child,
     );

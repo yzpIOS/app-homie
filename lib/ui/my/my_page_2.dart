@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:app/ui/my/common/other_details_info_view.dart';
 import 'package:app/ui/my/openliveroom/open_live_room_page.dart';
 import '../home/home_banner_view.dart';
+import '../task/task_center_page.dart';
 import 'invite_new_members/invite_new_members_activity_page.dart';
 
 class MyPage2 extends StatefulWidget {
@@ -222,8 +223,8 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         Get.to(() => const BackpackPage());
         break;
       case '我的任务':
-        SignDialog.show(isManual: true);
-        // Get.to(() => const TaskCenterPage());
+       // SignDialog.show(isManual: true);
+         Get.to(() => const TaskCenterPage());
         break;
       case '公会中心':
         Get.to(() => const GuildCenterPage());
