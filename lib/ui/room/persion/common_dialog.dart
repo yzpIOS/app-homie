@@ -333,7 +333,7 @@ class _DownMicConfirmState extends State<CommonDialog> {
       onTap: () {
         Get.back();
         // 显示结算
-        delay(500, () {
+        delay(milliseconds:500,callBack: () {
           widget.cancel?.call();
         });
       },
@@ -376,7 +376,7 @@ class _DownMicConfirmState extends State<CommonDialog> {
       onTap: () {
         Get.back();
         // 显示结算
-        delay(500, () {
+        delay(milliseconds:500,callBack: () {
           widget.confirm.call();
         });
       },

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:app/ui/room/game/fruitMachine/infinite_carousel.dart';
 import 'package:app/ui/room/game/fruitMachine/roll_slot_controller.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +12,7 @@ typedef SelectedItemCallback = void Function({
 // after hitting this index it will reset to zero
 const maxIndex = 50000;
 
+/// RollSlot
 class RollSlot extends StatefulWidget {
   final RollSlotController? rollSlotController;
 
@@ -111,7 +111,7 @@ class _RollSlotState extends State<RollSlot> {
   void addRollSlotControllerListener() {
     if (widget.rollSlotController != null) {
       widget.rollSlotController!.addListener(() {
-        if (widget.rollSlotController!.state.isAnimateRandomly) {
+        if (widget.rollSlotController!.state.isRolling) {
           animate();
         }
         if (widget.rollSlotController!.state.isStopped) {

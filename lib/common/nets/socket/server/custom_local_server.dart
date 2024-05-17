@@ -84,7 +84,7 @@ class CustomLocalServer with BaseClient {
     _currentPort = 0;
     _isBindingServer = true;
     resetShareSocketStatus();
-    logForDebug("开启与Unity通信的本地SocketServer, port = $port");
+    //logForDebug("开启与Unity通信的本地SocketServer, port = $port");
 
     // 开启ServerSocket
     ServerSocket.bind("127.0.0.1", port).asStream().listen((event) {
@@ -95,7 +95,7 @@ class CustomLocalServer with BaseClient {
       completeShareSocketStatus();
       // 绑定server
       _handleServer();
-      logForDebug("SocketServer开启成功，通知Unity进行连接");
+      //logForDebug("SocketServer开启成功，通知Unity进行连接");
       riseServerStatusCallBacks();
     }, onError: (error) async {
       _isBindingServer = false;
@@ -161,7 +161,7 @@ class CustomLocalServer with BaseClient {
   /// 处理server连接
   ///
   void _handleServer() {
-    logForDebug("SocketServer开启成功");
+    //logForDebug("SocketServer开启成功");
     serverSocket?.asBroadcastStream(onListen: (event) {
       _socketSubscription = event;
     }).listen((data) {
@@ -250,7 +250,7 @@ class CustomLocalServer with BaseClient {
           }
           // 心跳
           if(nowSeconds - item.lastReceivePkgTime > SOCKET_TIME_OUT) {
-            logForDebug("收不到unity心跳，断开链接");
+            //logForDebug("收不到unity心跳，断开链接");
 
             // 移除session
             deletes.add(key);
@@ -267,7 +267,7 @@ class CustomLocalServer with BaseClient {
 
         // 如果断开就重连
         if(deletes.isNotEmpty && _sessions.isEmpty) {
-          logForDebug("没有unity与flutter有socket连接1");
+          ////logForDebug("没有unity与flutter有socket连接1");
           // 己经连接成功
           if(statusCompleter.isCompleted) {
             statusCompleter = Completer();
@@ -276,7 +276,7 @@ class CustomLocalServer with BaseClient {
           riseDisconnect();
         }
       } else {
-        logForDebug("没有unity与flutter有socket连接2");
+        ////logForDebug("没有unity与flutter有socket连接2");
         // 己经连接成功
         if(statusCompleter.isCompleted) {
           statusCompleter = Completer();
@@ -298,7 +298,7 @@ class CustomLocalServer with BaseClient {
   /// 无网时，重置所有的连接
   ///
   void resetConnect() {
-    logForDebug("网络发生变化；无网络");
+    //logForDebug("网络发生变化；无网络");
     _sessions.forEach((key, value) {
       value.dispose();
     });
@@ -360,7 +360,7 @@ class CustomLocalServer with BaseClient {
   }
 
   void riseServerStatusCallBacks() {
-    logForDebug("网络发生变化；有网络，请求与unity进行连接");
+    //logForDebug("网络发生变化；有网络，请求与unity进行连接");
     _serverStatusCallBacks.forEach((element) {
       element.call();
     });
@@ -402,7 +402,7 @@ class CustomLocalServer with BaseClient {
       return;
     }
     _preRiseTime = DateTime.now().millisecondsSinceEpoch;
-    logForDebug("unity断开连接，执行断开回调方法, 方法数：${_disconnects.length}");
+    //logForDebug("unity断开连接，执行断开回调方法, 方法数：${_disconnects.length}");
     for(int index = 0; index < _disconnects.length; index ++) {
       try {
         _disconnects[index].call();

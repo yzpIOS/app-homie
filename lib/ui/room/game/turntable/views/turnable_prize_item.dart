@@ -1,19 +1,19 @@
 
+import 'package:app/model/activity_lottery_model.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
 class TurnablePrizeItem extends StatelessWidget {
+  ActivityLotteryModel activityLotteryModel;
 
-  Map data;
-
-  TurnablePrizeItem(this.data);
+  TurnablePrizeItem({super.key, required this.activityLotteryModel});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: Color(0xFFFFBDEE),
+          color:const Color(0xFFFFBDEE),
           width: 1.5,
         ),
         borderRadius: BorderRadius.circular(10),
@@ -27,7 +27,7 @@ class TurnablePrizeItem extends StatelessWidget {
             top: 7.5,
             bottom: 20,
             child: NetImage(
-              data["prize_image"] ?? "",
+              activityLotteryModel.prizeImage ?? "",
               width: 33,
               height: 33,
             ),
@@ -38,14 +38,14 @@ class TurnablePrizeItem extends StatelessWidget {
             top: 2.0,
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 6),
+              padding:const EdgeInsets.symmetric(horizontal: 6),
               decoration: BoxDecoration(
-                color: Color(0xFFFFD9F2),
+                color:const Color(0xFFFFD9F2),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
-                "x${data["count"] ?? 0}",
-                style: TextStyle(
+                "x${activityLotteryModel.count ?? 0}",
+                style:const TextStyle(
                     color: Color(0xFFFF3291),
                     fontSize: 10,
                     fontWeight: FontWeight.w500
@@ -59,9 +59,9 @@ class TurnablePrizeItem extends StatelessWidget {
             right: 0.0,
             bottom: 0.0,
             child: Text(
-              data["prize_name"] ?? "",
+              activityLotteryModel.prizeName ?? "",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style:const TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 12

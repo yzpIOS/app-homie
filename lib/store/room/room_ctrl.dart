@@ -134,7 +134,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // todo 去掉加载页面
     completeProgress();
 
-    debugPrint("开始监听麦位信息");
+    //debugPrint("开始监听麦位信息");
 
     // 服务端的数据广播比较快，而客户端数据比较慢
     // 所以要记录用户的列表，然后当服务端数据返回来的时候
@@ -144,7 +144,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       if(data == null) {
         return;
       }
-      debugPrint("新增麦位：data = ${data.toProto3Json()}");
+      //debugPrint("新增麦位：data = ${data.toProto3Json()}");
       newMicList.add(data);
     }
     );
@@ -254,7 +254,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // bindGet(RoomMsgCtrl(roomId));
     bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
-    debugPrint("aa");
+    //debugPrint("aa");
   }
 
   @mustCallSuper
@@ -291,10 +291,10 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       RoomManagerCtrl.ins.onSocketDisconnect();
       return;
     }
-    logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+    //logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
     // 监听unity发过来的信息
-    logForDebug("获听unity初始化完成消息");
+    //logForDebug("获听unity初始化完成消息");
     // 判断是否关闭界面
     isNotClose();
 
@@ -349,7 +349,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
-    logForDebug("开始加载unity");
+    //logForDebug("开始加载unity");
 
     markReady();
     // unity加载完成，设置成normal状态，如果返回的时候
@@ -373,10 +373,10 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       RoomManagerCtrl.ins.onSocketDisconnect();
       return;
     }
-    logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+    //logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
     // 监听unity发过来的信息
-    logForDebug("获听unity初始化完成消息");
+    //logForDebug("获听unity初始化完成消息");
     // 判断是否关闭界面
     isNotClose();
 
@@ -430,7 +430,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
-    logForDebug("开始加载unity");
+    //logForDebug("开始加载unity");
     isNotClose();
     await loader(
       'Room',
@@ -444,14 +444,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         onProcess(0.8);
         try {
           isNotClose();
-          logForDebug("开始FTU_JOIN_GAME");
+          //logForDebug("开始FTU_JOIN_GAME");
 
           Future<void> doJoinGame() {
             const dur = Duration(seconds: unity_time_out);
             final data = {'token': OAuthCtrl.token, 'scene': info};
-            logForDebug("开始FTU_JOIN_GAME, data = ${data.toString()}");
+            //logForDebug("开始FTU_JOIN_GAME, data = ${data.toString()}");
             var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
-            logForDebug("FTU_JOIN_GAME成功");
+            //logForDebug("FTU_JOIN_GAME成功");
             return result;
           }
 
@@ -459,7 +459,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             // assert(false, '产品需求改了，这个逻辑应该不会走');
             await doJoinGame();
           } else {
-            logForDebug("获取房间信息开始");
+            //logForDebug("获取房间信息开始");
 
             // 加载unity
             isNotClose();
@@ -471,7 +471,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           // unity加载完成，设置成normal状态，如果返回的时候
           RoomManagerCtrl.ins.doNormalState();
         } catch (e, s) {
-          logForDebug("FTU_JOIN_GAME失败, error = ${e}");
+          //logForDebug("FTU_JOIN_GAME失败, error = ${e}");
           if(isDisposed) {
             return;
           }
@@ -494,12 +494,12 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     //没有加房的时候，先进房pk的状态；1.房间pk中
     if(!_hasJoinRoom) {
       if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
-        logForDebug("非pk状态，joinRoom");
+        //logForDebug("非pk状态，joinRoom");
         try {
           // 加一个标识用来是否要加入房间，个人房在创建的时候不需要加入房间
           if(RoomManagerCtrl.ins.needJoinRoom) {
             final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
-            logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+            //logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
             if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
               if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
                 throw const LogicException(-1, "该房间主人拒绝您进入");
@@ -522,15 +522,15 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           RoomManagerCtrl.ins.needJoinRoom = true;
         }
       } else {
-        logForDebug("pk状态，不需要joinRoom", enMsg: "user in pk status, don't need call joinRoom api");
+        //logForDebug("pk状态，不需要joinRoom", enMsg: "user in pk status, don't need call joinRoom api");
       }
       _hasJoinRoom = true;
     }
 
     isNotClose();
-    logForDebug(
-        "通知服务端同步房间信息",
-        enMsg: "start to tell server to synchronise room's message, such as players");
+    // logForDebug(
+    //     "通知服务端同步房间信息",
+    //     enMsg: "start to tell server to synchronise room's message, such as players");
     // unity初始化完成后，发送同步信息指令
     try {
       C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
@@ -546,7 +546,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
       onRender(s_syncRoomInfo);
 
       RoomInfoEvent(s_syncRoomInfo).fire();
-      logForDebug("通知同步房间结果, s_syncRoomInfo = ${s_syncRoomInfo.toString()}", enMsg: "call synchronise room's message api result");
+      //logForDebug("通知同步房间结果, s_syncRoomInfo = ${s_syncRoomInfo.toString()}", enMsg: "call synchronise room's message api result");
     } catch(e) {
       RoomManagerCtrl.ins.doNormalState();
       RoomManagerCtrl.ins.onSocketDisconnect();

@@ -46,13 +46,13 @@ class _UserGiftWallDialogState extends State<UserGiftWallDialog> with SingleTick
   @override
   void initState() {
     super.initState();
-    delay(100, () async {
+    delay(milliseconds:100,callBack: () async {
       WaitingCtrl.obj.show();
       Map mapValue = {};
       try {
         mapValue = await Api.UserInfo.getWallGift(uid: widget.uid);
       } catch(e, s) {
-        debugPrint(e.toString());
+        //debugPrint(e.toString());
       } finally {
         WaitingCtrl.obj.hidden();
       }

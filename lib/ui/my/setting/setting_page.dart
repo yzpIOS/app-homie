@@ -122,7 +122,7 @@ class _SettingPageState extends State<SettingPage> {
       await deleteDirectory(directory);
     } catch(e) {
     }
-    debugPrint("删除缓存目录 ==> ....");
+    //debugPrint("删除缓存目录 ==> ....");
     return Future.value(true);
   }
 
@@ -135,7 +135,7 @@ class _SettingPageState extends State<SettingPage> {
           await deleteDirectory(child);
         }
       }
-      debugPrint("删除缓存目录 ==> " + file.path);
+      //debugPrint("删除缓存目录 ==> " + file.path);
       await file.delete();
     } catch(e) {
     }

@@ -67,7 +67,7 @@ class ChatPage extends StatelessWidget {
             return;
           }
         } catch(e, s) {
-          debugPrint("aa");
+          //debugPrint("aa");
         }
       }
     }

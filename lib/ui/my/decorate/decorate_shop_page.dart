@@ -68,8 +68,8 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
         if(childOffset != null) {
           //convert
           Offset? childRelativeToParent = parent?.globalToLocal(childOffset);
-          debugPrint("数据异常[${titles[index].value1}]: offSetX = ${childRelativeToParent?.dx}, "
-              "offSetY = ${childRelativeToParent?.dy}");
+          // debugPrint("数据异常[${titles[index].value1}]: offSetX = ${childRelativeToParent?.dx}, "
+          //     "offSetY = ${childRelativeToParent?.dy}");
           if((childRelativeToParent?.dy ?? -1) >= 0.0) {
             break;
           }
@@ -84,7 +84,7 @@ class _DecorateShopState extends State<DecorateShopPage> with SingleTickerProvid
 
   void requestTypes() {
     Api.Shop.get2DGoods().then((value) {
-      debugPrint("aa");
+      //debugPrint("aa");
       data.clear();
       (value as List).forEach((element) {
         if(((element["product_item_list"] as List?)?.length ?? 0) > 0) {

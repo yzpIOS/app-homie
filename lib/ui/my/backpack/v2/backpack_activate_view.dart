@@ -42,7 +42,7 @@ class _BackPackActivateState extends BaseBackPackState<BackPackActivateView> {
               ),
               selectRx: selectRx,
               callBack: (productId) {
-                debugPrint("选择发生变化: data = ${data.toString()}");
+                //debugPrint("选择发生变化: data = ${data.toString()}");
                 CommonDialog.useImmediate(() async {
                   await Api.DressUp.dressUp2(productId);
                   refreshFlag.value = !refreshFlag.value;

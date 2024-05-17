@@ -68,7 +68,7 @@ class ApplePurchase {
       _listenToPurchaseUpdated(recordNumber, data);
       // 检查是否支持苹果支付
     }, onError: (error) {
-      debugPrint("aaa");
+      //debugPrint("aaa");
       showToastQueue(error.toString());
     });
   }

@@ -70,7 +70,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog2> with Ticke
       anime = _AnimeHelp(this, widget.movieEntity!);
     }
 
-    delay(300, () async {
+    delay(milliseconds:300,callBack: () async {
       await anime?.doStart(
         callback: () async {
           anime?.dispose();

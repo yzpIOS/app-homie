@@ -47,7 +47,7 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
     if(listGoods.isEmpty) {
       return;
     }
-    debugPrint("send size ${listGoods.length}");
+    //debugPrint("send size ${listGoods.length}");
     S_PushPreload payLoad = S_PushPreload();
     payLoad.clothIds.addAll(listGoods);
     SocketCtrl.ins.senByteUnity(CMD.S_PushPreload, datas: payLoad.writeToBuffer());
@@ -55,7 +55,7 @@ class ShopCategoryCtrl extends AsyncListCtrl<Map> {
   }
 
   void sendItems(int id) {
-    debugPrint("product id = $id");
+    //debugPrint("product id = $id");
     if(hasSendGoods.contains(id)) {
       return;
     }

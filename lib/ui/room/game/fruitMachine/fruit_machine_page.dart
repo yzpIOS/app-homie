@@ -5,6 +5,7 @@ import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
 import 'package:app/ui/room/game/fruitMachine/fruit_machine_controller.dart';
+import 'package:app/ui/room/game/fruitMachine/roll_slot.dart';
 import 'package:app/ui/room/game/fruitMachine/roll_slot_widget.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +72,9 @@ class FruitMachinePage extends StatelessWidget {
                             return controller.currentShowLotteryList.isEmpty
                                 ? const SizedBox()
                                 : Row(
+                              mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Spacing(),
                                       RollSlotWidget(
                                         prizesList: controller
                                             .currentShowLotteryImageUrlList
@@ -80,7 +82,7 @@ class FruitMachinePage extends StatelessWidget {
                                         rollSlotController:
                                             controller.leftRollSlotController,
                                       ),
-                                      Spacing.w12,
+                                      Spacing.w6,
                                       RollSlotWidget(
                                         prizesList: controller
                                             .currentShowLotteryImageUrlList
@@ -88,7 +90,7 @@ class FruitMachinePage extends StatelessWidget {
                                         rollSlotController:
                                             controller.centerRollSlotController,
                                       ),
-                                      Spacing.w12,
+                                      Spacing.w6,
                                       RollSlotWidget(
                                         prizesList: controller
                                             .currentShowLotteryImageUrlList
@@ -96,7 +98,6 @@ class FruitMachinePage extends StatelessWidget {
                                         rollSlotController:
                                             controller.rightRollSlotController,
                                       ),
-                                      const Spacing(),
                                     ],
                                   );
                           }),

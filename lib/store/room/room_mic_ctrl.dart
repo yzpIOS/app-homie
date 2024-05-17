@@ -161,12 +161,12 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     var mikeUserKeyList = dataRx.keys.toList();
     for(int index = 0; index < mikeUserKeyList.length; index ++) {
       if(dataRx[mikeUserKeyList[index]]?.uid == data.uid) {
-        debugPrint("删除旧麦位: data = ${data.toProto3Json()}");
+        //debugPrint("删除旧麦位: data = ${data.toProto3Json()}");
         dataRx.remove(mikeUserKeyList[index]);
         break;
       }
     }
-    debugPrint("新增麦位：data = ${data.toProto3Json()}");
+    //debugPrint("新增麦位：data = ${data.toProto3Json()}");
 
     // 删除旧mike
     dataRx.remove(data.oldMikeNo);
@@ -509,7 +509,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   }
 
   static Map<String, MicInfo> micDataFrom(data) {
-    debugPrint("用户上麦：data = ${data.toString()}");
+    //debugPrint("用户上麦：data = ${data.toString()}");
     return <String, MicInfo>{
       if (data is List && data.isNotEmpty)
         for (final item in data)
@@ -528,7 +528,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
 
   static List<MicInfo> micDataFrom2(data) {
-    debugPrint("用户上麦：data = ${data.toString()}");
+    //debugPrint("用户上麦：data = ${data.toString()}");
     List<MicInfo> micInfoes = <MicInfo>[];
     if(data is List && data.isNotEmpty) {
       for (final item in data) {

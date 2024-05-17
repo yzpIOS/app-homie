@@ -4,6 +4,7 @@ import 'package:app/widgets/image/network_cache_image.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 
+/// 滚动槽
 class RollSlotWidget extends StatelessWidget {
   final List<String> prizesList;
 
@@ -15,10 +16,10 @@ class RollSlotWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 268,
+      height: 260,
       width: 90,
       child: RollSlot(
-          itemExtend: 57.3,
+          itemExtend: 57.5,
           rollSlotController: rollSlotController,
           children: prizesList.map(
             (e) {

@@ -1,9 +1,10 @@
 import 'dart:async';
-
+import 'package:app/tools.dart';
 import 'package:flutter/cupertino.dart';
 
-enum RollSlotControllerState { none, animateRandomly, stopped }
+enum RollSlotControllerState { none,rolling,rollRandomly, stopped }
 
+/// 滚动槽控制器
 class RollSlotController extends ChangeNotifier {
   RollSlotControllerState _state = RollSlotControllerState.none;
 
@@ -25,19 +26,25 @@ class RollSlotController extends ChangeNotifier {
     this.secondsBeforeStop,
   });
 
+  void startRoll(){
+    if (_state.isRolling || _state.isRollRandomly) {
+      return;
+    }
+    //logForDebug("RollSlotController startRoll");
+    _state = RollSlotControllerState.rolling;
+    notifyListeners();
+  }
+
   void animateRandomly({
     required int topIndex,
     required int centerIndex,
     required int bottomIndex,
   }) {
-    if (_state.isAnimateRandomly) {
-      return;
-    }
+    //logForDebug("RollSlotController animateRandomly");
     _topIndex = topIndex;
     _centerIndex = centerIndex;
     _bottomIndex = bottomIndex;
-
-    _state = RollSlotControllerState.animateRandomly;
+    _state = RollSlotControllerState.rollRandomly;
     if (secondsBeforeStop != null) {
       _setAutomaticallyStopTimer(secondsBeforeStop!);
     }
@@ -45,7 +52,8 @@ class RollSlotController extends ChangeNotifier {
   }
 
   void stop() {
-    if (_state.isAnimateRandomly) {
+    //logForDebug("RollSlotController stop");
+    if (_state.isRollRandomly || _state.isRolling) {
       _state = RollSlotControllerState.stopped;
       notifyListeners();
     }
@@ -53,6 +61,7 @@ class RollSlotController extends ChangeNotifier {
 
   void _setAutomaticallyStopTimer(int stopDuration) {
     _stopAutomaticallyTimer = Timer.periodic(const Duration(seconds: 1), (count) {
+      //logForDebug("RollSlotController automaticallyStopTimer");
       if (count.tick == secondsBeforeStop) {
         if (!_state.isStopped) {
           stop();
@@ -65,6 +74,7 @@ class RollSlotController extends ChangeNotifier {
 
 extension RollSlotControllerStateExt on RollSlotControllerState {
   bool get isNone => this == RollSlotControllerState.none;
-  bool get isAnimateRandomly => this == RollSlotControllerState.animateRandomly;
+  bool get isRolling => this == RollSlotControllerState.rolling;
+  bool get isRollRandomly => this == RollSlotControllerState.rollRandomly;
   bool get isStopped => this == RollSlotControllerState.stopped;
 }

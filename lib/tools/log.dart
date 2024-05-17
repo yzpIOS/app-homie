@@ -145,7 +145,7 @@ void logForDebug(String? msg, {LogType type = LogType.SOCKET, String? enMsg}) {
   if(msg == null) {
     return;
   }
-  debugPrint(msg);
+  //debugPrint(msg);
   if(!cachesLogs.containsKey(type)) {
     cachesLogs[type] = RxList();
   }

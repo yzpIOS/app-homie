@@ -51,7 +51,7 @@ class GiftSheet extends StatefulWidget {
           child: sheet,
           onWillPop:() {
             isPopUp = false;
-            debugPrint("debug ...");
+            //debugPrint("debug ...");
             return Future.value(true);
           }
       ),
@@ -95,7 +95,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
     if(count >= 2) {
       tabController = TabController(length: count, vsync: this);
       tabController?.addListener(() {
-        debugPrint("aaa");
+        //debugPrint("aaa");
         showIndex.value = tabController?.index ?? 0;
         if(showIndex.value == 1) {
           myGiftCtrl?.doRefresh();
@@ -612,7 +612,7 @@ class _GiftSheetState extends State<GiftSheet> with TickerProviderStateMixin {
           // 魔法星球
           if(logic.selectRx()?['type'] ==  8) {
             var curTime = DateTime.now().millisecondsSinceEpoch;
-            debugPrint("记录点击次数 = ${curTime - _preSendTime}");
+            //debugPrint("记录点击次数 = ${curTime - _preSendTime}");
             if(_preSendTime == 0 || curTime - _preSendTime < 1500) {
               _totalSendCount += 1;
             } else {

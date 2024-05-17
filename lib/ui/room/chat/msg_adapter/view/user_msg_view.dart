@@ -259,7 +259,7 @@ class LuckyNotifyMsgView extends BaseMsgView<AllRoomMsgAdapter> {
                   alignment: PlaceholderAlignment.middle,
                   child: GestureDetector(
                     onTap: () {
-                      debugPrint("click room");
+                      //debugPrint("click room");
                       RoomManagerCtrl.ins.toMiddleRoom(roomId: vm.data.roomId.toInt());
                     },
                     behavior: HitTestBehavior.opaque,

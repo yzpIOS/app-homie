@@ -1,37 +1,30 @@
 
 import 'package:app/common/theme.dart';
-import 'package:app/model/enum/money_type.dart';
-import 'package:app/net/api.dart';
+import 'package:app/model/activity_lottery_model.dart';
 import 'package:app/tools.dart';
-import 'package:app/tools/view.dart';
 import 'package:app/ui/common/money_icon.dart';
 import 'package:app/ui/room/game/turntable/views/turnable_prize_item.dart';
 import 'package:app/widgets.dart';
-import 'package:app/widgets/list/list_config.dart';
-import 'package:app/widgets/list/list_ctrl.dart';
-import 'package:app/widgets/list/simple_list.dart';
-import 'package:app/widgets/sliver_grid_delegate.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 class TurntablePrizeDialog extends StatefulWidget {
 
-  List items;
+  List<ActivityLotteryModel> items;
 
   MovieEntity? movieEntity;
 
-  TurntablePrizeDialog(this.items, this.movieEntity, {super.key});
+  TurntablePrizeDialog( {required this.items,required this.movieEntity,super.key});
 
-  static Future<void> showDialog(List items) async {
+  static Future<void> showDialog(List<ActivityLotteryModel> items) async {
     items.sort((a, b) {
-      int value1 = (a["price"] ?? 0);
-      int value2 = (b["price"] ?? 0);
+      int value1 = (a.price ?? 0);
+      int value2 = (b.price ?? 0);
       return value2 - value1;
     });
 
     // MovieEntity movieEntity = await SVGAParser.shared.decodeFromAssets('assets/烟花.svga');
-    var dialog = TurntablePrizeDialog(items, null);
+    var dialog = TurntablePrizeDialog(items:items,movieEntity: null);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -56,7 +49,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
       anime = _AnimeHelp(this, widget.movieEntity!);
     }
 
-    delay(300, () async {
+    delay(milliseconds:300,callBack: () async {
       await anime?.doStart(
         callback: () async {
           anime?.dispose();
@@ -87,7 +80,17 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
               right: 15,
               top: 190,
               bottom: 133,
-              child: _SimpleWnRecord(widget.items),
+              child:GridView(
+                padding: Pad(horizontal: 20, bottom: AppSize.safeBottom, top: 0),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 6.5,
+                  crossAxisSpacing: 6.5,
+                ),
+                children:
+                widget.items.map(_itemBuilder).toList(growable: false),
+              ) // _SimpleWnRecord(widget.items),
             ),
 
             // 价格
@@ -107,13 +110,17 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
     );
   }
 
+  Widget _itemBuilder(ActivityLotteryModel activityLotteryModel){
+    return TurnablePrizeItem(activityLotteryModel:activityLotteryModel);
+  }
+
 
   Widget createTotalInfo() {
     int totalAmount = 0;
     int totalMoney = 0;
     widget.items.forEach((element) {
-      totalAmount += element["count"] as int;
-      totalMoney += (element["price"] as int) * (element["count"] as int);
+      totalAmount += element.count ?? 0;
+      totalMoney += (element.price ?? 0) * (element.count ?? 0);
     });
     return Positioned(
       bottom: 88,
@@ -125,11 +132,11 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Container(width: double.infinity, height: 1,),
+          const SizedBox(width: double.infinity, height: 1,),
           XRichText(
             TextSpan(
               children: [
-                TextSpan(
+                const TextSpan(
                     text: "共 ",
                   style: TextStyle(
                     color: Color(0xFFFF6DB6),
@@ -139,13 +146,13 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
                 ),
                 TextSpan(
                     text: "$totalAmount",
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color(0xFFE30071),
                         fontWeight: FontWeight.bold,
                         fontSize: 16
                     )
                 ),
-                TextSpan(
+                const TextSpan(
                     text: " 件礼物",
                     style: TextStyle(
                         color: Color(0xFFFF6DB6),
@@ -160,7 +167,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
           XRichText(
             TextSpan(
               children: [
-                TextSpan(
+                const TextSpan(
                   text: '总价值 ',
                   style: TextStyle(
                       color: Color(0xFFFF6DB6),
@@ -170,13 +177,13 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
                 ),
                 TextSpan(
                     text: "$totalMoney ",
-                    style: TextStyle(
+                    style:const TextStyle(
                         color: Color(0xFFE30071),
                         fontWeight: FontWeight.bold,
                         fontSize: 16
                     )
                 ),
-                WidgetSpan(
+                const WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
                   child: MoneyIcon(type: MoneyType.diamond, size: 16),
                 )
@@ -201,13 +208,13 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
         child: Container(
           width: 169,
           height: 54,
-          padding: EdgeInsets.only(top: 5),
+          padding:const EdgeInsets.only(top: 5),
           decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(IMG.format("room/game/turntable_button_qd")),
               )
           ),
-          child: Text(
+          child:const Text(
             "确定",
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -223,7 +230,7 @@ class _TurntablePrizeDialogState extends State<TurntablePrizeDialog> with Ticker
 
   Widget createFireWorks() {
     if(anime?.ctrl == null) {
-      return SizedBox();
+      return const SizedBox();
     }
     return Positioned(
       bottom: 0,
@@ -297,38 +304,4 @@ class _AnimeHelp {
       ..stop()
       ..dispose();
   }
-}
-
-
-
-class _SimpleWnRecord extends SimplePageView<Map> {
-
-  List items;
-
-  _SimpleWnRecord(this.items);
-
-  @override
-  BaseConfig get config {
-    return GridConfig(
-      padding: Pad(horizontal: 20, top: 0, bottom: AppSize.safeBottom),
-      gridDelegate: const XGridDelegate(
-        crossAxisCount: 4,
-        mainAxisSpacing: 6.5,
-        crossAxisSpacing: 6.5,
-        fixedHeight: 0,
-      ),
-    );
-  }
-
-  @override
-  Future fetchPage(PageNum page) async {
-    return {"items": items};
-  }
-
-  @override
-  Widget itemBuilder(BuildContext context, Map<dynamic, dynamic> item, int index) {
-    // TODO: implement itemBuilder
-    return TurnablePrizeItem(item);
-  }
-
 }

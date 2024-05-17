@@ -71,17 +71,17 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
   void startCountDown() {
     Future.delayed(Duration(milliseconds: 500)).whenComplete(() {
       if(!mounted) {
-        debugPrint("startCountDown destroy");
+        //debugPrint("startCountDown destroy");
         return;
       }
 
       var curTime = DateTime.now().millisecondsSinceEpoch;
       if(_preSendTime == 0 || curTime - _preSendTime < interval) {
-        debugPrint("记录点击次数时间55555： = ${curTime - _preSendTime}");
+        //debugPrint("记录点击次数时间55555： = ${curTime - _preSendTime}");
         startCountDown();
         return;
       }
-      debugPrint("记录点击次数4444 = ${curTime - _preSendTime}");
+      //debugPrint("记录点击次数4444 = ${curTime - _preSendTime}");
       _handleBack();
     });
   }
@@ -140,7 +140,7 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
     var data = widget.giftSendLogic.selectRx.value;
     if(data == null) {
 
-      debugPrint("记录点击次数3333");
+      //debugPrint("记录点击次数3333");
       _handleBack();
       return;
     }
@@ -162,11 +162,11 @@ class _ContinueMagicBall extends State<ContinueMagicBall> {
           // 魔法星球
           var curTime = DateTime.now().millisecondsSinceEpoch;
           if(_preSendTime == 0 || curTime - _preSendTime < interval) {
-            debugPrint("记录点击次数111 = ${curTime - _preSendTime}");
+            //debugPrint("记录点击次数111 = ${curTime - _preSendTime}");
             _totalSendCount += 1;
             setState(() { });
           } else {
-            debugPrint("记录点击次数222 = ${curTime - _preSendTime}");
+            //debugPrint("记录点击次数222 = ${curTime - _preSendTime}");
             _handleBack();
           }
           _preSendTime = curTime;

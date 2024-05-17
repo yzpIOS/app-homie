@@ -73,7 +73,7 @@ class CustomClient with BaseClient {
 
     // 开始连接时，重新设置网络状态
     _customSocket.startConnect = () {
-      logForDebug("socket开始重新连接....");
+      //logForDebug("socket开始重新连接....");
       _canForceWaitTimes = false;
       resetShareSocketStatus();
     };
@@ -84,7 +84,7 @@ class CustomClient with BaseClient {
     super.riseOnData(curCmd, generatedMessage);
     // 数据返回，通知网络通了
     if(curCmd != CMD.S_Err && _canForceWaitTimes) {
-      logForDebug("收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted} ,_canForceWaitTimes = $_canForceWaitTimes");
+      //logForDebug("收到服务端的协议，重置forceWaitTimes = ${forceWaitTimes}字段, 此时_shareSocketStatus = ${_shareSocketStatus.isCompleted} ,_canForceWaitTimes = $_canForceWaitTimes");
       completeShareSocketStatus();
     }
   }
@@ -96,9 +96,9 @@ class CustomClient with BaseClient {
 
     // 等待socket连接成功
     if(!_shareSocketStatus.isCompleted) {
-      logForDebug("socket没有连接，等待socket连接");
+      //logForDebug("socket没有连接，等待socket连接");
       await _shareSocketStatus.future;
-      logForDebug("socket连接成功111");
+      //logForDebug("socket连接成功111");
     } else {
       return Future.value(true);
     }
@@ -139,7 +139,7 @@ class CustomClient with BaseClient {
       // 发送数据错误超过3次，就重新连接
       sendFailTime += 1;
       if(sendFailTime > 3) {
-        logForDebug("多次网络请求发送异常，sendFailTime = ${sendFailTime}");
+        //logForDebug("多次网络请求发送异常，sendFailTime = ${sendFailTime}");
         _customSocket.reconnect();
         sendFailTime = 0;
       }
@@ -209,7 +209,7 @@ class CustomClient with BaseClient {
   CustomClient startHeartBeat({int interval = CLIENT_BEAT_RATE}) {
     // 心跳没有响应的次数
     if(heartBeatNumber >= CLIENT_MAX_BEAT_TIME) {
-      logForDebug("长时间没有接收服务端的心跳， heartBeatNumber = ${heartBeatNumber}");
+      //logForDebug("长时间没有接收服务端的心跳， heartBeatNumber = ${heartBeatNumber}");
       _customSocket.reconnect(foreceConnect: true);
       heartBeatNumber = 0;
     }
@@ -257,7 +257,7 @@ class CustomClient with BaseClient {
   /// 重置连接数据
   ///
   void resetConnect({bool clearHost = true}) {
-    logForDebug("重置网络状态 ${heartBeatNumber}");
+    //logForDebug("重置网络状态 ${heartBeatNumber}");
     _customSocket.resetConnect(clearHost: clearHost);
   }
 
@@ -268,7 +268,7 @@ class CustomClient with BaseClient {
     if(_shareSocketStatus.isCompleted) {
       _shareSocketStatus = Completer();
     }
-    logForDebug("socket重新连接 ${heartBeatNumber}");
+    //logForDebug("socket重新连接 ${heartBeatNumber}");
     _customSocket.reconnect(foreceConnect: foreceConnect);
   }
 

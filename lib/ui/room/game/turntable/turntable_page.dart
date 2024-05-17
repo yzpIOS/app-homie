@@ -2,6 +2,7 @@
 
 import 'package:app/common/theme.dart';
 import 'package:app/model/activity_info_model.dart';
+import 'package:app/model/activity_lottery_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
@@ -231,7 +232,7 @@ class _TurntablePageState extends State<TurntablePage> {
         if(currentPrizeList.isNotEmpty || _timer != null) {
           return;
         }
-        debugPrint("GestureDetector .......");
+        //debugPrint("GestureDetector .......");
         curSelectedIndex = index;
 
         var itemList = widget.infoModel.lotteryItemList ?? [];
@@ -501,7 +502,7 @@ class _TurntablePageState extends State<TurntablePage> {
               if(selectedIndex == _resultIndex && _speedNotChange) {
                 toOpenWindowDialog();
               }
-              debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
+              //debugPrint("己经中奖. 停止定时器，不前进 = ${_resultIndex}");
 
               // 获取当前位置
               var item = prizeItemList[curIndex];
@@ -767,9 +768,9 @@ class _TurntablePageState extends State<TurntablePage> {
     if(currentPrizeList.isEmpty) {
       return;
     }
-    var newList = currentPrizeList.toList(growable: true);
+    var newList = currentPrizeList.map((e) => ActivityLotteryModel.fromJson(e)).toList();
     currentPrizeList = [];
-    delay(10, () {
+    delay(milliseconds:10,callBack: () {
       TurntablePrizeDialog.showDialog(newList);
     });
   }
@@ -782,7 +783,7 @@ class _TurntablePageState extends State<TurntablePage> {
 
     // 过的时间
     double seconds = (curTime - _startTime) / 1000.0;
-    debugPrint("startSpin startSpin seconds = ${seconds}");
+    //debugPrint("startSpin startSpin seconds = ${seconds}");
 
     // 初始速度
     double v0 = 16;
@@ -814,6 +815,6 @@ class _TurntablePageState extends State<TurntablePage> {
       }
 
     }
-    debugPrint("startSpin startSpin ");
+    //debugPrint("startSpin startSpin ");
   }
 }

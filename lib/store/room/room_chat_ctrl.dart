@@ -394,7 +394,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   }
 
   static void cacheEventItem(event) {
-    debugPrint("房间内不需要缓存信息: ${Get.currentRoute}, roomPage = ${RoomPage.room_name}");
+    //debugPrint("房间内不需要缓存信息: ${Get.currentRoute}, roomPage = ${RoomPage.room_name}");
     // 在房间内，不缓存信息
     if(Get.currentRoute == RoomPage.room_name) {
       return;

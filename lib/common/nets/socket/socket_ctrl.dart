@@ -315,7 +315,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     if(role == null) {
       return;
     }
-    logForDebug("[SocketCtrl:onRoleResponse]:连接成功，收到用户信息, role = ${role.toString()}");
+    ////logForDebug("[SocketCtrl:onRoleResponse]:连接成功，收到用户信息, role = ${role.toString()}");
 
     // 收到用户信息后，才认为是己经连接上
     share.completeShareSocketStatus();
@@ -342,7 +342,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       share.completeErrorShareSocketStatus();
       // 立即连接会有问题，延迟去连接
       share.resetConnect();
-      delay(300, () {
+      delay(milliseconds:300,callBack: () {
         share.reConnect(foreceConnect: true);
       });
     }
@@ -357,7 +357,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       return;
     }
 
-    logForDebug("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
+    //logForDebug("服务端返回错误：cmd = $cmd error = ${role?.code}", type: LogType.SOCKET);
     if(role?.message.isNotEmpty == true) {
       showToast(role?.message ?? "");
     }
@@ -372,9 +372,9 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
 
     // 等待unity连接成功
     if(!local.statusCompleter.isCompleted) {
-      logForDebug("unity没有连接，等待unity连接");
+      //logForDebug("unity没有连接，等待unity连接");
       await local.statusCompleter.future;
-      logForDebug("unity连接成功111");
+      //logForDebug("unity连接成功111");
     }
     return Future.value(true);
   }
@@ -494,14 +494,14 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     _netStateSubscription = Connectivity().onConnectivityChanged.listen((ConnectivityResult state) {
       // 如果网络变化的值一样，就不处理
       if(preState == state) {
-        logForDebug("网络状态与之前状态一致, state = $state");
+        //logForDebug("网络状态与之前状态一致, state = $state");
         return;
       }
       preState = state;
       // 没有网络直接返回
       final hasNet = state != ConnectivityResult.none && state != ConnectivityResult.bluetooth;
       if(!hasNet) {
-        logForDebug("网络发生变化；无网络000, state = $state");
+        //logForDebug("网络发生变化；无网络000, state = $state");
         // 重置所有与unity相关的socket连接
         local.resetConnect();
         local.cancelHeartBeat();
@@ -511,7 +511,7 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
         share.onCanConnected(false);
         return;
       }
-      logForDebug("网络发生变化；有网络111, state = $state");
+      //logForDebug("网络发生变化；有网络111, state = $state");
       // 设置自动重连
       share.onCanConnected(true);
       // 连接server

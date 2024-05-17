@@ -120,7 +120,7 @@ mixin BaseClient {
   /// 唤起原始数据的回调
   ///
   void riseOnRawData(int curCmd, Uint8List? curPkg) {
-    debugPrint("riseOnRawData接收, cmd= $curCmd, data = ${curPkg?.toString()}");
+    //debugPrint("riseOnRawData接收, cmd= $curCmd, data = ${curPkg?.toString()}");
 
     // 唤起原始数据的回调
     for(int index = 0; index < _onReceiveRaw.length; index ++) {

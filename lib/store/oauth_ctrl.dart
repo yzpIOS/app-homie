@@ -244,7 +244,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       UserCtrl(_auth = data, init: info, showTransition: _auth?.sex != 0),
       permanent: true,
     );
-    debugPrint("[showTransition] 如果未登录时，选角界面111111");
+    //debugPrint("[showTransition] 如果未登录时，选角界面111111");
     // 开启socket连接, 新建一个等待的队列
     SocketCtrl.ins.startClient(Env.serverIP, Env.serverPort);
 

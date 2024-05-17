@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       Get.until((route) {
         return route.isFirst;
       });
-      delay(300, () {
+      delay(milliseconds:300,callBack: () {
         OAuthCtrl.toIdentityReal();
       });
     });

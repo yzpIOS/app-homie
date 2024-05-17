@@ -13,7 +13,7 @@ public class OaidPlugin: NSObject, FlutterPlugin {
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        debugPrint("ios获取IDFA开始...")
+        //debugPrint("ios获取IDFA开始...")
         switch call.method {
         case "getPlatformVersion":
           result("iOS " + UIDevice.current.systemVersion)
@@ -22,12 +22,12 @@ public class OaidPlugin: NSObject, FlutterPlugin {
             //权限申请
             if #available(iOS 14.0, *) {
                 // 获取ASA广告归因
-                debugPrint("ios获取IDFA开始11111.22...")
+                //debugPrint("ios获取IDFA开始11111.22...")
                 ATTrackingManager.requestTrackingAuthorization(completionHandler: {status in
                     self.opInit(result: result);//不管用户是否授权，都要初始化
                 })
             }else{
-                debugPrint("ios获取IDFA开始22222...")
+                //debugPrint("ios获取IDFA开始22222...")
                 opInit(result: result);
             }
             break

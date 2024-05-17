@@ -35,7 +35,7 @@ class _ADLoadingPageState extends State<ADLoadingPage> with TickerProviderStateM
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {//动画在终点停止
         if (widget.fromType == 1) {
-          delay(200, () {
+          delay(milliseconds:300,callBack: () {
             Get.find<OAuthCtrl>().skipToMain();
           });
         } else {

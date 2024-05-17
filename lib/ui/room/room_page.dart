@@ -49,7 +49,7 @@ class RoomPage extends StatefulWidget {
 
     // 处理异常
     if(SocketCtrl.ins.share.forceWaitTimes > 0) {
-      logForDebug("用户从后台到前台，并进入房间, 需要等待网络包的响应， 此时 waitTimes = ${SocketCtrl.ins.share.forceWaitTimes}");
+      //logForDebug("用户从后台到前台，并进入房间, 需要等待网络包的响应， 此时 waitTimes = ${SocketCtrl.ins.share.forceWaitTimes}");
       // 显示loading
       WaitingCtrl.obj.show();
       // 添加超时时间
@@ -62,13 +62,13 @@ class RoomPage extends StatefulWidget {
       WaitingCtrl.obj.hidden();
       if(mgr.sceneCtrl2 == null) {
         showToast("网络异常，请重试");
-        logForDebug("进房过程中发现网络断掉，房间己关闭，直接退出");
+        //logForDebug("进房过程中发现网络断掉，房间己关闭，直接退出");
         return;
       }
     }
 
     Future _show() {
-      logForDebug("打开房间，请稍后");
+      //logForDebug("打开房间，请稍后");
       SceneCtrl? sceneCtrl = mgr.sceneCtrl2;
       if(sceneCtrl == null) {
         return Future.value();
@@ -138,7 +138,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
       Get.until((route) {
         return route.isFirst;
       });
-      delay(300, () {
+      delay(milliseconds:300,callBack: () {
         Get.alertDialog(event.message);
       });
     });
@@ -245,7 +245,7 @@ class _RoomPageState extends State<RoomPage> with BusStateMixin, GetStateMixin, 
 
     on<UserBlockEvent>(
       test: (event) {
-        debugPrint("用户被禁；userInfo = ${event?.data?.toString()}");
+        //debugPrint("用户被禁；userInfo = ${event?.data?.toString()}");
         return OAuthCtrl.isSelf(event.uid);
       },
       (_) => _doClose('你被封禁了'),

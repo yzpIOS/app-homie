@@ -11,12 +11,12 @@ void post(VoidCallback callback) {
     try {
       callback();
     } catch(e) {
-      debugPrint(e.toString());
+      //debugPrint(e.toString());
     }
   });
 }
 
-void delay(int milliseconds, VoidCallback callBack,) {
+void delay({required int milliseconds,required VoidCallback callBack}) {
   Future.delayed(Duration(milliseconds: milliseconds)).whenComplete(() => callBack.call());
 }
 
