@@ -1,5 +1,5 @@
 import 'package:app/3rd/sentry/sentry.dart';
-import 'package:app/model/auth_info.dart';
+import 'package:app/model/auth_info_model.dart';
 import 'package:app/store/activity_banner_ctrl.dart';
 import 'package:app/store/banner_ctrl.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
@@ -7,7 +7,6 @@ import 'package:app/store/gift_ctrl.dart';
 import 'package:app/store/im/conv_manager_ctrl.dart';
 import 'package:app/store/im/im_ctrl.dart';
 import 'package:app/store/im/message_manager_ctrl.dart';
-import 'package:app/store/mq_ctrl.dart';
 import 'package:app/store/my_anime_ctrl.dart';
 import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/my_wardrobe_ctrl.dart';
@@ -16,7 +15,6 @@ import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/store/search_ctrl.dart';
 import 'package:app/store/shop_category_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
-import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
 import 'package:app/store/user/setting_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
@@ -34,10 +32,10 @@ class UserCtrl extends GetxController with GetDisposableMixin {
   final Map? init;
   bool? showTransition;
 
-  final AuthInfo _auth;
+  final AuthInfoModel _auth;
   final UserLazyBox _box;
 
-  UserCtrl(this._auth, {this.init, this.showTransition = true}) : _box = UserLazyBox(uid: _auth.uid, name: 'UserStore');
+  UserCtrl(this._auth, {this.init, this.showTransition = true}) : _box = UserLazyBox(uid: _auth.uid ?? '', name: 'UserStore');
 
   bool roomLoadingHasBeenDisplayed = false;//房间加载图是否已经显示
   bool squareLoadingHasBeenDisplayed = false;//广场加载图是否已经显示
@@ -91,7 +89,7 @@ class UserCtrl extends GetxController with GetDisposableMixin {
   void onInit() {
     super.onInit();
 
-    final uid = _auth.uid;
+    final uid = _auth.uid ?? '';
 
     bindGet(ImAuth(uid: uid));
     bindGet(SettingCtrl(_box));

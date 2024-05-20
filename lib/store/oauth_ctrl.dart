@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/exception.dart';
-import 'package:app/model/auth_info.dart';
+import 'package:app/model/auth_info_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/tools.dart';
@@ -22,7 +22,8 @@ import 'package:app/store/user/user_ctrl.dart';
 import 'package:fixnum/fixnum.dart';
 
 class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
-  static AuthInfo? _auth;
+
+  static AuthInfoModel? _auth;
 
   static OAuthCtrl get ins {
     return Get.find<OAuthCtrl>();
@@ -36,7 +37,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
       final data = await KvBox.read(PrefKey.AuthInfo);
 
       if (data is Map) {
-        _setup(AuthInfo.fromJson(data.cast()), true);
+        _setup(AuthInfoModel.fromJson(data.cast()), true);
       }
     } catch (e, s) {
       errLog(e, s);
@@ -218,13 +219,13 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
     final uid = info['uid'];
     Int64 nUid = Int64(info['role_id']);
 
-    final auth = AuthInfo(
+    final auth = AuthInfoModel(
       token: token,
       uid: uid,
       nuid: nUid,
       sex: info["sex"] ?? 0,
-      real_name_type: info["real_name_type"] ?? 0,
-      show_name: ""
+      realNameType: info["real_name_type"] ?? 0,
+      showName: ""
     );
 
     Map<String, dynamic> data = auth.toJson();
@@ -238,7 +239,7 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
   ///
   /// [showTransition] 如果未登录时，选角界面
   ///
-  void _setup(AuthInfo data, bool showTransition, {Map? info}) {
+  void _setup(AuthInfoModel data, bool showTransition, {Map? info}) {
     _auth = data;
     Get.put(
       UserCtrl(_auth = data, init: info, showTransition: _auth?.sex != 0),
@@ -286,16 +287,16 @@ class OAuthCtrl extends GetxService with ReadyMixin, ReadyCtrlMixin {
 
   //</editor-fold>
 
-  static String get uid => _auth!.uid;
-  static NUID get nUid => _auth!.nuid;
-  static int get sex => _auth!.sex;
-  static String get showName => _auth!.show_name;
+  static String get uid => _auth!.uid ?? '';
+  static NUID get nUid => (_auth!.nuid != null && _auth!.nuid! > 0) ? _auth!.nuid! : Int64(0);
+  static int get sex => _auth!.sex ?? 0;
+  static String get showName => _auth!.showName ?? '';
 
   // 是否人脸识别
-  static bool get isFaceValidate => _auth?.real_name_type == 2;
+  static bool get isFaceValidate => _auth?.realNameType == 2;
 
   // 是否实名
-  static bool get isNameValidate => _auth?.real_name_type == 1 || _auth?.real_name_type == 2;
+  static bool get isNameValidate => _auth?.realNameType == 1 || _auth?.realNameType == 2;
 
   static bool isSelf(String? uid) {
     final _uid = _auth?.uid;
