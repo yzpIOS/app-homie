@@ -7,6 +7,7 @@ import 'package:app/ui/my/guild_center/guild_business_card_controller.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/guild_center/widget/guild_name_and_level_widget.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
+import 'package:app/ui/room/room_page.dart';
 import 'package:app/widgets.dart';
 import 'package:app/widgets/blurred_network_image.dart';
 import 'package:flutter/material.dart';
@@ -283,7 +284,13 @@ class GuildBusinessCardPage extends StatelessWidget {
   Widget _roomItemBuilder(RoomInfoModel roomInfoModel) {
     return InkWell(
       onTap: () {
-        Get.find<RoomManagerCtrl>().toRoom(roomId: roomInfoModel.roomId ?? 0);
+        if(Get.currentRoute.toLowerCase().contains(RoomPage.room_name.toLowerCase())) {
+          // 已在房间
+          RoomManagerCtrl.ins.toMiddleRoom(roomId: roomInfoModel.roomId ?? 0);
+        } else {
+          // 没有在房间
+          RoomManagerCtrl.ins.toRoom(roomId: roomInfoModel.roomId ?? 0);
+        }
       },
       child: Container(
         height: 147,

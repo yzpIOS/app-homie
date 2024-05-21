@@ -5,6 +5,7 @@ import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/guild_center/widget/guild_name_and_level_widget.dart';
+import 'package:app/ui/my/my_guild/guild_room_information_page.dart';
 import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:app/widgets.dart';
@@ -30,9 +31,9 @@ class MyGuildCenterPage extends StatelessWidget {
                 if (guildModel.isMaster) ...[
                   _buildGuildFlowsItem(controller),
                   _buildAnchorListItem(controller),
-                  _roomGridViewWidget(controller),
-                  _safeBottomWidget()
-                ]
+                ],
+                _roomGridViewWidget(controller),
+                _safeBottomWidget()
               ],
             ),
           );
@@ -249,7 +250,11 @@ class MyGuildCenterPage extends StatelessWidget {
     return Expanded(
       child: Container(
           padding: const Pad(left: 5, right: 5),
-          margin: const Pad(left: 10, right: 10, top: 10,),
+          margin: const Pad(
+            left: 10,
+            right: 10,
+            top: 10,
+          ),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(4),
@@ -261,8 +266,10 @@ class MyGuildCenterPage extends StatelessWidget {
                 Spacing.h10,
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(controller.roomList.isNotEmpty ? "公会房间(${controller
-                      .roomList.length})" : "公会房间",
+                  child: Text(
+                      controller.roomList.isNotEmpty
+                          ? "公会房间(${controller.roomList.length})"
+                          : "公会房间",
                       style: const TextStyle(
                         fontSize: 14,
                         color: Color(0xFF000000),
@@ -270,33 +277,37 @@ class MyGuildCenterPage extends StatelessWidget {
                       )),
                 ),
                 Spacing.h6,
-                Expanded(
-                  child: GridView(
-                    padding: const Pad(horizontal: 5, bottom: 10, top: 5),
-                    shrinkWrap: true,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: 147,
-                      mainAxisSpacing: 20,
-                      crossAxisSpacing: 22,
-                    ),
-                    children:
-                    controller.roomList.map(_roomItemBuilder).toList(
-                        growable: false),
-                  ),
-                )
+                controller.roomList.isEmpty
+                    ? SizedBox(width: Get.width,)
+                    : Expanded(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 147,
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 22,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return _roomItemBuilder(
+                                controller, controller.roomList[index]);
+                          },
+                          padding: const Pad(horizontal: 5, bottom: 10, top: 5),
+                          shrinkWrap: true,
+                        ),
+                      )
               ],
             );
-          })
-      ),
+          })),
     );
   }
 
   /// 房间item
-  Widget _roomItemBuilder(RoomInfoModel roomInfoModel) {
+  Widget _roomItemBuilder(
+      MyGuildCenterController controller, RoomInfoModel roomInfoModel) {
     return InkWell(
       onTap: () {
-        // Get.find<RoomManagerCtrl>().toRoom(roomId: roomInfoModel.roomId ?? 0);
+        controller.clickRoomInfo(roomInfoModel);
       },
       child: Container(
         height: 147,
@@ -309,7 +320,7 @@ class MyGuildCenterPage extends StatelessWidget {
                 offset: const Offset(0.0, 2.0), //阴影y轴偏移量
                 blurRadius: 4, //阴影模糊程度
                 spreadRadius: 1 //阴影扩散程度
-            )
+                )
           ],
         ),
         child: Column(
@@ -318,27 +329,27 @@ class MyGuildCenterPage extends StatelessWidget {
           children: [
             (roomInfoModel.status != null && roomInfoModel.status! > 0)
                 ? Container(
-              padding: const Pad(vertical: 1, horizontal: 7),
-              margin: const Pad(right: 5, top: 5),
-              decoration: BoxDecoration(
-                color: roomInfoModel.isRoomOpenLive
-                    ? const Color(0xFF7E8BFF)
-                    : const Color(0xFFD8D8D8),
-                borderRadius:
-                const BorderRadius.all(Radius.circular(3.0)),
-              ),
-              child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: roomInfoModel.isRoomOpenLive
-                        ? Colors.white
-                        : const Color(0xFF333333),
-                  )),
-            )
+                    padding: const Pad(vertical: 1, horizontal: 7),
+                    margin: const Pad(right: 5, top: 5),
+                    decoration: BoxDecoration(
+                      color: roomInfoModel.isRoomOpenLive
+                          ? const Color(0xFF7E8BFF)
+                          : const Color(0xFFD8D8D8),
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(3.0)),
+                    ),
+                    child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: roomInfoModel.isRoomOpenLive
+                              ? Colors.white
+                              : const Color(0xFF333333),
+                        )),
+                  )
                 : const SizedBox(
-              width: 34,
-              height: 16,
-            ),
+                    width: 34,
+                    height: 16,
+                  ),
             Spacing.h2,
             Center(
               child: ClipRRect(
@@ -394,10 +405,7 @@ class MyGuildCenterPage extends StatelessWidget {
   /// 安全底部widget
   Widget _safeBottomWidget() {
     return SizedBox(
-      height: MediaQueryData
-          .fromView(window)
-          .padding
-          .bottom,
+      height: MediaQueryData.fromView(window).padding.bottom,
     );
   }
 }

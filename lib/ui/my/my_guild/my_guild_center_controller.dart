@@ -5,6 +5,7 @@ import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/my_guild/anchor_list_page.dart';
 import 'package:app/ui/my/my_guild/guild_flows_page.dart';
+import 'package:app/ui/my/my_guild/guild_room_information_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 
 /// 我的公会控制器
@@ -81,5 +82,10 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   /// 点击主播列表
   void clickAnchorList(){
     Get.to(() => const AnchorListPage());
+  }
+
+  /// 点击房间信息
+  void clickRoomInfo(RoomInfoModel infoModel){
+    Get.to(() => GuildRoomInformationPage(roomId: infoModel.roomId ?? 0, isGuildMaster: guildModel.isMaster,));
   }
 }

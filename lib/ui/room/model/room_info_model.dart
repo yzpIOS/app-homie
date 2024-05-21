@@ -22,6 +22,7 @@ class RoomInfoModel {
   int? classifyId;
   String? classifyName;
   List? classifyIconColor;
+  String? noticeMessage;
 
   RoomInfoModel(
       {this.roomId,
@@ -44,7 +45,9 @@ class RoomInfoModel {
         this.onlineNum,
         this.classifyId,
         this.classifyName,
-        this.classifyIconColor});
+        this.classifyIconColor,
+        this.noticeMessage
+      });
 
   RoomInfoModel.fromJson(Map<dynamic, dynamic> json) {
     roomId = json['room_id'];
@@ -68,6 +71,7 @@ class RoomInfoModel {
     classifyId = json['classify_id'];
     classifyName = json['classify_name'];
     classifyIconColor = json['classify_icon_color'] ?? [];
+    noticeMessage = json['notice_message'];
   }
 
   Map<String, dynamic> toJson() {
@@ -93,6 +97,7 @@ class RoomInfoModel {
     data['classify_id'] = classifyId;
     data['classify_name'] = classifyName;
     data['classify_icon_color'] = classifyIconColor ?? [];
+    data['notice_message'] = noticeMessage;
     return data;
   }
 
