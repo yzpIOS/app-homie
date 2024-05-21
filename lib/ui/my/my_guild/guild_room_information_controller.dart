@@ -1,6 +1,7 @@
 
 import 'package:app/net/api.dart';
 import 'package:app/tools/help.dart';
+import 'package:app/ui/my/my_guild/guild_room_setting_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 import 'package:get/get.dart';
 
@@ -17,6 +18,7 @@ class GuildRoomInformationController extends GetxController {
     loadData();
   }
 
+  /// 获取房间信息
   void loadData(){
     Future.delayed(const Duration(microseconds:200),(){
       simpleTry(
@@ -29,5 +31,10 @@ class GuildRoomInformationController extends GetxController {
             }
           });
     });
+  }
+
+  /// 点击进入设置
+  void clickRoomSetting(){
+    Get.to(() => GuildRoomSettingPage(roomId: roomId,isOpen: roomInfoModel.value.status == 1,));
   }
 }

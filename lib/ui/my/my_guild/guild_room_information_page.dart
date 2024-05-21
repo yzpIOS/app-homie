@@ -98,7 +98,7 @@ class GuildRoomInformationPage extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        // controller.clickGuildFlows();
+        controller.clickRoomSetting();
       },
       child: Container(
         height: 50,
