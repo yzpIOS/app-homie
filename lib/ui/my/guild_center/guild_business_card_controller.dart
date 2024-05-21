@@ -32,7 +32,7 @@ class GuildBusinessCardController extends GetxController with BusGetLifeMixin {
   void loadData() {
     Future.delayed(const Duration(microseconds:200),(){
       simpleTry(
-              () => Api.Room.getGuildRoomList(guildModel.guildNo ?? ""),
+              () => Api.Room.getGuildRoomList(guildNumber:guildModel.guildNo ?? ""),
           showProgress: true,
           callback: (resp) {
             if (resp != null && resp is List) {

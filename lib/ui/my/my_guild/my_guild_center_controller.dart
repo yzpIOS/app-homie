@@ -39,6 +39,16 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
         anchorApplyCount.value = count;
       },
     );
+
+    /// 处理房间直播状态事件
+    on<RoomLiveStatusChangeEvent>((event) {
+      roomList.forEach((element) {
+        if(element.roomId == event.roomId){
+          element.status = event.isLive ? 1 : 2;
+        }
+      });
+      update();
+    });
   }
 
   /// 加载公会主播申请数量
@@ -58,7 +68,7 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   void loadData() {
     Future.delayed(const Duration(microseconds:400),(){
       simpleTry(
-              () => Api.Room.getGuildRoomList(guildModel.guildNo ?? ""),
+              () => Api.Room.getGuildRoomList(guildNumber:guildModel.guildNo ?? "",statusList: [1,2]),
           showProgress: true,
           callback: (resp) {
             if (resp != null && resp is List) {

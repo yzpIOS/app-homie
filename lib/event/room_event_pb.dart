@@ -254,3 +254,11 @@ class MikeSpeakingEvent extends RoomEvent<S_MikeSpeakingBroadcast> {
 class LiveStopSettlementEvent extends RoomEvent<S_LiveStopSettlementBroadcast> {
 
 }
+
+/// 房间直播状态变化
+class RoomLiveStatusChangeEvent extends EventPb {
+  final int roomId;
+  final bool isLive;
+
+  RoomLiveStatusChangeEvent({required this.roomId,required this.isLive});
+}

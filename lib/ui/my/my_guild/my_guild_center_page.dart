@@ -292,6 +292,7 @@ class MyGuildCenterPage extends StatelessWidget {
                             return _roomItemBuilder(
                                 controller, controller.roomList[index]);
                           },
+                          itemCount: controller.roomList.length,
                           padding: const Pad(horizontal: 5, bottom: 10, top: 5),
                           shrinkWrap: true,
                         ),
@@ -327,29 +328,24 @@ class MyGuildCenterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            (roomInfoModel.status != null && roomInfoModel.status! > 0)
-                ? Container(
-                    padding: const Pad(vertical: 1, horizontal: 7),
-                    margin: const Pad(right: 5, top: 5),
-                    decoration: BoxDecoration(
-                      color: roomInfoModel.isRoomOpenLive
-                          ? const Color(0xFF7E8BFF)
-                          : const Color(0xFFD8D8D8),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(3.0)),
-                    ),
-                    child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: roomInfoModel.isRoomOpenLive
-                              ? Colors.white
-                              : const Color(0xFF333333),
-                        )),
-                  )
-                : const SizedBox(
-                    width: 34,
-                    height: 16,
-                  ),
+            Container(
+              padding: const Pad(vertical: 1, horizontal: 7),
+              margin: const Pad(right: 5, top: 5),
+              decoration: BoxDecoration(
+                color: roomInfoModel.isRoomOpenLive
+                    ? const Color(0xFF7E8BFF)
+                    : const Color(0xFFD8D8D8),
+                borderRadius:
+                const BorderRadius.all(Radius.circular(3.0)),
+              ),
+              child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: roomInfoModel.isRoomOpenLive
+                        ? Colors.white
+                        : const Color(0xFF333333),
+                  )),
+            ),
             Spacing.h2,
             Center(
               child: ClipRRect(

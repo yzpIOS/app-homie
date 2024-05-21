@@ -498,7 +498,12 @@ class ApiRoom extends ApiBase {
   }
 
   /// 获取公会房间列表
-  Future getGuildRoomList(String guildNumber) {
-    return _doPost("list", data: {"guild_no": guildNumber});
+  Future getGuildRoomList({required String guildNumber,List? statusList}) {
+    final Map map = {};
+    map["guild_no"] = guildNumber;
+    if(statusList != null) {
+      map["status_list"] = statusList;
+    }
+    return _doPost("list", data: map);
   }
 }

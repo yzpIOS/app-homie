@@ -86,4 +86,14 @@ class ApiGuild extends ApiBase {
   Future getGuildAnchorApplyCount() {
     return _doPost('apply/total', data: {});
   }
+
+  /// 改变房间直播状态
+  Future changeGuildRoomLiveStatus({required int roomId,required bool isLive}) {
+    return _doPost('room/on-off', data: {'room_id':roomId,'status':isLive ? 1 : 2});
+  }
+
+  /// 改变房间背景
+  Future changeGuildRoomBackground({required int roomId,required String image}) {
+    return _doPost('room/bg/edit', data: {'room_id':roomId,'image':image});
+  }
 }
