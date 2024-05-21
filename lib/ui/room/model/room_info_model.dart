@@ -117,4 +117,9 @@ class RoomInfoModel {
       return [defaultColor,defaultColor];
     }
   }
+
+  /// 是否开播
+  bool get isRoomOpenLive => status == 1;
+  /// 是否关播
+  bool get isRoomCloseLive => status == 2;
 }

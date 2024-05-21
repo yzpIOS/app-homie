@@ -307,7 +307,7 @@ class GuildBusinessCardPage extends StatelessWidget {
                     roomInfoModel.classifyName!.isNotEmpty)
                 ? Container(
                     padding: const Pad(vertical: 1, horizontal: 7),
-                    margin: const Pad(left: 3, top: 3),
+                    margin: const Pad(left: 5, top: 5),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,

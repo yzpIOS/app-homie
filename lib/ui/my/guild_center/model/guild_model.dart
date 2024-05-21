@@ -79,4 +79,9 @@ class GuildModel {
       }
     }
   }
+
+  /// 是否会长
+  bool get isMaster {
+    return anchorType == 1;
+  }
 }
