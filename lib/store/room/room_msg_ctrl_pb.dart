@@ -62,7 +62,6 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_WorldChatMessageBroadcast: WorldChatMessageBroadcastEvent.new,
     // 清屏广播
     CMD.S_ClearScreenBroadcast: ClearScreenBroadcastEvent.new,
-
     // // 房间禁麦广播
     // CMD.S_BanChatBroadcast: BanChatBroadcast.new,
   };

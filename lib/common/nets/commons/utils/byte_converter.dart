@@ -33,6 +33,7 @@ class ByteConverter {
     register(CMD.S_MoreGiftPlay, S_MoreGiftPlay.fromBuffer);
     register(CMD.S_UpdateLevel, S_UpdateLevel.fromBuffer);
     register(CMD.S_UpdateCharmLevel, S_UpdateCharmLevel.fromBuffer);
+    register(CMD.S_UpdateLevelAll, S_UpdateLevel_All.fromBuffer);
     register(CMD.S_LiveStopBroadcast, S_LiveStopBroadcast.fromBuffer);
     register(CMD.S_ApplyUpMikeBroadcast, S_ApplyUpMikeBroadcast.fromBuffer);
     register(CMD.S_ChatMessageBroadcast, S_ChatMessageBroadcast.fromBuffer);
