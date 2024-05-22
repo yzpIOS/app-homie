@@ -328,23 +328,52 @@ class MyGuildCenterPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
-              padding: const Pad(vertical: 1, horizontal: 7),
-              margin: const Pad(right: 5, top: 5),
-              decoration: BoxDecoration(
-                color: roomInfoModel.isRoomOpenLive
-                    ? const Color(0xFF7E8BFF)
-                    : const Color(0xFFD8D8D8),
-                borderRadius:
-                const BorderRadius.all(Radius.circular(3.0)),
-              ),
-              child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
-                  style: TextStyle(
-                    fontSize: 10,
+            const SizedBox(height: 5,),
+            Row(
+              children: [
+                const SizedBox(width: 5,),
+                (roomInfoModel.classifyName != null &&
+                    roomInfoModel.classifyName!.isNotEmpty)
+                    ? Container(
+                  padding: const Pad(vertical: 1, horizontal: 7),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors:roomInfoModel.classifyIconColorList,
+                    ),
+                    borderRadius:const BorderRadius.all(Radius.circular(8.0)),
+                  ),
+                  child: Text(roomInfoModel.classifyName ?? "",
+                      style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.white,
+                      )),
+                )
+                    : const SizedBox(
+                  width: 34,
+                  height: 16,
+                ),
+                const Spacing(),
+                Container(
+                  padding: const Pad(vertical: 1, horizontal: 7),
+                  decoration: BoxDecoration(
                     color: roomInfoModel.isRoomOpenLive
-                        ? Colors.white
-                        : const Color(0xFF333333),
-                  )),
+                        ? const Color(0xFF7E8BFF)
+                        : const Color(0xFFD8D8D8),
+                    borderRadius:
+                    const BorderRadius.all(Radius.circular(3.0)),
+                  ),
+                  child: Text(roomInfoModel.isRoomOpenLive ? "开播" : "关播",
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: roomInfoModel.isRoomOpenLive
+                            ? Colors.white
+                            : const Color(0xFF333333),
+                      )),
+                ),
+                const SizedBox(width: 5,),
+              ],
             ),
             Spacing.h2,
             Center(

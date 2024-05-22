@@ -72,7 +72,7 @@ class FruitMachinePage extends StatelessWidget {
                             return controller.currentShowLotteryList.isEmpty
                                 ? const SizedBox()
                                 : Row(
-                              mainAxisSize: MainAxisSize.min,
+                                    mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       RollSlotWidget(
@@ -125,7 +125,7 @@ class FruitMachinePage extends StatelessWidget {
                       image: DecorationImage(
                         image: AssetImage(IMG.format(
                             "room/game/fruit_machine_body_header_icon")),
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                       ),
                     ),
                     child: Column(
@@ -140,7 +140,6 @@ class FruitMachinePage extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount:
                                   controller.currentShowLotteryList.length,
-                              itemExtent: 55,
                               itemBuilder: (context, index) {
                                 final ActivityLotteryModel
                                     activityLotteryModel =
@@ -170,7 +169,7 @@ class FruitMachinePage extends StatelessWidget {
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
-                                            height: 1),
+                                        ),
                                         maxLines: 1,
                                       ),
                                     ],
@@ -205,16 +204,10 @@ class FruitMachinePage extends StatelessWidget {
                   bottom: fruitMachineBodyTitleWidgetBottomMargin,
                   width: fruitMachineBodyTitleWidgetWidth,
                   height: fruitMachineBodyTitleWidgetHeight,
-                  child: Container(
+                  child: Image.asset(
+                    IMG.format("room/game/fruit_machine_body_title_icon"),
                     width: fruitMachineBodyTitleWidgetWidth,
                     height: fruitMachineBodyTitleWidgetHeight,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(IMG
-                            .format("room/game/fruit_machine_body_title_icon")),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
                   ),
                 ),
                 Positioned(

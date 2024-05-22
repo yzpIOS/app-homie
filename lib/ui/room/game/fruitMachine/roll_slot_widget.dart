@@ -26,12 +26,12 @@ class RollSlotWidget extends StatelessWidget {
               (e) {
                 return Container(
                   color: Colors.transparent,
-                  padding: const Pad(vertical: 10),
+                  padding: const Pad(vertical: 5),
                   alignment: Alignment.center,
                   child: NetImage(
                     e,
-                    width: 37.5,
-                    height: 37.5,
+                    width: 45,
+                    height: 45,
                     fit: BoxFit.contain,
                   ),
                 );
