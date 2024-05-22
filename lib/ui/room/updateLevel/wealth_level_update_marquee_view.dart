@@ -5,21 +5,22 @@ import 'package:marqueer/marqueer.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 
-/// 魅力等级升级
-class CharmLevelUpdateMarqueeView extends StatelessWidget {
+/// 财富等级更新
+class WealthLevelUpdateMarqueeView extends StatelessWidget {
   final S_UpdateLevel_All data;
 
-  CharmLevelUpdateMarqueeView({super.key, required this.data});
+  WealthLevelUpdateMarqueeView({super.key, required this.data});
 
   final double backgroundHeight = 66;
   final double backgroundWidth = 344;
-  final double leftIconWidth = 73.5;
-  final double leftIconHeight = 58.5;
+  final double leftIconWidth = 71.5;
+  final double leftIconHeight = 34.5;
+  final double leftIconBottomMargin = 9;
   final double marqueeViewMaxWidth = 370;
   final double avatarSize = 21;
   final double marqueeLeftMargin = 4;
   final double marqueeRightMargin = 36;
-  final double marqueeTopMargin = 27;
+  final double marqueeTopMargin = 29;
   final controller = MarqueerController();
 
   @override
@@ -48,7 +49,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
       right: 0,
       top: 0,
       child: Image.asset(
-        IMG.format('level/charm/charm_level_update_marquee_background'),
+        IMG.format('level/wealth/wealth_level_update_marquee_background'),
         width: backgroundWidth,
         height: backgroundHeight,
         fit: BoxFit.contain,
@@ -61,9 +62,9 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
       width: leftIconWidth,
       height: leftIconHeight,
       left: 0,
-      bottom: 0,
+      bottom: leftIconBottomMargin,
       child: Image.asset(
-        IMG.format('level/charm/${min(data.level, 60)}'),
+        IMG.format('level/wealth/${min(data.level, 60)}'),
         width: leftIconWidth,
         height: leftIconHeight,
         fit: BoxFit.contain,
@@ -85,7 +86,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
             // 恭喜
             if (index == 0) {
               return const Center(
-                child: Text(
+                child:  Text(
                   '恭喜',
                   maxLines: 1,
                   style: TextStyle(
@@ -99,14 +100,15 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
             // 等级
             if (index == 1) {
               return Container(
-                width: 20,
-                height: 20,
-                margin: const EdgeInsets.only(left: 2),
+                // width: 24,
+                // height: 11,
+                margin: const EdgeInsets.only(left: 2,top:2),
+                alignment: Alignment.center,
                 child: Image.asset(
-                  IMG.format('level/charm/${min(data.level, 60)}'),
+                  IMG.format('level/wealth/${min(data.level, 60)}'),
                   scale: 3,
-                  width: 20,
-                  height: 20,
+                  width: 24,
+                  height: 11,
                   fit: BoxFit.contain,
                 ),
               );
@@ -134,7 +136,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
                 child: Text(
                   data.userName,
                   style: const TextStyle(
-                    color: Color(0xFFFDD95D),
+                    color: Color(0xFFFF3A11),
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -147,7 +149,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 2.5),
               child: Text(
-                '魅力等级升级到${data.level}级',
+                '财富等级升级到${data.level}级',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
