@@ -48,7 +48,7 @@ class WealthyLevelView extends StatelessWidget {
     }else{
       if (_level == null || _level.isEmpty) return Spacing.blank;
       child = Image.asset(
-        IMG.format('level/$_level'),
+        IMG.format('level/wealth/$_level'),
         scale: 3,
         // width: 72.3,
         // height: 29,

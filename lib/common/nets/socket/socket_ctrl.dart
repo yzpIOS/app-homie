@@ -259,6 +259,8 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
     onDataCmd(BaseClient.CONNECT_FAIL, onConnectFail);
     onDataCmd(BaseClient.CONNECT_SUC, onConnectSuccess);
 
+    //等级提升
+    onDataCmd(CMD.S_UpdateLevelAll, onLevelUpdateScreen);
   }
 
   // 盲盒处理
@@ -448,6 +450,16 @@ class SocketCtrl extends GetxController with BusGetLifeMixin, BaseClient {
       errorTimes = 0;
       return Future.value(true);
     });
+  }
+
+  ///
+  /// 等级提升
+  ///
+  void onLevelUpdateScreen(int cmd, S_UpdateLevel_All? sUpdateLevelAll) {
+    if(sUpdateLevelAll == null) {
+      return;
+    }
+    LevelUpdateEvent(sUpdateLevelAll).fire();
   }
 
   ///

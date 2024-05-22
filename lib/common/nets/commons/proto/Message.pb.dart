@@ -12964,10 +12964,10 @@ class S_TopThree extends $pb.GeneratedMessage {
 
 class S_UpdateLevel_All extends $pb.GeneratedMessage {
   factory S_UpdateLevel_All({
-    $core.String? avatarUrl,
-    $core.String? userName,
-    $core.int? level,
-    $core.int? type,
+    $core.String? avatarUrl,// 用户头像
+    $core.String? userName,// 用户昵称
+    $core.int? level,// 等级
+    $core.int? type,// 等级类型，1：财富等级，2：魅力等级
   }) {
     final $result = create();
     if (avatarUrl != null) {

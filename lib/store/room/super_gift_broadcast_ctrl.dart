@@ -23,29 +23,37 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     on<SuperGiftEvent>(
       (event) => _onGiftEvent(event, event.data),
     );
+    on<LevelUpdateEvent>(
+      (event) => _onLevelUpdateEvent(event.data),
+    );
   }
 
+  /// 礼物事件
   void _onGiftEvent(SuperGiftEvent event, S_FloatingScreen data) async {
     final ids = data.acceptUidList;
     final users = await _findByUidX({data.sendId, ...ids}, useNet: true);
 
-    if(ids.isNotEmpty) {
+    if (ids.isNotEmpty) {
       for (final uid in ids) {
-        if(data.bannerType.toInt() == 1) {
+        if (data.bannerType.toInt() == 1) {
           // 1：特殊礼物, 己测试
           addTask(
             SpecialGiftMarqueeView(acceptUid: uid, users: users, data: data),
           );
-        } else if(data.bannerType.toInt() == 2) {
+        } else if (data.bannerType.toInt() == 2) {
           // 2：普通礼物, 己测试
           addTask(
             CommonGiftMarqueeView(acceptUid: uid, users: users, data: data),
           );
-        } else if(data.bannerType.toInt() == 3) {
+        } else if (data.bannerType.toInt() == 3) {
           // 3：盲盒礼物, 己测试
           addTask(
-            BlindGiftMarqueeView(users: users, data: data,
-              blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
+            BlindGiftMarqueeView(
+              users: users,
+              data: data,
+              blinkName: event.blinkName,
+              blinkUrl: event.blinkUrl,
+            ),
           );
         }
         // else if(data.bannerType.toInt() == 4) {
@@ -63,13 +71,26 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
         }
       }
     } else {
-      if(data.bannerType.toInt() == 3) {
+      if (data.bannerType.toInt() == 3) {
         // 3：盲盒礼物, 己测试
         addTask(
-          BlindGiftMarqueeView(users: users, data: data,
-            blinkName: event.blinkName, blinkUrl: event.blinkUrl,),
+          BlindGiftMarqueeView(
+            users: users,
+            data: data,
+            blinkName: event.blinkName,
+            blinkUrl: event.blinkUrl,
+          ),
         );
       }
+    }
+  }
+
+  /// 等级提升事件
+  void _onLevelUpdateEvent(S_UpdateLevel_All data) async {
+    if(data.type == 1){
+      //财富
+    }else{
+      //魅力
     }
   }
 
@@ -78,7 +99,8 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
     return AnimeEntity(
       child: data,
       dock: const Tuple3(1.0, 0.0, -1.0),
-      times: const Tuple3(Duration(seconds: 1), Duration(milliseconds: 5400), Duration(milliseconds: 400)),
+      times: const Tuple3(Duration(seconds: 1), Duration(milliseconds: 5400),
+          Duration(milliseconds: 400)),
       offsetTop: AppSize.safeTop + AppSize.appBar - 10,
     );
   }

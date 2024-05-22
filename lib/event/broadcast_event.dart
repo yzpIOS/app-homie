@@ -11,3 +11,9 @@ class SuperGiftEvent extends BroadcastEvent<S_FloatingScreen> {
   String? blinkUrl;
   SuperGiftEvent(super.data, {this.blinkName = "", this.blinkUrl = ""});
 }
+
+class LevelUpdateEvent extends BroadcastEvent<S_UpdateLevel_All> {
+  LevelUpdateEvent(super.data);
+}
+
+
