@@ -213,13 +213,13 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   ///
   /// 处理麦位在线数据
   ///
-  void onDoRefreshHandle(resp) {
+  void onDoRefreshHandle(resp){
     dataRx(
       micDataFrom(resp),
     );
  //  micDataFrom(resp);
-
-
+    //TODO 处理重连期间自己麦状态改变情况
+    onMikeListUpdate();
   }
 
   ///
@@ -278,9 +278,9 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   Future<void> doRefresh() async {
     final resp = await Api.Room.micList(roomId: roomId);
-    onDoRefreshHandle(resp);
+     onDoRefreshHandle(resp);
     //TODO 处理重连期间自己麦状态改变情况
-    onMikeListUpdate();
+   // onMikeListUpdate();
 
    // S_UpMikeBroadcast? data = event.data;
    //  if(data == null) {
@@ -654,7 +654,7 @@ class MicInfo {
   // int micId;
   bool isMute;
   int hotCount;
-  int status;
+  int status; /// 麦克风状态：0.无麦 1.上麦 2.下麦 3.开麦 4.闭麦 5.禁言【禁止rtc】6.禁止上麦
   // 麦号
   String no = "";
 

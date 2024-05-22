@@ -139,6 +139,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_GiveGiftByOneClick = CMD._(3115, _omitEnumNames ? '' : 'S_GiveGiftByOneClick');
   static const CMD S_LuckScreen = CMD._(3116, _omitEnumNames ? '' : 'S_LuckScreen');
   static const CMD S_AllScreen = CMD._(3117, _omitEnumNames ? '' : 'S_AllScreen');
+  static const CMD S_UpdateLevel_All = CMD._(3118, _omitEnumNames ? '' : 'S_UpdateLevel_All');
   static const CMD C_SaveUserCurrentDressUp = CMD._(4100, _omitEnumNames ? '' : 'C_SaveUserCurrentDressUp');
   static const CMD S_SaveUserCurrentDressUp = CMD._(4101, _omitEnumNames ? '' : 'S_SaveUserCurrentDressUp');
   static const CMD S_UpdateDressUp = CMD._(4102, _omitEnumNames ? '' : 'S_UpdateDressUp');
@@ -326,6 +327,7 @@ class CMD extends $pb.ProtobufEnum {
     S_GiveGiftByOneClick,
     S_LuckScreen,
     S_AllScreen,
+    S_UpdateLevel_All,
     C_SaveUserCurrentDressUp,
     S_SaveUserCurrentDressUp,
     S_UpdateDressUp,

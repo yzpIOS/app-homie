@@ -12962,6 +12962,102 @@ class S_TopThree extends $pb.GeneratedMessage {
   $core.List<TopThreeItem> get items => $_getList(0);
 }
 
+class S_UpdateLevel_All extends $pb.GeneratedMessage {
+  factory S_UpdateLevel_All({
+    $core.String? avatarUrl,
+    $core.String? userName,
+    $core.int? level,
+    $core.int? type,
+  }) {
+    final $result = create();
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (userName != null) {
+      $result.userName = userName;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    return $result;
+  }
+  S_UpdateLevel_All._() : super();
+  factory S_UpdateLevel_All.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateLevel_All.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_UpdateLevel_All', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'avatarUrl')
+    ..aOS(2, _omitFieldNames ? '' : 'userName')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'level', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateLevel_All clone() => S_UpdateLevel_All()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateLevel_All copyWith(void Function(S_UpdateLevel_All) updates) => super.copyWith((message) => updates(message as S_UpdateLevel_All)) as S_UpdateLevel_All;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateLevel_All create() => S_UpdateLevel_All._();
+  S_UpdateLevel_All createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateLevel_All> createRepeated() => $pb.PbList<S_UpdateLevel_All>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateLevel_All getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateLevel_All>(create);
+  static S_UpdateLevel_All? _defaultInstance;
+
+  /// 用户头像
+  @$pb.TagNumber(1)
+  $core.String get avatarUrl => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set avatarUrl($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAvatarUrl() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAvatarUrl() => clearField(1);
+
+  /// 用户昵称
+  @$pb.TagNumber(2)
+  $core.String get userName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUserName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserName() => clearField(2);
+
+  /// 等级
+  @$pb.TagNumber(3)
+  $core.int get level => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set level($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLevel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLevel() => clearField(3);
+
+  /// 等级类型，1：财富等级，2：魅力等级
+  @$pb.TagNumber(4)
+  $core.int get type => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set type($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearType() => clearField(4);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

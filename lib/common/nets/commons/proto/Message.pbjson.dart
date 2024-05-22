@@ -2660,3 +2660,20 @@ final $typed_data.Uint8List s_TopThreeDescriptor = $convert.base64Decode(
     'CgpTX1RvcFRocmVlEjMKBWl0ZW1zGAEgAygLMh0uY29tLnNhdnZ5LnByb3RvLlRvcFRocmVlSX'
     'RlbVIFaXRlbXM=');
 
+@$core.Deprecated('Use s_UpdateLevel_AllDescriptor instead')
+const S_UpdateLevel_All$json = {
+  '1': 'S_UpdateLevel_All',
+  '2': [
+    {'1': 'avatar_url', '3': 1, '4': 1, '5': 9, '10': 'avatarUrl'},
+    {'1': 'user_name', '3': 2, '4': 1, '5': 9, '10': 'userName'},
+    {'1': 'level', '3': 3, '4': 1, '5': 5, '10': 'level'},
+    {'1': 'type', '3': 4, '4': 1, '5': 5, '10': 'type'},
+  ],
+};
+
+/// Descriptor for `S_UpdateLevel_All`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List s_UpdateLevel_AllDescriptor = $convert.base64Decode(
+    'ChFTX1VwZGF0ZUxldmVsX0FsbBIdCgphdmF0YXJfdXJsGAEgASgJUglhdmF0YXJVcmwSGwoJdX'
+    'Nlcl9uYW1lGAIgASgJUgh1c2VyTmFtZRIUCgVsZXZlbBgDIAEoBVIFbGV2ZWwSEgoEdHlwZRgE'
+    'IAEoBVIEdHlwZQ==');
+
