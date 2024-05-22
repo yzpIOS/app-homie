@@ -8,6 +8,7 @@ import 'package:app/ui/my/my_guild/guild_flows_page.dart';
 import 'package:app/ui/my/my_guild/guild_room_information_page.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
 
+
 /// 我的公会控制器
 class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   /// 公会信息
@@ -18,10 +19,10 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   /// 公会房间列表
   RxList<RoomInfoModel> roomList = <RoomInfoModel>[].obs;
 
+
   @override
   void onInit() {
     super.onInit();
-
     if(guildModel.isMaster){
       /// 会长身份
       loadGuildAnchorApplyCount();

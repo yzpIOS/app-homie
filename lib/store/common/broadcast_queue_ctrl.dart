@@ -5,7 +5,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 abstract class BroadcastQueueCtrl<T> extends GetxController with BusGetLifeMixin {
-  final _views = <Key, OverlayEntry>{};
+  final views = <Key, OverlayEntry>{};
 
   late final _ctrl = StreamController<T>.broadcast();
   late final _queue = StreamQueue(_ctrl.stream);
@@ -21,7 +21,7 @@ abstract class BroadcastQueueCtrl<T> extends GetxController with BusGetLifeMixin
   void onClose() {
     [_queue.cancel, _ctrl.close].tryRun();
 
-    _views
+    views
       ..values.forEach((it) async => it.remove())
       ..clear();
 
@@ -46,7 +46,7 @@ abstract class BroadcastQueueCtrl<T> extends GetxController with BusGetLifeMixin
     final key = UniqueKey();
 
     Widget child = SlideAnimatedView(
-      onFinish: () async => _views[key]?.remove(),
+      onFinish: () async => views[key]?.remove(),
       dock: data.dock,
       times: data.times,
       child: data.child,
@@ -60,8 +60,8 @@ abstract class BroadcastQueueCtrl<T> extends GetxController with BusGetLifeMixin
       child: child,
     );
 
-    _views[key] = await Get.insertOverlay(child);
-
+    views[key] = await Get.insertOverlay(child);
+    //showToast('进入时间:${data.times.value1.inMilliseconds/1000.0}秒,停留时间:${data.times.value2.inMilliseconds/1000.0}秒,退出时间:${data.times.value3.inMilliseconds/1000.0}秒');
     // 等待上一个横幅
     return await Future.delayed(data.times.value1 + data.times.value2);
   }

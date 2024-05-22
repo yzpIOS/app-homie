@@ -1,14 +1,12 @@
 import 'dart:ui';
 
-import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/my/guild_center/model/guild_model.dart';
 import 'package:app/ui/my/guild_center/widget/guild_name_and_level_widget.dart';
 import 'package:app/ui/my/my_guild/my_guild_center_controller.dart';
 import 'package:app/ui/room/model/room_info_model.dart';
-import 'package:app/ui/room/updateLevel/charm_level_update_marquee_view.dart';
-import 'package:app/ui/room/updateLevel/wealth_level_update_marquee_view.dart';
+
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -28,9 +26,6 @@ class MyGuildCenterPage extends StatelessWidget {
             child: Column(
               children: [
                 _buildHeader(controller),
-                // WealthLevelUpdateMarqueeView(data: S_UpdateLevel_All(avatarUrl:'https://img0.baidu.com/it/u=4100494086,838221599&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=800',userName:'四川自贡男子',level:60,type:1),),
-                // CharmLevelUpdateMarqueeView(data: S_UpdateLevel_All(avatarUrl:'https://img0.baidu.com/it/u=4100494086,838221599&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=800',userName:'四川自贡男子',level:10,type:2),),
-                _buildMyProfitSharingItem(),
                 if (guildModel.isMaster) ...[
                   _buildGuildFlowsItem(controller),
                   _buildAnchorListItem(controller),

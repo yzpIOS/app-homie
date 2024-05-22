@@ -1,15 +1,14 @@
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
-import 'package:app/store/room/room_manager_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/ui/room/broadcast/super_gift_view.dart';
 import 'package:app/ui/room/gift/blind_gift_marquee_view.dart';
-import 'package:app/ui/room/gift/cloth_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/common_gift_marquee_view.dart';
 import 'package:app/ui/room/gift/special_gift_marquee_view.dart';
 import 'package:app/widgets.dart';
-
+import 'package:app/ui/room/updateLevel/charm_level_update_marquee_view.dart';
+import 'package:app/ui/room/updateLevel/wealth_level_update_marquee_view.dart';
 import 'package:app/store/common/broadcast_queue_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 
@@ -89,18 +88,40 @@ class SuperGiftBroadcastCtrl extends BroadcastQueueCtrl<Widget> {
   void _onLevelUpdateEvent(S_UpdateLevel_All data) async {
     if(data.type == 1){
       //财富
+      addTask(
+        WealthLevelUpdateMarqueeView(data: data,),
+      );
     }else{
       //魅力
+      addTask(
+        CharmLevelUpdateMarqueeView(data: data,),
+      );
     }
   }
 
   @override
   AnimeEntity itemBuilder(Widget data) {
+    //跑马灯队列机制, 根据数量调整跑马灯停留时间
+    int maxRemainMilliseconds = 5000;
+    int maxEnterMilliseconds = 1000;
+    if(views.length > 12){
+      maxRemainMilliseconds = 1000;
+      maxEnterMilliseconds = 600;
+    }else if(views.length > 9){
+      maxRemainMilliseconds = 2000;
+      maxEnterMilliseconds = 700;
+    }else if(views.length > 6){
+      maxRemainMilliseconds = 3000;
+      maxEnterMilliseconds = 800;
+    }else if(views.length > 3){
+      maxRemainMilliseconds = 4000;
+      maxEnterMilliseconds = 900;
+    }
     return AnimeEntity(
       child: data,
       dock: const Tuple3(1.0, 0.0, -1.0),
-      times: const Tuple3(Duration(seconds: 1), Duration(milliseconds: 5400),
-          Duration(milliseconds: 400)),
+      times:  Tuple3( Duration(milliseconds: maxEnterMilliseconds), Duration(milliseconds: maxRemainMilliseconds),
+          const Duration(milliseconds: 400)),
       offsetTop: AppSize.safeTop + AppSize.appBar - 10,
     );
   }

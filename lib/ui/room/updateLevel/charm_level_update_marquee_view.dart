@@ -89,6 +89,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
                   '恭喜',
                   maxLines: 1,
                   style: TextStyle(
+                      decoration: TextDecoration.none,
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.bold),
@@ -134,6 +135,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
                 child: Text(
                   data.userName,
                   style: const TextStyle(
+                    decoration: TextDecoration.none,
                     color: Color(0xFFFDD95D),
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
@@ -149,6 +151,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
               child: Text(
                 '魅力等级升级到${data.level}级',
                 style: const TextStyle(
+                  decoration: TextDecoration.none,
                   color: Colors.white,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
