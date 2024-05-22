@@ -97,6 +97,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_ChatMessage = CMD._(2181, _omitEnumNames ? '' : 'S_ChatMessage');
   static const CMD C_BanChat = CMD._(2196, _omitEnumNames ? '' : 'C_BanChat');
   static const CMD S_BanChat = CMD._(2197, _omitEnumNames ? '' : 'S_BanChat');
+  static const CMD C_OpenShutMike = CMD._(2198, _omitEnumNames ? '' : 'C_OpenShutMike');
   static const CMD S_LiveStartBroadcast = CMD._(2200, _omitEnumNames ? '' : 'S_LiveStartBroadcast');
   static const CMD S_LiveStopBroadcast = CMD._(2201, _omitEnumNames ? '' : 'S_LiveStopBroadcast');
   static const CMD S_JoinBroadcast = CMD._(2210, _omitEnumNames ? '' : 'S_JoinBroadcast');
@@ -138,6 +139,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_GiveGiftByOneClick = CMD._(3115, _omitEnumNames ? '' : 'S_GiveGiftByOneClick');
   static const CMD S_LuckScreen = CMD._(3116, _omitEnumNames ? '' : 'S_LuckScreen');
   static const CMD S_AllScreen = CMD._(3117, _omitEnumNames ? '' : 'S_AllScreen');
+  static const CMD S_UpdateLevel_All = CMD._(3118, _omitEnumNames ? '' : 'S_UpdateLevel_All');
   static const CMD C_SaveUserCurrentDressUp = CMD._(4100, _omitEnumNames ? '' : 'C_SaveUserCurrentDressUp');
   static const CMD S_SaveUserCurrentDressUp = CMD._(4101, _omitEnumNames ? '' : 'S_SaveUserCurrentDressUp');
   static const CMD S_UpdateDressUp = CMD._(4102, _omitEnumNames ? '' : 'S_UpdateDressUp');
@@ -283,6 +285,7 @@ class CMD extends $pb.ProtobufEnum {
     S_ChatMessage,
     C_BanChat,
     S_BanChat,
+    C_OpenShutMike,
     S_LiveStartBroadcast,
     S_LiveStopBroadcast,
     S_JoinBroadcast,
@@ -324,6 +327,7 @@ class CMD extends $pb.ProtobufEnum {
     S_GiveGiftByOneClick,
     S_LuckScreen,
     S_AllScreen,
+    S_UpdateLevel_All,
     C_SaveUserCurrentDressUp,
     S_SaveUserCurrentDressUp,
     S_UpdateDressUp,

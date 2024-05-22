@@ -1038,6 +1038,7 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     $core.int? isAnchor,
     $core.bool? luckChatChannel,
     $core.bool? worldChatChannel,
+    $core.bool? openBackpack,
   }) {
     final $result = create();
     if (onlineList != null) {
@@ -1061,6 +1062,9 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     if (worldChatChannel != null) {
       $result.worldChatChannel = worldChatChannel;
     }
+    if (openBackpack != null) {
+      $result.openBackpack = openBackpack;
+    }
     return $result;
   }
   S_SyncRoomInfo._() : super();
@@ -1075,6 +1079,7 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
     ..a<$core.int>(5, _omitFieldNames ? '' : 'isAnchor', $pb.PbFieldType.O3)
     ..aOB(6, _omitFieldNames ? '' : 'luckChatChannel')
     ..aOB(7, _omitFieldNames ? '' : 'worldChatChannel')
+    ..aOB(8, _omitFieldNames ? '' : 'openBackpack')
     ..hasRequiredFields = false
   ;
 
@@ -1153,6 +1158,16 @@ class S_SyncRoomInfo extends $pb.GeneratedMessage {
   $core.bool hasWorldChatChannel() => $_has(6);
   @$pb.TagNumber(7)
   void clearWorldChatChannel() => clearField(7);
+
+  /// 是否开启用户背包
+  @$pb.TagNumber(8)
+  $core.bool get openBackpack => $_getBF(7);
+  @$pb.TagNumber(8)
+  set openBackpack($core.bool v) { $_setBool(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasOpenBackpack() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearOpenBackpack() => clearField(8);
 }
 
 /// 请求切换场景
@@ -3226,6 +3241,58 @@ class S_BanChatBroadcast extends $pb.GeneratedMessage {
   void clearStatus() => clearField(3);
 }
 
+class C_OpenShutMike extends $pb.GeneratedMessage {
+  factory C_OpenShutMike({
+    $core.int? status,
+  }) {
+    final $result = create();
+    if (status != null) {
+      $result.status = status;
+    }
+    return $result;
+  }
+  C_OpenShutMike._() : super();
+  factory C_OpenShutMike.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory C_OpenShutMike.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'C_OpenShutMike', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'status', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  C_OpenShutMike clone() => C_OpenShutMike()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  C_OpenShutMike copyWith(void Function(C_OpenShutMike) updates) => super.copyWith((message) => updates(message as C_OpenShutMike)) as C_OpenShutMike;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static C_OpenShutMike create() => C_OpenShutMike._();
+  C_OpenShutMike createEmptyInstance() => create();
+  static $pb.PbList<C_OpenShutMike> createRepeated() => $pb.PbList<C_OpenShutMike>();
+  @$core.pragma('dart2js:noInline')
+  static C_OpenShutMike getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<C_OpenShutMike>(create);
+  static C_OpenShutMike? _defaultInstance;
+
+  /// int64 room_id = 1;  // 房间id
+  /// int64 role_id = 2;  // 用户id
+  @$pb.TagNumber(3)
+  $core.int get status => $_getIZ(0);
+  @$pb.TagNumber(3)
+  set status($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(3)
+  void clearStatus() => clearField(3);
+}
+
 class S_MikeSpeakingBroadcast extends $pb.GeneratedMessage {
   factory S_MikeSpeakingBroadcast({
     $fixnum.Int64? roomId,
@@ -3841,6 +3908,9 @@ class S_JoinScene extends $pb.GeneratedMessage {
     $fixnum.Int64? roomId,
     $1.ErrorCode? code,
     $fixnum.Int64? pkRoomId,
+    $core.int? sdkAppId,
+    $core.String? userId,
+    $core.String? userSig,
   }) {
     final $result = create();
     if (roomId != null) {
@@ -3852,6 +3922,15 @@ class S_JoinScene extends $pb.GeneratedMessage {
     if (pkRoomId != null) {
       $result.pkRoomId = pkRoomId;
     }
+    if (sdkAppId != null) {
+      $result.sdkAppId = sdkAppId;
+    }
+    if (userId != null) {
+      $result.userId = userId;
+    }
+    if (userSig != null) {
+      $result.userSig = userSig;
+    }
     return $result;
   }
   S_JoinScene._() : super();
@@ -3862,6 +3941,9 @@ class S_JoinScene extends $pb.GeneratedMessage {
     ..aInt64(1, _omitFieldNames ? '' : 'roomId')
     ..e<$1.ErrorCode>(2, _omitFieldNames ? '' : 'code', $pb.PbFieldType.OE, defaultOrMaker: $1.ErrorCode.Ok, valueOf: $1.ErrorCode.valueOf, enumValues: $1.ErrorCode.values)
     ..aInt64(3, _omitFieldNames ? '' : 'pkRoomId')
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'sdkAppId', $pb.PbFieldType.O3)
+    ..aOS(5, _omitFieldNames ? '' : 'userId')
+    ..aOS(6, _omitFieldNames ? '' : 'userSig')
     ..hasRequiredFields = false
   ;
 
@@ -3912,6 +3994,36 @@ class S_JoinScene extends $pb.GeneratedMessage {
   $core.bool hasPkRoomId() => $_has(2);
   @$pb.TagNumber(3)
   void clearPkRoomId() => clearField(3);
+
+  /// rtc 应用标识
+  @$pb.TagNumber(4)
+  $core.int get sdkAppId => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set sdkAppId($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSdkAppId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSdkAppId() => clearField(4);
+
+  /// rtc 用户标识
+  @$pb.TagNumber(5)
+  $core.String get userId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set userId($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasUserId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearUserId() => clearField(5);
+
+  /// rtc 用户签名
+  @$pb.TagNumber(6)
+  $core.String get userSig => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set userSig($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasUserSig() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearUserSig() => clearField(6);
 }
 
 /// 房间麦克风列表
@@ -12848,6 +12960,102 @@ class S_TopThree extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<TopThreeItem> get items => $_getList(0);
+}
+
+class S_UpdateLevel_All extends $pb.GeneratedMessage {
+  factory S_UpdateLevel_All({
+    $core.String? avatarUrl,
+    $core.String? userName,
+    $core.int? level,
+    $core.int? type,
+  }) {
+    final $result = create();
+    if (avatarUrl != null) {
+      $result.avatarUrl = avatarUrl;
+    }
+    if (userName != null) {
+      $result.userName = userName;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    if (type != null) {
+      $result.type = type;
+    }
+    return $result;
+  }
+  S_UpdateLevel_All._() : super();
+  factory S_UpdateLevel_All.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory S_UpdateLevel_All.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'S_UpdateLevel_All', package: const $pb.PackageName(_omitMessageNames ? '' : 'com.savvy.proto'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'avatarUrl')
+    ..aOS(2, _omitFieldNames ? '' : 'userName')
+    ..a<$core.int>(3, _omitFieldNames ? '' : 'level', $pb.PbFieldType.O3)
+    ..a<$core.int>(4, _omitFieldNames ? '' : 'type', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  S_UpdateLevel_All clone() => S_UpdateLevel_All()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  S_UpdateLevel_All copyWith(void Function(S_UpdateLevel_All) updates) => super.copyWith((message) => updates(message as S_UpdateLevel_All)) as S_UpdateLevel_All;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateLevel_All create() => S_UpdateLevel_All._();
+  S_UpdateLevel_All createEmptyInstance() => create();
+  static $pb.PbList<S_UpdateLevel_All> createRepeated() => $pb.PbList<S_UpdateLevel_All>();
+  @$core.pragma('dart2js:noInline')
+  static S_UpdateLevel_All getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<S_UpdateLevel_All>(create);
+  static S_UpdateLevel_All? _defaultInstance;
+
+  /// 用户头像
+  @$pb.TagNumber(1)
+  $core.String get avatarUrl => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set avatarUrl($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasAvatarUrl() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAvatarUrl() => clearField(1);
+
+  /// 用户昵称
+  @$pb.TagNumber(2)
+  $core.String get userName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set userName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasUserName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearUserName() => clearField(2);
+
+  /// 等级
+  @$pb.TagNumber(3)
+  $core.int get level => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set level($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLevel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLevel() => clearField(3);
+
+  /// 等级类型，1：财富等级，2：魅力等级
+  @$pb.TagNumber(4)
+  $core.int get type => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set type($core.int v) { $_setSignedInt32(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasType() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearType() => clearField(4);
 }
 
 
