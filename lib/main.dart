@@ -13,6 +13,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:slugid/slugid.dart';
+import 'package:app/common/utils/utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,8 @@ void main() async {
   }
 
   await loggerInit(Slugid.nice().toString());
+  /// 本地存储初始化
+  await SpUtil.getInstance();
 
   await asyncTrack(
     'App 初始化',

@@ -16,8 +16,8 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_JoinBroadcast: UserInEvent.new,
     // 用户退出
     CMD.S_LeaveBroadcast: UserOutEvent.new,
-    // 全员禁麦
-    CMD.S_MikeSpeakingBroadcast: MikeSpeakingEvent.new,
+    // // 全员禁麦
+    // CMD.S_MikeSpeakingBroadcast: MikeSpeakingEvent.new,
     // 个人房开麦结算
     CMD.S_LiveStopSettlementBroadcast: LiveStopSettlementEvent.new,
     // 盲盒
@@ -62,7 +62,10 @@ class RoomMsgCtrlPb extends GetxController {
     CMD.S_WorldChatMessageBroadcast: WorldChatMessageBroadcastEvent.new,
     // 清屏广播
     CMD.S_ClearScreenBroadcast: ClearScreenBroadcastEvent.new,
-
+    // 加入房间场景反馈结果
+    CMD.S_JoinScene: JoinSceneEvent.new,
+    // 房间开闭麦禁言广播
+    CMD.S_MikeSpeakingBroadcast: MikeSpeakingEvent.new,
     // // 房间禁麦广播
     // CMD.S_BanChatBroadcast: BanChatBroadcast.new,
   };

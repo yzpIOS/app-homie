@@ -462,17 +462,17 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         try {
           // 加一个标识用来是否要加入房间，个人房在创建的时候不需要加入房间
           if(RoomManagerCtrl.ins.needJoinRoom) {
-            final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
-            logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
-            if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-              if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-                throw const LogicException(-1, "该房间主人拒绝您进入");
-              } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-                throw const LogicException(-1, "输入的房间密码错误");
-              } else {
-                throw const LogicException(-1, "房间数据加载失败");
-              }
-            }
+            // final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
+            // logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+            // if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+            //   if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+            //     throw const LogicException(-1, "该房间主人拒绝您进入");
+            //   } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+            //     throw const LogicException(-1, "输入的房间密码错误");
+            //   } else {
+            //     throw const LogicException(-1, "房间数据加载失败");
+            //   }
+            // }
           }
         } catch(e) {
           String? message = null;
@@ -602,9 +602,9 @@ class RoomCtrl extends SceneCtrl {
     }
 
     // 更新mike位数据
-    roomMicCtrl = getRoomMicCtrl();
-    (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
-    (roomMicCtrl as RoomMicCtrl?)?.onMikeListUpdate();
+    // roomMicCtrl = getRoomMicCtrl();
+    // (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
+    // (roomMicCtrl as RoomMicCtrl?)?.onMikeListUpdate();
 
     if(RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);
@@ -677,6 +677,16 @@ class RoomCtrl extends SceneCtrl {
     on<S_ClearScreenBroadcast>((data) {
       RoomChatCtrl.cacheEventItem(data);
     });
+
+    // 加入房间场景反馈结果
+    on<JoinSceneEvent>((data) {
+    //  RoomChatCtrl.cacheEventItem(data);
+      UID? userSig = data?.userSig;
+      int? sdkAppId = data?.sdkAppId;
+      UID? userId = data?.userId;
+
+    });
+
   }
 
   bool isOwner(UID uid) => roomUid == uid;

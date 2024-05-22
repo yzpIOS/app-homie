@@ -160,8 +160,20 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       handleEvent(data);
     });
 
+    // 加入房间场景反馈结果
+    on<JoinSceneEvent>((data) {
+      UID? userSig = data?.userSig;
+      int? sdkAppId = data?.sdkAppId;
+      UID? userId = data?.userId;
+      // RoomChatCtrl.cacheEventItem(data);
+    });
+
     on<MikeSpeakingEvent>((data) {
       // handleEvent(data);
+      // int64 room_id = 1;  // 房间id
+      // int64 role_id = 2;  // 用户id
+      // int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
+      // string uid = 4; // 旧的用户id
       print('禁麦通知：$data');
         ///  int32 status = 3; // 1.禁麦 2.开麦
        var uid = data.uid;
@@ -175,31 +187,33 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       if(OAuthCtrl.uid == uid){
       //  print('测试来了吗222');
        // Rtc.micSwitch();
-        bool isOpen = Rtc.openMicRx.contains(uid);
-        if(statusq == 1){
+       //  bool isOpen = Rtc.openMicRx.contains(uid);
+        if(statusq == 3){
         //  Rtc.status.value = 1; 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
 
-
+      //    3.开麦 4.闭麦 5.禁言【禁止rtc】
          // if(isOpen == false){
-            Rtc.mike_status.value = 4;
-            Rtc.micRx.value = false;
+            Rtc.mike_status.value = 3;
+            Rtc.micRx.value = true;
         //  }
         //  status.value = 1;
-        }else{
+        }else if(statusq == 4){
         //  Rtc.status.value = 2;
 
-          if(isOpen == false){
-            Rtc.mike_status.value = 3;
-          }else{
-            Rtc.mike_status.value = 1;
-            Rtc.micRx.value = true;
-          }
+        //  if(isOpen == false){
+            Rtc.mike_status.value = 4;
+          // }else{
+
+        }else{
+          Rtc.mike_status.value = 5;
+          Rtc.micRx.value = false;
+        }
 
         //  status.value = 2;
         }
 
 
-      }
+     // }
 
     });
 

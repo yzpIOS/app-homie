@@ -143,6 +143,13 @@ class WorldChatMessageBroadcastEvent extends RoomEvent<S_WorldChatMessageBroadca
 class ClearScreenBroadcastEvent extends RoomEvent<S_ClearScreenBroadcast> {
 }
 
+//  加入房间场景反馈结果
+class JoinSceneEvent extends RoomEvent<S_JoinScene> {
+  UID? get userId => data?.userId;
+  int? get sdkAppId => data?.sdkAppId;
+  UID? get userSig => data?.userSig;
+}
+
 // class BanChatBroadcast extends RoomEvent<S_BanChatBroadcast> {
 // }
 

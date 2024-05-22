@@ -26,6 +26,8 @@ import 'package:app/ui/room/user/accept_challenge_view.dart';
 import 'package:app/ui/room/user/accept_enter_room.dart';
 import 'package:app/widgets.dart';
 import 'package:dartz/dartz.dart';
+import 'package:app/common/utils/utils.dart';
+import '../../common/nets/commons/proto/ErrorCode.pbenum.dart';
 
 class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposableMixin {
   final interval_time = 200;
@@ -469,14 +471,14 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
   ///
   /// 公会房
   ///
-  void toRoom({required int roomId, Map? data, bool off = false}) {
+  void toRoom({required int roomId, Map? data, bool off = false}){
     if(_preClickTime != 0 && DateTime.now().millisecondsSinceEpoch - _preClickTime < interval_time) {
       return;
     }
     _preClickTime = DateTime.now().millisecondsSinceEpoch;
     simpleTry(
       () => Api.Room.info(roomId: roomId, tryTimes: 2),
-      callback: (data) {
+      callback: (data) async {
         bool changeRoom = (sceneCtrl2 is PersonRoomCtrl) && (sceneCtrl2?.roomUid == OAuthCtrl.uid);
         if(data["room_type"] == 1) {
           if(data["status"] == 2) {
@@ -489,8 +491,15 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           // 个人房
           toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 2) {
+          final joinResult = await Api.Room.joinRoom(roomId, pwd: null, timeout: 60 * 2);
+          logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+          if(joinResult != null && joinResult.code == ErrorCode.Success) {
+            saveState('Int', 'sdkAppId', joinResult.sdkAppId);
+            saveState('String', 'userId', joinResult.userId);
+            saveState('String', 'userSig', joinResult.userSig);
+            toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
+          }
 
-          toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 3) {
           // 广场
           toSquare(data: data, changeRoom: changeRoom);

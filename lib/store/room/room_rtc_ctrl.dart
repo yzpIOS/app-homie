@@ -12,6 +12,8 @@ import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 
+import '../../common/nets/commons/proto/ErrorCode.pbenum.dart';
+import '../../net/api.dart';
 import 'room_mic_ctrl.dart';
 
 class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
@@ -134,9 +136,13 @@ class RoomRtcCtrl extends GetxController with BusGetLifeMixin {
   }
 
   Future<void> joinRoom({required String roomId}) async {
-    xlog('用户[$OAuthCtrl.uid]准备加入房间 -> $roomId', type: LogType.RTC);
-    final token = await Get.find<ImAuth>().fetchToken();
-    await Rtc.enterRoom(roomId, token);
+    // final joinResult = await Api.Room.joinRoom(int.parse(roomId), pwd: null, timeout: 60 * 2);
+    // logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+    // if(joinResult != null && joinResult.code == ErrorCode.Ok) {
+      xlog('用户[$OAuthCtrl.uid]准备加入房间 -> $roomId', type: LogType.RTC);
+      final token = await Get.find<ImAuth>().fetchToken();
+      await Rtc.enterRoom(roomId, token);
+   // }
   }
 
   Future<void> leaveRoom() {

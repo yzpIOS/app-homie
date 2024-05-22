@@ -97,6 +97,7 @@ class CMD extends $pb.ProtobufEnum {
   static const CMD S_ChatMessage = CMD._(2181, _omitEnumNames ? '' : 'S_ChatMessage');
   static const CMD C_BanChat = CMD._(2196, _omitEnumNames ? '' : 'C_BanChat');
   static const CMD S_BanChat = CMD._(2197, _omitEnumNames ? '' : 'S_BanChat');
+  static const CMD C_OpenShutMike = CMD._(2198, _omitEnumNames ? '' : 'C_OpenShutMike');
   static const CMD S_LiveStartBroadcast = CMD._(2200, _omitEnumNames ? '' : 'S_LiveStartBroadcast');
   static const CMD S_LiveStopBroadcast = CMD._(2201, _omitEnumNames ? '' : 'S_LiveStopBroadcast');
   static const CMD S_JoinBroadcast = CMD._(2210, _omitEnumNames ? '' : 'S_JoinBroadcast');
@@ -283,6 +284,7 @@ class CMD extends $pb.ProtobufEnum {
     S_ChatMessage,
     C_BanChat,
     S_BanChat,
+    C_OpenShutMike,
     S_LiveStartBroadcast,
     S_LiveStopBroadcast,
     S_JoinBroadcast,

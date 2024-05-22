@@ -102,13 +102,22 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
        // bool isMickStatus = Rtc.micRx.value;
        // int isJinMaiStatus = Rtc.status.value;
         /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+        /// 3.开麦 4.闭麦 5.禁言【禁止rtc】
         int mikeStatus = Rtc.mike_status.value;
      //   print('123status = $status');
-        return _IconBtnSvg(
-          icon: isEnable && mikeStatus == 1 ? '麦克风_${Rtc.micRx().intVal}' : mikeStatus == 4 ?'表情' : '麦克风_禁用',
+        return mikeStatus == 5? _IconBtn(
+          icon: '麦位_禁麦',
+          padding: Pad(horizontal: 5),
+          // onItemClick: isEnable && status != 1 ? onItemClick : null,
+          // onItemClick: isEnable ? onItemClick : null,
+          onItemClick:onItemClick ,
+        ) : _IconBtnSvg(
+       //   icon: isEnable && mikeStatus == 3 ? '麦克风_${Rtc.micRx().intVal}' : mikeStatus == 5 ?'表情' : '麦克风_禁用',
+          icon: mikeStatus == 3 ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
           padding: Pad(horizontal: 5),
          // onItemClick: isEnable && status != 1 ? onItemClick : null,
-          onItemClick: isEnable ? onItemClick : null,
+         // onItemClick: isEnable ? onItemClick : null,
+          onItemClick:onItemClick ,
         );
       },
     );
@@ -230,17 +239,17 @@ class _IconBtnSvg extends StatelessWidget {
 
 class _IconBtn extends StatelessWidget {
   final String? icon;
-
+  Pad padding;
   final ValueChanged<String>? onItemClick;
 
-  _IconBtn({this.icon, this.onItemClick}) : super(key: ValueKey(icon));
+  _IconBtn({this.icon, this.onItemClick,this.padding = const Pad(all: 5)}) : super(key: ValueKey(icon));
 
   @override
   Widget build(BuildContext context) {
     return IconBtn(
       icon: icon,
       size: 28,
-      padding: const Pad(all: 5),
+      padding: const Pad(horizontal: 5),
       onTap: onItemClick?.let((fn) => () => fn(icon!)),
     );
   }

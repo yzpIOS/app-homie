@@ -241,7 +241,7 @@ class OnlineUserView extends SimplePageView<Map> {
         !dataUserIsOwner &&
         myRole != role);
     RxBool isSelectChat = true.obs;
-    RxInt mikeStatus = 0.obs;/// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+    RxInt mikeStatus = 0.obs;/// 麦克风状态：0.无麦 1.上麦 2.下麦 3.开麦 4.闭麦 5.禁言【禁止rtc】6.禁止上麦
     var hasMike = item['mike_status'] != 0;
     // || item['mike_status'] != 2;
     mikeStatus.value = item['mike_status'];

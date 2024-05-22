@@ -273,9 +273,10 @@ class _ItemView extends StatelessWidget {
     return RepaintBoundary(
       child: _MicView(
         tag: no == '1' ? 'presided' : null,
-        mic: $Mic(),
+         mic: $Mic(),
         tips: $HotView(),
         avatar: $Avatar(),
+       // avatar: Container(),
         title: UserInfoCtrl.use(uid, builder: (it) {
           return XText(
             it?.showName ?? '',

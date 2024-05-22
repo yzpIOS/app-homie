@@ -22,7 +22,7 @@ class IconBtn extends StatelessWidget {
         child: _icon == null
             ? SizedBox(width: size, height: size)
             : IconBtnDecor(
-                child: Image.asset(IMG.format('room/$_icon'), width: size, height: size),
+                child: Image.asset(IMG.format('room/mic/$_icon'), width: size, height: size),
               ),
       ),
     );

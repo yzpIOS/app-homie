@@ -254,6 +254,7 @@ const S_SyncRoomInfo$json = {
     {'1': 'is_anchor', '3': 5, '4': 1, '5': 5, '10': 'isAnchor'},
     {'1': 'luck_chat_channel', '3': 6, '4': 1, '5': 8, '10': 'luckChatChannel'},
     {'1': 'world_chat_channel', '3': 7, '4': 1, '5': 8, '10': 'worldChatChannel'},
+    {'1': 'open_backpack', '3': 8, '4': 1, '5': 8, '10': 'openBackpack'},
   ],
 };
 
@@ -264,7 +265,8 @@ final $typed_data.Uint8List s_SyncRoomInfoDescriptor = $convert.base64Decode(
     'aWtlSW5mb1IFbWlrZXMSJQoOY29sbGVjdF9zdGF0dXMYAyABKAVSDWNvbGxlY3RTdGF0dXMSKQ'
     'oQaXNfYWRtaW5pc3RyYXRvchgEIAEoBVIPaXNBZG1pbmlzdHJhdG9yEhsKCWlzX2FuY2hvchgF'
     'IAEoBVIIaXNBbmNob3ISKgoRbHVja19jaGF0X2NoYW5uZWwYBiABKAhSD2x1Y2tDaGF0Q2hhbm'
-    '5lbBIsChJ3b3JsZF9jaGF0X2NoYW5uZWwYByABKAhSEHdvcmxkQ2hhdENoYW5uZWw=');
+    '5lbBIsChJ3b3JsZF9jaGF0X2NoYW5uZWwYByABKAhSEHdvcmxkQ2hhdENoYW5uZWwSIwoNb3Bl'
+    'bl9iYWNrcGFjaxgIIAEoCFIMb3BlbkJhY2twYWNr');
 
 @$core.Deprecated('Use s_LiveStartBroadcastDescriptor instead')
 const S_LiveStartBroadcast$json = {
@@ -636,6 +638,18 @@ final $typed_data.Uint8List s_BanChatBroadcastDescriptor = $convert.base64Decode
     'ChJTX0JhbkNoYXRCcm9hZGNhc3QSFwoHcm9vbV9pZBgBIAEoA1IGcm9vbUlkEhcKB3JvbGVfaW'
     'QYAiABKANSBnJvbGVJZBIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
 
+@$core.Deprecated('Use c_OpenShutMikeDescriptor instead')
+const C_OpenShutMike$json = {
+  '1': 'C_OpenShutMike',
+  '2': [
+    {'1': 'status', '3': 3, '4': 1, '5': 5, '10': 'status'},
+  ],
+};
+
+/// Descriptor for `C_OpenShutMike`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List c_OpenShutMikeDescriptor = $convert.base64Decode(
+    'Cg5DX09wZW5TaHV0TWlrZRIWCgZzdGF0dXMYAyABKAVSBnN0YXR1cw==');
+
 @$core.Deprecated('Use s_MikeSpeakingBroadcastDescriptor instead')
 const S_MikeSpeakingBroadcast$json = {
   '1': 'S_MikeSpeakingBroadcast',
@@ -766,6 +780,9 @@ const S_JoinScene$json = {
     {'1': 'room_id', '3': 1, '4': 1, '5': 3, '10': 'roomId'},
     {'1': 'code', '3': 2, '4': 1, '5': 14, '6': '.com.savvy.proto.ErrorCode', '10': 'code'},
     {'1': 'pk_room_id', '3': 3, '4': 1, '5': 3, '10': 'pkRoomId'},
+    {'1': 'sdk_app_id', '3': 4, '4': 1, '5': 5, '10': 'sdkAppId'},
+    {'1': 'user_id', '3': 5, '4': 1, '5': 9, '10': 'userId'},
+    {'1': 'user_sig', '3': 6, '4': 1, '5': 9, '10': 'userSig'},
   ],
 };
 
@@ -773,7 +790,8 @@ const S_JoinScene$json = {
 final $typed_data.Uint8List s_JoinSceneDescriptor = $convert.base64Decode(
     'CgtTX0pvaW5TY2VuZRIXCgdyb29tX2lkGAEgASgDUgZyb29tSWQSLgoEY29kZRgCIAEoDjIaLm'
     'NvbS5zYXZ2eS5wcm90by5FcnJvckNvZGVSBGNvZGUSHAoKcGtfcm9vbV9pZBgDIAEoA1IIcGtS'
-    'b29tSWQ=');
+    'b29tSWQSHAoKc2RrX2FwcF9pZBgEIAEoBVIIc2RrQXBwSWQSFwoHdXNlcl9pZBgFIAEoCVIGdX'
+    'NlcklkEhkKCHVzZXJfc2lnGAYgASgJUgd1c2VyU2ln');
 
 @$core.Deprecated('Use c_MikeListDescriptor instead')
 const C_MikeList$json = {

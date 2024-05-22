@@ -18,6 +18,7 @@ import 'package:app/ui/my/real_identity_1_page.dart';
 import 'package:app/ui/room/chat/msg_adapter/data/user_msg_data.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
 import 'package:app/widgets.dart';
+import 'package:dartz/dartz_unsafe.dart';
 import 'package:fixnum/fixnum.dart';
 
 class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
@@ -29,6 +30,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   RxMap<String, MicInfo> dataRx = RxMap();
 
+  @override
   List<MicInfo> get simpleUserList => dataRx.values.toList();
 
   List<MicInfo> getOnLineManager() {
@@ -116,6 +118,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       (_) => doRefresh(),
     );
 
+    doRefresh();
+
     on<RespUnityEvent>(
       test: (it) => it.code == Unity2AppEnum.UTF_GET_ONMICROPJONE_INFO_GUILD,
       (event) {
@@ -173,7 +177,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     // 新增mike
     dataRx[data.mikeNo] = MicInfo(
         uid: event.uid ?? "",
-        micId: data.mikeId.toInt(),
+       // micId: data.mikeId.toInt(),
         hotCount: event.hotCount,
         isMute: false,
         nUid: data.roleId,
@@ -213,6 +217,9 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     dataRx(
       micDataFrom(resp),
     );
+ //  micDataFrom(resp);
+
+
   }
 
   ///
@@ -274,6 +281,37 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     onDoRefreshHandle(resp);
     //TODO 处理重连期间自己麦状态改变情况
     onMikeListUpdate();
+
+   // S_UpMikeBroadcast? data = event.data;
+   //  if(data == null) {
+   //    return;
+   //  }
+   //  var mikeUserKeyList = dataRx.keys.toList();
+   //  for(int index = 0; index < mikeUserKeyList.length; index ++) {
+   //    if(dataRx[mikeUserKeyList[index]]?.uid == data.uid) {
+   //      debugPrint("删除旧麦位: data = ${data.toProto3Json()}");
+   //      dataRx.remove(mikeUserKeyList[index]);
+   //      break;
+   //    }
+   //  }
+   //  debugPrint("新增麦位：data = ${data.toProto3Json()}");
+
+    // // 删除旧mike
+    // dataRx.remove(data.oldMikeNo);
+    // 新增mike
+    // forEach(foldable, (a) { })
+    // dataRx[data.mikeNo] = MicInfo(
+    //     uid: event.uid ?? "",
+    //     micId: data.mikeId.toInt(),
+    //     hotCount: event.hotCount,
+    //     isMute: false,
+    //     nUid: data.roleId,
+    //     roleType: event.data?.roleType ?? 0,
+    //     no: event.data?.mikeNo ?? ""
+    // );
+  //
+  //   onUpdateHotCount3Handler(data.mikeNo, data.number, refresh: true);
+
   }
 
   Map<String, List<Map<String, UID>>> unityMicInfoData() {
@@ -508,21 +546,47 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     Rtc.micRx(false);
   }
 
-  static Map<String, MicInfo> micDataFrom(data) {
+  static Map<String, MicInfo>micDataFrom(data) {
     debugPrint("用户上麦：data = ${data.toString()}");
-    return <String, MicInfo>{
-      if (data is List && data.isNotEmpty)
-        for (final item in data)
-          item['mike_no']: MicInfo(
-            uid: item['uid'],
-            nUid: NUID(item["role_id"] ?? 0),
-            micId: item['mike_id'],
-            hotCount: item['number'] ?? 0,
-            isMute: item['open_status'] == 2,
-            no: item['mike_no'],
-            roleType: item['role_type'] ?? 0,
-          ),
-    };
+   // Map <String, MicInfo> data1 = {
+   //    if (data is List && data.isNotEmpty)
+   //      for (final item in data)
+   //        item['mike_no']: MicInfo(
+   //          uid: item['uid'],
+   //          nUid: NUID(item["role_id"] ?? 0),
+   //          micId: item['mike_id'],
+   //          hotCount: item['number'] ?? 0,
+   //          isMute: item['open_status'] == 2,
+   //          no: item['mike_no'],
+   //          roleType: item['role_type'] ?? 0,
+   //        ),
+   //  };
+    // 调用函数合成新的字典
+
+
+    Map <String, MicInfo> result = {};
+    if (data is List && data.isNotEmpty){
+      for(final item in data){
+        String uid = item['uid'];
+        MicInfo micInfo = MicInfo(
+          uid: item['uid'],
+          nUid: NUID(item["role_id"] ?? 0),
+        //  micId: item['mike_id'],
+          status: item['status'] ?? 0,
+          hotCount: item['number'] ?? 0,
+          isMute: item['open_status'] == 2,
+          no: item['mike_no'],
+          roleType: item['role_type'] ?? 0,
+        );
+        result[uid] = micInfo;
+      }
+    }
+
+    // dataRx.value = result;
+    // print('data4444444:$result');
+    return result;
+ //  print('dataResult = $data1');
+
   }
 
 
@@ -535,7 +599,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         micInfoes.add(MicInfo(
           uid: item['uid'],
           nUid: NUID(item["role_id"] ?? 0),
-          micId: item['mike_id'],
+        //  micId: item['mike_id'],
           hotCount: item['number'] ?? 0,
           isMute: item['open_status'] == 2,
           no: item['mike_no'],
@@ -550,10 +614,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     var map = <String, MicInfo>{};
     for(var index = 0; index < mikeInfos.length; index ++) {
       var mikeInfo = mikeInfos[index];
-      map[mikeInfo.mikeNo] = MicInfo(
+      map[mikeInfo.uid] = MicInfo(
         uid: mikeInfo.uid,
         nUid: mikeInfo.roleId,
-        micId: mikeInfo.mikeId.toInt(),
+      //  micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
         isMute: false,
         no: mikeInfo.mikeNo,
@@ -570,7 +634,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
       map.add(MicInfo(
         uid: mikeInfo.uid,
         nUid: mikeInfo.roleId,
-        micId: mikeInfo.mikeId.toInt(),
+        // status: mikeInfo.status.,
+      //  micId: mikeInfo.mikeId.toInt(),
         hotCount: mikeInfo.number.toInt(),
         isMute: false,
         roleType: mikeInfo.roleType,
@@ -582,12 +647,14 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 }
 
 class MicInfo {
+
+
   UID uid;
   NUID nUid;
-  int micId;
+  // int micId;
   bool isMute;
   int hotCount;
-
+  int status;
   // 麦号
   String no = "";
 
@@ -597,12 +664,13 @@ class MicInfo {
 
   MicInfo({
     required this.uid,
-    required this.micId,
+    // required this.micId,
     required this.hotCount,
     required this.isMute,
     required this.nUid,
     required this.roleType,
-    this.no = ""
+    this.no = "",
+    this.status = 0,
   });
 
   ///
