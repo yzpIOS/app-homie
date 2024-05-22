@@ -25,8 +25,8 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
     if(guildModel.isMaster){
       /// 会长身份
       loadGuildAnchorApplyCount();
-      loadData();
     }
+    loadData();
 
     /// 处理公会主播申请事件
     on<HandleGuildAnchorApplyEvent>(
@@ -68,7 +68,7 @@ class MyGuildCenterController extends GetxController with BusGetLifeMixin{
   void loadData() {
     Future.delayed(const Duration(microseconds:400),(){
       simpleTry(
-              () => Api.Room.getGuildRoomList(guildNumber:guildModel.guildNo ?? "",statusList: [1,2]),
+              () => Api.Room.getGuildRoomList(guildNumber:guildModel.guildNo ?? "",statusList:guildModel.isMaster ? [1,2] : [1]),
           showProgress: true,
           callback: (resp) {
             if (resp != null && resp is List) {
