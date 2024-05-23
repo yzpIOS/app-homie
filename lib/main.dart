@@ -23,15 +23,15 @@ void main() async {
   }
 
   await loggerInit(Slugid.nice().toString());
-  /// 本地存储初始化
-  await SpUtil.getInstance();
+
 
   await asyncTrack(
     'App 初始化',
     action: () async {
       // FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
       asyncTrack('Executor 初始化', action: executorInit);
-
+      /// 本地存储初始化
+      await SpUtil.getInstance();
       await Future.wait(
         [
           asyncTrack('KvBox 初始化', action: KvBox.init),
