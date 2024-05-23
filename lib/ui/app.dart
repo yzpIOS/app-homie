@@ -70,11 +70,13 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
 
   @override
   Widget build(BuildContext context) {
-    Widget child = ScreenUtilInit(
-      designSize: const Size(375, 812),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) => GetMaterialApp(
+    Widget child =
+    // ScreenUtilInit(
+    //   designSize: const Size(375, 812),
+    //   minTextAdapt: true,
+    //   splitScreenMode: true,
+    //   builder: (context, child) =>
+          GetMaterialApp(
       title: appInfo.appName,
       showPerformanceOverlay: false,
       checkerboardOffscreenLayers: false,
@@ -92,8 +94,8 @@ class _AppState extends State<App> with WidgetsBindingObserver, WidgetsBindingOb
       ],
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       navigatorObservers: [AppNavObserver.routeObserver],
-    )
     );
+  //  );
 
     child = Stack(
       clipBehavior: Clip.none,
