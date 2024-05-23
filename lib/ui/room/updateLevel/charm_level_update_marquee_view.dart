@@ -12,6 +12,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
   CharmLevelUpdateMarqueeView({super.key, required this.data});
 
   final double backgroundHeight = 66;
+  final double backgroundLeftInset = 26.5;
   final double backgroundWidth = 344;
   final double leftIconWidth = 73.5;
   final double leftIconHeight = 58.5;
@@ -21,9 +22,11 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
   final double marqueeRightMargin = 36;
   final double marqueeTopMargin = 27;
   final controller = MarqueerController();
+  final int maxLevel = 60;
 
   @override
   Widget build(BuildContext context) {
+    final double marqueeViewLeftInset = (Get.width - marqueeViewMaxWidth)/2.0;
     return Container(
       alignment: Alignment.center,
       height: backgroundHeight,
@@ -31,21 +34,21 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
       child: Stack(
         children: [
           // 背景图
-          _createBackground(),
+          _createBackground(marqueeViewLeftInset:marqueeViewLeftInset),
           // 左边的icon
-          _createLeftIcon(),
+          _createLeftIcon(marqueeViewLeftInset:marqueeViewLeftInset),
           // 跑马灯
-          _createMarquee(),
+          _createMarquee(marqueeViewLeftInset:marqueeViewLeftInset),
         ],
       ),
     );
   }
 
-  Widget _createBackground() {
+  Widget _createBackground({required double marqueeViewLeftInset}) {
     return Positioned(
       width: backgroundWidth,
       height: backgroundHeight,
-      right: 0,
+      left: marqueeViewLeftInset + backgroundLeftInset,
       top: 0,
       child: Image.asset(
         IMG.format('level/charm/charm_level_update_marquee_background'),
@@ -56,14 +59,14 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
     );
   }
 
-  Widget _createLeftIcon() {
+  Widget _createLeftIcon({required double marqueeViewLeftInset}) {
     return Positioned(
       width: leftIconWidth,
       height: leftIconHeight,
-      left: 0,
+      left: marqueeViewLeftInset,
       bottom: 0,
       child: Image.asset(
-        IMG.format('level/charm/${min(data.level, 60)}'),
+        IMG.format('level/charm/${min(data.level, maxLevel)}'),
         width: leftIconWidth,
         height: leftIconHeight,
         fit: BoxFit.contain,
@@ -71,11 +74,11 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
     );
   }
 
-  Widget _createMarquee() {
+  Widget _createMarquee({required double marqueeViewLeftInset}) {
     return Positioned(
       right: marqueeRightMargin,
       height: avatarSize,
-      left: leftIconWidth + marqueeLeftMargin,
+      left:marqueeViewLeftInset + leftIconWidth + marqueeLeftMargin,
       top: marqueeTopMargin,
       child: Marqueer.builder(
           interaction: false,
@@ -104,7 +107,7 @@ class CharmLevelUpdateMarqueeView extends StatelessWidget {
                 height: 20,
                 margin: const EdgeInsets.only(left: 2),
                 child: Image.asset(
-                  IMG.format('level/charm/${min(data.level, 60)}'),
+                  IMG.format('level/charm/${min(data.level, maxLevel)}'),
                   scale: 3,
                   width: 20,
                   height: 20,

@@ -12,6 +12,7 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
   WealthLevelUpdateMarqueeView({super.key, required this.data});
 
   final double backgroundHeight = 66;
+  final double backgroundLeftInset = 25;
   final double backgroundWidth = 344;
   final double leftIconWidth = 71.5;
   final double leftIconHeight = 34.5;
@@ -21,10 +22,12 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
   final double marqueeLeftMargin = 4;
   final double marqueeRightMargin = 36;
   final double marqueeTopMargin = 29;
+  final int maxLevel = 60;
   final controller = MarqueerController();
 
   @override
   Widget build(BuildContext context) {
+    final double marqueeViewLeftInset = (Get.width - marqueeViewMaxWidth)/2.0;
     return Container(
       alignment: Alignment.center,
       height: backgroundHeight,
@@ -32,21 +35,21 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
       child: Stack(
         children: [
           // 背景图
-          _createBackground(),
+          _createBackground(marqueeViewLeftInset:marqueeViewLeftInset),
           // 左边的icon
-          _createLeftIcon(),
+          _createLeftIcon(marqueeViewLeftInset:marqueeViewLeftInset),
           // 跑马灯
-          _createMarquee(),
+          _createMarquee(marqueeViewLeftInset:marqueeViewLeftInset),
         ],
       ),
     );
   }
 
-  Widget _createBackground() {
+  Widget _createBackground({required double marqueeViewLeftInset}) {
     return Positioned(
       width: backgroundWidth,
       height: backgroundHeight,
-      right: 0,
+      left: marqueeViewLeftInset + backgroundLeftInset,
       top: 0,
       child: Image.asset(
         IMG.format('level/wealth/wealth_level_update_marquee_background'),
@@ -57,14 +60,14 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
     );
   }
 
-  Widget _createLeftIcon() {
+  Widget _createLeftIcon({required double marqueeViewLeftInset}) {
     return Positioned(
       width: leftIconWidth,
       height: leftIconHeight,
-      left: 0,
+      left: marqueeViewLeftInset,
       bottom: leftIconBottomMargin,
       child: Image.asset(
-        IMG.format('level/wealth/${min(data.level, 60)}'),
+        IMG.format('level/wealth/${min(data.level, maxLevel)}'),
         width: leftIconWidth,
         height: leftIconHeight,
         fit: BoxFit.contain,
@@ -72,11 +75,11 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
     );
   }
 
-  Widget _createMarquee() {
+  Widget _createMarquee({required double marqueeViewLeftInset}) {
     return Positioned(
       right: marqueeRightMargin,
       height: avatarSize,
-      left: leftIconWidth + marqueeLeftMargin,
+      left: marqueeViewLeftInset + leftIconWidth + marqueeLeftMargin,
       top: marqueeTopMargin,
       child: Marqueer.builder(
           interaction: false,
@@ -106,7 +109,7 @@ class WealthLevelUpdateMarqueeView extends StatelessWidget {
                 margin: const EdgeInsets.only(left: 2,top:2),
                 alignment: Alignment.center,
                 child: Image.asset(
-                  IMG.format('level/wealth/${min(data.level, 60)}'),
+                  IMG.format('level/wealth/${min(data.level, maxLevel)}'),
                   scale: 3,
                   width: 24,
                   height: 11,
