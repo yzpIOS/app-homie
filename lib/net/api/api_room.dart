@@ -521,4 +521,14 @@ class ApiRoom extends ApiBase {
     }
     return _doPost("list", data: map);
   }
+
+  /// 修改房间公告
+  Future editRoomNotice({required int roomId, required String notice}){
+    final Map map = {};
+    map["room_id"] = roomId;
+    if(notice.isNotEmpty) {
+      map["notice_message"] = notice;
+    }
+    return _doPost("notice/edit", data: map);
+  }
 }
