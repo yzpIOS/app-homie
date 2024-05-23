@@ -18,17 +18,17 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   const RoomInfoDialog._();
 
   static void show() {
-
     const decor = ShapeDecoration(
       shape: XRectangleBorder(borderRadius: AppBorderRadius.t12),
-       color: Color(0xCC333333),
-    //  color: Colors.white,
+      color: Color(0xCC333333),
+      //  color: Colors.white,
     );
 
     OrientationSheet.show(
-      child:  RoomInfoDialog._(),
+      child: RoomInfoDialog._(),
       decoration: decor,
-      direction: Get.isLandscape ? SheetOrientation.left : SheetOrientation.bottom,
+      direction:
+          Get.isLandscape ? SheetOrientation.left : SheetOrientation.bottom,
     );
   }
 
@@ -203,20 +203,19 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 //       ],
 //     );
 // >>>>>>> 1.6.0_1
-       return titleWidget();
-
+    return titleWidget();
   }
 
-  Widget titleWidget(){
+  Widget titleWidget() {
     const divider = Divider(height: 5, thickness: 5, color: AppPalette.colorEB);
     final data = controller.info;
     final notice = controller.noticeRx();
-    return  Stack(
+    return Stack(
       clipBehavior: Clip.none,
-       alignment: Alignment.topCenter,
+      alignment: Alignment.topCenter,
       children: [
         OrientationSheet.scaffold(
-        title: '房间详情',
+          title: '房间详情',
           textStyle: const TextStyle(color: Colors.white),
           body: $Body(),
         ),
@@ -237,61 +236,54 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         //     child:  topViewWidget()
         // ),
         //
-        Positioned(
-            top: 0,
-            right: 10,
-            child:$ReportView()
-        ),
+        Positioned(top: 0, right: 10, child: $ReportView()),
 
         // const Positioned(
         //    top: 50,
         //    child: divider),
-
-
-
-
-
-
       ],
     );
   }
 
-
-  Widget topViewWidget(){
+  Widget topViewWidget() {
     final data = controller.info;
     final notice = controller.noticeRx();
     return Container(
-           child: Column(
-           children: [
-           Row(
-           children: [
-             const Text('恋爱告急',style: TextStyle(color: Colors.black),),
-           SizedBox(width: 10,),
-           SelectableText(
-             'ID:${data['room_no'] ?? data['room_id']}',
-             style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-           ),
-           ],
-         ),
-
-    Row(
-    children: [
-    const Text('恋爱告急',style: TextStyle(color: Colors.black),),
-    SizedBox(width: 10,),
-    SelectableText(
-    'ID:${data['room_no'] ?? data['room_id']}',
-    style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-         ),
+        child: Column(
+      children: [
+        Row(
+          children: [
+            const Text(
+              '恋爱告急',
+              style: TextStyle(color: Colors.black),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            SelectableText(
+              'ID:${data['room_no'] ?? data['room_id']}',
+              style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+            ),
+          ],
+        ),
+        Row(
+          children: [
+            const Text(
+              '恋爱告急',
+              style: TextStyle(color: Colors.black),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            SelectableText(
+              'ID:${data['room_no'] ?? data['room_id']}',
+              style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+            ),
+          ],
+        )
       ],
-       )
-
-
-    ],
-    )
-
-         );
+    ));
   }
-
 
   // Widget topView() {
   //
@@ -361,10 +353,19 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         Spacing.h20,
         headerView,
         Spacing.h16,
-        const Text(
-          '【房间公告】',
-          style: TextStyle(fontSize: 14, color: Colors.white),
-        ),
+        XRichText(TextSpan(children: [
+          const TextSpan(
+            text: "【房间公告】",
+            style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+          WidgetSpan(
+            child: GestureDetector(
+              onTap: () {},
+              child: Image.asset(IMG.format('room/room_info_notice_edit'),
+                  width: 18, height: 18, scale: 3),
+            ),
+          ),
+        ],),),
         Spacing.h4,
         Expanded(child: noticeView),
         Spacing.h4,
@@ -390,7 +391,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
           SvgView(SVG.$('room/$action'), width: 26, height: 26),
           Text(
             action,
-            style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
+            style: const TextStyle(
+                fontSize: 14, color: Colors.white, fontWeight: fw$Medium),
           ),
         ],
       ),
@@ -416,7 +418,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     final data = controller.info;
     switch (action) {
       case '分享房间':
-        Share.share(RouteUtil.generateShareRoom(controller.roomId), subject: '房间分享');
+        Share.share(RouteUtil.generateShareRoom(controller.roomId),
+            subject: '房间分享');
         break;
       case '已关注':
       case '关注房间':
@@ -431,12 +434,13 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         break;
 
       case '举报':
-        final canManage = ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
+        final canManage =
+            ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
 
         final items = {
-          '举报': () => Get.to(() =>  MomentReportPage(type: 2, id: data['uid'])),
+          '举报': () => Get.to(() => MomentReportPage(type: 2, id: data['uid'])),
           if (canManage && !ctrl.getRole(data['uid']).isManager) //
-            '加入黑名单': () => ctrl.setBlock(uid:data['uid'], isAdd: true)
+            '加入黑名单': () => ctrl.setBlock(uid: data['uid'], isAdd: true)
         };
 
         switch (items.length) {
@@ -446,7 +450,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
             items.values.single();
             break;
           default:
-            Get.showSheet(items.entries, toTitle: (it) => Tuple2(it.key, null)) //
+            Get.showSheet(items.entries,
+                    toTitle: (it) => Tuple2(it.key, null)) //
                 .onNotNull((val) => val.value());
         }
 
