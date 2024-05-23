@@ -28,7 +28,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
       child: RoomInfoDialog._(),
       decoration: decor,
       direction:
-          Get.isLandscape ? SheetOrientation.left : SheetOrientation.bottom,
+      Get.isLandscape ? SheetOrientation.left : SheetOrientation.bottom,
     );
   }
 
@@ -250,39 +250,39 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     final notice = controller.noticeRx();
     return Container(
         child: Column(
-      children: [
-        Row(
           children: [
-            const Text(
-              '恋爱告急',
-              style: TextStyle(color: Colors.black),
+            Row(
+              children: [
+                const Text(
+                  '恋爱告急',
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                SelectableText(
+                  'ID:${data['room_no'] ?? data['room_id']}',
+                  style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+                ),
+              ],
             ),
-            SizedBox(
-              width: 10,
-            ),
-            SelectableText(
-              'ID:${data['room_no'] ?? data['room_id']}',
-              style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-            ),
+            Row(
+              children: [
+                const Text(
+                  '恋爱告急',
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                SelectableText(
+                  'ID:${data['room_no'] ?? data['room_id']}',
+                  style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+                ),
+              ],
+            )
           ],
-        ),
-        Row(
-          children: [
-            const Text(
-              '恋爱告急',
-              style: TextStyle(color: Colors.black),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            SelectableText(
-              'ID:${data['room_no'] ?? data['room_id']}',
-              style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-            ),
-          ],
-        )
-      ],
-    ));
+        ));
   }
 
   // Widget topView() {
@@ -333,10 +333,12 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
     final noticeView = SingleChildScrollView(
       padding: const Pad(horizontal: 10),
-      child: Text(
-        notice.isEmpty ? '目前暂无公告。' : notice,
-        style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-      ),
+      child: Obx(() {
+        return Text(
+          controller.noticeRx.isEmpty ? '目前暂无公告。' : controller.noticeRx.value,
+          style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+        );
+      }),
     );
 
     final actionView = Row(
@@ -356,11 +358,14 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         XRichText(TextSpan(children: [
           const TextSpan(
             text: "【房间公告】",
-            style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold, color: Colors.white),
+            style: TextStyle(
+                fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          WidgetSpan(
+            if(controller.isOwner(OAuthCtrl.uid)) WidgetSpan(
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                controller.clickEditNotice();
+              },
               child: Image.asset(IMG.format('room/room_info_notice_edit'),
                   width: 18, height: 18, scale: 3),
             ),
@@ -435,11 +440,16 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
       case '举报':
         final canManage =
-            ctrl is RoomCtrl && ctrl.getRole(OAuthCtrl.uid).isManager;
+            ctrl is RoomCtrl && ctrl
+                .getRole(OAuthCtrl.uid)
+                .isManager;
 
         final items = {
-          '举报': () => Get.to(() => MomentReportPage(type: 2, id: data['uid'])),
-          if (canManage && !ctrl.getRole(data['uid']).isManager) //
+          '举报': () =>
+              Get.to(() => MomentReportPage(type: 2, id: data['uid'])),
+          if (canManage && !ctrl
+              .getRole(data['uid'])
+              .isManager) //
             '加入黑名单': () => ctrl.setBlock(uid: data['uid'], isAdd: true)
         };
 
@@ -451,7 +461,7 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
             break;
           default:
             Get.showSheet(items.entries,
-                    toTitle: (it) => Tuple2(it.key, null)) //
+                toTitle: (it) => Tuple2(it.key, null)) //
                 .onNotNull((val) => val.value());
         }
 

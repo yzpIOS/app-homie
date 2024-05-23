@@ -8,6 +8,7 @@ import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
+import 'package:app/ui/room/overlay/room_notice_edit_dialog.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
 import 'package:app/ui/room/overlay/square_overlay.dart';
 import 'package:app/ui/room/persion/common_dialog.dart';
@@ -43,6 +44,7 @@ import 'package:app/widgets.dart';
 import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:fixnum/fixnum.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app/model/activity_info_model.dart';
 export 'package:app/model/enum/room_role_type.dart';
@@ -762,6 +764,15 @@ class RoomCtrl extends SceneCtrl {
 
   void setManager({required UID uid, required bool isAdd}) {
     Api.Room.setManager(roomId: roomId, uid: uid, isAdd: isAdd);
+  }
+
+  /// 点击编辑公告
+  void clickEditNotice(){
+    showDialog(context: Get.context!, builder: (context) {
+      return RoomNoticeEditDialog(roomId: roomId,);
+    }).then((value){
+      noticeRx.value = value;
+    });
   }
 
   @override
