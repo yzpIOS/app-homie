@@ -92,8 +92,18 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     on<InviteMicUpEvent>(
       test: (event) => OAuthCtrl.isSelf(event.uid),
-      (event) {
-        onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
+      (event)  {
+      //  onInviteMicUp(event.data?.mikeId.toInt() ?? 0);
+        Get.simpleDialog(msg: '管理员邀请你上麦', okLabel: '接受', cancelLabel: '拒绝').then((val) async{
+          UserInfoModel? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
+          if(userInfo == null) {
+            return;
+          }
+          simpleTry(
+                () => Api.Room.micConfirm(mikeId: int.tryParse(event.data?.mikeNo ?? "0") ?? 0, type: 2, isAgree: val == '接受',
+                    uid: userInfo.nuid, roomId: event.data?.roomId.toInt()),
+          );
+        });
       },
     );
 
@@ -130,6 +140,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
     // 申请上麦
     on<MicApplyEvent>((event) async {
+      print('申请上麦：${event.uid}, roomId: ${event.data?.roomId}');
       UserInfoModel? userInfo = await UserInfoCtrl.ins.findByUidOrNull(event.uid ?? "", useNet: true);
       if(userInfo == null) {
         return;
