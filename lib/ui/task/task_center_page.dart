@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:app/common/theme.dart';
@@ -6,6 +7,7 @@ import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/common/money_icon.dart';
+import 'package:app/common/common.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 /// 任务中心
@@ -19,6 +21,8 @@ class TaskCenterPage extends StatefulWidget {
 }
 
 class _TaskCenterPageState extends State<TaskCenterPage> {
+
+
   final tabs = <String, Widget>{
     '每日任务': DelayView(
       fadeIn: false,
@@ -73,13 +77,13 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
       indicatorSize: TabBarIndicatorSize.label,
       indicator: const UnderlineTabIndicator(
         borderRadius: AppBorderRadius.max,
-        borderSide: BorderSide(width: 2.5, color: Colors.white),
+        borderSide: BorderSide(width: 2.5, color: AppPalette.primary),
       ),
       indicatorPadding: const Pad(horizontal: 15),
       labelStyle: const TextStyle(fontSize: 18, fontWeight: fw$Medium),
       unselectedLabelStyle: const TextStyle(fontSize: 18, fontWeight: fw$Medium),
-      labelColor: Colors.white,
-      unselectedLabelColor: Colors.white,
+      labelColor: AppPalette.primary,
+      unselectedLabelColor: AppPalette.hint,
       padding: const Pad(vertical: (AppSize.appBar - 30) / 2),
       tabs: [
         _buildTab(0, tabs.keys.toList(growable: false).first),
@@ -146,6 +150,7 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
 }
 
 class TaskMainView extends StatelessWidget {
+
   final int taskListType; //任务列表类型 1：每日任务，2：成长任务
   const TaskMainView({super.key, required this.taskListType});
 
@@ -181,6 +186,10 @@ class TaskMainView extends StatelessWidget {
 
   /// 头部活跃度视图
   Widget $HeaderView() {
+    // RxBool isOpen10 = false.obs;
+    // RxBool isOpen40 = false.obs;
+    // RxBool isOpen70 = false.obs;
+    // RxBool isOpen100 = false.obs;
     Widget $Indicator(double percent) {
       return LinearPercentIndicator(
         animation: false,
@@ -196,12 +205,21 @@ class TaskMainView extends StatelessWidget {
     }
 
     Widget $TaskBoxView(String bottomNum, double right, double boxWidth) {
+
       return Positioned(
         right: right,
         top: 12,
         child: Column(
           children: [
-            Image.asset(IMG.format('task/task_box_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
+           GestureDetector(
+             onTap: (){
+               // isOpen = !isOpen;
+             },
+             child:  Image.asset(IMG.format('task/task_box_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,)
+             //  :
+             // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
+           ),
+
             XText(
               bottomNum,
               style: const TextStyle(fontSize: 10, color: AppPalette.colorA7),
@@ -217,9 +235,9 @@ class TaskMainView extends StatelessWidget {
           padding: Pad(horizontal: 12),
           child: Row(
             children: [
-              XText('今日活跃度：0'),
+              XText('今日活跃度：0',selectionColor: Colors.black,style: TextStyle(color: Colors.black),),
               Expanded(child: Spacing.blank),
-              XText('每日0点刷新'),
+              XText('每日0点刷新',style: TextStyle(color: Colors.black),),
             ],
           ),
         ),
@@ -233,9 +251,9 @@ class TaskMainView extends StatelessWidget {
 
                 return Stack(
                   clipBehavior: Clip.none,
-                  children: [
+                  children: [  // 90
                     Positioned.fill(child: $Indicator(
-                      max(0, min(1, 0.5,),),
+                      max(0, min(1, 0.9,),),
                     ),),
                     $TaskBoxView('100', -3, boxWidth),
                     $TaskBoxView('70', 3 * tenPercentWidth + boxWidth - 3, boxWidth),
@@ -263,12 +281,14 @@ class TaskMainView extends StatelessWidget {
                     children: [
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
-                        child: SvgView(SVG.$('cz/紫钻'), width: 21, height: 21),
+                       // child: SvgView(SVG.$('cz/黄钻'), width: 21, height: 21),
+                        child: Image.asset(IMG.format('money_gold'), width: 21, height: 21)
                       ),
-                      const TextSpan(text: '  打开宝箱可获得，'),
+                      const TextSpan(text: '  打开宝箱可获得'),
                       const TextSpan(
-                        text: '金币或体力点',
-                        style: TextStyle(fontSize: 11, color: Color(0xFFFF000C), fontWeight: fw$Regular),
+                        // text: '金币或体力点',
+                        text: '黄钻',
+                        style: TextStyle(fontSize: 11, color: AppPalette.colorYZ, fontWeight: fw$Regular),
                       ),
                     ],
                   ),
@@ -319,7 +339,7 @@ class TaskMainView extends StatelessWidget {
 
     child = Container(
       padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
-      height: 53,
+      height: 53.h,
       child: child,
     );
 

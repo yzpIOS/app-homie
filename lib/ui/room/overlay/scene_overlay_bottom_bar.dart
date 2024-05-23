@@ -98,13 +98,17 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
     return Obx(
       () {
         final isEnable = (isRoom && freeMicRx && canSpeak(myUid)) || (manInHallNearByRoom?.isTrue ?? false);
-        int? status = RoomChatCtrl.status.value;
-        print('123status = $status');
+        // int? status = RoomChatCtrl.status.value;
+       // bool isMickStatus = Rtc.micRx.value;
+       // int isJinMaiStatus = Rtc.status.value;
+        /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+        int mikeStatus = Rtc.mike_status.value;
+     //   print('123status = $status');
         return _IconBtnSvg(
-          icon: isEnable ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
+          icon: isEnable && mikeStatus == 1 ? '麦克风_${Rtc.micRx().intVal}' : mikeStatus == 4 ?'表情' : '麦克风_禁用',
           padding: Pad(horizontal: 5),
-          onItemClick: isEnable && status != 1 ? onItemClick : null,
-         // onItemClick: isEnable ? onItemClick : null,
+         // onItemClick: isEnable && status != 1 ? onItemClick : null,
+          onItemClick: isEnable ? onItemClick : null,
         );
       },
     );

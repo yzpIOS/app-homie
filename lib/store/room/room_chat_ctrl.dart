@@ -171,15 +171,31 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       // final role = _ctrl.getRole(uid!);
       // final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
       // print('dataUserIsOwner: $dataUserIsOwner');
+
       if(OAuthCtrl.uid == uid){
-        print('测试来了吗222');
+      //  print('测试来了吗222');
        // Rtc.micSwitch();
+        bool isOpen = Rtc.openMicRx.contains(uid);
         if(statusq == 1){
-          Rtc.micRx.value = false;
-          status.value = 1;
+        //  Rtc.status.value = 1; 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+
+
+         // if(isOpen == false){
+            Rtc.mike_status.value = 4;
+            Rtc.micRx.value = false;
+        //  }
+        //  status.value = 1;
         }else{
-          Rtc.micRx.value = true;
-          status.value = 2;
+        //  Rtc.status.value = 2;
+
+          if(isOpen == false){
+            Rtc.mike_status.value = 3;
+          }else{
+            Rtc.mike_status.value = 1;
+            Rtc.micRx.value = true;
+          }
+
+        //  status.value = 2;
         }
 
 
