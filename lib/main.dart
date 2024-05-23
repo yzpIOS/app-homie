@@ -31,7 +31,7 @@ void main() async {
       // FlutterNativeSplash.preserve(widgetsBinding: WidgetsBinding.instance);
       asyncTrack('Executor 初始化', action: executorInit);
       /// 本地存储初始化
-       await SpUtil.getInstance();
+      // await SpUtil.getInstance();
       await Future.wait(
         [
           asyncTrack('KvBox 初始化', action: KvBox.init),
