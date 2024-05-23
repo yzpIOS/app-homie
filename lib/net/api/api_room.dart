@@ -199,7 +199,7 @@ class ApiRoom extends ApiBase {
   ///
   Future micConfirm({required int mikeId, required bool isAgree, required int type, int? uid, int? roomId}) {
     final data = {
-      'mike_id': mikeId,
+      // 'mike_id': mikeId,
       'type': type,
       'status': isAgree ? 1 : 2,
       if(uid != null)

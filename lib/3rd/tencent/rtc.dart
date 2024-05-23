@@ -24,9 +24,9 @@ class Rtc {
   static final videoRx = RxBool(false);
   static final netQualityRx = RxInt(0);
 
-  static  int sdkAppId = 0 ;
-  static String userId = '';
-  static String userSig = '';
+  // static  int sdkAppId = 0 ;
+  // static String userId = '';
+  // static String userSig = '';
   // 麦状态，1禁麦
   static late final status = RxInt(0);
   //RxInt mike_status = 0.obs;
@@ -255,23 +255,23 @@ class Rtc {
   static Future<void> enterRoom(String roomId, String token) async {
     await Rtc.init;
     await Rtc.leave(isJoinBefore: true);
-    // int sdkAppId = readIntData('sdkAppId');
-    // String userId = readStringData('userId');
-    // String userSig = readStringData('userSig');
+    int sdkAppId = readIntData('sdkAppId');
+    String userId = readStringData('userId');
+    String userSig = readStringData('userSig');
   //  Rtc.sdkAppId
    // Rtc.userId
 
-    print('Rtc.sdkAppId:${Rtc.sdkAppId},Rtc.userId:${Rtc.userId},Rtc.userSig:${Rtc.userSig}');
+   // print('Rtc.sdkAppId:${Rtc.sdkAppId},Rtc.userId:${Rtc.userId},Rtc.userSig:${Rtc.userSig}');
 
     _rtcClient.enterRoom(
       TRTCParams(
-        sdkAppId: Rtc.sdkAppId,
+        sdkAppId: sdkAppId,
      //   sdkAppId: readIntData('sdkAppId'),
         roomId: 0,
         strRoomId: roomId,
-         userId: Rtc.userId,
+         userId: userId,
      //   userId: readStringData('userId'),
-        userSig: Rtc.userSig,
+        userSig: userSig,
     //    userSig: readStringData('userSig'),
         role: TRTCCloudDef.TRTCRoleAudience,
       ),

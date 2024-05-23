@@ -495,13 +495,13 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           final joinResult = await Api.Room.joinRoom(roomId, pwd: null, timeout: 60 * 2);
           logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
           if(joinResult != null && joinResult.code == ErrorCode.Success) {
-            // saveState('Int', 'sdkAppId', joinResult.sdkAppId);
-            // saveState('String', 'userId', joinResult.userId);
-            // saveState('String', 'userSig', joinResult.userSig);
+            saveState('Int', 'sdkAppId', joinResult.sdkAppId);
+            saveState('String', 'userId', joinResult.userId);
+            saveState('String', 'userSig', joinResult.userSig);
            // ConsumableStore.save(joinResult.userId);
-            Rtc.sdkAppId = joinResult.sdkAppId;
-            Rtc.userId = joinResult.userId;
-            Rtc.userSig = joinResult.userSig;
+           //  Rtc.sdkAppId = joinResult.sdkAppId;
+           //  Rtc.userId = joinResult.userId;
+           //  Rtc.userSig = joinResult.userSig;
             toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
           }
 

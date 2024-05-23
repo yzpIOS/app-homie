@@ -650,8 +650,8 @@ class RoomCtrl extends SceneCtrl {
       managerRx.add(OAuthCtrl.uid);
     }
 
-    // //  更新mike位数据
-    //   roomMicCtrl = getRoomMicCtrl();
+    //  更新mike位数据
+     // roomMicCtrl = getRoomMicCtrl();
     //   (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
     //   (roomMicCtrl as RoomMicCtrl?)?.onMikeListUpdate();
 
