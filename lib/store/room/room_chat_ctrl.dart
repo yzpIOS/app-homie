@@ -7,6 +7,8 @@ import 'package:app/store/im/chat_ctrl.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/store/room/room_ctrl.dart';
 import 'package:app/store/room/room_manager_ctrl.dart';
+import 'package:app/store/room/room_mic_ctrl.dart';
+import 'package:app/store/room/scene_mic_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/user_info_ctrl.dart';
 import 'package:app/tools.dart';
@@ -160,46 +162,61 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       handleEvent(data);
     });
 
+    // 加入房间场景反馈结果
+    on<JoinSceneEvent>((data) {
+      UID? userSig = data?.userSig;
+      int? sdkAppId = data?.sdkAppId;
+      UID? userId = data?.userId;
+      // RoomChatCtrl.cacheEventItem(data);
+    });
+
     on<MikeSpeakingEvent>((data) {
-      // handleEvent(data);
+
+      // int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
+
       print('禁麦通知：$data');
-        ///  int32 status = 3; // 1.禁麦 2.开麦
+      ///  int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
        var uid = data.uid;
-       var statusq = data.status;
+       int? statusq = data.status;
        print('status.value = ${status.value}');
-      // late final _ctrl = sceneCtrl<RoomCtrl>();
-      // final role = _ctrl.getRole(uid!);
-      // final dataUserIsOwner = role.isOwner;//这条数据用户是否是房主
-      // print('dataUserIsOwner: $dataUserIsOwner');
+      SceneMicCtrl? sceneMicCtrl = RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl();
+      if(sceneMicCtrl is RoomMicCtrl) {
+        sceneMicCtrl.dataRx.value.forEach((key,value){
+          if(value.uid == uid){
+            value.status = statusq!;
+          }
+        });
+      }
+
 
       if(OAuthCtrl.uid == uid){
-      //  print('测试来了吗222');
-       // Rtc.micSwitch();
-        bool isOpen = Rtc.openMicRx.contains(uid);
-        if(statusq == 1){
+
+        if(statusq == 3){
         //  Rtc.status.value = 1; 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
 
-
+      //    3.开麦 4.闭麦 5.禁言【禁止rtc】
          // if(isOpen == false){
-            Rtc.mike_status.value = 4;
-            Rtc.micRx.value = false;
+            Rtc.mike_status.value = 3;
+            Rtc.micRx.value = true;
         //  }
         //  status.value = 1;
-        }else{
+        }else if(statusq == 4){
         //  Rtc.status.value = 2;
 
-          if(isOpen == false){
-            Rtc.mike_status.value = 3;
-          }else{
-            Rtc.mike_status.value = 1;
-            Rtc.micRx.value = true;
-          }
+        //  if(isOpen == false){
+            Rtc.mike_status.value = 4;
+          // }else{
+            Rtc.micRx.value = false;
+        }else{
+          Rtc.mike_status.value = 5;
+          Rtc.micRx.value = false;
+        }
 
         //  status.value = 2;
         }
 
 
-      }
+     // }
 
     });
 

@@ -104,6 +104,21 @@ class ApiRoom extends ApiBase {
     );
   }
 
+  /// 开闭麦操作
+  Future<S_MikeSpeakingBroadcast?> openShutMike({int? status,int timeout = 16}) async {
+    C_OpenShutMike c_jpenShutMike = C_OpenShutMike();
+    c_jpenShutMike.status = status ?? 2;
+    return await SocketCtrl.ins.sendByteAsyncServer(
+        CMD.C_OpenShutMike,
+        datas: c_jpenShutMike.writeToBuffer(),
+        resCmd: CMD.S_MikeSpeakingBroadcast,
+        timeout: timeout
+    );
+
+  }
+
+
+
   Future getRoomInfo(int id, {String? pwd}) {
     final data = {
       'room_id': id,

@@ -219,21 +219,39 @@ class _ItemView extends StatelessWidget {
     }
 
     Widget $Mic() {
-      return item.isMute
-          ? $MicStateView('禁麦')
-          : Obx(
-              () {
-                final bool isOpen;
+      // return item.isMute
+      //     ? $MicStateView('禁麦')
+      //     : Obx(
+      //         () {
+      //           final bool isOpen;
+      //           if (isSelf) {
+      //             isOpen = Rtc.micRx();
+      //           } else {
+      //             isOpen = Rtc.openMicRx.contains(uid);
+      //           }
+      //           // print('isOpen=&$isOpen');
+      //           return isOpen ? Spacing.blank : $MicStateView('闭麦');
+      //         },
+      //       );
 
-                if (isSelf) {
-                  isOpen = Rtc.micRx();
-                } else {
-                  isOpen = Rtc.openMicRx.contains(uid);
-                }
-
-                return isOpen ? Spacing.blank : $MicStateView('闭麦');
-              },
-            );
+      return
+        // Obx(
+        //     () {
+          // final bool isOpen;
+          //
+          // if (isSelf) {
+          //   isOpen = Rtc.micRx();
+          // } else {
+          //   isOpen = Rtc.openMicRx.contains(uid);
+          // }
+          // print('isOpen=&$isOpen');
+             /// int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
+        ///
+        item.status == 3 ? Spacing.blank : item.status == 4 || item.status == 1 ? $MicStateView('闭麦') :
+        item.status == 5 || item.status == 6 ? $MicStateView('禁麦') : Spacing.blank;
+        //  return isOpen ? Spacing.blank : $MicStateView('闭麦');
+        // },
+    //  );
     }
 
     Widget $HotView() {
@@ -273,9 +291,10 @@ class _ItemView extends StatelessWidget {
     return RepaintBoundary(
       child: _MicView(
         tag: no == '1' ? 'presided' : null,
-        mic: $Mic(),
+         mic: $Mic(),
         tips: $HotView(),
         avatar: $Avatar(),
+       // avatar: Container(),
         title: UserInfoCtrl.use(uid, builder: (it) {
           return XText(
             it?.showName ?? '',

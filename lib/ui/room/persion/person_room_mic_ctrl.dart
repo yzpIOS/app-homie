@@ -199,7 +199,7 @@ class PersonRoomMicCtrl extends RoomMicCtrl  {
 
     var localMicInfo = MicInfo(
         uid: event.uid ?? "",
-        micId: data.mikeId.toInt(),
+      //  micId: data.mikeId.toInt(),
         hotCount: event.hotCount,
         isMute: event.isMute,
         nUid: data.roleId,

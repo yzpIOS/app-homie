@@ -31,6 +31,8 @@ class CMD {
   static const C_JoinScene = 2112; // 加入房间场景=======对接完成
   static const S_JoinScene = 2113; // 加入房间场景反馈结果=======对接完成
 
+
+
   static const C_GoBack = 2116;//公会房间按钮返回键发送的消息c_gob
 
   static const C_OutScene = 2114; // 退出房间场景, 只是退出场景，rtc还在=======对接完成
@@ -86,7 +88,9 @@ class CMD {
   static const S_AccMikeBroadcast = 2230; // 房间计数器广播, 18=======对接完成
   static const S_UpdateCharmLevel = 3103; // 魅力等级提升广播（对应mq的19）=======对接完成
 
+  static const C_OpenShutMike = 2198; // 开闭麦操作，响应广播：S_MikeSpeakingBroadcast
   static const S_MikeSpeakingBroadcast = 2272; // 房间禁言广播
+
   static const S_FloatingScreen = 3105; // 礼物飘屏广播(对应mq的8，和礼物播放不同的mq通道)=======对接完成
   static const refuseUpMic = 22013; // 房间开关播广播
   static const msgTxt = 2206; // 礼物

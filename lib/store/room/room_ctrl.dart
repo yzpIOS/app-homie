@@ -6,7 +6,6 @@ import 'package:app/common/nets/commons/proto/ErrorCode.pb.dart';
 import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/exception.dart';
-import 'package:app/model/activity_info_model.dart';
 import 'package:app/store/room/room_msg_ctrl_pb.dart';
 import 'package:app/ui/common/orientation_sheet.dart';
 import 'package:app/ui/room/overlay/room_overlay.dart';
@@ -45,21 +44,21 @@ import 'package:app/common/nets/commons/proto/Message.pb.dart';
 import 'package:app/event/event.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:provider/provider.dart';
-
-
+import 'package:app/model/activity_info_model.dart';
 export 'package:app/model/enum/room_role_type.dart';
 
 typedef RoomBaseInfo = Map;
 typedef RoomRunInfo = Map;
 
 T sceneCtrl<T extends SceneCtrl>() {
-  if(RoomManagerCtrl.ins.sceneCtrl2 is T) {
+  if (RoomManagerCtrl.ins.sceneCtrl2 is T) {
     return RoomManagerCtrl.ins.sceneCtrl2 as T;
   }
   return Get.find<SceneCtrl>(tag: '$T') as T;
 }
 
-abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin, ReadyMixin, ReadyCtrlMixin {
+abstract class SceneCtrl extends GetxController
+    with GetDisposableMixin, BusGetLifeMixin, ReadyMixin, ReadyCtrlMixin {
   final String? pwd;
   final RoomBaseInfo info;
 
@@ -84,14 +83,14 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         noticeRx = RxString(info['notice_message'] ?? '');
 
   final sceneHudRx = Rx(RoomHudState.None);
-  final micPanelRx = RxBool(false);//麦位是否显示
-  final chatMsgViewIsShowRx = RxBool(false);//聊天消息视图是否显示
-  final bottomBarIsShowRx = RxBool(false);//底部栏视图是否显示
+  final micPanelRx = RxBool(false); //麦位是否显示
+  final chatMsgViewIsShowRx = RxBool(false); //聊天消息视图是否显示
+  final bottomBarIsShowRx = RxBool(false); //底部栏视图是否显示
 
   // todo 去掉加载页面
-  final adLoadingIsFinishRx = RxBool(true);//广告加载图是否完成
+  final adLoadingIsFinishRx = RxBool(true); //广告加载图是否完成
 
-  final noticePanelRx = RxBool(false);//房间公告是否显示
+  final noticePanelRx = RxBool(false); //房间公告是否显示
 
   abstract bool keepState;
 
@@ -100,10 +99,13 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
   /// 记录是否己经加入房间
   bool _hasJoinRoom = false;
+
   /// 活动入口数组
   final activityList = <ActivityInfoModel>[].obs;
+
   /// 是否显示转盘活动
   final showTurntableActivity = false.obs;
+
   /// 是否显示水果机活动
   final showFruitMachineActivity = false.obs;
 
@@ -122,7 +124,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
       Future.delayed(
         3.seconds,
-            () {
+        () {
           if (!isClosed) noticePanelRx(false);
         },
       );
@@ -134,20 +136,19 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // todo 去掉加载页面
     completeProgress();
 
-    //debugPrint("开始监听麦位信息");
+    debugPrint("开始监听麦位信息");
 
     // 服务端的数据广播比较快，而客户端数据比较慢
     // 所以要记录用户的列表，然后当服务端数据返回来的时候
     // 把当前数据更新到http列表的数据
     on<MicUpEvent>((event) {
       S_UpMikeBroadcast? data = event.data;
-      if(data == null) {
+      if (data == null) {
         return;
       }
-      //debugPrint("新增麦位：data = ${data.toProto3Json()}");
+      debugPrint("新增麦位：data = ${data.toProto3Json()}");
       newMicList.add(data);
-    }
-    );
+    });
 
     super.onInit();
 
@@ -159,19 +160,19 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     SocketCtrl.ins.onDataCmd(CMD.S_TopThree, onReceiveTopThree);
 
-
     Api.Room.getContribute(roomId).then((value) {
-      if(topThree.value != null) {
+      if (topThree.value != null) {
         return;
       }
-      if(value is Map && value["items"] != null) {
+      if (value is Map && value["items"] != null) {
         S_TopThree three = S_TopThree.create();
         var list = (value["items"] as List);
-        for(var index = 0; index < list.length; index ++) {
+        for (var index = 0; index < list.length; index++) {
           TopThreeItem topThreeItem = TopThreeItem.create();
           topThreeItem.roleId = Int64(list[index]["role_id"]);
           topThreeItem.uid = list[index]["uid"];
-          topThreeItem.contributionCount = Int64(list[index]["contribution_count"]);
+          topThreeItem.contributionCount =
+              Int64(list[index]["contribution_count"]);
           three.items.add(topThreeItem);
         }
         topThree.value = three;
@@ -203,7 +204,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     if (!Env.useUnity) {
       try {
         var jointResult = await Api.Room.joinRoom(roomId, pwd: pwd);
-        if(jointResult == null || jointResult.code != ErrorCode.Ok) {
+        if (jointResult == null || jointResult.code != ErrorCode.Ok) {
           return;
         }
         var info = await Api.Room.getRoomInfo(roomId, pwd: pwd);
@@ -254,7 +255,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // bindGet(RoomMsgCtrl(roomId));
     bindGet(RoomMsgCtrlPb(roomId: roomId));
     bindGet(RoomChatCtrl(roomId));
-    //debugPrint("aa");
+    debugPrint("aa");
   }
 
   @mustCallSuper
@@ -270,7 +271,9 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     //靠近售卖机
     on<XUnityEvent>(
-      test: (event) => event.code == Unity2AppEnum.UTF_DETECT_BUILDING && event.ext['type'] == 2,
+      test: (event) =>
+          event.code == Unity2AppEnum.UTF_DETECT_BUILDING &&
+          event.ext['type'] == 2,
       (_) => ActMainDialog.show(),
     );
   }
@@ -286,26 +289,26 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // unity初始化与加入房间同时进行
     try {
       roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
-    } catch(e) {
+    } catch (e) {
       RoomManagerCtrl.ins.doNormalState();
       RoomManagerCtrl.ins.onSocketDisconnect();
       return;
     }
-    //logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+    logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
     // 监听unity发过来的信息
-    //logForDebug("获听unity初始化完成消息");
+    logForDebug("获听unity初始化完成消息");
     // 判断是否关闭界面
     isNotClose();
 
     // loadSceneInfo method return false means load fail, and this page will close
     bool result = await loadSceneInfo();
-    if(!result) {
+    if (!result) {
       return;
     }
 
     // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
-    if(keepState) {
+    if (keepState) {
       RoomManagerCtrl.ins.doMiniState();
     } else {
       RoomManagerCtrl.ins.doNormalState();
@@ -316,28 +319,28 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     // 获取抽奖列表
     Api.Activity.getLotteries().then((result) {
-      if(result["items"] != null && result["items"] is List){
+      if (result["items"] != null && result["items"] is List) {
         final List items = result["items"];
         final List<ActivityInfoModel> modelList = [];
-        for(int i = 0; i < items.length; i ++) {
+        for (int i = 0; i < items.length; i++) {
           final Map item = items[i];
           final ActivityInfoModel infoModel = ActivityInfoModel.fromJson(item);
-          if(infoModel.type != null && infoModel.type == 1){
+          if (infoModel.type != null && infoModel.type == 1) {
             showTurntableActivity.value = true;
-          }else if(infoModel.type != null && infoModel.type == 2){
+          } else if (infoModel.type != null && infoModel.type == 2) {
             showFruitMachineActivity.value = true;
           }
           modelList.add(infoModel);
         }
         activityList.addAll(modelList);
-      }else{
+      } else {
         activityList.clear();
       }
     });
 
     /// 请求房间系统公告消息数组
     isNotClose();
-    if(!hasSendMsg) {
+    if (!hasSendMsg) {
       Api.Common.systemQuery().then((data) {
         hasSendMsg = true;
         isNotClose();
@@ -349,15 +352,15 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
-    //logForDebug("开始加载unity");
+    logForDebug("开始加载unity");
 
     markReady();
     // unity加载完成，设置成normal状态，如果返回的时候
     RoomManagerCtrl.ins.doNormalState();
   }
 
-
-  Future<void> loadScene2(UnityCtrl unity, SceneLoader loader, ValueChanged<double> onProcess) async {
+  Future<void> loadScene2(UnityCtrl unity, SceneLoader loader,
+      ValueChanged<double> onProcess) async {
     sceneHudRx(RoomHudState.None);
     isRequestBack = false;
 
@@ -368,26 +371,26 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     // unity初始化与加入房间同时进行
     try {
       roomHttpInfo = await Api.Room.getRoomInfo(roomId, pwd: pwd);
-    } catch(e) {
+    } catch (e) {
       RoomManagerCtrl.ins.doNormalState();
       RoomManagerCtrl.ins.onSocketDisconnect();
       return;
     }
-    //logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
+    logForDebug("房间信息返回, roomHttpInfo = ${roomHttpInfo.toString()}");
 
     // 监听unity发过来的信息
-    //logForDebug("获听unity初始化完成消息");
+    logForDebug("获听unity初始化完成消息");
     // 判断是否关闭界面
     isNotClose();
 
     // loadSceneInfo method return false means load fail, and this page will close
     bool result = await loadSceneInfo();
-    if(!result) {
+    if (!result) {
       return;
     }
 
     // 加载成功后，设置成成功，后面unity加载完成后，再把状态设置成normal
-    if(keepState) {
+    if (keepState) {
       RoomManagerCtrl.ins.doMiniState();
     } else {
       RoomManagerCtrl.ins.doNormalState();
@@ -398,28 +401,28 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
 
     // 获取抽奖列表
     Api.Activity.getLotteries().then((result) {
-      if(result["items"] != null && result["items"] is List){
+      if (result["items"] != null && result["items"] is List) {
         final List items = result["items"];
         final List<ActivityInfoModel> modelList = [];
-        for(int i = 0; i < items.length; i ++) {
+        for (int i = 0; i < items.length; i++) {
           final Map item = items[i];
           final ActivityInfoModel infoModel = ActivityInfoModel.fromJson(item);
-          if(infoModel.type != null && infoModel.type == 1){
+          if (infoModel.type != null && infoModel.type == 1) {
             showTurntableActivity.value = true;
-          }else if(infoModel.type != null && infoModel.type == 2){
+          } else if (infoModel.type != null && infoModel.type == 2) {
             showFruitMachineActivity.value = true;
           }
           modelList.add(infoModel);
         }
         activityList.addAll(modelList);
-      }else{
+      } else {
         activityList.clear();
       }
     });
 
     /// 请求房间系统公告消息数组
     isNotClose();
-    if(!hasSendMsg) {
+    if (!hasSendMsg) {
       Api.Common.systemQuery().then((data) {
         hasSendMsg = true;
         isNotClose();
@@ -430,7 +433,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     sceneHudRx(RoomHudState.Normal);
 
     // unity初始化与加入房间同时进行
-    //logForDebug("开始加载unity");
+    logForDebug("开始加载unity");
     isNotClose();
     await loader(
       'Room',
@@ -444,14 +447,15 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
         onProcess(0.8);
         try {
           isNotClose();
-          //logForDebug("开始FTU_JOIN_GAME");
+          logForDebug("开始FTU_JOIN_GAME");
 
           Future<void> doJoinGame() {
             const dur = Duration(seconds: unity_time_out);
             final data = {'token': OAuthCtrl.token, 'scene': info};
-            //logForDebug("开始FTU_JOIN_GAME, data = ${data.toString()}");
-            var result =  unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME, data: data, timeout: dur);
-            //logForDebug("FTU_JOIN_GAME成功");
+            logForDebug("开始FTU_JOIN_GAME, data = ${data.toString()}");
+            var result = unity.sendMessage(App2UnityEnum.FTU_JOIN_GAME,
+                data: data, timeout: dur);
+            logForDebug("FTU_JOIN_GAME成功");
             return result;
           }
 
@@ -459,7 +463,7 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
             // assert(false, '产品需求改了，这个逻辑应该不会走');
             await doJoinGame();
           } else {
-            //logForDebug("获取房间信息开始");
+            logForDebug("获取房间信息开始");
 
             // 加载unity
             isNotClose();
@@ -471,8 +475,8 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           // unity加载完成，设置成normal状态，如果返回的时候
           RoomManagerCtrl.ins.doNormalState();
         } catch (e, s) {
-          //logForDebug("FTU_JOIN_GAME失败, error = ${e}");
-          if(isDisposed) {
+          logForDebug("FTU_JOIN_GAME失败, error = ${e}");
+          if (isDisposed) {
             return;
           }
           markFail(e, s);
@@ -492,27 +496,30 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
     }
 
     //没有加房的时候，先进房pk的状态；1.房间pk中
-    if(!_hasJoinRoom) {
-      if (((isInPKRoom() && RoomManagerCtrl.ins.stateRx.value == RoomState.None) || !isInPKRoom()) && neeJoinRoom()) {
-        //logForDebug("非pk状态，joinRoom");
+    if (!_hasJoinRoom) {
+      if (((isInPKRoom() &&
+                  RoomManagerCtrl.ins.stateRx.value == RoomState.None) ||
+              !isInPKRoom()) &&
+          neeJoinRoom()) {
+        logForDebug("非pk状态，joinRoom");
         try {
           // 加一个标识用来是否要加入房间，个人房在创建的时候不需要加入房间
-          if(RoomManagerCtrl.ins.needJoinRoom) {
-            final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
-            //logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
-            if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
-              if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
-                throw const LogicException(-1, "该房间主人拒绝您进入");
-              } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
-                throw const LogicException(-1, "输入的房间密码错误");
-              } else {
-                throw const LogicException(-1, "房间数据加载失败");
-              }
-            }
+          if (RoomManagerCtrl.ins.needJoinRoom) {
+            // final joinResult = await Api.Room.joinRoom(roomId, pwd: pwd, timeout: 60 * 2);
+            // logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+            // if(joinResult == null || (joinResult.code != ErrorCode.Ok && joinResult.code != ErrorCode.Success)) {
+            //   if(joinResult?.code == ErrorCode.ROOM_UID_BLACK) {
+            //     throw const LogicException(-1, "该房间主人拒绝您进入");
+            //   } else if (joinResult?.code == ErrorCode.ROOM_PASSWORD_NOT_PERMISSION) {
+            //     throw const LogicException(-1, "输入的房间密码错误");
+            //   } else {
+            //     throw const LogicException(-1, "房间数据加载失败");
+            //   }
+            // }
           }
-        } catch(e) {
+        } catch (e) {
           String? message = null;
-          if(e is LogicException) {
+          if (e is LogicException) {
             message = e.msg;
           }
           RoomManagerCtrl.ins.doNormalState();
@@ -522,32 +529,33 @@ abstract class SceneCtrl extends GetxController with GetDisposableMixin, BusGetL
           RoomManagerCtrl.ins.needJoinRoom = true;
         }
       } else {
-        //logForDebug("pk状态，不需要joinRoom", enMsg: "user in pk status, don't need call joinRoom api");
+        logForDebug("pk状态，不需要joinRoom",
+            enMsg: "user in pk status, don't need call joinRoom api");
       }
       _hasJoinRoom = true;
     }
 
     isNotClose();
-    // logForDebug(
-    //     "通知服务端同步房间信息",
-    //     enMsg: "start to tell server to synchronise room's message, such as players");
+    logForDebug("通知服务端同步房间信息",
+        enMsg:
+            "start to tell server to synchronise room's message, such as players");
     // unity初始化完成后，发送同步信息指令
     try {
       C_RoomEnterComplete c_roomEnterComplete = C_RoomEnterComplete.create();
       c_roomEnterComplete.roomId = Int64(roomId);
       S_SyncRoomInfo? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-        CMD.C_RoomEnterComplete,
-        datas: c_roomEnterComplete.writeToBuffer(),
-        resCmd: CMD.S_SyncRoomInfo,
-        timeout: 60 * 2
-      );
+          CMD.C_RoomEnterComplete,
+          datas: c_roomEnterComplete.writeToBuffer(),
+          resCmd: CMD.S_SyncRoomInfo,
+          timeout: 60 * 2);
       // 判断是否关闭界面
       isNotClose();
       onRender(s_syncRoomInfo);
 
       RoomInfoEvent(s_syncRoomInfo).fire();
-      //logForDebug("通知同步房间结果, s_syncRoomInfo = ${s_syncRoomInfo.toString()}", enMsg: "call synchronise room's message api result");
-    } catch(e) {
+      logForDebug("通知同步房间结果, s_syncRoomInfo = ${s_syncRoomInfo.toString()}",
+          enMsg: "call synchronise room's message api result");
+    } catch (e) {
       RoomManagerCtrl.ins.doNormalState();
       RoomManagerCtrl.ins.onSocketDisconnect();
       return false;
@@ -588,19 +596,24 @@ class RoomCtrl extends SceneCtrl {
   RxBool freeMicRx = RxBool(false);
 
   RxBool followRx = RxBool(false);
+
   /// 背包开关
   RxBool openBackpack = RxBool(false);
 
   RxInt userCountRx = RxInt(0);
 
   RoomCtrl({required super.info, required super.pwd, required super.overlay})
-      : assert({RoomType.customize.code, RoomType.guild.code}.contains(info['room_type'])),
+      : assert({RoomType.customize.code, RoomType.guild.code}
+            .contains(info['room_type'])),
         maxMic = info['mike_num'],
         maxUser = info['max_num'] ?? -1,
         //麦克风状态1开放 2.关闭；默认:2
-        freeMicRx = RxBool(info['room_type'] == RoomType.guild.code,),
+        freeMicRx = RxBool(
+          info['room_type'] == RoomType.guild.code,
+        ),
         //房间麦审核状态1.开 2.关  默认：2
-        examineMicRx = RxBool(info['mike_examine_status'] == ApiSwitch.open.code),
+        examineMicRx =
+            RxBool(info['mike_examine_status'] == ApiSwitch.open.code),
         managerRx = RxSet();
 
   @override
@@ -633,16 +646,16 @@ class RoomCtrl extends SceneCtrl {
     isAnchor = data?.isAnchor == 1;
 
     // 是否管理员
-    if(data?.isAdministrator == 1) {
+    if (data?.isAdministrator == 1) {
       managerRx.add(OAuthCtrl.uid);
     }
 
-    // 更新mike位数据
-    roomMicCtrl = getRoomMicCtrl();
-    (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
-    (roomMicCtrl as RoomMicCtrl?)?.onMikeListUpdate();
+    // //  更新mike位数据
+    //   roomMicCtrl = getRoomMicCtrl();
+    //   (roomMicCtrl as RoomMicCtrl?)?.dataRx.value = RoomMicCtrl.createMicInfo(data?.mikes ?? []);
+    //   (roomMicCtrl as RoomMicCtrl?)?.onMikeListUpdate();
 
-    if(RoomManagerCtrl.ins.shouldOpenGift) {
+    if (RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);
     }
     RoomManagerCtrl.ins.shouldOpenGift = false;
@@ -659,7 +672,8 @@ class RoomCtrl extends SceneCtrl {
   }
 
   SceneMicCtrl getRoomMicCtrl() {
-    roomMicCtrl ??= bindGet<SceneMicCtrl>(RoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, roomUid: roomUid));
+    roomMicCtrl ??= bindGet<SceneMicCtrl>(RoomMicCtrl(roomId,
+        maxMic: maxMic, roomType: roomType, roomUid: roomUid));
     return roomMicCtrl!;
   }
 
@@ -692,10 +706,12 @@ class RoomCtrl extends SceneCtrl {
     on<LuckScreenEvent>((data) async {
       RoomChatCtrl.cacheEventItem(data);
     });
+
     /// 礼物消息
     on<GiftEvent>((data) async {
       RoomChatCtrl.cacheEventItem(data);
     });
+
     /// 多个礼物播放广播（盲盒开出的礼物数组）
     on<MoreGiftPlayEvent>((data) async {
       RoomChatCtrl.cacheEventItem(data);
@@ -712,6 +728,14 @@ class RoomCtrl extends SceneCtrl {
     // 清屏
     on<S_ClearScreenBroadcast>((data) {
       RoomChatCtrl.cacheEventItem(data);
+    });
+
+    // 加入房间场景反馈结果
+    on<JoinSceneEvent>((data) {
+      //  RoomChatCtrl.cacheEventItem(data);
+      UID? userSig = data?.userSig;
+      int? sdkAppId = data?.sdkAppId;
+      UID? userId = data?.userId;
     });
   }
 
@@ -732,7 +756,7 @@ class RoomCtrl extends SceneCtrl {
 
   void setBlock({required UID uid, required bool isAdd}) {
     simpleSub(
-      () => Api.Room.setBlock(uid:uid, roomId: roomId, isAdd: isAdd),
+      () => Api.Room.setBlock(uid: uid, roomId: roomId, isAdd: isAdd),
     );
   }
 
@@ -742,14 +766,16 @@ class RoomCtrl extends SceneCtrl {
 
   @override
   Widget createHeader() {
-    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
+    final isLandscape =
+        Get.context?.watch<Orientation>() == Orientation.landscape;
 
     return Obx(() {
       final showMic = micPanelRx();
       final freeMic = freeMicRx();
 
       //公会房且不在pk中，才显示麦位
-      final topMicMode = (roomType == RoomType.guild && !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
+      final topMicMode = (roomType == RoomType.guild &&
+          !Get.find<RoomManagerCtrl>().sceneCtrl.isInPKRoom());
 
       final showMicPanel = maxMic > 0 && freeMic;
       return Positioned(
@@ -766,13 +792,13 @@ class RoomCtrl extends SceneCtrl {
                 try {
                   keepState = true;
                   // 公会房通知下线
-                  if(roomType == RoomType.guild || roomType == RoomType.customize) {
+                  if (roomType == RoomType.guild ||
+                      roomType == RoomType.customize) {
                     C_GoBack c_goBack = C_GoBack.create();
                     c_goBack.roomId = Int64(roomId);
                     SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
                   }
-                } catch(e, s) {
-                }
+                } catch (e, s) {}
                 Get.back();
                 break;
               case '公告':
@@ -781,7 +807,9 @@ class RoomCtrl extends SceneCtrl {
               case '用户':
                 OrientationSheet.show(
                   child: OnlineUserPage(roomId: roomId),
-                  direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+                  direction: Get.isLandscape
+                      ? SheetOrientation.right
+                      : SheetOrientation.bottom,
                 );
                 break;
               case '关注':
@@ -828,11 +856,11 @@ class SquareCtrl extends SceneCtrl {
   @override
   Widget createHeader() {
     return Positioned(
-        top: AppSize.safeTop,
-        left: 5,
-        right: 5,
-        height: 44,
-        child: const SqureRoomHeader(),
+      top: AppSize.safeTop,
+      left: 5,
+      right: 5,
+      height: 44,
+      child: const SqureRoomHeader(),
     );
   }
 }
@@ -841,14 +869,13 @@ class SquareCtrl extends SceneCtrl {
 /// 个人房的controller
 ///
 class PersonRoomCtrl extends RoomCtrl {
-
   ///
   /// 房主的信息
   ///
   Rxn<UserInfo> owner = Rxn();
 
-  PersonRoomCtrl({required super.info, required super.pwd, required super.overlay});
-
+  PersonRoomCtrl(
+      {required super.info, required super.pwd, required super.overlay});
 
   @override
   void onRender(S_SyncRoomInfo? data) {
@@ -856,10 +883,11 @@ class PersonRoomCtrl extends RoomCtrl {
 
     // 更新mike位数据
     roomMicCtrl = getRoomMicCtrl();
-    (roomMicCtrl as PersonRoomMicCtrl?)?.updateMicInfo(RoomMicCtrl.createMicInfo2(data?.mikes ?? []), roomUid, info['status']);
+    (roomMicCtrl as PersonRoomMicCtrl?)?.updateMicInfo(
+        RoomMicCtrl.createMicInfo2(data?.mikes ?? []), roomUid, info['status']);
     (roomMicCtrl as PersonRoomMicCtrl?)?.onMikeListUpdate();
 
-    if(RoomManagerCtrl.ins.shouldOpenGift) {
+    if (RoomManagerCtrl.ins.shouldOpenGift) {
       RoomOverlay.showGiftSend(roomId);
     }
     RoomManagerCtrl.ins.shouldOpenGift = false;
@@ -867,7 +895,8 @@ class PersonRoomCtrl extends RoomCtrl {
 
   @override
   Widget createHeader() {
-    final isLandscape = Get.context?.watch<Orientation>() == Orientation.landscape;
+    final isLandscape =
+        Get.context?.watch<Orientation>() == Orientation.landscape;
 
     return Obx(() {
       final showMic = micPanelRx();
@@ -876,9 +905,8 @@ class PersonRoomCtrl extends RoomCtrl {
       PersonRoomMicCtrl? personRoomMicCtrl;
       try {
         personRoomMicCtrl = getRoomMicCtrl() as PersonRoomMicCtrl;
-      } catch(e) {
-      }
-      if(personRoomMicCtrl == null) {
+      } catch (e) {}
+      if (personRoomMicCtrl == null) {
         return SizedBox();
       }
 
@@ -898,13 +926,13 @@ class PersonRoomCtrl extends RoomCtrl {
                 try {
                   keepState = true;
                   // 公会房通知下线
-                  if(roomType == RoomType.guild || roomType == RoomType.customize) {
+                  if (roomType == RoomType.guild ||
+                      roomType == RoomType.customize) {
                     C_GoBack c_goBack = C_GoBack.create();
                     c_goBack.roomId = Int64(roomId);
                     SocketCtrl.ins.sendSever(CMD.C_GoBack, message: c_goBack);
                   }
-                } catch(e, s) {
-                }
+                } catch (e, s) {}
                 Get.back();
                 break;
               case '公告':
@@ -913,7 +941,9 @@ class PersonRoomCtrl extends RoomCtrl {
               case '用户':
                 OrientationSheet.show(
                   child: OnlineUserPage(roomId: roomId),
-                  direction: Get.isLandscape ? SheetOrientation.right : SheetOrientation.bottom,
+                  direction: Get.isLandscape
+                      ? SheetOrientation.right
+                      : SheetOrientation.bottom,
                 );
                 break;
             }
@@ -932,8 +962,8 @@ class PersonRoomCtrl extends RoomCtrl {
 
   @override
   SceneMicCtrl getRoomMicCtrl() {
-    roomMicCtrl ??= bindGet<PersonRoomMicCtrl>(PersonRoomMicCtrl(roomId, maxMic: maxMic, roomType: roomType, roomUid: roomUid));
+    roomMicCtrl ??= bindGet<PersonRoomMicCtrl>(PersonRoomMicCtrl(roomId,
+        maxMic: maxMic, roomType: roomType, roomUid: roomUid));
     return roomMicCtrl!;
   }
-
 }

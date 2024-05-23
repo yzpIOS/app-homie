@@ -1,3 +1,4 @@
+import 'package:app/net/api.dart';
 import 'package:app/store/oauth_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/widgets.dart';
@@ -6,6 +7,7 @@ import 'package:tencent_trtc_cloud/trtc_cloud.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_listener.dart';
 
+import 'package:app/common/utils/utils.dart';
 import 'keys.dart';
 
 export 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
@@ -26,6 +28,7 @@ class Rtc {
   static late final status = RxInt(0);
   //RxInt mike_status = 0.obs;
   /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
+  /// 3.开麦 4.闭麦 5.禁言【禁止rtc】
   static late final mike_status = RxInt(0);
 
   static late final TRTCCloud _rtcClient;
@@ -249,13 +252,19 @@ class Rtc {
   static Future<void> enterRoom(String roomId, String token) async {
     await Rtc.init;
     await Rtc.leave(isJoinBefore: true);
+    int sdkAppId = readIntData('sdkAppId');
+    String userId = readStringData('userId');
+    String userSig = readStringData('userSig');
     _rtcClient.enterRoom(
       TRTCParams(
-        sdkAppId: appId,
+       // sdkAppId: appId,
+        sdkAppId: readIntData('sdkAppId'),
         roomId: 0,
         strRoomId: roomId,
-        userId: OAuthCtrl.uid,
-        userSig: token,
+        // userId: OAuthCtrl.uid,
+        userId: readStringData('userId'),
+      //  userSig: token,
+        userSig: readStringData('userSig'),
         role: TRTCCloudDef.TRTCRoleAudience,
       ),
       TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM,
@@ -297,13 +306,16 @@ class Rtc {
       }
     }
 
-    micRx.toggle();
+    int status = micRx.value == true ? 2: 1;
+    await Api.Room.openShutMike(status: status);
 
-    if(micRx.value == true){
-      Rtc.mike_status.value = 1;
-    }else{
-      Rtc.mike_status.value = 3;
-    }
+    // micRx.toggle();
+    //
+    // if(micRx.value == true){
+    //   Rtc.mike_status.value = 1;
+    // }else{
+    //   Rtc.mike_status.value = 3;
+    // }
   }
 
   static Future<void> switchRole(int role) async {
