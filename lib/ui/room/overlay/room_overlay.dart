@@ -308,15 +308,22 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       WaitingCtrl.obj.show();
       C_OnlineList c_roomEnterComplete = C_OnlineList.create();
       c_roomEnterComplete.roomIdList.add(Int64(roomId ?? 0));
-      S_OnlineList? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
-          CMD.C_OnlineList,
-          datas: c_roomEnterComplete.writeToBuffer(),
-          resCmd: CMD.S_OnlineList);
+      // S_OnlineList? s_syncRoomInfo = await SocketCtrl.ins.sendByteAsyncServer(
+      //     CMD.C_OnlineList,
+      //     datas: c_roomEnterComplete.writeToBuffer(),
+      //     resCmd: CMD.S_OnlineList);
       WaitingCtrl.obj.hidden();
-      if (s_syncRoomInfo?.items.isEmpty == true) {
-        showToast("暂无在麦用户");
-        return;
-      }
+      // 获取麦上的用户列表
+      var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
+    //  SceneMicCtrl? sceneMicCtrl2 = RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl();
+    //   if(sceneMicCtrl2 is RoomMicCtrl) {
+        if (micUsers.isEmpty) {
+          showToast("暂无在麦用户");
+          return;
+        }
+    //  }
+       // micInfos = sceneMicCtrl.dataRx.values.toList();
+
 
       // 找出的房主的信息
       GiftSend2RoomEntity? roomOwner;
@@ -324,8 +331,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       GiftSend2RoomEntity? mainRole;
       // 麦上的用户信息列表
       List<GiftSend2RoomEntity> userInMicList = [];
-      // 获取麦上的用户列表
-      var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
+
       // 根据麦号进行排序
       var userList = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
 
@@ -342,8 +348,9 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       userList.sort((a, b) => a.no.compareTo(b.no));
 
       // 获取房主的信息
-      var roomOwnerInfo = s_syncRoomInfo?.items
-          .firstWhereOrNull((element) => element.type == 1);
+      // var roomOwnerInfo = s_syncRoomInfo?.items
+      //     .firstWhereOrNull((element) => element.type == 1);
+      var roomOwnerInfo = userList.firstWhereOrNull((element) => element.roleType == 1);
       if (roomOwnerInfo != null) {
         // 送礼过滤自己
         if (!OAuthCtrl.isSelf(roomOwnerInfo.uid)) {

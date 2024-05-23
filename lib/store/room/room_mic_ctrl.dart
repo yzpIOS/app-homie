@@ -218,7 +218,9 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   /// 下麦处理
   ///
   void onMicDownEventHandle(MicDownEvent event) {
+
     dataRx.remove(event.data?.mikeNo);
+
   }
 
   ///
