@@ -13,7 +13,7 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
   final selectorCloth = _SelectorCloth();//我的-其他
   final selectorWardrobe = _SelectorWardrobe();//我的-衣柜
   bool needGoToMyWardrobe = false;//是否要跳转我的装扮
-  bool modelSceneUnityLoadComplete = false;//商城模特unity界面是否加载完成
+  bool modelSceneUnityLoadComplete = true;//商城模特unity界面是否加载完成
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);

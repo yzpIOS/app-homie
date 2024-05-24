@@ -6,6 +6,7 @@ import 'package:app/common/nets/socket/socket_ctrl.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/shop/cart_sheet.dart';
+import 'package:app/shop/shop_view_best.dart';
 import 'package:app/store/cloth_selector_ctrl.dart';
 import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/my_wardrobe_ctrl.dart';
@@ -352,6 +353,20 @@ class ModelOverlay$Shop extends StatelessWidget {
           width: 65,
           height: 30,
           child: buyView(),
+        ),
+        Positioned(
+          right: 13,
+          bottom: 20 + 6 + 30,
+          width: 65,
+          height: 30,
+          child: XTextBtn(
+            label: '兑换',
+            textStyle:const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold),
+            color: AppPalette.primary,
+            onTap: () {
+
+            },
+          ),
         ),
       ],
     );
