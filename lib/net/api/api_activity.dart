@@ -20,6 +20,14 @@ class ApiActivity extends ApiBase {
   }
 
   ///
+  /// 查询每日任务
+  /// http://192.168.1.131:3000/project/34/interface/api/7385
+  ///
+  Future dailyTaskQuery(){
+    return _doPost("daily_task/query");
+  }
+
+  ///
   /// 获取活动
   /// http://192.168.1.156:20000/project/15/interface/api/2126
   ///

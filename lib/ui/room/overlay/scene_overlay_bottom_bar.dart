@@ -110,14 +110,14 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
           padding: Pad(horizontal: 5),
           // onItemClick: isEnable && status != 1 ? onItemClick : null,
           // onItemClick: isEnable ? onItemClick : null,
-          onItemClick:onItemClick ,
+          onItemClick:null,
         ) : _IconBtnSvg(
        //   icon: isEnable && mikeStatus == 3 ? '麦克风_${Rtc.micRx().intVal}' : mikeStatus == 5 ?'表情' : '麦克风_禁用',
           icon: mikeStatus == 3 ? '麦克风_${Rtc.micRx().intVal}' : '麦克风_禁用',
           padding: Pad(horizontal: 5),
          // onItemClick: isEnable && status != 1 ? onItemClick : null,
-         // onItemClick: isEnable ? onItemClick : null,
-          onItemClick:onItemClick ,
+          onItemClick: isEnable ? onItemClick : null,
+        //  onItemClick:onItemClick ,
         );
       },
     );
