@@ -193,7 +193,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
         isMute: false,
         nUid: data.roleId,
         roleType: event.data?.roleType ?? 0,
-        no: event.data?.mikeNo ?? ""
+        no: event.data?.mikeNo ?? "",
+        status: event.data!.status,
     );
 
     onUpdateHotCount3Handler(data.mikeNo, data.number, refresh: true);

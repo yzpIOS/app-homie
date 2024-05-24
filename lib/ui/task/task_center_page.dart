@@ -362,8 +362,9 @@ class _DetailsListView extends SimpleDataView<Map> {
 
   @override
   Future fetch() =>
-      Api.Finance.diamondDetail(
-        type: taskListType, page: const PageNum(index: 0, size: 999),);
+      // Api.Finance.diamondDetail(
+      //   type: taskListType, page: const PageNum(index: 0, size: 999),);
+   Api.Activity.dailyTaskQuery();
 
   @override
   Widget itemBuilder(BuildContext context, Map item, int index) {
