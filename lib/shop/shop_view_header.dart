@@ -150,9 +150,14 @@ class _MyModelViewState extends State<MyModelView> {
         // 加载成功后，才显示广场按钮
         if(clothSelectorCtrl.modelSceneUnityLoadComplete)
           Positioned(
-            bottom: 100,
-            left: 20,
-            child: $Btn(action: '广场'),
+            bottom: 90,
+            left: 15,
+            child: OpacityButton(
+              onTap: () {
+                clothSelectorCtrl.showSmashingEggsActivityDialog();
+              },
+              child: Image.asset(IMG.format("room/game/product_exchange_egg_icon"), scale: 3),
+            ),
             // left: 13,
             // child: $Btn(action: '装扮抽奖入口'),
           ),
