@@ -99,6 +99,8 @@ class _HomeShopPageState extends State<HomeShopPage> with BusStateMixin, Overlay
     on<GoWardrobeEvent>(
       (_) => pageCtrl.jumpToPage(0),
     );
+
+
   }
 
   @override

@@ -1,5 +1,7 @@
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
+import 'package:app/model/dress_up_product_model.dart';
+import 'package:app/model/product_label_model.dart';
 import 'package:app/net/api.dart';
 import 'package:app/shop/shop_view_header.dart';
 import 'package:app/shop/widgets/hold_future.dart';
@@ -24,7 +26,8 @@ class HomeShopAndDressUpView extends StatefulWidget {
   State<HomeShopAndDressUpView> createState() => _HomeShopAndDressUpViewState();
 }
 
-class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with BusStateMixin {
+class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView>
+    with BusStateMixin {
   late final controller = Get.find<ClothSelectorCtrl>();
 
   @override
@@ -32,7 +35,7 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
     super.initState();
 
     on<GoWardrobeEvent>(
-          (_) => controller.setWardrobeMode(true),
+      (_) => controller.setWardrobeMode(true),
     );
   }
 
@@ -41,7 +44,8 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
       builder: (it) {
         final data = <Category>[
           //const (null, '全部', (null, null)),
-          ...it.autoGet.map((it) => (it['id'], it['name'], (it['icon'], it['select_icon']))),
+          ...it.autoGet.map(
+              (it) => (it['id'], it['name'], (it['icon'], it['select_icon']))),
         ];
 
         return DefaultTabController(
@@ -69,7 +73,8 @@ class _HomeShopAndDressUpViewState extends State<HomeShopAndDressUpView> with Bu
         Expanded(
           child: HoldRoot(
             child: Obx(
-                  () => IndexedStack(index: controller.isShopMode ? 0 : 1, children: children),
+              () => IndexedStack(
+                  index: controller.isShopMode ? 0 : 1, children: children),
             ),
           ),
         ),
@@ -149,14 +154,16 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
   }
 
   StreamSubscription? streamSubscription;
-  
+
   @override
   void didUpdateWidget(covariant _DataView oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     //debugPrint("didUpdateWidget categoryId = ${widget.categoryId}");
     streamSubscription?.cancel();
-    streamSubscription = Future.delayed(const Duration(milliseconds: 200)).asStream().listen((event) {
+    streamSubscription = Future.delayed(const Duration(milliseconds: 200))
+        .asStream()
+        .listen((event) {
       doRefresh();
     });
   }
@@ -169,7 +176,8 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
 
   @override
   Future fetchPage(PageNum page) {
-    return Api.Shop.productList(page: page, categoryId: widget.categoryId, gender: myInfo().gender);
+    return Api.Shop.productList(
+        page: page, categoryId: widget.categoryId, gender: myInfo().gender);
   }
 
   @override
@@ -177,20 +185,21 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
     final productId = item['id'];
     // 放在这里吧？
     Get.find<ShopCategoryCtrl>().sendItems(productId);
-
+    final DressUpProductModel model = DressUpProductModel.fromJson(item);
     return HoldView(
       child: _ItemView(
         key: ValueKey(productId),
-        data: item,
+        productModel: model,
       ),
       builder: (Object? taskId, DoHold doHold, child) {
         return GestureDetector(
-          onTap: taskId != null ? null : () {
-
-            doHold(productId, selector.doSelect(item));
-          },
+          onTap: taskId != null
+              ? null
+              : () {
+                  doHold(productId, selector.doSelect(item));
+                },
           child: Obx(
-                () {
+            () {
               final isSelected = selector.isRxSelected(productId);
 
               return DecoratedBox(
@@ -199,7 +208,9 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
                     borderRadius: AppBorderRadius.a10,
                     side: isSelected
                         ? const BorderSide(width: 2, color: AppPalette.primary)
-                        : (taskId == productId ? const BorderSide(width: 2, color: AppPalette.hint) : BorderSide.none),
+                        : (taskId == productId
+                            ? const BorderSide(width: 2, color: AppPalette.hint)
+                            : BorderSide.none),
                   ),
                   color: const Color(0xFFF5F5F5),
                 ),
@@ -214,14 +225,13 @@ class _DataViewState extends SimplePageState<Map, _DataView> {
 }
 
 class _ItemView extends StatelessWidget {
-  final Map data;
+  final DressUpProductModel productModel;
 
-  const _ItemView({super.key, required this.data});
-
+  const _ItemView({super.key, required this.productModel});
 
   @override
   Widget build(BuildContext context) {
-    final type = MoneyType.fromVal(data['currency']);
+    final type = MoneyType.fromVal(productModel.currency ?? 0);
 
     Widget child = LayoutBuilder(
       builder: (_, c) {
@@ -231,29 +241,31 @@ class _ItemView extends StatelessWidget {
         return XFrameWidget(
           width: w,
           height: h,
-          child: NetImage(data['image'], width: w, height: h),
+          child: NetImage(productModel.image, width: w, height: h),
         );
       },
     );
 
     var itemBuyAble = true;
-    if (data case {'label_list': List items}) {
-      if (items.isNotEmpty) {
-        // 不能购买
-        itemBuyAble = items.isNotEmpty && items[0]["is_buy"] == true;
-        child = Stack(
-          children: [
-            child,
-              // 普通左上角的商品角标
-              if(items.isNotEmpty && items[0]["is_buy"] == true)
-                Positioned(
-                  top: 5,
-                  left: 5.0,
-                  child: NetImage(items[0]['icon'], width: 32, height: 16, fit: BoxFit.contain),
-                ),
-          ],
-        );
-      }
+    String productIcon = '';
+    if (productModel.labelList != null && productModel.labelList!.isNotEmpty) {
+      ProductLabelModel labelModel = productModel.labelList!.first;
+      productIcon = labelModel.icon ?? '';
+      // 不能购买
+      itemBuyAble = labelModel.isBuy == true;
+      child = Stack(
+        children: [
+          child,
+          // 普通左上角的商品角标
+          if (labelModel.isBuy == true)
+            Positioned(
+              top: 5,
+              left: 5.0,
+              child: NetImage(labelModel.icon,
+                  width: 32, height: 16, fit: BoxFit.contain),
+            ),
+        ],
+      );
     }
 
     child = BlankImgState(child: child);
@@ -262,9 +274,35 @@ class _ItemView extends StatelessWidget {
     child = Column(
       children: [
         Expanded(child: child),
-        XText(data['name']),
-        // 可以购买，显示价格
-        if(itemBuyAble)
+        XText(productModel.name ?? '',
+            style: const TextStyle(
+                color: AppPalette.c0, fontSize: 12)),
+        if (productModel.redemptionList != null &&
+            productModel.redemptionList!.isNotEmpty)
+          XRichText(
+            TextSpan(
+              children: [
+                const WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: SizedBox(width: 1,height: 20,),
+                ),
+                TextSpan(
+                    text: '${productModel.redemptionList!.first.name}:',
+                    style: const TextStyle(
+                        color: AppPalette.c0,
+                        fontSize: 12,
+                        )),
+                TextSpan(
+                    text:
+                        '${productModel.redemptionList!.first.haveRedemptionCardCount}/${productModel.redemptionList!.first.redemptionNeedCount}',
+                    style: const TextStyle(
+                        color: Color(0xFFF400E6),
+                        fontSize: 12,
+                        )),
+              ],
+            ),
+          )
+        else if (itemBuyAble) // 可以购买，显示价格
           XRichText(
             TextSpan(
               children: [
@@ -273,22 +311,25 @@ class _ItemView extends StatelessWidget {
                     alignment: PlaceholderAlignment.middle,
                     child: MoneyIcon(type: type, size: 20),
                   ),
-                TextSpan(text: '${data['price']}'),
+                TextSpan(
+                    text: '${productModel.price ?? 0}',
+                    style: const TextStyle(
+                        color: AppPalette.c0,
+                        fontSize: 12,
+                        )),
               ],
             ),
           ),
 
         // 不能购买
         // label_list内增加is_buy字段，用于声明该商品是否可以加入购物车并购买
-        if(!itemBuyAble)
+        if (!itemBuyAble)
           Align(
             alignment: Alignment.bottomCenter,
-            child: NetImage(
-                data["label_list"][0]['icon'],
+            child: NetImage(productIcon,
                 fit: BoxFit.contain,
                 width: (AppSize.width - (3 * space + 4 * space)) / 3.5,
-                height: 20
-            ),
+                height: 20),
           ),
         Spacing.h2,
       ],

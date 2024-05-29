@@ -118,6 +118,7 @@ abstract class AppPalette {
   static const txtWhite = Colors.white;
 
   //
+  static const c0 = Color(0xFF000000);
   static const c3 = Color(0xFF333333);
   static const c6 = Color(0xFF666666);
   static const c9 = Color(0xFF999999);

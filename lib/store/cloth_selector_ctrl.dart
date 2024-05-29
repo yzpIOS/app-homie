@@ -1,19 +1,21 @@
 import 'dart:convert';
 
 import 'package:app/event/event.dart';
+import 'package:app/shop/exchange/smashing_eggs_activity_dialog.dart';
 import 'package:app/tools.dart';
 
 import 'package:app/store/my_dressup_ctrl.dart';
 import 'package:app/store/shopping_cart_ctrl.dart';
 import 'package:app/store/unity_ctrl.dart';
 import 'package:app/store/user/my_info_ctrl.dart';
+import 'package:flutter/material.dart';
 
 class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLifeMixin {
   final selectorShop = _SelectorShop();//商城
   final selectorCloth = _SelectorCloth();//我的-其他
   final selectorWardrobe = _SelectorWardrobe();//我的-衣柜
   bool needGoToMyWardrobe = false;//是否要跳转我的装扮
-  bool modelSceneUnityLoadComplete = false;//商城模特unity界面是否加载完成
+  bool modelSceneUnityLoadComplete = true;//商城模特unity界面是否加载完成
 
   final _modeRx = RxInt(0);
   final _mode1Rx = RxBool(true);
@@ -125,6 +127,16 @@ class ClothSelectorCtrl extends GetxController with GetDisposableMixin, BusGetLi
     isShopMode
         ? selectorShop._dataRx.assignAll(items)
         : (isWardrobeMode ? selectorWardrobe._dataRx.assignAll(items) : selectorCloth._dataRx.assignAll(items));
+  }
+
+  void showSmashingEggsActivityDialog(){
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return const SmashingEggsActivityDialog();
+      },
+      useSafeArea: false,
+    );
   }
 }
 
