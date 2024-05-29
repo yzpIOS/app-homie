@@ -22,6 +22,7 @@ import '../moment/moment_page.dart';
 import '../my/wallet/recharge_page.dart';
 import '../podcast/hot_podcast_page.dart';
 import 'growth_task_controller.dart';
+import 'my_sign_view.dart';
 
 class GrowthTaskPage extends StatelessWidget {
   // late final TaskCenterController taskCenterController;
@@ -239,8 +240,8 @@ class _ItemView extends StatelessWidget {
               /// 18：魅力值,19：财富值,20：发表动态数
               switch(data?.type){
                 case 1:
-                //  SignDialog.show(isManual: true);
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  SignDialog.show(isManual: true);
+                 // Get.to(() => const MomentPage(),arguments: {'myTask':true});
                   break;
                 case 2:
                   Get.to(() => const MomentPage(),arguments: {'myTask':true});
