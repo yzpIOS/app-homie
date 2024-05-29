@@ -24,6 +24,7 @@ class _MomentPageState extends State<MomentPage> with SingleTickerProviderStateM
 
   late final controller = TabController(vsync: this, length: data.length);
 
+
   @override
   void initState() {
     super.initState();
@@ -42,10 +43,22 @@ class _MomentPageState extends State<MomentPage> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    var argumentst = Get.arguments;
+    bool myTask = false;
+    if (argumentst is Map){
+       myTask = argumentst['myTask'];
+    }
     return Scaffold(
       backgroundColor: AppPalette.background2,
-      appBar: xAppBar(
-        title: xAppBar$TabBar(
+      appBar:
+       xAppBar(
+        title: myTask == true ?Container(
+          margin: const EdgeInsets.only(left: 30),
+          child: xAppBar$TabBar(
+          data.keys,
+          controller: controller,
+          alignment: Alignment.bottomLeft,
+        ),): xAppBar$TabBar(
           data.keys,
           controller: controller,
           alignment: Alignment.bottomLeft,

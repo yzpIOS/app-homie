@@ -28,6 +28,29 @@ class ApiActivity extends ApiBase {
   }
 
   ///
+  /// 领取任务奖励
+  /// http://192.168.1.131:3000/project/34/interface/api/7385
+  ///
+  Future taskReceive({required int? id, required int taskType}){
+    return _doPost("task/receive",data: {"id": id,'task_type':taskType});
+  }
+  ///
+  /// 查询成长任务
+  /// http://192.168.1.131:3000/project/34/interface/api/7385
+  ///
+  Future growUpTaskQuery(){
+    return _doPost("grow_up_task/query",data: {});
+  }
+
+  ///
+  /// 一键领取任务奖励
+  /// http://192.168.1.131:3000/project/34/interface/api/7413
+  ///
+  Future oneKeyReceive({required int taskType}){
+    return _doPost("task/one_key_receive",data: {'task_type':taskType});
+  }
+
+  ///
   /// 获取活动
   /// http://192.168.1.156:20000/project/15/interface/api/2126
   ///

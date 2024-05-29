@@ -36,6 +36,7 @@ mixin _HttpMixin on _IApi {
       switch (code) {
         case 0:
           return data['data'] ?? data;
+        //  return data;
         // case 1:
         //   throw const NetException('服务异常');
         case 17:

@@ -28,7 +28,6 @@ import 'package:flutter_portal/flutter_portal.dart';
 import 'package:provider/provider.dart';
 import 'package:app/common/theme.dart';
 // import '../common/common.dart';
-import 'package:app/common/common.dart';
 import 'login/ad_loading_page.dart';
 
 class App extends StatefulWidget {

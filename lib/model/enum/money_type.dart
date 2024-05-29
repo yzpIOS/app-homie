@@ -4,6 +4,7 @@ enum MoneyType {
   diamond(0, '紫钻'),
   gold(1, '黄钻'),
   homie(2, '黑钻'),
+  activity(3, '活跃度'),
   ;
 
   final int val;
