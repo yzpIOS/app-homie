@@ -193,26 +193,17 @@ class TaskMainPage extends StatelessWidget {
                            children: [
                              GestureDetector(
                                  onTap: () async{
-                                   // if(isReceive == true && isReceived == false){
-                                   //   await vc.taskReceive(id: item?.id, taskType: 3);
-                                   // }
-                                   SunDiamondDialog.showDialog(dailyTaskLivenessItems);
-                                   // showDialog(
-                                   //  // barrierColor: Colors.transparent,
-                                   //   context: context,
-                                   //   builder: (BuildContext context) {
-                                   //     return Dialog(
-                                   //      backgroundColor: Colors.transparent,
-                                   //       child: SunDiamondDialog(),
-                                   //     );
-                                   //   },
-                                   // );
+                                   if(isReceive == true && isReceived == false){
+                                   //  await vc.taskReceive(id: item?.id, taskType: 3);
+                                     SunDiamondDialog.showDialog(dailyTaskLivenessItems,vc);
+                                   }
+
                                  },
                                // child: Image.asset(IMG.format('task/task_box_${activityLevels[index]}'), scale: 3,),
-                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover)
-                                   :Image.network(receiveCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover)) :
-                               isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover): // isReceived == true ?
-                               Image.network(notReceiveCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover),
+                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover)
+                                   :Image.network(receiveCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover)) :
+                               isReceived == true ?Image.network(receivedCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover): // isReceived == true ?
+                               Image.network(notReceiveCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover),
                                //  :
                                // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
                              ),
@@ -426,16 +417,7 @@ class _ItemView extends StatelessWidget {
             ),
           ),
 
-         data?.isReceive == true? (data?.isReceived == true? XTextBtn(
-           label: '已领取',
-           width: 55,
-           height: 23,
-           textStyle: const TextStyle(
-               fontSize: 12, color: AppPalette.txtWhite),
-           onTap: () {
-
-           },
-         ): XTextBtn(
+         data?.isReceive == true? XTextBtn(
            label: '领取',
            width: 55,
            height: 23,
@@ -445,6 +427,15 @@ class _ItemView extends StatelessWidget {
              await vc.taskReceive(id: data?.id, taskType: 1);
            },
          )
+         : data?.isReceived == true ? XTextBtn(
+           label: '已领取',
+           width: 55,
+           height: 23,
+           color: AppPalette.colorA7,
+           textStyle: const TextStyle(
+               fontSize: 12, color: AppPalette.txtWhite),
+           onTap: () async{
+           },
          ): XOutlinedBtn(
            label: '前往',
            width: 55,
@@ -552,16 +543,16 @@ class _ItemView extends StatelessWidget {
 
 class SunDiamondDialog extends StatefulWidget {
   
-  SunDiamondDialog({Key? key, required this.dailyTaskLivenessItems}) : super(key: key);
+  SunDiamondDialog({Key? key, required this.dailyTaskLivenessItems, required this.vc}) : super(key: key);
   DailyTaskLivenessItems dailyTaskLivenessItems;
-  
+  TaskMainPageController vc;
   @override
   _SunDiamondDialogState createState() => _SunDiamondDialogState();
 
-  static Future<void> showDialog(DailyTaskLivenessItems dailyTaskLivenessItems) async {
+  static Future<void> showDialog(DailyTaskLivenessItems dailyTaskLivenessItems,TaskMainPageController vc) async {
 
 
-    var dialog = SunDiamondDialog(dailyTaskLivenessItems: dailyTaskLivenessItems);
+    var dialog = SunDiamondDialog(dailyTaskLivenessItems: dailyTaskLivenessItems,vc: vc,);
     await Get.dialog(
       dialog,
       useSafeArea: false,
@@ -596,6 +587,8 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
 
   @override
   Widget build(BuildContext context) {
+    // 获取屏幕宽度的一半
+    double halfScreenHeight = MediaQuery.of(context).size.height / 2;
     return
       FadeTransition(
       opacity: _animation,
@@ -605,7 +598,7 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
         children: [
 
           Positioned(
-            top: 170,
+            top: halfScreenHeight - 200,
             child: ElevatedButton(
               onPressed: () {
               //  Navigator.of(context).pop(); // Close the dialog
@@ -641,22 +634,17 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
           
           // "立即领取" button below the Sun
           Positioned(
-           bottom: 170,
+           bottom: halfScreenHeight - 200,
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async{
+                await widget.vc.taskReceive(id: widget.dailyTaskLivenessItems?.id, taskType: 3);
                 Navigator.of(context).pop(); // Close the dialog
               },
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero, // Remove default padding
               ),
               child: Image.asset(IMG.format('button_ljlq'), scale: 4,fit: BoxFit.none),
-             //  style: ElevatedButton.styleFrom(
-             // //   primary: Colors.blue, // Background color
-             //    onPrimary: Colors.white,
-             //    textStyle: const TextStyle(
-             //      fontSize: 20, // Adjust font size here
-             //    ),// Text color
-             //  ),
+
             ),
           ),
         ],

@@ -219,16 +219,7 @@ class _ItemView extends StatelessWidget {
             ),
           ),
 
-          data?.isReceive == true? (data?.isReceived == true? XTextBtn(
-            label: '已领取',
-            width: 55,
-            height: 23,
-            textStyle: const TextStyle(
-                fontSize: 12, color: AppPalette.txtWhite),
-            onTap: () {
-
-            },
-          ): XTextBtn(
+          data?.isReceive == true?  XTextBtn(
             label: '领取',
             width: 55,
             height: 23,
@@ -237,7 +228,16 @@ class _ItemView extends StatelessWidget {
             onTap: () async{
               await vc.taskReceive(id: data?.id, taskType: 2);
             },
-          )
+
+          ): data?.isReceived == true ? XTextBtn(
+            label: '已领取',
+            width: 55,
+            height: 23,
+            color: AppPalette.colorA7,
+            textStyle: const TextStyle(
+                fontSize: 12, color: AppPalette.txtWhite),
+            onTap: () async{
+            },
           ): XOutlinedBtn(
             label: '前往',
             width: 55,
