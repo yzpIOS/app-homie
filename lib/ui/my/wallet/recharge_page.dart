@@ -18,6 +18,7 @@ import 'package:app/ui/my/wallet/purple_diamond_details_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pay_plugin/pay_plugin.dart';
 
 class RechargePage extends StatefulWidget {
 
@@ -334,11 +335,16 @@ class _RechargePageState extends State<RechargePage> {
       return;
     }
 
-    //1：支付宝，2：微信，4: 苹果内购
+
+    //1：支付宝，2：微信，4: 苹果内购  5 杉德宝支付
     int? payType = payTypeRx.value;
-    // 苹果支付不传支付渠道，所以强制写死4
+
     if(Platform.isIOS) {
+      // 苹果支付不传支付渠道，只允许使用苹果内购,所以强制写死4
       payType = 4;
+    }else{
+      // 安卓使用杉德宝
+      payType = 5;
     }
 
     if(payType == null) {
@@ -371,7 +377,9 @@ class _RechargePageState extends State<RechargePage> {
         if(payType == 4) {
           payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
         } else {
-          payResult = await Get.to(() => PayPage(payType: payType!, data: resp));
+          final String? result = await PayPlugin().startSandPay(cashierUrl: resp['sand_pay_url']);
+          print(result);
+          payResult = result != null ? true : false;// await Get.to(() => PayPage(payType: payType!, data: resp));
         }
 
         if (payResult) {

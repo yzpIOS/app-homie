@@ -19,6 +19,8 @@ dependencies:
 #  image_picker: ^0.8.5+3
   wechat_assets_picker:
     path: ./plugin/wechat_assets_picker-8.8.0
+  pay_plugin:
+    path: ./plugin/pay_plugin
   package_info_plus: ^4.0.2
   connectivity_plus: ^4.0.0
   android_intent_plus: ^4.0.0

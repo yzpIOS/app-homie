@@ -1,0 +1,68 @@
+group 'com.sand.pay_plugin'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        flatDir {
+            dirs project(':pay_plugin').file('libs')
+        }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.sand.pay_plugin'
+    }
+
+    compileSdkVersion 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+    dependencies {
+        //加载正式环境aar文件
+        implementation(name: 'sand-paytypesdk-1.0.0', ext: 'aar')
+        //加载uat环境aar文件
+        //implementation(name: 'sand-paytypesdk-uat-1.0.0', ext: 'aar')
+        //微信sdk，建议使用最新版本
+        api 'com.tencent.mm.opensdk:wechat-sdk-android:+'
+//        implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.8.0'
+        testImplementation 'junit:junit:4.13.2'
+        testImplementation 'org.mockito:mockito-core:5.0.0'
+    }
+
+    testOptions {
+        unitTests.all {
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation files('libs/UPPayAssistEx.jar')
+}

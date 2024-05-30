@@ -11,6 +11,7 @@ import 'package:app/widgets.dart';
 import 'package:assorted_layout_widgets/assorted_layout_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:pay_plugin/pay_plugin.dart';
 
 class PayPage extends StatefulWidget {
   static bool needSendFailStatistic = true;
@@ -88,6 +89,7 @@ class _PayPageState extends State<PayPage> {
   }
 
   void doConfirm() {
+
     simpleSub(
       Api.Wallet.info(id: data['record_number']),
       callback1: (resp) {
