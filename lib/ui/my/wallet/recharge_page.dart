@@ -377,9 +377,16 @@ class _RechargePageState extends State<RechargePage> {
         if(payType == 4) {
           payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
         } else {
-          final String? result = await PayPlugin().startSandPay(cashierUrl: resp['sand_pay_url']);
-          print(result);
-          payResult = result != null ? true : false;// await Get.to(() => PayPage(payType: payType!, data: resp));
+          final Map? resultMap = await PayPlugin().startSandPay(cashierUrl: resp['pay_params']['sand_pay_url']);
+          if(resultMap == null){
+            showToast('支付失败');
+            return;
+          }
+          if(resultMap['success'] != true){
+            showToast(resultMap['errMsg']);
+            return;
+          }
+          payResult = resultMap != null ? true : false;// await Get.to(() => PayPage(payType: payType!, data: resp));
         }
 
         if (payResult) {

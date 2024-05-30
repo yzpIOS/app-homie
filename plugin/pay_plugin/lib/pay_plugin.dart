@@ -6,7 +6,7 @@ class PayPlugin {
     return PayPluginPlatform.instance.getPlatformVersion();
   }
 
-  Future<String?> startSandPay({required String cashierUrl}){
+  Future<Map?> startSandPay({required String cashierUrl}){
     return PayPluginPlatform.instance.startSandPay(cashierUrl: cashierUrl);
   }
 }

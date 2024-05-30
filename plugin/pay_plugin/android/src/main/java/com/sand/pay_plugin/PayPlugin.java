@@ -8,6 +8,9 @@ import com.sand.qzf.paytypesdk.base.CallBack;
 import com.sand.qzf.paytypesdk.base.PayTypeSdk;
 import com.sand.qzf.paytypesdk.base.Resp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -59,21 +62,32 @@ public class PayPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
         public void onResult(Resp resp) {
           switch (resp.status){
             case Resp.FINISH:
-              System.out.println("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              System.out.println("需调用服务端接口查询支付结果");
-              result.success("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              break;
             case Resp.SUCCESS:
               //多个里的银联和杉德宝，支付成功走这里
               //单个的银联走handleUnionPayResult，不走这里
               //微信走WXEntryActivity onResp，不走这里
               //支付宝、H5快捷、一键快捷、快捷充值，支付成功跳frontUrl网页，不走这里
               System.out.println("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              result.success("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              //System.out.println("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              //System.out.println("需调用服务端接口查询支付结果");
+              Map finishMap = new HashMap<>();
+              // 向Map中添加键值对
+              finishMap.put("success", true);
+              finishMap.put("funcCode", resp.funcCode);
+              finishMap.put("errCode", resp.errCode);
+              finishMap.put("errMsg", resp.errMsg);
+              finishMap.put("exceptionMsg", resp.exceptionMsg);
+              result.success(finishMap);
               break;
             case Resp.ERROR:
               System.out.println("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              result.success("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              Map errorMap = new HashMap<>();
+              errorMap.put("success", false);
+              errorMap.put("funcCode", resp.funcCode);
+              errorMap.put("errCode", resp.errCode);
+              errorMap.put("errMsg", resp.errMsg);
+              errorMap.put("exceptionMsg", resp.exceptionMsg);
+              result.success(errorMap);
               break;
           }
         }

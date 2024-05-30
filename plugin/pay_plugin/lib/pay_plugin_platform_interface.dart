@@ -27,7 +27,7 @@ abstract class PayPluginPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<String?> startSandPay({required String cashierUrl}){
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  Future<Map?> startSandPay({required String cashierUrl}){
+    throw UnimplementedError('startSandPay() has not been implemented.');
   }
 }

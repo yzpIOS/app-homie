@@ -16,8 +16,8 @@ class MethodChannelPayPlugin extends PayPluginPlatform {
   }
 
   @override
-  Future<String?> startSandPay({required String cashierUrl}) async {
-    final result = await methodChannel.invokeMethod<String>('startSandPay',{'cashierUrl':cashierUrl});
+  Future<Map ?> startSandPay({required String cashierUrl}) async {
+    final result = await methodChannel.invokeMethod<Map>('startSandPay',{'cashierUrl':cashierUrl}) ?? {'code':-1,'msg':'支付失败'};
     return result;
   }
 
