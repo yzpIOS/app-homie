@@ -53,7 +53,19 @@ class GrowthTaskPage extends StatelessWidget {
                             controller: _growthTaskController.scrollController,
                             itemCount: _growthTaskController.dailyTaskAllItems.data?.items?.length,
                             itemBuilder:  (BuildContext context, int index) {
-                              return _ItemView(data:_growthTaskController.dailyTaskAllItems.data?.items![index],vc: _growthTaskController,);
+                              return Column(
+                                children: [
+                                  _ItemView(data:_growthTaskController.dailyTaskAllItems.data?.items![index],vc: _growthTaskController,),
+                                  const Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Divider(
+                                      thickness: 1,
+                                      height: 0.5,  // Height of the divider
+                                      color: AppPalette.colorEB,  // Color of the divider
+                                    ),
+                                  ),
+                                ],
+                              );
                             },)
                     //  )
 
@@ -195,7 +207,7 @@ class _ItemView extends StatelessWidget {
                             alignment: PlaceholderAlignment.middle,
                           ),
                           TextSpan(text: 'x${data?.count.toString()}',
-                            style: TextStyle(fontSize: 12,
+                            style: const TextStyle(fontSize: 12,
                                 color: AppPalette.txtDark,
                                 fontWeight: fw$Medium),),
                         ],
@@ -244,60 +256,91 @@ class _ItemView extends StatelessWidget {
                  // Get.to(() => const MomentPage(),arguments: {'myTask':true});
                   break;
                 case 2:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+               //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 3:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+               //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                 case 4:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                //  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 5:
 
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+               //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 6:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+               //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                 case 7:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                //  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 8:
-                  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                //  Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 9:
                 //  await vc.taskReceive(id: data?.id, taskType: 3);
-                  Get.to(() => const HotPodcastPage());
-
+                 // Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                 case 10:
-                  Get.to(() => const HotPodcastPage());
+                //  Get.to(() => const HotPodcastPage());
                   // await vc.taskReceive(id: data?.id, taskType: 1);
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
                 case 11:
 
-                  Get.to(() => const HomeShopPage());
+               //   Get.to(() => const HomeShopPage());
+                  Get.back();
+                  const MomentPageEvent().fire();
                   break;
                 case 12:
-                  Get.to(() => const HomeShopPage());
+                //  Get.to(() => const HomeShopPage());
+                  Get.back();
+                  const HomeShopPageEvent().fire();
                 case 13:
                   Get.to(() => RechargePage(hasShowUnityView: true,));
                   break;
                 case 14:
-                  Get.to(() => const HotPodcastPage());
+                //  Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
                 case 15:
                   Get.to(() => RechargePage());
                 case 16:
-                  Get.to(() => const HotPodcastPage());
+              //    Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
                 case 17:
                   break;
                 case 18:
-                  Get.to(() => const HotPodcastPage());
+                //  Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
                 case 19:
-                  Get.to(() => const HotPodcastPage());
+                //  Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
                 case 20:
-                  Get.to(() => const HotPodcastPage());
+                 // Get.to(() => const HotPodcastPage());
+                  Get.back();
+                  const HotBroadcastEvent().fire();
                   break;
               }
             },

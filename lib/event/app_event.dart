@@ -30,7 +30,17 @@ class GoDressUpEvent extends Event {
   const GoDressUpEvent();
 }
 
+class HotBroadcastEvent extends Event {
+  const HotBroadcastEvent();
+}
 
+class MomentPageEvent extends Event {
+  const MomentPageEvent();
+}
+
+class HomeShopPageEvent extends Event {
+  const HomeShopPageEvent();
+}
 
 class GoComment extends Event {
   const GoComment();

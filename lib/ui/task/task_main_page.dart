@@ -42,7 +42,7 @@ class TaskMainPage extends StatelessWidget {
           Box(
             color: AppPalette.transparent,
             height: 110,
-            child: $HeaderView(vc: vc),
+            child: $HeaderView(vc: vc,context: context),
           ),
 
         Expanded(
@@ -58,7 +58,19 @@ class TaskMainPage extends StatelessWidget {
                          controller: _taskMainPageController.scrollController,
                          itemCount: _taskMainPageController.dailyTaskAllItems?.data?.dailyTaskItems?.length,
                          itemBuilder:  (BuildContext context, int index) {
-                           return _ItemView(data:_taskMainPageController.dailyTaskAllItems.data?.dailyTaskItems?[index],vc: _taskMainPageController,);
+                           return Column(
+                             children: [
+                             _ItemView(data:_taskMainPageController.dailyTaskAllItems.data?.dailyTaskItems?[index],vc: _taskMainPageController,),
+                               const Padding(
+                                 padding: EdgeInsets.symmetric(horizontal: 8.0),
+                                 child: Divider(
+                                   thickness: 1,
+                                   height: 0.5,  // Height of the divider
+                                   color: AppPalette.colorEB,  // Color of the divider
+                                 ),
+                               ),
+                             ],
+                           );
                          },)
                        )
 
@@ -76,7 +88,7 @@ class TaskMainPage extends StatelessWidget {
   }
 
   /// 头部活跃度视图
-  Widget $HeaderView({required TaskMainPageController vc}) {
+  Widget $HeaderView({required TaskMainPageController vc,required BuildContext context}) {
     String? value;
     double number = 0;
     int boxCount = 0;
@@ -150,9 +162,6 @@ class TaskMainPage extends StatelessWidget {
                 // final tenPercentWidth = (c.maxWidth - boxWidth * 3.0) / 10.0;
                 // 箱子的固定宽度和高度
                  double boxSize = 36;
-                // 从服务器获取的箱子数和活跃度
-                // final List<int> boxCounts = [3];
-                // final List<int> activityLevels = [10, 40, 70];
                 // 计算每个箱子的间距
                 double totalBoxWidth =  boxCount * boxSize;
                 double totalSpacing = c.maxWidth - totalBoxWidth;
@@ -175,7 +184,7 @@ class TaskMainPage extends StatelessWidget {
                        String value = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].value.toString();
                        bool? isReceive = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].isReceive;
                        bool? isReceived = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].isReceived;
-
+                       DailyTaskLivenessItems? dailyTaskLivenessItems =  _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index];
                        return Container(
                          width: boxSize,
                          height: 80,
@@ -184,15 +193,26 @@ class TaskMainPage extends StatelessWidget {
                            children: [
                              GestureDetector(
                                  onTap: () async{
-                                   if(isReceive == true && isReceived == false){
-                                     await vc.taskReceive(id: item?.id, taskType: 3);
-                                   }
+                                   // if(isReceive == true && isReceived == false){
+                                   //   await vc.taskReceive(id: item?.id, taskType: 3);
+                                   // }
+                                   SunDiamondDialog.showDialog(dailyTaskLivenessItems);
+                                   // showDialog(
+                                   //  // barrierColor: Colors.transparent,
+                                   //   context: context,
+                                   //   builder: (BuildContext context) {
+                                   //     return Dialog(
+                                   //      backgroundColor: Colors.transparent,
+                                   //       child: SunDiamondDialog(),
+                                   //     );
+                                   //   },
+                                   // );
                                  },
                                // child: Image.asset(IMG.format('task/task_box_${activityLevels[index]}'), scale: 3,),
-                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize,)
-                                   :Image.network(receiveCover!,scale: 3,width: boxSize,height: boxSize,)) :
-                               isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize,): // isReceived == true ?
-                               Image.network(notReceiveCover!,scale: 3,width: boxSize,height: boxSize,),
+                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover)
+                                   :Image.network(receiveCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover)) :
+                               isReceived == true ?Image.network(receivedCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover): // isReceived == true ?
+                               Image.network(notReceiveCover!,scale: 3,width: boxSize,height: boxSize, fit: BoxFit.cover),
                                //  :
                                // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
                              ),
@@ -358,25 +378,29 @@ class _ItemView extends StatelessWidget {
                 const Spacing(height: 4, flex: null,),
 
                  Row(
+                   mainAxisAlignment: MainAxisAlignment.start,
+                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     XRichText(
+
                       TextSpan(
                         children: [
                           WidgetSpan(
-                            // child: MoneyIcon(type: MoneyType.diamond, size: 21),
                             child: Image.network(
                               data!.prizeImage ?? '',
-                              width: 21,
-                              height: 21,
+                              width: 23,
+                              height: 23,
                             ),
                             alignment: PlaceholderAlignment.middle,
                           ),
                           TextSpan(text: 'x${data?.count.toString()}',
                             style: TextStyle(fontSize: 12,
                                 color: AppPalette.txtDark,
-                                fontWeight: fw$Medium),),
+                                fontWeight: fw$Medium,
+                            ),),
                         ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     Spacing(width: 7, flex: null,),
                     XRichText(
@@ -392,6 +416,7 @@ class _ItemView extends StatelessWidget {
                                 fontWeight: fw$Medium),),
                         ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 )
@@ -433,64 +458,81 @@ class _ItemView extends StatelessWidget {
              switch(data?.type){
                case 1:
                  SignDialog.show(isManual: true);
-                // Get.to(() => const MomentPage(),arguments: {'myTask':true});
+
                  break;
                case 2:
                //  await vc.taskReceive(id: data?.id, taskType: 2);
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+              //   Get.put(TaskMainPageController());
+              //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                  break;
                case 3:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                case 4:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                  break;
                case 5:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                  break;
                case 6:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                case 7:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                  break;
                case 8:
 
-                 Get.to(() => const MomentPage(),arguments: {'myTask':true});
+                 Get.back();
+                 const MomentPageEvent().fire();
                  break;
                case 9:
 
-                 Get.to(() => const HotPodcastPage());
+                 Get.back();
+                 const HotBroadcastEvent().fire();
+               //  Get.to(() => const HotPodcastPage());
 
                case 10:
-                 Get.to(() => const HotPodcastPage());
+                 Get.back();
+                 const HotBroadcastEvent().fire();
 
                  break;
                case 11:
-
-                 Get.to(() => const HomeShopPage());
+                 Get.back();
+                 const HomeShopPageEvent().fire();
+              //   Get.to(() => const HomeShopPage());
 
                  break;
                case 12:
-                 Get.to(() => const HomeShopPage());
+                 Get.back();
+                 const HomeShopPageEvent().fire();
+               //  Get.to(() => const HomeShopPage());
 
                case 13:
                  Get.to(() => RechargePage(hasShowUnityView: true,));
 
                  break;
                case 14:
-                 Get.to(() => const HotPodcastPage());
-
+               //  Get.to(() => const HotPodcastPage());
+                 Get.back();
+                 const HotBroadcastEvent().fire();
                  break;
                case 15:
 
                  Get.to(() => RechargePage(hasShowUnityView: true,));
                case 16:
-                 Get.to(() => const HotPodcastPage());
-
+               //  Get.to(() => const HotPodcastPage());
+                 Get.back();
+                 const HotBroadcastEvent().fire();
                  break;
                case 17:
 
@@ -503,6 +545,122 @@ class _ItemView extends StatelessWidget {
 
 
       ),
+    );
+  }
+}
+
+
+class SunDiamondDialog extends StatefulWidget {
+  
+  SunDiamondDialog({Key? key, required this.dailyTaskLivenessItems}) : super(key: key);
+  DailyTaskLivenessItems dailyTaskLivenessItems;
+  
+  @override
+  _SunDiamondDialogState createState() => _SunDiamondDialogState();
+
+  static Future<void> showDialog(DailyTaskLivenessItems dailyTaskLivenessItems) async {
+
+
+    var dialog = SunDiamondDialog(dailyTaskLivenessItems: dailyTaskLivenessItems);
+    await Get.dialog(
+      dialog,
+      useSafeArea: false,
+      routeSettings: dialog.toRouteSettings(),
+    );
+  }
+}
+
+class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return
+      FadeTransition(
+      opacity: _animation,
+      child:
+        Stack(
+        alignment: Alignment.center,
+        children: [
+
+          Positioned(
+            top: 170,
+            child: ElevatedButton(
+              onPressed: () {
+              //  Navigator.of(context).pop(); // Close the dialog
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF000000).withAlpha(100), // Background color
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(
+                  fontSize: 20, // Adjust font size here
+                ),// Text
+               // fontSize: 20,// Text color
+              ),
+              child: Text('${widget.dailyTaskLivenessItems.count}${widget.dailyTaskLivenessItems.prizeType == 1 ?
+              '礼物' : widget.dailyTaskLivenessItems.prizeType == 2 ? '装扮': widget.dailyTaskLivenessItems.prizeType == 3 ? '紫钻':
+              widget.dailyTaskLivenessItems.prizeType == 4 ? '黄钻': '兑换卡'}'),
+            ),
+          ),
+          // Sun Image
+          Image.asset(
+            IMG.format("sun"), scale: 3,
+            width: 400,
+            height: 400,
+            fit: BoxFit.cover,
+          ),
+          // Diamond Image in the center of the Sun
+          // Image.asset(
+          //   IMG.format("money_gold"), scale: 3,
+          //   width: 300,
+          //   height: 300,
+          // ),
+          Image.network(widget.dailyTaskLivenessItems.prizeImage!,scale: 3,width: 100,
+            height: 100,fit: BoxFit.cover,),
+          
+          // "立即领取" button below the Sun
+          Positioned(
+           bottom: 170,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero, // Remove default padding
+              ),
+              child: Image.asset(IMG.format('button_ljlq'), scale: 4,fit: BoxFit.none),
+             //  style: ElevatedButton.styleFrom(
+             // //   primary: Colors.blue, // Background color
+             //    onPrimary: Colors.white,
+             //    textStyle: const TextStyle(
+             //      fontSize: 20, // Adjust font size here
+             //    ),// Text color
+             //  ),
+            ),
+          ),
+        ],
+      )
     );
   }
 }

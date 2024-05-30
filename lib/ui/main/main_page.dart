@@ -79,6 +79,19 @@ class _MainPageState extends State<MainPage> with BusStateMixin, WidgetsBindingO
       selector.value = 0; //跳到商城页
     });
 
+
+    on<HotBroadcastEvent>((event) {
+      selector.value = 1; //跳到热播
+    });
+
+    on<MomentPageEvent>((event) {
+      selector.value = 0; //跳到动态
+    });
+
+    on<HomeShopPageEvent>((event) {
+      selector.value = 2; //跳到商城
+    });
+
     if (Env.isRelease) {
       post(
         () async {
