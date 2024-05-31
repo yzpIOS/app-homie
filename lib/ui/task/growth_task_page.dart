@@ -74,14 +74,14 @@ class GrowthTaskPage extends StatelessWidget {
           ),
         ),
         // if (taskListType == 2)
-           $BatchReceiveView(_growthTaskController),
+           $BatchReceiveView(_growthTaskController,context),
       ],
         )
     );
   }
 
   /// 批量领取视图
-  Widget $BatchReceiveView(GrowthTaskController vc) {
+  Widget $BatchReceiveView(GrowthTaskController vc,BuildContext context) {
     // final GrowthTaskController vc;
    // vc.dailyTaskAllItems.data?.items?.length;
   //  EventBus eventBus = EventBus();
@@ -91,7 +91,7 @@ class GrowthTaskPage extends StatelessWidget {
         dataList.add(element);
       }
     });
-    ShowRedDotListGrowpEvent(dataList);
+    ShowRedDotListGrowpEvent(dataList).fire();
    // eventBus.fire(ShowRedDotListGrowpEvent(dataList));
 
     Widget child = Row(
@@ -125,7 +125,7 @@ class GrowthTaskPage extends StatelessWidget {
     );
 
     child = Container(
-      padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
+      margin: Pad(bottom: MediaQuery.of(context).padding.bottom, horizontal: 18),
       height: 53,
       child: child,
     );

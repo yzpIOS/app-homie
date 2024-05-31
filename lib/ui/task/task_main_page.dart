@@ -79,7 +79,7 @@ class TaskMainPage extends StatelessWidget {
 
           ),
 
-        $BatchReceiveView(_taskMainPageController),
+        $BatchReceiveView(_taskMainPageController,context),
          ]
         ),
         // if (taskListType == 2)
@@ -274,7 +274,7 @@ class TaskMainPage extends StatelessWidget {
   }
 
   /// 批量领取视图
-  Widget $BatchReceiveView(TaskMainPageController vc) {
+  Widget $BatchReceiveView(TaskMainPageController vc,BuildContext context) {
     // EventBus eventBus = EventBus();
     List dataList = [];
     vc.dailyTaskAllItems.data?.dailyTaskItems?.forEach((element) {
@@ -282,7 +282,7 @@ class TaskMainPage extends StatelessWidget {
           dataList.add(element);
         }
     });
-    ShowRedDotListEvent(dataList);
+    ShowRedDotListEvent(dataList).fire();
 
     Widget child = Row(
       children: [
@@ -315,7 +315,7 @@ class TaskMainPage extends StatelessWidget {
     );
 
     child = Container(
-      padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
+      margin: Pad(bottom: MediaQuery.of(context).padding.bottom, horizontal: 18),
       height: 53,
       child: child,
     );

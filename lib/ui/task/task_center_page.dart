@@ -68,22 +68,24 @@ class _TaskCenterPageState extends State<TaskCenterPage> with BusStateMixin {
     // on<ShowRedDotListEvent>(
     //       (_) => updateUserInfo(),
     // );
-    on<ShowRedDotListEvent>(
-          (event) =>  print('Received EventOne: ${event.dataList}')
-    );
-
-    on<ShowRedDotListGrowpEvent>(
-            (event) =>  print('Received EventOne111: ${event.dataList}')
-    );
-    // on<ShowRedDotListEvent>().listen((event) {
-    //   print('Received EventOne: ${event.dataList}');
+    // on<ShowRedDotListEvent>(
+    //       (event) =>  print('Received EventOne: ${event.dataList}')
+    // );
     //
-    // });
+    // on<ShowRedDotListGrowpEvent>(
+    //         (event) =>  print('Received EventOne111: ${event.dataList}')
+    // );
 
-    // on<ShowRedDotListGrowpEvent>().listen((event) {
-    //   print('Received EventOne: ${event.dataList}');
-    //
-    // });
+    on<ShowRedDotListEvent>((event) {
+      print('Received EventOne: ${event.dataList}');
+      event.dataList!.isEmpty ? _showRedDotList[0] = false : _showRedDotList[0] = true;
+     // _showRedDotList[0] = false;
+    });
+
+    on<ShowRedDotListGrowpEvent>((event) {
+      print('Received EventOne: ${event.dataList}');
+      event.dataList!.isEmpty ? _showRedDotList[1] = false : _showRedDotList[1] = true;
+    });
 
     // Future.delayed(const Duration(seconds: 2)).whenComplete(() {
     //   _showRedDotList[0] = false;

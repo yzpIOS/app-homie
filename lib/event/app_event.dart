@@ -38,9 +38,23 @@ class MomentPageEvent extends Event {
   const MomentPageEvent();
 }
 
+
 class HomeShopPageEvent extends Event {
   const HomeShopPageEvent();
 }
+
+class ShowRedDotListEvent extends Event {
+  final List? dataList;
+
+  ShowRedDotListEvent([this.dataList]);
+}
+
+class ShowRedDotListGrowpEvent extends Event {
+  final List? dataList;
+
+  ShowRedDotListGrowpEvent([this.dataList]);
+}
+
 
 class GoComment extends Event {
   const GoComment();
