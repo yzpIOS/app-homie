@@ -89,12 +89,12 @@ class _TaskCenterPageState extends State<TaskCenterPage> with BusStateMixin {
     //   _showRedDotList[0] = false;
     // });
 
-      simpleTry(() => Api.Activity.growUpTaskQuery(),callback: (data){
-        DailyTaskAllItems items = DailyTaskAllItems.fromJson(data);
-        growthTaskController.dailyTaskAllItems = items;
+      simpleTry(() => Api.Activity.growUpTaskQuery(offset: 0, limit: 20),callback: (data){
+        DailyTaskAllItems dailyTaskAllItems = DailyTaskAllItems.fromJson(data);
+        growthTaskController.itemList = dailyTaskAllItems!.data!.items!.isEmpty ? [] : dailyTaskAllItems.data!.items!;
 
         List dataList = [];
-        growthTaskController.dailyTaskAllItems.data?.items?.forEach((element) {
+        growthTaskController.itemList.forEach((element) {
           if(element.isReceive == true){
             dataList.add(element);
           }

@@ -13,8 +13,8 @@ class GrowthTaskController extends GetxController {
   void onInit() async{
     // TODO: implement onInit
     super.onInit();
-    dailyTaskAllItems = DailyTaskAllItems();
-    await dailyTaskQuery();
+    // dailyTaskAllItems = DailyTaskAllItems();
+    // await dailyTaskQuery();
   }
   /// 滚动控制器
   final ScrollController scrollController = ScrollController();
@@ -27,14 +27,19 @@ class GrowthTaskController extends GetxController {
   /// 刷新控制器
   RefreshController refController = RefreshController();
 
+  int pageNum = 0;
+  int offset = 0;
+  int limit = 20;
   onRefresh() async {
-    // pageNum = 1;
+     pageNum = 0;
+     offset = 0;
+     hasMoreData = true;
     // await baseController.flashcardDetails();
     // await userMine();
     // await userMineField();
     // await getMyAsset();
-
-    await dailyTaskQuery();
+     itemList.clear();
+    await dailyTaskQuery(offset: offset, limit: limit);
     refController.refreshCompleted();
     // baseController.getPayType();
 
@@ -44,7 +49,7 @@ class GrowthTaskController extends GetxController {
     simpleTry(() async => await Api.Activity.oneKeyReceive(taskType: 2),
         callback: (data) {
             showToast('领取成功');
-            dailyTaskQuery();
+             onRefresh();
         }
     );
   }
@@ -55,25 +60,41 @@ class GrowthTaskController extends GetxController {
     callback: (data) {
     //  if (data == 1) {
         showToast('领取成功');
-        dailyTaskQuery();
+      //  dailyTaskQuery();
+        onRefresh();
      // }
     }
     );
   }
-
+  bool hasMoreData = true;
+  List itemList = [];
   onLoad() async {
-    // pageNum++;
+     pageNum++;
+     offset += pageNum * limit;
     //await getGoodsList();
-    //  await dailyTaskQuery();
-    refController.loadComplete();
+     await dailyTaskQuery(offset: offset, limit: limit);
+   // refController.loadComplete();
   }
-  DailyTaskAllItems dailyTaskAllItems = DailyTaskAllItems();
+ // DailyTaskAllItems dailyTaskAllItems = DailyTaskAllItems();
 
-  dailyTaskQuery() async {
-    Map<String, dynamic> data = await Api.Activity.growUpTaskQuery();
-    DailyTaskAllItems Items = DailyTaskAllItems.fromJson(data);
-    dailyTaskAllItems = Items;
-    update(['growthTaskPage']);
+  dailyTaskQuery({required int? offset, required int limit}) async {
+    if(hasMoreData){
+      Map<String, dynamic> data = await Api.Activity.growUpTaskQuery(offset: offset, limit: limit);
+      DailyTaskAllItems dailyTaskAllItems = DailyTaskAllItems.fromJson(data);
+      // dailyTaskAllItems = Items;
+      if(dailyTaskAllItems.data!.items!.isEmpty){
+        //  refController.loadComplete();
+        hasMoreData = false;
+        refController.loadNoData();
+      }else{
+        itemList.addAll(dailyTaskAllItems.data!.items!);
+      }
+      refController.loadComplete();
+      update(['growthTaskPage']);
+    }else{
+      refController.loadNoData();
+    }
+
   }
 
 }

@@ -38,8 +38,8 @@ class ApiActivity extends ApiBase {
   /// 查询成长任务
   /// http://192.168.1.131:3000/project/34/interface/api/7385
   ///
-  Future growUpTaskQuery(){
-    return _doPost("grow_up_task/query",data: {});
+  Future growUpTaskQuery({required int? offset, required int limit}){
+    return _doPost("grow_up_task/query",data: {"offset":offset,"limit":limit});
   }
 
   ///

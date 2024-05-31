@@ -76,7 +76,6 @@ class TaskMainPageController extends GetxController {
       dailyTaskAllItems = Items;
       update(['taskMainPage']);
 
-
   }
 
 }

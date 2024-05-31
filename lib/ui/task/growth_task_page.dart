@@ -51,11 +51,11 @@ class GrowthTaskPage extends StatelessWidget {
                           ListView.builder(
                             shrinkWrap: true,
                             controller: _growthTaskController.scrollController,
-                            itemCount: _growthTaskController.dailyTaskAllItems.data?.items?.length,
+                            itemCount: _growthTaskController.itemList.length,
                             itemBuilder:  (BuildContext context, int index) {
                               return Column(
                                 children: [
-                                  _ItemView(data:_growthTaskController.dailyTaskAllItems.data?.items![index],vc: _growthTaskController,),
+                                  _ItemView(data:_growthTaskController.itemList[index],vc: _growthTaskController,),
                                   const Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Divider(
@@ -86,7 +86,7 @@ class GrowthTaskPage extends StatelessWidget {
    // vc.dailyTaskAllItems.data?.items?.length;
   //  EventBus eventBus = EventBus();
     List dataList = [];
-    vc.dailyTaskAllItems.data?.items?.forEach((element) {
+    vc.itemList.forEach((element) {
       if(element.isReceive == true){
         dataList.add(element);
       }

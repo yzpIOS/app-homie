@@ -41,7 +41,7 @@ class TaskMainPage extends StatelessWidget {
       children: [
           Box(
             color: AppPalette.transparent,
-            height: 110,
+            height: 115,
             child: $HeaderView(vc: vc,context: context),
           ),
 
@@ -53,6 +53,7 @@ class TaskMainPage extends StatelessWidget {
                        _taskMainPageController.onRefresh,
                        _taskMainPageController.onLoad,
                         _taskMainPageController.refController,
+                        isShowUp:false,
                                ListView.builder(
                          shrinkWrap: true,
                          controller: _taskMainPageController.scrollController,
@@ -161,7 +162,7 @@ class TaskMainPage extends StatelessWidget {
                 // const boxWidth = 36.0;
                 // final tenPercentWidth = (c.maxWidth - boxWidth * 3.0) / 10.0;
                 // 箱子的固定宽度和高度
-                 double boxSize = 36;
+                 double boxSize = 38;
                 // 计算每个箱子的间距
                 double totalBoxWidth =  boxCount * boxSize;
                 double totalSpacing = c.maxWidth - totalBoxWidth;
@@ -200,10 +201,10 @@ class TaskMainPage extends StatelessWidget {
 
                                  },
                                // child: Image.asset(IMG.format('task/task_box_${activityLevels[index]}'), scale: 3,),
-                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover)
-                                   :Image.network(receiveCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover)) :
-                               isReceived == true ?Image.network(receivedCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover): // isReceived == true ?
-                               Image.network(notReceiveCover!,scale: 2,width: boxSize,height: boxSize, fit: BoxFit.cover),
+                               child:isReceive == true ? (isReceived == true ?Image.network(receivedCover!,scale: 1,width: boxSize,height: boxSize, fit: BoxFit.cover)
+                                   :Image.network(receiveCover!,scale: 1,width: boxSize,height: boxSize, fit: BoxFit.cover)) :
+                               isReceived == true ?Image.network(receivedCover!,scale: 1,width: boxSize,height: boxSize, fit: BoxFit.cover): // isReceived == true ?
+                               Image.network(notReceiveCover!,scale: 1,width: boxSize,height: boxSize, fit: BoxFit.cover),
                                //  :
                                // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
                              ),
@@ -629,8 +630,7 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
           //   width: 300,
           //   height: 300,
           // ),
-          Image.network(widget.dailyTaskLivenessItems.prizeImage!,scale: 3,width: 100,
-            height: 100,fit: BoxFit.cover,),
+          Image.network(widget.dailyTaskLivenessItems.prizeImage!,width: 100,height: 100,scale: 3,fit: BoxFit.fitWidth,),
           
           // "立即领取" button below the Sun
           Positioned(
