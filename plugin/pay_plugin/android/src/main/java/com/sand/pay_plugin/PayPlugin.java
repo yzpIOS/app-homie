@@ -67,7 +67,7 @@ public class PayPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
               //单个的银联走handleUnionPayResult，不走这里
               //微信走WXEntryActivity onResp，不走这里
               //支付宝、H5快捷、一键快捷、快捷充值，支付成功跳frontUrl网页，不走这里
-              System.out.println("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              //System.out.println("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
               //System.out.println("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
               //System.out.println("需调用服务端接口查询支付结果");
               Map finishMap = new HashMap<>();
@@ -80,7 +80,7 @@ public class PayPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
               result.success(finishMap);
               break;
             case Resp.ERROR:
-              System.out.println("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              //System.out.println("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
               Map errorMap = new HashMap<>();
               errorMap.put("success", false);
               errorMap.put("funcCode", resp.funcCode);

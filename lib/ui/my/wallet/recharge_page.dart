@@ -151,10 +151,7 @@ class _RechargePageState extends State<RechargePage> {
         children: [
           Spacing.h20,
           $ComboView(items),
-          Spacing.h20,
-          // 只有android才显示支付方式
-          if(Platform.isAndroid)
-            $PayTypeView(types),
+
           Spacing.exp,
           Padding(
             padding: Pad(
@@ -345,11 +342,6 @@ class _RechargePageState extends State<RechargePage> {
     }else{
       // 安卓使用杉德宝
       payType = 5;
-    }
-
-    if(payType == null) {
-      showToast('请选择支付方式');
-      return;
     }
 
     if (pactRx.value == false) {
