@@ -62,14 +62,22 @@ public class PayPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
         public void onResult(Resp resp) {
           switch (resp.status){
             case Resp.FINISH:
+              System.out.println("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              //System.out.println("需调用服务端接口查询支付结果");
+              Map map = new HashMap<>();
+              // 向Map中添加键值对
+              map.put("success", true);
+              map.put("funcCode", resp.funcCode);
+              map.put("errCode", resp.errCode);
+              map.put("errMsg", resp.errMsg);
+              map.put("exceptionMsg", resp.exceptionMsg);
+              result.success(map);
             case Resp.SUCCESS:
               //多个里的银联和杉德宝，支付成功走这里
               //单个的银联走handleUnionPayResult，不走这里
               //微信走WXEntryActivity onResp，不走这里
               //支付宝、H5快捷、一键快捷、快捷充值，支付成功跳frontUrl网页，不走这里
-              //System.out.println("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              //System.out.println("call Android action startSandPay finish -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
-              //System.out.println("需调用服务端接口查询支付结果");
+              System.out.println("call Android action startSandPay success -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
               Map finishMap = new HashMap<>();
               // 向Map中添加键值对
               finishMap.put("success", true);
@@ -80,7 +88,7 @@ public class PayPlugin implements FlutterPlugin, MethodCallHandler, ActivityAwar
               result.success(finishMap);
               break;
             case Resp.ERROR:
-              //System.out.println("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
+              System.out.println("call Android action startSandPay error -> " + "funcCode: "+resp.funcCode + "errCode: " +resp.errCode + "errMsg: " +resp.errMsg + "exceptionMsg: " +resp.exceptionMsg);
               Map errorMap = new HashMap<>();
               errorMap.put("success", false);
               errorMap.put("funcCode", resp.funcCode);
