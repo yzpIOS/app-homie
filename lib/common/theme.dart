@@ -101,6 +101,8 @@ abstract class AppPalette {
   static const divider = Color(0x80CCCCCC);
   static const background = Colors.white;
   static const background2 = Color(0xFFF5F5F5);
+  static const primaryRed = Color(0xFFFF2C67);
+
 
   static const room = Color(0x4D000000);
   static const colorY = Color(0xFFFFDD7A);

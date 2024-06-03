@@ -15,6 +15,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:slugid/slugid.dart';
 import 'package:app/common/utils/utils.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

@@ -260,10 +260,10 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   void onUpdateHotCount2Handler(List<S_AccMikeBroadcast> data) {
     bool refresh = false;
     for(int index = 0; index < data.length; index ++) {
-      var info = dataRx[data[index].mikeNo];
+      var info = dataRx[data[index].uid];
       if(info != null) {
         refresh = true;
-        onUpdateHotCount3Handler(data[index].mikeNo, data[index].number);
+        onUpdateHotCount3Handler(data[index].uid, data[index].number);
       }
     }
     if (refresh) {
@@ -274,11 +274,11 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   ///
   /// 处理热力值
   ///
-  void onUpdateHotCount3Handler(String? mikeNo, int? number, {bool refresh = false}) {
-    if(mikeNo == null || number == null) {
+  void onUpdateHotCount3Handler(String? uid, int? number, {bool refresh = false}) {
+    if(uid == null || number == null) {
       return;
     }
-    final info = dataRx[mikeNo];
+    final info = dataRx[uid];
     if (info == null) {
       return;
     } else {

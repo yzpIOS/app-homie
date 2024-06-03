@@ -68,32 +68,40 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        $SquareView(),
-        Box(
-          padding: const Pad(top: 10),
-          alignment: Alignment.centerLeft,
-          child: TabBar(
-            tabAlignment: TabAlignment.start,
-            labelPadding: const Pad(horizontal: 15),
-            isScrollable: true,
-            indicatorSize: TabBarIndicatorSize.label,
-            tabs: data.keys.map((it) => Tab(text: it, height: 28)).toList(growable: false),
+    Widget child = Scaffold(
+      backgroundColor: AppPalette.background2,
+      appBar: xAppBar(
+       title: _createBar(),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        //  _createBar(),
+          $SquareView(),
+          Box(
+            padding: const Pad(top: 10),
+            alignment: Alignment.centerLeft,
+            child: TabBar(
+              tabAlignment: TabAlignment.start,
+              labelPadding: const Pad(horizontal: 15),
+              isScrollable: true,
+              indicatorSize: TabBarIndicatorSize.label,
+              tabs: data.keys.map((it) => Tab(text: it, height: 28)).toList(growable: false),
+            ),
           ),
-        ),
-        Expanded(
-          child: TabBarView(
-            children: data.values
-                .map((it) => (_) => it)
-                .map((it) => DelayView(keepAlive: true, builder: it))
-                .toList(growable: false),
+          Expanded(
+            child: TabBarView(
+              children: data.values
+                  .map((it) => (_) => it)
+                  .map((it) => DelayView(keepAlive: true, builder: it))
+                  .toList(growable: false),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
+
 
     child = DefaultTabController(
       initialIndex: 1,
@@ -114,7 +122,7 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                _createBar(),
+             //   _createBar(),
                 Expanded(
                   child: child,
                 ),
@@ -132,7 +140,8 @@ class _HotPodcastPageState extends State<HotPodcastPage> {
   Widget _createBar() {
     return Container(
       height: AppSize.appBar + AppSize.safeTop,
-      padding: EdgeInsets.only(top: AppSize.safeTop, right: 10),
+       padding: EdgeInsets.only(top: AppSize.safeTop, right: 10),
+    //  padding: EdgeInsets.only( right: 10),
       alignment: Alignment.centerRight,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

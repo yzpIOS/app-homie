@@ -4,42 +4,53 @@ import 'dart:math';
 import 'package:app/common/theme.dart';
 import 'package:app/net/api.dart';
 import 'package:app/tools.dart';
+import 'package:app/ui/task/task_main_page.dart';
+import 'package:app/ui/task/task_main_page_controller.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:app/ui/common/money_icon.dart';
-import 'package:app/common/common.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../../common/common_model.dart';
+import '../../common/widgetUtils.dart';
+import '../../event/event.dart';
+import 'growth_task_controller.dart';
+import 'growth_task_page.dart';
+import 'package:event_bus/event_bus.dart';
 /// 任务中心
 class TaskCenterPage extends StatefulWidget {
   final int initIndex;
-
+  // final TaskCenterController taskCenterController;
   const TaskCenterPage({super.key, this.initIndex = 0});
 
   @override
   State<TaskCenterPage> createState() => _TaskCenterPageState();
 }
 
-class _TaskCenterPageState extends State<TaskCenterPage> {
-
-
-  final tabs = <String, Widget>{
-    '每日任务': DelayView(
-      fadeIn: false,
-      keepAlive: true,
-      builder: (_) {
-        return const TaskMainView(taskListType: 1);
-      },
-    ),
-    '成长任务': DelayView(
-      fadeIn: false,
-      keepAlive: true,
-      builder: (_) {
-        return const TaskMainView(taskListType: 2);
-      },
-    ),
-  };
-
+class _TaskCenterPageState extends State<TaskCenterPage> with BusStateMixin {
+  final TaskMainPageController taskCenterController = Get.put(TaskMainPageController());
+  final GrowthTaskController growthTaskController = Get.put(GrowthTaskController());
+  // var tabs;
+   var tabs = <String, Widget>{
+     // '每日任务': const TaskMainPage(taskListType:1),
+     '每日任务': DelayView(
+       fadeIn: false,
+       keepAlive: true,
+       builder: (_) {
+       //  return   TaskMainPage();
+         return Container();
+       },
+     ),
+     '成长任务': DelayView(
+       fadeIn: false,
+       keepAlive: true,
+       builder: (_) {
+       //  return  GrowthTaskPage();
+         return Container();
+       },
+     ),
+   };
   // 控制红点显示的标志位列表
   final _showRedDotList = RxList([true, false]);
 
@@ -49,10 +60,99 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
   void initState() {
     super.initState();
 
+    // on<ShowRedDotListEvent>.listen((event)){
+    //
+    // }
+  //  EventBus eventBus = EventBus();
+    // 请求数据刷新界面
+    // on<ShowRedDotListEvent>(
+    //       (_) => updateUserInfo(),
+    // );
+    // on<ShowRedDotListEvent>(
+    //       (event) =>  print('Received EventOne: ${event.dataList}')
+    // );
+    //
+    // on<ShowRedDotListGrowpEvent>(
+    //         (event) =>  print('Received EventOne111: ${event.dataList}')
+    // );
+
+    on<ShowRedDotListEvent>((event) {
+      print('Received EventOne: ${event.dataList}');
+      event.dataList!.isEmpty ? _showRedDotList[0] = false : _showRedDotList[0] = true;
+     // _showRedDotList[0] = false;
+    });
+
+    on<ShowRedDotListGrowpEvent>((event) {
+      print('Received EventOne: ${event.dataList}');
+      event.dataList!.isEmpty ? _showRedDotList[1] = false : _showRedDotList[1] = true;
+    });
+
     // Future.delayed(const Duration(seconds: 2)).whenComplete(() {
     //   _showRedDotList[0] = false;
     // });
+
+      simpleTry(() => Api.Activity.growUpTaskQuery(offset: 0, limit: 20),callback: (data){
+        DailyTaskAllItems dailyTaskAllItems = DailyTaskAllItems.fromJson(data);
+        growthTaskController.itemList = dailyTaskAllItems!.data!.items!.isEmpty ? [] : dailyTaskAllItems.data!.items!;
+
+        List dataList = [];
+        growthTaskController.itemList.forEach((element) {
+          if(element.isReceive == true){
+            dataList.add(element);
+          }
+        });
+        if(dataList.isEmpty){
+          _showRedDotList[1] = false;
+        }else{
+          _showRedDotList[1] = true;
+        }
+
+        simpleTry(() => Api.Activity.dailyTaskQuery(),callback: (data2){
+          DailyTaskAllItems items2 = DailyTaskAllItems.fromJson(data2);
+          taskCenterController.dailyTaskAllItems = items2;
+          List dataList = [];
+          taskCenterController.dailyTaskAllItems.data?.dailyTaskItems?.forEach((element) {
+            if(element.isReceive == true){
+              dataList.add(element);
+            }
+          });
+          if(dataList.isEmpty){
+            _showRedDotList[0] = false;
+          }else{
+            _showRedDotList[0] = true;
+          }
+
+
+          tabs = <String, Widget>{
+            // '每日任务': const TaskMainPage(taskListType:1),
+            '每日任务': DelayView(
+              fadeIn: false,
+              keepAlive: true,
+              builder: (_) {
+                return   TaskMainPage();
+              },
+            ),
+            '成长任务': DelayView(
+              fadeIn: false,
+              keepAlive: true,
+              builder: (_) {
+                return  GrowthTaskPage();
+              },
+            ),
+          };
+
+          setState(() {
+
+          });
+
+        });
+      });
+
+
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -149,233 +249,128 @@ class _TaskCenterPageState extends State<TaskCenterPage> {
   }
 }
 
-class TaskMainView extends StatelessWidget {
-
-  final int taskListType; //任务列表类型 1：每日任务，2：成长任务
-  const TaskMainView({super.key, required this.taskListType});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (taskListType == 1)
-          Box(
-            color: AppPalette.transparent,
-            height: 110,
-            child: $HeaderView(),
-          ),
-        Expanded(
-          child: Material(
-            borderRadius: AppBorderRadius.t16,
-            color: Colors.white,
-            child: ConfigListState(
-              buildNoMoreView: ([_]) => const SizedBox(),
-              child: _DetailsListView(taskListType),
-            ),
-            // child: XFutureBuilder<dynamic>(
-            //   api,
-            //   onData: (data) => $BodyView(data['items'], data['pay_type_items']),
-            // ),
-          ),
-        ),
-        if (taskListType == 2)
-          $BatchReceiveView(),
-      ],
-    );
-  }
-
-  /// 头部活跃度视图
-  Widget $HeaderView() {
-    // RxBool isOpen10 = false.obs;
-    // RxBool isOpen40 = false.obs;
-    // RxBool isOpen70 = false.obs;
-    // RxBool isOpen100 = false.obs;
-    Widget $Indicator(double percent) {
-      return LinearPercentIndicator(
-        animation: false,
-        animationDuration: 618,
-        curve: Curves.easeOutCubic,
-        lineHeight: 4.5,
-        padding: Pad.zero,
-        barRadius: AppRadius.max,
-        percent: percent,
-        linearGradient: const LinearGradient(colors: [Color(0xFF18FF00), Color(0xFF9AFF9A)]),
-        backgroundColor: const Color(0xFF868686).withAlpha(80),
-      );
-    }
-
-    Widget $TaskBoxView(String bottomNum, double right, double boxWidth) {
-
-      return Positioned(
-        right: right,
-        top: 12,
-        child: Column(
-          children: [
-           GestureDetector(
-             onTap: (){
-               // isOpen = !isOpen;
-             },
-             child:  Image.asset(IMG.format('task/task_box_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,)
-             //  :
-             // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
-           ),
-
-            XText(
-              bottomNum,
-              style: const TextStyle(fontSize: 10, color: AppPalette.colorA7),
-            )
-          ],
-        ),
-      );
-    }
-    
-    Widget child = Column(
-      children: [
-        const Padding(
-          padding: Pad(horizontal: 12),
-          child: Row(
-            children: [
-              XText('今日活跃度：0',selectionColor: Colors.black,style: TextStyle(color: Colors.black),),
-              Expanded(child: Spacing.blank),
-              XText('每日0点刷新',style: TextStyle(color: Colors.black),),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const Pad(horizontal: 19),
-            child: LayoutBuilder(
-              builder: (_ , c) {
-                const boxWidth = 36.0;
-                final tenPercentWidth = (c.maxWidth - boxWidth * 4.0) / 10.0;
-
-                return Stack(
-                  clipBehavior: Clip.none,
-                  children: [  // 90
-                    Positioned.fill(child: $Indicator(
-                      max(0, min(1, 0.9,),),
-                    ),),
-                    $TaskBoxView('100', -3, boxWidth),
-                    $TaskBoxView('70', 3 * tenPercentWidth + boxWidth - 3, boxWidth),
-                    $TaskBoxView('40', 6 * tenPercentWidth + 2 * boxWidth - 3, boxWidth),
-                    $TaskBoxView('10', 9 * tenPercentWidth + 3 * boxWidth - 3, boxWidth),
-                  ],
-                );
-              },
-            ),
-          ),
-        ),
-        Container(
-          width: 195,
-          height: 31.6,
-          margin: const Pad(bottom: 4),
-          child: Stack(
-            children: [
-              Positioned.fill(child: Image.asset(IMG.format('task/task_box_desc_bg'), scale: 3, fit: BoxFit.cover,),),
-              Positioned(
-                bottom: 3.5,
-                left: 0,
-                right: 0,
-                child: XRichText(
-                  TextSpan(
-                    children: [
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                       // child: SvgView(SVG.$('cz/黄钻'), width: 21, height: 21),
-                        child: Image.asset(IMG.format('money_gold'), width: 21, height: 21)
-                      ),
-                      const TextSpan(text: '  打开宝箱可获得'),
-                      const TextSpan(
-                        // text: '金币或体力点',
-                        text: '黄钻',
-                        style: TextStyle(fontSize: 11, color: AppPalette.colorYZ, fontWeight: fw$Regular),
-                      ),
-                    ],
-                  ),
-                  style: const TextStyle(fontSize: 11, color: AppPalette.txtDark, fontWeight: fw$Regular),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-
-    child = DefaultTextStyle(
-      style: const TextStyle(fontSize: 12, color: Colors.white),
-      child: child,
-    );
-
-    return child;
-  }
-
-  /// 批量领取视图
-  Widget $BatchReceiveView() {
-    Widget child = Row(
-      children: [
-        const XRichText(
-          TextSpan(
-            children: [
-              TextSpan(text: '共'),
-              TextSpan(
-                text: '3',
-                style: TextStyle(fontSize: 13, color: Color(0xFFBD7BE5), fontWeight: fw$Regular),
-              ),
-              TextSpan(text: '个任务奖励未领取'),
-            ],
-            style: TextStyle(fontSize: 13, color: AppPalette.colorA7, fontWeight: fw$Regular),
-          ),
-        ),
-        Spacing.exp,
-        XTextBtn(
-          width: 116,
-          height: 30,
-          label: '一键领取',
-          textStyle: const TextStyle(fontSize: 15, color: AppPalette.txtWhite, fontWeight: fw$Regular),
-        ),
-      ],
-    );
-
-    child = Container(
-      padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
-      height: 53,
-      child: child,
-    );
-
-    return child;
-  }
-}
+// class TaskMainView extends StatelessWidget {
+//   // late final TaskCenterController taskCenterController;
+//
+//   final int taskListType; //任务列表类型 1：每日任务，2：成长任务
+//   final TaskCenterController taskCenterController;
+//   const TaskMainView({super.key, required this.taskListType, required this.taskCenterController});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         if (taskListType == 1)
+//           Box(
+//             color: AppPalette.transparent,
+//             height: 110,
+//             child: $HeaderView(),
+//           ),
+//         Expanded(
+//           child: Material(
+//             borderRadius: AppBorderRadius.t16,
+//             color: Colors.white,
+//             child: refreshBox(
+//               taskCenterController.onRefresh,
+//               taskCenterController.onLoad,
+//               taskCenterController.refController,
+//                 ListView.builder(
+//                   shrinkWrap: true,
+//                   controller: taskCenterController.scrollController,
+//                   itemCount: 8,
+//                   itemBuilder:  (BuildContext context, int index) {
+//                   return _ItemView();
+//                 },),
+//                 isShowUp: false,
+//                 isMain: false
+//             )
+//
+//             // ConfigListState(
+//             //   buildNoMoreView: ([_]) => const SizedBox(),
+//             //   child: _DetailsListView(taskListType),
+//             // ),
+//
+//
+//             // child: XFutureBuilder<dynamic>(
+//             //   api,
+//             //   onData: (data) => $BodyView(data['items'], data['pay_type_items']),
+//             // ),
+//           ),
+//         ),
+//         if (taskListType == 2)
+//           $BatchReceiveView(),
+//       ],
+//     );
+//   }
+//
+//
+//
+//   /// 批量领取视图
+//   Widget $BatchReceiveView() {
+//     Widget child = Row(
+//       children: [
+//         const XRichText(
+//           TextSpan(
+//             children: [
+//               TextSpan(text: '共'),
+//               TextSpan(
+//                 text: '3',
+//                 style: TextStyle(fontSize: 13, color: Color(0xFFBD7BE5), fontWeight: fw$Regular),
+//               ),
+//               TextSpan(text: '个任务奖励未领取'),
+//             ],
+//             style: TextStyle(fontSize: 13, color: AppPalette.colorA7, fontWeight: fw$Regular),
+//           ),
+//         ),
+//         Spacing.exp,
+//         XTextBtn(
+//           width: 116,
+//           height: 30,
+//           label: '一键领取',
+//           textStyle: const TextStyle(fontSize: 15, color: AppPalette.txtWhite, fontWeight: fw$Regular),
+//         ),
+//       ],
+//     );
+//
+//     child = Container(
+//       padding: Pad(bottom: AppSize.safeBottom, horizontal: 18),
+//       height: 53,
+//       child: child,
+//     );
+//
+//     return child;
+//   }
+// }
 
 
-class _DetailsListView extends SimpleDataView<Map> {
-  final int taskListType; //任务列表类型 1：每日任务，2：成长任务
-  _DetailsListView(this.taskListType);
-
-  @override
-  BaseConfig get config {
-    return ListConfig(
-      padding: Pad(horizontal: 18, bottom: AppSize.safeBottom),
-      divider: const Divider(color: AppPalette.colorEB,),
-    );
-  }
-
-  @override
-  Future fetch() =>
-      // Api.Finance.diamondDetail(
-      //   type: taskListType, page: const PageNum(index: 0, size: 999),);
-   Api.Activity.dailyTaskQuery();
-
-  @override
-  Widget itemBuilder(BuildContext context, Map item, int index) {
-    return _ItemView(data: item);
-  }
-}
+// class _DetailsListView extends SimpleDataView<Map> {
+//   final int taskListType; //任务列表类型 1：每日任务，2：成长任务
+//   _DetailsListView(this.taskListType);
+//
+//   @override
+//   BaseConfig get config {
+//     return ListConfig(
+//       padding: Pad(horizontal: 18, bottom: AppSize.safeBottom),
+//       divider: const Divider(color: AppPalette.colorEB,),
+//     );
+//   }
+//
+//   @override
+//   Future fetch() =>
+//       // Api.Finance.diamondDetail(
+//       //   type: taskListType, page: const PageNum(index: 0, size: 999),);
+//    Api.Activity.dailyTaskQuery();
+//
+//   @override
+//   Widget itemBuilder(BuildContext context, Map item, int index) {
+//     return _ItemView(data: item);
+//   }
+// }
 
 class _ItemView extends StatelessWidget {
-  final Map data;
-
-  const _ItemView({required this.data});
+  // final Map data;
+  //
+  // const _ItemView({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -383,28 +378,30 @@ class _ItemView extends StatelessWidget {
       height: 90,
       child: Row(
         children: [
-          NetImage(data['image'] ?? '-', width: 44, height: 44,),
+        //  NetImage(data['image'] ?? '-', width: 44, height: 44,),
           const Spacing(width: 8, flex: null,),
-          Expanded(
+          const Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 XText(
-                  data['mainName'] ?? '每日登录',
-                  style: const TextStyle(fontSize: 14,
+                  // data['mainName'] ?? '每日登录',
+               '每日登录',
+                  style: TextStyle(fontSize: 14,
                       color: AppPalette.txtDark,
                       fontWeight: fw$Medium),
                 ),
-                const Spacing(height: 4, flex: null,),
+                Spacing(height: 4, flex: null,),
                 XText(
-                  data['subName'] ?? '每日登录游戏1次',
-                  style: const TextStyle(fontSize: 12,
+                 // data['subName'] ?? '每日登录游戏1次',
+                 '每日登录游戏1次',
+                  style: TextStyle(fontSize: 12,
                       color: AppPalette.colorA7,
                       fontWeight: fw$Regular),
                 ),
-                const Spacing(height: 4, flex: null,),
-                const XRichText(
+                Spacing(height: 4, flex: null,),
+                XRichText(
                   TextSpan(
                     children: [
                       WidgetSpan(

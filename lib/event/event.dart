@@ -84,6 +84,8 @@ class AppLifecycleEvent extends Event {
   }
 }
 
+
+
 class AppLinkEvent extends Event {
   final Uri link;
 
