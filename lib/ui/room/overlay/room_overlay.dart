@@ -45,7 +45,7 @@ import 'package:provider/provider.dart';
 import 'package:quiver/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:app/common/nets/commons/proto/Common.pb.dart' as Common;
-
+import 'package:app/common/common_model.dart';
 import '../user/room_user_info_dialog.dart';
 
 class RoomOverlay extends SceneOverlay<RoomCtrl> {
@@ -313,14 +313,22 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       //     datas: c_roomEnterComplete.writeToBuffer(),
       //     resCmd: CMD.S_OnlineList);
       WaitingCtrl.obj.hidden();
+     // Map<String, dynamic> data =
+      OnlineModel onlineModel = OnlineModel();
+      await Api.Room.online(offset: 0, limit: 1000,roomId: roomId).then((data) => {
+     // print('data222 = $data')
+        onlineModel = OnlineModel.fromJson(data),
+
+      });
+
       // 获取麦上的用户列表
-      var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
+    //  var micUsers = sceneMicCtrl<RoomMicCtrl>().simpleUserList;
     //  SceneMicCtrl? sceneMicCtrl2 = RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl();
     //   if(sceneMicCtrl2 is RoomMicCtrl) {
-        if (micUsers.isEmpty) {
-          showToast("暂无在麦用户");
-          return;
-        }
+    //     if (micUsers.isEmpty) {
+    //       showToast("暂无在麦用户");
+    //       return;
+    //     }
     //  }
        // micInfos = sceneMicCtrl.dataRx.values.toList();
 
@@ -350,12 +358,14 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
       // 获取房主的信息
       // var roomOwnerInfo = s_syncRoomInfo?.items
       //     .firstWhereOrNull((element) => element.type == 1);
-      var roomOwnerInfo = userList.firstWhereOrNull((element) => element.roleType == 1);
+     // var roomOwnerInfo = userList.firstWhereOrNull((element) => element.roleType == 1);
+      var roomOwnerInfo = onlineModel?.data
+           ?.firstWhereOrNull((element) => element.type == 1);
       if (roomOwnerInfo != null) {
         // 送礼过滤自己
         if (!OAuthCtrl.isSelf(roomOwnerInfo.uid)) {
           roomOwner =
-              GiftSend2RoomEntity(uid: roomOwnerInfo.uid, no: "", userType: 1);
+              GiftSend2RoomEntity(uid: roomOwnerInfo.uid!, no: "", userType: 1);
         }
       }
 

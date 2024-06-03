@@ -372,6 +372,7 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
         if (OAuthCtrl.isSelf(info['uid'])) {
           //logForDebug("用户自入自己的房间 info= ${info}");
+
           return Tuple2(info, null);
         }
 
@@ -379,16 +380,20 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
 
         if (status == ApiSwitch.open.code) {
           //logForDebug("用户进入其它房间，房间信息 info= ${info}");
+        //  return Tuple2(info, null);
           return Tuple2(info, null);
         } else if (status == ApiSwitch.close.code) {
           //logForDebug("用户进入密码房，房间信息 info= ${info}");
+
+
           return holderProgress(
             Get.showInputDialog(title: '请输入密码').then((val) {
               if (val == null) throw const LogicException(-1, '已取消');
-
               return Tuple2(info, val);
             }),
           );
+
+
         } else {
           throw const LogicException(-1, '数据错误');
         }
@@ -454,15 +459,29 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           if (okLabel != other) {
             return;
           } else {
-            // 清除原房间资源
-            await doCloseState();
+            // // 清除原房间资源
+             await doCloseState();
 
             continue join;
           }
         }
       join:
       case RoomState.None:
-        await doJoin();
+        final joinResult = await Api.Room.joinRoom(roomId!, pwd: null, timeout: 60 * 2);
+        logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+        if(joinResult != null && joinResult.code == ErrorCode.Success) {
+          // saveState('Int', 'sdkAppId', joinResult.sdkAppId);
+          // saveState('String', 'userId', joinResult.userId);
+          // saveState('String', 'userSig', joinResult.userSig);
+          // 清除原房间资源
+          //  await doCloseState();
+          Rtc.sdkAppId = joinResult.sdkAppId;
+          Rtc.userId = joinResult.userId;
+          Rtc.userSig = joinResult.userSig;
+          //  return Tuple2(info, null);
+          await doJoin();
+        }
+
         break;
     }
   }
@@ -492,18 +511,20 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           // 个人房
           toPersonRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
         } else if(data["room_type"] == 2) {
-          final joinResult = await Api.Room.joinRoom(roomId, pwd: null, timeout: 60 * 2);
-          logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
-          if(joinResult != null && joinResult.code == ErrorCode.Success) {
-            // saveState('Int', 'sdkAppId', joinResult.sdkAppId);
-            // saveState('String', 'userId', joinResult.userId);
-            // saveState('String', 'userSig', joinResult.userSig);
-
-            Rtc.sdkAppId = joinResult.sdkAppId;
-            Rtc.userId = joinResult.userId;
-            Rtc.userSig = joinResult.userSig;
-            toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
-          }
+          toGuildRoom(roomId: roomId, data: data, off: off, changeRoom: changeRoom);
+          // final joinResult = await Api.Room.joinRoom(roomId, pwd: null, timeout: 60 * 2);
+          // logForDebug("joinRoom结果, joinResult = ${joinResult.toString()}");
+          // if(joinResult != null && joinResult.code == ErrorCode.Success) {
+          //   // saveState('Int', 'sdkAppId', joinResult.sdkAppId);
+          //   // saveState('String', 'userId', joinResult.userId);
+          //   // saveState('String', 'userSig', joinResult.userSig);
+          //   // 清除原房间资源
+          // //  await doCloseState();
+          //   Rtc.sdkAppId = joinResult.sdkAppId;
+          //   Rtc.userId = joinResult.userId;
+          //   Rtc.userSig = joinResult.userSig;
+          //
+          // }
 
         } else if(data["room_type"] == 3) {
           // 广场
