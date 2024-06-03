@@ -23,6 +23,8 @@ abstract class MicUserSheet {
       final isAdmin = isRoom && roomCtrl.isAdmin(myUid);
       // 是否是管理者
       final isOwner = isRoom && roomCtrl.isOwner(myUid);
+     // bool aa = RoomCtrl;
+
       final canManage = isOwner || isAdmin;
       if(canManage) {
         // 管理员操作

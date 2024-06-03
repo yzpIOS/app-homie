@@ -552,6 +552,7 @@ abstract class SceneCtrl extends GetxController
           timeout: 60 * 2);
       // 判断是否关闭界面
       isNotClose();
+      print('s_syncRoomInfo = $s_syncRoomInfo');
       onRender(s_syncRoomInfo);
 
       RoomInfoEvent(s_syncRoomInfo).fire();

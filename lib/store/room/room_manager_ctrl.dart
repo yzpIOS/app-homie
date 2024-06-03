@@ -480,6 +480,10 @@ class RoomManagerCtrl extends GetxController with BusGetLifeMixin, GetDisposable
           Rtc.userSig = joinResult.userSig;
           //  return Tuple2(info, null);
           await doJoin();
+        }else{
+          if(joinResult != null && joinResult.code == ErrorCode.ROOM_UID_BLACK){
+            Get.alertDialog('你被封禁了');
+          }
         }
 
         break;
