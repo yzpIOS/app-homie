@@ -19,6 +19,7 @@ import '../../common/common_model.dart';
 import '../../event/event.dart';
 import '../../shop/home_shop_page.dart';
 import '../moment/moment_page.dart';
+import '../my/real_identity_page.dart';
 import '../my/wallet/recharge_page.dart';
 import '../podcast/hot_podcast_page.dart';
 import 'growth_task_controller.dart';
@@ -326,6 +327,9 @@ class _ItemView extends StatelessWidget {
                   const HotBroadcastEvent().fire();
                   break;
                 case 17:
+                  Get.back();
+                  const HotBroadcastEvent().fire();
+
                   break;
                 case 18:
                 //  Get.to(() => const HotPodcastPage());
@@ -341,6 +345,13 @@ class _ItemView extends StatelessWidget {
                  // Get.to(() => const HotPodcastPage());
                   Get.back();
                   const HotBroadcastEvent().fire();
+                  break;
+
+                case 21:
+                  Get.to(() => const RealIdentityPage());
+                  break;
+                case 22:
+
                   break;
               }
             },
