@@ -148,7 +148,6 @@ public class FUnityPlugin implements FlutterPlugin, MethodCallHandler, ActivityA
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         try {
-            System.out.print("FUnityPlugin onMethodCall 1...");
             switch (call.method) {
                 case "postMessage":
                     XUnityPlayer.UnitySendMessage(

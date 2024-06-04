@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:alipay_kit/alipay_kit.dart';
 import 'package:app/common/theme.dart';
 import 'package:app/event/event.dart';
 import 'package:app/model/enum/money_type.dart';
@@ -15,12 +17,13 @@ import 'package:app/ui/my/wallet/apple_purchase.dart';
 import 'package:app/ui/my/wallet/money_card.dart';
 import 'package:app/ui/my/wallet/pay_page.dart';
 import 'package:app/ui/my/wallet/purple_diamond_details_page.dart';
+import 'package:app/ui/my/wallet/recharge_confirm_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pay_plugin/pay_plugin.dart';
 
 class RechargePage extends StatefulWidget {
-
   // 进入充值入口的页面是否显示了unity
   bool hasShowUnityView;
 
@@ -30,25 +33,27 @@ class RechargePage extends StatefulWidget {
   State<RechargePage> createState() => _RechargePageState();
 }
 
-class _RechargePageState extends State<RechargePage> {
+class _RechargePageState extends State<RechargePage> with WidgetsBindingObserver {
   final selectRx = Rxn<Map>();
   final payTypeRx = RxnInt();
 
   final type = MoneyType.diamond;
 
   late final api = Api.Wallet.rechargeCombo();
-  late final RxBool pactRx = RxBool(false);//是否选中充值及购买协议
+  late final RxBool pactRx = RxBool(false); //是否选中充值及购买协议
+  int _currentPayOrderId = 0;
+  bool _needConfirmPay = true;
 
   ApplePurchase applePurchase = ApplePurchase();
 
   static final _format = NumberFormat('0.##').format;
-  static double bgHeight = AppSize.width / 375 * 374;//头部背景图高度
+  static double bgHeight = AppSize.width / 375 * 374; //头部背景图高度
 
   @override
   void initState() {
     super.initState();
     PayPage.needSendFailStatistic = true;
-
+    WidgetsBinding.instance.addObserver(this); //添加观察者
     _init();
   }
 
@@ -61,7 +66,10 @@ class _RechargePageState extends State<RechargePage> {
       final items = val['items'];
       final types = val['pay_type_items'];
 
-      if (items is List && items.isNotEmpty && types is List && types.isNotEmpty) {
+      if (items is List &&
+          items.isNotEmpty &&
+          types is List &&
+          types.isNotEmpty) {
         payTypeRx(types.first['pay_type']);
 
         return;
@@ -76,7 +84,9 @@ class _RechargePageState extends State<RechargePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: xAppBar(title: '充值', bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
+      appBar: xAppBar(
+          title: '充值',
+          bgColor: AppPalette.appBarForegroundColorDark.withAlpha(0)),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
@@ -117,7 +127,8 @@ class _RechargePageState extends State<RechargePage> {
                     color: Colors.white,
                     child: XFutureBuilder<dynamic>(
                       api,
-                      onData: (data) => $BodyView(data['items'], data['pay_type_items']),
+                      onData: (data) =>
+                          $BodyView(data['items'], data['pay_type_items']),
                     ),
                   ),
                 ),
@@ -150,14 +161,10 @@ class _RechargePageState extends State<RechargePage> {
         children: [
           Spacing.h20,
           $ComboView(items),
-          Spacing.h20,
-          // 只有android才显示支付方式
-          if(Platform.isAndroid)
-            $PayTypeView(types),
           Spacing.exp,
           Padding(
-            padding: Pad(
-                horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
+            padding:
+                Pad(horizontal: 40, top: 10, bottom: 40 + AppSize.safeBottom),
             child: Column(
               children: [
                 $PactTxt(),
@@ -174,7 +181,8 @@ class _RechargePageState extends State<RechargePage> {
   Widget $Btn() {
     return XTextBtn(
       label: '立即充值',
-      textStyle: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
+      textStyle: const TextStyle(
+          fontSize: 18, color: Colors.white, fontWeight: fw$Medium),
       onTap: doSub,
     );
   }
@@ -188,9 +196,12 @@ class _RechargePageState extends State<RechargePage> {
           children: [
             Obx(() {
               return OpacityButton(
-                child: Image.asset(IMG.format(
-                    pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
-                    width: 13, height: 13, scale: 3, fit: BoxFit.contain),
+                child: Image.asset(
+                    IMG.format(pactRx.value ? 'shop/协议选中' : 'shop/协议未选中'),
+                    width: 13,
+                    height: 13,
+                    scale: 3,
+                    fit: BoxFit.contain),
                 onTap: () {
                   pactRx.toggle();
                 },
@@ -200,8 +211,10 @@ class _RechargePageState extends State<RechargePage> {
             StyledText(
               text: '我已阅读并同意<c>《<a1>充值及购买协议</a1>》</c>',
               tags: {
-                'c': StyledTextTag(style: const TextStyle(color: AppPalette.primary)),
-                'a1': StyledTextActionTag((val, __) => ctrl.onTapLink(val!, 'recharge_agreement')),
+                'c': StyledTextTag(
+                    style: const TextStyle(color: AppPalette.primary)),
+                'a1': StyledTextActionTag(
+                    (val, __) => ctrl.onTapLink(val!, 'recharge_agreement')),
               },
               style: const TextStyle(fontSize: 12, color: AppPalette.c9),
             ),
@@ -236,7 +249,8 @@ class _RechargePageState extends State<RechargePage> {
             height: 34,
           ),
           XRichText(
-            style: const TextStyle(fontSize: 18, color: Colors.black, fontWeight: fw$Medium),
+            style: const TextStyle(
+                fontSize: 18, color: Colors.black, fontWeight: fw$Medium),
             TextSpan(
               text: '${item['diamond_amount']}',
               children: [
@@ -251,7 +265,10 @@ class _RechargePageState extends State<RechargePage> {
           const Expanded(flex: 3, child: Spacing.blank),
           XText(
             '¥${_format(item['pay_amount'] / 100)}',
-            style: const TextStyle(fontSize: 12, color: AppPalette.colorA9, fontWeight: fw$Regular),
+            style: const TextStyle(
+                fontSize: 12,
+                color: AppPalette.colorA9,
+                fontWeight: fw$Regular),
           ),
           const Expanded(flex: 13, child: Spacing.blank),
         ],
@@ -334,16 +351,15 @@ class _RechargePageState extends State<RechargePage> {
       return;
     }
 
-    //1：支付宝，2：微信，4: 苹果内购
+    //1：支付宝，2：微信，4: 苹果内购  5 杉德宝支付
     int? payType = payTypeRx.value;
-    // 苹果支付不传支付渠道，所以强制写死4
-    if(Platform.isIOS) {
-      payType = 4;
-    }
 
-    if(payType == null) {
-      showToast('请选择支付方式');
-      return;
+    if (Platform.isIOS) {
+      // 苹果支付不传支付渠道，只允许使用苹果内购,所以强制写死4
+      payType = 4;
+    } else {
+      // 安卓使用杉德宝
+      payType = 5;
     }
 
     if (pactRx.value == false) {
@@ -355,7 +371,7 @@ class _RechargePageState extends State<RechargePage> {
     //   return Future.value();
     // }
 
-    if(payType != null) {
+    if (payType != null) {
       Statistic.userCharge(payType);
     }
 
@@ -363,37 +379,97 @@ class _RechargePageState extends State<RechargePage> {
       Api.Wallet.recharge(id: data['id'], payType: payType!),
       callback1: (resp) async {
         bool payResult;
-
-        if(payType != null) {
-          Statistic.risePay(payType, orderId: resp["record_number_string"] ?? "");
+        _currentPayOrderId = resp['record_number'] ?? 0;
+        if (payType != null) {
+          Statistic.risePay(payType, orderId: '$_currentPayOrderId');
         }
 
-        if(payType == 4) {
-          payResult = await applePurchase.appPurchase(resp['pay_params']) ?? false;
+        if (payType == 4) {
+          _needConfirmPay = false;
+          payResult =
+              await applePurchase.appPurchase(resp['pay_params']) ?? false;
+          _reportPayEvent(isSuccess: payResult);
         } else {
-          payResult = await Get.to(() => PayPage(payType: payType!, data: resp));
-        }
-
-        if (payResult) {
-          // 统计支付成功
-          OpenInstallUtils.ins.reportPaySuccessEvent(data['pay_amount']);
-          // 完成充值订单上报
-          await Api.Wallet.rechargeRecordReportFinish(idList: [data['id']]);
-          Get.back(result: true);
-          MoneyChangeEvent({type: data['diamond_amount']}).fire();
-
-          if(payType != null) {
-            Statistic.paySuccess(
-                payType, orderId: resp["record_number_string"] ?? "");
-          }
-        } else {
-          if(payType != null && PayPage.needSendFailStatistic) {
-            Statistic.payFail(
-                payType, orderId: resp["record_number_string"] ?? "");
-          }
+          _needConfirmPay = true;
+          await PayPlugin()
+              .startSandPay(cashierUrl: resp['pay_params']['sand_pay_url']);
+          // final Map resultMap = await PayPlugin()
+          //     .startSandPay(cashierUrl: resp['pay_params']['sand_pay_url']);
+          // payResult = await Get.to(() => RechargeConfirmPage(recordNumber: resp['record_number']));
+          // _reportPayEvent(isSuccess: payResult,errorMsg: resultMap['errMsg'] ?? '支付失败');
         }
       },
     );
+  }
+
+  /// 支付结果上报
+  void _reportPayEvent({required bool isSuccess}) async {
+    final data = selectRx();
+    if (data == null) {
+      showToast('请选择充值套餐');
+      return;
+    }
+
+    //1：支付宝，2：微信，4: 苹果内购  5 杉德宝支付
+    int? payType = payTypeRx.value;
+    if (Platform.isIOS) {
+      // 苹果支付不传支付渠道，只允许使用苹果内购,所以强制写死4
+      payType = 4;
+    } else {
+      // 安卓使用杉德宝
+      payType = 5;
+    }
+    if (isSuccess) {
+      showToast('支付成功');
+      // 统计支付成功
+      OpenInstallUtils.ins.reportPaySuccessEvent(data['pay_amount']);
+      // 完成充值订单上报
+      await Api.Wallet.rechargeRecordReportFinish(idList: [data['id']]);
+      Get.back(result: true);
+      MoneyChangeEvent({type: data['diamond_amount']}).fire();
+
+      if (payType != null) {
+        Statistic.paySuccess(payType, orderId: '$_currentPayOrderId');
+      }
+    } else {
+      showToast('支付失败');
+      if (payType != null && PayPage.needSendFailStatistic) {
+        Statistic.payFail(payType, orderId: '$_currentPayOrderId');
+      }
+    }
+  }
+
+  void checkOrder() async {
+    final bool payResult = await Get.to(() => RechargeConfirmPage(recordNumber: _currentPayOrderId));
+    _reportPayEvent(isSuccess: payResult);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+      //应用程序处于闲置状态并且没有收到用户的输入事件。
+      //注意这个状态，在切换到后台时候会触发，所以流程应该是先冻结窗口，然后停止UI
+        //print('didChangeAppLifecycleState----->AppLifecycleState.inactive');
+        break;
+      case AppLifecycleState.paused:
+      //应用程序处于不可见状态
+        //print('didChangeAppLifecycleState----->AppLifecycleState.paused');
+        break;
+      case AppLifecycleState.resumed:
+      //进入应用时候不会触发该状态
+      //应用程序处于可见状态，并且可以响应用户的输入事件。它相当于 Android 中Activity的onResume。
+        //print('didChangeAppLifecycleState----->AppLifecycleState.resumed');
+        if(_needConfirmPay == true)checkOrder();
+        break;
+      case AppLifecycleState.detached:
+      //当前页面即将退出
+        //print('didChangeAppLifecycleState----->AppLifecycleState.detached');
+        break;
+      default:
+        break;
+    }
   }
 
   @override
@@ -401,5 +477,6 @@ class _RechargePageState extends State<RechargePage> {
     super.dispose();
     applePurchase.dispose();
     PayPage.needSendFailStatistic = true;
+    WidgetsBinding.instance.removeObserver(this); //添加观察者
   }
 }

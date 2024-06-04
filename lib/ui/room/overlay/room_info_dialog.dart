@@ -425,6 +425,12 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
       case '分享房间':
         Share.share(RouteUtil.generateShareRoom(controller.roomId),
             subject: '房间分享');
+        simpleSub(
+          Api.Activity.finishRoomShare(),
+          callback: () {
+
+          },
+        );
         break;
       case '已关注':
       case '关注房间':
