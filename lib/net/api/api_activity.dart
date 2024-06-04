@@ -133,4 +133,9 @@ class ApiActivity extends ApiBase {
   Future getFruitMachineLotteryList() async {
     return _doPost("lottery/fruit_machine/prize_pool/query", data: {});
   }
+
+  /// 完成房间分享
+  Future finishRoomShare() async {
+    return _doPost("room_share/finish", data: {});
+  }
 }
