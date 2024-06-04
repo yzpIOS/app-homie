@@ -73,6 +73,16 @@ class ApiRoom extends ApiBase {
     return _doPost('on-line', data: page + data);
   }
 
+  Future online({required int offset,required int limit,required int roomId}) {
+    final data = {
+      "offset":offset,
+      "limit":limit,
+      'room_id': roomId,
+    };
+
+    return _doPost4('on-line', data:data);
+  }
+
   Future wealthyRankUserList({required PageNum page, required int roomId, required int type}) {
     final data = {
       'room_id': roomId,

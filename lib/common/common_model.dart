@@ -271,3 +271,86 @@ class Items {
     return data;
   }
 }
+
+
+/// 直播间在线人数
+class OnlineModel {
+  int? code;
+  String? reqId;
+  String? msg;
+  List<OnlineData>? data;
+
+  OnlineModel({this.code, this.reqId, this.msg, this.data});
+
+  OnlineModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    reqId = json['req_id'];
+    msg = json['msg'];
+    if (json['data'] != null) {
+      data = <OnlineData>[];
+      json['data'].forEach((v) {
+        data!.add(OnlineData.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['req_id'] = this.reqId;
+    data['msg'] = this.msg;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class OnlineData {
+  String? uid;
+  int? roleId;
+  String? username;
+  String? avatarUrl;
+  int? type;
+  int? adminType;
+  String? level;
+  int? mikeStatus;
+  int? chatStatus;
+
+  OnlineData(
+      {this.uid,
+        this.roleId,
+        this.username,
+        this.avatarUrl,
+        this.type,
+        this.adminType,
+        this.level,
+        this.mikeStatus,
+        this.chatStatus});
+
+  OnlineData.fromJson(Map<String, dynamic> json) {
+    uid = json['uid'];
+    roleId = json['role_id'];
+    username = json['username'];
+    avatarUrl = json['avatar_url'];
+    type = json['type'];
+    adminType = json['admin_type'];
+    level = json['level'];
+    mikeStatus = json['mike_status'];
+    chatStatus = json['chat_status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['uid'] = this.uid;
+    data['role_id'] = this.roleId;
+    data['username'] = this.username;
+    data['avatar_url'] = this.avatarUrl;
+    data['type'] = this.type;
+    data['admin_type'] = this.adminType;
+    data['level'] = this.level;
+    data['mike_status'] = this.mikeStatus;
+    data['chat_status'] = this.chatStatus;
+    return data;
+  }
+}
