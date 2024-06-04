@@ -461,7 +461,10 @@ class _RechargePageState extends State<RechargePage> with WidgetsBindingObserver
       //进入应用时候不会触发该状态
       //应用程序处于可见状态，并且可以响应用户的输入事件。它相当于 Android 中Activity的onResume。
         //print('didChangeAppLifecycleState----->AppLifecycleState.resumed');
-        if(_needConfirmPay == true)checkOrder();
+        if(_needConfirmPay == true){
+          _needConfirmPay = false;
+          checkOrder();
+        }
         break;
       case AppLifecycleState.detached:
       //当前页面即将退出

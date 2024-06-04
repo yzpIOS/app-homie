@@ -58,7 +58,7 @@ android {
         applicationId 'com.jm.homie.app'
 
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 
