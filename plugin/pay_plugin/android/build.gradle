@@ -43,9 +43,9 @@ android {
 
     dependencies {
         //加载正式环境aar文件
-        //implementation(name: 'sand-paytypesdk-1.0.0', ext: 'aar')
+        implementation(name: 'sand-paytypesdk-1.0.0', ext: 'aar')
         //加载uat环境aar文件
-        implementation(name: 'sand-paytypesdk-uat-1.0.0', ext: 'aar')
+        //implementation(name: 'sand-paytypesdk-uat-1.0.0', ext: 'aar')
         implementation 'com.android.support:appcompat-v7:28.0.0'
         //微信sdk，建议使用最新版本
         api 'com.tencent.mm.opensdk:wechat-sdk-android:+'

@@ -346,20 +346,6 @@ class ModelOverlay$Shop extends StatelessWidget {
           height: 30,
           child: buyView(),
         ),
-        Positioned(
-          right: 13,
-          bottom: 20 + 6 + 30,
-          width: 65,
-          height: 30,
-          child: XTextBtn(
-            label: '兑换',
-            textStyle:const TextStyle(fontSize: 14, color: Colors.white, fontWeight: fw$SemiBold),
-            color: AppPalette.primary,
-            onTap: () {
-
-            },
-          ),
-        ),
       ],
     );
   }
