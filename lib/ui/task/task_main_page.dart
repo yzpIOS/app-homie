@@ -18,11 +18,14 @@ import 'package:media_kit/ffi/ffi.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import '../../common/common_model.dart';
+import '../../model/enum/room_state.dart';
 import '../../shop/home_shop_page.dart';
+import '../../store/room/room_manager_ctrl.dart';
 import '../moment/moment_page.dart';
 import '../my/real_identity_page.dart';
 import '../my/wallet/recharge_page.dart';
 import '../podcast/hot_podcast_page.dart';
+import '../room/room_page.dart';
 import 'my_sign_view.dart';
 
 class TaskMainPage extends StatelessWidget {
@@ -453,10 +456,8 @@ class _ItemView extends StatelessWidget {
                  SignDialog.show(isManual: true);
 
                  break;
+
                case 2:
-               //  await vc.taskReceive(id: data?.id, taskType: 2);
-              //   Get.put(TaskMainPageController());
-              //   Get.to(() => const MomentPage(),arguments: {'myTask':true});
                  Get.back();
                  const MomentPageEvent().fire();
                  break;
@@ -490,13 +491,21 @@ class _ItemView extends StatelessWidget {
                  break;
                case 9:
 
-                 Get.back();
-                 const HotBroadcastEvent().fire();
+                 if(RoomManagerCtrl.ins.stateRx() == RoomState.Mini){
+                   RoomPage.show();
+                 }else{
+                   Get.back();
+                   const HotBroadcastEvent().fire();
+                 }
                //  Get.to(() => const HotPodcastPage());
 
                case 10:
-                 Get.back();
-                 const HotBroadcastEvent().fire();
+                 if(RoomManagerCtrl.ins.stateRx() == RoomState.Mini){
+                   RoomPage.show();
+                 }else{
+                   Get.back();
+                   const HotBroadcastEvent().fire();
+                 }
 
                  break;
                case 11:
@@ -516,8 +525,12 @@ class _ItemView extends StatelessWidget {
                  break;
                case 14:
                //  Get.to(() => const HotPodcastPage());
-                 Get.back();
-                 const HotBroadcastEvent().fire();
+                 if(RoomManagerCtrl.ins.stateRx() == RoomState.Mini){
+                   RoomPage.show();
+                 }else{
+                   Get.back();
+                   const HotBroadcastEvent().fire();
+                 }
                  break;
                case 15:
 
@@ -528,15 +541,24 @@ class _ItemView extends StatelessWidget {
                  const HotBroadcastEvent().fire();
                  break;
                case 17:
-                 Get.back();
-                 const HotBroadcastEvent().fire();
+                 if(RoomManagerCtrl.ins.stateRx() == RoomState.Mini){
+                   RoomPage.show();
+                 }else{
+                   Get.back();
+                   const HotBroadcastEvent().fire();
+                 }
+
                  break;
                case 21:
                  Get.to(() => const RealIdentityPage());
                  break;
                case 22:
-                 Get.back();
-                 const HotBroadcastEvent().fire();
+                 if(RoomManagerCtrl.ins.stateRx() == RoomState.Mini){
+                   RoomPage.show();
+                 }else{
+                   Get.back();
+                   const HotBroadcastEvent().fire();
+                 }
                  break;
              }
            },
