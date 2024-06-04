@@ -224,8 +224,13 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   ///
   void onMicDownEventHandle(MicDownEvent event) {
 
-    dataRx.remove(event.data?.mikeNo);
-
+    // dataRx.remove(event.data?.mikeNo);
+    // dataRx.removeWhere((key, value) => event.data..contains(value.nUid));
+    // 遍历并删除匹配的条目
+   // dataRx.forEach((key, subMap) {
+    dataRx.removeWhere((subKey, model) => model.no == event.data?.mikeNo);
+    // });
+    dataRx.refresh();
   }
 
   ///

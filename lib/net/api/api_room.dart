@@ -157,7 +157,7 @@ class ApiRoom extends ApiBase {
   ///
   /// 房间下麦
   ///
-  void micDown({Int64? uid, List<Int64>? uids}) {
+  Future micDown({Int64? uid, List<Int64>? uids}) {
     C_OutMike c_outMike = C_OutMike.create();
     if(uid != null) {
       c_outMike.roleId = uid;
@@ -169,7 +169,7 @@ class ApiRoom extends ApiBase {
       CMD.C_OutMike,
       message: c_outMike,
     );
-
+    return Future.value(1);
     // final data = {
     //   'mike_id': micId,
     // };

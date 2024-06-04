@@ -265,6 +265,35 @@ class _UserManagerSheetState extends State<MicUserOnlineManagerSheet> {
       showToast("请选择下麦用户");
       return;
     }
-    Api.Room.micDown(uids: selectedIds);
+
+    SceneMicCtrl? roomMicCtrl = widget.sceneCtrl?.getRoomMicCtrl();
+    if(roomMicCtrl == null || roomMicCtrl is! RoomMicCtrl) {
+      return;
+    }
+    var userList = roomMicCtrl.dataRx.values;
+
+   await Api.Room.micDown(uids: selectedIds);
+
+   // userList.removeWhere((model) => selectedIds.contains(model.nUid));
+
+    // userList.forEach((element) {
+    //   if(selectedIds.contains(element.nUid)) {
+    //   //  element.hotCount = 0;
+    //     userList.remove(element);
+    //   }
+    // });
+
+    // for(int index = 0; index < selectedIds.length; index ++) {
+    //   if(roomMicCtrl.dataRx[mikeUserKeyList[index]]?.uid == data.uid) {
+    //     debugPrint("删除旧麦位: data = ${data.toProto3Json()}");
+    //     dataRx.remove(mikeUserKeyList[index]);
+    //     break;
+    //   }
+    // }
+  //  roomMicCtrl.dataRx.removeWhere((key, value) => selectedIds.contains(value.nUid));
+  //  roomMicCtrl.dataRx.values = userList;
+    selectedIds.clear();
+    setState(() { });
+
   }
 }
