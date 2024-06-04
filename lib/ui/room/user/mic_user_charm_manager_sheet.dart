@@ -338,6 +338,11 @@ class _UserManagerSheetState extends State<MicUserCharmManagerSheet> {
       return;
     }
     await Api.Room.resetHotCount(userRoleids);
+    userList.forEach((element) {
+      if(selectedIds.contains(element.nUid)) {
+        element.hotCount = 0;
+      }
+    });
     // 清理选择的数据
     selectedIds.clear();
     selectedAll.value = false;

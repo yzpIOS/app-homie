@@ -186,18 +186,22 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     // 删除旧mike
     dataRx.remove(data.oldMikeNo);
     // 新增mike
-    dataRx[data.mikeNo] = MicInfo(
+    dataRx[data.uid] = MicInfo(
         uid: event.uid ?? "",
        // micId: data.mikeId.toInt(),
-        hotCount: event.hotCount,
+        hotCount: data.number,
         isMute: false,
         nUid: data.roleId,
         roleType: event.data?.roleType ?? 0,
         no: event.data?.mikeNo ?? "",
         status: event.data!.status,
     );
+   // if(data.status == 4){
+   //   dataRx.refresh();
+   // }else{
+     onUpdateHotCount3Handler(data.uid, data.number, refresh: true);
+  // }
 
-    onUpdateHotCount3Handler(data.mikeNo, data.number, refresh: true);
   }
 
   ///
@@ -260,6 +264,8 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   void onUpdateHotCount2Handler(List<S_AccMikeBroadcast> data) {
     bool refresh = false;
     for(int index = 0; index < data.length; index ++) {
+     var uid = data[index].uid;
+     print('uid = $uid');
       var info = dataRx[data[index].uid];
       if(info != null) {
         refresh = true;
@@ -455,7 +461,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     simpleTry(
           () async {
         final result = await Api.Room.micUp(roomId: roomId, no: no, uid: uid);
-
+        dataRx.refresh();
         switch (result?.status.toInt()) {
           case 3:
             showToast('申请发送成功');
