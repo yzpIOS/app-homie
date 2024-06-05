@@ -47,4 +47,14 @@ class ActivityLotteryModel {
     data['count'] = count;
     return data;
   }
+
+  String getProbabilityString(){
+    if(probability == null || probability == 0){
+      return '0.00%';
+    }else{
+      double num = probability! / 100.0;
+      //保留小数点后2位数
+      return '${num.toStringAsFixed(2)}%';
+    }
+  }
 }

@@ -165,7 +165,7 @@ class FruitMachinePage extends StatelessWidget {
                                           fit: BoxFit.contain),
                                       Spacing.h2,
                                       Text(
-                                        '${activityLotteryModel.probability != null && activityLotteryModel.probability! > 0 ? activityLotteryModel.probability! / 10.0 : 0}%',
+                                        activityLotteryModel.getProbabilityString(),
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 12,
