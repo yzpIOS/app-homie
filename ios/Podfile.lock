@@ -55,6 +55,8 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - pay_plugin (0.0.1):
+    - Flutter
   - permission_handler_apple (9.1.1):
     - Flutter
   - photo_manager (2.0.0):
@@ -82,13 +84,13 @@ PODS:
   - tencent_trtc_cloud (10.7):
     - Flutter
     - TXCustomBeautyProcesserPlugin (= 1.0.2)
-    - TXLiteAVSDK_Professional (~> 11.7.15343)
+    - TXLiteAVSDK_Professional (~> 11.8.15687)
   - TOCropViewController (2.6.1)
   - TXCustomBeautyProcesserPlugin (1.0.2)
   - TXIMSDK_Plus_iOS (7.9.5666)
-  - TXLiteAVSDK_Professional (11.7.15343):
-    - TXLiteAVSDK_Professional/Professional (= 11.7.15343)
-  - TXLiteAVSDK_Professional/Professional (11.7.15343)
+  - TXLiteAVSDK_Professional (11.8.15687):
+    - TXLiteAVSDK_Professional/Professional (= 11.8.15687)
+  - TXLiteAVSDK_Professional/Professional (11.8.15687)
   - url_launcher_ios (0.0.1):
     - Flutter
   - video_compress (0.3.0):
@@ -132,6 +134,7 @@ DEPENDENCIES:
   - openinstall_flutter_plugin (from `.symlinks/plugins/openinstall_flutter_plugin/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - pay_plugin (from `.symlinks/plugins/pay_plugin/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - record (from `.symlinks/plugins/record/ios`)
@@ -204,6 +207,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
+  pay_plugin:
+    :path: ".symlinks/plugins/pay_plugin/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   photo_manager:
@@ -264,6 +269,7 @@ SPEC CHECKSUMS:
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  pay_plugin: cbc571cb4b2f903cabc5c512539def040e6f2abb
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   ReachabilitySwift: 2128f3a8c9107e1ad33574c6e58e8285d460b149
@@ -273,11 +279,11 @@ SPEC CHECKSUMS:
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   tencent_cloud_chat_sdk: 6410615827c6d2f4141b2e36bcb103eac61460a6
   tencent_kit: 81ca28c061c5e239043b3a266f9316ab60141e1b
-  tencent_trtc_cloud: e45d4582e6feebce7436a5098f3fa73ebf9dbe32
+  tencent_trtc_cloud: 110bcd85006934314d3836346126c065218fb8b8
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   TXCustomBeautyProcesserPlugin: 099393b941cb40eda12b3a80bf6c0319957b1cfd
   TXIMSDK_Plus_iOS: c1304bbd65784fa736e96b09a298262d6fcc9412
-  TXLiteAVSDK_Professional: 5d3a68e6c02aee961a58df8c886a635849473aa0
+  TXLiteAVSDK_Professional: 2f284284ae14c31309216c97577534a87545fafc
   url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
   video_compress: fce97e4fb1dfd88175aa07d2ffc8a2f297f87fbe
   video_player_avfoundation: e9e6f9cae7d7a6d9b43519b0aab382bca60fcfd1
