@@ -60,7 +60,7 @@ class _MyPage2State extends State<MyPage2> with BusStateMixin {
         // HomeActivityBannerView(),// 活动banner
 
         HomeBannerView(),
-        SizedBox(height: 10,),// 距离
+       // SizedBox(height: 10,),// 距离
         // HomePlayTogether(),// 一起玩模块
       ],
     );

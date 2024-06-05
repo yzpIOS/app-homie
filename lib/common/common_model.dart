@@ -154,6 +154,7 @@ class DailyTaskLivenessItems {
   bool? isReceive;
   bool? isReceived;
   String? prizeImage;
+  String? prizeName;
 
   DailyTaskLivenessItems(
       {this.id,
@@ -168,7 +169,8 @@ class DailyTaskLivenessItems {
         this.receivedCover,
         this.isReceive,
         this.isReceived,
-        this.prizeImage});
+        this.prizeImage,
+        this.prizeName});
 
   DailyTaskLivenessItems.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -184,6 +186,7 @@ class DailyTaskLivenessItems {
     isReceive = json['is_receive'];
     isReceived = json['is_received'];
     prizeImage = json['prize_image'];
+    prizeName = json['prize_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -201,6 +204,7 @@ class DailyTaskLivenessItems {
     data['is_receive'] = this.isReceive;
     data['is_received'] = this.isReceived;
     data['prize_image'] = this.prizeImage;
+    data['prize_name'] = this.prizeName;
     return data;
   }
 

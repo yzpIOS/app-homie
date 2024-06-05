@@ -373,48 +373,74 @@ class _ItemView extends StatelessWidget {
                 ),
                 const Spacing(height: 4, flex: null,),
 
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.start,
-                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    XRichText(
+                Center(
+                  child:   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                  //  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // XRichText(
 
-                      TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Image.network(
-                              data!.prizeImage ?? '',
-                              width: 23,
-                              height: 23,
-                            ),
-                            alignment: PlaceholderAlignment.middle,
-                          ),
-                          TextSpan(text: 'x${data?.count.toString()}',
-                            style: TextStyle(fontSize: 12,
-                                color: AppPalette.txtDark,
-                                fontWeight: fw$Medium,
-                            ),),
-                        ],
+                        // TextSpan(
+                        //   children: [
+                        //     WidgetSpan(
+                        //       child:
+                              Image.network(
+                                data!.prizeImage ?? '',
+                                // width: 23,
+                                // height: 23,
+                                width: 22,
+                                height: 22,
+                                scale: 2,
+                                fit: BoxFit.contain,
+                              ),
+                              // alignment: PlaceholderAlignment.middle,
+                          //  ),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Text('x${data?.count.toString()}',
+                            style: const TextStyle(fontSize: 12,
+                              color: AppPalette.txtDark,
+                              fontWeight: fw$Medium,
+                            ),)
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    Spacing(width: 7, flex: null,),
-                    XRichText(
-                      TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: MoneyIcon(type: MoneyType.activity, size: 15),
-                            alignment: PlaceholderAlignment.middle,
-                          ),
-                          TextSpan(text: 'x${data?.addLiveness.toString()}',
-                            style: TextStyle(fontSize: 12,
-                                color: AppPalette.txtDark,
-                                fontWeight: fw$Medium),),
-                        ],
+
+                        //  ],
+                        // ),
+                      //   textAlign: TextAlign.center,
+                      // ),
+                      Spacing(width: 7, flex: null,),
+                   //   XRichText(
+                       // TextSpan(
+                      //    children: [
+                      //       WidgetSpan(
+                      //         child: MoneyIcon(type: MoneyType.activity, size: 15),
+                      //         alignment: PlaceholderAlignment.middle,
+                      //       ),
+                      Center(
+                        child: Image.asset(
+                          IMG.format('money_activity'),
+                          width: 16,
+                          height: 16,
+                          scale: 2,
+                          fit: BoxFit.contain,
+                        )
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
+                  Align(
+                    child:  Text('x${data?.addLiveness.toString()}',
+                      style: TextStyle(fontSize: 12,
+                          color: AppPalette.txtDark,
+                          fontWeight: fw$Medium),),
+                  )
+
+                        //  ],
+                     //   ),
+                     //    textAlign: TextAlign.center,
+                   //   ),
+
+
+                    ],
+                  ),
                 )
 
 
@@ -643,9 +669,7 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
                 ),// Text
                // fontSize: 20,// Text color
               ),
-              child: Text('${widget.dailyTaskLivenessItems.count}${widget.dailyTaskLivenessItems.prizeType == 1 ?
-              '礼物' : widget.dailyTaskLivenessItems.prizeType == 2 ? '装扮': widget.dailyTaskLivenessItems.prizeType == 3 ? '紫钻':
-              widget.dailyTaskLivenessItems.prizeType == 4 ? '黄钻': '兑换卡'}'),
+              child: Text('${widget.dailyTaskLivenessItems.count}${widget.dailyTaskLivenessItems.prizeName}'),
             ),
           ),
           // Sun Image
