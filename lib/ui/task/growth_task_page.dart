@@ -182,42 +182,40 @@ class _ItemView extends StatelessWidget {
                       fontWeight: fw$Regular),
                 ),
                 const Spacing(height: 4, flex: null,),
-                // const XRichText(
-                //   TextSpan(
-                //     children: [
-                //       WidgetSpan(
-                //         child: MoneyIcon(type: MoneyType.diamond, size: 21),
-                //         alignment: PlaceholderAlignment.middle,
-                //       ),
-                //       TextSpan(text: 'x5',
-                //         style: TextStyle(fontSize: 12,
-                //             color: AppPalette.txtDark,
-                //             fontWeight: fw$Medium),),
-                //     ],
-                //   ),
-                // ),
-                Row(
-                  children: [
-                    XRichText(
-                      TextSpan(
-                        children: [
-                          WidgetSpan(
-                            // child: MoneyIcon(type: MoneyType.diamond, size: 21),
-                            child: Image.network(
-                              data!.prizeImage ?? '',
-                              width: 21,
-                              height: 21,
-                            ),
-                            alignment: PlaceholderAlignment.middle,
-                          ),
-                          TextSpan(text: 'x${data?.count.toString()}',
-                            style: const TextStyle(fontSize: 12,
-                                color: AppPalette.txtDark,
-                                fontWeight: fw$Medium),),
-                        ],
+                Center(
+                  child:   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    //  mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // XRichText(
+
+                      // TextSpan(
+                      //   children: [
+                      //     WidgetSpan(
+                      //       child:
+                      Image.network(
+                        data!.prizeImage ?? '',
+                        // width: 23,
+                        // height: 23,
+                        width: 22,
+                        height: 22,
+                        scale: 2,
+                        fit: BoxFit.contain,
                       ),
-                    ),
-                  ],
+                      // alignment: PlaceholderAlignment.middle,
+                      //  ),
+                      Align(
+                          alignment: Alignment.center,
+                          child: Text('x${data?.count.toString()}',
+                            style: const TextStyle(fontSize: 12,
+                              color: AppPalette.txtDark,
+                              fontWeight: fw$Medium,
+                            ),)
+                      ),
+
+                    ],
+                  ),
                 )
               ],
             ),
