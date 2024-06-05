@@ -392,7 +392,7 @@ class _ItemView extends StatelessWidget {
                                 width: 22,
                                 height: 22,
                                 scale: 2,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.fill,
                               ),
                               // alignment: PlaceholderAlignment.middle,
                           //  ),
@@ -422,12 +422,12 @@ class _ItemView extends StatelessWidget {
                           IMG.format('money_activity'),
                           width: 16,
                           height: 16,
-                          scale: 2,
+                          scale: 3,
                           fit: BoxFit.contain,
                         )
                       ),
                   Align(
-                    child:  Text('x${data?.addLiveness.toString()}',
+                    child:  Text(' x${data?.addLiveness.toString()}',
                       style: TextStyle(fontSize: 12,
                           color: AppPalette.txtDark,
                           fontWeight: fw$Medium),),
