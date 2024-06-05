@@ -1,4 +1,4 @@
-package com.sand.pay_plugin.wxapi;
+package android.src.main.java.com.sand.pay_plugin.wxapi;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -3,14 +3,11 @@ package com.sand.cashier;
 import android.content.Context;
 import android.util.Log;
 
-import com.sand.qzf.paytypesdk.base.ErrorEnum;
-import com.sand.qzf.paytypesdk.base.PayTypeSdk;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.unionpay.UPPayAssistEx;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,9 +34,9 @@ public class StartPay {
     }
 
     //银联支付 支付结果在Activity的onActivityResult返回
-    public void startUnionPay(Context context, String tn) {
-        UPPayAssistEx.startPay(context, null, null, tn, "00");
-    }
+//    public void startUnionPay(Context context, String tn) {
+//        UPPayAssistEx.startPay(context, null, null, tn, "00");
+//    }
 
     //杉德宝支付
 //    public void startSandBaoPay(Context context, String tn, final PayTypeSdk.OnPayCallBack callBack) {
