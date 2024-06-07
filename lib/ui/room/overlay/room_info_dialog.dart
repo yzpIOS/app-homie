@@ -207,10 +207,14 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     final data = controller.info;
     final notice = controller.noticeRx();
     return Container(
+        alignment: Alignment.centerLeft,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start, // Optional: Align the Column itself
+          crossAxisAlignment: CrossAxisAlignment.start, // Align children to the start of the Column
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+           //   crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                  Text(
                    data['room_name'],
@@ -233,15 +237,16 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+          //    crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                  Text(
-                   data['collect_num'].contributionCount.toInt() >= 10000 ?
-                   '${(data['collect_num'].contributionCount.toInt() / 10000).toStringAsFixed(1)}W 粉丝' :
+                   data['collect_num'] >= 10000 ?
+                   '${(data['collect_num'] / 10000).toStringAsFixed(1)}W 粉丝' :
                    '${convert(
-                       data['collect_num'].contributionCount.toInt())} 粉丝',
+                       data['collect_num'])} 粉丝',
                  // '${data['collect_num']}',
-                  style: const TextStyle(color: AppPalette.colorA7,),
+                  style: const TextStyle(color: AppPalette.colorA7),
+                     textAlign: TextAlign.left,
                 ),
 
 
@@ -251,14 +256,17 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
                 Container(
                   width: 1,
-                  height: 8,
+                  height: 10,
                   color: AppPalette.colorA7,
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
                 Text(
-                  data['like_num'].contributionCount.toInt() >= 10000 ?
-                  '${(data['like_num'].contributionCount.toInt() / 10000).toStringAsFixed(1)}W 赞' :
+                  data['like_num'] >= 10000 ?
+                  '${(data['like_num'] / 10000).toStringAsFixed(1)}W 赞' :
                   '${convert(
-                      data['like_num'].contributionCount.toInt())} 赞',
+                      data['like_num'])} 赞',
                   // '${data['collect_num']}',
                   style: const TextStyle(color: AppPalette.colorA7,),
                 ),
