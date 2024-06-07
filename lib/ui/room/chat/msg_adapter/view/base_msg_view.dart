@@ -13,7 +13,7 @@ class BaseMsgView<T extends BaseMsgData> extends ViewAdapter<T> {
     Widget child = msgView(context);
 
     child = Padding(
-      padding: const Pad(left: 4, right: 8, vertical: 3),
+      padding: const Pad(left: 4, right: 4, vertical: 3),
       child: child,
     );
 

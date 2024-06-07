@@ -674,6 +674,8 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                         children: [
                           SvgView(SVG.$('room/热度'), width: 6, height: 6),
                           Text(
+                              topThree.items[0].contributionCount.toInt() >= 10000 ?
+                                '${(topThree.items[0].contributionCount.toInt() / 10000).toStringAsFixed(1)}W' :
                             convert(
                                 topThree.items[0].contributionCount.toInt()),
                             style: TextStyle(
@@ -737,8 +739,12 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                           ),
                           SvgView(SVG.$('room/热度'), width: 6, height: 6),
                           Text(
+                            topThree.items[1].contributionCount.toInt() >= 10000 ?
+                            '${(topThree.items[1].contributionCount.toInt() / 10000).toStringAsFixed(1)}W' :
                             convert(
                                 topThree.items[1].contributionCount.toInt()),
+                            // convert(
+                            //     topThree.items[1].contributionCount.toInt()),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 6,
@@ -803,8 +809,12 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
                           ),
                           SvgView(SVG.$('room/热度'), width: 6, height: 6),
                           Text(
+                            topThree.items[2].contributionCount.toInt() >= 10000 ?
+                            '${(topThree.items[2].contributionCount.toInt() / 10000).toStringAsFixed(1)}W' :
                             convert(
                                 topThree.items[2].contributionCount.toInt()),
+                            // convert(
+                            //     topThree.items[2].contributionCount.toInt()),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 6,

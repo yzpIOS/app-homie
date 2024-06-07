@@ -37,174 +37,132 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
     final data = controller.info;
     final notice = controller.noticeRx();
     const divider = Divider(height: 5, thickness: 5, color: AppPalette.colorEB);
-// <<<<<<< HEAD
-//     return
-//     //   Column(
-//     //   mainAxisSize: MainAxisSize.min,
-//     //   mainAxisAlignment: MainAxisAlignment.start,
-//     //   children: [
-//     //     Stack(
-//     //       clipBehavior: Clip.none,
-//     //       alignment: Alignment.centerLeft,
-//     //       children: [
-//     //         Container(
-//     //           height: 60,
-//     //           color: Colors.white,
-//     //           // child: const Center(
-//     //           //   child: Text(
-//     //           //     'This is a bottom sheet',
-//     //           //     style: TextStyle(fontSize: 20),
-//     //           //   ),
-//     //           // ),
-//     //         ),
-//     //
-//     //         Positioned(
-//     //           top: -30,
-//     //           left: 10,
-//     //           // right: 10,
-//     //           child: ClipRRect(
-//     //             borderRadius: AppBorderRadius.a10,
-//     //             child: NetImage(data['image'], width: 60, height: 60),
-//     //           ),
-//     //
-//     //         ),
-//     //
-//     //         Positioned(
-//     //             top: 10,
-//     //             left: 80,
-//     //             child:  topViewWidget()
-//     //         ),
-//     //
-//     //         Positioned(
-//     //             top: 0,
-//     //             right: 10,
-//     //             child:$ReportView()
-//     //         ),
-//     //         // const Positioned(
-//     //         //   top: -50, // 偏移量的一半，假设头像大小是100
-//     //         //   left: 10,
-//     //         //   child: CircleAvatar(
-//     //         //     radius: 50, // 头像的半径
-//     //         //     backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-//     //         //   ),
-//     //         // ),
-//     //       ],
-//     //     ),
-//     //     // 其他内容，可以在这里添加更多的部件
-//     //     divider,
-//     //     Text('房间详情'),
-//     //     // $Body()
-//     //    Container(
-//     //      margin: EdgeInsets.only(left: 10),
-//     //      child: Text('【房间公告】'),
-//     //      alignment: Alignment.centerLeft,
-//     //    ),
-//     // Container(
-//     //     margin: EdgeInsets.only(left: 10),
-//     //     alignment: Alignment.centerLeft,
-//     //   child:  SingleChildScrollView(
-//     //     padding: const Pad(horizontal: 10),
-//     //     child: Text(
-//     //       notice.isEmpty ? '目前暂无公告。' : notice,
-//     //       style: const TextStyle(fontSize: 12, color: AppPalette.cc,),
-//     //       textAlign: TextAlign.left,
-//     //     ),
-//     //   )
-//     // )
-//     //
-//     //
-//     //   ],
-//     // );
-// =======
-//     return Column(
-//       mainAxisSize: MainAxisSize.min,
-//       mainAxisAlignment: MainAxisAlignment.start,
-//       children: [
-//         Stack(
-//           clipBehavior: Clip.none,
-//           alignment: Alignment.centerLeft,
-//           children: [
-//             Container(
-//               height: 60,
-//               color: Colors.white,
-//               // child: const Center(
-//               //   child: Text(
-//               //     'This is a bottom sheet',
-//               //     style: TextStyle(fontSize: 20),
-//               //   ),
-//               // ),
-//             ),
+    return
+      Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              height: 60,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+              ),
+            ),
 
-//             Positioned(
-//               top: -30,
-//               left: 10,
-//               // right: 10,
-//               child: ClipRRect(
-//                 borderRadius: AppBorderRadius.a10,
-//                 child: NetImage(data['image'], width: 60, height: 60),
-//               ),
+            Positioned(
+              top: -40,
+              left: 10,
+              // right: 10,
+              child: CircularProfileImage(
+                imageUrl: data['image'], // 替换为你的图片URL
+                size: 81.0,
+                borderWidth: 1.0, // 1厘米边框（根据实际DPI调整）
+                borderColor: Colors.white,
+              ),
 
-//             ),
+            ),
 
-//             Positioned(
-//                 top: 10,
-//                 left: 80,
-//                 child:  topViewWidget()
-//             ),
+            Positioned(
+                top: 10,
+                left: 100,
+                child:  topViewWidget()
+            ),
 
-//             Positioned(
-//                 top: 0,
-//                 right: 10,
-//                 child:$ReportView()
-//             ),
-//             // const Positioned(
-//             //   top: -50, // 偏移量的一半，假设头像大小是100
-//             //   left: 10,
-//             //   child: CircleAvatar(
-//             //     radius: 50, // 头像的半径
-//             //     backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-//             //   ),
-//             // ),
-//           ],
-//         ),
-//         // 其他内容，可以在这里添加更多的部件
-//         divider,
-//         Text('房间详情'),
-//         // $Body()
-//        Container(
-//          margin: EdgeInsets.only(left: 10),
-//          child: Text('【房间公告】'),
-//          alignment: Alignment.centerLeft,
-//        ),
+            Positioned(
+                top: 0,
+                right: 10,
+                child:$ReportView()
+            ),
+            // const Positioned(
+            //   top: -50, // 偏移量的一半，假设头像大小是100
+            //   left: 10,
+            //   child: CircleAvatar(
+            //     radius: 50, // 头像的半径
+            //     backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+            //   ),
+            // ),
 
-//     Container(
-//         margin: EdgeInsets.only(left: 10),
-//         alignment: Alignment.centerLeft,
-//       child:  SingleChildScrollView(
-//         padding: const Pad(horizontal: 10),
-//         child: Text(
-//           notice.isEmpty ? '目前暂无公告。' : notice,
-//           style: const TextStyle(fontSize: 12, color: AppPalette.cc,),
-//           textAlign: TextAlign.left,
-//         ),
-//       )
-//     ),
 
-//    // Row(
-//    //  mainAxisAlignment: MainAxisAlignment.center,
-//    //  children: [
-//       Positioned(
-//           bottom: 20,
-//           child: $Btn(action: '分享房间'),)
-//     // Obx(() => $Btn(action: controller.followRx() ? '已关注' : '关注房间')),
-//     // ],
-//     // )
+          ],
+        ),
+        // 其他内容，可以在这里添加更多的部件
+        divider,
 
-//       ],
-//     );
-// >>>>>>> 1.6.0_1
+        // $Body()
+
+        Stack(
+          children: [
+            Expanded(
+                // flex: 1,
+                child: Container(
+                  height: 300,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10,),
+                      const Text('房间详情',  style: const TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),),
+                      Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 10),
+                            child: Text('【房间公告】'),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          if(controller.isOwner(OAuthCtrl.uid)) Container(
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.clickEditNotice();
+                              },
+                              child: Image.asset(IMG.format('room/room_info_notice_edit'),
+                                  width: 18, height: 18, scale: 3),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(left: 10),
+                          alignment: Alignment.centerLeft,
+                          child:  SingleChildScrollView(
+                            padding: const Pad(horizontal: 10),
+                            child: Text(
+                              notice.isEmpty ? '目前暂无公告。' : notice,
+                              style: const TextStyle(fontSize: 12, color: AppPalette.cc,),
+                              textAlign: TextAlign.left,
+                            ),
+                          )
+                      ),
+
+
+                    ],
+                  ),
+                )),
+            Positioned(
+                bottom: MediaQuery.of(context).padding.bottom + 20,
+                left: 80,
+                right: 80,
+                child: $Btn(action: '分享房间')
+            ),
+
+
+          ],
+        )
+
+      ],
+    );
+
     return titleWidget();
   }
+
+
+
 
   Widget titleWidget() {
     const divider = Divider(height: 5, thickness: 5, color: AppPalette.colorEB);
@@ -252,32 +210,57 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  '恋爱告急',
-                  style: TextStyle(color: Colors.black),
+                 Text(
+                   data['room_name'],
+                  style: const TextStyle(color: Colors.black,fontSize: 16,fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   width: 10,
                 ),
-                SelectableText(
-                  'ID:${data['room_no'] ?? data['room_id']}',
-                  style: const TextStyle(fontSize: 12, color: AppPalette.cc),
-                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppPalette.colorEB,
+                    borderRadius: AppBorderRadius.a10,
+                  ),
+                  child:  SelectableText(
+                    'ID:${data['room_no'] ?? data['room_id']}',
+                    style: const TextStyle(fontSize: 12, color: AppPalette.colorA7),
+                  ),
+                )
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  '恋爱告急',
-                  style: TextStyle(color: Colors.black),
+                 Text(
+                   data['collect_num'].contributionCount.toInt() >= 10000 ?
+                   '${(data['collect_num'].contributionCount.toInt() / 10000).toStringAsFixed(1)}W 粉丝' :
+                   '${convert(
+                       data['collect_num'].contributionCount.toInt())} 粉丝',
+                 // '${data['collect_num']}',
+                  style: const TextStyle(color: AppPalette.colorA7,),
                 ),
-                SizedBox(
+
+
+                const SizedBox(
                   width: 10,
                 ),
-                SelectableText(
-                  'ID:${data['room_no'] ?? data['room_id']}',
-                  style: const TextStyle(fontSize: 12, color: AppPalette.cc),
+
+                Container(
+                  width: 1,
+                  height: 8,
+                  color: AppPalette.colorA7,
+                ),
+                Text(
+                  data['like_num'].contributionCount.toInt() >= 10000 ?
+                  '${(data['like_num'].contributionCount.toInt() / 10000).toStringAsFixed(1)}W 赞' :
+                  '${convert(
+                      data['like_num'].contributionCount.toInt())} 赞',
+                  // '${data['collect_num']}',
+                  style: const TextStyle(color: AppPalette.colorA7,),
                 ),
               ],
             )
@@ -285,6 +268,9 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
         ));
   }
 
+  String convert(int value) {
+    return value.toString();
+  }
   // Widget topView() {
   //
   //   return
@@ -387,8 +373,16 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
   }
 
   Widget $Btn({required String action}) {
-    Widget child = Box(
+    Widget child = Container(
+
+      decoration: BoxDecoration(
+        color: AppPalette.primary,
+        // color: Colors.white,
+        borderRadius: BorderRadius.circular(17),
+        //  border: Border.all(color: AppPalette.primary),
+      ),
       width: 120.adaptW,
+
       height: 34,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -403,18 +397,28 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
       ),
     );
 
-    child = DecoratedBox(
-      decoration: const ShapeDecoration(
-        shape: XStadiumBorder(side: BorderSide(color: AppPalette.primary)),
-      ),
-      child: child,
-    );
+    // child = Container(
+    //   decoration: BoxDecoration(
+    //     // color: Colors.white,
+    //     borderRadius: BorderRadius.circular(17),
+    //   //  border: Border.all(color: AppPalette.primary),
+    //   ),
+    //   // const ShapeDecoration(
+    //   //   shape: XStadiumBorder(side: BorderSide(color: AppPalette.primary)),
+    //   // ),
+    //   child: child,
+    // );
 
-    child = OpacityButton(
+
+
+    // child = OpacityButton(
+    //   onTap: () => onItemClick(action),
+    //   child: child,
+    // );
+    child = GestureDetector(
       onTap: () => onItemClick(action),
       child: child,
     );
-
     return child;
   }
 
@@ -473,5 +477,39 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
         break;
     }
+  }
+}
+
+class CircularProfileImage extends StatelessWidget {
+  final String imageUrl;
+  final double size;
+  final double borderWidth;
+  final Color borderColor;
+
+  CircularProfileImage({
+    required this.imageUrl,
+    required this.size,
+    required this.borderWidth,
+    required this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: borderColor, width: borderWidth),
+      ),
+      child: ClipOval(
+        child: Image.network(
+          imageUrl,
+          fit: BoxFit.cover,
+          width: size - borderWidth * 2,
+          height: size - borderWidth * 2,
+        ),
+      ),
+    );
   }
 }

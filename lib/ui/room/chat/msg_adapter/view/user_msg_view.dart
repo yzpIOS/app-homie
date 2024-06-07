@@ -339,17 +339,18 @@ class NewUserMsgView extends BaseMsgView<NewUserMsgAdapter> {
                   visible: vm.data["public_id"] != null && vm.data["public_id"].toString().isNotEmpty,
                   child: Text(
                     "ID:${vm.data["public_id"]}",
-                    style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.normal),
+                    style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.normal),
                   ),
                 ),
               ],
             ),
           ),
 
-          SizedBox(width: 4,),
+          SizedBox(width: 6,),
           Text(
             "刚刚完成了注册",
             maxLines: 1,
+            textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.normal),
           ),

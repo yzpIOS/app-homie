@@ -17,7 +17,7 @@ class RoomChatView extends GetView<RoomChatCtrl> {
       padding: EdgeInsets.all(padding),
       width: 190 + padding * 2,
       height: 350,
-      margin: EdgeInsets.only(right: 126),
+      margin: EdgeInsets.only(right: 110),
       child: Stack(
         alignment: Alignment.topLeft,
         children: [
