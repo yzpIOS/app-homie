@@ -26,6 +26,7 @@ class MyGuildCenterPage extends StatelessWidget {
             child: Column(
               children: [
                 _buildHeader(controller),
+                _buildMyProfitSharingItem(),
                 if (guildModel.isMaster) ...[
                   _buildGuildFlowsItem(controller),
                   _buildAnchorListItem(controller),

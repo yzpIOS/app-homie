@@ -4,6 +4,7 @@ import 'package:app/model/activity_lottery_model.dart';
 import 'package:app/store/wallet_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
+import 'package:app/ui/my/wallet/recharge_page.dart';
 import 'package:app/ui/room/game/fruitMachine/fruit_machine_controller.dart';
 import 'package:app/ui/room/game/fruitMachine/roll_slot.dart';
 import 'package:app/ui/room/game/fruitMachine/roll_slot_widget.dart';
@@ -412,18 +413,23 @@ class FruitMachinePage extends StatelessWidget {
           },
         ),
         Spacing.w4,
-        XRichText(TextSpan(children: [
-          const TextSpan(
-            text: '充值',
-            style: TextStyle(
-                fontSize: 16, color: Color(0xFFFF2B6B), fontWeight: fw$Medium),
-          ),
-          WidgetSpan(
-            alignment: PlaceholderAlignment.middle,
-            child: Image.asset(IMG.format('room/game/fruit_machine_right_icon'),
-                width: 11, height: 11, scale: 3),
-          )
-        ])),
+        GestureDetector(
+          onTap: (){
+            Get.to(() => RechargePage(hasShowUnityView: false,));
+          },
+          child: XRichText(TextSpan(children: [
+            const TextSpan(
+              text: '充值',
+              style: TextStyle(
+                  fontSize: 16, color: Color(0xFFFF2B6B), fontWeight: fw$Medium),
+            ),
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Image.asset(IMG.format('room/game/fruit_machine_right_icon'),
+                  width: 11, height: 11, scale: 3),
+            )
+          ])),
+        ),
         const Spacing(),
         Obx(() {
           return GestureDetector(
