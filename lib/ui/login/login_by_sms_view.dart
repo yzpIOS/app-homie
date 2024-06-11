@@ -36,13 +36,16 @@ class _LoginBySmsViewState extends State<LoginBySmsView> {
       () {
         Pact.app
           ..pactRx(false)
-          ..alertSub();
+          ..alertSub(doSub: (){
+            KvBox.read<String>(PrefKey.LastPhone).onNotNull((val) {
+              inputs['手机号']?.text = val;
+            });
+          }
+          );
       },
     );
 
-    KvBox.read<String>(PrefKey.LastPhone).onNotNull((val) {
-      inputs['手机号']?.text = val;
-    });
+
   }
 
   @override

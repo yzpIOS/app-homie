@@ -1,4 +1,5 @@
 import 'package:app/common/theme.dart';
+import 'package:app/store/config_ctrl.dart';
 import 'package:app/store/user/user_ctrl.dart';
 import 'package:app/tools.dart';
 import 'package:app/tools/text_extension.dart';
@@ -249,7 +250,9 @@ class ApplyJoinGuildPage extends StatelessWidget {
                 fontSize: 12,
                 color: Color(0xFF819AFF),
               ),
-            ).toBtn(width: 140, height: 27, onTap: () {}),
+            ).toBtn(width: 140, height: 27, onTap: () {
+              Get.find<ConfigCtrl>().onTapLink('公会入驻服务协议', 'guild_protocol');
+            }),
           ),
           Spacing.h16,
         ],

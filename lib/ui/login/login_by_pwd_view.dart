@@ -23,10 +23,17 @@ class _LoginByPwdViewState extends State<LoginByPwdView> {
   @override
   void initState() {
     super.initState();
-
-    KvBox.read<String>(PrefKey.LastPhone).onNotNull((val) {
-      inputs['手机号']?.text = val;
-    });
+    post(
+          () {
+        Pact.app
+          .alertSub(doSub: (){
+            KvBox.read<String>(PrefKey.LastPhone).onNotNull((val) {
+              inputs['手机号']?.text = val;
+            });
+          }
+          );
+      },
+    );
   }
 
   @override
