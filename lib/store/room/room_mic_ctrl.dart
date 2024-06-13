@@ -30,11 +30,17 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   RxMap<String, MicInfo> dataRx = RxMap();
 
+
   @override
   List<MicInfo> get simpleUserList => dataRx.values.toList();
 
   List<MicInfo> getOnLineManager() {
     return simpleUserList;
+  }
+
+  MicInfo? micUserInfo({required String micNumber}){
+    return dataRx.values.toList().firstWhereOrNull((element) =>
+    element.no == micNumber);
   }
 
   RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required this.roomUid});
@@ -44,7 +50,6 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   @override
   void onInit() {
     super.onInit();
-
     Api.Room.hotCount(roomId: roomId) //
         .then((val) => val is List ? onUpdateHotCountHandle(val) : null);
 
