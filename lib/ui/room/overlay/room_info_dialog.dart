@@ -100,9 +100,10 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
         Stack(
           children: [
-            Expanded(
+          //  Expanded(
                 // flex: 1,
-                child: Container(
+              //  child:
+                Container(
                   height: 300,
                   color: Colors.white,
                   child: Column(
@@ -143,7 +144,8 @@ class RoomInfoDialog extends RoomGetView<RoomCtrl> {
 
                     ],
                   ),
-                )),
+                ),
+           // ),
             Positioned(
                 bottom: MediaQuery.of(context).padding.bottom + 20,
                 left: 80,
