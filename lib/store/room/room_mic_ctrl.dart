@@ -53,6 +53,29 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
     Api.Room.hotCount(roomId: roomId) //
         .then((val) => val is List ? onUpdateHotCountHandle(val) : null);
 
+    on<MikeSpeakingEvent>((data) {
+      ///  int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
+      var uid = data.uid ?? '';
+      if(uid.isEmpty){
+        return;
+      }
+      final micUserList = simpleUserList;
+      int userIndex = -1;
+      for(int i = 0;i < micUserList.length;i++){
+        final micInfo = micUserList[i];
+        if (micInfo.uid == uid) {
+          userIndex = i;
+          break;
+        }
+      }
+      if(userIndex < 0){
+        return;
+      }
+      final micInfo = micUserList[userIndex];
+      micInfo.status = data.status!;
+      dataRx[uid] = micInfo;
+    });
+
     on<MicUpEvent>(
       (event) {
         onMicUpEventHandle(event);

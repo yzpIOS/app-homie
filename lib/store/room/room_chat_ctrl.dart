@@ -178,17 +178,6 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
       ///  int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
        var uid = data.uid;
        int? statusq = data.status;
-       print('status.value = ${status.value}');
-     // SceneMicCtrl? sceneMicCtrl = RoomManagerCtrl.ins.sceneCtrl2?.getRoomMicCtrl();
-      var userList = sceneMicCtrl<RoomMicCtrl>().dataRx;
-     // if(sceneMicCtrl is RoomMicCtrl) {
-      userList.value.forEach((key,value){
-          if(value.uid == uid){
-            value.status = statusq!;
-          }
-        });
-     // }
-
 
       if(OAuthCtrl.uid == uid){
 

@@ -288,42 +288,17 @@ class _ItemView extends StatelessWidget {
     }
 
     Widget $Mic() {
-      // return item.isMute
-      //     ? $MicStateView('禁麦')
-      //     : Obx(
-      //         () {
-      //           final bool isOpen;
-      //           if (isSelf) {
-      //             isOpen = Rtc.micRx();
-      //           } else {
-      //             isOpen = Rtc.openMicRx.contains(uid);
-      //           }
-      //           // print('isOpen=&$isOpen');
-      //           return isOpen ? Spacing.blank : $MicStateView('闭麦');
-      //         },
-      //       );
-
-      return
-        // Obx(
-        //     () {
-        // final bool isOpen;
-        //
-        // if (isSelf) {
-        //   isOpen = Rtc.micRx();
-        // } else {
-        //   isOpen = Rtc.openMicRx.contains(uid);
-        // }
-        // print('isOpen=&$isOpen');
-        /// int32 status = 3; // 3.开麦 4.闭麦 5.禁言【禁止rtc】
-        ///
-        item.status == 3 ? Spacing.blank : item.status == 4 || item.status == 1
-            ? $MicStateView('闭麦')
-            :
-        item.status == 5 || item.status == 6 ? $MicStateView('禁麦') : Spacing
+      /// int status; /// 麦克风状态：0.无麦 1.上麦 2.下麦 3.开麦 4.闭麦 5.禁言【禁止rtc】6.禁止上麦
+      if(item.status == 3){
+        return Spacing.blank;
+      }else if(item.status == 4 || item.status == 1){
+        return $MicStateView('闭麦');
+      }else if(item.status == 5 || item.status == 6){
+        return $MicStateView('禁麦');
+      }else{
+        return Spacing
             .blank;
-      //  return isOpen ? Spacing.blank : $MicStateView('闭麦');
-      // },
-      //  );
+      }
     }
 
     Widget $HotView() {
