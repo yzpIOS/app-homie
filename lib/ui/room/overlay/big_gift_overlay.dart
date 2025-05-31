@@ -148,7 +148,11 @@ class _XState extends State<_X> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: view?.let(
-        (child) => _AnimateView(onComplete: _doLoop, size: widget.size, padding: widget.padding, child: child),
+        (child) => _AnimateView(
+          onComplete: _doLoop,
+         size: widget.size, 
+         padding: widget.padding, 
+         child: child),
       ),
     );
   }
@@ -194,7 +198,7 @@ class _BigGiftView extends StatelessWidget {
   final UID acceptUid;
   final Map<UID, UserInfoModel> users;
   final S_GiftPlay data;
-  final String? blindBoxName;//盲盒名称
+  final String? blindBoxName;//盲盒名称3322566333
 
   _BigGiftView({required this.uid, required this.nuid, required this.acceptUid, required this.users, required this.data, this.blindBoxName})
       : super(key: UniqueKey());
