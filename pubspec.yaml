@@ -90,7 +90,7 @@ dependencies:
   # 工具类
   fnv: ^1.0.1  # 哈希函数
   percent_indicator: ^4.2.2  # 进度指示器
-  flutter_animate: ^4.1.0  # 动画效果
+  flutter_animate: ^4.1.0  # 动画效果  
   synchronized: ^3.0.1  # 同步锁
   f_unity:  # Unity集成
     path: ./plugin/f_unity
