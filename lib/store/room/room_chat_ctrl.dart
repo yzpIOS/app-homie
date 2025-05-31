@@ -232,7 +232,7 @@ class RoomChatCtrl extends GetxController with BusGetLifeMixin {
   }
 
 
-  Future<void> handleEvent(data) async {
+  Future<void> handleEvent(dynamic data) async {
     // 礼物事件
     // 礼物事件
     // 礼物事件

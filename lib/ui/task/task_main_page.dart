@@ -1,5 +1,3 @@
-
-
 import 'dart:math';
 
 import 'package:app/event/event.dart';
@@ -662,8 +660,8 @@ class _SunDiamondDialogState extends State<SunDiamondDialog> with SingleTickerPr
               //  Navigator.of(context).pop(); // Close the dialog
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFF000000).withAlpha(100), // Background color
-                onPrimary: Colors.white,
+                backgroundColor: Color(0xFF000000).withAlpha(100), // Background color
+                foregroundColor: Colors.white,
                 textStyle: const TextStyle(
                   fontSize: 20, // Adjust font size here
                 ),// Text

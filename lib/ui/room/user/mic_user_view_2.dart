@@ -40,9 +40,13 @@ class MicUser$Header extends _MicUserView {
               width: _MicView.itemW,
               height: _MicView.itemH,
               child: Obx(() {
+                MicInfo ?info =controller.micUserInfo(micNumber: '1');
+                double? dynamicPresentation = controller.getMicHeight(info: info);
                 return _ItemView(no: '1',
-                    micUserInfo: controller.micUserInfo(micNumber: '1'),
-                    myRole: myRole);
+                    micUserInfo: info,
+                  myRole: myRole,
+                  dynamicPresentation: dynamicPresentation,
+                );
               }),
             ),
         ],
@@ -87,8 +91,12 @@ class MicUser$Header extends _MicUserView {
                   final no = '${i + 2}';
                   // 主持位
                   var micMo = i + 2;
+                  print('来这里乐乐');
                   if (micMo == maxMic) {
                     final String micNumberString = '$maxMic';
+                    MicInfo? info = controller.micUserInfo(
+                        micNumber: micNumberString);
+                   double? dynamicPresentation = controller.getMicHeight(info: info);
                     return Container(
                       margin: const Pad(top: 0),
                       width: _MicView.itemW,
@@ -96,21 +104,27 @@ class MicUser$Header extends _MicUserView {
                       child: Transform.translate(
                         offset: const Offset(0, 0),
                         child: _ItemView(no: micNumberString,
-                            micUserInfo: controller.micUserInfo(
-                                micNumber: micNumberString),
+                            micUserInfo: info,
                             myRole: myRole,
-                            type: 1),
+                            type: 1,
+                          dynamicPresentation: dynamicPresentation
+                        ),
                       ),
                     );
                   } else {
+                    MicInfo? info = controller.micUserInfo(
+                        micNumber: no);
+                    double? dynamicPresentation = controller.getMicHeight(info: info);
                     return Container(
                       margin: Pad(top: micMo > 5 ? 0 : 0),
                       width: _MicView.itemW,
                       height: _MicView.itemH,
                       child: _ItemView(
                           no: no,
-                          micUserInfo: controller.micUserInfo(micNumber: no),
-                          myRole: myRole),
+                          micUserInfo: info,
+                          myRole: myRole,
+                         dynamicPresentation: dynamicPresentation,
+                      )
                     );
                   }
                 });
@@ -210,10 +224,14 @@ class MicUser$Right extends _MicUserView {
       itemCount: controller.maxMic,
       itemBuilder: (_, i) {
         final String no = '${i + 1}';
+        MicInfo? info = controller.micUserInfo(micNumber: no);
+        double? dynamicPresentation = controller.getMicHeight(info: info);
         return _ItemView(
             no: no,
-            micUserInfo: controller.micUserInfo(micNumber: no),
-            myRole: myRole);
+            micUserInfo: info,
+            myRole: myRole,
+          dynamicPresentation: dynamicPresentation,
+        );
       },
     );
   }
@@ -224,9 +242,10 @@ class _ItemView extends StatelessWidget {
   final String no;
   final RoomRoleType? myRole;
   final MicInfo? micUserInfo;
+  final double? dynamicPresentation;
 
   _ItemView(
-      {required this.no, required this.micUserInfo, required this.myRole, this.type = 0})
+      {required this.no, required this.micUserInfo, required this.myRole, this.type = 0,required this.dynamicPresentation})
       : super(key: ValueKey(no));
 
   @override
@@ -271,20 +290,19 @@ class _ItemView extends StatelessWidget {
         onTap: Some(() => MicUserSheet.show(no, info: item)),
       );
 
-      return Obx(
-            () {
+      // return Obx(
+      //       () {
           final val = Rtc.speakRx[uid];
-
-          return val == null
+          return dynamicPresentation == null
               ? child
               : MicAnimeBuilder(
-            value: val,
+            value: dynamicPresentation!,
             child: child,
             builder: (context, value, child) =>
                 DecoratedBox(decoration: value, child: child),
           );
-        },
-      );
+     //   },
+     // );
     }
 
     Widget $Mic() {
@@ -317,6 +335,7 @@ class _ItemView extends StatelessWidget {
               ?.findRenderObject() as RenderBox?;
           // offset.dx , offset.dy 就是控件的左上角坐标
           var offset = renderBox?.localToGlobal(Offset.zero);
+          
           var centerBottom = Offset((offset?.dx ?? 0),
               (offset?.dy ?? 0) + (size?.height ?? 0.0));
 

@@ -9,138 +9,135 @@ environment:
   sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
+  # Flutter 核心框架
   flutter:
     sdk: flutter
+  # Flutter 国际化支持
   flutter_localizations:
     sdk: flutter
-  cupertino_icons: ^1.0.5
-  jovial_svg: ^1.1.10
-#  file_picker: ^5.3.0
-#  image_picker: ^0.8.5+3
-  wechat_assets_picker:
+
+  # UI 组件
+  cupertino_icons: ^1.0.5  # iOS风格图标
+  jovial_svg: ^1.1.10     # SVG图片处理
+  wechat_assets_picker:   # 图片选择器
     path: ./plugin/wechat_assets_picker-8.8.0
-  pay_plugin:
+  pay_plugin:            # 支付插件
     path: ./plugin/pay_plugin
-  package_info_plus: ^4.0.2
-  connectivity_plus: ^4.0.0
-  android_intent_plus: ^4.0.0
-  share_plus: ^7.0.0
-  carousel_slider: ^4.1.1
-  event_bus: ^2.0.0
-  provider: ^6.0.3
-  dio: ^5.0.0
-  cached_network_image: ^3.3.0
-  oktoast: ^3.2.0
-  styled_text: ^7.0.0
-  get:
+  package_info_plus: ^4.0.2  # 获取应用包信息
+  connectivity_plus: ^4.0.0  # 网络状态检测
+  android_intent_plus: ^4.0.0  # Android Intent 处理
+  share_plus: ^7.0.0  # 分享功能
+  carousel_slider: ^4.1.1  # 轮播图组件
+  event_bus: ^2.0.0  # 事件总线
+  provider: ^6.0.3  # 状态管理
+  dio: ^5.0.0  # 网络请求
+  cached_network_image: ^3.3.0  # 网络图片缓存
+  oktoast: ^3.2.0  # Toast提示
+  styled_text: ^7.0.0  # 富文本
+  get:  # GetX框架，用于状态管理、路由等
     path: ./plugin/getx
-  hive_flutter: ^1.1.0
-  crypto: ^3.0.2
-  permission_handler: 10.4.3
-  url_launcher: ^6.1.8
-  blurhash_dart: ^1.2.0
-  octo_image: ^2.0.0
-  characters: ^1.2.0
-  scrollable_positioned_list: ^0.3.2
-  badges: ^3.0.2
-  visibility_detector: ^0.4.0+2
-  timing: ^1.0.1
-  worker_manager: ^5.0.0
-  boxy: ^2.0.5+1
-  assorted_layout_widgets: ^8.0.0
-  infinite_scroll_pagination: ^3.2.0
-  sliver_tools: ^0.2.6
-  flutter_layout_grid: ^2.0.1
-  jiffy: ^6.1.0
-  dartz: ^0.10.1
-  webview_flutter: ^4.0.6
-  kotlin_flavor: ^0.2.0
-  number_display: ^3.0.0
-  flutter_spinkit: ^5.1.0
-  flutter_keyboard_visibility: ^5.3.0
-  path_provider: ^2.0.11
-  path: ^1.8.1
-  extended_text: ^11.0.1
-  extended_text_field: ^12.0.1
-  extended_nested_scroll_view: ^6.1.2
-#  photo_manager: ^2.8.1
-  photo_view: ^0.14.0
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.8.1
-  #  stomp_dart_client: ^0.4.4
-  tencent_cloud_chat_sdk: ^5.0.8
-  tencent_trtc_cloud: ^2.4.2
-  slugid: ^1.1.1
-  bubble: ^1.2.1
-  image_size_getter: ^2.1.2
-  video_compress: ^3.1.1
-  ffmpeg_kit_flutter: ^5.1.0
-  flutter_slidable: 0.6.0
-  #  geolocator: ^9.0.2
-  #  geocoding: ^2.0.5
-  svgaplayer_flutter: ^2.2.0
-  just_audio: ^0.9.30
-  record: ^4.4.3
-  flutter_portal: ^1.1.3
-  keframe: ^3.0.0
-  chinese_font_library: ^1.0.0
-  #
-  fnv: ^1.0.1
-  percent_indicator: ^4.2.2
-  flutter_animate: ^4.1.0
-  synchronized: ^3.0.1
-  f_unity:
+  hive_flutter: ^1.1.0  # 本地数据存储
+  crypto: ^3.0.2  # 加密
+  permission_handler: 10.4.3  # 权限处理
+  url_launcher: ^6.1.8  # URL启动器
+  blurhash_dart: ^1.2.0  # 图片模糊哈希
+  octo_image: ^2.0.0  # 图片加载
+  characters: ^1.2.0  # 字符处理
+  scrollable_positioned_list: ^0.3.2  # 可定位列表
+  badges: ^3.0.2  # 徽章
+  visibility_detector: ^0.4.0+2  # 可见性检测
+  timing: ^1.0.1  # 时间处理
+  worker_manager: ^5.0.0  # 工作管理器
+  boxy: ^2.0.5+1  # 布局工具
+  assorted_layout_widgets: ^8.0.0  # 布局组件
+  infinite_scroll_pagination: ^3.2.0  # 无限滚动分页
+  sliver_tools: ^0.2.6  # Sliver工具
+  flutter_layout_grid: ^2.0.1  # 网格布局
+  jiffy: ^6.1.0  # 日期时间处理
+  dartz: ^0.10.1  # 函数式编程
+  webview_flutter: ^4.0.6  # WebView
+  kotlin_flavor: ^0.2.0  # Kotlin风格
+  number_display: ^3.0.0  # 数字显示
+  flutter_spinkit: ^5.1.0  # 加载动画
+  flutter_keyboard_visibility: ^5.3.0  # 键盘可见性
+  path_provider: ^2.0.11  # 文件路径管理
+  path: ^1.8.1  # 路径处理
+  extended_text: ^11.0.1  # 扩展文本
+  extended_text_field: ^12.0.1  # 扩展文本输入框
+  extended_nested_scroll_view: ^6.1.2  # 嵌套滚动
+  photo_view: ^0.14.0  # 图片查看
+  freezed_annotation: ^2.4.1  # 代码生成注解
+  json_annotation: ^4.8.1  # JSON序列化注解
+
+  # 腾讯云服务
+  tencent_cloud_chat_sdk: ^5.0.8  # 腾讯云IM
+  tencent_trtc_cloud: ^2.4.2  # 腾讯实时音视频
+  slugid: ^1.1.1  # ID生成
+  bubble: ^1.2.1  # 聊天气泡
+  image_size_getter: ^2.1.2  # 图片尺寸获取
+  video_compress: ^3.1.1  # 视频压缩
+  ffmpeg_kit_flutter: ^5.1.0  # 视频处理
+  flutter_slidable: 0.6.0  # 滑动操作
+
+  # 媒体相关
+  svgaplayer_flutter: ^2.2.0  # SVG动画播放
+  just_audio: ^0.9.30  # 音频播放
+  record: ^4.4.3  # 录音
+  flutter_portal: ^1.1.3  # 门户组件
+  keframe: ^3.0.0  # 帧率优化
+  chinese_font_library: ^1.0.0  # 中文字体
+
+  # 工具类
+  fnv: ^1.0.1  # 哈希函数
+  percent_indicator: ^4.2.2  # 进度指示器
+  flutter_animate: ^4.1.0  # 动画效果
+  synchronized: ^3.0.1  # 同步锁
+  f_unity:  # Unity集成
     path: ./plugin/f_unity
-  image_editor: ^1.3.0
-  link_kit: ^1.0.1
-  alipay_kit: ^5.0.0
-  wechat_kit: ^5.0.3
-  smooth_page_indicator: ^1.0.1
-  http_proxy: ^1.2.1
-  figma_squircle: ^0.5.3
-  flutter_displaymode: ^0.6.0
-#  flutter_mxlogger: ^1.2.5+6
-  stack_trace: ^1.11.0
-  flutter_local_notifications: ^14.1.0
-  #
-  media_kit: ^1.1.5
-  media_kit_native_event_loop: ^1.0.4
-  media_kit_video: ^1.1.6
-#  media_kit_libs_android_video: 1.3.2
-  media_kit_libs_ios_video: ^1.1.3
-  #
-  flutter_constraintlayout: ^1.7.0-stable
-  wakelock:
+  image_editor: ^1.3.0  # 图片编辑
+  link_kit: ^1.0.1  # 链接处理
+  alipay_kit: ^5.0.0  # 支付宝
+  wechat_kit: ^5.0.3  # 微信
+  smooth_page_indicator: ^1.0.1  # 页面指示器
+  http_proxy: ^1.2.1  # HTTP代理
+  figma_squircle: ^0.5.3  # 圆角处理
+  flutter_displaymode: ^0.6.0  # 显示模式
+  stack_trace: ^1.11.0  # 堆栈跟踪
+  flutter_local_notifications: ^14.1.0  # 本地通知
+
+  # 媒体播放
+  media_kit: ^1.1.5  # 媒体播放
+  media_kit_native_event_loop: ^1.0.4  # 媒体事件循环
+  media_kit_video: ^1.1.6  # 视频播放
+  media_kit_libs_ios_video: ^1.1.3  # iOS视频库
+
+  # 布局相关
+  flutter_constraintlayout: ^1.7.0-stable  # 约束布局
+  wakelock:  # 屏幕常亮
     path: ./plugin/wakelock-0.6.2
-  # protobuf
-  # https://pub.dev/packages/protoc_plugin/install
-  protoc_plugin: ^20.0.1
 
-  tencent_kit: ^6.0.1
+  # 协议相关
+  protoc_plugin: ^20.0.1  # Protocol Buffers
 
-  # 苹果内购
-  in_app_purchase: ^3.1.7
-  # 获取当前设备信息
-  device_info_plus: ^9.1.1
-  # 中国的城市三级联动选择器
-  city_pickers: ^1.3.0
-  # 图片裁剪
-  image_cropper: ^4.0.1
-##  # 本地存储
-#  shared_preferences: ^2.0.0
-  # open install
-  # https://pub.dev/packages/openinstall_flutter_plugin/install
-  openinstall_flutter_plugin: ^2.4.2
-  flutter_blurhash: ^0.8.2
+  # 第三方登录
+  tencent_kit: ^6.0.1  # 腾讯登录
 
+  # 支付相关
+  in_app_purchase: ^3.1.7  # 苹果内购
+  device_info_plus: ^9.1.1  # 设备信息
+  city_pickers: ^1.3.0  # 城市选择器
+  image_cropper: ^4.0.1  # 图片裁剪
+  openinstall_flutter_plugin: ^2.4.2  # 安装来源统计
+  flutter_blurhash: ^0.8.2  # 图片模糊哈希
+
+  # 其他
   oaid:
     path: ./plugin/oaid
+  image_pixels: ^3.0.1  # 图片像素处理
+  pull_to_refresh: ^2.0.0  # 下拉刷新
+  custom_sliding_segmented_control: ^1.8.3  # 分段控制器
 
-  image_pixels: ^3.0.1
-
-  pull_to_refresh: ^2.0.0
-  custom_sliding_segmented_control: ^1.8.3
-
+# 配置
 link_kit:
   deep_link: homie:///
 
@@ -158,19 +155,18 @@ alipay_kit:
   ios: "noutdid"
   android: "noutdid"
 
+# 开发依赖
 dev_dependencies:
-  flutter_launcher_icons: ^0.13.0
-  #
-  flutter_lints: ^2.0.0
-  dart_code_metrics: ^5.0.0
-  #
-  build_runner: ^2.3.3
-  hive_generator: ^2.0.0
-  freezed: ^2.1.0+1
-  json_serializable: ^6.5.0
-  marqueer: ^1.4.3
+  flutter_launcher_icons: ^0.13.0  # 应用图标生成
+  flutter_lints: ^2.0.0  # 代码规范
+  dart_code_metrics: ^5.0.0  # 代码质量检查
+  build_runner: ^2.3.3  # 代码生成
+  hive_generator: ^2.0.0  # Hive代码生成
+  freezed: ^2.1.0+1  # 代码生成
+  json_serializable: ^6.5.0  # JSON序列化
+  marqueer: ^1.4.3  # 跑马灯
 
-
+# 依赖覆盖
 dependency_overrides:
   alipay_kit_android:
     path: ./plugin/alipay_kit_android-5.0.0
@@ -179,14 +175,13 @@ dependency_overrides:
   extended_image:
     path: ./plugin/extended_image-8.0.2
 
-
+# Flutter配置
 flutter:
-
   uses-material-design: true
 
+  # 资源文件
   assets:
     - assets/
-    #
     - assets/img/
     - assets/img/msg/
     - assets/img/login/
@@ -207,7 +202,6 @@ flutter:
     - assets/img/intro/room/
     - assets/img/intro/shop/
     - assets/img/room/game/
-    #
     - assets/si/
     - assets/si/main/
     - assets/si/main/nav/

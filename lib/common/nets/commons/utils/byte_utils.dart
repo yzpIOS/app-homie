@@ -34,7 +34,7 @@ class ByteUtils {
   }
 
   ///
-  /// 解密
+  /// 加密
   /// [data] 加密数据
   ///
   static void encryption(Uint8List? data) {

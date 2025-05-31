@@ -56,7 +56,7 @@ class RoomPage extends StatefulWidget {
       Future.delayed(Duration(seconds: SocketCtrl.ins.share.forceWaitTimes)).asStream().listen((event) {
         WaitingCtrl.obj.hidden();
       });
-      // 待主待
+       // 等待网络连接
       await SocketCtrl.ins.isCConnect();
       // 隐藏loading
       WaitingCtrl.obj.hidden();

@@ -364,7 +364,7 @@ class CustomSocket {
   /// 连接成功状态设置
   ///
   void completeShareSocketStatus() {
-    if(!socketStatus.isCompleted) {
+    if(!socketStatus.isCompleted) {// 检查是否没有完成，没有完成就设置socketStatus.complete(true);
       socketStatus.complete(true);
     }
   }

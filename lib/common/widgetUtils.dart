@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -72,13 +71,13 @@ Widget refreshBox(onRefresh, onLoading, refController, childs,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CupertinoActivityIndicator(
-                    color: Get.theme.textTheme.headline3!.color),
+                    color: Get.theme.textTheme.titleLarge!.color),
                 SizedBox(width: 5),
                 Text(
                   "加载中",
                   style: TextStyle(
                       fontSize: 14,
-                      color: Get.theme.textTheme.headline3!.color),
+                      color: Get.theme.textTheme.titleLarge!.color),
                 )
               ],
             );

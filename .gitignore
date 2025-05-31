@@ -60,3 +60,43 @@ app.*.map.json
 /android/deploy
 /plugin/f_unity/android/unityLibrary/
 /plugin/f_unity/android/unityLibrary2/
+
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+ios/Pods/
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# IDE specific
+.idea/
+.vscode/
+*.iml
+*.iws
+.DS_Store
+
+# Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+
+# Local configuration
+local.properties
+*.log
+
+# Plugin specific
+plugin/*/pubspec.lock
+plugin/*/example/pubspec.lock
+plugin/*/example/android/local.properties
+plugin/*/example/ios/Flutter/Generated.xcconfig
+plugin/*/example/ios/Flutter/flutter_export_environment.sh
+plugin/*/example/ios/Runner/GeneratedPluginRegistrant.*
+plugin/*/example/macos/Flutter/GeneratedPluginRegistrant.*
+plugin/*/example/macos/Flutter/ephemeral/

@@ -30,6 +30,7 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
 
   RxMap<String, MicInfo> dataRx = RxMap();
 
+  bool isSelect = false;
 
   @override
   List<MicInfo> get simpleUserList => dataRx.values.toList();
@@ -41,6 +42,30 @@ class RoomMicCtrl extends SceneMicCtrl with BusGetLifeMixin {
   MicInfo? micUserInfo({required String micNumber}){
     return dataRx.values.toList().firstWhereOrNull((element) =>
     element.no == micNumber);
+  }
+
+  // double? getMicHeight({required String micNumber}) {
+  //   MicInfo? info = dataRx.values.toList().firstWhereOrNull((element) =>
+  //   element.no == micNumber);
+  //   final val = Rtc.speakRx[info?.uid];
+  //   return val;
+  // }
+
+  double? getMicHeight({required MicInfo? info}) {
+    // MicInfo? info = dataRx.values.toList().firstWhereOrNull((element) =>
+    // element.no == micNumber);
+    if(info?.uid == null){
+      return null;
+    }else{
+      final val = Rtc.speakRx[info?.uid];
+      if(val == null) {
+        isSelect = false;
+      }else{
+        isSelect = true;
+      }
+      return val;
+    }
+
   }
 
   RoomMicCtrl(this.roomId, {required this.maxMic, required this.roomType, required this.roomUid});

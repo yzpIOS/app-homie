@@ -32,25 +32,25 @@ Future<void> loggerInit(String session) async {
 }
 
 enum LogType {
-  App,
-  BUS,
-  HTTP,
-  TRACK,
-  BOX,
-  IMG,
-  API,
-  IM,
-  USER_BOX,
-  WEB_VIEW,
-  ASYNC_CTRL,
-  SIMPLE_TRY,
-  EXECUTOR,
-  UNITY,
-  STOMP,
-  RTC,
-  GIFT_EFFECT,
-  GETX,
-  SOCKET,
+  App,      // 应用级日志
+  BUS,      // 业务逻辑日志
+  HTTP,     // 网络请求日志
+  TRACK,    // 用户行为追踪
+  BOX,      // 数据存储日志
+  IMG,      // 图片处理日志
+  API,      // API调用日志
+  IM,       // 即时通讯日志
+  USER_BOX, // 用户数据日志
+  WEB_VIEW, // WebView相关日志
+  ASYNC_CTRL, // 异步控制日志
+  SIMPLE_TRY, // 简单尝试日志
+  EXECUTOR,   // 执行器日志
+  UNITY,      // Unity相关日志
+  STOMP,      // STOMP协议日志
+  RTC,        // 实时通讯日志
+  GIFT_EFFECT, // 礼物效果日志
+  GETX,        // GetX状态管理日志
+  SOCKET,      // Socket连接日志
 }
 
 const _visible = <LogType>{

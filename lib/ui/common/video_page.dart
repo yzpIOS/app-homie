@@ -17,11 +17,11 @@ class VideoPage extends StatefulWidget {
   VideoPage._(this.playable) {
     _init;
   }
-
+  // 从URL创建视频页面
   factory VideoPage.fromUrl(String url) {
     return VideoPage._(Media(url));
   }
-
+ // 从文件创建视频页面
   factory VideoPage.fromFile(File file) {
     return VideoPage._(
       file.existsSync() ? Media(file.uri.toString()) : null,
@@ -31,19 +31,23 @@ class VideoPage extends StatefulWidget {
   @override
   State<VideoPage> createState() => _VideoPageState();
 }
-
+// 2. 视频播放器实现
 class _VideoPageState extends State<VideoPage> {
+  // 视频控制器
   final controller = Rxn<VideoController>();
+
+  // 播放器实例
   final player = Player(
     configuration: const PlayerConfiguration(logLevel: MPVLogLevel.error),
   );
 
-  final durationRx = Rx(Duration.zero);
-  final positionRx = Rx(Duration.zero);
-  final bufferRx = Rx(Duration.zero);
-  final playingRx = RxBool(false);
-  final completedRx = RxBool(false);
-  final bufferingRx = RxBool(false);
+  // 状态管理
+  final durationRx = Rx(Duration.zero);      // 视频时长
+  final positionRx = Rx(Duration.zero);      // 播放位置
+  final bufferRx = Rx(Duration.zero);        // 缓冲进度
+  final playingRx = RxBool(false);           // 是否正在播放
+  final completedRx = RxBool(false);         // 是否播放完成
+  final bufferingRx = RxBool(false);         // 是否正在缓冲
 
   @override
   void initState() {
@@ -61,19 +65,22 @@ class _VideoPageState extends State<VideoPage> {
   }
 
   void _init(Media playable) async {
+    // 创建视频控制器
     final videoCtrl = VideoController(player);
 
-    final streams = player.streams;
+    // 绑定状态流
+    final stream = player.stream;
+    durationRx.bindStream(stream.duration);
+    positionRx.bindStream(stream.position);
+    completedRx.bindStream(stream.completed);
+    playingRx.bindStream(stream.playing);
+    bufferingRx.bindStream(stream.buffering);
+    bufferRx.bindStream(stream.buffer);
 
-    durationRx.bindStream(streams.duration);
-    positionRx.bindStream(streams.position);
-    completedRx.bindStream(streams.completed);
-    playingRx.bindStream(streams.playing);
-    bufferingRx.bindStream(streams.buffering);
-    bufferRx.bindStream(streams.buffer);
-
+    // 打开视频
     await player.open(playable);
 
+    // 设置控制器
     controller(videoCtrl);
   }
 

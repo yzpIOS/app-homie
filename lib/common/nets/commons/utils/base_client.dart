@@ -23,7 +23,7 @@ typedef OnReceiveRawData = void Function(int cmd, Uint8List? data);
 typedef OnGeneratedMessage = GeneratedMessage Function(List<int> data);
 
 mixin BaseClient {
-  // 连接失败, 有可能回调多次
+  // 连接成功, 有可能回调多次
   static const CONNECT_SUC = 900000000;
   // 连接失败, 有可能回调多次
   static const CONNECT_FAIL = 900000001;

@@ -8,6 +8,7 @@ import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_listener.dart';
 
 import 'package:app/common/utils/utils.dart';
+import '../../event/event.dart';
 import 'keys.dart';
 
 export 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
@@ -29,6 +30,8 @@ class Rtc {
   static String userSig = '';
   // 麦状态，1禁麦
   static late final status = RxInt(0);
+
+  static bool isCanSelect = true;
   //RxInt mike_status = 0.obs;
   /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
   /// 3.开麦 4.闭麦 5.禁言【禁止rtc】
@@ -304,6 +307,7 @@ class Rtc {
     }
   }
 
+
   //切换麦克风开关
   static Future<void> micSwitch() async {
     if (micRx.isFalse) {
@@ -314,8 +318,12 @@ class Rtc {
       }
     }
 
-    int status = micRx.value == true ? 2: 1;
-    await Api.Room.openShutMike(status: status);
+    if(isCanSelect == true){
+      int status = micRx.value == true ? 2: 1;
+      await Api.Room.openShutMike(status: status);
+    }
+
+
 
     // micRx.toggle();
     //
