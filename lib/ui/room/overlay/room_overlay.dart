@@ -877,73 +877,91 @@ class CommonRoomHeader extends RoomGetView<RoomCtrl> {
 class _RoomRight extends RoomGetView<RoomCtrl> {
   const _RoomRight();
 
+  // 计算麦位面板的总高度
+  // count: 麦位数量
   double _calcH(int count) {
-    return MicUser$Right.padding.vertical //
-            +
-            MicUser$Right.itemH * count //
-            +
-            MicUser$Right.spacing * (count - 1) //
-        ;
+    return MicUser$Right.padding.vertical +     // 上下内边距
+           MicUser$Right.itemH * count +        // 每个麦位的高度 × 麦位数量
+           MicUser$Right.spacing * (count - 1); // 麦位之间的间距 × (麦位数量-1)
   }
 
   @override
   Widget build(BuildContext context) {
+    // 监听屏幕方向变化
     final isLandscape = context.watch<Orientation>() == Orientation.landscape;
 
-    final double width = isLandscape ? 160 : 90;
+    // 根据横竖屏设置面板宽度
+    final double width = isLandscape ? 160 : 90;  // 横屏160，竖屏90
+    // 根据横竖屏设置麦位数量（横屏2个，竖屏4个）并计算高度
     final double height = _calcH(isLandscape ? 2 : 4);
 
+    // 动画持续时间
     const dur = kTabScrollDuration;
+    // 获取麦位面板显示状态
     final showMicRx = controller.micPanelRx;
 
+    // 创建麦位视图
     final micView = $MicUserView();
 
+    // 使用 Obx 监听状态变化
     Widget child = Obx(
       () {
-        final isShow = showMicRx();
+        final isShow = showMicRx();  // 是否显示麦位面板
 
         return Stack(
           alignment: Alignment.center,
           children: [
+            // 1. 麦位切换按钮
             AnimatedPositioned(
               duration: dur,
               curve: Curves.easeOutCubic,
-              right: isShow ? width : 0,
+              right: isShow ? width : 0,  // 根据显示状态调整位置
               width: 22,
               height: 48,
               child: GestureDetector(
-                onTap: showMicRx.toggle,
+                onTap: showMicRx.toggle,  // 点击切换显示状态
                 child: MicPanelSwitcher(dur: dur, isShow: isShow),
               ),
             ),
+
+            // 2. 麦位列表面板
             AnimatedPositioned(
               duration: dur,
               curve: Curves.easeOutCubic,
-              right: isShow ? 0 : -width,
+              right: isShow ? 0 : -width,  // 根据显示状态调整位置
               width: width,
               height: height,
-              child: micView,
+              child: micView,  // 麦位视图
             ),
           ],
         );
       },
     );
 
-    child = SizedBox(width: 22 + width, height: height, child: child);
+    // 设置整体容器大小
+    child = SizedBox(
+      width: 22 + width,  // 按钮宽度 + 面板宽度
+      height: height,     // 面板高度
+      child: child
+    );
 
     return child;
   }
 
+  // 创建麦位视图
   Widget $MicUserView() {
+    // 设置面板样式
     const decor = ShapeDecoration(
-      color: Color(0x80000000),
-      shape: XRectangleBorder(borderRadius: AppBorderRadius.l10),
+      color: Color(0x80000000),  // 半透明黑色背景
+      shape: XRectangleBorder(borderRadius: AppBorderRadius.l10),  // 圆角边框
     );
 
     return DecoratedBox(
       decoration: decor,
-      child:
-          Obx(() => MicUser$Right(myRole: controller.getRole(OAuthCtrl.uid))),
+      // 使用 Obx 监听用户角色变化
+      child: Obx(() => MicUser$Right(
+        myRole: controller.getRole(OAuthCtrl.uid)  // 获取当前用户角色
+      )),
     );
   }
 }

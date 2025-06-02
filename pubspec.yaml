@@ -19,6 +19,7 @@ dependencies:
   # UI 组件
   cupertino_icons: ^1.0.5  # iOS风格图标
   jovial_svg: ^1.1.10     # SVG图片处理
+  flutter_cache_manager: ^3.3.1  # 缓存管理
   wechat_assets_picker:   # 图片选择器
     path: ./plugin/wechat_assets_picker-8.8.0
   pay_plugin:            # 支付插件

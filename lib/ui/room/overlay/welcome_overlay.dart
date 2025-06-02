@@ -27,7 +27,7 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
   late final _queue = StreamQueue(_ctrl.stream);
 
   Widget? view;
-
+  
   @override
   void initState() {
     super.initState();
@@ -59,7 +59,7 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
     if (view != null && mounted) setState(() => view = null);
 
     await _queue.hasNext;
-
+    
     if (mounted) {
       final _view = await _queue.next;
 
@@ -76,7 +76,10 @@ class _WelcomeOverlayState extends State<WelcomeOverlay> with BusStateMixin {
     }
     return SizedBox(
       height: 50,
-      child: _AnimateView(onComplete: _doLoop, size: Size(Get.width, 50), padding: padding, child: view!),
+      child: _AnimateView(onComplete: _doLoop,
+       size: Size(Get.width, 50), 
+       padding: padding, 
+       child: view!),
     );
   }
 }
@@ -96,25 +99,38 @@ class _AnimateView extends StatelessWidget {
     final dock = padding * 0.618;
 
     final effects = <Effect>[
-      const Effect(duration: Duration(milliseconds: 618), curve: Curves.easeOutQuart),
-      MoveEffect(
-        begin: Offset(begin, 0),
-        end: Offset(padding, 0),
-      ),
-      const ThenEffect(duration: Duration(seconds: 3), curve: Curves.linear),
-      MoveEffect(
-        begin: Offset.zero,
-        end: Offset(-dock, 0),
-      ),
-      const ThenEffect(duration: Duration(milliseconds: 1000 - 618), curve: Curves.linearToEaseOut),
-      const SlideEffect(
-        begin: Offset.zero,
-        end: Offset(-1, 0),
-      ),
-      MoveEffect(
-        begin: Offset.zero,
-        end: Offset(-(padding - dock), 0),
-      ),
+    // 1. 初始动画设置
+  const Effect(duration: Duration(milliseconds: 618), curve: Curves.easeOutQuart),
+  
+  // 2. 从右侧滑入
+  MoveEffect(
+    begin: Offset(begin, 0),  // 从屏幕右侧开始
+    end: Offset(padding, 0),  // 移动到指定位置
+  ),
+  
+  // 3. 停留3秒
+  const ThenEffect(duration: Duration(seconds: 3), curve: Curves.linear),
+  
+  // 4. 向左移动一小段距离
+  MoveEffect(
+    begin: Offset.zero,
+    end: Offset(-dock, 0),  // dock = padding * 0.618
+  ),
+
+  // 5. 延迟动画
+  const ThenEffect(duration: Duration(milliseconds: 1000 - 618), curve: Curves.linearToEaseOut),
+  
+  // 6. 向左滑出
+  const SlideEffect(
+    begin: Offset.zero,
+    end: Offset(-1, 0),  // 完全滑出屏幕
+  ),
+  
+  // 7. 最后移动
+  MoveEffect(
+    begin: Offset.zero,
+    end: Offset(-(padding - dock), 0),
+  ),
     ];
 
     return Align(

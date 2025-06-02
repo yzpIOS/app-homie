@@ -24,12 +24,27 @@ abstract class SceneOverlay<T extends SceneCtrl> extends RoomGetView<T> {
   late final roomId = controller.roomId;
 
   final rightEffect = const <Effect>[
-    Effect(duration: kThemeChangeDuration, curve: Curves.easeOutCubic),
-    SlideEffect(begin: Offset(0.4, 0), end: Offset.zero),
+    // 1. 基础动画效果
+    Effect(
+      duration: kThemeChangeDuration,  // 动画持续时间
+      curve: Curves.easeOutCubic,      // 动画曲线
+    ),
+    
+    // 2. 滑动效果
+    SlideEffect(
+      begin: Offset(0.4, 0),  // 开始位置：向右偏移自身宽度的 40%
+      end: Offset.zero,       // 结束位置：原始位置(0,0)
+    ),
   ];
 
+  // 定义底部滑入动画效果列表
   final bottomEffect = const <Effect>[
+    // 基础动画效果配置
+    // duration: 动画持续时间，使用主题中定义的过渡动画时长
     Effect(duration: kThemeChangeDuration, curve: Curves.easeOutCubic),
+    
+    // 滑动效果配置
+    // begin: 动画开始位置，从底部向上偏移40%的位置开始
     SlideEffect(begin: Offset(0, 0.4), end: Offset.zero),
   ];
 

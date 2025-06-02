@@ -13,23 +13,31 @@ import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// 麦位用户视图的抽象基类
+/// 用于管理麦位相关的通用功能
 abstract class _MicUserView extends StatelessWidget {
+  /// 当前用户的角色类型
   final RoomRoleType? myRole;
 
   _MicUserView({super.key, this.myRole});
 
+  /// 获取场景麦位控制器
   late final controller = sceneMicCtrl<RoomMicCtrl>();
 }
 
+/// 麦位头部视图组件
+/// 用于显示房间顶部的麦位布局
 class MicUser$Header extends _MicUserView {
   MicUser$Header({super.key, super.myRole});
 
+  /// 麦位项的高度
   static double itemH = _MicView.itemH;
 
   @override
   Widget build(BuildContext context) {
     var maxMic = controller.maxMic;
 
+    // 构建单个麦位视图
     Widget child = SizedBox(
       height: _MicView.itemH,
       child: Stack(
@@ -53,10 +61,11 @@ class MicUser$Header extends _MicUserView {
       ),
     );
 
+    // 如果有多个麦位，构建网格布局
     if (maxMic > 1) {
-      // 麦位间的间距
+      // 计算麦位之间的间距
       double gap = (Get.width - _MicView.itemW * 4 - 33 * 2) / 3;
-      // 计算有多少列
+      // 设置列数
       var numOfColumn = 4;
       var column = 0;
       if (maxMic > 1) {
@@ -73,9 +82,9 @@ class MicUser$Header extends _MicUserView {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // 第一行
+            // 第一行显示主持麦位
             child,
-            // 第二行
+            // 第二行显示其他麦位
             GridView.builder(
               shrinkWrap: true,
               padding: Pad(horizontal: gap),
@@ -91,7 +100,6 @@ class MicUser$Header extends _MicUserView {
                   final no = '${i + 2}';
                   // 主持位
                   var micMo = i + 2;
-                  print('来这里乐乐');
                   if (micMo == maxMic) {
                     final String micNumberString = '$maxMic';
                     MicInfo? info = controller.micUserInfo(
@@ -136,80 +144,26 @@ class MicUser$Header extends _MicUserView {
     }
 
     return child;
-    // // 麦位间的间距
-    // double gap = (Get.width - _MicView.itemW * 4 - 33 * 2) / 3;
-    // const pad = _MicView.padding;
-    // var children = <Widget>[];
-    //
-    // for(int index = 0; index < column; index ++) {
-    //   var count = numOfColumn;
-    //   if(column - 1 == index) {
-    //     count = maxMic - index * numOfColumn - 1;
-    //   }
-    //   children.add(Container(
-    //     height: _MicView.itemH,
-    //     margin: EdgeInsets.only(top: index > 0 ? 10 : 0),
-    //     child: ListView.separated(
-    //       padding: pad.copyWith(top: 0, bottom: 0, left: 33),
-    //       scrollDirection: Axis.horizontal,
-    //       itemCount: count,
-    //       addRepaintBoundaries: false,
-    //       addAutomaticKeepAlives: false,
-    //       itemBuilder: (_, i) {
-    //         final no = '${i + (1 + 1) + index * numOfColumn}';
-    //
-    //         // 主持位
-    //         var micMo = i + index * numOfColumn + (1 + 1);
-    //         if(micMo == maxMic) {
-    //           return SizedBox(
-    //             width: _MicView.itemW,
-    //             height: _MicView.itemH,
-    //             child: Transform.translate(
-    //               offset: const Offset(0, 0),
-    //               child: _ItemView(no: '$maxMic', controller: controller, myRole: myRole, type: 1),
-    //             ),
-    //           );
-    //         }
-    //
-    //         return _ItemView(no: no, controller: controller, myRole: myRole);
-    //       },
-    //       separatorBuilder: (_, i) {
-    //         return SizedBox(width: gap,);
-    //       },
-    //     ),
-    //   ));
-    // }
-    //
-    // if (maxMic > 1) {
-    //
-    //   child = Column(
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     children: [
-    //       // 第一行
-    //       child,
-    //
-    //       // 第二行
-    //       ...children
-    //     ],
-    //   );
-    // }
-    //
-    // return child;
   }
 }
 
+/// 右侧麦位列表视图组件
+/// 用于显示房间右侧的麦位列表
 class MicUser$Right extends _MicUserView {
   MicUser$Right({super.key, super.myRole});
 
+  /// 麦位项的高度
   static double itemH = _MicView.itemH;
+  /// 麦位之间的间距
   static const spacing = 4.0;
+  /// 整体内边距
   static const padding = Pad(vertical: 6);
 
   @override
   Widget build(BuildContext context) {
     final isLandscape = context.watch<Orientation>() == Orientation.landscape;
 
+    // 根据屏幕方向设置网格布局
     late final delegate = SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: isLandscape ? 2 : 1,
       mainAxisSpacing: spacing,
@@ -237,11 +191,18 @@ class MicUser$Right extends _MicUserView {
   }
 }
 
+/// 单个麦位项视图组件
+/// 用于显示单个麦位的详细信息
 class _ItemView extends StatelessWidget {
+  /// 麦位类型（0: 普通麦位, 1: 特殊麦位）
   final int type;
+  /// 麦位编号
   final String no;
+  /// 当前用户角色
   final RoomRoleType? myRole;
+  /// 麦位用户信息
   final MicInfo? micUserInfo;
+  /// 动态展示效果值
   final double? dynamicPresentation;
 
   _ItemView(
@@ -253,6 +214,7 @@ class _ItemView extends StatelessWidget {
     return micUserInfo == null ? $EmptyView(no) : $UserView(no, micUserInfo!);
   }
 
+  /// 构建空麦位视图
   Widget $EmptyView(String no) {
     TextStyle style;
     String text = '$no号麦';
@@ -279,10 +241,12 @@ class _ItemView extends StatelessWidget {
     );
   }
 
+  /// 构建用户麦位视图
   Widget $UserView(String no, MicInfo item) {
     final uid = item.uid;
     final isSelf = OAuthCtrl.isSelf(uid);
 
+    /// 构建头像组件
     Widget $Avatar() {
       final child = AsyncAvatar(
         uid: uid,
@@ -290,23 +254,19 @@ class _ItemView extends StatelessWidget {
         onTap: Some(() => MicUserSheet.show(no, info: item)),
       );
 
-      // return Obx(
-      //       () {
-          final val = Rtc.speakRx[uid];
-          return dynamicPresentation == null
-              ? child
-              : MicAnimeBuilder(
-            value: dynamicPresentation!,
-            child: child,
-            builder: (context, value, child) =>
-                DecoratedBox(decoration: value, child: child),
-          );
-     //   },
-     // );
+      final val = Rtc.speakRx[uid];
+      return dynamicPresentation == null
+          ? child
+          : MicAnimeBuilder(
+        value: dynamicPresentation!,
+        child: child,
+        builder: (context, value, child) =>
+            DecoratedBox(decoration: value, child: child),
+      );
     }
 
+    /// 构建麦克风状态组件
     Widget $Mic() {
-      /// int status; /// 麦克风状态：0.无麦 1.上麦 2.下麦 3.开麦 4.闭麦 5.禁言【禁止rtc】6.禁止上麦
       if(item.status == 3){
         return Spacing.blank;
       }else if(item.status == 4 || item.status == 1){
@@ -314,11 +274,11 @@ class _ItemView extends StatelessWidget {
       }else if(item.status == 5 || item.status == 6){
         return $MicStateView('禁麦');
       }else{
-        return Spacing
-            .blank;
+        return Spacing.blank;
       }
     }
 
+    /// 构建热度视图组件
     Widget $HotView() {
       GlobalKey globalKey = GlobalKey();
       return GestureDetector(
@@ -333,7 +293,6 @@ class _ItemView extends StatelessWidget {
               .size;
           RenderBox? renderBox = globalKey.currentContext
               ?.findRenderObject() as RenderBox?;
-          // offset.dx , offset.dy 就是控件的左上角坐标
           var offset = renderBox?.localToGlobal(Offset.zero);
           
           var centerBottom = Offset((offset?.dx ?? 0),
@@ -365,7 +324,6 @@ class _ItemView extends StatelessWidget {
           mic: $Mic(),
           tips: $HotView(),
           avatar: $Avatar(),
-          // avatar: Container(),
           title: UserInfoCtrl.use(uid, builder: (it) {
             return XText(
               it?.showName ?? '',
@@ -377,6 +335,7 @@ class _ItemView extends StatelessWidget {
         ));
   }
 
+  /// 构建麦克风状态视图
   Widget $MicStateView(String state) {
     return Image.asset(
       IMG.format('room/mic/麦位_$state'),
@@ -386,22 +345,34 @@ class _ItemView extends StatelessWidget {
   }
 }
 
+/// 麦位基础视图组件
+/// 用于构建麦位的基本布局结构
 class _MicView extends StatelessWidget {
+  /// 头像组件
   final Widget avatar;
+  /// 标题组件
   final Widget title;
+  /// 麦克风状态组件
   final Widget? mic;
+  /// 提示信息组件
   final Widget? tips;
+  /// 标签
   final String? tag;
 
   const _MicView(
       {required this.avatar, required this.title, this.tips, this.mic, this.tag});
 
+  /// 每行显示的麦位数量
   static const double _count = 6;
+  /// 麦位实际大小
   static final double _size = itemW - padding.horizontal;
 
+  /// 内边距
   static const padding = Pad(top: 6, horizontal: 8);
 
+  /// 麦位宽度
   static double itemW = (AppSize.width - padding.horizontal) / _count;
+  /// 麦位高度
   static double itemH = padding.vertical + _size + 24 + 12;
 
   @override
@@ -462,10 +433,14 @@ class _MicView extends StatelessWidget {
   }
 }
 
+/// 麦克风动画构建器组件
+/// 用于处理麦位动画效果
 class MicAnimeBuilder extends StatefulWidget {
+  /// 动画值
   final double value;
+  /// 子组件
   final Widget? child;
-
+  /// 构建器函数
   final ValueWidgetBuilder<Decoration> builder;
 
   const MicAnimeBuilder(
@@ -475,10 +450,13 @@ class MicAnimeBuilder extends StatefulWidget {
   State<MicAnimeBuilder> createState() => _MicAnimeBuilderState();
 }
 
+/// 麦克风动画构建器状态类
 class _MicAnimeBuilderState extends State<MicAnimeBuilder>
     with SingleTickerProviderStateMixin {
+  /// 动画控制器
   late final animation = AnimationController(vsync: this);
 
+  /// 装饰动画补间
   final tween = DecorationTween(
     begin: const BoxDecoration(shape: BoxShape.circle),
     end: const BoxDecoration(
@@ -492,17 +470,16 @@ class _MicAnimeBuilderState extends State<MicAnimeBuilder>
   @override
   void initState() {
     super.initState();
-
     _doPlay();
   }
 
   @override
   void didUpdateWidget(MicAnimeBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-
     _doPlay();
   }
 
+  /// 执行动画播放
   void _doPlay() {
     animation.animateTo(
       widget.value,
@@ -514,7 +491,6 @@ class _MicAnimeBuilderState extends State<MicAnimeBuilder>
   @override
   void dispose() {
     animation.dispose();
-
     super.dispose();
   }
 
