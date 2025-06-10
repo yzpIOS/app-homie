@@ -40,12 +40,12 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         $SpeakView(),
         Expanded(child: SceneOverlayInput(onItemClick: onItemClick, padding: Pad(horizontal: 5),)),
 
-        SizedBox(width: 5,),
+       const SizedBox(width: 5,),
         _ConvView(onItemClick: onItemClick),
 
         // _IconBtnSvg(icon: '动作', onItemClick: onItemClick),
         if(isRoom)
-          SizedBox(width: 10,),
+        const  SizedBox(width: 10,),
         if (isRoom)
           GestureDetector(
             onTap: () {
@@ -65,7 +65,7 @@ class SceneOverlayBottomBar<T extends SceneCtrl> extends RoomGetView<T> {
         if(controller is PersonRoomCtrl) MicOperate(),
 
         if(isRoom)
-          SizedBox(width: 10,),
+        const  SizedBox(width: 10,),
         if (isRoom)
           GestureDetector(
             onTap: () {

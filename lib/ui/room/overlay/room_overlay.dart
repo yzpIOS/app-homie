@@ -99,8 +99,7 @@ class RoomOverlay extends SceneOverlay<RoomCtrl> {
                 child: Box(
                   child: Animate(
                     effects: bottomEffect,
-                    child: SceneOverlayBottomBar<RoomCtrl>(
-                        onItemClick: onItemClick),
+                    child: SceneOverlayBottomBar<RoomCtrl>(onItemClick: onItemClick),
                   ),
                 ),
               ),

@@ -13,32 +13,46 @@ import 'keys.dart';
 
 export 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 
+/// RTC 实时通信管理类
+/// 用于管理腾讯云 TRTC 的实时音视频通信功能
 class Rtc {
-  Rtc._();
+  Rtc._(); // 私有构造函数，防止实例化
 
+  /// 初始化实例
   static final init = _init();
 
+  /// 用户说话音量映射表，key为用户ID，value为音量值(0-1)
   static final speakRx = RxMap<String, double>();
+  /// 开启麦克风的用户集合
   static final openMicRx = RxSet<String>();
+  /// 麦克风开关状态
   static final micRx = RxBool(false);
+  /// 音频开关状态
   static final audioRx = RxBool(true);
+  /// 视频开关状态
   static final videoRx = RxBool(false);
+  /// 网络质量状态
   static final netQualityRx = RxInt(0);
 
+  /// TRTC SDK 应用 ID
   static  int sdkAppId = 0 ;
+  /// 用户 ID
   static String userId = '';
+  /// 用户签名
   static String userSig = '';
-  // 麦状态，1禁麦
+  /// 麦状态，1禁麦
   static late final status = RxInt(0);
 
+  /// 是否可以选择麦克风
   static bool isCanSelect = true;
-  //RxInt mike_status = 0.obs;
   /// 麦克风状态:0.无麦 1.上麦 2,下麦 3.闭麦,4.禁麦
   /// 3.开麦 4.闭麦 5.禁言【禁止rtc】
   static late final mike_status = RxInt(0);
 
+  /// TRTC 客户端实例
   static late final TRTCCloud _rtcClient;
 
+  /// 初始化 TRTC 客户端
   static Future<void> _init() async {
     _rtcClient = (await TRTCCloud.sharedInstance())!;
 
@@ -49,38 +63,49 @@ class Rtc {
       ],
     );
 
+    // 注册 TRTC 事件监听器
     _rtcClient.registerListener((type, args) {
       switch (type) {
+        /// 网络质量变化回调。用于监控本地和远端用户的网络状况，通常用于显示网络信号强弱。
         case TRTCCloudListener.onNetworkQuality:
           netQualityRx(args['localQuality']['quality']);
           break;
+          /// 用户音量回调。用于获取房间内每个用户的实时音量大小，常用于语音聊天室的音量显示。
         case TRTCCloudListener.onUserVoiceVolume:
           _onUserVoiceVolume(args);
           break;
+          /// 进入房间回调。用户成功进入房间时触发。
         case TRTCCloudListener.onEnterRoom:
           _onEnterRoom(args);
           break;
+          /// 离开房间回调。用户主动离开房间时触发。
         case TRTCCloudListener.onExitRoom:
           _onExitRoom(args);
           break;
+          /// 用户切换房间回调。用户切换到其他房间时触发。
         case TRTCCloudListener.onSwitchRoom:
           xlog('用户切换房间 -> $args', type: LogType.RTC);
           break;
+          /// 用户切换角色回调。用户切换角色时触发。
         case TRTCCloudListener.onSwitchRole:
           xlog('用户切换角色 -> $args', type: LogType.RTC);
           break;
+          /// 远程用户进入房间回调。当有其他用户进入房间时触发。
         case TRTCCloudListener.onRemoteUserEnterRoom:
           _onRemoteUserEnterRoom(args);
           break;
+          /// 远程用户离开房间回调。当有其他用户离开房间时触发。
         case TRTCCloudListener.onRemoteUserLeaveRoom:
           _onRemoteUserLeaveRoom(args);
           break;
+          /// 用户音量回调。用于获取房间内每个用户的实时音量大小，常用于语音聊天室的音量显示。
         case TRTCCloudListener.onUserAudioAvailable:
           _onUserAudioAvailable(args);
-
           break;
+          /// 统计信息回调。用于获取当前用户的音视频统计信息。
         case TRTCCloudListener.onStatistics:
           break;
+          /// 错误回调。用于处理音视频通信过程中的错误事件。
         case TRTCCloudListener.onError:
         case TRTCCloudListener.onWarning:
         case TRTCCloudListener.onCameraDidReady:
@@ -118,6 +143,7 @@ class Rtc {
         case TRTCCloudListener.onTestSpeakerVolume:
         case TRTCCloudListener.onStartPublishMediaStream:
         case TRTCCloudListener.onUpdatePublishMediaStream:
+        
         case TRTCCloudListener.onStopPublishMediaStream:
           xlog(() => '$type -> $args', type: LogType.RTC);
           break;
@@ -129,22 +155,25 @@ class Rtc {
     await _micInit();
   }
 
+  /// 初始化麦克风相关设置
   static Future<void> _micInit() async {
     await _enableMic(micRx.value);
     await _enableAudio(audioRx.value);
     await _enableVideo(videoRx.value);
-    // await _enableVideo(mike_status.value);
 
+    // 监听状态变化
     micRx.listen(_enableMic);
     audioRx.listen(_enableAudio);
     videoRx.listen(_enableVideo);
   }
 
   //<editor-fold desc="Event">
+  /// 处理远程用户进入房间事件
   static void _onRemoteUserEnterRoom(args) {
     xlog('用户上麦 -> $args', type: LogType.RTC);
   }
 
+  /// 处理远程用户离开房间事件
   static void _onRemoteUserLeaveRoom(args) {
     xlog('用户下麦 -> $args', type: LogType.RTC);
 
@@ -157,6 +186,7 @@ class Rtc {
     }
   }
 
+  /// 处理用户音频可用性变化事件
   static void _onUserAudioAvailable(Map args) {
     xlog('用户开关麦 -> $args', type: LogType.RTC);
 
@@ -167,6 +197,7 @@ class Rtc {
     }
   }
 
+  /// 处理用户音量变化事件
   static void _onUserVoiceVolume(Map args) {
     final data = <String, double>{};
 
@@ -189,6 +220,7 @@ class Rtc {
     }
   }
 
+  /// 处理进入房间事件
   static void _onEnterRoom(int args) {
     xlog('用户进入房间 -> $args', type: LogType.RTC);
 
@@ -201,6 +233,7 @@ class Rtc {
     }
   }
 
+  /// 处理离开房间事件
   static void _onExitRoom(int args) {
     xlog('用户离开房间 -> $args', type: LogType.RTC);
 
@@ -224,7 +257,7 @@ class Rtc {
   //</editor-fold>
 
   //<editor-fold desc="Action">
-  //开关麦
+  /// 控制麦克风开关
   static Future<void> _enableMic(bool enable) async {
     try {
       await Future.wait(
@@ -244,7 +277,7 @@ class Rtc {
     }
   }
 
-  //开关声音
+  /// 控制音频开关
   static Future<void> _enableAudio(bool enable) async {
     try {
       await _rtcClient.muteAllRemoteAudio(!enable);
@@ -255,27 +288,18 @@ class Rtc {
     }
   }
 
+  /// 进入房间
   static Future<void> enterRoom(String roomId, String token) async {
     await Rtc.init;
     await Rtc.leave(isJoinBefore: true);
-    // int sdkAppId = readIntData('sdkAppId');
-    // String userId = readStringData('userId');
-    // String userSig = readStringData('userSig');
-  //  Rtc.sdkAppId
-   // Rtc.userId
-
-   // print('Rtc.sdkAppId:${Rtc.sdkAppId},Rtc.userId:${Rtc.userId},Rtc.userSig:${Rtc.userSig}');
 
     _rtcClient.enterRoom(
       TRTCParams(
         sdkAppId: Rtc.sdkAppId,
-     //   sdkAppId: readIntData('sdkAppId'),
         roomId: 0,
         strRoomId: roomId,
-         userId: Rtc.userId,
-     //   userId: readStringData('userId'),
+        userId: Rtc.userId,
         userSig: Rtc.userSig,
-    //    userSig: readStringData('userSig'),
         role: TRTCCloudDef.TRTCRoleAudience,
       ),
       TRTCCloudDef.TRTC_APP_SCENE_VOICE_CHATROOM,
@@ -284,11 +308,12 @@ class Rtc {
     Rtc.micRx(false);
   }
 
+  /// 设置音频采集音量
   static Future<void> setAudioCaptureVolume(int volume) async {
     await Rtc._rtcClient.setAudioCaptureVolume(volume.toInt());
   }
 
-  //开关视频
+  /// 控制视频开关
   static Future<void> _enableVideo(bool enable) async {
     try {
       await Future.wait(
@@ -307,13 +332,11 @@ class Rtc {
     }
   }
 
-
-  //切换麦克风开关
+  /// 切换麦克风开关
   static Future<void> micSwitch() async {
     if (micRx.isFalse) {
       if (!await Permission.microphone.request().isGranted) {
         showToast('权限获取失败');
-
         return;
       }
     }
@@ -322,28 +345,19 @@ class Rtc {
       int status = micRx.value == true ? 2: 1;
       await Api.Room.openShutMike(status: status);
     }
-
-
-
-    // micRx.toggle();
-    //
-    // if(micRx.value == true){
-    //   Rtc.mike_status.value = 1;
-    // }else{
-    //   Rtc.mike_status.value = 3;
-    // }
   }
 
+  /// 切换用户角色
   static Future<void> switchRole(int role) async {
     await _rtcClient.switchRole(TRTCCloudDef.TRTCRoleAnchor);
   }
 
+  /// 离开房间
   static Future<void> leave({bool isJoinBefore = false}) async {
     try {
       audioRx(true);
       await Future.wait(
         [
-          // $.switchRole(TRTCCloudDef.TRTCRoleAudience),
           _rtcClient.exitRoom(),
         ],
       );

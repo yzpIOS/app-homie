@@ -77,7 +77,8 @@ class ClientSession with BaseClient {
       // 32位整数，转化成二进制数据
       (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8),
       // 32位整数，转化成二进制数据
-      (udpIndex >> 24).toUnsigned(8), (udpIndex >> 16).toUnsigned(8), (udpIndex >> 8).toUnsigned(8), (udpIndex).toUnsigned(8),...(datas ?? [])
+      (udpIndex >> 24).toUnsigned(8), (udpIndex >> 16).toUnsigned(8), (udpIndex >> 8).toUnsigned(8),
+       (udpIndex).toUnsigned(8),...(datas ?? [])
     ]);
     // 缓存己发送的数据
     sendedList[udpIndex] = datas;

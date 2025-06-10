@@ -10,6 +10,7 @@ typedef OnReceiveData<T extends GeneratedMessage> = void Function(int cmd, T? da
 class CallBack<T extends GeneratedMessage> {
 
   static CallBack<T> create<T extends GeneratedMessage>(int cmd) {
+    
     return CallBack(cmd: cmd, complete: Completer<T?>());
   }
 

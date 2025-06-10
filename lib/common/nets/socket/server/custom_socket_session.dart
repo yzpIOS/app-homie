@@ -86,7 +86,8 @@ class CustomSocketSession with BaseClient {
       // 32位整数，转化成二进制数据
       (len >> 24).toUnsigned(8), (len >> 16).toUnsigned(8), (len >> 8).toUnsigned(8), (len).toUnsigned(8),
       // 32位整数，转化成二进制数据
-      (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8), ...(datas ?? [])
+      (cmd >> 24).toUnsigned(8), (cmd >> 16).toUnsigned(8), (cmd >> 8).toUnsigned(8), (cmd).toUnsigned(8),
+       ...(datas ?? [])
     ]);
     try {
       socket.add(datas);

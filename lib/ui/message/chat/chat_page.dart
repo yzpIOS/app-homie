@@ -240,14 +240,17 @@ class _ChatViewState extends State<ChatView> with BusStateMixin {
             ),
             Padding(
               padding: const Pad(left: 5, right: 2),
-              child: Image.asset(IMG.format('chat/直播跟随'), width: 18, height: 18, scale: 3, fit: BoxFit.contain),
+              child: Image.asset(IMG.format('chat/直播跟随'), width: 18,
+               height: 18, scale: 3, fit: BoxFit.contain),
             ),
             Expanded(child: Text.rich(
               TextSpan(
                 style: const TextStyle(fontSize: 14, color: AppPalette.txtDark, fontWeight: fw$Regular),
                 children: [
                   const TextSpan(text: 'TA正在',),
-                  TextSpan(text: '【${followOnlineData['room_name']}】', style: const TextStyle(fontSize: 14, color: AppPalette.primary, fontWeight: fw$Regular),),
+                  TextSpan(text: '【${followOnlineData['room_name']}】',
+                   style: const TextStyle(fontSize: 14, color: AppPalette.primary,
+                    fontWeight: fw$Regular),),
                   const TextSpan(text: '嗨聊',),
                 ],
               ),

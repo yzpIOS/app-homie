@@ -440,9 +440,8 @@ class MicAnimeBuilder extends StatefulWidget {
   final double value;
   /// 子组件
   final Widget? child;
-  /// 构建器函数
-  final ValueWidgetBuilder<Decoration> builder;
-
+  /// 构建器函数  typedef ValueWidgetBuilder<T> = Widget Function(BuildContext context, T value, Widget? child);
+   final ValueWidgetBuilder<Decoration> builder;
   const MicAnimeBuilder(
       {required this.value, required this.builder, this.child});
 
@@ -473,10 +472,15 @@ class _MicAnimeBuilderState extends State<MicAnimeBuilder>
     _doPlay();
   }
 
+  /// 当父组件更新导致widget属性变化时调用
+  /// 用于响应value值的变化，重新执行动画
   @override
   void didUpdateWidget(MicAnimeBuilder oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _doPlay();
+    // 如果value值发生变化，重新执行动画
+    if (oldWidget.value != widget.value) {
+      _doPlay();
+    }
   }
 
   /// 执行动画播放

@@ -7,14 +7,22 @@ import 'package:app/ui/my/user_home_page.dart';
 import 'package:app/widgets.dart';
 import 'package:flutter/material.dart';
 
+/// 异步头像组件
+/// 用于加载和显示用户头像，支持头像框和在线状态显示
 class AsyncAvatar extends StatelessWidget {
+  /// 用户ID
   final UID uid;
+  /// 头像大小
   final double size;
+  /// 头像边框样式
   final BorderSide side;
+  /// 点击回调函数
   final Option<VoidCallback>? onTap;
+  /// 是否显示在线状态
   final bool isShowOnline;
+  /// 头像框大小
   final int avatarFrameSize;
-
+  /// 是否使用用户头像框
   final bool userFrame;
 
   const AsyncAvatar({
@@ -30,8 +38,10 @@ class AsyncAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 如果用户ID为空，显示默认头像
     if (uid.isEmpty) return AvatarView(null, size: size, side: side);
 
+    // 使用UserHomeWrap包装，支持点击跳转到用户主页
     return UserHomeWrap(
       uid: uid,
       onTap: onTap,
@@ -53,22 +63,32 @@ class AsyncAvatar extends StatelessWidget {
   }
 }
 
+/// 头像视图组件
+/// 用于显示头像图片，支持头像框和在线状态显示
 class AvatarView extends StatelessWidget {
+  /// 头像URL
   final String? url;
+  /// 头像框URL
   final String? avatarFrameUrl;
+  /// 模糊效果参数
   final String? blur;
+  /// 头像大小
   final double size;
+  /// 头像边框样式
   final BorderSide side;
+  /// 是否显示在线状态
   final bool isShowOnline;
+  /// 头像框大小
   final int avatarFrameSize;
-
+  /// 是否使用用户头像框
   final bool userFrame;
 
   const AvatarView(this.url, {
     super.key,
     this.blur,
     this.size = 82,
-    this.side = BorderSide.none, this.isShowOnline = false,
+    this.side = BorderSide.none, 
+    this.isShowOnline = false,
     this.avatarFrameSize = 8,
     this.avatarFrameUrl = null,
     this.userFrame = true,
@@ -76,6 +96,7 @@ class AvatarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 构建基础头像组件
     Widget child = _Avatar(
       url: url,
       avatarFrameUrl: avatarFrameUrl,
@@ -86,8 +107,7 @@ class AvatarView extends StatelessWidget {
       userFrame: userFrame,
     );
 
-    // return child;
-
+    // 如果需要显示在线状态，添加在线状态指示器
     if (isShowOnline) {
       return Container(
         clipBehavior: Clip.none,
@@ -103,6 +123,7 @@ class AvatarView extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           children: [
             Positioned.fill(child: child,),
+            // 添加"直播中"标签
             Positioned(
               bottom: -13,
               child: Image.asset(IMG.format('直播中'), width: 46.5, height: 19.5, scale: 3, fit: BoxFit.contain),
@@ -116,15 +137,22 @@ class AvatarView extends StatelessWidget {
   }
 }
 
+/// 基础头像组件
+/// 用于处理头像图片的加载、裁剪和装饰
 class _Avatar extends StatelessWidget {
+  /// 头像URL
   final String? url;
+  /// 头像框URL
   final String? avatarFrameUrl;
+  /// 模糊效果参数
   final String? blur;
+  /// 头像大小
   final double size;
+  /// 头像形状
   final ShapeBorder shape;
+  /// 头像框大小
   final int avatarFrameSize;
-
-
+  /// 是否使用用户头像框
   final bool userFrame;
 
   const _Avatar({
@@ -139,22 +167,24 @@ class _Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 加载网络图片
     Widget child = NetImage(url, blur: blur, width: size, height: size, fit: BoxFit.cover);
 
-
+    // 裁剪图片为指定形状
     child = ClipPath(
       clipper: ShapeBorderClipper(shape: shape),
       clipBehavior: Clip.antiAlias,
       child: child,
     );
 
+    // 添加边框装饰
     child = DecoratedBox(
       position: DecorationPosition.foreground,
       decoration: ShapeDecoration(shape: shape),
       child: child,
     );
 
-    // 加头像框
+    // 如果需要显示头像框，添加头像框
     if(userFrame) {
       Widget avatarFrame = avatarFrameUrl?.isNotEmpty == true ?
         NetImage(avatarFrameUrl, blur: blur, width: size, height: size, fit: BoxFit.cover) : SizedBox();
@@ -179,9 +209,14 @@ class _Avatar extends StatelessWidget {
   }
 }
 
+/// 用户主页包装组件
+/// 用于处理头像点击跳转到用户主页的功能
 class UserHomeWrap extends StatelessWidget {
+  /// 用户ID
   final UID uid;
+  /// 子组件
   final Widget child;
+  /// 点击回调函数
   final Option<VoidCallback>? onTap;
 
   const UserHomeWrap({super.key, required this.uid, required this.child, this.onTap});
@@ -195,16 +230,10 @@ class UserHomeWrap extends StatelessWidget {
   }
 }
 
+/// 跳转到用户主页的回调函数
+/// @param uid 用户ID
 VoidCallback toUserPage(UID uid) {
   return () {
-    // if(Env.isDebug) {
-    //   Get.to(() => MineGiftWallPage(uid: uid));
-    //   return;
-    // }
-    // if (OAuthCtrl.uid == uid) {
-    //   Get.to(() => const MyPage());
-    // } else {
     Get.to(() => UserHomePage(uid: uid));
-    // }
   };
 }

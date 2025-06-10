@@ -3,17 +3,17 @@ import 'dart:typed_data';
 
 import 'package:app/common/nets/commons/utils/base_byte_buffer.dart';
 
-// 单个包体长度
+/// 单个包体长度
 const int PKG_LEN = 4;
-// 协仪长度
+/// 协仪长度
 const int CMD_LEN = 4;
 
 class ByteBuffer1 extends BaseByteBuffer {
 
 
-  // 当前的包体长度
+  /// 当前的包体长度
   int _curPkgLen = 0;
-  // 当前的cmd
+  /// 当前的cmd
   int _curCmd = 0;
   ///
   /// 原始buffer数据
