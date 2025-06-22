@@ -26,7 +26,8 @@ class ChatConv {
 
   FutureOr<V2TimConversation>? _conv;
 
-  FutureOr<V2TimConversation> get conv => _conv ??= IM.conv.getConversation(conversationID: convId).dataGet;
+  FutureOr<V2TimConversation> get conv => _conv ??=
+   IM.conv.getConversation(conversationID: convId).dataGet;
 
   Future<void> markMessageAsRead() async {
     final chat = IM.chat;

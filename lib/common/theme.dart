@@ -17,7 +17,7 @@ ThemeData _default() {
     color: AppPalette.divider,
   );
 
-  const tabBarTheme = TabBarTheme(
+  const tabBarTheme = TabBarThemeData(
     dividerColor: Colors.transparent,
     //
     indicatorSize: TabBarIndicatorSize.tab,
@@ -45,7 +45,7 @@ ThemeData _default() {
     titleTextStyle: TextStyle(fontSize: 18, color: AppPalette.appBarForegroundColorLight, fontWeight: fw$SemiBold),
   );
 
-  const cardTheme = CardTheme(
+  const cardTheme = CardThemeData(
     elevation: 0,
     margin: Pad.zero,
     clipBehavior: Clip.hardEdge,

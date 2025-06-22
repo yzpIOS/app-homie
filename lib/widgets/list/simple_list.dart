@@ -37,7 +37,8 @@ mixin _SimpleMixin<T> {
 
   Widget itemBuilder(BuildContext context, T item, int index);
 
-  Widget _rxDataView<CTRL extends GetxController>({CTRL? init, required GetControllerBuilder<CTRL> builder}) {
+  Widget _rxDataView<CTRL extends GetxController>({CTRL? init, 
+  required GetControllerBuilder<CTRL> builder}) {
     return ConfigList(
       config: config,
       child: GetBuilder<CTRL>(

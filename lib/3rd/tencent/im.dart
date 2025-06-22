@@ -29,11 +29,13 @@ export 'package:tencent_im_sdk_plugin_platform_interface/models/v2_tim_value_cal
 
 class IM {
   IM._();
-
+ /// 核心管理器：
   static final $ = TencentImSDKPlugin.v2TIMManager;
-
+/// 消息管理器：
   static final chat = $.v2TIMMessageManager;
+/// 会话管理器：
   static final conv = $.v2ConversationManager;
+/// 用户管理器：
   static final user = $.v2TIMFriendshipManager;
 
   static Future<void> init() {

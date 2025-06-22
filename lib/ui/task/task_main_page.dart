@@ -63,7 +63,8 @@ class TaskMainPage extends StatelessWidget {
                          itemBuilder:  (BuildContext context, int index) {
                            return Column(
                              children: [
-                             _ItemView(data:_taskMainPageController.dailyTaskAllItems.data?.dailyTaskItems?[index],vc: _taskMainPageController,),
+                             _ItemView(data:_taskMainPageController.dailyTaskAllItems.data?.dailyTaskItems?[index],
+                             vc: _taskMainPageController,),
                                const Padding(
                                  padding: EdgeInsets.symmetric(horizontal: 8.0),
                                  child: Divider(
@@ -130,7 +131,8 @@ class TaskMainPage extends StatelessWidget {
                 onTap: (){
                   // isOpen = !isOpen;
                 },
-                child:  Image.asset(IMG.format('task/task_box_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,)
+                child:  Image.asset(IMG.format('task/task_box_$bottomNum'),
+                 width: boxWidth, height: boxWidth, scale: 3,)
               //  :
               // Image.asset(IMG.format('task/task_box_open_$bottomNum'), width: boxWidth, height: boxWidth, scale: 3,),
             ),
@@ -150,7 +152,8 @@ class TaskMainPage extends StatelessWidget {
           padding: Pad(horizontal: 12),
           child: Row(
             children: [
-              XText(value == null ?'今日活跃度：0':'今日活跃度：$scheduleValue',selectionColor: Colors.black,style: TextStyle(color: Colors.black),),
+              XText(value == null ?'今日活跃度：0':'今日活跃度：$scheduleValue',
+              selectionColor: Colors.black,style: TextStyle(color: Colors.black),),
               Expanded(child: Spacing.blank),
               XText('每日0点刷新',style: TextStyle(color: Colors.black),),
             ],
@@ -187,7 +190,8 @@ class TaskMainPage extends StatelessWidget {
                        String value = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].value.toString();
                        bool? isReceive = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].isReceive;
                        bool? isReceived = _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index].isReceived;
-                       DailyTaskLivenessItems? dailyTaskLivenessItems =  _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index];
+                       DailyTaskLivenessItems? dailyTaskLivenessItems = 
+                        _taskMainPageController.dailyTaskAllItems.data!.dailyTaskLivenessItems![index];
                        return Container(
                          width: boxSize,
                          height: 80,

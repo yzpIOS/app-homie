@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 
-abstract class ListItem<T> extends StatelessWidget {
-  final T item;
+// abstract class ListItem<T> extends StatelessWidget {
+//   final T item;
 
-  ListItem(this.item, {Key? key}) : super(key: key ?? ValueKey(item));
-}
+//   ListItem(this.item, {Key? key}) : super(key: key ?? ValueKey(item));
+// }
